@@ -14,7 +14,7 @@
 (defvar BATTERY_LOW 20)
 (defvar OVERVIEW_SCALE 0.08)
 (defvar OVERVIEW_INDICATOR_GAP 1)
-(defvar POWERMENU_COMMANDS `["gtklock -d &", "loginctl terminate-user $USER &", "systemctl suspend &", "systemctl hibernate &", "systemctl poweroff &", "systemctl reboot &", "# nothing", "# cancel"]`)
+(defvar POWERMENU_COMMANDS `["gtklock -d &", "sleep 1 && loginctl terminate-user $USER &", "systemctl suspend &", "systemctl hibernate &", "sleep 1 && systemctl poweroff &", "sleep 1 && systemctl reboot &", "# nothing", "# cancel"]`)
 (defvar POWERMENU_QUICKLAUNCHES `["hyprctl keyword debug:overlay $(( 1 - $(hyprctl getoption debug:overlay -j | gojq '.int') ))", "hyprctl dispatch submap reset && eww close powermenu && xdg-open 'https://discord.com/app' && xdg-open 'https://youtube.com/' && xdg-open 'https://github.com/' &", "hyprctl dispatch submap reset && eww close powermenu && code ~/.config/eww/ &", "hyprctl dispatch submap reset && eww close powermenu && xdg-open ~/.config/hypr/hyprland.conf &", "hyprctl dispatch submap reset && eww close powermenu && xdg-open 'https://wiki.hyprland.org/' &", "hyprctl dispatch submap reset && eww close powermenu && xdg-open 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' &"]`)
 (defvar SCROLL_MULTIPLIER_WAIFUTAGS 36) ; Number of pixels to scroll each mouse scroll
 (defvar SCROLL_TOSHOW_WAIFUTAGS 7) ; Edit scroll-waifu script too. I have to hard code or it'll be very slow
