@@ -1,6 +1,12 @@
 .calendar {
     padding: 1.023rem;
 }
+.calendar {
+    padding: 1.023rem;
+}
+.calendar:selected {
+    color: $primary;
+}
 
 .sidebar-window {
     @include elevation2;
