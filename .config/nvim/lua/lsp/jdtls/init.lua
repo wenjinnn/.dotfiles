@@ -62,7 +62,7 @@ function M.setup()
   local bundles = {
     vim.fn.glob(mason_pkg_path .. '/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar')
   }
-  vim.list_extend(bundles, vim.split(vim.fn.glob(config_path .. '/vscode-java-decompiler/server/*.jar'), '\n'))
+  vim.list_extend(bundles, vim.split(vim.fn.glob(mason_pkg_path .. '/vscode-java-decompiler/server/*.jar'), '\n'))
   vim.list_extend(bundles, vim.split(vim.fn.glob(mason_pkg_path .. '/java-test/extension/server/*.jar'), '\n'))
   -- vim.list_extend(bundles, vim.split(vim.fn.glob(config_path .. '/vscode-java-dependency/server/*.jar'), '\n'))
 

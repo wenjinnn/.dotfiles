@@ -66,6 +66,9 @@ return {
       \ marksman
       \ vue-language-server
       \ jdtls
+      \ vscode-java-decompiler
+      \ java-debug-adapter
+      \ java-test
       \ google-java-format
       \ pyright
       \ bash-language-server
