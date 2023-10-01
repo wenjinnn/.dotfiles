@@ -24,7 +24,7 @@ return {
         if not ok then
           return ''
         end
-        return result
+        return result:gsub('%%', '%%%1')
       end
       require('lualine').setup({
         options = {
