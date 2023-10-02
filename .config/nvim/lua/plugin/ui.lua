@@ -223,9 +223,7 @@ return {
     'lukas-reineke/indent-blankline.nvim',
     cond = not vim.g.vscode,
     config = function()
-      require('ibl').setup({
-        show_current_context = true,
-      })
+      require('ibl').setup()
     end
   }
 }
