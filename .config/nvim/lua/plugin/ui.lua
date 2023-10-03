@@ -223,7 +223,16 @@ return {
     'lukas-reineke/indent-blankline.nvim',
     cond = not vim.g.vscode,
     config = function()
-      require('ibl').setup()
+      local highlight = {
+          "RainbowDelimiterRed",
+          "RainbowDelimiterYellow",
+          "RainbowDelimiterBlue",
+          "RainbowDelimiterOrange",
+          "RainbowDelimiterGreen",
+          "RainbowDelimiterViolet",
+          "RainbowDelimiterCyan",
+      }
+      require('ibl').setup { scope = { highlight = highlight, show_start = false, show_end = false } }
     end
   }
 }
