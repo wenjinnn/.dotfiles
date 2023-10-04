@@ -32,7 +32,6 @@ return {
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
       { 'JoosepAlviste/nvim-ts-context-commentstring' },
-      { 'HiPhish/rainbow-delimiters.nvim' },
       { 'windwp/nvim-ts-autotag' },
       { 'windwp/nvim-autopairs',                      opts = { check_ts = true } },
     },
