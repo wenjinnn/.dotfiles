@@ -221,21 +221,6 @@ return {
   },
   {
     'HiPhish/rainbow-delimiters.nvim',
-    cond = not vim.g.vscode,
-    config = function()
-      local highlight = {
-        'RainbowDelimiterRed',
-        'RainbowDelimiterYellow',
-        'RainbowDelimiterBlue',
-        'RainbowDelimiterOrange',
-        'RainbowDelimiterGreen',
-        'RainbowDelimiterViolet',
-        'RainbowDelimiterCyan',
-      }
-      require('ibl').setup { scope = { highlight = highlight, show_start = false, show_end = false } }
-    end,
-    dependencies = {
-      'lukas-reineke/indent-blankline.nvim',
-    }
+    cond = not vim.g.vscode
   },
 }
