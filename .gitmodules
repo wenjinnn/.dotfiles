@@ -4,3 +4,12 @@
 [submodule ".tmux"]
 	path = .tmux
 	url = https://github.com/gpakosz/.tmux.git
+[submodule ".config/nvim/lua/lsp/jdtls/vscode-java-decompiler"]
+	path = .config/nvim/lua/lsp/jdtls/vscode-java-decompiler
+	url = https://github.com/dgileadi/vscode-java-decompiler.git
+[submodule ".config/nvim/lua/lsp/jdtls/vscode-java-test"]
+	path = .config/nvim/lua/lsp/jdtls/vscode-java-test
+	url = https://github.com/microsoft/vscode-java-test.git
+[submodule ".config/nvim/lua/lsp/jdtls/java-debug"]
+	path = .config/nvim/lua/lsp/jdtls/java-debug
+	url = https://github.com/microsoft/java-debug.git
