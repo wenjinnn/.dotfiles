@@ -9,15 +9,20 @@ return {
     'nvim-orgmode/orgmode',
     cond = not vim.g.vscode,
     config = function()
-      require('orgmode').setup_ts_grammar()
-      require('orgmode').setup({
+      local config = {
         org_agenda_files = { '~/project/my/archive/org/*' },
-        org_default_notes_file = '~/project/my/archive/org/refile.org',
         win_border = 'none',
         notifications = {
           enabled = true,
         }
-      })
+      }
+      local default_notes_file = '~/project/my/archive/org/refile.org';
+      if vim.fn.filereadable(vim.fn.expand(default_notes_file)) then
+        config.org_default_notes_file = default_notes_file
+      end
+      print(default_notes_file)
+      require('orgmode').setup_ts_grammar()
+      require('orgmode').setup(config)
     end
   },
   -- markdown preview
