@@ -60,10 +60,10 @@ function M.setup()
   local config_path = vim.fn.stdpath('config') .. '/lua/lsp/jdtls'
 
   local bundles = {
-    vim.fn.glob(mason_pkg_path .. '/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar')
+    vim.fn.glob(config_path .. '/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar')
   }
-  vim.list_extend(bundles, vim.split(vim.fn.glob(mason_pkg_path .. '/vscode-java-decompiler/server/*.jar'), '\n'))
-  vim.list_extend(bundles, vim.split(vim.fn.glob(mason_pkg_path .. '/java-test/extension/server/*.jar'), '\n'))
+  vim.list_extend(bundles, vim.split(vim.fn.glob(config_path .. '/vscode-java-decompiler/server/*.jar'), '\n'))
+  vim.list_extend(bundles, vim.split(vim.fn.glob(config_path .. '/vscode-java-test/server/*.jar'), '\n'))
   -- vim.list_extend(bundles, vim.split(vim.fn.glob(config_path .. '/vscode-java-dependency/server/*.jar'), '\n'))
 
   local jdtls_java_home = os.getenv('JDTLS_JAVA_HOME')
