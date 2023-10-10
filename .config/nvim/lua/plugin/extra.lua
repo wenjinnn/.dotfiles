@@ -16,11 +16,11 @@ return {
           enabled = true,
         }
       }
-      local default_notes_file = '~/project/my/archive/org/refile.org';
-      if vim.fn.filereadable(vim.fn.expand(default_notes_file)) then
+      local default_notes_file = '~/project/my/archive/org/refile.org'
+      default_notes_file = vim.fn.expand(default_notes_file)
+      if vim.fn.filereadable(default_notes_file) == 1 then
         config.org_default_notes_file = default_notes_file
       end
-      print(default_notes_file)
       require('orgmode').setup_ts_grammar()
       require('orgmode').setup(config)
     end
