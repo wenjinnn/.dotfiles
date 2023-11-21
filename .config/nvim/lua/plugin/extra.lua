@@ -3,8 +3,6 @@ return {
   {
     'NTBBloodbath/rest.nvim',
     cond = not vim.g.vscode,
-    -- latest commit breaks formatting
-    commit = "8b62563",
     config = true
   },
   {

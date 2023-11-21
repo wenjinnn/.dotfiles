@@ -31,7 +31,12 @@ return {
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
-      { 'JoosepAlviste/nvim-ts-context-commentstring' },
+      { 'JoosepAlviste/nvim-ts-context-commentstring', config = function ()
+        vim.g.skip_ts_context_commentstring_module = true
+        require('ts_context_commentstring').setup {
+          enable_autocmd = false,
+        }
+      end },
       { 'windwp/nvim-ts-autotag' },
       { 'windwp/nvim-autopairs',                      opts = { check_ts = true } },
     },
@@ -81,10 +86,6 @@ return {
               goto_previous_usage = "<a-#>",
             },
           },
-        },
-        context_commentstring = {
-          enable = true,
-          enable_autocmd = false,
         },
         textobjects = {
           select = {
