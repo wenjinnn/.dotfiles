@@ -17,6 +17,7 @@ return {
         opts.highlight = {
           groups = {
             label = "lualine_a_normal",
+            backdrop = "LineNr",
           },
         }
       end
