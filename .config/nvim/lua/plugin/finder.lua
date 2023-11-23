@@ -40,6 +40,7 @@ return {
     end
     local layout = require('telescope.actions.layout')
     local toggle_preview = function() layout.toggle_preview(vim.fn.bufnr()) end
+    local fb_actions = require "telescope._extensions.file_browser.actions"
     require('telescope').setup({
       defaults = {
         file_ignore_patterns = fileIgnoreTable or nil,
@@ -61,13 +62,13 @@ return {
           i = {
             -- example
             -- ["<C-o>"] = trouble.open_with_trouble,
-            ['<C-o>'] = toggle_preview,
+            ['<M-v>'] = toggle_preview,
             ['<M-n>'] = require('telescope.actions').cycle_history_next,
             ['<M-p>'] = require('telescope.actions').cycle_history_prev,
             ['<C-s>'] = flash,
           },
           n = {
-            ['<C-o>'] = toggle_preview,
+            ['<M-v>'] = toggle_preview,
             ['<M-n>'] = require('telescope.actions').cycle_history_next,
             ['<M-p>'] = require('telescope.actions').cycle_history_prev,
             ['<s>'] = flash,
@@ -125,6 +126,19 @@ return {
           path = '%:p:h',
           prompt_path = true,
           hijack_netrw = true,
+          mappings = {
+            ['i'] = {
+              ["<A-o>"] = fb_actions.open,
+              ["<C-b>"] = fb_actions.backspace,
+              ["<C-o>"] = 'select_default',
+            },
+            ['n'] = {
+              -- your custom normal mode mappings
+              ["b"] = fb_actions.backspace,
+              ["o"] = 'select_default',
+              ["<A-o>"] = fb_actions.open,
+            },
+          },
         },
       }
     })
