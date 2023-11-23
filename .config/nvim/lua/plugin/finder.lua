@@ -116,6 +116,7 @@ return {
           },
         },
         file_browser = {
+          hide_parent_dir = true,
           respect_gitignore = false,
           select_buffer = true,
           grouped = true,
