@@ -33,7 +33,14 @@ return {
     'neovim/nvim-lspconfig',
     cond = not vim.g.vscode,
     dependencies = {
-      { 'williamboman/mason.nvim' },
+      { 'williamboman/mason.nvim', config = function ()
+        require("mason").setup({
+          registries = {
+            'github:nvim-java/mason-registry',
+            'github:mason-org/mason-registry',
+          },
+        })
+      end },
       { 'williamboman/mason-lspconfig.nvim' },
       { 'b0o/SchemaStore.nvim' },
     },
