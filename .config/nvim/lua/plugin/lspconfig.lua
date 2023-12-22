@@ -185,25 +185,17 @@ return {
     end
   },
   {
-    'mfussenegger/nvim-lint',
+    'nvimtools/none-ls.nvim',
     cond = not vim.g.vscode,
     config = function()
-      local lint = require('lint')
-      lint.linters_by_ft = {}
-      vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufReadPost', 'TextChanged', 'InsertLeave' }, {
-        desc = 'nvim-lint',
-        callback = function()
-          local linters = lint.linters_by_ft[vim.bo.filetype]
-          if not linters then
-            linters = {}
-            lint.linters_by_ft[vim.bo.filetype] = linters
-          end
-          if (not vim.bo.buftype or vim.bo.buftype == '') and not vim.tbl_contains(linters, 'cspell') then
-            table.insert(linters, 'cspell')
-          end
-          lint.try_lint()
-        end,
-      })
+      local null_ls = require("null-ls")
+
+      -- register any number of sources simultaneously
+      local sources = {
+        null_ls.builtins.formatting.google_java_format,
+        null_ls.builtins.diagnostics.cspell
+      }
+      null_ls.setup({ sources = sources })
     end
   },
   {
