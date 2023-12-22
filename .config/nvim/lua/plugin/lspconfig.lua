@@ -195,7 +195,7 @@ return {
         null_ls.builtins.formatting.google_java_format,
         null_ls.builtins.diagnostics.cspell.with({
           diagnostics_postprocess = function(diagnostic)
-            diagnostic.severity = vim.diagnostic.severity["WARN"]
+            diagnostic.severity = vim.diagnostic.severity["INFO"]
           end,
         }),
         null_ls.builtins.code_actions.cspell,
