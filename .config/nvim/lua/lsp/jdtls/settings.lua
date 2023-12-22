@@ -37,15 +37,16 @@ local M = {
       }
     },
     format = {
+      enabled = false,
       comments = {
         enabled = false
       },
       onType = {
-        enabled = true
+        enabled = false
       },
       settings = {
-        url = config_path .. '/lua/lsp/jdtls/eclipse-java-google-style.xml',
-        profile = "GoogleStyle",
+        -- url = config_path .. '/lua/lsp/jdtls/eclipse-java-google-style.xml',
+        profile = "google-java-format",
       }
     },
     maxConcurrentBuilds = 5,
