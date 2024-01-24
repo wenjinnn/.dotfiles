@@ -1,11 +1,7 @@
 return {
   -- buffer | statusline | icon | treeview | startup buffer
-  {
-    'goolord/alpha-nvim',
-    cond = not vim.g.vscode,
-    config = function()
-      require 'alpha'.setup(require 'alpha.themes.theta'
-        .config)
+  { 'echasnovski/mini.starter', config = function()
+      require('mini.starter').setup()
     end
   },
   { 'kyazdani42/nvim-web-devicons' },
@@ -121,6 +117,8 @@ return {
           'TelescopePrompt',
           'rnvimr',
           'toggleterm',
+          'minifiles',
+          'minifiles-help',
           'dap-repl',
           'dap-float',
           'Term',
@@ -223,4 +221,9 @@ return {
     'HiPhish/rainbow-delimiters.nvim',
     cond = not vim.g.vscode
   },
+  {
+    'echasnovski/mini.indentscope', config = function ()
+      require('mini.indentscope').setup()
+    end
+  }
 }

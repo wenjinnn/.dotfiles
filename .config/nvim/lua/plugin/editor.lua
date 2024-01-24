@@ -28,6 +28,15 @@ return {
     end
   },
   {
+    'echasnovski/mini.splitjoin', config = function ()
+      require('mini.splitjoin').setup({
+        mappings = {
+          toggle = 'gj',
+        },
+      })
+    end
+  },
+  {
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
