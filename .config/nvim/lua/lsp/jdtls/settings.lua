@@ -37,7 +37,7 @@ local M = {
       }
     },
     format = {
-      enabled = false,
+      enabled = true,
       comments = {
         enabled = false
       },
@@ -45,8 +45,8 @@ local M = {
         enabled = false
       },
       settings = {
-        -- url = config_path .. '/lua/lsp/jdtls/eclipse-java-google-style.xml',
-        profile = "google-java-format",
+        url = config_path .. '/lua/lsp/jdtls/eclipse-java-google-style-custom.xml',
+        profile = "GoogleStyle",
       }
     },
     maxConcurrentBuilds = 5,
