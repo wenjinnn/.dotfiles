@@ -11,7 +11,6 @@ return {
     config = function()
       local config = {
         org_agenda_files = { '~/project/my/archive/org/*' },
-        win_border = 'none',
         notifications = {
           enabled = true,
         }
@@ -73,13 +72,6 @@ return {
         default = {
           command = default_command
         },
-        preset = {
-          output = {
-            floating = {
-              border = 'none'
-            }
-          }
-        }
       })
     end
   },
@@ -110,26 +102,26 @@ return {
       }, { prefix = '<leader>' })
     end
   },
-  {
-    'rmagatti/auto-session',
-    cond = not vim.g.vscode,
-    config = function()
-      local function shutdown_term()
-        local terms = require('toggleterm.terminal')
-        local terminals = terms.get_all()
-        for _, terminal in pairs(terminals) do
-          terminal:shutdown()
-        end
+  { 'echasnovski/mini.bufremove', version = '*' , config = function()
+    require('mini.bufremove').setup()
+  end },
+  { 'echasnovski/mini.sessions', cond = not vim.g.vscode, version = '*', config = function ()
+    local function shutdown_term()
+      local terms = require('toggleterm.terminal')
+      local terminals = terms.get_all()
+      for _, terminal in pairs(terminals) do
+        terminal:shutdown()
       end
-      require('auto-session').setup({
-        bypass_session_save_file_types = { 'alpha', 'dashboard', 'lazy', 'mason' },
-        auto_session_suppress_dirs = { '~/', '/', '~/Desktop/', '~/Music/', '~/Public/', '~/Videos/', '~/Pictures/',
-          '~/project/', '~/Documents/', '~/Downloads/', '~/Templates/' },
-        auto_restore_enabled = true,
-        auto_save_enabled = true,
-        auto_session_use_git_branch = true,
-        pre_save_cmds = { shutdown_term }
-      })
     end
-  }
+    require('mini.sessions').setup({
+      directory = vim.fn.stdpath('state') .. '/sessions/',
+      file = 'session.vim',
+      hooks = {
+        -- Before successful action
+        pre = { read = nil, write = shutdown_term, delete = nil },
+        -- After successful action
+        post = { read = nil, write = nil, delete = nil },
+      },
+    })
+  end },
 }

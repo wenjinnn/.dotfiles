@@ -14,7 +14,7 @@ nnoremap <silent><leader>b <cmd>exe "LualineBuffersJump!" . v:count1<CR>
 nnoremap <silent><c-j> <cmd>exe "LualineBuffersJump!" . v:count1<CR>
 nnoremap <silent><leader>B <cmd>LualineBuffersJump $<CR>
 nnoremap <silent><leader>S <cmd>windo set scrollbind!<CR>
-nnoremap <silent><leader>x <cmd>BufferDelete<CR>
+nnoremap <silent><leader>x <cmd>lua MiniBufremove.delete()<CR>
 nnoremap <silent><leader>X <cmd>only<CR>
 " nnoremap <silent><leader>a <cmd>Alpha<CR>
 nnoremap <silent><leader><leader>b <c-^>
@@ -33,10 +33,11 @@ nnoremap <silent> <leader>h <cmd>noh<CR>
 " treesitter context
 " nnoremap <leader>cc <cmd>TSContextToggle<cr>
 
+nnoremap <leader>fe <cmd>:lua MiniFiles.open()<cr>
+
 " Find files using Telescope command-line sugar.
 nnoremap <leader>ff <cmd>Telescope find_files hidden=true<cr>
 nnoremap <leader>fo <cmd>Telescope oldfiles only_cwd=true<cr>
-nnoremap <leader>fe <cmd>Telescope file_browser hidden=true<cr>
 nnoremap <leader>fc <cmd>Telescope commands<cr>
 nnoremap <leader>fa <cmd>Telescope autocommands<cr>
 nnoremap <leader>fk <cmd>Telescope keymaps<cr>
@@ -74,7 +75,6 @@ nnoremap <leader>fwS <cmd>Telescope lsp_document_symbols<cr>
 nnoremap <leader>fwr <cmd>Telescope lsp_references show_line=false<cr>
 " telescope extensions
 nnoremap <leader>fp <cmd>Telescope projects<cr>
-nnoremap <leader>fsl <cmd>Telescope session-lens search_session<CR>
 
 " lsp
 nnoremap <leader>P <cmd>lua print(require('lsp-status').status())<CR>
@@ -189,17 +189,18 @@ nnoremap <silent> <leader>dl <cmd>lua require'dap'.set_breakpoint(nil, nil, vim.
 nnoremap <silent> <leader>dE <cmd>lua require'dap'.set_exception_breakpoints("default")<cr>
 nnoremap <silent> <leader>dR <cmd>lua require'dap'.repl.toggle()<CR>
 nnoremap <silent> <leader>dr <cmd>lua require'dap'.run_last()<CR>
-command DapScopesFloat :lua require'dap.ui.widgets'.cursor_float(require('dap.ui.widgets').scopes, {border = 'none'})<CR>
-command DapFramesFloat :lua require'dap.ui.widgets'.cursor_float(require('dap.ui.widgets').frames, {border = 'none'})<CR>
-command DapExpressionFloat :lua require'dap.ui.widgets'.cursor_float(require('dap.ui.widgets').expression, {border = 'none'})<CR>
-command DapThreadsFloat :lua require'dap.ui.widgets'.cursor_float(require('dap.ui.widgets').threads, {border = 'none'})<CR>
-command DapSessionFloat :lua require'dap.ui.widgets'.cursor_float(require('dap.ui.widgets').sessions, {border = 'none'})<CR>
+command DapScopesFloat :lua require'dap.ui.widgets'.cursor_float(require('dap.ui.widgets').scopes, {title = 'dap-scopes'})<CR>
+command DapFramesFloat :lua require'dap.ui.widgets'.cursor_float(require('dap.ui.widgets').frames, {title = 'dap-frames'})<CR>
+command DapExpressionFloat :lua require'dap.ui.widgets'.cursor_float(require('dap.ui.widgets').expression, {title = 'dap-expression'})<CR>
+command DapThreadsFloat :lua require'dap.ui.widgets'.cursor_float(require('dap.ui.widgets').threads, {title = 'dap-threads'})<CR>
+command DapSessionFloat :lua require'dap.ui.widgets'.cursor_float(require('dap.ui.widgets').sessions, {title = 'dap-session'})<CR>
+command DapHoverFloat :lua require'dap.ui.widgets'.hover('<cexpr>', {title = 'dap-hover'})<CR>
 nnoremap <silent> <leader>ds <cmd>DapScopesFloat<CR>
 nnoremap <silent> <leader>df <cmd>DapFramesFloat<CR>
 nnoremap <silent> <leader>de <cmd>DapExpressionFloat<CR>
 nnoremap <silent> <leader>dt <cmd>DapThreadsFloat<CR>
 nnoremap <silent> <leader>dS <cmd>DapSessionFloat<CR>
-nnoremap <silent> <leader>dh <cmd>lua require'dap.ui.widgets'.hover('<cexpr>', {border = 'none'})<CR>
+nnoremap <silent> <leader>dh <cmd>DapHoverFloat<CR>
 
 " rest nvim
 nnoremap <leader>re <plug>RestNvim
@@ -235,10 +236,10 @@ nnoremap <silent> <leader>u <cmd>Lazy update<CR>
 nnoremap <silent> <leader>l <cmd>Lazy<CR>
 nnoremap <silent> <leader>L <cmd>Mason<CR>
 
-" auto session
-nnoremap <silent> <leader>ss <cmd>SessionSave<CR>
-nnoremap <silent> <leader>sr <cmd>SessionRestore<CR>
-nnoremap <silent> <leader>sd <cmd>SessionDelete<CR>
+" session
+nnoremap <silent> <leader>sw <cmd>:lua MiniSessions.write((vim.fn.getcwd():gsub('/', '_')))<CR>
+nnoremap <silent> <leader>ss <cmd>:lua MiniSessions.select()<CR>
+nnoremap <silent> <leader>sd <cmd>:lua MiniSessions.delete((vim.fn.getcwd():gsub('/', '_')))<CR>
 
 " gitsigns
 " Navigation

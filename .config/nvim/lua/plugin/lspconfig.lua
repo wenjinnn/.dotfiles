@@ -33,19 +33,18 @@ return {
     'neovim/nvim-lspconfig',
     cond = not vim.g.vscode,
     dependencies = {
-      { 'williamboman/mason.nvim', config = function ()
-        require("mason").setup({
-          registries = {
-            'github:nvim-java/mason-registry',
-            'github:mason-org/mason-registry',
-          },
-        })
-      end },
+      { 'williamboman/mason.nvim' },
       { 'williamboman/mason-lspconfig.nvim' },
       { 'b0o/SchemaStore.nvim' },
     },
     config = function()
-      require('mason').setup()
+      require('mason').setup({
+        PATH = 'append',
+        registries = {
+          'github:nvim-java/mason-registry',
+          'github:mason-org/mason-registry',
+        },
+      })
       local installed_pkgs = require('mason-registry').get_installed_packages()
       local install_confirm = ''
       if #installed_pkgs == 0 then
@@ -71,7 +70,7 @@ return {
       \ luaformatter
       \ lua-language-server
       \ marksman
-      \ vue-language-server
+      \ vuels
       \ jdtls
       \ vscode-java-decompiler
       \ java-debug-adapter
@@ -166,21 +165,21 @@ return {
             root_dir = require('lspconfig.util').find_git_ancestor
           }
         end,
-        ['lemminx'] = function()
-          local lemminx_jars = {}
-          for _, bundle in ipairs(vim.split(vim.fn.glob('/home/hewenjin/.lemminx/' .. '/*.jar'), '\n')) do
-            table.insert(lemminx_jars, bundle)
-          end
-          require 'lspconfig'.lemminx.setup {
-            cmd = {
-              '/usr/lib/jvm/java-17-openjdk/bin/java',
-              -- 'lemminx',
-              '-cp',
-              vim.fn.join(lemminx_jars, ':'),
-              'org.eclipse.lemminx.XMLServerLauncher'
-            }
-          }
-        end
+        -- ['lemminx'] = function()
+        --   local lemminx_jars = {}
+        --   for _, bundle in ipairs(vim.split(vim.fn.glob('/home/hewenjin/.lemminx/' .. '/*.jar'), '\n')) do
+        --     table.insert(lemminx_jars, bundle)
+        --   end
+        --   require 'lspconfig'.lemminx.setup {
+        --     cmd = {
+        --       'java',
+        --       -- 'lemminx',
+        --       '-cp',
+        --       vim.fn.join(lemminx_jars, ':'),
+        --       'org.eclipse.lemminx.XMLServerLauncher'
+        --     }
+        --   }
+        -- end
       })
     end
   },

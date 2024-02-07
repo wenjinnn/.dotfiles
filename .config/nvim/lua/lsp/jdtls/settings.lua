@@ -2,6 +2,8 @@ local home = os.getenv('HOME')
 local jdtls_maven_settings = os.getenv('JDTLS_MAVEN_SETTINGS')
 local jdtls_java_home = os.getenv('JDTLS_JAVA_HOME')
 local java_home = os.getenv('JAVA_HOME')
+local java_8_home = os.getenv('JAVA_8_HOME')
+local java_21_home = os.getenv('JAVA_21_HOME')
 local config_path = vim.fn.stdpath('config')
 local data_path = vim.fn.stdpath('data')
 local M = {
@@ -131,7 +133,7 @@ local M = {
         ind = "    "
       }
     },
-    home = "/usr/lib/jvm/java-17-openjdk/",
+    home = java_21_home or "/usr/lib/jvm/java-17-openjdk/",
     configuration = {
       updateBuildConfiguration = 'automatic',
       maven = {
@@ -145,12 +147,12 @@ local M = {
         -- },
         {
           name = "JavaSE-1.8",
-          path = "/usr/lib/jvm/java-8-openjdk/",
+          path = java_8_home or "/usr/lib/jvm/java-8-openjdk/",
           default = true
         },
         {
-          name = "JavaSE-17",
-          path = "/usr/lib/jvm/java-17-openjdk/",
+          name = "JavaSE-21",
+          path = java_21_home or "/usr/lib/jvm/java-17-openjdk/",
         },
       }
     }

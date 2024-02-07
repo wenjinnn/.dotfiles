@@ -1,5 +1,5 @@
 return {
   -- base plugin
   { 'nvim-lua/plenary.nvim' },
-  { 'tpope/vim-repeat'}
+  { 'tpope/vim-repeat'},
 }

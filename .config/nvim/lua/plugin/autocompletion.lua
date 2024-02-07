@@ -55,11 +55,10 @@ return {
       },
       window = {
         documentation = {
-          -- border = {'┌', '─', '┐', '│', '┘', '─', '└', '│'},
           max_width = 70,
+          winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
         },
         completion = {
-          -- border = {'┌', '─', '┐', '│', '┘', '─', '└', '│'},
           -- winhighlight = 'Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:PmenuSel,Search:None',
         }
       },

@@ -13,7 +13,6 @@ glow.tar.gz
 *.so
 tags
 nvim/plugin/packer_compiled.lua
-.config/nvim/lazy-lock.json
 .config/eww/tmp
 .config/eww/images/svg/**
 .config/eww/eww_covers/**
