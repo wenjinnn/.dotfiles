@@ -63,9 +63,6 @@
       fi
       '';
     initExtra = let proxyAddr = "http://127.0.0.1:7890"; in ''
-      export GTK_IM_MODULE=fcitx
-      export XMODIFIERS=@im=fcitx
-      export QT_IM_MODULE=fcitx
       COMPLETION_WAITING_DOTS="true"
       bindkey '^ ' autosuggest-accept
       PROXY_ENV=(http_proxy ftp_proxy https_proxy all_proxy HTTP_PROXY HTTPS_PROXY FTP_PROXY ALL_PROXY)

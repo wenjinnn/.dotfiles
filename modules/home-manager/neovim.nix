@@ -6,7 +6,7 @@
   pkgs,
   ...
 }: let 
-  repoPath = "${config.home.homeDirectory}/project/my/nix/";
+  repoPath = "${config.home.homeDirectory}/project/my/config/";
   in {
 
   home.packages = with pkgs; [
@@ -21,6 +21,7 @@
     EDITOR = "nvim";
     JAVA_8_HOME = "${pkgs.jdk8}/lib/openjdk";
     JAVA_21_HOME = "${pkgs.jdk21}/lib/openjdk";
+    LAZY_NVIM_LOCK_PATH = "${repoPath}";
     GTK_THEME = "Adwaita-dark";
   };
   home.file = {
