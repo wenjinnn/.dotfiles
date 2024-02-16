@@ -64,6 +64,8 @@
   # This will additionally add your inputs to the system's legacy channels
   # Making legacy nix commands consistent as well, awesome!
   nix.nixPath = ["/etc/nix/path"];
+
+  environment.wordlist.enable = true;
   environment.etc =
     lib.mapAttrs'
     (name: value: {
