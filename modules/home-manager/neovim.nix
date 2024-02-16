@@ -12,6 +12,7 @@
     rustc
     cargo
     rust-analyzer
+    rustfmt
     maven
     lemminx
   ];
