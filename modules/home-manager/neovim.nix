@@ -9,7 +9,9 @@
   home.packages = with pkgs; [
     lua-language-server
     clang-tools
-    rustup
+    rustc
+    cargo
+    rust-analyzer
     maven
     lemminx
   ];
