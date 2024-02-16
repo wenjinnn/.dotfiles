@@ -1,8 +1,0 @@
-[Unit]
-Description=Auto load next img by swww timer
-
-[Timer]
-OnCalendar=hourly
-
-[Install]
-WantedBy=timers.target

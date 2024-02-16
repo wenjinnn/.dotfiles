@@ -1,8 +1,0 @@
-[Unit]
-Description=Auto download bing wallpaper timer
-
-[Timer]
-OnCalendar=daily
-
-[Install]
-WantedBy=timers.target

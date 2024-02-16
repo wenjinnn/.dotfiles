@@ -1,9 +1,0 @@
-[Unit]
-Description=Auto download bing wallpaper
-
-[Service]
-Type=oneshot
-ExecStart=python '$HOME/.local/eww/bing-get.py'
-
-[Install]
-WantedBy=default.target

@@ -1,9 +1,0 @@
-[Unit]
-Description=Auto load next img by swww
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/bash -c 'exec $HOME/.config/eww/scripts/nextwall'
-
-[Install]
-WantedBy=default.target
