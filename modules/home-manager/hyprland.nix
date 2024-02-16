@@ -32,7 +32,6 @@
     # gtklock-powerbar-module
     # gtklock-playerctl-module
     blueberry
-    xorg.xrdb
     cliphist
     glib
     wl-clipboard
@@ -176,14 +175,12 @@
             "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
             "kdeconnect-indicator"
             "udiskie &"
-            "echo \"Xft.dpi: 192\" | xrdb -merge"
             "swayidle -w timeout 300 'swaylock' timeout 360 'hyprctl dispatch dpms off' after-resume 'hyprctl dispatch dpms on' before-sleep 'swaylock && sleep 1 && hyprctl dispatch dpms off'"
             "libinput-gestures-setup start"
             "sleep 1 && dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
             # fix share pick https://wiki.hyprland.org/Useful-Utilities/Hyprland-desktop-portal/
             "dbus-update-activation-environment --systemd --all && systemctl --user import-environment QT_QPA_PLATFORMTHEME"
             "hyprctl dispatch exec [workspace special:monitor silent] foot btop"
-            # "hyprctl dispatch exec [workspace special:kdeconnect silent] kdeconnect-app"
             "hyprctl dispatch exec [workspace special:evolution silent] evolution"
             # "hyprctl dispatch exec [workspace special:windows silent] \"virt-manager --no-fork --show-domain-console win10 -c qemu:///system\""
           ];
@@ -219,6 +216,7 @@
           general = {
             layout = "dwindle";
             no_focus_fallback = true;
+            "col.active_border" = "rgba(51a4e7ff)";
           };
           dwindle = {
             preserve_split = true;
@@ -264,10 +262,7 @@
             enable_swallow = true;
             mouse_move_enables_dpms = true;
             key_press_enables_dpms = true;
-            disable_hyprland_logo = true;
-          };
-          xwayland = {
-            force_zero_scaling = true;
+            force_default_wallpaper = 0;
           };
           windowrule = [
             "float, ^(steam)$"
