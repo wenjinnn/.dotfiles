@@ -7,6 +7,8 @@ The old Arch config at [Arch branch](https://github.com/wenjinnn/config/tree/arc
 
 For a lone time I search for a solution to manage my OS config, The Arch branch is a way that I manage my home config, but that's not enough, NixOS provided capability to manage system wide config, or even more, with Flake I can manage configuration of multiple system.
 
+repo's structure base on [nix-starter-config#standard](https://github.com/Misterio77/nix-starter-configs/tree/main/standard)
+
 # Stuff here
 
 * Editor: a well [config nvim](https://github.com/wenjinnn/config/tree/nixos/xdg/config/nvim) that follows the [KISS principle](https://en.wikipedia.org/wiki/KISS_principle)
