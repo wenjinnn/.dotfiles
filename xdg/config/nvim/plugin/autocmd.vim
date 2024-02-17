@@ -7,7 +7,7 @@ function! FormatAndWrite() abort
         w
     endif
 endfunction
-au BufLeave * exec FormatAndWrite() 
+au BufLeave * call FormatAndWrite() 
 " auto vimdiff wrap
 au VimEnter * if &diff | execute 'windo set wrap' | endif
 " nvim-dap repl completion
