@@ -40,10 +40,10 @@ return {
     config = function()
       require('mason').setup({
         PATH = 'append',
-        registries = {
-          'github:nvim-java/mason-registry',
-          'github:mason-org/mason-registry',
-        },
+        -- registries = {
+        --   'github:nvim-java/mason-registry',
+        --   'github:mason-org/mason-registry',
+        -- },
       })
       local installed_pkgs = require('mason-registry').get_installed_packages()
       local install_confirm = ''
