@@ -4,7 +4,7 @@ return {
     'NTBBloodbath/rest.nvim',
     cond = not vim.g.vscode,
     config = function()
-      require("rest-nvim").setup()
+      require('rest-nvim').setup()
     end
   },
   {
@@ -29,12 +29,12 @@ return {
   -- markdown preview
   {
     'iamcco/markdown-preview.nvim',
-    build = function() vim.fn['mkdp#util#install']() end,
-    cond = not vim.g.vscode,
-    ft = 'markdown',
-    config = function()
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    build = 'cd app && npm install',
+    init = function()
       vim.g.mkdp_filetypes = { 'markdown' }
-    end
+    end,
+    ft = { 'markdown' },
   },
   -- neovim in browser
   {

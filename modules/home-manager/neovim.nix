@@ -15,6 +15,7 @@
     rustfmt
     maven
     lemminx
+    marksman
   ];
 
   home.sessionVariables = {
