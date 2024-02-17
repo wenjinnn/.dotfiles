@@ -5,7 +5,7 @@ The old Arch config at [Arch branch](https://github.com/wenjinnn/config/tree/arc
 
 # Why switch to NixOS?
 
-For a lone time I search for a solution to manage my OS config, The Arch branch is a way that I manage my home config, but that's not enough, NixOS provided capability to manage system wide config, or even more, with Flake I can manage configuration of multiple system.
+For a lone time I'm seeking for a solution to manage my OS config, The Arch branch is a way that I manage my home config, but that's not enough, NixOS provided capability to manage system wide config, or even more, with Flake I can manage configuration of multiple system.
 
 repo's structure base on [nix-starter-config#standard](https://github.com/Misterio77/nix-starter-configs/tree/main/standard)
 
@@ -20,8 +20,9 @@ repo's structure base on [nix-starter-config#standard](https://github.com/Mister
 The [ags config](https://github.com/wenjinnn/config/tree/nixos/xdg/config/ags) base on [Aylur/dotfiles](https://github.com/Aylur/dotfiles), with these different:
 
 * add hibernate button for powermenu, need to set swap to let it work.  
-* use [swaylock-effects](https://github.com/jirutka/swaylock-effects) instead of lockscreen.js (more security)  
+* use [swaylock-effects](https://github.com/jirutka/swaylock-effects) instead of lockscreen.js (more security, see this [issue](https://github.com/Aylur/dotfiles/issues/72))  
 * add a clipboard menu depends on [cliphist](https://github.com/sentriz/cliphist)
+* some bug fix for chinese font and [more](https://github.com/Aylur/dotfiles/issues/122)
 
 # Must have
 
