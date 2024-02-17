@@ -1,7 +1,13 @@
 " auto positioning to last edit position when open file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
-" auto save buffer
-au BufLeave * if &readonly==0 && filereadable(bufname('%')) | silent update | endif
+" auto format and save buffer, DiffFormat is a custom command from ../lua/plugin/editing.lua
+function! FormatAndWrite() abort
+    if getbufinfo('%')[0].changed
+        DiffFormat
+        w
+    endif
+endfunction
+au BufLeave * if &readonly==0 && filereadable(bufname('%')) | exec FormatAndWrite() | endif
 " auto vimdiff wrap
 au VimEnter * if &diff | execute 'windo set wrap' | endif
 " nvim-dap repl completion
