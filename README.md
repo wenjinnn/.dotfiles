@@ -25,7 +25,7 @@ The [ags config](https://github.com/wenjinnn/config/tree/nixos/xdg/config/ags) b
 
 # Must have
 
-Almost as same as Aylur/dotfiles from this [commit](https://github.com/Aylur/dotfiles/tree/a66f3422a53bf65343c0f8f936ae33200a145c93) with follows pkg:
+Almost as same as Aylur/dotfiles from this [commit](https://github.com/Aylur/dotfiles/tree/a66f3422a53bf65343c0f8f936ae33200a145c93) with these additional pkg:
 
 * cliphist  
 * jq
