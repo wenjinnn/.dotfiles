@@ -1,20 +1,27 @@
 return {
   {
+    'stevearc/conform.nvim',
+    cond = not vim.g.vscode,
+    config = function()
+      require('conform').setup()
+    end
+  },
+  {
     'kylechui/nvim-surround',
     config = function()
       require('nvim-surround').setup({
         keymaps = {
-          insert = "<C-g>s",
-          insert_line = "<C-g>S",
-          normal = "gs",
-          normal_cur = "gss",
-          normal_line = "gS",
-          normal_cur_line = "gSS",
-          visual = "gs",
-          visual_line = "gS",
-          delete = "gsd",
-          change = "gsc",
-          change_line = "gsC",
+          insert = '<C-g>s',
+          insert_line = '<C-g>S',
+          normal = 'gs',
+          normal_cur = 'gss',
+          normal_line = 'gS',
+          normal_cur_line = 'gSS',
+          visual = 'gs',
+          visual_line = 'gS',
+          delete = 'gsd',
+          change = 'gsc',
+          change_line = 'gsC',
         },
       })
     end
@@ -28,7 +35,8 @@ return {
     end
   },
   {
-    'echasnovski/mini.splitjoin', config = function ()
+    'echasnovski/mini.splitjoin',
+    config = function()
       require('mini.splitjoin').setup({
         mappings = {
           toggle = 'gsj',
@@ -40,12 +48,15 @@ return {
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
-      { 'JoosepAlviste/nvim-ts-context-commentstring', config = function ()
-        vim.g.skip_ts_context_commentstring_module = true
-        require('ts_context_commentstring').setup {
-          enable_autocmd = false,
-        }
-      end },
+      {
+        'JoosepAlviste/nvim-ts-context-commentstring',
+        config = function()
+          vim.g.skip_ts_context_commentstring_module = true
+          require('ts_context_commentstring').setup {
+            enable_autocmd = false,
+          }
+        end
+      },
       { 'windwp/nvim-ts-autotag' },
       { 'windwp/nvim-autopairs',                      opts = { check_ts = true } },
     },
@@ -82,17 +93,17 @@ return {
           smart_rename = {
             enable = true,
             keymaps = {
-              smart_rename = "gR",
+              smart_rename = 'gR',
             },
           },
           navigation = {
             enable = true,
             keymaps = {
-              goto_definition = "gnd",
-              list_definitions = "gnD",
-              list_definitions_toc = "gO",
-              goto_next_usage = "<a-*>",
-              goto_previous_usage = "<a-#>",
+              goto_definition = 'gnd',
+              list_definitions = 'gnD',
+              list_definitions_toc = 'gO',
+              goto_next_usage = '<a-*>',
+              goto_previous_usage = '<a-#>',
             },
           },
         },
@@ -103,10 +114,10 @@ return {
             lookahead = true,
             keymaps = {
               -- You can use the capture groups defined in textobjects.scm
-              ["af"] = "@function.outer",
-              ["if"] = "@function.inner",
-              ["ac"] = "@class.outer",
-              ["ic"] = "@class.inner",
+              ['af'] = '@function.outer',
+              ['if'] = '@function.inner',
+              ['ac'] = '@class.outer',
+              ['ic'] = '@class.inner',
             },
             -- You can choose the select mode (default is charwise 'v')
             selection_modes = {
@@ -122,6 +133,6 @@ return {
           },
         },
       })
-    end
-  }
+    end,
+  },
 }

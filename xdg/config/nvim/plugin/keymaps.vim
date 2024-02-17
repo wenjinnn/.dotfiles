@@ -102,8 +102,9 @@ nnoremap <leader>q <cmd>lua vim.diagnostic.setloclist()<CR>
 nnoremap <leader>n <cmd>lua vim.diagnostic.hide(nil, 0)<CR>
 nnoremap <leader>N <cmd>lua vim.diagnostic.show(nil, 0)<CR>
 
-nnoremap <leader>mm <cmd>lua vim.lsp.buf.format({async = true})<CR>
-vnoremap <leader>mm <cmd>lua vim.lsp.buf.format({async = true})<CR>
+command Format :lua require'conform'.format({async = true, lsp_fallback = true})<CR>
+nnoremap <leader>mm <cmd>Format<CR>
+vnoremap <leader>mm <cmd>Format<CR>
 
 nnoremap <leader>cC <cmd>JdtCompile full<CR>
 nnoremap <leader>cc <cmd>JdtCompile incremental<CR>
