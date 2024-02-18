@@ -17,8 +17,6 @@
     systemd-boot
     waydroid
     fonts
-    xserver
-    gnome
     hyprland
     bluetooth
     sing-box
