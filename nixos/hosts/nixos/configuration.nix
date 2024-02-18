@@ -16,6 +16,12 @@
     virt
     systemd-boot
     waydroid
+    fonts
+    xserver
+    gnome
+    hyprland
+    bluetooth
+    sing-box
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
@@ -27,6 +33,13 @@
     # Import your generated (nixos-generate-config) hardware configuration
     #./hardware-configuration.nix
   ];
+
+  programs.kdeconnect.enable = true;
+
+  services.tlp.settings = {
+    INTEL_GPU_MIN_FREQ_ON_AC = 300;
+    INTEL_GPU_MIN_FREQ_ON_BAT = 300;
+  };
 
   networking.hostName = "nixos";
 

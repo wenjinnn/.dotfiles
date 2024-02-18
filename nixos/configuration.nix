@@ -13,13 +13,7 @@
   imports = with outputs.nixosModules; [
     # If you want to use modules your own flake exports (from modules/nixos):
     # outputs.nixosModules.interception-tools
-    fonts
-    xserver
-    gnome
-    hyprland
     podman
-    sing-box
-    bluetooth
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
@@ -75,10 +69,6 @@
     config.nix.registry
       ;
 
-  services.tlp.settings = {
-    INTEL_GPU_MIN_FREQ_ON_AC = 300;
-    INTEL_GPU_MIN_FREQ_ON_BAT = 300;
-  };
 
   nix.package = pkgs.nixFlakes;
   nix.settings = {
@@ -178,7 +168,6 @@
     enable = true;
     enableSSHSupport = true;
   };
-  programs.kdeconnect.enable = true;
   programs.zsh.enable = true;
 
   systemd.sleep.extraConfig = ''
