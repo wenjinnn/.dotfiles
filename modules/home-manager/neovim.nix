@@ -16,7 +16,6 @@
     maven
     lemminx
     marksman
-    python3
   ];
 
   home.sessionVariables = {
