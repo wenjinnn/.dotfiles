@@ -10,7 +10,7 @@ return {
           timeout_ms = 500,
           range = {
             start = { vim.fn.line("'["), 0},
-            ['end'] = { vim.fn.line("']"), vim.fn.col("']") }
+            ['end'] = { vim.fn.line("']"), vim.fn.col('$') }
           },
         }
       end
