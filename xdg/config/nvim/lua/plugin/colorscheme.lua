@@ -12,8 +12,8 @@ return {
           -- use colors from this colorscheme by requiring vscode.colors!
           TelescopePromptNormal = { link = 'Pmenu' },
           TelescopeResultsNormal = { link = 'Pmenu' },
-          TelescopePreviewNormal = {  fg=c.vscFront, bg=c.vscBack },
-          TelescopePreviewBorder = {  fg=c.vscFront, bg=c.vscBack },
+          TelescopePreviewNormal = { fg = c.vscFront, bg = c.vscBack },
+          TelescopePreviewBorder = { fg = c.vscFront, bg = c.vscBack },
           TelescopeResultsBorder = { link = 'Pmenu' },
           TelescopePromptBorder = { link = 'Pmenu' },
           TelescopePromptTitle = { link = 'lualine_a_insert' },

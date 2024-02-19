@@ -10,10 +10,6 @@ return {
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
       { 'nvim-telescope/telescope-live-grep-args.nvim' },
-      {
-        'nvim-telescope/telescope-file-browser.nvim',
-        branch = 'feat/tree'
-      },
     },
     config = function()
       local function flash(prompt_bufnr)
@@ -44,7 +40,6 @@ return {
       end
       local layout = require('telescope.actions.layout')
       local toggle_preview = function() layout.toggle_preview(vim.fn.bufnr()) end
-      local fb_actions = require 'telescope._extensions.file_browser.actions'
       require('telescope').setup({
         defaults = {
           file_ignore_patterns = fileIgnoreTable or nil,
@@ -145,31 +140,6 @@ return {
               preview_height = 0.5,
             },
           },
-          file_browser = {
-            hide_parent_dir = true,
-            respect_gitignore = false,
-            select_buffer = true,
-            grouped = true,
-            auto_depth = true,
-            initial_browser = 'tree',
-            follow = true,
-            path = '%:p:h',
-            prompt_path = true,
-            hijack_netrw = true,
-            mappings = {
-              ['i'] = {
-                ['<A-o>'] = fb_actions.open,
-                ['<C-b>'] = fb_actions.backspace,
-                ['<C-o>'] = 'select_default',
-              },
-              ['n'] = {
-                -- your custom normal mode mappings
-                ['b'] = fb_actions.backspace,
-                ['o'] = 'select_default',
-                ['<A-o>'] = fb_actions.open,
-              },
-            },
-          },
         }
       })
 
@@ -187,7 +157,6 @@ return {
       require('telescope').load_extension('undo')
       require('telescope').load_extension('ui-select')
       require('telescope').load_extension('live_grep_args')
-      require('telescope').load_extension('file_browser')
     end
   },
   { 'echasnovski/mini.files',

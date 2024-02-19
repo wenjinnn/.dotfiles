@@ -1,7 +1,16 @@
 return {
-  { 'nvim-lua/lsp-status.nvim', cond = not vim.g.vscode, },
-  { 'onsails/lspkind.nvim',     cond = not vim.g.vscode, }, -- enhancement for jdtls
-  { 'mfussenegger/nvim-jdtls',  cond = not vim.g.vscode, },
+  {
+    'nvim-lua/lsp-status.nvim',
+    cond = not vim.g.vscode,
+  },
+  {
+    'onsails/lspkind.nvim',
+    cond = not vim.g.vscode,
+  }, -- enhancement for jdtls
+  {
+    'mfussenegger/nvim-jdtls',
+    cond = not vim.g.vscode,
+  },
   {
     url = 'https://gitlab.com/schrieveslaach/sonarlint.nvim',
     cond = not vim.g.vscode,
@@ -55,43 +64,43 @@ return {
 
       if install_confirm == 'y' then
         vim.cmd([[
-      MasonInstall
-      \ typescript-language-server
-      \ dot-language-server
-      \ cspell
-      \ vim-language-server
-      \ emmet-ls
-      \ html-lsp
-      \ prettier
-      \ sqlls
-      \ python-lsp-server
-      \ yaml-language-server
-      \ lemminx
-      \ luaformatter
-      \ lua-language-server
-      \ marksman
-      \ vuels
-      \ jdtls
-      \ vscode-java-decompiler
-      \ java-debug-adapter
-      \ java-test
-      \ google-java-format
-      \ pyright
-      \ bash-language-server
-      \ eslint-lsp
-      \ rust-analyzer
-      \ clang-format
-      \ taplo
-      \ clangd
-      \ codelldb
-      \ cpplint
-      \ cpptools
-      \ gradle-language-server
-      \ glow
-      \ sonarlint-language-server
-      \ jq
-      \ jsonls
-    ]])
+          MasonInstall
+          \ typescript-language-server
+          \ dot-language-server
+          \ cspell
+          \ vim-language-server
+          \ emmet-ls
+          \ html-lsp
+          \ prettier
+          \ sqlls
+          \ python-lsp-server
+          \ yaml-language-server
+          \ lemminx
+          \ luaformatter
+          \ lua-language-server
+          \ marksman
+          \ vuels
+          \ jdtls
+          \ vscode-java-decompiler
+          \ java-debug-adapter
+          \ java-test
+          \ google-java-format
+          \ pyright
+          \ bash-language-server
+          \ eslint-lsp
+          \ rust-analyzer
+          \ clang-format
+          \ taplo
+          \ clangd
+          \ codelldb
+          \ cpplint
+          \ cpptools
+          \ gradle-language-server
+          \ glow
+          \ sonarlint-language-server
+          \ jq
+          \ jsonls
+        ]])
       end
       local lsp_status = require('lsp-status')
       lsp_status.register_progress();
@@ -187,14 +196,13 @@ return {
     'nvimtools/none-ls.nvim',
     cond = not vim.g.vscode,
     config = function()
-      local null_ls = require("null-ls")
-
+      local null_ls = require('null-ls')
       -- register any number of sources simultaneously
       local sources = {
         -- null_ls.builtins.formatting.google_java_format,
         null_ls.builtins.diagnostics.cspell.with({
           diagnostics_postprocess = function(diagnostic)
-            diagnostic.severity = vim.diagnostic.severity["INFO"]
+            diagnostic.severity = vim.diagnostic.severity['INFO']
           end,
         }),
         null_ls.builtins.code_actions.cspell,

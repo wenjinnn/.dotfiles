@@ -1,24 +1,24 @@
 -- lsp auto completion & snip
 local item_source = {
-  buffer = "buf",
-  nvim_lsp = "lsp",
-  vsnip = "snip",
-  nvim_lsp_signature_help = "sign",
-  path = "path",
-  cmp_tabnine = "tabnine",
-  look = "look",
-  treesitter = "treesitter",
-  nvim_lua = "lua",
-  latex_symbols = "latex",
-  git = "git",
-  ['vim-dadbod-completion'] = "dadbod",
+  buffer = 'buf',
+  nvim_lsp = 'lsp',
+  vsnip = 'snip',
+  nvim_lsp_signature_help = 'sign',
+  path = 'path',
+  cmp_tabnine = 'tabnine',
+  look = 'look',
+  treesitter = 'treesitter',
+  nvim_lua = 'lua',
+  latex_symbols = 'latex',
+  git = 'git',
+  ['vim-dadbod-completion'] = 'dadbod',
 }
 local item_maxwidth = 50
 
 return {
   'hrsh7th/nvim-cmp',
   cond = not vim.g.vscode,
-  event = "InsertEnter",
+  event = 'InsertEnter',
   dependencies = {
     { 'rafamadriz/friendly-snippets' },
     { 'hrsh7th/vim-vsnip' },
@@ -43,7 +43,7 @@ return {
     end
     local has_words_before = function()
       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-      return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+      return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
     end
 
     cmp.setup({
@@ -51,7 +51,7 @@ return {
         completeopt = 'menu,menuone,noinsert,preview'
       },
       view = {
-        entries = "custom" -- can be "custom", "wildmenu" or "native"
+        entries = 'custom' -- can be "custom", "wildmenu" or "native"
       },
       window = {
         documentation = {
@@ -67,7 +67,7 @@ return {
       },
       snippet = {
         expand = function(args)
-          vim.fn["vsnip#anonymous"](args.body)
+          vim.fn['vsnip#anonymous'](args.body)
         end,
       },
       mapping = cmp.mapping.preset.insert({
@@ -88,24 +88,24 @@ return {
           },
           c = cmp.mapping.confirm { select = true },
         },
-        ["<Tab>"] = cmp.mapping(function(fallback)
+        ['<Tab>'] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
-          elseif vim.fn["vsnip#available"](1) == 1 then
-            feedkey("<Plug>(vsnip-expand-or-jump)", "")
+          elseif vim.fn['vsnip#available'](1) == 1 then
+            feedkey('<Plug>(vsnip-expand-or-jump)', '')
           elseif has_words_before() then
             cmp.complete()
           else
             fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
           end
-        end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function()
+        end, { 'i', 's' }),
+        ['<S-Tab>'] = cmp.mapping(function()
           if cmp.visible() then
             cmp.select_prev_item()
-          elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-            feedkey("<Plug>(vsnip-jump-prev)", "")
+          elseif vim.fn['vsnip#jumpable'](-1) == 1 then
+            feedkey('<Plug>(vsnip-jump-prev)', '')
           end
-        end, { "i", "s" }),
+        end, { 'i', 's' }),
       }),
       sources = {
         {
@@ -142,10 +142,10 @@ return {
       },
       formatting = {
         deprecated = true,
-        fields = {'kind', 'abbr', 'menu'},
+        fields = { 'kind', 'abbr', 'menu' },
         format = lspkind.cmp_format({
           mode = 'symbol', -- show only symbol annotations
-          maxwidth = item_maxwidth,        -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+          maxwidth = item_maxwidth, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
           ellipsis_char = '…', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
 
           -- The function below will be called before any actual modifications from lspkind
@@ -202,14 +202,14 @@ return {
         ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
         ['<C-e>'] = cmp.mapping.close(),
         ['<CR>'] = cmp.mapping.confirm(),
-        ["<Tab>"] = cmp.mapping(function()
+        ['<Tab>'] = cmp.mapping(function()
           if cmp.visible() then
             cmp.select_next_item()
           else
             cmp.complete()
           end
-        end, { "i", "c" }),
-        ["<S-Tab>"] = cmp.mapping(function()
+        end, { 'i', 'c' }),
+        ['<S-Tab>'] = cmp.mapping(function()
           if cmp.visible() then
             cmp.select_prev_item()
           else
@@ -234,20 +234,20 @@ return {
         ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
         ['<C-e>'] = cmp.mapping.close(),
         ['<CR>'] = cmp.mapping.confirm(),
-        ["<Tab>"] = cmp.mapping(function()
+        ['<Tab>'] = cmp.mapping(function()
           if cmp.visible() then
             cmp.select_next_item()
           else
             cmp.complete()
           end
-        end, { "i", "c" }),
-        ["<S-Tab>"] = cmp.mapping(function()
+        end, { 'i', 'c' }),
+        ['<S-Tab>'] = cmp.mapping(function()
           if cmp.visible() then
             cmp.select_prev_item()
           else
             cmp.complete()
           end
-        end, { "i", "c" }),
+        end, { 'i', 'c' }),
       }),
       sources = cmp.config.sources({
         { name = 'buffer' }

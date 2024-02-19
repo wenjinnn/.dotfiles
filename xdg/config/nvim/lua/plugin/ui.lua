@@ -1,6 +1,9 @@
 return {
   -- buffer | statusline | icon | treeview | startup buffer
-  { 'echasnovski/mini.starter', cond = not vim.g.vscode, config = function()
+  {
+    'echasnovski/mini.starter',
+    cond = not vim.g.vscode,
+    config = function()
       local starter = require('mini.starter')
       starter.setup({
         items = {
@@ -171,7 +174,7 @@ return {
         -- size can be a number or function which is passed the current terminal
         size = get_height,
         open_mapping = [[<c-\><c-\>]],
-        hide_numbers = true,      -- hide the number column in toggleterm buffers
+        hide_numbers = true, -- hide the number column in toggleterm buffers
         shade_terminals = true,
         -- shading_factor = 1,       -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
         start_in_insert = true,
@@ -230,7 +233,9 @@ return {
     cond = not vim.g.vscode
   },
   {
-    'echasnovski/mini.indentscope', cond = not vim.g.vscode, config = function ()
+    'echasnovski/mini.indentscope',
+    cond = not vim.g.vscode,
+    config = function()
       require('mini.indentscope').setup({
         draw = {
           animation = require('mini.indentscope').gen_animation.none()
