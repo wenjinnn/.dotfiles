@@ -2,6 +2,7 @@ return {
   -- motion
   {
     'folke/flash.nvim',
+    event = 'VeryLazy',
     opts = function()
       local opts = {
         label = {
@@ -23,7 +24,6 @@ return {
       end
       return opts
     end,
-    event = 'VeryLazy',
     keys = {
       {
         's',

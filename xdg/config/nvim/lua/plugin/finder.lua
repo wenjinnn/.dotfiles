@@ -2,6 +2,7 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     cond = not vim.g.vscode,
+    event = "VeryLazy",
     dependencies = {
       { 'debugloop/telescope-undo.nvim' },
       {
@@ -161,6 +162,7 @@ return {
   },
   { 'echasnovski/mini.files',
     cond = not vim.g.vscode,
+    event = "VeryLazy",
     opts = {
       windows = {
         preview = true,

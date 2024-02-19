@@ -3,14 +3,17 @@ return {
   {
     'NTBBloodbath/rest.nvim',
     cond = not vim.g.vscode,
-    config = function()
-      require('rest-nvim').setup()
-    end
+    main = 'rest-nvim',
+    config = true
   },
   {
     'nvim-orgmode/orgmode',
     cond = not vim.g.vscode,
-    config = function()
+    event = 'VeryLazy',
+    init = function()
+      require('orgmode').setup_ts_grammar()
+    end,
+    opts = function()
       local config = {
         org_agenda_files = { '~/project/my/archive/org/*' },
         notifications = {
@@ -22,8 +25,7 @@ return {
       if vim.fn.filereadable(default_notes_file) == 1 then
         config.org_default_notes_file = default_notes_file
       end
-      require('orgmode').setup_ts_grammar()
-      require('orgmode').setup(config)
+      return config
     end
   },
   -- markdown preview
@@ -45,16 +47,19 @@ return {
   -- db manage
   {
     'tpope/vim-dadbod',
-    cond = not vim.g.vscode
+    cond = not vim.g.vscode,
+    event = 'VeryLazy'
   },
   {
     'kristijanhusak/vim-dadbod-ui',
-    cond = not vim.g.vscode
+    cond = not vim.g.vscode,
+    event = 'VeryLazy'
   },
   -- powerful replace tool
   {
     'windwp/nvim-spectre',
-    cond = not vim.g.vscode
+    cond = not vim.g.vscode,
+    event = 'VeryLazy'
   },
   -- remote develop
   -- {
@@ -81,6 +86,7 @@ return {
   {
     'folke/which-key.nvim',
     cond = not vim.g.vscode,
+    event = 'VeryLazy',
     config = function()
       require('which-key').setup()
       local wk = require('which-key')
@@ -108,15 +114,15 @@ return {
   {
     'echasnovski/mini.bufremove',
     version = '*',
-    config = function()
-      require('mini.bufremove').setup()
-    end
+    event = 'VeryLazy',
+    config = true,
   },
   {
     'echasnovski/mini.sessions',
     cond = not vim.g.vscode,
+    lazy = true,
     version = '*',
-    config = function()
+    opts = function()
       local function shutdown_term()
         local terms = require('toggleterm.terminal')
         local terminals = terms.get_all()
@@ -124,7 +130,7 @@ return {
           terminal:shutdown()
         end
       end
-      require('mini.sessions').setup({
+      return {
         directory = vim.fn.stdpath('state') .. '/sessions/',
         file = 'session.vim',
         hooks = {
@@ -133,7 +139,7 @@ return {
           -- After successful action
           post = { read = nil, write = nil, delete = nil },
         },
-      })
+      }
     end
   },
 }

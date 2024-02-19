@@ -2,6 +2,7 @@
 return {
   {
     'lewis6991/gitsigns.nvim',
+    event = "BufRead",
     cond = not vim.g.vscode,
     config = function()
       require('gitsigns').setup({

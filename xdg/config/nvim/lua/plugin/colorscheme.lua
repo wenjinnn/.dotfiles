@@ -3,9 +3,9 @@ return {
     'Mofiqul/vscode.nvim',
     cond = not vim.g.vscode,
     priority = 1000,
-    config = function()
+    opts = function()
       local c = require('vscode.colors').get_colors()
-      require('vscode').setup({
+      return {
         transparent = true,
         group_overrides = {
           -- this supports the same val table as vim.api.nvim_set_hl
@@ -23,8 +23,13 @@ return {
           ['@lsp.type.interface'] = { link = '@interface' },
           CmpItemMenu = { link = 'Comment' },
         }
-      })
+      }
     end
   },
-  { 'NvChad/nvim-colorizer.lua', cond = not vim.g.vscode, config = true },
+  {
+    'NvChad/nvim-colorizer.lua',
+    event = 'BufRead',
+    cond = not vim.g.vscode,
+    config = true
+  },
 }
