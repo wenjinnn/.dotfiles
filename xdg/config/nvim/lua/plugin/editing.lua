@@ -5,12 +5,18 @@ return {
     config = function()
       require('conform').setup()
       local diff_format = function()
+        local last_line = vim.fn.line('$')
+        local start_line = vim.fn.line("'[");
+        local end_line = vim.fn.line("']")
+        if start_line == 1 and endline == last_line then
+          return
+        end
         require('conform').format {
           lsp_fallback = true,
           timeout_ms = 500,
           range = {
-            start = { vim.fn.line("'["), 0},
-            ['end'] = { vim.fn.line("']"), vim.fn.col('$') }
+            start = { start_line, 0},
+            ['end'] = { end_line, vim.fn.col('$') }
           },
         }
       end
