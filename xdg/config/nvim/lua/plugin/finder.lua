@@ -190,12 +190,13 @@ return {
       require('telescope').load_extension('file_browser')
     end
   },
-  { 'echasnovski/mini.files', cond = not vim.g.vscode, config = function ()
-    require('mini.files').setup({
+  { 'echasnovski/mini.files',
+    cond = not vim.g.vscode,
+    opts = {
       windows = {
         preview = true,
         width_preview = 40,
       }
-    })
-  end }
+    }
+  }
 }

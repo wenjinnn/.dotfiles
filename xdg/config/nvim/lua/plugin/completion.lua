@@ -18,6 +18,7 @@ local item_maxwidth = 50
 return {
   'hrsh7th/nvim-cmp',
   cond = not vim.g.vscode,
+  event = "InsertEnter",
   dependencies = {
     { 'rafamadriz/friendly-snippets' },
     { 'hrsh7th/vim-vsnip' },
@@ -30,7 +31,6 @@ return {
     { 'hrsh7th/cmp-nvim-lsp-signature-help' },
     { 'octaltree/cmp-look' },
     { 'petertriho/cmp-git' },
-    -- {'tzachar/cmp-tabnine', run='./install.sh'},
     { 'kristijanhusak/vim-dadbod-completion' },
   },
   config = function()

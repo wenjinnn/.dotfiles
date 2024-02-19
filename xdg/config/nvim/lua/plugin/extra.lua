@@ -64,6 +64,7 @@ return {
   -- },
   {
     'uga-rosa/translate.nvim',
+    cmd = "Translate",
     cond = not vim.g.vscode,
     config = function()
       local default_command = 'google'
