@@ -81,6 +81,29 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   end,
 })
 
+-- close some filetypes with <q>
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup("close_with_q"),
+  pattern = {
+    "PlenaryTestPopup",
+    "help",
+    "lspinfo",
+    "dap-float",
+    "man",
+    "notify",
+    "qf",
+    "query",
+    "spectre_panel",
+    "startuptime",
+    "tsplayground",
+    "checkhealth",
+  },
+  callback = function(event)
+    vim.bo[event.buf].buflisted = false
+    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+  end,
+})
+
 -- wrap vim diff buffer
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
   group = augroup("vim_enter"),

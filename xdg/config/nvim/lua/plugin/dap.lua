@@ -24,13 +24,5 @@ return {
         require('dap.ext.autocompl').attach()
       end,
     })
-
-    -- dap repl completion
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = "dap-float",
-      callback = function(args)
-        util.safe_keymap_set("n", "q", "quit", { buffer = true, silent = true })
-      end,
-    })
   end
 }
