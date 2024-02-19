@@ -20,7 +20,8 @@
     {
       devShells = forEachSupportedSystem ({ pkgs }: {
         default = pkgs.mkShell {
-          packages = with pkgs; [ python2 virtualenv ];
+          packages = with pkgs; [ python2 virtualenv ] ++ 
+            (with pkgs.python2Packages; [ pip setuptools ]);
           shellHook = ''
             exec zsh
           '';
