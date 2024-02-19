@@ -4,16 +4,15 @@ return {
     'NTBBloodbath/rest.nvim',
     cond = not vim.g.vscode,
     main = 'rest-nvim',
-    config = true
+    config = true,
+    ft = { 'http' },
   },
   {
     'nvim-orgmode/orgmode',
     cond = not vim.g.vscode,
     event = 'VeryLazy',
-    init = function()
-      require('orgmode').setup_ts_grammar()
-    end,
     opts = function()
+      require('orgmode').setup_ts_grammar()
       local config = {
         org_agenda_files = { '~/project/my/archive/org/*' },
         notifications = {
@@ -48,12 +47,12 @@ return {
   {
     'tpope/vim-dadbod',
     cond = not vim.g.vscode,
-    event = 'VeryLazy'
+    cmd = 'DBUIToggle'
   },
   {
     'kristijanhusak/vim-dadbod-ui',
     cond = not vim.g.vscode,
-    event = 'VeryLazy'
+    cmd = 'DBUIToggle'
   },
   -- powerful replace tool
   {
@@ -121,6 +120,8 @@ return {
     'echasnovski/mini.sessions',
     cond = not vim.g.vscode,
     lazy = true,
+    priority = 100,
+    event = 'VimEnter',
     version = '*',
     opts = function()
       local function shutdown_term()

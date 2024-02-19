@@ -18,6 +18,7 @@ local item_maxwidth = 50
 return {
   'hrsh7th/nvim-cmp',
   cond = not vim.g.vscode,
+  module = false,
   event = 'InsertEnter',
   dependencies = {
     { 'rafamadriz/friendly-snippets' },
