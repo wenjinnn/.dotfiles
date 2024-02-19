@@ -42,9 +42,23 @@ return {
         diff_format,
         { desc = 'Format changed lines' }
       )
+
       vim.api.nvim_create_autocmd('BufWritePre', {
         pattern = '*',
         callback = diff_format,
+        desc = 'Auto Format changed lines'
+      })
+
+      vim.api.nvim_create_autocmd('BufLeave', {
+        pattern = '*',
+        callback = function()
+          local buffer_readable = vim.fn.filereadable(vim.fn.bufname('%')) > 0
+          local buffer_changed = vim.api.nvim_buf_get_changedtick(0) > 0
+          if not vim.bo.readonly and buffer_readable and buffer_changed then
+            diff_format()
+            vim.cmd('update')
+          end
+        end,
         desc = 'Auto Format changed lines'
       })
     end
