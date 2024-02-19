@@ -28,6 +28,11 @@ nnoremap <leader>0 "0p
 vmap <leader>p "+p
 vmap <leader>0 "0p
 
+" Add undo break-points
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ; ;<c-g>u
+
 nnoremap <silent> <leader>h <cmd>noh<CR>
 
 " treesitter context
@@ -90,9 +95,16 @@ nnoremap <leader>ca <cmd>lua vim.lsp.buf.code_action()<CR>
 vnoremap <leader>ca <cmd>lua vim.lsp.buf.code_action()<CR>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>k <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <leader>K <cmd>lua vim.diagnostic.open_float()<CR>
+nnoremap <leader>K <cmd>norm! K<CR>
+nnoremap <leader>D <cmd>lua vim.diagnostic.open_float()<CR>
+nnoremap [q <cmd>cprev<CR>
+nnoremap ]q <cmd>cnext<CR>
 nnoremap [d <cmd>lua vim.diagnostic.goto_prev()<CR>
 nnoremap ]d <cmd>lua vim.diagnostic.goto_next()<CR>
+nnoremap [e <cmd>lua vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })<CR>
+nnoremap ]e <cmd>lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })<CR>
+nnoremap [w <cmd>lua vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })<CR>
+nnoremap ]w <cmd>lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })<CR>
 nnoremap <leader>wa <cmd>lua vim.lsp.buf.add_workspace_folder()<CR>
 nnoremap <leader>wr <cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>
 nnoremap <leader>wl <cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>

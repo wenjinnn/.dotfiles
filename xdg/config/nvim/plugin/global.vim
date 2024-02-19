@@ -1,6 +1,3 @@
-if exists('g:started_by_firenvim')
-  let g:auto_session_enabled = v:false
-endif
 let g:db_ui_winwidth = 30
 
 let g:vim_dadbod_completion_mark = ''

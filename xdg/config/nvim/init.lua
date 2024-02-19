@@ -22,5 +22,4 @@ local lazy_config = {
 if lockpath then
   lazy_config.lockfile = lockpath .. '/lazy-lock.json'
 end
-require('config.autocmd')
 require('lazy').setup('plugin', lazy_config)
