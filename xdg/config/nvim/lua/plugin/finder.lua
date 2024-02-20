@@ -91,7 +91,7 @@ return {
       local toggle_preview = function() layout.toggle_preview(vim.fn.bufnr()) end
       require('telescope').setup({
         defaults = {
-          file_ignore_patterns = fileIgnoreTable or nil,
+          file_ignore_patterns = fileIgnoreTable or { '^.git/', '^node_modules/' },
           -- borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
           borderchars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
           wrap_results = true,
