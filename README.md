@@ -11,7 +11,7 @@ repo's structure base on [nix-starter-config#standard](https://github.com/Mister
 
 # Stuff here
 
-* Editor: a well [config nvim](https://github.com/wenjinnn/config/tree/nixos/xdg/config/nvim) that follows the [KISS principle](https://en.wikipedia.org/wiki/KISS_principle)
+* Editor: a well [config nvim](https://github.com/wenjinnn/config/tree/nixos/xdg/config/nvim) (tested startup time are less than 30ms) that follows the [KISS principle](https://en.wikipedia.org/wiki/KISS_principle)
 * Compositor: [Hyprland](https://github.com/hyprwm/Hyprland)  
 * Shell: [ags](https://github.com/Aylur/ags)  
 * Terminal emulator: [foot](https://codeberg.org/dnkl/foot)  
