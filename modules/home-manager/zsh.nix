@@ -53,8 +53,7 @@
       }
     ];
     initExtraFirst = ''
-      export LANG=en_US.UTF-8
-      if [[ -n "''${IS_NVIM_DAP_TOGGLETERM}" ]]; then
+      if [[ -n "''${NVIM_DAP_TOGGLETERM}" ]]; then
           return
       fi
       # TMUX

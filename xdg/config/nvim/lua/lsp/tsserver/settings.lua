@@ -1,3 +1,3 @@
 return {
-  format = { enable = false }
+  format = { enable = false },
 }

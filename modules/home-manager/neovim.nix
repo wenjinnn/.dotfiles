@@ -16,6 +16,7 @@
     maven
     lemminx
     marksman
+    stylua
   ];
 
   home.sessionVariables = {

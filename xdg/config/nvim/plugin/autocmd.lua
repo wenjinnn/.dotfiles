@@ -8,10 +8,10 @@ end
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
   group = augroup("checktime"),
   callback = function()
-    if vim.o.buftype ~= 'nofile' then
-      vim.cmd('checktime')
+    if vim.o.buftype ~= "nofile" then
+      vim.cmd("checktime")
     end
-  end
+  end,
 })
 
 -- Highlight on yank
@@ -116,18 +116,20 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 })
 
 -- fcitx5 rime auto switch to asciimode
-if vim.fn.has('fcitx5') then
+if vim.fn.has("fcitx5") then
   vim.api.nvim_create_autocmd({ "InsertLeave" }, {
     group = augroup("fcitx5_rime"),
     pattern = "*",
     callback = function(event)
-      vim.cmd("silent call system('busctl call --user org.fcitx.Fcitx5 /rime org.fcitx.Fcitx.Rime1 SetAsciiMode b 1')")
+      vim.cmd(
+        "silent call system('busctl call --user org.fcitx.Fcitx5 /rime org.fcitx.Fcitx.Rime1 SetAsciiMode b 1')"
+      )
     end,
   })
 end
 
 -- sync wsl clipboard
-if vim.fn.has('wsl') then
+if vim.fn.has("wsl") then
   vim.api.nvim_create_autocmd({ "TextYankPost" }, {
     group = augroup("wsl_yank"),
     pattern = "*",
