@@ -7,9 +7,9 @@ return {
     config = true,
     ft = { 'http' },
     keys = {
-      { '<leader>re', '<plug>RestNvim' },
-      { '<leader>rp', '<plug>RestNvimPreview' },
-      { '<leader>rr', '<plug>RestNvimLast' },
+      { '<leader>re', '<plug>RestNvim', desc = "RestNvim Run" },
+      { '<leader>rp', '<plug>RestNvimPreview', desc = "RestNvim Preview" },
+      { '<leader>rr', '<plug>RestNvimLast', desc = "RestNvim Run Last" },
     }
   },
   {
@@ -37,7 +37,7 @@ return {
     'iamcco/markdown-preview.nvim',
     cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
     keys = {
-      { '<leader>mp', '<cmd>MarkdownPreviewToggle<cr>' }
+      { '<leader>mp', '<cmd>MarkdownPreviewToggle<cr>', desc = "Markdown Preview Toggle" }
     },
     build = 'cd app && npm install',
     init = function()
@@ -59,7 +59,7 @@ return {
       { 'tpope/vim-dadbod' },
     },
     keys = {
-      { '<leader><leader>d', '<cmd>DBUIToggle<cr>' }
+      { '<leader><leader>d', '<cmd>DBUIToggle<cr>', desc = "DBUI Toggle" }
     },
     cond = not vim.g.vscode,
     cmd = 'DBUIToggle'
@@ -70,13 +70,13 @@ return {
     cond = not vim.g.vscode,
     keys = {
       { '<leader>fss', '<cmd>lua require("spectre").toggle()<CR>',                        desc = 'Toggle Spectre' },
-      { '<leader>fsw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', desc = 'Spectre Search current word' },
-      { '<leader>fsw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', mode = 'v',                          desc = 'Spectre Search current word' },
+      { '<leader>fsw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', desc = 'Spectre Search Current Word' },
+      { '<leader>fsw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', mode = 'v',                          desc = 'Spectre Search Current Word' },
       {
         '<leader>fsf',
         '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>',
         desc =
-        'Search on current file',
+        'Search On Current File',
       }
     }
   },
@@ -91,29 +91,25 @@ return {
     cmd = 'Translate',
     keys = {
       -- Display translation in a window
-      { '<leader>tt', '<cmd>Translate ZH<CR>' },
-      { '<leader>tt', '<cmd>Translate ZH<CR>' },
+      { '<leader>tt', '<cmd>Translate ZH<CR>', mode = {'n','x'} },
       -- Replace the text with translation
-      { '<leader>tr', '<cmd>Translate ZH -output=replace<CR>' },
-      { '<leader>tr', '<cmd>Translate ZH -output=replace<CR>' },
+      { '<leader>tr', '<cmd>Translate ZH -output=replace<CR>', mode = {'n', 'x'} },
       -- Insert the text with translation
-      { '<leader>ti', '<cmd>Translate ZH -output=insert<CR>' },
-      { '<leader>ti', '<cmd>Translate ZH -output=insert<CR>' },
+      { '<leader>ti', '<cmd>Translate ZH -output=insert<CR>', mode = {'n','x'} },
       -- copy translation to register
-      { '<leader>ty', '<cmd>Translate ZH -output=register<CR>' },
-      { '<leader>ty', '<cmd>Translate ZH -output=register<CR>' },
+      { '<leader>ty', '<cmd>Translate ZH -output=register<CR>', mode = {'n', 'x'} },
     },
     cond = not vim.g.vscode,
-    config = function()
+    opts = function ()
       local default_command = 'google'
-      -- if vim.fn.executable('trans') then
-      --   default_command = 'translate_shell'
-      -- end
-      require('translate').setup({
+      if vim.fn.executable('trans') then
+        default_command = 'translate_shell'
+      end
+      return {
         default = {
           command = default_command
         },
-      })
+      }
     end
   },
   {
@@ -147,7 +143,7 @@ return {
   {
     'echasnovski/mini.bufremove',
     keys = {
-      { '<leader>x', '<cmd>lua MiniBufremove.delete()<CR>' }
+      { '<leader>x', '<cmd>lua MiniBufremove.delete()<CR>', desc = "Buf Delete" }
     },
     version = '*',
     config = true,
@@ -159,9 +155,9 @@ return {
     priority = 100,
     event = 'VimEnter',
     keys = {
-      { '<leader>sw', '<cmd>:lua MiniSessions.write((vim.fn.getcwd():gsub("/", "_")))<CR>' },
-      { '<leader>ss', '<cmd>:lua MiniSessions.select()<CR>' },
-      { '<leader>sd', '<cmd>:lua MiniSessions.delete((vim.fn.getcwd():gsub("/", "_")))<CR>' },
+      { '<leader>sw', '<cmd>:lua MiniSessions.write((vim.fn.getcwd():gsub("/", "_")))<CR>', desc = "Session Write" },
+      { '<leader>ss', '<cmd>:lua MiniSessions.select()<CR>', desc = "Session Select" },
+      { '<leader>sd', '<cmd>:lua MiniSessions.delete((vim.fn.getcwd():gsub("/", "_")))<CR>', desc = "Session Delete" },
     },
     version = '*',
     opts = function()

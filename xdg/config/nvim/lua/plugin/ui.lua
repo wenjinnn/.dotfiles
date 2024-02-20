@@ -31,9 +31,9 @@ return {
     event = 'UIEnter',
     cond = not vim.g.vscode,
     keys = {
-      { '<leader>b', '<cmd>exe "LualineBuffersJump!" . v:count1<CR>' },
-      { '<c-j>',     '<cmd>exe "LualineBuffersJump!" . v:count1<CR>' },
-      { '<leader>B', '<cmd>LualineBuffersJump $<CR>' },
+      { '<leader>b', '<cmd>exe "LualineBuffersJump!" . v:count1<CR>', desc = 'Lualine Buffers Jump' },
+      { '<c-j>',     '<cmd>exe "LualineBuffersJump!" . v:count1<CR>', desc = 'Lualine Buffers Jump' },
+      { '<leader>B', '<cmd>LualineBuffersJump $<CR>',                 desc = 'Lualine Buffers Jump' },
     },
     opts = function()
       local lsp_status = function()
@@ -114,7 +114,7 @@ return {
     'chentoast/marks.nvim',
     cond = not vim.g.vscode,
     keys = {
-      { '<leader>mt', '<cmd>MarksToggleSigns<cr>' }
+      { '<leader>mt', '<cmd>MarksToggleSigns<cr>', desc = 'Marks Toggle Signs' }
     },
     event = 'BufRead',
     opts = {
@@ -177,8 +177,8 @@ return {
     cond = not vim.g.vscode,
     lazy = true,
     keys = {
-      [[<c-\><c-\>]],
-      { '<leader>ft', '<cmd>TermSelect<cr>' },
+      { [[<c-\><c-\>]], desc = 'ToggleTerm' },
+      { '<leader>ft',   '<cmd>TermSelect<cr>', desc = 'Term Select' },
     },
     config = function()
       local get_height = function()

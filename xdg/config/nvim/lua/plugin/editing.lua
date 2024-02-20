@@ -100,7 +100,7 @@ return {
   },
   {
     'echasnovski/mini.splitjoin',
-    keys = { 'gsj' },
+    keys = { {'gsj', desc = 'Splitjoin'} },
     config = function()
       require('mini.splitjoin').setup({
         mappings = {
