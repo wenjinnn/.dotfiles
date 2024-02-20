@@ -36,7 +36,10 @@ return {
       { '<leader>B', '<cmd>LualineBuffersJump $<CR>',                 desc = 'Lualine Buffers Jump' },
     },
     opts = function()
-      local lsp_status = function()
+      local lsp = function()
+        if not pcall(require, 'lsp-status') then
+          return ''
+        end
         local lsp_status = require('lsp-status')
         local ok, result = pcall(lsp_status.status)
         if not ok then
@@ -69,7 +72,7 @@ return {
         sections = {
           lualine_a = { 'mode' },
           lualine_b = { 'branch', 'diff', 'diagnostics' },
-          lualine_c = { 'filename', lsp_status },
+          lualine_c = { 'filename', lsp },
           lualine_x = { 'encoding', 'fileformat', 'filetype' },
           lualine_y = { 'progress' },
           lualine_z = { 'location' }

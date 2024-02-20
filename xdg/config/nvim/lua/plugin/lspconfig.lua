@@ -1,17 +1,5 @@
 return {
   {
-    'nvim-lua/lsp-status.nvim',
-    lazy = true,
-    config = function()
-      local lsp_status = require('lsp-status')
-      lsp_status.register_progress();
-      lsp_status.config({
-        diagnostics = false,
-        status_symbol = ''
-      })
-    end
-  },
-  {
     'neovim/nvim-lspconfig',
     cond = not vim.g.vscode,
     event = 'BufRead',
@@ -37,6 +25,18 @@ return {
       {'<leader>N', '<cmd>lua vim.diagnostic.show(nil, 0)<CR>', desc = 'Show Diagnostic'},
     },
     dependencies = {
+      {
+        'nvim-lua/lsp-status.nvim',
+        module = false,
+        config = function()
+          local lsp_status = require('lsp-status')
+          lsp_status.register_progress();
+          lsp_status.config({
+            diagnostics = false,
+            status_symbol = ''
+          })
+        end
+      },
       {
         'williamboman/mason.nvim',
         opts = { PATH = 'append' },
