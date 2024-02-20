@@ -15,61 +15,36 @@ return {
     'neovim/nvim-lspconfig',
     cond = not vim.g.vscode,
     event = 'BufRead',
-    lazy = true,
+    keys = {
+      { '<leader>P',  '<cmd>lua print(require("lsp-status").status())<CR>' },
+      { 'K',          '<cmd>lua vim.lsp.buf.hover()<CR>' },
+      { 'gD',         '<cmd>lua vim.lsp.buf.declaration()<CR>' },
+      {'<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>'},
+      {'<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>'},
+      {'<leader>k', '<cmd>lua vim.lsp.buf.signature_help()<CR>'},
+      {'<leader>K', '<cmd>norm! K<CR>'},
+      {'<leader>D', '<cmd>lua vim.diagnostic.open_float()<CR>'},
+      {'[q', '<cmd>cprev<CR>'},
+      {']q', '<cmd>cnext<CR>'},
+      {'[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>'},
+      {']d', '<cmd>lua vim.diagnostic.goto_next()<CR>'},
+      {'[e', '<cmd>lua vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })<CR>'},
+      {']e', '<cmd>lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })<CR>'},
+      {'[w', '<cmd>lua vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })<CR>'},
+      {']w', '<cmd>lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })<CR>'},
+      {'<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>'},
+      {'<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>'},
+      {'<leader>wl', '<cmd>lua vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>'},
+      {'<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>'},
+      {'<leader>Q', '<cmd>lua vim.diagnostic.setloclist()<CR>'},
+      {'<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>'},
+      {'<leader>n', '<cmd>lua vim.diagnostic.hide(nil, 0)<CR>'},
+      {'<leader>N', '<cmd>lua vim.diagnostic.show(nil, 0)<CR>'},
+    },
     dependencies = {
       {
         'williamboman/mason.nvim',
-        opts = {
-          PATH = 'append'
-        },
-        init = function()
-          local installed_pkgs = require('mason-registry').get_installed_packages()
-          local install_confirm = ''
-          if #installed_pkgs == 0 then
-            install_confirm = vim.fn.input('No package installed yet, install default package now ? (via Mason) Y/n = ')
-          end
-          install_confirm = string.lower(install_confirm)
-          if install_confirm == 'y' then
-            vim.cmd([[
-              MasonInstall
-              \ typescript-language-server
-              \ dot-language-server
-              \ cspell
-              \ vim-language-server
-              \ emmet-ls
-              \ html-lsp
-              \ prettier
-              \ sqlls
-              \ python-lsp-server
-              \ yaml-language-server
-              \ lemminx
-              \ luaformatter
-              \ lua-language-server
-              \ marksman
-              \ vuels
-              \ jdtls
-              \ vscode-java-decompiler
-              \ java-debug-adapter
-              \ java-test
-              \ google-java-format
-              \ pyright
-              \ bash-language-server
-              \ eslint-lsp
-              \ rust-analyzer
-              \ clang-format
-              \ taplo
-              \ clangd
-              \ codelldb
-              \ cpplint
-              \ cpptools
-              \ gradle-language-server
-              \ glow
-              \ sonarlint-language-server
-              \ jq
-              \ jsonls
-            ]])
-          end
-        end
+        opts = { PATH = 'append' },
       },
       {
         'williamboman/mason-lspconfig.nvim',
@@ -77,6 +52,7 @@ return {
           local common = require('lsp.common')
           local textdomain = os.getenv('TEXTDOMAIN')
           require('mason-lspconfig').setup()
+          require('util').mason_package_init()
           require('mason-lspconfig').setup_handlers({
             -- The first entry (without a key) will be the default handler
             -- and will be called for each installed server that doesn't have
@@ -152,11 +128,30 @@ return {
             --   }
             -- end
           })
-        end
-      },
+      end},
       { 'b0o/SchemaStore.nvim' },
       { 'onsails/lspkind.nvim' },
-      { 'mfussenegger/nvim-jdtls' },
+      {
+        'VidocqH/lsp-lens.nvim',
+        opts = {
+          sections = { -- Enable / Disable specific request, formatter example looks 'Format Requests'
+            definition = true,
+            references = true,
+            implements = true,
+            git_authors = true,
+          }
+        }
+      },
+      {
+        'mfussenegger/nvim-jdtls',
+        keys = {
+          { '<leader>cC', '<cmd>JdtCompile full<CR>' },
+          { '<leader>cc', '<cmd>JdtCompile incremental<CR>' },
+          { '<leader>ch', '<cmd>JdtHotcodeReplace<CR>' },
+          { 'gt',         '<cmd>lua require("jdtls.tests").goto_subjects()<CR>' },
+          { '<leader>cg', '<cmd>lua require("jdtls.tests").generate()<CR>' },
+        }
+      },
       {
         url = 'https://gitlab.com/schrieveslaach/sonarlint.nvim',
         opts = {

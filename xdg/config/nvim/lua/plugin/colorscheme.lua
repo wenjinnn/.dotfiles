@@ -19,6 +19,7 @@ return {
           TelescopePromptTitle = { link = 'lualine_a_insert' },
           TelescopeResultsTitle = { link = 'lualine_a_normal' },
           TelescopePreviewTitle = { link = 'lualine_a_normal' },
+          LspLens = { link = 'LineNr' },
           ['@interface'] = { link = '@constant' },
           ['@lsp.type.interface'] = { link = '@interface' },
           CmpItemMenu = { link = 'Comment' },

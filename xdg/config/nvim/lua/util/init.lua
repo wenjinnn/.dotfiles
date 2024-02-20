@@ -24,4 +24,70 @@ function M.safe_keymap_set(mode, lhs, rhs, opts)
   end
 end
 
+-- make repeatable keymap
+function M.make_repeatable_keymap(mode, lhs, rhs)
+  vim.validate {
+    mode = { mode, { 'string', 'table' } },
+    rhs = { rhs, { 'string', 'function' },
+      lhs = { name = 'string' } }
+  }
+  if not vim.startswith(lhs:lower(), '<plug>') then
+    error('`lhs` should start with `<Plug>` or `<plug>`, given: ' .. lhs)
+  end
+  vim.keymap.set(mode, lhs, function()
+    rhs()
+    vim.fn['repeat#set'](vim.api.nvim_replace_termcodes(lhs, true, true, true))
+  end)
+  return lhs
+end
+
+function M.mason_package_init()
+  local installed_pkgs = require('mason-registry').get_installed_packages()
+  local install_confirm = ''
+  if #installed_pkgs == 0 then
+    install_confirm = vim.fn.input('No package installed yet, install default package now ? (via Mason) Y/n = ')
+  end
+  install_confirm = string.lower(install_confirm)
+  if install_confirm == 'y' then
+    vim.cmd([[
+      MasonInstall
+      \ typescript-language-server
+      \ dot-language-server
+      \ cspell
+      \ vim-language-server
+      \ emmet-ls
+      \ html-lsp
+      \ prettier
+      \ sqlls
+      \ python-lsp-server
+      \ yaml-language-server
+      \ lemminx
+      \ luaformatter
+      \ lua-language-server
+      \ marksman
+      \ vuels
+      \ jdtls
+      \ vscode-java-decompiler
+      \ java-debug-adapter
+      \ java-test
+      \ google-java-format
+      \ pyright
+      \ bash-language-server
+      \ eslint-lsp
+      \ rust-analyzer
+      \ clang-format
+      \ taplo
+      \ clangd
+      \ codelldb
+      \ cpplint
+      \ cpptools
+      \ gradle-language-server
+      \ glow
+      \ sonarlint-language-server
+      \ jq
+      \ jsonls
+    ]])
+  end
+end
+
 return M

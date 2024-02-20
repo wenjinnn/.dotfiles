@@ -2,7 +2,7 @@ return {
   -- motion
   {
     'folke/flash.nvim',
-    event = 'VeryLazy',
+    event = 'BufRead',
     opts = function()
       local opts = {
         label = {

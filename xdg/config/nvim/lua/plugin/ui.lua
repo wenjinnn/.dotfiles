@@ -30,7 +30,10 @@ return {
     'nvim-lualine/lualine.nvim',
     event = 'UIEnter',
     cond = not vim.g.vscode,
-    dependencies = {
+    keys = {
+      { '<leader>b', '<cmd>exe "LualineBuffersJump!" . v:count1<CR>' },
+      { '<c-j>',     '<cmd>exe "LualineBuffersJump!" . v:count1<CR>' },
+      { '<leader>B', '<cmd>LualineBuffersJump $<CR>' },
     },
     opts = function()
       local lsp_status = function()
@@ -110,6 +113,9 @@ return {
   {
     'chentoast/marks.nvim',
     cond = not vim.g.vscode,
+    keys = {
+      { '<leader>mt', '<cmd>MarksToggleSigns<cr>' }
+    },
     event = 'BufRead',
     opts = {
       -- whether to map keybinds or not. default true
@@ -169,7 +175,11 @@ return {
   {
     'akinsho/toggleterm.nvim',
     cond = not vim.g.vscode,
-    event = 'VeryLazy',
+    lazy = true,
+    keys = {
+      [[<c-\><c-\>]],
+      { '<leader>ft', '<cmd>TermSelect<cr>' },
+    },
     config = function()
       local get_height = function()
         return math.floor(vim.o.lines * 0.50)

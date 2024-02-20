@@ -3,7 +3,10 @@ return {
     'stevearc/conform.nvim',
     cond = not vim.g.vscode,
     event = 'BufRead',
-    cmd = 'DiffFormat',
+    cmd = { 'DiffFormat', 'Format' },
+    keys = {
+      { '<leader>mm', '<cmd>lua require"conform".format({async = true, lsp_fallback = true})<cr>', mode = { 'n', 'v' }, desc = 'Format' }
+    },
     config = function()
       require('conform').setup()
       local diff_format = function()
@@ -126,7 +129,7 @@ return {
       },
     },
     build = ':TSUpdate',
-    event = { 'VeryLazy' },
+    event = { 'BufReadPre' },
     init = function(plugin)
       -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
       -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
