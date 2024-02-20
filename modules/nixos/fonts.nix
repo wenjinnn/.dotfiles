@@ -22,7 +22,7 @@
       defaultFonts = {
         emoji = [ "Noto Color Emoji" ];
         monospace = [
-          "CaskaydiaCove Nerd Font Mono"
+          "CaskaydiaCove Nerd Font"
           "Sarasa Mono SC"
         ];
         sansSerif = [
