@@ -8,7 +8,6 @@ set grepformat=%f:%l:%c:%m
 set formatoptions=jcroqlnt
 set clipboard+=unnamedplus
 set inccommand=nosplit
-set t_Co=256
 set cmdheight=1
 set showcmd
 set ruler
