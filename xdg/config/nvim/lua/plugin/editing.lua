@@ -14,6 +14,7 @@ return {
       },
     },
     config = function()
+      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
       require("conform").setup({
         formatters_by_ft = {
           lua = { "stylua" },
@@ -21,6 +22,15 @@ return {
       })
       local diff_format = function()
         if not vim.fn.has("git") then
+          return
+        end
+        local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+        local format = require("conform").format
+        if filetype == "lua" then
+          format({
+            lsp_fallback = true,
+            timeout_ms = 500,
+          })
           return
         end
         local filename = vim.fn.expand("%:p")
@@ -44,7 +54,6 @@ return {
             end
           end
         end
-        local format = require("conform").format
         for _, range in pairs(ranges) do
           format({
             lsp_fallback = true,
@@ -137,6 +146,7 @@ return {
     },
     build = ":TSUpdate",
     event = { "BufReadPre" },
+    cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     cond = not_vscode,
     init = function(plugin)
       -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
@@ -160,12 +170,13 @@ return {
           "xml",
         },
       },
-      ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+      ensure_installed = {}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
       ignore_install = {}, -- List of parsers to ignore installing
+      auto_install = true,
       highlight = {
         enable = true, -- false will disable the whole extension
-        disable = {}, -- list of language that will be disabled
       },
+      indent = { enable = true },
       autopairs = {
         enable = true,
       },
@@ -200,5 +211,18 @@ return {
         },
       },
     },
+    config = function(_, opts)
+      if type(opts.ensure_installed) == "table" then
+        local added = {}
+        opts.ensure_installed = vim.tbl_filter(function(lang)
+          if added[lang] then
+            return false
+          end
+          added[lang] = true
+          return true
+        end, opts.ensure_installed)
+      end
+      require("nvim-treesitter.configs").setup(opts)
+    end,
   },
 }
