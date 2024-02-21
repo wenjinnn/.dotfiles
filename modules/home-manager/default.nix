@@ -21,5 +21,5 @@
   gnome-terminal = import ./gnome-terminal.nix;
   tmux = import ./tmux.nix;
   wezterm = import ./wezterm.nix;
-  python = import ./python.nix;
+  lang = import ./lang.nix;
 }

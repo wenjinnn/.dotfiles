@@ -23,8 +23,6 @@
 
   home.packages = with pkgs; [
     microsoft-edge
-    sassc
-    ffmpeg
     gimp
     obs-studio
     unstable.vscode
@@ -41,12 +39,9 @@
     bottles
     telegram-desktop
     discord
-    distrobox
     nur.repos.xddxdd.dingtalk
     nur.repos.xddxdd.wechat-uos
     nur.repos.xddxdd.qq
     nur.repos.linyinfeng.wemeet
-
   ];
-
 }

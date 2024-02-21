@@ -20,8 +20,7 @@
     yazi
     mime
     git-sync
-    python
-
+    lang
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
 
@@ -82,6 +81,8 @@
     #   echo "Hello, ${config.home.username}!"
     # '')/
     neofetch
+    ffmpeg
+    distrobox
     bat
     fd
     ripgrep
@@ -109,15 +110,10 @@
     # it provides the command `nom` works just like `nix`
     # with more details log output
     nix-output-monitor
-    gnumake
-    cmake
-    nodejs
-    gcc
     zip
     unzip
     glib
     killall
-    jdk21
     k9s
     minikube
     kubernetes

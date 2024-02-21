@@ -9,11 +9,8 @@
   home.packages = with pkgs; [
     lua-language-server
     clang-tools
-    rustc
-    cargo
     rust-analyzer
     rustfmt
-    maven
     lemminx
     marksman
     stylua

@@ -9,6 +9,9 @@
   imports = [
     inputs.ags.homeManagerModules.default
   ];
+  home.packages = with pkgs; [
+    sassc
+  ];
   # ags
   programs.ags = {
     enable = true;
