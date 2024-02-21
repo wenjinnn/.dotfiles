@@ -91,7 +91,7 @@ return {
         sections = {
           lualine_a = { "mode" },
           lualine_b = { "branch", "diff", "diagnostics" },
-          lualine_c = { "filename", lsp },
+          lualine_c = { "filename", navic, lsp },
           lualine_x = { "encoding", "fileformat", "filetype" },
           lualine_y = { "progress" },
           lualine_z = { "location" },
@@ -120,7 +120,7 @@ return {
           lualine_y = { { "tabs", mode = 2, use_mode_colors = true } },
           lualine_z = {},
         },
-        winbar = { lualine_c = { navic } },
+        winbar = {},
         inactive_winbar = {},
         extensions = {
           "quickfix",
