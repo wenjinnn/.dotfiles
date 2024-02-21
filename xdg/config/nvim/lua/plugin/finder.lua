@@ -5,6 +5,7 @@ return {
     cond = not_vscode,
     cmd = "Telescope",
     keys = {
+      "<leader>dc",
       { "gd", "<cmd>Telescope lsp_definitions<CR>", desc = "Telescope Lsp Definitions" },
       {
         "gi",
