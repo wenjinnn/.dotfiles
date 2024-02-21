@@ -1,4 +1,5 @@
 local not_vscode = require("util").not_vscode
+
 return {
   -- buffer | statusline | icon | treeview | startup buffer
   {
@@ -49,16 +50,21 @@ return {
       },
     },
     opts = function()
+      local navic = function()
+        if not pcall(require, "nvim-navic") then
+          return ""
+        end
+        local nvim_navic = require("nvim-navic")
+        if not nvim_navic.is_available() then
+          return ""
+        end
+        return nvim_navic.get_location()
+      end
       local lsp = function()
-        if not pcall(require, "lsp-status") then
+        if not pcall(require, "lsp-progress") then
           return ""
         end
-        local lsp_status = require("lsp-status")
-        local ok, result = pcall(lsp_status.status)
-        if not ok then
-          return ""
-        end
-        return result:gsub("%%", "%%%1")
+        return require("lsp-progress").progress()
       end
       return {
         options = {
@@ -114,7 +120,7 @@ return {
           lualine_y = { { "tabs", mode = 2, use_mode_colors = true } },
           lualine_z = {},
         },
-        winbar = {},
+        winbar = { lualine_c = { navic } },
         inactive_winbar = {},
         extensions = {
           "quickfix",

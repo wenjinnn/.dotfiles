@@ -5,11 +5,6 @@ return {
     cond = not_vscode,
     event = "BufRead",
     keys = {
-      {
-        "<leader>P",
-        '<cmd>lua print(require("lsp-status").status())<CR>',
-        desc = "Print Lsp Status",
-      },
       { "K", "<cmd>lua vim.lsp.buf.hover()<CR>", desc = "Lsp Hover" },
       { "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", desc = "Lsp Declaration" },
       {
@@ -72,16 +67,32 @@ return {
     },
     dependencies = {
       {
-        "nvim-lua/lsp-status.nvim",
+        "linrongbin16/lsp-progress.nvim",
         module = false,
-        config = function()
-          local lsp_status = require("lsp-status")
-          lsp_status.register_progress()
-          lsp_status.config({
-            diagnostics = false,
-            status_symbol = "",
-          })
-        end,
+        opts = {
+          format = function(client_messages)
+            -- icon: nf-fa-gear \uf013
+            local sign = " LSP"
+            if #client_messages > 0 then
+              return sign .. " " .. table.concat(client_messages, " ")
+            end
+            if #vim.lsp.get_active_clients() > 0 then
+              return ""
+            end
+            return ""
+          end,
+        },
+      },
+      {
+        "SmiteshP/nvim-navic",
+        module = false,
+        opts = {
+          lsp = {
+            auto_attach = true,
+          },
+          highlight = true,
+          click = true,
+        },
       },
       {
         "williamboman/mason.nvim",
