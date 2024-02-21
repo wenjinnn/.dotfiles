@@ -9,7 +9,7 @@
     gcc
     nodejs
     jdk21
-    maven.override { jdk = jdk21; }
+    (maven.override { jdk = pkgs.jdk21; })
     rustc
     cargo
   ];
