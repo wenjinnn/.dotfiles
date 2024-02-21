@@ -5,18 +5,18 @@ return {
     cond = not_vscode,
     event = "BufRead",
     cmd = { "DiffFormat", "Format" },
-    keys = function ()
-      local toggle_auto_format = function ()
+    keys = function()
+      local toggle_auto_format = function()
         vim.g.conform_autoformat = not vim.g.conform_autoformat
         local status
         if vim.g.conform_autoformat then
-          status = 'on'
+          status = "on"
         else
-          status = 'off'
+          status = "off"
         end
-        vim.notify('Autoformat: ' .. status)
+        vim.notify("Autoformat: " .. status)
       end
-      
+
       return {
         {
           "<leader>mm",
@@ -28,8 +28,8 @@ return {
           "<leader>mM",
           toggle_auto_format,
           mode = { "n", "v" },
-          desc = "ToggleAutoFormat",
-        }
+          desc = "Auto Format Toggle",
+        },
       }
     end,
     config = function()
