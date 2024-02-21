@@ -116,14 +116,12 @@ export class Opt extends Service {
             return;
         }
 
-        if (this.value !== value) {
-            this.#value = this.format(value);
-            this.changed('value');
+        this.#value = this.format(value);
+        this.changed('value');
 
-            if (reload && !this.noReload) {
-                reloadScss();
-                setupHyprland();
-            }
+        if (reload && !this.noReload) {
+            reloadScss();
+            setupHyprland();
         }
     }
 
