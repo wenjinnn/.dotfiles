@@ -72,7 +72,7 @@ return {
     },
     dependencies = {
       {
-        "nvim-lua/lsp-status.nvim",
+        "wenjinnn/lsp-status.nvim",
         module = false,
         config = function()
           local lsp_status = require("lsp-status")
