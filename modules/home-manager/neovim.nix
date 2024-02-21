@@ -8,6 +8,7 @@
 
   home.packages = with pkgs; [
     lua-language-server
+    vscode-langservers-extracted
     clang-tools
     rust-analyzer
     rustfmt
@@ -20,6 +21,7 @@
     EDITOR = "nvim";
     JAVA_8_HOME = "${pkgs.jdk8}/lib/openjdk";
     JAVA_21_HOME = "${pkgs.jdk21}/lib/openjdk";
+    ESLINT_LIBRARY = "${pkgs.vscode-langservers-extracted}/lib/node_modules/vscode-langservers-extracted/node_modules";
     LAZY_NVIM_LOCK_PATH = "${repoPath}/xdg/config/nvim/";
     GTK_THEME = "Adwaita-dark";
   };
