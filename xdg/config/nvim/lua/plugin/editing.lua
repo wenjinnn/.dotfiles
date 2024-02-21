@@ -41,7 +41,8 @@ return {
         },
       })
       local diff_format = function()
-        if not vim.fn.has("git") or not vim.g.conform_autoformat then
+        local buffer_readable = vim.fn.filereadable(vim.fn.bufname("%")) > 0
+        if not vim.fn.has("git") or not vim.g.conform_autoformat or not buffer_readable then
           return
         end
         local filetype = vim.api.nvim_buf_get_option(0, "filetype")
