@@ -5,23 +5,43 @@ return {
     cond = not_vscode,
     event = "BufRead",
     cmd = { "DiffFormat", "Format" },
-    keys = {
-      {
-        "<leader>mm",
-        '<cmd>lua require"conform".format({async = true, lsp_fallback = true})<cr>',
-        mode = { "n", "v" },
-        desc = "Format",
-      },
-    },
+    keys = function ()
+      local toggle_auto_format = function ()
+        vim.g.conform_autoformat = not vim.g.conform_autoformat
+        local status
+        if vim.g.conform_autoformat then
+          status = 'on'
+        else
+          status = 'off'
+        end
+        vim.notify('Autoformat: ' .. status)
+      end
+      
+      return {
+        {
+          "<leader>mm",
+          '<cmd>lua require"conform".format({async = true, lsp_fallback = true})<cr>',
+          mode = { "n", "v" },
+          desc = "Format",
+        },
+        {
+          "<leader>mM",
+          toggle_auto_format,
+          mode = { "n", "v" },
+          desc = "ToggleAutoFormat",
+        }
+      }
+    end,
     config = function()
       vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+      vim.g.conform_autoformat = true
       require("conform").setup({
         formatters_by_ft = {
           lua = { "stylua" },
         },
       })
       local diff_format = function()
-        if not vim.fn.has("git") then
+        if not vim.fn.has("git") or not vim.g.conform_autoformat then
           return
         end
         local filetype = vim.api.nvim_buf_get_option(0, "filetype")
