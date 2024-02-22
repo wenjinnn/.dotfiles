@@ -6,6 +6,7 @@ return {
     cmd = "Telescope",
     keys = {
       "<leader>dc",
+      "<leader>ca",
       "<leader>L",
       { "gd", "<cmd>Telescope lsp_definitions<CR>", desc = "Telescope Lsp Definitions" },
       {
