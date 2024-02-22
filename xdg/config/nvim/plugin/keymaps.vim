@@ -55,6 +55,7 @@ endif
 nnoremap <silent> <leader>sc <cmd>call SourceMyConfig()<CR>
 nnoremap <silent> <leader>u <cmd>Lazy update<CR>
 nnoremap <silent> <leader>l <cmd>Lazy<CR>
+nnoremap <silent> <leader>L <cmd>Mason<CR>
 
 " ctags
 nnoremap <silent> <leader>C <cmd>!ctags<CR>
