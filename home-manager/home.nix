@@ -20,6 +20,7 @@
     yazi
     mime
     git-sync
+    btop
     lang
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
@@ -104,7 +105,6 @@
     inotify-tools
     libnotify
     lsof
-    btop
     # nix related
     #
     # it provides the command `nom` works just like `nix`

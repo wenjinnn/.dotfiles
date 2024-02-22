@@ -22,4 +22,5 @@
   tmux = import ./tmux.nix;
   wezterm = import ./wezterm.nix;
   lang = import ./lang.nix;
+  btop = import ./btop.nix;
 }
