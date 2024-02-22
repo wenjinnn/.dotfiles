@@ -38,7 +38,7 @@ nnoremap ]q <cmd>cnext<CR>
 
 nnoremap <silent> <leader>q <cmd>copen<cr>
 
-" source config
+" source config, not compatible with lazy.nvim
 if !exists('*SourceMyConfig')
     function SourceMyConfig()
         let configs = split(glob('~/.config/nvim/plugin/*.vim'))
@@ -55,7 +55,6 @@ endif
 nnoremap <silent> <leader>sc <cmd>call SourceMyConfig()<CR>
 nnoremap <silent> <leader>u <cmd>Lazy update<CR>
 nnoremap <silent> <leader>l <cmd>Lazy<CR>
-nnoremap <silent> <leader>L <cmd>Mason<CR>
 
 " ctags
 nnoremap <silent> <leader>C <cmd>!ctags<CR>
@@ -65,6 +64,7 @@ if s:textdomain == 'git'
     nnoremap <silent> gl <cmd>diffget LO<CR>
     nnoremap <silent> gr <cmd>diffget RE<CR>
 endif
+
 if exists('g:vscode')
     nnoremap K <cmd>call VSCodeNotify('editor.action.showHover')<CR>
     nnoremap gd <cmd>call VSCodeNotify('editor.action.peekDefinition')<CR>

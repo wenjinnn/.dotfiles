@@ -40,7 +40,7 @@ function M.make_repeatable_keymap(mode, lhs, rhs)
   return lhs
 end
 
--- download package on fresh init
+-- download mason package on fresh init
 function M.mason_package_init()
   local installed_pkgs = require("mason-registry").get_installed_packages()
   local install_confirm = ""

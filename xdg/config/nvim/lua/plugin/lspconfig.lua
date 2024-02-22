@@ -97,6 +97,9 @@ return {
       {
         "williamboman/mason.nvim",
         opts = { PATH = "append" },
+        keys = {
+          { "<leader>L", "<cmd>Mason<cr>" },
+        },
       },
       {
         "williamboman/mason-lspconfig.nvim",
