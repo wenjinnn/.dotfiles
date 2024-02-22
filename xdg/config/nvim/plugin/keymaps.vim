@@ -58,8 +58,7 @@ nnoremap <silent> <leader>l <cmd>Lazy<CR>
 " ctags
 nnoremap <silent> <leader>C <cmd>!ctags<CR>
 
-let s:textdomain = $TEXTDOMAIN
-if s:textdomain == 'git'
+if &diff
     nnoremap <silent> gl <cmd>diffget LO<CR>
     nnoremap <silent> gr <cmd>diffget RE<CR>
 endif
