@@ -13,8 +13,8 @@
       github.user = "wenjinnn";
       push.autoSetupRemote = true;
       mergetool.keepBackup = false;
-      merge.tool = "nvimdiff";
-      diff.tool = "nvimdiff";
+      merge.tool = "vimdiff";
+      diff.tool = "vimdiff";
     };
   };
 }
