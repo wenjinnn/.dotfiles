@@ -2,6 +2,7 @@ local not_vscode = require("util").not_vscode
 return {
   {
     "nvim-telescope/telescope.nvim",
+    lazy = true,
     cond = not_vscode,
     cmd = "Telescope",
     keys = {
@@ -105,7 +106,7 @@ return {
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "make",
       },
-      { "nvim-telescope/telescope-ui-select.nvim" },
+      { "nvim-telescope/telescope-ui-select.nvim", lazy = true },
       { "nvim-telescope/telescope-live-grep-args.nvim" },
     },
     config = function()
