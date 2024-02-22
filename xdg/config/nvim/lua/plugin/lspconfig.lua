@@ -89,6 +89,7 @@ return {
         opts = {
           lsp = {
             auto_attach = true,
+            preference = { "pyright" },
           },
           click = true,
         },

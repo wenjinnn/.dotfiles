@@ -15,6 +15,11 @@
     lemminx
     marksman
     stylua
+    luajitPackages.luarocks
+    python311Packages.pynvim
+    python311Packages.pip
+    python311Packages.python-lsp-server
+    tree-sitter
   ];
 
   home.sessionVariables = {
@@ -40,20 +45,6 @@
     withRuby = true;
     withNodeJs = true;
     withPython3 = true;
-
-    extraPackages = with pkgs; [
-      cargo
-      unzip
-      jdk8
-      jdk21
-      wget
-      curl
-      tree-sitter
-      luajitPackages.luarocks
-      python311Packages.pynvim
-      python311Packages.pip
-      gcc
-    ];
   };
 
 
