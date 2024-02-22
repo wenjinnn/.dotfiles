@@ -3,7 +3,7 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     cond = not_vscode,
-    event = "BufEnter",
+    event = "BufRead",
     cmd = "Telescope",
     keys = {
       { "gd", "<cmd>Telescope lsp_definitions<CR>", desc = "Telescope Lsp Definitions" },
