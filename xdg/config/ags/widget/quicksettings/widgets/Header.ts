@@ -36,10 +36,13 @@ export const Header = () => Widget.Box<Gtk.Widget>(
         vertical: true,
         vpack: "center",
         children: [
-            Widget.Box([
-                Widget.Icon({ icon: battery.bind("icon_name") }),
-                Widget.Label({ label: battery.bind("percent").as(p => `${p}%`) }),
-            ]),
+            Widget.Box({
+                visible: battery.bind("available"),
+                children: [
+                    Widget.Icon({ icon: battery.bind("icon_name") }),
+                    Widget.Label({ label: battery.bind("percent").as(p => `${p}%`) }),
+                ],
+            }),
             Widget.Box([
                 Widget.Icon({ icon: icons.ui.time }),
                 Widget.Label({ label: uptime.bind().as(up) }),
@@ -51,6 +54,7 @@ export const Header = () => Widget.Box<Gtk.Widget>(
         vpack: "center",
         child: Widget.Icon(icons.ui.settings),
         on_clicked: () => {
+            App.closeWindow("quicksettings")
             App.closeWindow("settings-dialog")
             App.openWindow("settings-dialog")
         },

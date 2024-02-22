@@ -1,6 +1,7 @@
 import { launchApp, icon } from "lib/utils"
 import icons from "lib/icons"
 import options from "options"
+import { watch } from "lib/experiments"
 import PanelButton from "../PanelButton"
 
 const hyprland = await Service.import("hyprland")
@@ -28,24 +29,23 @@ const AppItem = (address: string) => {
         tooltip_text: client.title,
         on_primary_click: () => focus(address),
         on_middle_click: () => app && launchApp(app),
-        setup: w => w.hook(hyprland, () => {
-            const { workspace } = hyprland.getClient(address)!
-            w.visible = exclusive.value
-                ? hyprland.active.workspace.id === workspace.id
-                : true
-        }),
         child: Widget.Icon({
-            icon: monochrome.bind().as(m => {
-                return icon(
-                    (app?.icon_name || client.class) + (m ? "-symbolic" : ""),
-                    icons.fallback.executable,
-                )
-            }),
+            icon: monochrome.bind().as(m => icon(
+                (app?.icon_name || client.class) + (m ? "-symbolic" : ""),
+                icons.fallback.executable,
+            )),
         }),
     })
 
     return Widget.Box(
-        { attribute: { address } },
+        {
+            attribute: { address },
+            visible: watch(true, [exclusive, hyprland], () => {
+                return exclusive.value
+                    ? hyprland.active.workspace.id === client.workspace.id
+                    : true
+            }),
+        },
         Widget.Overlay({
             child: btn,
             pass_through: true,
@@ -55,7 +55,7 @@ const AppItem = (address: string) => {
                 vpack: position.bind().as(p => p === "top" ? "start" : "end"),
                 setup: w => w.hook(hyprland, () => {
                     w.toggleClassName("active", hyprland.active.client.address === address)
-                }, "event"),
+                }),
             }),
         }),
     )
