@@ -66,7 +66,7 @@ function M.mason_package_init()
       \ luaformatter
       \ lua-language-server
       \ marksman
-      \ vuels
+      \ volar
       \ jdtls
       \ vscode-java-decompiler
       \ java-debug-adapter
