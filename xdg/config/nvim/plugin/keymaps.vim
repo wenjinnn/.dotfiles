@@ -53,7 +53,6 @@ if !exists('*SourceMyConfig')
 endif
 
 nnoremap <silent> <leader>sc <cmd>call SourceMyConfig()<CR>
-nnoremap <silent> <leader>u <cmd>Lazy update<CR>
 nnoremap <silent> <leader>l <cmd>Lazy<CR>
 
 " ctags
