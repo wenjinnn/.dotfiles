@@ -43,15 +43,7 @@ return {
       })
       local diff_format = function()
         local buffer_readable = vim.fn.filereadable(vim.fn.bufname("%")) > 0
-        local buffer_changed = vim.fn.getbufinfo("%")[1].changed > 0
-
-        if
-          not vim.fn.has("git")
-          or vim.bo.readonly
-          or not vim.g.conform_autoformat
-          or not buffer_readable
-          or not buffer_changed
-        then
+        if not vim.fn.has("git") or not vim.g.conform_autoformat or not buffer_readable then
           return
         end
         local filetype = vim.api.nvim_buf_get_option(0, "filetype")
@@ -103,8 +95,12 @@ return {
       vim.api.nvim_create_autocmd("BufLeave", {
         pattern = "*",
         callback = function()
-          diff_format()
-          vim.cmd("update")
+          local buffer_readable = vim.fn.filereadable(vim.fn.bufname("%")) > 0
+          local buffer_changed = vim.fn.getbufinfo("%")[1].changed > 0
+          if not vim.bo.readonly and buffer_readable and buffer_changed then
+            diff_format()
+            vim.cmd("update")
+          end
         end,
         desc = "Auto Format changed lines",
       })
