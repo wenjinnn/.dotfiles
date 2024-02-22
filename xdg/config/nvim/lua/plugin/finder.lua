@@ -8,27 +8,6 @@ return {
     keys = {
       -- for mason filter
       { "<leader>L", "<cmd>Mason<CR>", desc = "Mason" },
-      { "gd", "<cmd>Telescope lsp_definitions<CR>", desc = "Telescope Lsp Definitions" },
-      {
-        "gi",
-        "<cmd>Telescope lsp_implementations<CR>",
-        desc = "Telescope Lsp Implementations",
-      },
-      {
-        "gI",
-        "<cmd>Telescope lsp_incoming_calls<CR>",
-        desc = "Telescope Lsp Incoming Calls",
-      },
-      {
-        "gO",
-        "<cmd>Telescope lsp_outgoing_calls<CR>",
-        desc = "Telescope Lsp_outgoing Calls",
-      },
-      {
-        "gr",
-        "<cmd>Telescope lsp_references show_line=false<CR>",
-        desc = "Telescope Lsp References",
-      },
       { "<leader>ff", "<cmd>Telescope find_files hidden=true<cr>", desc = "Telescope Find Files" },
       { "<leader>fo", "<cmd>Telescope oldfiles only_cwd=true<cr>", desc = "Telescope Oldfiles" },
       { "<leader>fc", "<cmd>Telescope commands<cr>", desc = "Telescope Commands" },
@@ -83,21 +62,6 @@ return {
         '<cmd>lua require"telescope.builtin".diagnostics{bufnr=0}<cr>',
         desc = "Telescope Buf Diagnostics",
       },
-      {
-        "<leader>fws",
-        "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
-        desc = "Telescope Lsp Dynamic Workspace Symbols",
-      },
-      {
-        "<leader>fwS",
-        "<cmd>Telescope lsp_document_symbols<cr>",
-        desc = "Telescope Lsp Document Symbols",
-      },
-      {
-        "<leader>fwr",
-        "<cmd>Telescope lsp_references show_line=false<cr>",
-        desc = "Telescope Lsp References",
-      },
     },
     dependencies = {
       { "debugloop/telescope-undo.nvim" },
@@ -107,6 +71,19 @@ return {
       },
       { "nvim-telescope/telescope-ui-select.nvim" },
       { "nvim-telescope/telescope-live-grep-args.nvim" },
+      {
+        "ahmedkhalf/project.nvim",
+        main = "project_nvim",
+        opts = {
+          -- All the patterns used to detect root dir, when **"pattern"** is in
+          detection_methods = { "lsp", "pattern" },
+          -- detection_methods
+          patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
+          -- Show hidden files in telescope
+          show_hidden = true,
+          silent_chdir = false,
+        },
+      },
     },
     config = function()
       local function flash(prompt_bufnr)

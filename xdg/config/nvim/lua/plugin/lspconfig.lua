@@ -2,7 +2,7 @@ local not_vscode = require("util").not_vscode
 return {
   {
     "neovim/nvim-lspconfig",
-    cond = not_vscode,
+    cond = not_vscode and not vim.o.diff,
     event = "BufRead",
     keys = {
       { "K", "<cmd>lua vim.lsp.buf.hover()<CR>", desc = "Lsp Hover" },
@@ -64,6 +64,42 @@ return {
       { "<leader>Q", "<cmd>lua vim.diagnostic.setloclist()<CR>", desc = "Lsp Diagnostic Loclist" },
       { "<leader>n", "<cmd>lua vim.diagnostic.hide(nil, 0)<CR>", desc = "Hide Diagnostic" },
       { "<leader>N", "<cmd>lua vim.diagnostic.show(nil, 0)<CR>", desc = "Show Diagnostic" },
+      {
+        "<leader>fws",
+        "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
+        desc = "Telescope Lsp Dynamic Workspace Symbols",
+      },
+      {
+        "<leader>fwS",
+        "<cmd>Telescope lsp_document_symbols<cr>",
+        desc = "Telescope Lsp Document Symbols",
+      },
+      {
+        "<leader>fwr",
+        "<cmd>Telescope lsp_references show_line=false<cr>",
+        desc = "Telescope Lsp References",
+      },
+      { "gd", "<cmd>Telescope lsp_definitions<CR>", desc = "Telescope Lsp Definitions" },
+      {
+        "gi",
+        "<cmd>Telescope lsp_implementations<CR>",
+        desc = "Telescope Lsp Implementations",
+      },
+      {
+        "gI",
+        "<cmd>Telescope lsp_incoming_calls<CR>",
+        desc = "Telescope Lsp Incoming Calls",
+      },
+      {
+        "gO",
+        "<cmd>Telescope lsp_outgoing_calls<CR>",
+        desc = "Telescope Lsp_outgoing Calls",
+      },
+      {
+        "gr",
+        "<cmd>Telescope lsp_references show_line=false<CR>",
+        desc = "Telescope Lsp References",
+      },
     },
     dependencies = {
       {
@@ -103,7 +139,6 @@ return {
         "williamboman/mason-lspconfig.nvim",
         config = function()
           local lsp = require("util.lsp")
-          local textdomain = os.getenv("TEXTDOMAIN")
           require("mason-lspconfig").setup()
           require("util").mason_package_init()
           require("mason-lspconfig").setup_handlers({
@@ -111,9 +146,6 @@ return {
             -- and will be called for each installed server that doesn't have
             -- a dedicated handler.
             function(server_name) -- default handler (optional)
-              if vim.o.diff or textdomain == "git" then
-                return
-              end
               -- vim.lsp.set_log_level('debug')
               if server_name ~= "jdtls" then
                 local lsp_config_path = "lsp." .. server_name
@@ -269,19 +301,6 @@ return {
           }
           return { sources = sources }
         end,
-      },
-      {
-        "ahmedkhalf/project.nvim",
-        main = "project_nvim",
-        opts = {
-          -- All the patterns used to detect root dir, when **"pattern"** is in
-          detection_methods = { "lsp", "pattern" },
-          -- detection_methods
-          patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
-          -- Show hidden files in telescope
-          show_hidden = true,
-          silent_chdir = false,
-        },
       },
     },
   },
