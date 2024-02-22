@@ -89,6 +89,7 @@ return {
         opts = {
           lsp = {
             auto_attach = true,
+            preference = { "pyright" },
           },
           click = true,
         },
@@ -96,6 +97,7 @@ return {
       {
         "williamboman/mason.nvim",
         opts = { PATH = "append" },
+        cmd = "Mason",
       },
       {
         "williamboman/mason-lspconfig.nvim",

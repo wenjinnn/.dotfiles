@@ -3,9 +3,11 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     cond = not_vscode,
+    event = "BufRead",
     cmd = "Telescope",
     keys = {
-      "<leader>dc",
+      -- for mason filter
+      { "<leader>L", "<cmd>Mason<CR>", desc = "Mason" },
       { "gd", "<cmd>Telescope lsp_definitions<CR>", desc = "Telescope Lsp Definitions" },
       {
         "gi",

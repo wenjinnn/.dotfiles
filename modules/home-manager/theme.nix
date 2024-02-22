@@ -10,6 +10,10 @@
     adw-gtk3
   ];
 
+  home.sessionVariables = {
+    GTK_THEME = "Adwaita-dark";
+  };
+
   services = {
     xsettingsd = {
       enable = true;

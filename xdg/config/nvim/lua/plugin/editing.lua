@@ -65,7 +65,7 @@ return {
               local _, _, first, second = line_nums:find("(%d+),(%d+)")
               table.insert(ranges, {
                 start = { tonumber(first), 0 },
-                ["end"] = { tonumber(first) + tonumber(second), 0 },
+                ["end"] = { tonumber(first) + tonumber(second) + 1, 0 },
               })
             else
               local first = tonumber(line_nums:match("%d+"))
