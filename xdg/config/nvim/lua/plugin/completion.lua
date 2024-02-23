@@ -20,7 +20,7 @@ return {
   "hrsh7th/nvim-cmp",
   cond = not_vscode,
   module = false,
-  event = "InsertEnter",
+  event = { "InsertEnter", "CmdLineEnter" },
   dependencies = {
     { "rafamadriz/friendly-snippets" },
     { "hrsh7th/vim-vsnip" },
