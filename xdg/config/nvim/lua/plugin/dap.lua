@@ -67,6 +67,7 @@ return {
           dap.list_breakpoints()
           vim.cmd("copen")
         end,
+        desc = "Dap List Breakpoints",
       },
       { "<leader>dd", dap.clear_breakpoints, desc = "Dap Clear Breakpoint" },
       { "<leader>dc", dap.continue, desc = "Dap Continue" },
