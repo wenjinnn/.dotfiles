@@ -115,7 +115,6 @@ export default [
         Group("Applauncher",
             Row({ opt: al.iconSize, title: "Icon Size" }),
             Row({ opt: al.width, title: "Width" }),
-            Row({ opt: al.maxItem, title: "Max Items" }),
         ),
         Group("Overview",
             Row({ opt: ov.scale, title: "Scale", max: 100 }),

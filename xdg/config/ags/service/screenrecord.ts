@@ -83,6 +83,10 @@ class Recorder extends Service {
                     if (dependencies("swappy"))
                         sh(`swappy, -f ${file}`)
                 },
+                "OCR": () => {
+                    if (dependencies("tesseract"))
+                        sh(`tesseract "${file}" - | wl-copy`)
+                },
             },
         })
     }

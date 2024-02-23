@@ -21,6 +21,8 @@
     pavucontrol
     swappy
     brightnessctl
+    playerctl
+    pulseaudio
     gnupg
     libsForQt5.kdeconnect-kde
     swayidle
@@ -310,7 +312,7 @@
             # Applauncher
             "Super, D, exec, ags -b hypr -t applauncher"
             "Super, V, exec, ags -b hypr -t clipboard"
-            "Super, N, exec, ags -b hypr -t dashboard"
+            "Super, N, exec, ags -b hypr -t datemenu"
             # Snapshot
             "SuperShift, S, exec, grim -g \"$(slurp)\" - | wl-copy"
             # Swap windows
@@ -398,26 +400,26 @@
             "SUPER, Semicolon, splitratio, -0.1"
             "SUPER, Apostrophe, splitratio, 0.1"
           ];
-          bindr = let e = "exec, ags -b hypr -r"; in [
+          bindr = [
             "ControlSuperShiftAlt, R, exec, ags -b hypr quit; ags -b hypr"
           ];
-          bindl = let e = "exec, ags -b hypr -r"; in [
+          bindl = [
             ",Print,exec,grim - | wl-copy"
             "ControlSuperShiftAlt, S, exec, systemctl suspend"
-            ",XF86AudioPlay,    ${e} 'mpris?.playPause()'"
-            ",XF86AudioStop,    ${e} 'mpris?.stop()'"
-            ",XF86AudioPause,   ${e} 'mpris?.pause()'"
-            ",XF86AudioPrev,    ${e} 'mpris?.previous()'"
-            ",XF86AudioNext,    ${e} 'mpris?.next()'"
-            ",XF86AudioMicMute, ${e} 'audio.microphone.isMuted = !audio.microphone.isMuted'"
+            ",XF86AudioPlay,    exec, playerctl play-pause"
+            ",XF86AudioStop,    exec, playerctl pause"
+            ",XF86AudioPause,   exec, playerctl pause"
+            ",XF86AudioPrev,    exec, playerctl previous"
+            ",XF86AudioNext,    exec, playerctl next"
+            ",XF86AudioMicMute, exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle"
           ];
-          bindle = let e = "exec, ags -b hypr -r"; in [
-            ",XF86MonBrightnessUp,   ${e} 'brightness.screen += 0.05; indicator.display()'"
-            ",XF86MonBrightnessDown, ${e} 'brightness.screen -= 0.05; indicator.display()'"
-            ",XF86KbdBrightnessUp,   ${e} 'brightness.kbd++; indicator.kbd()'"
-            ",XF86KbdBrightnessDown, ${e} 'brightness.kbd--; indicator.kbd()'"
-            ",XF86AudioRaiseVolume,  ${e} 'audio.speaker.volume += 0.05; indicator.speaker()'"
-            ",XF86AudioLowerVolume,  ${e} 'audio.speaker.volume -= 0.05; indicator.speaker()'"
+          bindle =  [
+        ",XF86MonBrightnessUp,   exec, brightnessctl set +5%"
+        ",XF86MonBrightnessDown, exec, brightnessctl set  5%-"
+        ",XF86KbdBrightnessUp,   exec, brightnessctl -d asus::kbd_backlight set +1"
+        ",XF86KbdBrightnessDown, exec, brightnessctl -d asus::kbd_backlight set  1-"
+        ",XF86AudioRaiseVolume,  exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
+        ",XF86AudioLowerVolume,  exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
           ];
         };
       };

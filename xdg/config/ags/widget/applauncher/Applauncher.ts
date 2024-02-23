@@ -1,5 +1,5 @@
 import PopupWindow, { Padding } from "widget/PopupWindow"
-import { AppItem, QuickButton } from "./AppItem"
+import { AppItem } from "./AppItem"
 import icons from "lib/icons"
 import options from "options"
 import type Gtk from "gi://Gtk?version=3.0"
@@ -7,10 +7,10 @@ import { launchApp } from "lib/utils"
 
 const apps = await Service.import("applications")
 const { query } = apps
-const { width, margin, maxItem, favorites } = options.applauncher
+const { width, margin } = options.applauncher
 
 const SeparatedAppItem = (app: Parameters<typeof AppItem>[0]) => Widget.Revealer(
-    { attribute: { app } },
+    { attribute: { app }, reveal_child: true },
     Widget.Box<Gtk.Widget>(
         { vertical: true },
         Widget.Separator(),
@@ -39,8 +39,8 @@ const Applauncher = () => {
         on_change: ({ text }) => {
             first = query(text || "")[0]
             list.children.reduce((i, item) => {
-                if (!text || i >= maxItem.value) {
-                    item.reveal_child = false
+                if (!text) {
+                    item.reveal_child = true
                     return i
                 }
                 if (item.attribute.app.match(text)) {
@@ -53,30 +53,11 @@ const Applauncher = () => {
         },
     })
 
-    const quicklaunch = Widget.Revealer({
-        setup: self => self.hook(entry, () => self.reveal_child = !entry.text, "notify::text"),
-        visible: favorites.bind().as(f => f.length > 0),
-        child: Widget.Box({
-            vertical: true,
-            children: favorites.bind().as(favs => favs.flatMap(fs => [
-                Widget.Separator(),
-                Widget.Box({
-                    class_name: "quicklaunch horizontal",
-                    children: fs
-                        .map(f => query(f)?.[0])
-                        .filter(f => f)
-                        .map(QuickButton),
-                }),
-            ])),
-        }),
-    })
-
     function focus() {
-        entry.text = "Search"
+        entry.text = ""
         entry.set_position(-1)
         entry.select_region(0, -1)
         entry.grab_focus()
-        quicklaunch.reveal_child = true
     }
 
     const layout = Widget.Box({
@@ -94,8 +75,10 @@ const Applauncher = () => {
         }),
         children: [
             entry,
-            quicklaunch,
-            list,
+            Widget.Scrollable({
+                hscroll: "never",
+                child: list,
+            }),
         ],
     })
 

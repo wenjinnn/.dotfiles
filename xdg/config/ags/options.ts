@@ -138,29 +138,11 @@ const options = mkOptions(OPTIONS, {
         iconSize: opt(62),
         width: opt(350),
         margin: opt(80),
-        maxItem: opt(0),
-        favorites: opt([
-            [
-                "microsoft-edge",
-                "org.gnome.Nautilus",
-                "org.gnome.Settings",
-                "mpv",
-                "bottles",
-            ],
-            [
-                "foot",
-                "org.gnome.Calendar",
-                "discord",
-                "org.telegram.desktop",
-                "code",
-            ],
-        ]),
     },
 
     clipboard: {
         width: opt(350),
         margin: opt(80),
-        maxItem: opt(6),
     },
 
     overview: {
@@ -186,7 +168,7 @@ const options = mkOptions(OPTIONS, {
         },
         width: opt(380),
         position: opt<"left" | "center" | "right">("right"),
-        networkSettings: opt("gtk-launch gnome-control-center"),
+        networkSettings: opt("gtk-launch gnome-control-center wifi"),
         media: {
             monochromeIcon: opt(true),
             coverSize: opt(100),
@@ -214,7 +196,7 @@ const options = mkOptions(OPTIONS, {
     },
 
     notifications: {
-        position: opt<Array<"top" | "bottom" | "left" | "right">>(["top", "right"]),
+        position: opt<Array<"top" | "bottom" | "left" | "right">>(["top"]),
         blacklist: opt(["Spotify"]),
         width: opt(440),
     },
