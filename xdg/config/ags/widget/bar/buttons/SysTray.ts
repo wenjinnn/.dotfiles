@@ -35,6 +35,4 @@ const SysTrayItem = (item: TrayItem) => PanelButton({
 })
 
 export default () => Widget.Box()
-    .bind("children", systemtray, "items", i => i
-        .filter(({ id }) => !ignore.value.includes(id))
-        .map(SysTrayItem))
+    .bind("children", systemtray, "items", i => i.map(SysTrayItem))
