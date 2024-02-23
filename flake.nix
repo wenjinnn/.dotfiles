@@ -26,6 +26,7 @@
 
     nixos-wsl.url = "github:/nix-community/NixOS-WSL";
     nur.url = "github:nix-community/NUR";
+    matugen.url = "github:InioX/matugen";
 
     # Home manager
     home-manager.url = "github:nix-community/home-manager/release-23.11";

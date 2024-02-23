@@ -10,15 +10,16 @@
     inputs.ags.homeManagerModules.default
   ];
   home.packages = with pkgs; [
-    sassc
+    inputs.matugen.packages.${pkgs.system}.default
+    dart-sass
+    bun
   ];
   # ags
   programs.ags = {
     enable = true;
     configDir = ../../xdg/config/ags;
     extraPackages = with pkgs; [
-      libgtop
-      libsoup_3
+      accountsservice
     ];
   };
 

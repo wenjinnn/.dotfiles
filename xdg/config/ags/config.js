@@ -1,23 +1,38 @@
-import { readFile } from 'resource:///com/github/Aylur/ags/utils.js';
-import App from 'resource:///com/github/Aylur/ags/app.js';
-import GLib from 'gi://GLib';
-const pkgjson = JSON.parse(readFile(App.configDir + '/package.json'));
-
-const SKIP_CHECK = 'AGS_SKIP_V_CHECK';
-
 const v = {
-    ags: `v${pkg.version}`,
-    expected: `v${pkgjson.version}`,
-    check: !GLib.getenv(SKIP_CHECK),
-};
-
-function mismatch() {
-    print(`my config expects ${v.expected}, but your ags is ${v.ags}`);
-    print(`to skip the check run "${SKIP_CHECK}=true ags"`);
-    App.connect('config-parsed', app => app.Quit());
-    return {};
+    ags: pkg.version.split(".").map(Number),
+    expect: [1, 7, 8],
 }
 
-export default v.ags === v.expected || !v.check
-    ? (await import('./js/main.js')).default
-    : mismatch();
+function mismatch() {
+    print(`my config needs at least v${v.expect.join(".")}, yours is v${v.ags.join(".")}`)
+    App.connect("config-parsed", app => app.Quit())
+    return {}
+}
+
+function check() {
+    if (v.ags[1] < v.expect[1])
+        return false
+
+    if (v.ags[2] < v.expect[2])
+        return false
+
+    return true
+}
+
+const main = "/tmp/ags/main.js"
+const outdir = `${App.configDir}/main.ts`
+
+try {
+    await Utils.execAsync([
+        "bun", "build", outdir,
+        "--outfile", main,
+        "--external", "resource://*",
+        "--external", "gi://*",
+        "--external", "file://*",
+    ])
+} catch (error) {
+    console.error(error)
+    App.quit()
+}
+
+export default check() ? (await import(`file://${main}`)).default : mismatch()
