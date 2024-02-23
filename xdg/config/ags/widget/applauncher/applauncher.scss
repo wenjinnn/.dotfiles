@@ -3,15 +3,7 @@
 
 window#applauncher .applauncher {
     @include floating_widget;
-
-    .quicklaunch {
-        @include spacing;
-
-        button {
-            @include button($flat: true);
-            padding: $padding;
-        }
-    }
+    min-height: 620px;
 
     entry {
         @include button;
@@ -32,6 +24,11 @@ window#applauncher .applauncher {
     separator {
         margin: 4pt 0;
         background-color: $popover-border-color;
+    }
+
+    scrolledwindow {
+        @include scrollable;
+        min-height: 550px;
     }
 
     button.app-item {

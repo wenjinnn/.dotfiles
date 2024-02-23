@@ -59,6 +59,11 @@ export const Header = () => Widget.Box<Gtk.Widget>(
             App.openWindow("settings-dialog")
         },
     }),
+    Widget.Button({
+        vpack: "center",
+        child: Widget.Icon(icons.ui.lock),
+        on_clicked: () => Utils.execAsync(["swaylock"]),
+    }),
     SysButton("logout"),
     SysButton("shutdown"),
 )

@@ -3,6 +3,7 @@ import "lib/init"
 import options from "options"
 import Bar from "widget/bar/Bar"
 import Applauncher from "widget/applauncher/Applauncher"
+import Clipboard from "widget/clipboard/Clipboard"
 import Overview from "widget/overview/Overview"
 import PowerMenu from "widget/powermenu/PowerMenu"
 import Verification from "widget/powermenu/Verification"
@@ -33,6 +34,7 @@ export default config({
         ...forMonitors(ScreenCorners),
         ...forMonitors(OSD),
         Applauncher(),
+        Clipboard(),
         Overview(),
         PowerMenu(),
         Verification(),

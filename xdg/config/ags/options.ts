@@ -90,7 +90,7 @@ const options = mkOptions(OPTIONS, {
             },
             label: {
                 colored: opt(false),
-                label: opt(" Applications"),
+                label: opt(""),
             },
             action: opt(() => App.toggleWindow("applauncher")),
         },
@@ -110,7 +110,7 @@ const options = mkOptions(OPTIONS, {
             workspaces: opt(7),
         },
         taskbar: {
-            monochrome: opt(true),
+            monochrome: opt(false),
             exclusive: opt(false),
         },
         messages: {
@@ -136,37 +136,44 @@ const options = mkOptions(OPTIONS, {
 
     applauncher: {
         iconSize: opt(62),
-        width: opt(0),
+        width: opt(350),
         margin: opt(80),
-        maxItem: opt(6),
+        maxItem: opt(0),
         favorites: opt([
             [
-                "firefox",
+                "microsoft-edge",
                 "org.gnome.Nautilus",
-                "obsidian",
-                "spotify",
+                "org.gnome.Settings",
+                "mpv",
                 "bottles",
             ],
             [
-                "wezterm",
+                "foot",
                 "org.gnome.Calendar",
                 "discord",
-                "teams-for-linux",
-                "caprine",
+                "org.telegram.desktop",
+                "code",
             ],
         ]),
+    },
+
+    clipboard: {
+        width: opt(350),
+        margin: opt(80),
+        maxItem: opt(6),
     },
 
     overview: {
         scale: opt(9),
         workspaces: opt(7),
-        monochromeIcon: opt(true),
+        monochromeIcon: opt(false),
     },
 
     powermenu: {
+        hibernate: opt("systemctl hibernate"),
         sleep: opt("systemctl suspend"),
         reboot: opt("systemctl reboot"),
-        logout: opt("pkill Hyprland"),
+        logout: opt("hyprctl dispatch exit"),
         shutdown: opt("shutdown now"),
         layout: opt<"line" | "box">("line"),
         labels: opt(true),

@@ -1,18 +1,9 @@
 @use "sass:math";
 @use "sass:color";
 
-window#applauncher .applauncher {
+window#clipboard .clipboard {
     @include floating_widget;
-    min-height: 600px;
-
-    .quicklaunch {
-        @include spacing;
-
-        button {
-            @include button($flat: true);
-            padding: $padding;
-        }
-    }
+    min-height: 620px;
 
     entry {
         @include button;
@@ -32,11 +23,15 @@ window#applauncher .applauncher {
 
     separator {
         margin: 4pt 0;
-        min-height: 1px;
         background-color: $popover-border-color;
     }
 
-    button.app-item {
+    scrolledwindow {
+        @include scrollable;
+        min-height: 550px;
+    }
+
+    button.clip-item {
         @include button($flat: true, $reactive: false);
 
         >box {

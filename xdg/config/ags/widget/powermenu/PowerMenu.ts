@@ -33,6 +33,7 @@ export default () => PopupWindow({
         children: layout.bind().as(layout => {
             switch (layout) {
                 case "line": return [
+                    SysButton("hibernate", "Hibernate"),
                     SysButton("shutdown", "Shutdown"),
                     SysButton("logout", "Log Out"),
                     SysButton("reboot", "Reboot"),

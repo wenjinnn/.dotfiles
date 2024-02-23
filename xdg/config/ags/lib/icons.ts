@@ -63,11 +63,11 @@ export default {
         },
         mixer: "mixer-symbolic",
     },
-    asusctl: {
+    power: {
         profile: {
-            Balanced: "power-profile-balanced-symbolic",
-            Quiet: "power-profile-power-saver-symbolic",
-            Performance: "power-profile-performance-symbolic",
+            balanced: "power-profile-balanced-symbolic",
+            "power-saver": "power-profile-power-saver-symbolic",
+            performance: "power-profile-performance-symbolic",
         },
         mode: {
             Integrated: "processor-symbolic",
@@ -88,6 +88,7 @@ export default {
         screen: "display-brightness-symbolic",
     },
     powermenu: {
+        hibernate: "weather-few-clouds-night-symbolic",
         sleep: "weather-clear-night-symbolic",
         reboot: "system-reboot-symbolic",
         logout: "system-log-out-symbolic",

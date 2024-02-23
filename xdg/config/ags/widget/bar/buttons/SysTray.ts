@@ -4,7 +4,6 @@ import Gdk from "gi://Gdk"
 import options from "options"
 
 const systemtray = await Service.import("systemtray")
-const { ignore } = options.bar.systray
 
 const SysTrayItem = (item: TrayItem) => PanelButton({
     class_name: "tray-item",

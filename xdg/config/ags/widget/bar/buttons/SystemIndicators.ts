@@ -1,19 +1,14 @@
 import PanelButton from "../PanelButton"
 import icons from "lib/icons"
-import asusctl from "service/asusctl"
-
 const notifications = await Service.import("notifications")
 const bluetooth = await Service.import("bluetooth")
 const audio = await Service.import("audio")
 const network = await Service.import("network")
+const powerprofiles = await Service.import("powerprofiles")
 
 const ProfileIndicator = () => Widget.Icon()
-    .bind("visible", asusctl, "profile", p => p !== "Balanced")
-    .bind("icon", asusctl, "profile", p => icons.asusctl.profile[p])
-
-const ModeIndicator = () => Widget.Icon()
-    .bind("visible", asusctl, "mode", m => m !== "Hybrid")
-    .bind("icon", asusctl, "mode", m => icons.asusctl.mode[m])
+    .bind("visible", powerprofiles, "active_profile", p => p !== "Balanced")
+    .bind("icon", powerprofiles, "active_profile", p => icons.power.profile[p])
 
 const MicrophoneIndicator = () => Widget.Icon()
     .hook(audio, self => self.visible =
@@ -69,9 +64,7 @@ export default () => PanelButton({
     on_scroll_down: () => audio.speaker.volume -= 0.02,
     child: Widget.Box([
         // @ts-expect-error
-        asusctl?.available && ProfileIndicator(),
-        // @ts-expect-error
-        asusctl?.available && ModeIndicator(),
+        ProfileIndicator(),
         DNDIndicator(),
         BluetoothIndicator(),
         NetworkIndicator(),

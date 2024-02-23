@@ -38,7 +38,7 @@ export default () => PopupWindow({
                     }),
                     Widget.Button({
                         child: Widget.Label("Yes"),
-                        on_clicked: () => Utils.exec(powermenu.cmd),
+                        on_clicked: () => setTimeout(() => { Utils.exec(powermenu.cmd) }, 500),
                     }),
                 ],
             }),
