@@ -129,7 +129,8 @@
           Description = "switch random wallpaper powered by swww timer";
         };
         Timer = {
-          OnCalendar = "hourly";
+          OnUnitActiveSec = "30min";
+          OnBootSec = "30min";
         };
         Install = { WantedBy = [ "timers.target" ]; };
       };
