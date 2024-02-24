@@ -27,6 +27,7 @@ export default config({
         "overview": options.transition.value,
         "quicksettings": options.transition.value,
         "datemenu": options.transition.value,
+        "clipboard": options.transition.value,
     },
     windows: [
         ...forMonitors(Bar),
