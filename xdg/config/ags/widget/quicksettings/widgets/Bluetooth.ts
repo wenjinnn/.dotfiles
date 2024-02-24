@@ -57,5 +57,15 @@ export const BluetoothDevices = () => Menu({
                 .filter(d => d.name)
                 .map(DeviceItem)),
         }),
+        Widget.Separator(),
+        Widget.Button({
+            on_clicked: () => Utils.execAsync("blueberry"),
+            child: Widget.Box({
+                children: [
+                    Widget.Icon(icons.ui.settings),
+                    Widget.Label("Blueberry"),
+                ],
+            }),
+        }),
     ],
 })
