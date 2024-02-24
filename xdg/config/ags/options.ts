@@ -2,9 +2,9 @@ import { type BarWidget } from "widget/bar/Bar"
 import { opt, mkOptions } from "lib/option"
 
 const options = mkOptions(OPTIONS, {
-    autotheme: opt(false),
+    autotheme: opt(true),
 
-    wallpaper: opt(`/home/${USER}/.config/background`, { persistent: true }),
+    wallpaper: opt(`/home/${USER}/Pictures/wallpaper`, { persistent: true }),
 
     theme: {
         dark: {

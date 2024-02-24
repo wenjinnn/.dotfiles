@@ -1,8 +1,8 @@
 import options from "options"
 import { dependencies, sh } from "./utils"
 
-// this is where the gtk portal sets the wallpaper
-const WP = `/home/${Utils.USER}/.config/background`
+// this is where the swww-switch sets the wallpaper
+const WP = `/home/${Utils.USER}/Pictures/wallpaper`
 
 async function wallpaper() {
     const pos = await sh("hyprctl cursorpos")
