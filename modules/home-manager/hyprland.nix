@@ -72,20 +72,23 @@
       bingwallpaper-get = {
         Unit = {
           Description = "Download bing wallpaper to target path";
+          Before = "swww-next.service";
+          Wants = "swww-next.service";
         };
         Service = {
           Type = "oneshot";
           Environment = "HOME=${config.home.homeDirectory}";
-          ExecStart = "${pkgs.bingwallpaper-get}/bin/bingwallpaper-get && ${pkgs.swww-switch}/bin/swww-switch 0";
+          ExecStart = "${pkgs.bingwallpaper-get}/bin/bingwallpaper-get";
         };
         Install = {
           WantedBy = [ "default.target" ];
         };
 
       };
-      swww-switch = {
+      swww-next = {
         Unit = {
-          Description = "switch randowm wallpaper powered by swww";
+          Description = "switch newest wallpaper powered by swww";
+          After = "bingwallpaper-get.service";
         };
         Service = {
           Type = "oneshot";
@@ -95,7 +98,20 @@
         Install = {
           WantedBy = [ "default.target" ];
         };
-
+      };
+      swww-random = {
+        Unit = {
+          Description = "switch random wallpaper powered by swww";
+          After = "bingwallpaper-get.service";
+        };
+        Service = {
+          Type = "oneshot";
+          Environment = "HOME=${config.home.homeDirectory}";
+          ExecStart = "${pkgs.swww-switch}/bin/swww-switch random";
+        };
+        Install = {
+          WantedBy = [ "default.target" ];
+        };
       };
     };
     timers = {
@@ -108,9 +124,9 @@
         };
         Install = { WantedBy = [ "timers.target" ]; };
       };
-      swww-switch = {
+      swww-random = {
         Unit = {
-          Description = "switch randowm wallpaper powered by swww timer";
+          Description = "switch random wallpaper powered by swww timer";
         };
         Timer = {
           OnCalendar = "hourly";
@@ -166,6 +182,7 @@
             "QT_AUTO_SCREEN_SCALE_FACTOR, 1"
             "CLUTTER_BACKEND, wayland"
             "ADW_DISABLE_PORTAL, 1"
+            "GDK_SCALE,2"
             "XCURSOR_SIZE, 24"
           ];
           exec-once = [
@@ -252,6 +269,9 @@
               "fade, 1, 7, default"
               "workspaces, 1, 6, default"
             ];
+          };
+          xwayland = {
+            force_zero_scaling = true;
           };
           misc = {
             vfr = true;
