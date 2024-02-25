@@ -72,8 +72,6 @@
       bingwallpaper-get = {
         Unit = {
           Description = "Download bing wallpaper to target path";
-          Before = "swww-next.service";
-          Wants = "swww-next.service";
         };
         Service = {
           Type = "oneshot";
@@ -89,6 +87,7 @@
         Unit = {
           Description = "switch newest wallpaper powered by swww";
           After = "bingwallpaper-get.service";
+          BindsTo = "bingwallpaper-get.service";
         };
         Service = {
           Type = "oneshot";
@@ -96,7 +95,10 @@
           ExecStart = "${pkgs.swww-switch}/bin/swww-switch";
         };
         Install = {
-          WantedBy = [ "default.target" ];
+          WantedBy = [
+            "default.target"
+            "bingwallpaper-get.service"
+          ];
         };
       };
       swww-random = {
