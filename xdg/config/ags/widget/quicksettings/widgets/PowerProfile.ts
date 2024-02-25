@@ -15,9 +15,9 @@ export const ProfileToggle = () => ArrowToggleButton({
     name: "power-profile",
     icon: profile.as(p => icons.powerprofile[p]),
     label: profile.as(pertty),
-    connection: [pp, () => pp.active_profile !== profiles[1]],
-    activate: () => pp.active_profile = profiles[0],
-    deactivate: () => pp.active_profile = profiles[1],
+    connection: [pp, () => pp.active_profile !== profiles[0]],
+    activate: () => pp.active_profile = profiles[2],
+    deactivate: () => pp.active_profile = profiles[0],
     activateOnArrow: false,
 })
 
