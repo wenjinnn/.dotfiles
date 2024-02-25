@@ -63,16 +63,10 @@ export default {
         },
         mixer: "mixer-symbolic",
     },
-    power: {
-        profile: {
-            balanced: "power-profile-balanced-symbolic",
-            "power-saver": "power-profile-power-saver-symbolic",
-            performance: "power-profile-performance-symbolic",
-        },
-        mode: {
-            Integrated: "processor-symbolic",
-            Hybrid: "controller-symbolic",
-        },
+    powerprofile: {
+        balanced: "power-profile-balanced-symbolic",
+        "power-saver": "power-profile-power-saver-symbolic",
+        performance: "power-profile-performance-symbolic",
     },
     battery: {
         charging: "battery-flash-symbolic",

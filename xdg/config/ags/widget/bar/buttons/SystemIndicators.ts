@@ -8,7 +8,7 @@ const powerprofiles = await Service.import("powerprofiles")
 
 const ProfileIndicator = () => Widget.Icon()
     .bind("visible", powerprofiles, "active_profile", p => p !== "Balanced")
-    .bind("icon", powerprofiles, "active_profile", p => icons.power.profile[p])
+    .bind("icon", powerprofiles, "active_profile", p => icons.powerprofile[p])
 
 const MicrophoneIndicator = () => Widget.Icon()
     .hook(audio, self => self.visible =
@@ -63,7 +63,6 @@ export default () => PanelButton({
     on_scroll_up: () => audio.speaker.volume += 0.02,
     on_scroll_down: () => audio.speaker.volume -= 0.02,
     child: Widget.Box([
-        // @ts-expect-error
         ProfileIndicator(),
         DNDIndicator(),
         BluetoothIndicator(),

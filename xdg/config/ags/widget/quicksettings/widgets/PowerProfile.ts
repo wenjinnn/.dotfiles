@@ -1,21 +1,29 @@
 import icons from "lib/icons"
 import { ArrowToggleButton, Menu } from "../ToggleButton"
 
-const powerprofiles = await Service.import("powerprofiles")
+
+const pp = await Service.import("powerprofiles")
+const profile = pp.bind("active_profile")
+const profiles = pp.profiles.map(p => p.Profile)
+
+const pertty = (str: string) => str
+    .split("-")
+    .map(str => `${str.at(0)?.toUpperCase()}${str.slice(1)}`)
+    .join(" ")
 
 export const ProfileToggle = () => ArrowToggleButton({
     name: "power-profile",
-    icon: powerprofiles.bind("active-profile").as(p => icons.power.profile[p]),
-    label: powerprofiles.bind("active-profile").as(p => p.substring(0, 1).toUpperCase() + p.substring(1)),
-    connection: [powerprofiles, () => powerprofiles.active_profile !== "power-saver"],
-    activate: () => powerprofiles.active_profile = "performance",
-    deactivate: () => powerprofiles.active_profile = "power-saver",
+    icon: profile.as(p => icons.powerprofile[p]),
+    label: profile.as(pertty),
+    connection: [pp, () => pp.active_profile !== profiles[1]],
+    activate: () => pp.active_profile = profiles[0],
+    deactivate: () => pp.active_profile = profiles[1],
     activateOnArrow: false,
 })
 
 export const ProfileSelector = () => Menu({
     name: "power-profile",
-    icon: powerprofiles.bind("active-profile").as(p => icons.power.profile[p]),
+    icon: profile.as(p => icons.powerprofile[p]),
     title: "Profile Selector",
     content: [
         Widget.Box({
@@ -24,16 +32,13 @@ export const ProfileSelector = () => Menu({
             children: [
                 Widget.Box({
                     vertical: true,
-                    children: powerprofiles.profiles.map(prof =>
+                    children: profiles.map(prof =>
                         Widget.Button({
-                            on_clicked: () => powerprofiles.active_profile = prof.Profile,
+                            on_clicked: () => pp.active_profile = prof,
                             child: Widget.Box({
                                 children: [
-                                    Widget.Icon(icons.power.profile[prof.Profile]),
-                                    Widget.Label({
-                                        label: prof.Profile.substring(0, 1).toUpperCase() + prof.Profile.substring(1),
-                                    },
-                                    ),
+                                    Widget.Icon(icons.powerprofile[prof]),
+                                    Widget.Label(pertty(prof)),
                                 ],
                             }),
                         }),

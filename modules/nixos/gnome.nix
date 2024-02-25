@@ -18,7 +18,6 @@
   programs.dconf.enable = true;
   services = {
     sysprof.enable = true;
-    gvfs.enable = true;
     gnome = {
       evolution-data-server.enable = true;
       glib-networking.enable = true;
