@@ -47,8 +47,9 @@ set undofile
 set undodir=~/.local/share/nvim/undo
 set noshowmode
 set wrap
-set foldmethod=marker
-set foldlevelstart=99
+set foldmethod=indent
+set foldlevel=99
+set foldtext=v:lua.require'util'.foldtext()
 if !exists('g:vscode')
     colorscheme vscode
 endif
@@ -97,5 +98,7 @@ set shortmess+=c
 set sessionoptions+=winpos
 " set sessionoptions+=options,resize,winpos,terminal
 if has('nvim-0.10')
+    set foldmethod=expr
+    set foldexpr=v:lua.require'util'.foldexpr()
     set smoothscroll
 endif
