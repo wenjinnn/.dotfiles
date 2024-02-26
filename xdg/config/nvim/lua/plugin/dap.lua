@@ -60,7 +60,7 @@ return {
       dap_cursor_float(dap_widgets.sessions, "dap-sessions")
     end
     return {
-      { "<leader>db", dap.toggle_breakpoint },
+      { "<leader>db", dap.toggle_breakpoint, desc = "Dap Toggle Breakpoint" },
       {
         "<leader>dq",
         function()
