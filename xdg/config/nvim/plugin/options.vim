@@ -49,7 +49,7 @@ set noshowmode
 set wrap
 set foldmethod=indent
 set foldlevel=99
-set foldtext=v:lua.require'util'.foldtext()
+" set foldtext=v:lua.require'util'.foldtext()
 if !exists('g:vscode')
     colorscheme vscode
 endif
