@@ -115,7 +115,7 @@ const options = mkOptions(OPTIONS, {
         taskbar: {
             monochrome: opt(false),
             iconSize: opt(0),
-            exclusive: opt(true),
+            exclusive: opt(false),
         },
         messages: {
             action: opt(() => App.toggleWindow("datemenu")),
