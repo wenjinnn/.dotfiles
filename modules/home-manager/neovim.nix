@@ -24,6 +24,7 @@
 
   home.sessionVariables = {
     JAVA_8_HOME = "${pkgs.jdk8}/lib/openjdk";
+    JAVA_17_HOME = "${pkgs.jdk17}/lib/openjdk";
     JAVA_21_HOME = "${pkgs.jdk21}/lib/openjdk";
     ESLINT_LIBRARY = "${pkgs.vscode-langservers-extracted}/lib/node_modules/vscode-langservers-extracted/node_modules";
     LAZY_NVIM_LOCK_PATH = "${repoPath}/xdg/config/nvim/";
