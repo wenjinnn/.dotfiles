@@ -2,7 +2,6 @@ filetype on
 filetype plugin on
 set noeb
 syntax on
-set signcolumn=yes
 set grepprg=rg\ --vimgrep
 set grepformat=%f:%l:%c:%m
 set formatoptions=jcroqlnt
@@ -41,6 +40,7 @@ set list
 if &buftype != 'terminal'
     set listchars=tab:>-,precedes:«,extends:»,trail:·,lead:·,eol:↴
 else
+    set signcolumn=yes
     set listchars=tab:>-,precedes:«,extends:»,trail:·,lead:·
 endif
 set undofile
