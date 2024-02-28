@@ -35,6 +35,7 @@ function M.setup()
     end
     require("jdtls").setup_dap()
     require("jdtls.dap").setup_dap_main_class_configs()
+    -- for all launch.json options see https://github.com/microsoft/vscode-java-debug#options
     require("dap.ext.vscode").load_launchjs()
     lsp.setup(client, bufnr)
     local opts = lsp.opts

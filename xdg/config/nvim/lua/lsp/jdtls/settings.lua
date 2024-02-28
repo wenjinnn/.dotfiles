@@ -138,7 +138,7 @@ local M = {
         ind = "    ",
       },
     },
-    home = java_21_home or "/usr/lib/jvm/java-17-openjdk/",
+    home = java_21_home or "/usr/lib/jvm/java-21-openjdk/",
     configuration = {
       updateBuildConfiguration = "automatic",
       maven = {
