@@ -42,3 +42,5 @@ $ home-manager switch --flake .#wenjin@nixos
 ```
 
 Also you may need to unset some [substituters](https://github.com/wenjinnn/config/blob/1d08b37c56696a953e1c40c0ea9307acf0c1539d/nixos/configuration.nix#L96) if download speed to slow.
+
+For other distributions, the files under [xdg](https://github.com/wenjinnn/config/tree/main/xdg) could directly put on [xdg base dir](https://wiki.archlinux.org/title/XDG_Base_Directory) (e.g you should put the file under `xdg/config` to $XDG_CONFIG_HOME), if you want try.
