@@ -10,7 +10,7 @@ LSP config and settings
 * define a attach function at `<lspname>/init.lua` will auto execute by particular lsp
 
 [./lua/plugin](https://github.com/wenjinnn/config/tree/main/xdg/config/nvim/lua/plugin)
-plugins with settings and keymap
+plugins with particular settings and keymap
 
 [./lua/util](https://github.com/wenjinnn/config/tree/main/xdg/config/nvim/lua/plugin)
 common utils
@@ -55,7 +55,7 @@ Defined environment variables cheatsheets:
 #### Must have
 1. [ripgrep](https://github.com/BurntSushi/ripgrep) and [fd](https://github.com/sharkdp/fd) for many plugin.
 
-#### recommend
+#### Recommend
 1. [tmux](https://github.com/tmux/tmux) & [oh-my-tmux](https://github.com/gpakosz/.tmux) for terminal multiplexing, I'm using only at wsl.
 2. [lazygit](https://github.com/jesseduffield/lazygit) smooth git operation.
 
