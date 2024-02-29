@@ -19,7 +19,7 @@ repo's structure base on [nix-starter-config#standard](https://github.com/Mister
 
 The [ags config](https://github.com/wenjinnn/config/tree/nixos/xdg/config/ags) base on [Aylur/dotfiles](https://github.com/Aylur/dotfiles), with these different:
 
-* add hibernate button for powermenu, need to set swap to let it work.  
+* add hibernate button for powermenu, need to setup swap to make it work.  
 * use [swaylock-effects](https://github.com/jirutka/swaylock-effects) instead of lockscreen.js (more security, see this [issue](https://github.com/Aylur/dotfiles/issues/72))  
 * add a clipboard menu depends on [cliphist](https://github.com/sentriz/cliphist)
 * some bug fix for chinese font and [more](https://github.com/Aylur/dotfiles/issues/122)
@@ -43,4 +43,4 @@ $ home-manager switch --flake .#wenjin@nixos
 
 Also you may need to unset some [substituters](https://github.com/wenjinnn/config/blob/1d08b37c56696a953e1c40c0ea9307acf0c1539d/nixos/configuration.nix#L96) if download speed to slow.
 
-For other distributions, the files under [xdg](https://github.com/wenjinnn/config/tree/main/xdg) could directly put on [xdg base dir](https://wiki.archlinux.org/title/XDG_Base_Directory) (e.g you should put the file under `xdg/config` to $XDG_CONFIG_HOME), if you want try.
+For other distributions, things under [xdg](https://github.com/wenjinnn/config/tree/main/xdg) could directly put on [xdg base dir](https://wiki.archlinux.org/title/XDG_Base_Directory) (e.g. you should put the file under `xdg/config` to $XDG_CONFIG_HOME), if you want try.
