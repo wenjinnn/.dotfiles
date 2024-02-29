@@ -93,6 +93,7 @@ vim.api.nvim_create_autocmd("FileType", {
     "notify",
     "qf",
     "query",
+    "git",
     "spectre_panel",
     "startuptime",
     "tsplayground",
