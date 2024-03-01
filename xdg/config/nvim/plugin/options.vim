@@ -10,7 +10,7 @@ set inccommand=nosplit
 set cmdheight=1
 set showcmd
 set ruler
-set laststatus=2
+set laststatus=0
 set number
 set cursorline
 set whichwrap+=<,>,h,l
