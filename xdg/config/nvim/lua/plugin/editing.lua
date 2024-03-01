@@ -169,7 +169,6 @@ return {
     build = ":TSUpdate",
     event = { "BufReadPre" },
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
-    cond = not_vscode,
     init = function(plugin)
       -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
       -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
@@ -196,16 +195,11 @@ return {
       ignore_install = {}, -- List of parsers to ignore installing
       auto_install = true,
       highlight = {
-        enable = true, -- false will disable the whole extension
+        enable = not_vscode, -- false will disable the whole extension
       },
       indent = { enable = true },
       autopairs = {
-        enable = true,
-      },
-      rainbow = {
-        enable = true,
-        extended_mode = true, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
-        -- max_file_lines = 1000, -- Do not enable for files with more than 1000 lines, int
+        enable = not_vscode,
       },
       textobjects = {
         select = {
