@@ -30,7 +30,7 @@ return {
   },
   {
     "nvim-lualine/lualine.nvim",
-    event = "BufRead",
+    event = "UIEnter",
     cond = not_vscode,
     keys = {
       {
@@ -76,7 +76,7 @@ return {
           component_separators = { left = "│", right = "│" },
           section_separators = { left = "", right = "" },
           disabled_filetypes = {
-            statusline = { "starter" },
+            statusline = {},
             winbar = {},
           },
           ignore_focus = {},
