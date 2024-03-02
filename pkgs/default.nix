@@ -4,4 +4,5 @@
   # example = pkgs.callPackage ./example { };
   bingwallpaper-get = pkgs.callPackage ./bingwallpaper-get { };
   swww-switch = pkgs.callPackage ./swww-switch { };
+  fhs = pkgs.callPackage ./fhs { };
 }

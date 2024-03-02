@@ -78,6 +78,7 @@ if exists('g:vscode')
     nnoremap <leader>fb <cmd>call VSCodeNotify('workbench.action.quickOpenPreviousRecentlyUsedEditor')<CR>
     nnoremap <C-n> <cmd>call VSCodeNotify('workbench.action.quickOpenPreviousRecentlyUsedEditor')<CR>
     nnoremap <C-p> <cmd>call VSCodeNotify('workbench.action.quickOpenLeastRecentlyUsedEditor')<CR>
+    nnoremap <c-\> <cmd>call VSCodeNotify('workbench.action.terminal.toggleTerminal')<CR>
     nnoremap <leader>mm <cmd>call VSCodeNotify('editor.action.formatDocument')<CR>
     vnoremap <leader>mm <cmd>call VSCodeNotifyVisual('editor.action.formatSelection')<CR>
     nnoremap <leader>ca <cmd>call VSCodeNotify('editor.action.quickFix')<CR>

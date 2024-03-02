@@ -14,6 +14,7 @@
     theme
     mpv
     foot
+    vscode
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
@@ -25,7 +26,6 @@
     microsoft-edge
     gimp
     obs-studio
-    unstable.vscode
     scrcpy
     rustdesk
     libreoffice

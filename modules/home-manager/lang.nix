@@ -7,7 +7,7 @@
     gnumake
     cmake
     gcc
-    gdb
+    unstable.gdb
     nodejs
     jdk21
     (maven.override { jdk = pkgs.jdk21; })
