@@ -172,7 +172,7 @@ return {
             if vim_item.menu then
               source = string.format("%s %s", source, vim_item.menu)
             end
-            if source:len() > item_maxwidth then
+            if source ~= nil and source:len() > item_maxwidth then
               source = source:sub(0, item_maxwidth) .. ellipsis_char
             end
             vim_item.menu = source
