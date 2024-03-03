@@ -288,20 +288,27 @@ return {
         main = "null-ls",
         opts = function()
           local null_ls = require("null-ls")
+          local cspell = require("cspell")
           -- register any number of sources simultaneously
           local sources = {
             -- null_ls.builtins.formatting.google_java_format,
-            null_ls.builtins.diagnostics.cspell.with({
+            -- null_ls.builtins.diagnostics.cspell.with({
+            --   diagnostics_postprocess = function(diagnostic)
+            --     diagnostic.severity = vim.diagnostic.severity["INFO"]
+            --   end,
+            -- }),
+            cspell.diagnostics.with({
               diagnostics_postprocess = function(diagnostic)
                 diagnostic.severity = vim.diagnostic.severity["INFO"]
               end,
             }),
-            null_ls.builtins.code_actions.cspell,
+            cspell.code_actions,
             null_ls.builtins.code_actions.gitsigns,
           }
           return { sources = sources }
         end,
       },
+      { "davidmh/cspell.nvim" },
     },
   },
 }
