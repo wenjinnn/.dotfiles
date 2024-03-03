@@ -11,10 +11,12 @@ local item_source = {
   treesitter = "treesitter",
   nvim_lua = "lua",
   latex_symbols = "latex",
+  dap = "dap",
   git = "git",
   ["vim-dadbod-completion"] = "dadbod",
 }
 local item_maxwidth = 50
+local ellipsis_char = "…"
 
 return {
   "hrsh7th/nvim-cmp",
@@ -33,6 +35,7 @@ return {
     { "hrsh7th/cmp-nvim-lsp-signature-help" },
     { "octaltree/cmp-look" },
     { "petertriho/cmp-git" },
+    { "rcarriga/cmp-dap" },
     { "kristijanhusak/vim-dadbod-completion" },
   },
   config = function()
@@ -156,7 +159,7 @@ return {
         format = lspkind.cmp_format({
           mode = "symbol", -- show only symbol annotations
           maxwidth = item_maxwidth, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-          ellipsis_char = "…", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+          ellipsis_char = ellipsis_char, -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
 
           -- The function below will be called before any actual modifications from lspkind
           -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
@@ -165,26 +168,14 @@ return {
             if string.find(abbr, "~", -1, true) then
               vim_item.abbr = string.sub(abbr, 1, string.len(abbr) - 1)
             end
+            local source = (item_source)[entry.source.name]
             if vim_item.menu then
-              local bracket_index = string.find(vim_item.menu, ")", 1, true)
-              if
-                bracket_index and (vim_item.kind == "Method" or vim_item.kind == "Constructor")
-              then
-                vim_item.abbr = vim_item.abbr .. string.sub(vim_item.menu, 1, bracket_index)
-                vim_item.menu =
-                  string.sub(vim_item.menu, bracket_index + 1, string.len(vim_item.menu))
-              end
-              local space_count = item_maxwidth
-                - string.len(vim_item.abbr)
-                - string.len(vim_item.menu)
-              if space_count < 0 then
-                space_count = 0
-              end
-              local space = " "
-              vim_item.abbr =
-                string.format("%s%" .. space_count .. "s%s", vim_item.abbr, space, vim_item.menu)
+              source = string.format("%s %s", source, vim_item.menu)
             end
-            vim_item.menu = (item_source)[entry.source.name]
+            if source:len() > item_maxwidth then
+              source = source:sub(0, item_maxwidth) .. ellipsis_char
+            end
+            vim_item.menu = source
             return vim_item
           end,
         }),
@@ -274,6 +265,15 @@ return {
       sources = cmp.config.sources({
         { name = "buffer" },
       }),
+    })
+    cmp.setup.filetype({ "dap-repl" }, {
+      enabled = function()
+        return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+          or require("cmp_dap").is_dap_buffer()
+      end,
+      sources = {
+        { name = "dap", keyword_length = 1 },
+      },
     })
     require("cmp_git").setup()
   end,

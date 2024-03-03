@@ -17,12 +17,12 @@ return {
     end
 
     -- dap repl completion
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = "dap-repl",
-      callback = function(args)
-        require("dap.ext.autocompl").attach()
-      end,
-    })
+    -- vim.api.nvim_create_autocmd("FileType", {
+    --   pattern = "dap-repl",
+    --   callback = function(args)
+    --     require("dap.ext.autocompl").attach()
+    --   end,
+    -- })
 
     dap.adapters.gdb = {
       type = "executable",
