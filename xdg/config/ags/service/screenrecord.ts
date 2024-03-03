@@ -81,7 +81,7 @@ class Recorder extends Service {
                 "View": () => sh(`xdg-open ${file}`),
                 "Edit": () => {
                     if (dependencies("swappy"))
-                        sh(`swappy, -f ${file}`)
+                        sh(`swappy -f ${file}`)
                 },
                 "OCR": () => {
                     if (dependencies("tesseract"))
