@@ -77,6 +77,7 @@
           Type = "oneshot";
           Environment = "HOME=${config.home.homeDirectory}";
           ExecStart = "${pkgs.bingwallpaper-get}/bin/bingwallpaper-get";
+          ExecStartPost = "${pkgs.swww-switch}/bin/swww-switch";
         };
         Install = {
           WantedBy = [ "default.target" ];
@@ -86,8 +87,6 @@
       swww-next = {
         Unit = {
           Description = "switch newest wallpaper powered by swww";
-          After = "bingwallpaper-get.service";
-          BindsTo = "bingwallpaper-get.service";
         };
         Service = {
           Type = "oneshot";
@@ -95,10 +94,7 @@
           ExecStart = "${pkgs.swww-switch}/bin/swww-switch";
         };
         Install = {
-          WantedBy = [
-            "default.target"
-            "bingwallpaper-get.service"
-          ];
+          WantedBy = [ "default.target" ];
         };
       };
       swww-random = {
