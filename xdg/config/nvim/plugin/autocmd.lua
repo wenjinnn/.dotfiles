@@ -89,6 +89,7 @@ vim.api.nvim_create_autocmd("FileType", {
     "help",
     "lspinfo",
     "dap-float",
+    "dap-repl",
     "man",
     "notify",
     "qf",

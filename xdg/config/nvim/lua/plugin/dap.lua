@@ -23,6 +23,25 @@ return {
         require("dap.ext.autocompl").attach()
       end,
     })
+
+    dap.adapters.gdb = {
+      type = "executable",
+      command = "gdb",
+      args = { "-i", "dap" },
+    }
+
+    dap.configurations.rust = {
+      {
+        name = "Launch",
+        type = "gdb",
+        request = "launch",
+        program = function()
+          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+        end,
+        cwd = "${workspaceFolder}",
+        stopAtBeginningOfMainSubprogram = false,
+      },
+    }
   end,
   keys = function()
     local util = require("util")
@@ -100,7 +119,7 @@ return {
       { "<leader>dB", dap_condition_breakpoint, desc = "Dap Condition Breakpoint" },
       { "<leader>dl", dap_log_breakpoint, desc = "Dap Log Breakpoint" },
       { "<leader>dE", dap_exception_breakpoint, desc = "Dap Exception Breakpoint" },
-      { "<leader>dR", dap.repl_toggle, desc = "Dap Repl Toggle" },
+      { "<leader>dR", dap.repl.toggle, desc = "Dap Repl Toggle" },
       { "<leader>dr", dap.run_last, desc = "Dap Run Last" },
       { "<leader>ds", dap_scopes, desc = "Dap Scopes" },
       { "<leader>df", dap_frames, desc = "Dap Frames" },
