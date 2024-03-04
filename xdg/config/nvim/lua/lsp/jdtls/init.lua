@@ -144,7 +144,7 @@ function M.setup()
       "-Dlog.level=ALL",
       "-Dfile.encoding=utf-8",
       "-Xms256m",
-      "-Xmx1G",
+      -- "-Xmx1G",
       -- "-XX:+UseZGC",
       -- "-XX:GCTimeRatio=4",
       -- "-XX:AdaptiveSizePolicyWeight=90",
