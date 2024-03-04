@@ -1,6 +1,5 @@
 import { Variable } from "resource:///com/github/Aylur/ags/variable.js"
 import { wait } from "./utils"
-import options from "options"
 
 type OptProps = {
     persistent?: boolean
@@ -67,6 +66,8 @@ export function mkOptions<T extends object>(cacheFile: string, object: T) {
     for (const opt of getOptions(object))
         opt.init(cacheFile)
 
+    Utils.ensureDirectory(cacheFile.split("/").slice(0, -1).join("/"))
+
     const configFile = `${TMP}/config.json`
     const values = getOptions(object).reduce((obj, { id, value }) => ({ [id]: value, ...obj }), {})
     Utils.writeFileSync(JSON.stringify(values, null, 2), configFile)
@@ -97,7 +98,7 @@ export function mkOptions<T extends object>(cacheFile: string, object: T) {
             return (await reset()).join("\n")
         },
         handler(deps: string[], callback: () => void) {
-            for (const opt of getOptions(options)) {
+            for (const opt of getOptions(object)) {
                 if (deps.some(i => opt.id.startsWith(i)))
                     opt.connect("changed", callback)
             }

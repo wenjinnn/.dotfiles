@@ -11,12 +11,13 @@ import NotificationPopups from "widget/notifications/NotificationPopups"
 import ScreenCorners from "widget/bar/ScreenCorners"
 import OSD from "widget/osd/OSD"
 import SettingsDialog from "widget/settings/SettingsDialog"
-import { config, forMonitors } from "lib/utils"
+import { forMonitors } from "lib/utils"
 import { setupQuickSettings } from "widget/quicksettings/QuickSettings"
 import { setupDateMenu } from "widget/datemenu/DateMenu"
 import { init } from "lib/init"
 
-export default config({
+App.config({
+    icons: "./assets",
     onConfigParsed: () => {
         setupQuickSettings()
         setupDateMenu()
@@ -29,7 +30,7 @@ export default config({
         "datemenu": options.transition.value,
         "clipboard": options.transition.value,
     },
-    windows: [
+    windows: () => [
         ...forMonitors(Bar),
         ...forMonitors(NotificationPopups),
         ...forMonitors(ScreenCorners),
