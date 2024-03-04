@@ -8,6 +8,7 @@ local item_source = {
   path = "path",
   cmp_tabnine = "tabnine",
   look = "look",
+  cmdline = "cmd",
   treesitter = "treesitter",
   nvim_lua = "lua",
   latex_symbols = "latex",
@@ -154,31 +155,33 @@ return {
         { name = "orgmode" },
       },
       formatting = {
+        expandable_indicator = false,
         deprecated = true,
-        fields = { "kind", "abbr", "menu" },
-        format = lspkind.cmp_format({
-          mode = "symbol", -- show only symbol annotations
-          maxwidth = item_maxwidth, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-          ellipsis_char = ellipsis_char, -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+        fields = { "abbr", "menu", "kind" },
+        format = function(entry, vim_item)
+          local lspkind_format = lspkind.cmp_format({
+            mode = "symbol", -- show only symbol annotations
+            maxwidth = item_maxwidth, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+            ellipsis_char = ellipsis_char, -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
 
-          -- The function below will be called before any actual modifications from lspkind
-          -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-          before = function(entry, vim_item)
-            local abbr = vim_item.abbr
-            if string.find(abbr, "~", -1, true) then
-              vim_item.abbr = string.sub(abbr, 1, string.len(abbr) - 1)
-            end
-            local source = (item_source)[entry.source.name]
-            if vim_item.menu then
-              source = string.format("%s %s", source, vim_item.menu)
-            end
-            if source ~= nil and source:len() > item_maxwidth then
-              source = source:sub(0, item_maxwidth) .. ellipsis_char
-            end
-            vim_item.menu = source
-            return vim_item
-          end,
-        }),
+            -- The function below will be called before any actual modifications from lspkind
+            -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+            before = function(entry, inner_item)
+              local menu = inner_item.menu
+              if menu ~= nil and menu:len() > item_maxwidth then
+                menu = menu:sub(0, item_maxwidth) .. ellipsis_char
+                inner_item.menu = menu
+              end
+              return inner_item
+            end,
+          })
+          local final_item = lspkind_format(entry, vim_item)
+          local source = (item_source)[entry.source.name]
+          if source ~= nil then
+            final_item.kind = final_item.kind .. " " .. source .. " "
+          end
+          return final_item
+        end,
       },
       -- sorting = {
       --   comparators = {
