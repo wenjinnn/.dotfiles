@@ -22,13 +22,16 @@ The [ags config](https://github.com/wenjinnn/config/tree/nixos/xdg/config/ags) b
 * add hibernate button for powermenu, need to setup swap to make it work.  
 * use [swaylock-effects](https://github.com/jirutka/swaylock-effects) instead of lockscreen.js (more security, see this [issue](https://github.com/Aylur/dotfiles/issues/72))  
 * add a clipboard menu depends on [cliphist](https://github.com/sentriz/cliphist)
+* ocr for screenshot powerd by [tesseract](https://github.com/tesseract-ocr/tesseract)
 * some bug fix for chinese font and [more](https://github.com/Aylur/dotfiles/issues/122)
+* removed favorites application on Applauncher and display all applications by default
 
 # Must have
 
 Almost as same as Aylur/dotfiles from this [commit](https://github.com/Aylur/dotfiles/tree/a66f3422a53bf65343c0f8f936ae33200a145c93) with these additional pkg:
 
 * cliphist  
+* tesseract
 * jq
 
 # Installation
