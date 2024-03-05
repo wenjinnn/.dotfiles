@@ -70,10 +70,10 @@ return {
         globalSettings = { alt = "all" },
         localSettings = {
           [".*"] = {
-            cmdline = "neovim",
+            cmdline = "firenvim",
             content = "text",
             priority = 0,
-            selector = "textarea:not([readonly], [aria-readonly]), div[role=\"textbox\"]",
+            selector = 'textarea:not([readonly], [aria-readonly]), div[role="textbox"]',
             takeover = "empty",
           },
         },
@@ -82,9 +82,14 @@ return {
     build = function()
       vim.fn["firenvim#install"](0)
     end,
-    config = function ()
-      vim.api.nvim_set_keymap("n", "<Esc><Esc>", "<Cmd>call firenvim#focus_page()<CR>", {desc = "Firenvim Focus Page"})
-    end
+    config = function()
+      vim.api.nvim_set_keymap(
+        "n",
+        "<Esc><Esc>",
+        "<Cmd>call firenvim#focus_page()<CR>",
+        { desc = "Firenvim Focus Page" }
+      )
+    end,
   },
   -- db manage
   {

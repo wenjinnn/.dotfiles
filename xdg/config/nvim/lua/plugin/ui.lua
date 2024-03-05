@@ -31,7 +31,7 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     event = "UIEnter",
-    cond = not_vscode,
+    cond = not_vscode and not vim.g.started_by_firenvim,
     keys = {
       {
         "<leader>b",

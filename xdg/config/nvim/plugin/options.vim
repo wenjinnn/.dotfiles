@@ -10,7 +10,12 @@ set inccommand=nosplit
 set cmdheight=1
 set showcmd
 set ruler
-set laststatus=2
+if exists('g:started_by_firenvim')
+    set laststatus=0
+else
+    set laststatus=2
+endif
+
 set number
 set cursorline
 set whichwrap+=<,>,h,l
