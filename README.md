@@ -32,6 +32,7 @@ Almost as same as Aylur/dotfiles from this [commit](https://github.com/Aylur/dot
 
 * cliphist  
 * tesseract
+* yazi (also as nvim file manager)
 * jq
 
 # Installation
