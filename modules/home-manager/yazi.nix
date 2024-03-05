@@ -12,6 +12,15 @@
         max_height = 1500;
       };
     };
+    theme = {
+      manager = {
+        border_symbol = " ";
+      };
+      status = {
+        separator_open  = "";
+        separator_close = "";
+      };
+    };
   };
 
 }
