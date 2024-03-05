@@ -73,8 +73,8 @@ return {
             cmdline = "firenvim",
             content = "text",
             priority = 0,
-            selector = 'textarea:not([readonly], [aria-readonly]), div[role="textbox"]',
-            takeover = "empty",
+            selector = "textarea:not([readonly], [aria-readonly])",
+            takeover = "once",
           },
         },
       }
