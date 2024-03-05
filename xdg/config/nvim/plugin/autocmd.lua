@@ -118,6 +118,17 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
   end,
 })
 
+-- auto update when BufLeave
+vim.api.nvim_create_autocmd("BufLeave", {
+  pattern = "*",
+  callback = function()
+    local buffer_readable = vim.fn.filereadable(vim.fn.bufname("%")) > 0
+    if not vim.bo.readonly and buffer_readable then
+      vim.cmd("update")
+    end
+  end,
+})
+
 -- fcitx5 rime auto switch to asciimode
 if vim.fn.has("fcitx5") then
   vim.api.nvim_create_autocmd({ "InsertLeave" }, {
