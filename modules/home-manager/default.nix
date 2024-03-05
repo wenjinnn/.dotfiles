@@ -24,4 +24,5 @@
   lang = import ./lang.nix;
   btop = import ./btop.nix;
   vscode = import ./vscode.nix;
+  direnv = import ./direnv.nix;
 }
