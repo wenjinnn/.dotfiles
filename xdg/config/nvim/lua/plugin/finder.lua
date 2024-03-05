@@ -1,6 +1,28 @@
 local not_vscode = require("util").not_vscode
 return {
   {
+    "rolv-apneseth/tfm.nvim",
+    lazy = true,
+    init = function()
+      vim.g.loaded_netrw = 1
+      vim.g.loaded_netrwPlugin = 1
+    end,
+    opts = {
+      replace_netrw = true,
+      enable_cmds = true,
+      ui = {
+        border = { " " },
+        height = 0.8,
+        width = 0.8,
+        x = 0.5,
+        y = 0.4,
+      },
+    },
+    keys = {
+      { "<leader>e", "<cmd>Tfm<CR>", desc = "TFM" },
+    },
+  },
+  {
     "nvim-telescope/telescope.nvim",
     cond = not_vscode,
     event = "BufRead",
@@ -215,23 +237,5 @@ return {
       require("telescope").load_extension("ui-select")
       require("telescope").load_extension("live_grep_args")
     end,
-  },
-  {
-    "echasnovski/mini.files",
-    cond = not_vscode,
-    init = function()
-      vim.g.loaded_netrw = 1
-      vim.g.loaded_netrwPlugin = 1
-    end,
-    lazy = true,
-    keys = {
-      { "<leader>fe", "<cmd>:lua MiniFiles.open()<cr>", desc = "MiniFiles Open" },
-    },
-    opts = {
-      windows = {
-        preview = true,
-        width_preview = 40,
-      },
-    },
   },
 }

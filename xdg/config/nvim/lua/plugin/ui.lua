@@ -166,6 +166,7 @@ return {
         "toggleterm",
         "minifiles",
         "minifiles-help",
+        "tfm",
         "dap-repl",
         "dap-float",
         "Term",
