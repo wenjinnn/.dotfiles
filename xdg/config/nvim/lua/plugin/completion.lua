@@ -1,23 +1,4 @@
 local not_vscode = require("util").not_vscode
--- lsp auto completion & snip
-local item_source = {
-  buffer = "buf",
-  nvim_lsp = "lsp",
-  vsnip = "snip",
-  nvim_lsp_signature_help = "sign",
-  path = "path",
-  cmp_tabnine = "tabnine",
-  look = "look",
-  cmdline = "cmd",
-  treesitter = "treesitter",
-  nvim_lua = "lua",
-  latex_symbols = "latex",
-  dap = "dap",
-  git = "git",
-  ["vim-dadbod-completion"] = "dadbod",
-}
-local item_maxwidth = 50
-local ellipsis_char = "…"
 
 return {
   "hrsh7th/nvim-cmp",
@@ -159,6 +140,25 @@ return {
         deprecated = true,
         fields = { "abbr", "menu", "kind" },
         format = function(entry, vim_item)
+          -- lsp auto completion & snip
+          local item_source = {
+            buffer = "buf",
+            nvim_lsp = "lsp",
+            vsnip = "snip",
+            nvim_lsp_signature_help = "sign",
+            path = "path",
+            cmp_tabnine = "tabnine",
+            look = "look",
+            cmdline = "cmd",
+            treesitter = "treesitter",
+            nvim_lua = "lua",
+            latex_symbols = "latex",
+            dap = "dap",
+            git = "git",
+            ["vim-dadbod-completion"] = "dadbod",
+          }
+          local item_maxwidth = 30
+          local ellipsis_char = "…"
           local lspkind_format = lspkind.cmp_format({
             mode = "symbol", -- show only symbol annotations
             maxwidth = item_maxwidth, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
