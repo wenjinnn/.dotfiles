@@ -35,6 +35,8 @@
     gnome.gnome-tweaks
     gnome.gnome-themes-extra
     gnome.dconf-editor
+    wireshark
+    mitmproxy
     waydroid
     bottles
     telegram-desktop
