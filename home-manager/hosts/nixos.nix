@@ -27,7 +27,7 @@
     gimp
     obs-studio
     scrcpy
-    rustdesk
+    unstable.rustdesk-flutter
     libreoffice
     evolution
     evolution-ews
