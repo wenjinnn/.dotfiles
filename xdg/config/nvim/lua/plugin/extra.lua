@@ -74,7 +74,7 @@ return {
             content = "text",
             priority = 0,
             selector = "textarea:not([readonly], [aria-readonly])",
-            takeover = "once",
+            takeover = "never",
           },
         },
       }
