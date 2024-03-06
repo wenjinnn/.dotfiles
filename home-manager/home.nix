@@ -120,6 +120,7 @@
     minikube
     kubernetes
     kubectl
+    autossh
   ];
 
   # xresources.properties = {
