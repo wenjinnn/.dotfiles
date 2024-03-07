@@ -22,6 +22,12 @@
 
   ];
 
+  services.openssh = {
+    ports = [
+      2222
+    ];
+  };
+
   networking.hostName = "nixos-wsl";
 
 }
