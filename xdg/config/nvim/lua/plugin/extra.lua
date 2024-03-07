@@ -217,6 +217,11 @@ return {
         '<cmd>:lua MiniSessions.write((vim.fn.getcwd():gsub("/", "_")))<CR>',
         desc = "Session Write",
       },
+      {
+        "<leader>sW",
+        '<cmd>:lua MiniSessions.write((vim.fn.getcwd():gsub("/", "_")))',
+        desc = "Session Write Custom",
+      },
       { "<leader>ss", "<cmd>:lua MiniSessions.select()<CR>", desc = "Session Select" },
       {
         "<leader>sd",
