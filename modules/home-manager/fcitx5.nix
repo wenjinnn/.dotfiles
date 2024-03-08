@@ -6,7 +6,6 @@
   pkgs,
   ...
 }: {
-
   home.file = {
     ".config/fcitx5".source = ../../xdg/config/fcitx5;
     ".local/share/fcitx5" = {

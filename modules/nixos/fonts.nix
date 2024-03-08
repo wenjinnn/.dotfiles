@@ -10,7 +10,7 @@
     packages = with pkgs; [
       noto-fonts-emoji
       sarasa-gothic
-      (nerdfonts.override { fonts = [ "FiraCode" "Ubuntu" "UbuntuMono" "Mononoki" "CascadiaCode" "DejaVuSansMono" ]; })
+      (nerdfonts.override {fonts = ["FiraCode" "Ubuntu" "UbuntuMono" "Mononoki" "CascadiaCode" "DejaVuSansMono"];})
       font-awesome
       lexend
       material-symbols
@@ -20,7 +20,7 @@
     fontconfig = {
       enable = true;
       defaultFonts = {
-        emoji = [ "Noto Color Emoji" ];
+        emoji = ["Noto Color Emoji"];
         monospace = [
           "CaskaydiaCove Nerd Font"
           "Sarasa Mono SC"

@@ -1,7 +1,4 @@
-{
-  config,
-  ...
-}: {
+{config, ...}: {
   services.git-sync = {
     enable = true;
     repositories.archive = {
@@ -10,4 +7,3 @@
     };
   };
 }
-

@@ -1,13 +1,12 @@
 # This file defines overlays
-{inputs, ...}:
-  let 
-    electron-flags = [
-      "--password-store=gnome-libsecret"
-      "--enable-features=UseOzonePlatform"
-      "--ozone-platform=wayland"
-      "--enable-wayland-ime"
-    ];
-  in rec {
+{inputs, ...}: let
+  electron-flags = [
+    "--password-store=gnome-libsecret"
+    "--enable-features=UseOzonePlatform"
+    "--ozone-platform=wayland"
+    "--enable-wayland-ime"
+  ];
+in rec {
   # This one brings our custom packages from the 'pkgs' directory
   additions = final: _prev: import ../pkgs {pkgs = final;};
 
@@ -29,10 +28,12 @@
     };
     gnome = prev.gnome.overrideScope' (gself: gsuper: {
       nautilus = gsuper.nautilus.overrideAttrs (nsuper: {
-        buildInputs = nsuper.buildInputs ++ (with prev.gst_all_1; [
-          gst-plugins-good
-          gst-plugins-bad
-        ]);
+        buildInputs =
+          nsuper.buildInputs
+          ++ (with prev.gst_all_1; [
+            gst-plugins-good
+            gst-plugins-bad
+          ]);
       });
     });
   };
@@ -43,7 +44,7 @@
     unstable = import inputs.nixpkgs-unstable {
       system = final.system;
       config.allowUnfree = true;
-      overlays = [ modifications ];
+      overlays = [modifications];
     };
   };
 }

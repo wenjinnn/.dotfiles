@@ -1,7 +1,4 @@
-{
-  username,
-  ...
-}: {
+{username, ...}: {
   programs.gnome-terminal = {
     enable = true;
     showMenubar = false;

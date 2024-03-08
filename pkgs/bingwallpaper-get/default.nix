@@ -1,12 +1,14 @@
-{ runCommandNoCC
-, lib
-, makeWrapper
-, jq
-, wget
-, coreutils-full
-, gnused
-}: runCommandNoCC "bingwallpaper-get" {
-  nativeBuildInputs = [ makeWrapper ];
+{
+  runCommandNoCC,
+  lib,
+  makeWrapper,
+  jq,
+  wget,
+  coreutils-full,
+  gnused,
+}:
+runCommandNoCC "bingwallpaper-get" {
+  nativeBuildInputs = [makeWrapper];
 } ''
   mkdir -p $out/bin
   dest="$out/bin/bingwallpaper-get"
@@ -15,5 +17,5 @@
   patchShebangs $dest
 
   wrapProgram $dest \
-    --prefix PATH : ${lib.makeBinPath [ jq wget gnused coreutils-full ]}
+    --prefix PATH : ${lib.makeBinPath [jq wget gnused coreutils-full]}
 ''

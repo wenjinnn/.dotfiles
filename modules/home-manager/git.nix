@@ -1,7 +1,4 @@
-{
-  username,
-  ...
-}: {
+{username, ...}: {
   # git
   programs.git = {
     enable = true;

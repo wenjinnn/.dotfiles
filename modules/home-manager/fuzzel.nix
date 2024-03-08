@@ -25,12 +25,11 @@
         selection-match = "5ba9e8ff";
       };
       dmenu = {
-        exit-immediately-if-empty="yes";
+        exit-immediately-if-empty = "yes";
       };
       border = {
         width = 1;
       };
     };
   };
-
 }

@@ -7,7 +7,7 @@
   username,
   ...
 }: {
-    # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
+  # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
   users.defaultUserShell = pkgs.zsh;
   users.users = {
     ${username} = {

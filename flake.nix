@@ -1,14 +1,14 @@
 {
   description = "NixOS Flake and Home Manager configuration of wenjin";
 
-    # the nixConfig here only affects the flake itself, not the system configuration!
+  # the nixConfig here only affects the flake itself, not the system configuration!
   nixConfig = {
     # will be appended to the system-level substituters
     extra-substituters = [
       # nix community's cache server
       "https://nix-community.cachix.org"
     ];
- 
+
     # will be appended to the system-level trusted-public-keys
     extra-trusted-public-keys = [
       # nix community's cache server public key
@@ -90,7 +90,7 @@
           ./nixos/configuration.nix
           ./nixos/hosts/nixos
           nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
-          { nixpkgs.overlays = [ nur.overlay ]; }
+          {nixpkgs.overlays = [nur.overlay];}
           nur.nixosModules.nur
         ];
       };
@@ -115,7 +115,7 @@
           # > Our main home-manager configuration file <
           ./home-manager/home.nix
           ./home-manager/hosts/nixos.nix
-          { nixpkgs.overlays = [ nur.overlay ]; }
+          {nixpkgs.overlays = [nur.overlay];}
           nur.hmModules.nur
         ];
       };
@@ -129,6 +129,5 @@
         ];
       };
     };
-
   };
 }

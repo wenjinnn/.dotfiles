@@ -25,5 +25,4 @@
     power-profiles-daemon.enable = true;
     accounts-daemon.enable = true;
   };
-
 }

@@ -6,7 +6,6 @@
   pkgs,
   ...
 }: {
-
   # zsh
   programs.zsh = {
     enable = true;
@@ -60,8 +59,10 @@
       if [ -x "$(command -v tmux)" ] && [ -n "''${DISPLAY}" ] && [ "''${TERM_PROGRAM}" != "vscode" ] && [ "''${XDG_SESSION_DESKTOP}" != "hyprland" ] && [ -z "''${TMUX}" ]; then
           tmux attach || tmux >/dev/null 2>&1
       fi
-      '';
-    initExtra = let proxyAddr = "http://127.0.0.1:7890"; in ''
+    '';
+    initExtra = let
+      proxyAddr = "http://127.0.0.1:7890";
+    in ''
       COMPLETION_WAITING_DOTS="true"
       bindkey '^ ' autosuggest-accept
       PROXY_ENV=(http_proxy ftp_proxy https_proxy all_proxy HTTP_PROXY HTTPS_PROXY FTP_PROXY ALL_PROXY)
@@ -107,7 +108,7 @@
 
       # toggleProxy
       tp(){
-          if proxyIsSet 
+          if proxyIsSet
           then
               clrProxy
           else
@@ -129,7 +130,6 @@
           currentTimeStamp=$((timeStamp*1000+`date "+%N"`/1000000))
           echo $currentTimeStamp
       }
-      '';
+    '';
   };
-
 }

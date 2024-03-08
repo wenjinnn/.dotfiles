@@ -17,10 +17,9 @@
         border_symbol = " ";
       };
       status = {
-        separator_open  = "";
+        separator_open = "";
         separator_close = "";
       };
     };
   };
-
 }

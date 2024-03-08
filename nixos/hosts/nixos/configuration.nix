@@ -40,5 +40,4 @@
   };
 
   networking.hostName = "nixos";
-
 }

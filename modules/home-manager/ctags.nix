@@ -6,7 +6,6 @@
   pkgs,
   ...
 }: {
-
   home.packages = with pkgs; [
     universal-ctags
   ];

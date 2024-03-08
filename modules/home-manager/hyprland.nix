@@ -46,7 +46,7 @@
     comment = "Gnome Control Center";
     icon = "org.gnome.Settings";
     exec = "env XDG_CURRENT_DESKTOP=gnome ${pkgs.gnome.gnome-control-center}/bin/gnome-control-center";
-    categories = [ "X-Preferences" ];
+    categories = ["X-Preferences"];
     terminal = false;
   };
   xdg.desktopEntries.dbeaver = {
@@ -54,7 +54,7 @@
     comment = "SQL Integrated Development Environment";
     icon = "dbeaver";
     exec = "env GDK_BACKEND=x11 ${pkgs.dbeaver}/bin/dbeaver";
-    categories = [ "Development" ];
+    categories = ["Development"];
     type = "Application";
     genericName = "SQL Integrated Development Environment";
   };
@@ -80,9 +80,8 @@
           ExecStartPost = "${pkgs.swww-switch}/bin/swww-switch";
         };
         Install = {
-          WantedBy = [ "default.target" ];
+          WantedBy = ["default.target"];
         };
-
       };
       swww-next = {
         Unit = {
@@ -94,7 +93,7 @@
           ExecStart = "${pkgs.swww-switch}/bin/swww-switch";
         };
         Install = {
-          WantedBy = [ "default.target" ];
+          WantedBy = ["default.target"];
         };
       };
       swww-random = {
@@ -108,7 +107,7 @@
           ExecStart = "${pkgs.swww-switch}/bin/swww-switch random";
         };
         Install = {
-          WantedBy = [ "default.target" ];
+          WantedBy = ["default.target"];
         };
       };
     };
@@ -120,7 +119,7 @@
         Timer = {
           OnCalendar = "hourly";
         };
-        Install = { WantedBy = [ "timers.target" ]; };
+        Install = {WantedBy = ["timers.target"];};
       };
       swww-random = {
         Unit = {
@@ -130,7 +129,7 @@
           OnUnitActiveSec = "30min";
           OnBootSec = "30min";
         };
-        Install = { WantedBy = [ "timers.target" ]; };
+        Install = {WantedBy = ["timers.target"];};
       };
     };
   };
@@ -215,10 +214,10 @@
             scroll_method = "2fg";
 
             touchpad = {
-                natural_scroll = "yes";
-                disable_while_typing = true;
-                clickfinger_behavior = true;
-                scroll_factor = 0.7;
+              natural_scroll = "yes";
+              disable_while_typing = true;
+              clickfinger_behavior = true;
+              scroll_factor = 0.7;
             };
           };
           gestures = {
@@ -239,7 +238,7 @@
             preserve_split = true;
           };
           decoration = {
-	        rounding = 10;
+            rounding = 10;
             drop_shadow = "false";
             shadow_range = 8;
             shadow_render_power = 2;
@@ -306,8 +305,9 @@
             # "blur, gtk-layer-shell"
             # "ignorezero, gtk-layer-shell"
           ];
-          bind = let e = "exec, ags -b hypr"; in [
-
+          bind = let
+            e = "exec, ags -b hypr";
+          in [
             "ControlSuper, Q, killactive,"
             "ControlSuper, Space, togglefloating, "
             "ControlSuperShift, Space, pin, "
@@ -384,7 +384,7 @@
             # bind = SUPER, Tab, cyclenext
             # "Super, Tab, exec, ags -b hypr -t overview"
             # "Super, Tab, bringactivetotop,   # bring it to the top"
-            # Move window to workspace Control + Super + [0-9] 
+            # Move window to workspace Control + Super + [0-9]
             "ControlSuper, 1, movetoworkspacesilent, 1"
             "ControlSuper, 2, movetoworkspacesilent, 2"
             "ControlSuper, 3, movetoworkspacesilent, 3"
@@ -432,13 +432,13 @@
             ",XF86AudioNext,    exec, playerctl next"
             ",XF86AudioMicMute, exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle"
           ];
-          bindle =  [
-        ",XF86MonBrightnessUp,   exec, brightnessctl set +5%"
-        ",XF86MonBrightnessDown, exec, brightnessctl set  5%-"
-        ",XF86KbdBrightnessUp,   exec, brightnessctl -d asus::kbd_backlight set +1"
-        ",XF86KbdBrightnessDown, exec, brightnessctl -d asus::kbd_backlight set  1-"
-        ",XF86AudioRaiseVolume,  exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
-        ",XF86AudioLowerVolume,  exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
+          bindle = [
+            ",XF86MonBrightnessUp,   exec, brightnessctl set +5%"
+            ",XF86MonBrightnessDown, exec, brightnessctl set  5%-"
+            ",XF86KbdBrightnessUp,   exec, brightnessctl -d asus::kbd_backlight set +1"
+            ",XF86KbdBrightnessDown, exec, brightnessctl -d asus::kbd_backlight set  1-"
+            ",XF86AudioRaiseVolume,  exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
+            ",XF86AudioLowerVolume,  exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
           ];
         };
       };

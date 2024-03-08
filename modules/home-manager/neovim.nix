@@ -2,10 +2,9 @@
   config,
   pkgs,
   ...
-}: let 
+}: let
   repoPath = "${config.home.homeDirectory}/project/my/config";
-  in {
-
+in {
   home.packages = with pkgs; [
     lua-language-server
     vscode-langservers-extracted
@@ -47,6 +46,4 @@
     withNodeJs = true;
     withPython3 = true;
   };
-
-
 }

@@ -68,9 +68,7 @@
       name = "nix/path/${name}";
       value.source = value.flake;
     })
-    config.nix.registry
-      ;
-
+    config.nix.registry;
 
   nix.package = pkgs.nixFlakes;
   nix.settings = {
@@ -78,7 +76,7 @@
     experimental-features = "nix-command flakes";
     # Deduplicate and optimize nix store
     auto-optimise-store = true;
-    trusted-users = [ "${username}" ];
+    trusted-users = ["${username}"];
     # the system-level substituers & trusted-public-keys
     # given the users in this list the right to specify additional substituters via:
     #    1. `nixConfig.substituers` in `flake.nix`
@@ -105,14 +103,14 @@
 
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
   time.timeZone = "Asia/Shanghai";
-   
+
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-  
-  # Select internationalisation properties.    
+
+  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   console.packages = with pkgs; [
     terminus_font
@@ -173,8 +171,8 @@
   programs.zsh.enable = true;
 
   systemd.sleep.extraConfig = ''
-      [Sleep]
-      HibernateMode=shutdown
+    [Sleep]
+    HibernateMode=shutdown
   '';
 
   # This setups a SSH server. Very important if you're setting up a headless system.
@@ -190,7 +188,12 @@
   };
 
   security.pam.loginLimits = [
-    { domain = "*"; item = "nofile"; type = "-"; value = "32768"; }
+    {
+      domain = "*";
+      item = "nofile";
+      type = "-";
+      value = "32768";
+    }
   ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

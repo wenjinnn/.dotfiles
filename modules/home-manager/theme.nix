@@ -64,6 +64,5 @@
       package = pkgs.unstable.morewaita-icon-theme;
       name = "MoreWaita";
     };
-
   };
 }

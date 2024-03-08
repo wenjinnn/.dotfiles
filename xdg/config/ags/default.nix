@@ -1,23 +1,23 @@
-{ inputs
-, system
-, stdenv
-, writeShellScriptBin
-, swww
-, bun
-, dart-sass
-, fd
-, brightnessctl
-, accountsservice
-, slurp
-, wf-recorder
-, wl-clipboard
-, wayshot
-, swappy
-, hyprpicker
-, pavucontrol
-, networkmanager
-}:
-let
+{
+  inputs,
+  system,
+  stdenv,
+  writeShellScriptBin,
+  swww,
+  bun,
+  dart-sass,
+  fd,
+  brightnessctl,
+  accountsservice,
+  slurp,
+  wf-recorder,
+  wl-clipboard,
+  wayshot,
+  swappy,
+  hyprpicker,
+  pavucontrol,
+  networkmanager,
+}: let
   ags = inputs.ags.packages.${system}.default.override {
     extraPackages = [accountsservice];
   };
@@ -82,4 +82,3 @@ in {
     '';
   };
 }
-

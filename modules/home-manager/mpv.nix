@@ -30,6 +30,5 @@
       osd-bar = "no";
       border = "no";
     };
-
   };
 }

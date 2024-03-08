@@ -10,6 +10,6 @@
     quickemu
   ];
   # virtualisation
-  programs.virt-manager.enable = true;    
+  programs.virt-manager.enable = true;
   virtualisation.libvirtd.enable = true;
 }
