@@ -61,6 +61,9 @@ class Cliphist extends Service {
     }
 
     readonly query = (term: string) => {
+        if (!term)
+            return this.#history
+
         return this.#history.filter(item => item.match(term))
     }
 }

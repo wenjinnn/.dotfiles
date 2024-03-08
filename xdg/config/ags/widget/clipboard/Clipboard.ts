@@ -30,7 +30,7 @@ const Clipboard = () => {
         children: cliplist.bind().as(list => list.map(SeparatedClipItem)),
     })
 
-    list.hook(cliphist, () => cliplist.value = query(""), "notify::frequents")
+    list.hook(cliphist, () => cliplist.value = query(""), "cliphist-changed")
 
     const entry = Widget.Entry({
         hexpand: true,
