@@ -172,6 +172,7 @@ return {
         "Term",
         "lazygit",
         "lspinfo",
+        "translate",
         "translator",
         "translatorborder",
         "translator_history",

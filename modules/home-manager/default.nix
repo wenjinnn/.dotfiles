@@ -24,4 +24,5 @@
   btop = import ./btop.nix;
   vscode = import ./vscode.nix;
   direnv = import ./direnv.nix;
+  translate-shell = import ./translate-shell.nix;
 }
