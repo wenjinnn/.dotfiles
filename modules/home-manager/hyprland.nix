@@ -232,6 +232,7 @@
           general = {
             layout = "dwindle";
             no_focus_fallback = true;
+            no_cursor_warps = true;
             "col.active_border" = "rgba(51a4e7ff)";
           };
           dwindle = {
