@@ -83,19 +83,6 @@
           WantedBy = ["default.target"];
         };
       };
-      swww-next = {
-        Unit = {
-          Description = "switch newest wallpaper powered by swww";
-        };
-        Service = {
-          Type = "oneshot";
-          Environment = "HOME=${config.home.homeDirectory}";
-          ExecStart = "${pkgs.swww-switch}/bin/swww-switch";
-        };
-        Install = {
-          WantedBy = ["default.target"];
-        };
-      };
       swww-random = {
         Unit = {
           Description = "switch random wallpaper powered by swww";
