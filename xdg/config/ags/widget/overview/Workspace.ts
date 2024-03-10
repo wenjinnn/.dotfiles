@@ -4,19 +4,13 @@ import Gtk from "gi://Gtk?version=3.0"
 import options from "options"
 
 const TARGET = [Gtk.TargetEntry.new("text/plain", Gtk.TargetFlags.SAME_APP, 0)]
-const scale = (size: number) => (options.overview.scale.value / 100) * size
+const scale = (size: number) => (options.overview.scale / 100) * size
 const hyprland = await Service.import("hyprland")
 
 const dispatch = (args: string) => hyprland.messageAsync(`dispatch ${args}`)
 
 const size = (id: number) => {
-    const def = { h: 1080, w: 1920 }
-    const ws = hyprland.getWorkspace(id)
-    if (!ws)
-        return def
-
-    const mon = hyprland.getMonitor(ws.monitorID)
-    return mon ? { h: mon.height, w: mon.width } : def
+    return { h: 1080, w: 1920 }
 }
 
 export default (id: number) => Widget.Box({
