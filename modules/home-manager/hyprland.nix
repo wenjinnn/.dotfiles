@@ -37,6 +37,7 @@
     glib
     wl-clipboard
     xdg-utils
+    xorg.xrdb
     wl-gammactl
     wlsunset
     unstable.xwaylandvideobridge
@@ -168,13 +169,14 @@
             "QT_AUTO_SCREEN_SCALE_FACTOR, 1"
             "CLUTTER_BACKEND, wayland"
             "ADW_DISABLE_PORTAL, 1"
-            "GDK_SCALE,2"
+            # "GDK_SCALE,2"
             "XCURSOR_SIZE, 24"
           ];
           exec-once = [
             # "sleep 1 && swww init && swww img ~/.config/eww/images/wallpaper --transition-fps 60 --transition-type random --transition-pos && systemctl --user start swww-next.timer &"
-            "ags -b hypr"
+            "echo 'Xft.dpi: 192' | xrdb -merge"
             "fcitx5 -d --replace"
+            "wlsunset -l 39.9 -L 116.3"
             "gnome-keyring-daemon --start --components=secrets"
             "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
             "kdeconnect-indicator"
@@ -184,10 +186,10 @@
             "sleep 1 && dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
             # fix share pick https://wiki.hyprland.org/Useful-Utilities/Hyprland-desktop-portal/
             "dbus-update-activation-environment --systemd --all && systemctl --user import-environment QT_QPA_PLATFORMTHEME"
+            "ags -b hypr"
             "hyprctl dispatch exec [workspace 9 silent] foot btop"
             "hyprctl dispatch exec [workspace 10 silent] evolution"
             # Beijing lat/long.
-            "wlsunset -l 39.9 -L 116.3"
             # "hyprctl dispatch exec [workspace special:windows silent] \"virt-manager --no-fork --show-domain-console win10 -c qemu:///system\""
           ];
           monitor = [
