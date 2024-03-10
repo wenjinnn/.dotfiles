@@ -38,6 +38,7 @@
     wl-clipboard
     xdg-utils
     wl-gammactl
+    wlsunset
     unstable.xwaylandvideobridge
   ];
 
@@ -185,6 +186,8 @@
             "dbus-update-activation-environment --systemd --all && systemctl --user import-environment QT_QPA_PLATFORMTHEME"
             "hyprctl dispatch exec [workspace 9 silent] foot btop"
             "hyprctl dispatch exec [workspace 10 silent] evolution"
+            # Beijing lat/long.
+            "wlsunset -l 39.9 -L 116.3"
             # "hyprctl dispatch exec [workspace special:windows silent] \"virt-manager --no-fork --show-domain-console win10 -c qemu:///system\""
           ];
           monitor = [
