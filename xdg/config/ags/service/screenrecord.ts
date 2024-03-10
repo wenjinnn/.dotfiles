@@ -85,7 +85,7 @@ class Recorder extends Service {
                 },
                 "OCR": () => {
                     if (dependencies("tesseract"))
-                        sh(`tesseract "${file}" - | wl-copy`)
+                        Utils.execAsync(["bash", "-c", `tesseract ${file} - | wl-copy`])
                 },
             },
         })
