@@ -127,7 +127,7 @@ const options = mkOptions(OPTIONS, {
             ]),
         },
         media: {
-            monochrome: opt(true),
+            monochrome: opt(false),
             preferred: opt("spotify"),
             direction: opt<"left" | "right">("right"),
             length: opt(40),
@@ -174,7 +174,7 @@ const options = mkOptions(OPTIONS, {
         position: opt<"left" | "center" | "right">("right"),
         networkSettings: opt("env XDG_CURRENT_DESKTOP=gnome gnome-control-center wifi"),
         media: {
-            monochromeIcon: opt(true),
+            monochromeIcon: opt(false),
             coverSize: opt(100),
         },
     },
