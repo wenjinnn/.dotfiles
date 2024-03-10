@@ -77,12 +77,7 @@ export function dependencies(...bins: string[]) {
  * run app detached
  */
 export function launchApp(app: Application) {
-    const exe = app.executable
-        .split(/\s+/)
-        .filter(str => !str.startsWith("%") && !str.startsWith("@"))
-        .join(" ")
-
-    bash(`${exe} &`)
+    bash(`gtk-launch ${app.desktop}`)
     app.frequency += 1
 }
 
