@@ -183,8 +183,8 @@
             "sleep 1 && dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
             # fix share pick https://wiki.hyprland.org/Useful-Utilities/Hyprland-desktop-portal/
             "dbus-update-activation-environment --systemd --all && systemctl --user import-environment QT_QPA_PLATFORMTHEME"
-            "hyprctl dispatch exec [workspace special:monitor silent] foot btop"
-            "hyprctl dispatch exec [workspace special:evolution silent] evolution"
+            "hyprctl dispatch exec [workspace 9 silent] foot btop"
+            "hyprctl dispatch exec [workspace 10 silent] evolution"
             # "hyprctl dispatch exec [workspace special:windows silent] \"virt-manager --no-fork --show-domain-console win10 -c qemu:///system\""
           ];
           monitor = [
