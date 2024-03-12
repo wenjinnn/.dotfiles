@@ -54,7 +54,7 @@ function Launcher() {
         child: Widget.Box(
             { vertical: true },
             HelpButton("sh", "run a binary"),
-            HelpButton("clip", "run a clipboard history"),
+            HelpButton("cp", "run a clipboard history"),
             isnix ? HelpButton("nx", options.launcher.nix.pkgs.bind().as(pkg =>
                 `run a nix package from ${pkg}`,
             )) : Widget.Box(),
@@ -69,8 +69,8 @@ function Launcher() {
                 nix.run(text.substring(3))
             else if (text?.startsWith(":sh"))
                 sh.run(text.substring(3))
-            else if (text?.startsWith(":clip"))
-                clip.run(text.substring(5))
+            else if (text?.startsWith(":cp"))
+                clip.run(text.substring(3))
             else
                 applauncher.launchFirst()
 
@@ -92,8 +92,8 @@ function Launcher() {
             else
                 sh.filter("")
 
-            if (text?.startsWith(":clip"))
-                clip.filter(text.substring(5))
+            if (text?.startsWith(":cp"))
+                clip.filter(text.substring(3))
             else
                 clip.filter("")
 
