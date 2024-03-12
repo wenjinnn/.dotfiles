@@ -12,7 +12,6 @@
 
   home.packages = with pkgs; [
     hyprpicker
-    supergfxctl
     wayshot
     wf-recorder
     imagemagick
