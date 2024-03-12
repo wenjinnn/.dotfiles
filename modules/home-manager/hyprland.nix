@@ -312,7 +312,6 @@
             "ControlSuperShiftAlt, D, exec, systemctl poweroff"
             # launcher
             "Super, D, exec, ags -b hypr -t launcher"
-            "Super, V, exec, ags -b hypr -t clipboard"
             "Super, N, exec, ags -b hypr -t datemenu"
             # Snapshot
             "SuperShift, S, exec, grim -g \"$(slurp)\" - | wl-copy"
