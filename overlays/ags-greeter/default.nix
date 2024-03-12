@@ -1,5 +1,7 @@
 { inputs
 , writeShellScript
+, wlr-randr
+, bash
 , system
 , stdenv
 , cage
@@ -54,7 +56,7 @@ let
 
   greeter = writeShellScript "greeter" ''
     export PATH=$PATH:${addBins dependencies}
-    ${cage}/bin/cage -ds -m last ${ags}/bin/ags -- -c ${config}/greeter.js
+    ${cage}/bin/cage -ds -m last  -- ${bash}/bin/bash -c "${wlr-randr}/bin/wlr-randr --output eDP-1 --scale 2 && ${ags}/bin/ags -c ${config}/greeter.js"
   '';
 
   desktop = writeShellScript name ''
