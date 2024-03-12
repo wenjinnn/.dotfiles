@@ -2,7 +2,6 @@ import "lib/session"
 import "lib/init"
 import options from "options"
 import Bar from "widget/bar/Bar"
-import Clipboard from "widget/clipboard/Clipboard"
 import Launcher from "widget/launcher/Launcher"
 import NotificationPopups from "widget/notifications/NotificationPopups"
 import OSD from "widget/osd/OSD"
@@ -27,14 +26,12 @@ App.config({
         "overview": options.transition.value,
         "quicksettings": options.transition.value,
         "datemenu": options.transition.value,
-        "clipboard": options.transition.value,
     },
     windows: () => [
         ...forMonitors(Bar),
         ...forMonitors(NotificationPopups),
         ...forMonitors(ScreenCorners),
         ...forMonitors(OSD),
-        Clipboard(),
         Launcher(),
         Overview(),
         PowerMenu(),

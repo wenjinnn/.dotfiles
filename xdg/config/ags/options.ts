@@ -137,11 +137,6 @@ const options = mkOptions(OPTIONS, {
             action: opt(() => App.toggleWindow("powermenu")),
         },
     },
-    clipboard: {
-        width: opt(350),
-        margin: opt(80),
-    },
-
     launcher: {
         width: opt(0),
         margin: opt(80),
@@ -150,6 +145,9 @@ const options = mkOptions(OPTIONS, {
             max: opt(8),
         },
         sh: {
+            max: opt(16),
+        },
+        clip: {
             max: opt(16),
         },
         apps: {

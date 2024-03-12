@@ -20,6 +20,9 @@ export default {
     app: {
         terminal: "terminal-symbolic",
     },
+    clip: {
+        folder: "folder-books-symbolic",
+    },
     fallback: {
         executable: "application-x-executable-symbolic",
         notification: "dialog-information-symbolic",

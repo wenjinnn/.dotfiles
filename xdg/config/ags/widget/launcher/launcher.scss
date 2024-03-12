@@ -140,4 +140,18 @@ window#launcher .launcher {
             text-shadow: $text-shadow;
         }
     }
+
+    button.clip-item {
+        @include button($flat: true, $reactive: false);
+        padding: 0 ($padding * .5);
+
+        transition: $transition;
+        color: $fg;
+
+        &:hover,
+        &:focus {
+            color: $primary-bg;
+            text-shadow: $text-shadow;
+        }
+    }
 }

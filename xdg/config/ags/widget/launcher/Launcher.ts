@@ -6,6 +6,7 @@ import nix from "service/nix"
 import * as AppLauncher from "./AppLauncher"
 import * as NixRun from "./NixRun"
 import * as ShRun from "./ShRun"
+import * as ClipRun from "./ClipRun"
 
 const { width, margin } = options.launcher
 const isnix = nix.available
@@ -17,6 +18,8 @@ function Launcher() {
     const shicon = ShRun.Icon()
     const nix = NixRun.NixRun()
     const nixload = NixRun.Spinner()
+    const clip = ClipRun.ClipRun()
+    const clipicon = ClipRun.Icon()
 
     function HelpButton(cmd: string, desc: string | Binding<string>) {
         return Widget.Box(
@@ -51,6 +54,7 @@ function Launcher() {
         child: Widget.Box(
             { vertical: true },
             HelpButton("sh", "run a binary"),
+            HelpButton("clip", "run a clipboard history"),
             isnix ? HelpButton("nx", options.launcher.nix.pkgs.bind().as(pkg =>
                 `run a nix package from ${pkg}`,
             )) : Widget.Box(),
@@ -65,6 +69,8 @@ function Launcher() {
                 nix.run(text.substring(3))
             else if (text?.startsWith(":sh"))
                 sh.run(text.substring(3))
+            else if (text?.startsWith(":clip"))
+                clip.run(text.substring(5))
             else
                 applauncher.launchFirst()
 
@@ -85,6 +91,11 @@ function Launcher() {
                 sh.filter(text.substring(3))
             else
                 sh.filter("")
+
+            if (text?.startsWith(":clip"))
+                clip.filter(text.substring(5))
+            else
+                clip.filter("")
 
             if (!text?.startsWith(":"))
                 applauncher.filter(text)
@@ -113,12 +124,13 @@ function Launcher() {
                 focus()
         }),
         children: [
-            Widget.Box([entry, nixload, shicon]),
+            Widget.Box([entry, nixload, shicon, clipicon]),
             favs,
             help,
             applauncher,
             nix,
             sh,
+            clip,
         ],
     })
 
