@@ -14,13 +14,13 @@
 Clone the repository and install the plugins:
 
 ```sh
-git clone git@github.com:wenjinnn/config
+git clone git@github.com:wenjinnn/config ~/.config/wenjinnn/config
 ```
 
-Open Neovim in current dir with this config:
+Open Neovim with this config:
 
 ```sh
-NVIM_APPNAME=config/xdg/config/nvim nvim
+NVIM_APPNAME=wenjinnn/config/xdg/config/nvim nvim
 ```
 
 ## Principle and Goal
