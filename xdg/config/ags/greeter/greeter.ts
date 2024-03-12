@@ -31,6 +31,13 @@ const win = RegularWindow({
     }),
 })
 
+// prevent white background color before window loaded
+App.applyCss(`
+window {
+    background-color: #000000;
+}
+`)
+
 App.config({
     onConfigParsed() {
         style()
