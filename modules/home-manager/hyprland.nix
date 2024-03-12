@@ -176,21 +176,15 @@
             # "sleep 1 && swww init && swww img ~/.config/eww/images/wallpaper --transition-fps 60 --transition-type random --transition-pos && systemctl --user start swww-next.timer &"
             "echo 'Xft.dpi: 192' | xrdb -merge"
             "fcitx5 -d --replace"
+            # Beijing lat/long.
             "wlsunset -l 39.9 -L 116.3"
             "gnome-keyring-daemon --start --components=secrets"
-            "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
             "kdeconnect-indicator"
             "udiskie &"
             "swayidle -w timeout 300 'swaylock' timeout 360 'hyprctl dispatch dpms off' after-resume 'hyprctl dispatch dpms on' before-sleep 'swaylock && sleep 1 && hyprctl dispatch dpms off'"
-            "libinput-gestures-setup start"
-            "sleep 1 && dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
-            # fix share pick https://wiki.hyprland.org/Useful-Utilities/Hyprland-desktop-portal/
-            "dbus-update-activation-environment --systemd --all && systemctl --user import-environment QT_QPA_PLATFORMTHEME"
             "ags -b hypr"
             "hyprctl dispatch exec [workspace 9 silent] foot btop"
             "hyprctl dispatch exec [workspace 10 silent] evolution"
-            # Beijing lat/long.
-            # "hyprctl dispatch exec [workspace special:windows silent] \"virt-manager --no-fork --show-domain-console win10 -c qemu:///system\""
           ];
           monitor = [
             ",highres,auto,auto"
@@ -370,9 +364,6 @@
             "Super, 9, workspace, 9"
             "Super, 0, workspace, 10"
             "Super, S, togglespecialworkspace"
-            "Super, M, togglespecialworkspace, monitor"
-            "Super, W, togglespecialworkspace, windows"
-            "Super, E, togglespecialworkspace, evolution"
             # "Super, C, togglespecialworkspace, kdeconnect"
             # bind = SUPER, Tab, cyclenext
             # "Super, Tab, exec, ags -b hypr -t overview"
