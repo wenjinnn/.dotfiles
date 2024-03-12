@@ -25,7 +25,6 @@
     gnupg
     libsForQt5.kdeconnect-kde
     swayidle
-    udiskie
     swww
     # gtklock
     # gtklock-userinfo-module
@@ -174,12 +173,9 @@
           exec-once = [
             # "sleep 1 && swww init && swww img ~/.config/eww/images/wallpaper --transition-fps 60 --transition-type random --transition-pos && systemctl --user start swww-next.timer &"
             "echo 'Xft.dpi: 192' | xrdb -merge"
-            "fcitx5 -d --replace"
             # Beijing lat/long.
             "wlsunset -l 39.9 -L 116.3"
-            "gnome-keyring-daemon --start --components=secrets"
             "kdeconnect-indicator"
-            "udiskie &"
             "swayidle -w timeout 300 'swaylock' timeout 360 'hyprctl dispatch dpms off' after-resume 'hyprctl dispatch dpms on' before-sleep 'swaylock && sleep 1 && hyprctl dispatch dpms off'"
             "ags -b hypr"
             "hyprctl dispatch exec [workspace 9 silent] foot btop"
@@ -314,8 +310,8 @@
             "ControlSuper, N, exec, playerctl next"
             "ControlSuperShiftAlt, L, exec, swaylock"
             "ControlSuperShiftAlt, D, exec, systemctl poweroff"
-            # Applauncher
-            "Super, D, exec, ags -b hypr -t applauncher"
+            # launcher
+            "Super, D, exec, ags -b hypr -t launcher"
             "Super, V, exec, ags -b hypr -t clipboard"
             "Super, N, exec, ags -b hypr -t datemenu"
             # Snapshot

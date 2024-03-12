@@ -10,4 +10,4 @@ echo "next wallpaper: $next"
 # wallpaper switch trigger by ags, no need to trigger by following code
 # cursorpos=$(hyprctl cursorpos)
 # swww img $next --transition-fps 60 --transition-type random --transition-pos "${cursorpos}"
-ln -sf $next $HOME/Pictures/wallpaper
+ln -sf $next $HOME/.config/background

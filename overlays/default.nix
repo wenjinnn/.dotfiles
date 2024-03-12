@@ -36,9 +36,9 @@ in rec {
           ]);
       });
     });
-    matugen = inputs.matugen.packages.default;
+    matugen = inputs.matugen.packages.${final.system}.default;
     ags = inputs.ags.packages.default;
-    ags-greeter = import ./ags-greeter;
+    ags-greeter = final.callPackage ./ags-greeter {inherit inputs;};
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will

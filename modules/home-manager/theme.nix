@@ -8,6 +8,7 @@
 }: {
   home.packages = with pkgs; [
     adw-gtk3
+    libsForQt5.qt5ct
   ];
 
   home.sessionVariables = {
@@ -52,7 +53,7 @@
       ];
       name = "adwaita-dark";
     };
-    platformTheme = "gnome";
+    platformTheme = "qtct";
   };
   gtk = {
     enable = true;

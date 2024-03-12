@@ -15,7 +15,6 @@
     # outputs.nixosModules.interception-tools
     podman
     xserver
-    gnome
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
@@ -116,9 +115,10 @@
     terminus_font
   ];
   console = {
-    font = "ter-i32b";
+    earlySetup = true;
+    font = "ter-132b";
     # keyMap = "us";
-    useXkbConfig = true; # use xkb.options in tty.
+    # useXkbConfig = true; # use xkb.options in tty.
   };
   # Enable the X11 windowing system.
   # services.xserver.enable = true;

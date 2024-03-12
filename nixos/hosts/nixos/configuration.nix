@@ -34,9 +34,14 @@
 
   programs.kdeconnect.enable = true;
 
-  services.tlp.settings = {
-    INTEL_GPU_MIN_FREQ_ON_AC = 300;
-    INTEL_GPU_MIN_FREQ_ON_BAT = 300;
+
+  services = {
+    printing.enable = true;
+    flatpak.enable = true;
+    tlp.settings = {
+      INTEL_GPU_MIN_FREQ_ON_AC = 300;
+      INTEL_GPU_MIN_FREQ_ON_BAT = 300;
+    };
   };
 
   networking.hostName = "nixos";

@@ -1,5 +1,6 @@
-{ ags
+{ inputs
 , writeShellScript
+, system
 , stdenv
 , cage
 , swww
@@ -24,14 +25,14 @@
 let
   name = "ags-greeter";
 
+  ags = inputs.ags.packages.${system}.default.override {
+    extraPackages = [accountsservice];
+  };
 
   dependencies = [
     which
     dart-sass
     fd
-    ags.override {
-      extraPackages = [accountsservice];
-    }
     brightnessctl
     swww
     matugen

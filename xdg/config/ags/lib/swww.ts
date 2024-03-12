@@ -2,7 +2,7 @@ import options from "options"
 import { dependencies, sh } from "./utils"
 
 // this is where the swww-switch sets the wallpaper
-const WP = `/home/${Utils.USER}/Pictures/wallpaper`
+const WP = `/home/${Utils.USER}/.config/background`
 
 async function wallpaper() {
     const pos = await sh("hyprctl cursorpos")
