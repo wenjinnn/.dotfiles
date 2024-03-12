@@ -51,7 +51,7 @@
         adwaita-qt
         adwaita-qt6
       ];
-      name = "adwaita-dark";
+      name = "Adwaita-Dark";
     };
     platformTheme = "qtct";
   };

@@ -160,7 +160,7 @@
             "XMODIFIERS, @im=fcitx"
             "QT_IM_MODULE, fcitx"
             "SDL_IM_MODULE, fcitx"
-            # "QT_QPA_PLATFORMTHEME, qt5ct"
+            "QT_QPA_PLATFORMTHEME, qt5ct"
             "GDK_BACKEND, wayland,x11"
             "QT_QPA_PLATFORM, wayland;xcb"
             "QT_WAYLAND_DISABLE_WINDOWDECORATION, 1"
