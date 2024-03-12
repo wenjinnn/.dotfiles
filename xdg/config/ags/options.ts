@@ -95,7 +95,7 @@ const options = mkOptions(OPTIONS, {
                 colored: opt(false),
                 label: opt(""),
             },
-            action: opt(() => App.toggleWindow("applauncher")),
+            action: opt(() => App.toggleWindow("launcher")),
         },
         date: {
             format: opt("%H:%M - %A %e."),
@@ -137,16 +137,35 @@ const options = mkOptions(OPTIONS, {
             action: opt(() => App.toggleWindow("powermenu")),
         },
     },
-
-    applauncher: {
-        iconSize: opt(62),
+    clipboard: {
         width: opt(350),
         margin: opt(80),
     },
 
-    clipboard: {
-        width: opt(350),
+    launcher: {
+        width: opt(0),
         margin: opt(80),
+        nix: {
+            pkgs: opt("nixpkgs/nixos-unstable"),
+            max: opt(8),
+        },
+        sh: {
+            max: opt(16),
+        },
+        apps: {
+            iconSize: opt(62),
+            max: opt(6),
+            favorites: opt([
+                [
+                    "microsoft-edge",
+                    "code",
+                    "mpv",
+                    "org.gnome.Nautilus",
+                    "org.gnome.Calendar",
+                    "dbeaver",
+                ],
+            ]),
+        },
     },
 
     overview: {

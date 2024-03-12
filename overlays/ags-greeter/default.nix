@@ -4,6 +4,7 @@
 , stdenv
 , cage
 , swww
+, fzf
 , bun
 , dart-sass
 , fd
@@ -36,6 +37,7 @@ let
     brightnessctl
     swww
     matugen
+    fzf
     hyprland
     slurp
     wf-recorder
