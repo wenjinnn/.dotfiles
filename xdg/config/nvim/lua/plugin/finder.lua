@@ -213,29 +213,31 @@ return {
               preview_height = 0.5,
             },
           },
-        },
-        file_browser = {
-          hide_parent_dir = true,
-          respect_gitignore = false,
-          select_buffer = true,
-          grouped = true,
-          auto_depth = true,
-          initial_browser = "tree",
-          follow = true,
-          path = "%:p:h",
-          prompt_path = true,
-          hijack_netrw = true,
-          mappings = {
-            ["i"] = {
-              ["<A-o>"] = fb_actions.open,
-              ["<C-b>"] = fb_actions.backspace,
-              ["<C-o>"] = "select_default",
-            },
-            ["n"] = {
-              -- your custom normal mode mappings
-              ["b"] = fb_actions.backspace,
-              ["o"] = "select_default",
-              ["<A-o>"] = fb_actions.open,
+          file_browser = {
+            wrap_results = false,
+            initial_mode = "normal",
+            hide_parent_dir = true,
+            respect_gitignore = false,
+            select_buffer = true,
+            grouped = true,
+            auto_depth = true,
+            initial_browser = "tree",
+            follow = true,
+            path = "%:p:h",
+            prompt_path = true,
+            hijack_netrw = true,
+            mappings = {
+              ["i"] = {
+                ["<A-o>"] = fb_actions.open,
+                ["<C-b>"] = fb_actions.backspace,
+                ["<C-o>"] = "select_default",
+              },
+              ["n"] = {
+                -- your custom normal mode mappings
+                ["b"] = fb_actions.backspace,
+                ["o"] = "select_default",
+                ["<A-o>"] = fb_actions.open,
+              },
             },
           },
         },
