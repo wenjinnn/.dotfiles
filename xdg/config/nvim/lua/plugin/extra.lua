@@ -5,6 +5,7 @@ return {
     "NTBBloodbath/rest.nvim",
     cond = not_vscode,
     main = "rest-nvim",
+    lazy = true,
     config = true,
     ft = { "http" },
     keys = {
