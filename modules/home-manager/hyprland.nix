@@ -157,9 +157,6 @@
         systemd.enable = true;
         settings = {
           env = [
-            "XMODIFIERS, @im=fcitx"
-            "QT_IM_MODULE, fcitx"
-            "SDL_IM_MODULE, fcitx"
             "QT_QPA_PLATFORMTHEME, qt5ct"
             "GDK_BACKEND, wayland,x11"
             "QT_QPA_PLATFORM, wayland;xcb"
@@ -173,8 +170,7 @@
           exec-once = [
             # "sleep 1 && swww init && swww img ~/.config/eww/images/wallpaper --transition-fps 60 --transition-type random --transition-pos && systemctl --user start swww-next.timer &"
             "echo 'Xft.dpi: 192' | xrdb -merge"
-            # Beijing lat/long.
-            "wlsunset -l 39.9 -L 116.3"
+            "wlsunset -S 06:30 -s 18:30"
             "kdeconnect-indicator"
             "swayidle -w timeout 300 'swaylock' timeout 360 'hyprctl dispatch dpms off' after-resume 'hyprctl dispatch dpms on' before-sleep 'swaylock && sleep 1 && hyprctl dispatch dpms off'"
             "ags -b hypr"
@@ -188,7 +184,6 @@
           ];
           input = {
             force_no_accel = false;
-
             kb_layout = "us";
             follow_mouse = 1;
             numlock_by_default = true;
