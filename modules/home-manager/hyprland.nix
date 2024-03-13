@@ -174,6 +174,7 @@
             "kdeconnect-indicator"
             "swayidle -w timeout 300 'swaylock' timeout 360 'hyprctl dispatch dpms off' after-resume 'hyprctl dispatch dpms on' before-sleep 'swaylock && sleep 1 && hyprctl dispatch dpms off'"
             "ags -b hypr"
+            "fcitx5 -d --replace"
             "hyprctl dispatch exec [workspace 9 silent] foot btop"
             "hyprctl dispatch exec [workspace 10 silent] evolution"
           ];
