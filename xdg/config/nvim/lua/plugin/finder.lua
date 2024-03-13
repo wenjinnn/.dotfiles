@@ -199,6 +199,7 @@ return {
           ["ui-select"] = {
             require("telescope.themes").get_cursor({
               borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
+              wrap_results = false,
               -- borderchars = {
               -- prompt = { "─", "│", " ", "│", "┌", "┐", "│", "│" },
               -- results = { "─", "│", "─", "│", "├", "┤", "┘", "└" },
