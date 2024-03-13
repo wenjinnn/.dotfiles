@@ -4,7 +4,7 @@
     enable = true;
     # dpi = 192;
     # xkb.layout = "us";
-    excludePackages = [ pkgs.xterm ];
+    excludePackages = [pkgs.xterm];
     # libinput.enable = true;
   };
 }
