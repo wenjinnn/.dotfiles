@@ -167,7 +167,7 @@ const options = mkOptions(OPTIONS, {
     },
 
     overview: {
-        scale: opt(9),
+        scale: opt(8),
         workspaces: opt(10),
         monochromeIcon: opt(false),
     },
