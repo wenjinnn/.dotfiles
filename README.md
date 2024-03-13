@@ -24,7 +24,6 @@ The [ags config](https://github.com/wenjinnn/config/tree/nixos/xdg/config/ags) b
 * add a clipboard menu depends on [cliphist](https://github.com/sentriz/cliphist)
 * ocr for screenshot powerd by [tesseract](https://github.com/tesseract-ocr/tesseract)
 * some bug fix for chinese font and [more](https://github.com/Aylur/dotfiles/issues/122)
-* removed favorites application on Applauncher and display all applications by default
 
 # Must have
 
