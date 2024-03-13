@@ -1,36 +1,32 @@
-{ inputs
-, writeShellScript
-, wlr-randr
-, bash
-, system
-, stdenv
-, cage
-, swww
-, fzf
-, bun
-, dart-sass
-, fd
-, brightnessctl
-, accountsservice
-, slurp
-, wf-recorder
-, wl-clipboard
-, wayshot
-, swappy
-, hyprpicker
-, pavucontrol
-, networkmanager
-, gtk3
-, which
-, hyprland
-, matugen
-}:
-let
+{
+  ags,
+  writeShellScript,
+  wlr-randr,
+  bash,
+  stdenv,
+  cage,
+  swww,
+  fzf,
+  bun,
+  dart-sass,
+  fd,
+  brightnessctl,
+  accountsservice,
+  slurp,
+  wf-recorder,
+  wl-clipboard,
+  wayshot,
+  swappy,
+  hyprpicker,
+  pavucontrol,
+  networkmanager,
+  gtk3,
+  which,
+  hyprland,
+  matugen,
+}: let
   name = "ags-greeter";
-
-  ags = inputs.ags.packages.${system}.default.override {
-    extraPackages = [accountsservice];
-  };
+  agsOverride = ags.override {extraPackages = [accountsservice];};
 
   dependencies = [
     which
@@ -38,6 +34,7 @@ let
     fd
     brightnessctl
     swww
+    agsOverride
     matugen
     fzf
     hyprland
@@ -56,12 +53,12 @@ let
 
   greeter = writeShellScript "greeter" ''
     export PATH=$PATH:${addBins dependencies}
-    ${cage}/bin/cage -ds -m last  -- ${bash}/bin/bash -c "${wlr-randr}/bin/wlr-randr --output eDP-1 --scale 2 && ${ags}/bin/ags -c ${config}/greeter.js"
+    ${cage}/bin/cage -ds -m last  -- ${bash}/bin/bash -c "${wlr-randr}/bin/wlr-randr --output eDP-1 --scale 2 && ${agsOverride}/bin/ags -c ${config}/greeter.js"
   '';
 
   desktop = writeShellScript name ''
     export PATH=$PATH:${addBins dependencies}
-    ${ags}/bin/ags -b ${name} -c ${config}/config.js $@
+    ${agsOverride}/bin/ags -b ${name} -c ${config}/config.js $@
   '';
 
   config = stdenv.mkDerivation {
@@ -90,14 +87,15 @@ let
       cp -f greeter.js $out/greeter.js
     '';
   };
-in stdenv.mkDerivation {
-  inherit name;
-  src = config;
+in
+  stdenv.mkDerivation {
+    inherit name;
+    src = config;
 
-  installPhase = ''
-    mkdir -p $out/bin
-    cp -r . $out
-    cp ${desktop} $out/bin/${name}
-    cp ${greeter} $out/bin/greeter
-  '';
-}
+    installPhase = ''
+      mkdir -p $out/bin
+      cp -r . $out
+      cp ${desktop} $out/bin/${name}
+      cp ${greeter} $out/bin/greeter
+    '';
+  }
