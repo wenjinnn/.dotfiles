@@ -121,7 +121,7 @@ just some filetype settings
 + [windwp/nvim-autopairs](https://dotfyle.com/plugins/windwp/nvim-autopairs)
 ### file-explorer
 
-+ [rolv-apneseth/tfm.nvim](https://dotfyle.com/plugins/rolv-apneseth/tfm.nvim)
++ [nvim-telescope/telescope-file-browser.nvim](https://github.com/nvim-telescope/telescope-file-browser.nvim)
 ### formatting
 
 + [stevearc/conform.nvim](https://dotfyle.com/plugins/stevearc/conform.nvim)
