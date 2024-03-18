@@ -167,12 +167,14 @@
             # "GDK_SCALE,2"
             "XCURSOR_SIZE, 24"
           ];
-          exec-once = [
+          exec-once = let 
+            wlsunset = "wlsunset -S 06:30 -s 18:30";
+            in [
             # "sleep 1 && swww init && swww img ~/.config/eww/images/wallpaper --transition-fps 60 --transition-type random --transition-pos && systemctl --user start swww-next.timer &"
             "echo 'Xft.dpi: 192' | xrdb -merge"
-            "wlsunset -S 06:30 -s 18:30"
+            "${wlsunset}"
             "kdeconnect-indicator"
-            "swayidle -w timeout 300 'swaylock' timeout 360 'hyprctl dispatch dpms off' after-resume 'hyprctl dispatch dpms on' before-sleep 'swaylock && sleep 1 && hyprctl dispatch dpms off'"
+            "swayidle -w timeout 300 'swaylock' timeout 360 'hyprctl dispatch dpms off' after-resume 'hyprctl dispatch dpms on;pkill wlsunset;${wlsunset};' before-sleep 'swaylock && sleep 1 && hyprctl dispatch dpms off'"
             "ags -b hypr"
             "fcitx5 -d --replace"
             "hyprctl dispatch exec [workspace 9 silent] foot btop"
