@@ -130,6 +130,7 @@ const options = mkOptions(OPTIONS, {
             monochrome: opt(false),
             preferred: opt("spotify"),
             direction: opt<"left" | "right">("right"),
+            format: opt("{artists} - {title}"),
             length: opt(40),
         },
         powermenu: {
@@ -137,6 +138,7 @@ const options = mkOptions(OPTIONS, {
             action: opt(() => App.toggleWindow("powermenu")),
         },
     },
+
     launcher: {
         width: opt(0),
         margin: opt(80),
