@@ -50,7 +50,7 @@ PreeditEnabledByDefault=True
 # Show Input Method Information when switch input method
 ShowInputMethodInformation=True
 # Show Input Method Information when changing focus
-showInputMethodInformationWhenFocusIn=True
+showInputMethodInformationWhenFocusIn=False
 # Show compact input method information
 CompactInputMethodInformation=True
 # Show first input method information
