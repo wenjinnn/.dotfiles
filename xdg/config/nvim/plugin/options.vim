@@ -100,7 +100,7 @@ set pumheight=20
 
 " Avoid showing message extra message when using completion
 set shortmess+=c
-set sessionoptions+=winpos
+set sessionoptions+=winpos,globals
 " set sessionoptions+=options,resize,winpos,terminal
 if has('nvim-0.10')
     set foldmethod=expr

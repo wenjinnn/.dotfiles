@@ -14,8 +14,7 @@ in {
     lemminx
     marksman
     stylua
-    luajitPackages.luarocks
-    python311Packages.pynvim
+    unstable.luajitPackages.luarocks
     python311Packages.pip
     python311Packages.python-lsp-server
     tree-sitter
@@ -45,5 +44,13 @@ in {
     withRuby = true;
     withNodeJs = true;
     withPython3 = true;
+    extraLuaPackages = luaPkgs: with pkgs.unstable.luajitPackages; [
+      lua-curl
+      nvim-nio
+      xml2lua
+    ];
+    extraPython3Packages = pyPkgs: with pyPkgs; [
+      pynvim
+    ];
   };
 }
