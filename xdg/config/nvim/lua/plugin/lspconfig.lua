@@ -244,8 +244,8 @@ return {
           },
           {
             "<leader>ch",
-            "<cmd>JdtHotcodeReplace<CR>",
-            desc = "JdtHotcodeReplace",
+            "<cmd>JdtUpdateHotcode<CR>",
+            desc = "JdtUpdateHotcode",
           },
           {
             "gt",
