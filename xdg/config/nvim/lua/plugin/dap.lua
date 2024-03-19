@@ -11,6 +11,9 @@ return {
         -- start zsh without rc file
         env = { ["NVIM_DAP_TOGGLETERM"] = 1 },
         clear_env = true,
+        on_open = function(term)
+          require("toggleterm.ui").set_winbar(term)
+        end,
       })
       new_term:toggle()
       return new_term.bufnr, new_term.window
