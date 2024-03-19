@@ -27,6 +27,21 @@ return {
     cond = not_vscode,
     event = "BufRead",
     config = true,
+    keys = function()
+      local todo_comments = require("todo-comments")
+      return {
+        {
+          "]t",
+          todo_comments.jump_next,
+          desc = "Next todo comment",
+        },
+        {
+          "[t",
+          todo_comments.jump_prev,
+          desc = "Previous todo comment",
+        },
+      }
+    end,
   },
   {
     "nvim-lualine/lualine.nvim",
@@ -183,6 +198,7 @@ return {
         "org",
         "orghelp",
         "orgagenda",
+        "httpResult",
         "",
       },
       mappings = {},

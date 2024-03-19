@@ -70,6 +70,8 @@ return {
       { "<leader>fhs", "<cmd>Telescope search_history<cr>", desc = "Telescope Search History" },
       { "<leader>fhq", "<cmd>Telescope quickfixhistory<cr>", desc = "Telescope Quickfix History" },
       { "<leader>fwD", "<cmd>Telescope diagnostics<cr>", desc = "Telescope Diagnostics" },
+      { "<leader>fT", "<cmd>TodoTelescope<cr>", desc = "Telescope Todo" },
+      { "<leader>fsb", "<cmd>Telescope scope buffers<cr>", desc = "Telescope Scope Buf" },
       {
         "<leader>fwd",
         '<cmd>lua require"telescope.builtin".diagnostics{bufnr=0}<cr>',
@@ -259,9 +261,8 @@ return {
       require("telescope").load_extension("ui-select")
       require("telescope").load_extension("live_grep_args")
       require("telescope").load_extension("file_browser")
-      -- first load extension
       require("telescope").load_extension("rest")
-      -- then use it
+      require("telescope").load_extension("scope")
     end,
   },
 }
