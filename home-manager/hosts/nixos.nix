@@ -41,8 +41,8 @@
     bottles
     telegram-desktop
     discord
+    nur.repos.wenjinnn.wechat-universal
     nur.repos.xddxdd.dingtalk
-    nur.repos.xddxdd.wechat-uos
     nur.repos.xddxdd.qq
     nur.repos.linyinfeng.wemeet
   ];
