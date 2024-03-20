@@ -157,6 +157,9 @@
         systemd.enable = true;
         settings = {
           env = [
+            "XMODIFIERS, @im=fcitx"
+            "QT_IM_MODULE, fcitx"
+            "SDL_IM_MODULE, fcitx"
             "QT_QPA_PLATFORMTHEME, qt5ct"
             "GDK_BACKEND, wayland,x11"
             "QT_QPA_PLATFORM, wayland;xcb"
@@ -264,6 +267,8 @@
           windowrule = [
             "float, ^(steam)$"
             "tile,title:^(WPS)(.*)$"
+            "tile,title:^(微信)(.*)$"
+            "tile,title:^(钉钉)(.*)$"
             # Dialogs
             "float,title:^(Open File)(.*)$"
             "float,title:^(Open Folder)(.*)$"
