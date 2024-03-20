@@ -122,6 +122,7 @@
     kubernetes
     kubectl
     autossh
+    gh
   ];
 
   # xresources.properties = {
