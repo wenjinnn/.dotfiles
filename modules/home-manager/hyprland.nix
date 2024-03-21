@@ -401,7 +401,7 @@
             "SUPER, Apostrophe, splitratio, 0.1"
           ];
           bindr = [
-            "ControlSuperShiftAlt, R, exec, ags -b hypr quit; ags -b hypr"
+            "ControlSuperShiftAlt, R, exec, ags -b hypr quit; ags -b hypr;pkill wlsunset;wlsunset -S 06:30 -s 18:30"
           ];
           bindl = [
             ",Print,exec,grim - | wl-copy"
