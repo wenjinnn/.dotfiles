@@ -122,6 +122,9 @@
     kubernetes
     kubectl
     autossh
+    mermaid-cli
+    mermaid-filter
+    pandoc
     gh
   ];
 
