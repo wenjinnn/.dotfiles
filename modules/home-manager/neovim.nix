@@ -45,9 +45,11 @@ in {
     withNodeJs = true;
     withPython3 = true;
     extraLuaPackages = luaPkgs: with pkgs.unstable.luajitPackages; [
+      # for rest.nvim
       lua-curl
       nvim-nio
       xml2lua
+      mimetypes
     ];
     extraPython3Packages = pyPkgs: with pyPkgs; [
       pynvim

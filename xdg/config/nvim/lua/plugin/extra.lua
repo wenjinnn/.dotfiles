@@ -9,9 +9,8 @@ return {
     config = true,
     ft = { "http" },
     keys = {
-      { "<leader>re", "<plug>RestNvim", desc = "RestNvim Run" },
-      { "<leader>rp", "<plug>RestNvimPreview", desc = "RestNvim Preview" },
-      { "<leader>rr", "<plug>RestNvimLast", desc = "RestNvim Run Last" },
+      { "<leader>re", "<cmd>Rest run<cr>", desc = "RestNvim Run" },
+      { "<leader>rr", "<cmd>Rest run last<cr>", desc = "RestNvim Run Last" },
     },
   },
   {
