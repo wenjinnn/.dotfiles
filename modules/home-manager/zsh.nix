@@ -29,6 +29,7 @@
         "z"
         "history"
         "extract"
+        "systemd"
         "fzf"
         "sudo"
       ];
