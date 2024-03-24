@@ -212,7 +212,8 @@
           general = {
             layout = "dwindle";
             no_focus_fallback = true;
-            no_cursor_warps = true;
+            no_cursor_warps = false;
+            resize_on_border = true;
             "col.active_border" = "rgba(51a4e7ff)";
           };
           dwindle = {
@@ -343,6 +344,8 @@
             "SuperShift, Page_Up, movetoworkspace, -1"
             "ControlShiftSuper, L, movetoworkspace, +1"
             "ControlShiftSuper, H, movetoworkspace, -1"
+            "AltShiftSuper, L, movecurrentworkspacetomonitor, +1"
+            "AltShiftSuper, H, movecurrentworkspacetomonitor, -1"
             "SuperShift, mouse_down, movetoworkspace, -1"
             "SuperShift, mouse_up, movetoworkspace, +1"
             # Fullscreen
