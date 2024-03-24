@@ -300,6 +300,8 @@
             "ControlSuperShiftAlt, E, exit,"
             ", XF86PowerOff, ${e} -t powermenu"
             "Super, Tab,     ${e} -t overview"
+            # Snapshot
+            # "SuperShift, S, exec, grim -g \"$(slurp)\" - | wl-copy"
             "Super,Print,  ${e} -r 'recorder.start()'"
             "ControlSuper,Print,  ${e} -r 'recorder.start(true)'"
             ",Print,         ${e} -r 'recorder.screenshot(true)'"
@@ -314,8 +316,6 @@
             # launcher
             "Super, D, exec, ags -b hypr -t launcher"
             "Super, N, exec, ags -b hypr -t datemenu"
-            # Snapshot
-            "SuperShift, S, exec, grim -g \"$(slurp)\" - | wl-copy"
             # Swap windows
             "SuperShift, H, movewindow, l"
             "SuperShift, L, movewindow, r"
@@ -404,7 +404,7 @@
             "ControlSuperShiftAlt, R, exec, ags -b hypr quit; ags -b hypr;pkill wlsunset;wlsunset -S 06:30 -s 18:30"
           ];
           bindl = [
-            ",Print,exec,grim - | wl-copy"
+            # ",Print,exec,grim - | wl-copy"
             "ControlSuperShiftAlt, S, exec, systemctl suspend"
             ",XF86AudioPlay,    exec, playerctl play-pause"
             ",XF86AudioStop,    exec, playerctl pause"
