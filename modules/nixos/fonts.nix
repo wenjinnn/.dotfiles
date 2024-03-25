@@ -14,6 +14,11 @@
       font-awesome
       lexend
       material-symbols
+      # microsoft fonts
+      corefonts
+      vistafonts-cht
+      vistafonts-chs
+      vistafonts
     ];
     fontDir.enable = true;
     enableDefaultPackages = true;

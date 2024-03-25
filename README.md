@@ -20,7 +20,7 @@ repo's structure base on [nix-starter-config#standard](https://github.com/Mister
 The [ags config](https://github.com/wenjinnn/config/tree/nixos/xdg/config/ags) base on [Aylur/dotfiles](https://github.com/Aylur/dotfiles), with these different:
 
 * add hibernate button for powermenu, need to setup swap to make it work.  
-* use [swaylock-effects](https://github.com/jirutka/swaylock-effects) instead of lockscreen.js (more security, see this [issue](https://github.com/Aylur/dotfiles/issues/72))  
+* use [hyprlock](https://github.com/hyprwm/hyprlock) instead of lockscreen.js (more security, see this [issue](https://github.com/Aylur/dotfiles/issues/72))  
 * add a clipboard menu depends on [cliphist](https://github.com/sentriz/cliphist)
 * ocr for screenshot powerd by [tesseract](https://github.com/tesseract-ocr/tesseract)
 * some bug fix for chinese font and [more](https://github.com/Aylur/dotfiles/issues/122)

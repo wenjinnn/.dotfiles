@@ -61,7 +61,7 @@ export const Header = () => Widget.Box(
     Widget.Button({
         vpack: "center",
         child: Widget.Icon(icons.ui.lock),
-        on_clicked: () => Utils.execAsync(["swaylock"]),
+        on_clicked: () => Utils.execAsync(["loginctl lock-session"]),
     }),
     SysButton("logout"),
     SysButton("shutdown"),

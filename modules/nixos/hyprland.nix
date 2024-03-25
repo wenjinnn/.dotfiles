@@ -61,6 +61,7 @@
   security = {
     polkit.enable = true;
     pam.services.swaylock = {};
+    pam.services.hyprlock = {};
     pam.services.ags = {};
   };
   services = {

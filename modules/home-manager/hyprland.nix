@@ -10,8 +10,7 @@
     outputs.homeManagerModules.ags
   ];
 
-  home.packages = with pkgs; [
-    hyprpicker
+  home.packages = (with pkgs; [
     wayshot
     wf-recorder
     imagemagick
@@ -24,12 +23,7 @@
     pulseaudio
     gnupg
     libsForQt5.kdeconnect-kde
-    swayidle
     swww
-    # gtklock
-    # gtklock-userinfo-module
-    # gtklock-powerbar-module
-    # gtklock-playerctl-module
     blueberry
     cliphist
     glib
@@ -37,9 +31,13 @@
     xdg-utils
     xorg.xrdb
     wl-gammactl
-    wlsunset
-    unstable.xwaylandvideobridge
-  ];
+  ]) ++ (with pkgs.unstable; [
+    xwaylandvideobridge
+    hypridle
+    (hyprlock.override {mesa = pkgs.mesa;})
+    hyprcursor
+    hyprpicker
+  ]);
 
   xdg.desktopEntries."org.gnome.Settings" = {
     name = "Settings";
@@ -59,12 +57,105 @@
     genericName = "SQL Integrated Development Environment";
   };
   home.file = {
-    # ".config/gtklock/config.ini".text = ''
-    #   [main]
-    #   gtk-theme=adw-gtk3-dark
-    #   modules=${pkgs.gtklock-powerbar-module}/lib/gtklock/powerbar-module.so;${pkgs.gtklock-playerctl-module}/lib/gtklock/playerctl-module.so;${pkgs.gtklock-userinfo-module}/lib/gtklock/userinfo-module.so
-    #   time-format=%T
-    # '';
+    # hypridle conf
+    ".config/hypr/hypridle.conf".text = ''
+      general {
+          lock_cmd = pidof hyprlock || hyprlock          # dbus/sysd lock command (loginctl lock-session)
+          # unlock_cmd =       # same as above, but unlock
+          before_sleep_cmd = loginctl lock-session   # command ran before sleep
+          after_sleep_cmd = hyprctl dispatch dpms on  # command ran after sleep
+          ignore_dbus_inhibit = false             # whether to ignore dbus-sent idle-inhibit requests (used by e.g. firefox or steam)
+      }
+
+      listener {
+          timeout = 300
+          on-timeout = loginctl lock-session
+      }
+
+      listener {
+          timeout = 330                            # in seconds
+          on-timeout = hyprctl dispatch dpms off   # command to run when timeout has passed
+          on-resume = hyprctl dispatch dpms on     # command to run when activity is detected after timeout has fired.
+      }
+    '';
+    # hyprlock conf
+    ".config/hypr/hyprlock.conf".text = ''
+      background {
+          monitor =
+          path = screenshot
+          color = rgba(25, 20, 20, 1.0)
+
+          # all these options are taken from hyprland, see https://wiki.hyprland.org/Configuring/Variables/#blur for explanations
+          blur_passes = 3 # 0 disables blurring
+          blur_size = 3
+          blur_new_optimizations = "on"
+          xray = true
+          noise = 0.01
+          contrast = 0.9
+          brightness = 0.8
+          vibrancy = 0.1696
+          vibrancy_darkness = 0.0
+      }
+      input-field {
+          monitor =
+          size = 600, 100
+          outline_thickness = 3
+          dots_size = 0.33 # Scale of input-field height, 0.2 - 0.8
+          dots_spacing = 0.15 # Scale of dots' absolute size, 0.0 - 1.0
+          dots_center = false
+          dots_rounding = -1 # -1 default circle, -2 follow input-field rounding
+          outer_color = rgb(151515)
+          inner_color = rgb(200, 200, 200)
+          font_color = rgb(10, 10, 10)
+          fade_on_empty = true
+          fade_timeout = 1000 # Milliseconds before fade_on_empty is triggered.
+          placeholder_text = <i>Input Password...</i> # Text rendered in the input box when it's empty.
+          hide_input = false
+          rounding = -1 # -1 means complete rounding (circle/oval)
+          check_color = rgb(204, 136, 34)
+          fail_color = rgb(204, 34, 34) # if authentication failed, changes outer_color and fail message color
+          fail_text = <i>$FAIL <b>($ATTEMPTS)</b></i> # can be set to empty
+          fail_transition = 300 # transition time in ms between normal outer_color and fail_color
+          capslock_color = -1
+          numlock_color = -1
+          bothlock_color = -1 # when both locks are active. -1 means don't change outer color (same for above)
+          invert_numlock = false # change color if numlock is off
+          swap_font_color = false # see below
+
+          position = 0, -20
+          halign = center
+          valign = center
+      }
+      label {
+          monitor =
+          text = Hi there, $USER
+          color = rgba(200, 200, 200, 1.0)
+          font_size = 50
+
+          position = 0, 80
+          halign = center
+          valign = center
+      }
+      label {
+          monitor =
+          text = $TIME
+          color = rgba(200, 200, 200, 1.0)
+          font_size = 150
+
+          position = 0, 600
+          halign = center
+          valign = center
+      }
+    '';
+  };
+
+  services.wlsunset = {
+    enable = true;
+    package = pkgs.unstable.wlsunset;
+    # Beijing lat/long.
+    latitude = "39.9";
+    longitude = "116.3";
+    # systemdTarget = "hyprland-session.target";
   };
 
   systemd.user = {
@@ -121,33 +212,6 @@
     };
   };
 
-  programs.swaylock = {
-    enable = true;
-    package = pkgs.swaylock-effects;
-    settings = {
-      screenshots = true;
-      clock = true;
-      indicator = true;
-      font-size = 48;
-      indicator-radius = 100;
-      indicator-thickness = 7;
-      fade-in = 0.2;
-      effect-blur = "7x5";
-      effect-vignette = "0.5:0.5";
-      ring-color = "51a4e7";
-      grace = 0;
-      key-hl-color = "880033";
-      line-color = "00000000";
-      inside-color = "00000088";
-      separator-color = "00000000";
-      datestr = "%F, %a";
-      show-failed-attempts = true;
-      daemonize = true;
-      indicator-caps-lock = true;
-      show-keyboard-layout = false;
-    };
-  };
-
   wayland = {
     windowManager = {
       hyprland = {
@@ -169,13 +233,14 @@
             "ADW_DISABLE_PORTAL, 1"
             # "GDK_SCALE,2"
             "XCURSOR_SIZE, 24"
+            "HYPRCURSOR_SIZE, 24"
           ];
           exec-once = [
             # "sleep 1 && swww init && swww img ~/.config/eww/images/wallpaper --transition-fps 60 --transition-type random --transition-pos && systemctl --user start swww-next.timer &"
             "echo 'Xft.dpi: 192' | xrdb -merge"
-            "wlsunset -S 06:30 -s 18:30"
+            # "wlsunset -S 06:30 -s 18:30"
             "kdeconnect-indicator"
-            "swayidle -w timeout 300 'swaylock' timeout 360 'hyprctl dispatch dpms off' after-resume 'hyprctl dispatch dpms on' before-sleep 'swaylock && sleep 1 && hyprctl dispatch dpms off'"
+            "hypridle"
             "ags -b hypr"
             "fcitx5 -d --replace"
             "hyprctl dispatch exec [workspace 9 silent] foot btop"
@@ -312,7 +377,7 @@
             "ControlShiftSuper, S, exec, playerctl pause"
             "ControlSuper, P, exec, playerctl previous"
             "ControlSuper, N, exec, playerctl next"
-            "ControlSuperShiftAlt, L, exec, swaylock"
+            "ControlSuperShiftAlt, L, exec, hyprlock"
             "ControlSuperShiftAlt, D, exec, systemctl poweroff"
             # launcher
             "Super, D, exec, ags -b hypr -t launcher"
