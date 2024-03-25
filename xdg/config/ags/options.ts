@@ -176,7 +176,7 @@ const options = mkOptions(OPTIONS, {
 
     powermenu: {
         hibernate: opt("systemctl hibernate"),
-        sleep: opt("systemctl suspend"),
+        sleep: opt("systemctl suspend-then-hibernate"),
         reboot: opt("systemctl reboot"),
         logout: opt("hyprctl dispatch exit"),
         shutdown: opt("shutdown now"),
