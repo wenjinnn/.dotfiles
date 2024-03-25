@@ -217,9 +217,10 @@ return {
             },
           },
           file_browser = {
+            hidden = true,
             wrap_results = false,
             initial_mode = "normal",
-            hide_parent_dir = true,
+            hide_parent_dir = false,
             respect_gitignore = false,
             select_buffer = true,
             grouped = true,
