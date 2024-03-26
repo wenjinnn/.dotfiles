@@ -25,4 +25,6 @@
   vscode = import ./vscode.nix;
   direnv = import ./direnv.nix;
   translate-shell = import ./translate-shell.nix;
+  hypridle = import ./hypridle.nix;
+  hyprlock = import ./hyprlock.nix;
 }

@@ -35,6 +35,8 @@
 
     # TODO: Add any other flake you might need
     nixos-hardware.url = "github:nixos/nixos-hardware";
+    hypridle.url = "github:hyprwm/hypridle";
+    hyprlock.url = "github:hyprwm/hyprlock";
 
     # Shameless plug: looking for a way to nixify your themes and make
     # everything match nicely? Try nix-colors!

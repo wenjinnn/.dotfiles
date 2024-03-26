@@ -17,6 +17,8 @@
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
   boot.resumeDevice = "/dev/disk/by-uuid/63c28fde-17cc-44bb-aa1b-6658c4107d3f";
+  # btrfs resume_offset calc
+  # btrfs inspect-internal map-swapfile -r swap_file
   boot.kernelParams = ["resume_offset=13194284"];
 
   fileSystems."/" = {

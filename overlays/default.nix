@@ -38,6 +38,7 @@ in rec {
     });
     matugen = inputs.matugen.packages.${final.system}.default;
     ags = inputs.ags.packages.${final.system}.default;
+    hyprlock = (inputs.hyprlock.packages.${final.system}.default.override {mesa = final.mesa;});
     ags-greeter = final.callPackage ./ags-greeter {};
   };
 

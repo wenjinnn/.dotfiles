@@ -6,8 +6,10 @@
   pkgs,
   ...
 }: {
-  imports = [
-    outputs.homeManagerModules.ags
+  imports = with outputs.homeManagerModules;[
+    ags
+    hypridle
+    hyprlock
   ];
 
   home.packages = (with pkgs; [
@@ -33,8 +35,6 @@
     wl-gammactl
   ]) ++ (with pkgs.unstable; [
     xwaylandvideobridge
-    hypridle
-    (hyprlock.override {mesa = pkgs.mesa;})
     hyprcursor
     hyprpicker
   ]);
@@ -55,98 +55,6 @@
     categories = ["Development"];
     type = "Application";
     genericName = "SQL Integrated Development Environment";
-  };
-  home.file = {
-    # hypridle conf
-    ".config/hypr/hypridle.conf".text = ''
-      general {
-          lock_cmd = pidof hyprlock || hyprlock          # dbus/sysd lock command (loginctl lock-session)
-          # unlock_cmd =       # same as above, but unlock
-          before_sleep_cmd = loginctl lock-session   # command ran before sleep
-          after_sleep_cmd = hyprctl dispatch dpms on  # command ran after sleep
-          ignore_dbus_inhibit = false             # whether to ignore dbus-sent idle-inhibit requests (used by e.g. firefox or steam)
-      }
-
-      listener {
-          timeout = 300
-          on-timeout = loginctl lock-session
-      }
-
-      listener {
-          timeout = 330                            # in seconds
-          on-timeout = hyprctl dispatch dpms off   # command to run when timeout has passed
-          on-resume = hyprctl dispatch dpms on     # command to run when activity is detected after timeout has fired.
-      }
-    '';
-    # hyprlock conf
-    ".config/hypr/hyprlock.conf".text = ''
-      background {
-          monitor =
-          path = screenshot
-          color = rgba(25, 20, 20, 1.0)
-
-          # all these options are taken from hyprland, see https://wiki.hyprland.org/Configuring/Variables/#blur for explanations
-          blur_passes = 3 # 0 disables blurring
-          blur_size = 3
-          blur_new_optimizations = "on"
-          xray = true
-          noise = 0.01
-          contrast = 0.9
-          brightness = 0.8
-          vibrancy = 0.1696
-          vibrancy_darkness = 0.0
-      }
-      input-field {
-          monitor =
-          size = 600, 100
-          outline_thickness = 3
-          dots_size = 0.33 # Scale of input-field height, 0.2 - 0.8
-          dots_spacing = 0.15 # Scale of dots' absolute size, 0.0 - 1.0
-          dots_center = false
-          dots_rounding = -1 # -1 default circle, -2 follow input-field rounding
-          outer_color = rgb(151515)
-          inner_color = rgb(200, 200, 200)
-          font_color = rgb(10, 10, 10)
-          fade_on_empty = true
-          fade_timeout = 1000 # Milliseconds before fade_on_empty is triggered.
-          placeholder_text = <i>Input Password...</i> # Text rendered in the input box when it's empty.
-          hide_input = false
-          rounding = -1 # -1 means complete rounding (circle/oval)
-          check_color = rgb(204, 136, 34)
-          fail_color = rgb(204, 34, 34) # if authentication failed, changes outer_color and fail message color
-          fail_text = <i>$FAIL <b>($ATTEMPTS)</b></i> # can be set to empty
-          fail_transition = 300 # transition time in ms between normal outer_color and fail_color
-          capslock_color = -1
-          numlock_color = -1
-          bothlock_color = -1 # when both locks are active. -1 means don't change outer color (same for above)
-          invert_numlock = false # change color if numlock is off
-          swap_font_color = false # see below
-
-          position = 0, -20
-          halign = center
-          valign = center
-      }
-      label {
-          monitor =
-          text = Hi there, $USER
-          color = rgba(200, 200, 200, 1.0)
-          font_size = 50
-
-          position = 0, 80
-          halign = center
-          valign = center
-      }
-      label {
-          monitor =
-          text = $TIME
-          color = rgba(200, 200, 200, 1.0)
-          font_size = 150
-
-          position = 0, 600
-          halign = center
-          valign = center
-      }
-    '';
   };
 
   services.wlsunset = {
@@ -240,7 +148,7 @@
             "echo 'Xft.dpi: 192' | xrdb -merge"
             # "wlsunset -S 06:30 -s 18:30"
             "kdeconnect-indicator"
-            "hypridle"
+            # "hypridle"
             "ags -b hypr"
             "fcitx5 -d --replace"
             "hyprctl dispatch exec [workspace 9 silent] foot btop"
