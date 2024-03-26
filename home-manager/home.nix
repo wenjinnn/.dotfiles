@@ -98,6 +98,7 @@
     file
     which
     tree
+    traceroute
     gnused
     gnutar
     gawk
