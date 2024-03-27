@@ -10,9 +10,9 @@ return {
     version = "v1.2.1",
     ft = { "http" },
     keys = {
-      { "<leader>re", "<plugin>RestNvim", desc = "RestNvim Run" },
-      { "<leader>rp", "<plugin>RestNvimPreview", desc = "RestNvim Preview" },
-      { "<leader>rr", "<plugin>RestNvimLast", desc = "RestNvim Run Last" },
+      { "<leader>re", "<plug>RestNvim", desc = "RestNvim Run" },
+      { "<leader>rp", "<plug>RestNvimPreview", desc = "RestNvim Preview" },
+      { "<leader>rr", "<plug>RestNvimLast", desc = "RestNvim Run Last" },
     },
   },
   {
