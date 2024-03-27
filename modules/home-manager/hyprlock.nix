@@ -22,6 +22,7 @@
           width = 600;
           height = 100;
         };
+        placeholder_text = "";
       }
     ];
     labels = [
