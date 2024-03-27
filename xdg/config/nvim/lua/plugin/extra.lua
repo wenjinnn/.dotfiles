@@ -7,10 +7,12 @@ return {
     main = "rest-nvim",
     lazy = true,
     config = true,
+    version = "v1.2.1",
     ft = { "http" },
     keys = {
-      { "<leader>re", "<cmd>Rest run<cr>", desc = "RestNvim Run" },
-      { "<leader>rr", "<cmd>Rest run last<cr>", desc = "RestNvim Run Last" },
+      { "<leader>re", "<plugin>RestNvim", desc = "RestNvim Run" },
+      { "<leader>rp", "<plugin>RestNvimPreview", desc = "RestNvim Preview" },
+      { "<leader>rr", "<plugin>RestNvimLast", desc = "RestNvim Run Last" },
     },
   },
   {
