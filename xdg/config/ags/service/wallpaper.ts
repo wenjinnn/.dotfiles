@@ -9,7 +9,7 @@ const wpConfig = {
 }
 
 const WP = `${Utils.HOME}/.config/background`
-const Cache = `${Utils.HOME}/Pictures/Wallpaper/Bing`
+const Cache = `${Utils.HOME}/Pictures/BingWallpaper`
 
 class Wallpaper extends Service {
     static {
