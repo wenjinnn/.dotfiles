@@ -22,7 +22,7 @@ The [ags config](https://github.com/wenjinnn/config/tree/nixos/xdg/config/ags) b
 * add hibernate button for powermenu, need to setup swap to make it work.  
 * use [hyprlock](https://github.com/hyprwm/hyprlock) instead of lockscreen.js (more security, see this [issue](https://github.com/Aylur/dotfiles/issues/72))  
 * add a clipboard menu depends on [cliphist](https://github.com/sentriz/cliphist)
-* ocr for screenshot powerd by [tesseract](https://github.com/tesseract-ocr/tesseract)
+* ocr for screenshot powered by [tesseract](https://github.com/tesseract-ocr/tesseract)
 * some bug fix for chinese font and [more](https://github.com/Aylur/dotfiles/issues/122)
 
 # Must have
@@ -31,7 +31,6 @@ Almost as same as [Aylur/dotfiles](https://github.com/Aylur/dotfiles) with these
 
 * cliphist  
 * tesseract
-* yazi (also as nvim file manager)
 * jq
 
 # Installation
