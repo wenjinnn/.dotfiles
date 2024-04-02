@@ -37,7 +37,7 @@ Almost as same as [Aylur/dotfiles](https://github.com/Aylur/dotfiles) with these
 
 For NixOS users:
 
-replace [hardware-configuration.nix](https://github.com/wenjinnn/config/blob/nixos/nixos/hosts/nixos/hardware-configuration.nix) with your own, and change the [username](https://github.com/wenjinnn/config/blob/1d08b37c56696a953e1c40c0ea9307acf0c1539d/flake.nix#L63) variable, then execute in local repo path:
+replace [hardware-configuration.nix](https://github.com/wenjinnn/config/blob/nixos/nixos/hosts/nixos/hardware-configuration.nix) with your own, and change the [username](https://github.com/wenjinnn/config/blob/1d08b37c56696a953e1c40c0ea9307acf0c1539d/flake.nix#L63) variable, you may also need remove this [line](https://github.com/wenjinnn/config/blob/3c58b72f83b4a4e421ef0fc72a808e2ce31ca68b/flake.nix#L94) from nixos hardware or replace it with your hardware model. then execute in local repo path:
 ```
 $ sudo nixos-rebuild switch --flake .#nixos
 $ home-manager switch --flake .#wenjin@nixos
