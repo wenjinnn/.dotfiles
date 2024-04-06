@@ -4,17 +4,18 @@ import Gdk from "gi://Gdk"
 import options from "options"
 
 const systemtray = await Service.import("systemtray")
+const { ignore } = options.bar.systray
 
 const SysTrayItem = (item: TrayItem) => PanelButton({
     class_name: "tray-item",
     child: Widget.Icon({ icon: item.bind("icon") }),
     tooltip_markup: item.bind("tooltip_markup"),
     setup: self => {
-        const menu = item.menu
+        const { menu } = item
         if (!menu)
             return
 
-        const id = item.menu?.connect("popped-up", () => {
+        const id = menu.connect("popped-up", () => {
             self.toggleClassName("active")
             menu.connect("notify::visible", () => {
                 self.toggleClassName("active", menu.visible)
@@ -22,8 +23,7 @@ const SysTrayItem = (item: TrayItem) => PanelButton({
             menu.disconnect(id!)
         })
 
-        if (id)
-            self.connect("destroy", () => item.menu?.disconnect(id))
+        self.connect("destroy", () => menu.disconnect(id))
     },
 
     on_primary_click: btn => item.menu?.popup_at_widget(
@@ -34,4 +34,6 @@ const SysTrayItem = (item: TrayItem) => PanelButton({
 })
 
 export default () => Widget.Box()
-    .bind("children", systemtray, "items", i => i.map(SysTrayItem))
+    .bind("children", systemtray, "items", i => i
+        .filter(({ id }) => !ignore.value.includes(id))
+        .map(SysTrayItem))
