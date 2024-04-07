@@ -123,10 +123,7 @@ const options = mkOptions(OPTIONS, {
             action: opt(() => App.toggleWindow("datemenu")),
         },
         systray: {
-            ignore: opt([
-                "KDE Connect Indicator",
-                "spotify-client",
-            ]),
+            ignore: opt([]),
         },
         media: {
             monochrome: opt(false),
