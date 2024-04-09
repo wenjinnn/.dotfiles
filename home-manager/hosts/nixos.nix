@@ -41,7 +41,7 @@
     bottles
     telegram-desktop
     discord
-    yq
+    appimage-run
     nur.repos.wenjinnn.wechat-universal
     nur.repos.xddxdd.dingtalk
     nur.repos.xddxdd.qq

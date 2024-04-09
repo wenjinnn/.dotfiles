@@ -127,6 +127,7 @@
     mermaid-filter
     pandoc
     gh
+    yq
   ];
 
   # xresources.properties = {
