@@ -20,7 +20,6 @@ return {
     cond = not_vscode,
     event = "VeryLazy",
     opts = function()
-      require("orgmode").setup_ts_grammar()
       local config = {
         org_agenda_files = { "~/project/my/archive/org/*" },
         notifications = {
