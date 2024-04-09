@@ -43,6 +43,7 @@
     discord
     appimage-run
     nur.repos.wenjinnn.wechat-universal
+    nur.repos.wenjinnn.hiddify-next
     nur.repos.xddxdd.dingtalk
     nur.repos.xddxdd.qq
     nur.repos.linyinfeng.wemeet
