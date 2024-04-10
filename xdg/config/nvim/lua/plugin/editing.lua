@@ -44,9 +44,11 @@ return {
         },
       }
     end,
-    config = function()
+    init = function()
       vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
       vim.g.conform_autoformat = true
+    end,
+    config = function()
       require("conform").setup({
         formatters_by_ft = {
           lua = { "stylua" },
