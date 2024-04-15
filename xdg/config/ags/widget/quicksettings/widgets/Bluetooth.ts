@@ -7,7 +7,7 @@ const bluetooth = await Service.import("bluetooth")
 export const BluetoothToggle = () => ArrowToggleButton({
     name: "bluetooth",
     icon: bluetooth.bind("enabled").as(p => icons.bluetooth[p ? "enabled" : "disabled"]),
-    label: Utils.watch("Enabled", bluetooth, () => {
+    label: Utils.watch("Disabled", bluetooth, () => {
         if (!bluetooth.enabled)
             return "Disabled"
 
