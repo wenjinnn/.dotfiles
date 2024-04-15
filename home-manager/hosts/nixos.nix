@@ -42,6 +42,7 @@
     telegram-desktop
     discord
     appimage-run
+    unstable.nixfmt-rfc-style
     nur.repos.wenjinnn.wechat-universal
     nur.repos.wenjinnn.hiddify-next
     nur.repos.xddxdd.dingtalk
