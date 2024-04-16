@@ -13,6 +13,9 @@
   ];
 
   home.file = {
+    ".local/lib/openjdk8".source = pkgs.jdk8;
+    ".local/lib/openjdk17".source = pkgs.jdk17;
+    ".local/lib/openjdk21".source = pkgs.jdk21;
     ".m2/toolchains.xml".text = ''
       <?xml version="1.0" encoding="UTF-8"?>
       <toolchains>
