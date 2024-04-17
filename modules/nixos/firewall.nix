@@ -4,7 +4,7 @@
     enable = true;
     checkReversePath = "loose";
     trustedInterfaces = ["tun*"];
-    allowedTCPPorts = [80 443];
+    allowedTCPPorts = [80 443 4001];
     allowedUDPPortRanges = [
       {
         from = 4000;

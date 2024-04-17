@@ -15,6 +15,7 @@
     mpv
     foot
     vscode
+    aria2
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
