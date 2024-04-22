@@ -242,6 +242,8 @@ return {
       return {
         directory = vim.fn.stdpath("state") .. "/sessions/",
         file = "session.vim",
+        -- Whether to force possibly harmful actions (meaning depends on function)
+        force = { read = false, write = true, delete = true },
         hooks = {
           -- Before successful action
           pre = { read = nil, write = shutdown_term, delete = nil },
