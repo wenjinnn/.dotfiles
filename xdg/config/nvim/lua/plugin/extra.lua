@@ -204,6 +204,7 @@ return {
       { "<leader>x", "<cmd>lua MiniBufremove.delete()<CR>", desc = "Buf Delete" },
     },
     version = "*",
+    cond = not_vscode,
     config = true,
   },
   {

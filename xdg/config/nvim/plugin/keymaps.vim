@@ -83,4 +83,5 @@ if exists('g:vscode')
     vnoremap <leader>mm <cmd>call VSCodeNotifyVisual('editor.action.formatSelection')<CR>
     nnoremap <leader>ca <cmd>call VSCodeNotify('editor.action.quickFix')<CR>
     vnoremap <leader>ca <cmd>call VSCodeNotifyVisual('editor.action.quickFix')<CR>
+    nnoremap <leader>x <cmd>call VSCodeNotify('workbench.action.closeActiveEditor')<CR>
 endif
