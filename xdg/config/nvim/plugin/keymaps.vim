@@ -57,7 +57,7 @@ nnoremap <silent> <leader>l <cmd>Lazy<CR>
 " ctags
 nnoremap <silent> <leader>C <cmd>!ctags<CR>
 
-if &diff
+if &diff != 0
     nnoremap <silent> gl <cmd>diffget LO<CR>
     nnoremap <silent> gr <cmd>diffget RE<CR>
 endif
