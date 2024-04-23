@@ -74,11 +74,6 @@ return {
         "<cmd>Telescope lsp_document_symbols<cr>",
         desc = "Telescope Lsp Document Symbols",
       },
-      {
-        "<leader>fwr",
-        "<cmd>Telescope lsp_references show_line=false<cr>",
-        desc = "Telescope Lsp References",
-      },
       { "gd", "<cmd>Telescope lsp_definitions<CR>", desc = "Telescope Lsp Definitions" },
       {
         "gi",
@@ -97,7 +92,7 @@ return {
       },
       {
         "gr",
-        "<cmd>Telescope lsp_references show_line=false<CR>",
+        "<cmd>Telescope lsp_references show_line=false include_declaration=false<CR>",
         desc = "Telescope Lsp References",
       },
     },
