@@ -72,12 +72,13 @@ if exists('g:vscode')
     nnoremap gO <cmd>call VSCodeNotify('editor.showOutgoingCalls')<CR>
     nnoremap gr <cmd>call VSCodeNotify('editor.action.goToReferences')<CR>
     vnoremap <leader>tt <cmd>call VSCodeNotifyVisual('translates.translates', 1)<cr>
+    nnoremap <leader>fe <cmd>call VSCodeNotify('workbench.view.explorer')<cr>
     nnoremap <leader>ff <cmd>call VSCodeNotify('workbench.action.quickOpen')<cr>
     nnoremap <leader>fg <cmd>call VSCodeNotify('workbench.view.search')<cr>
     nnoremap <leader>fb <cmd>call VSCodeNotify('workbench.action.quickOpenPreviousRecentlyUsedEditor')<CR>
-    nnoremap <C-n> <cmd>call VSCodeNotify('workbench.action.quickOpenPreviousRecentlyUsedEditor')<CR>
-    nnoremap <C-p> <cmd>call VSCodeNotify('workbench.action.quickOpenLeastRecentlyUsedEditor')<CR>
-    nnoremap <c-\> <cmd>call VSCodeNotify('workbench.action.terminal.toggleTerminal')<CR>
+    nnoremap [b <cmd>call VSCodeNotify('workbench.action.quickOpenPreviousRecentlyUsedEditor')<CR>
+    nnoremap ]b <cmd>call VSCodeNotify('workbench.action.quickOpenLeastRecentlyUsedEditor')<CR>
+    nnoremap <c-\><c-\> <cmd>call VSCodeNotify('workbench.action.terminal.toggleTerminal')<CR>
     nnoremap <leader>mm <cmd>call VSCodeNotify('editor.action.formatDocument')<CR>
     vnoremap <leader>mm <cmd>call VSCodeNotifyVisual('editor.action.formatSelection')<CR>
     nnoremap <leader>ca <cmd>call VSCodeNotify('editor.action.quickFix')<CR>
