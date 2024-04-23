@@ -149,7 +149,7 @@ const options = mkOptions(OPTIONS, {
             max: opt(16),
         },
         clip: {
-            max: opt(16),
+            height: opt(410),
         },
         apps: {
             iconSize: opt(62),

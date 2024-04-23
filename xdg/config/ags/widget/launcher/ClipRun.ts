@@ -7,13 +7,13 @@ import cliphist from "service/cliphist"
 
 const iconVisible = Variable(false)
 
-const max = options.launcher.clip.max
+const { height } = options.launcher.clip
 function query(filter: string) {
-    if (!dependencies("cliphist")) {
+    if (!dependencies("cliphist"))
         return [] as string[]
-    }
+
     const list = cliphist.query(filter)
-    return list.slice(0, max.value)
+    return list
 }
 
 function run(args: string) {
@@ -60,20 +60,23 @@ export function ClipRun() {
     })
 
     const revealer = Widget.Revealer({
-        child: list,
+        child: Widget.Scrollable({
+            css: height.bind().as(v => `min-height: ${v}pt;`),
+            child: list,
+        }),
     })
 
     async function filter(term: string) {
+        if (term === undefined) {
+            revealer.reveal_child = false
+            return
+        }
+
         iconVisible.value = Boolean(term)
 
-        if (!term)
-            revealer.reveal_child = false
-
-        if (term.trim()) {
-            const found = query(term)
-            list.children = found.map(ClipItem)
-            revealer.reveal_child = true
-        }
+        const found = query(term)
+        list.children = found.map(ClipItem)
+        revealer.reveal_child = true
     }
 
     return Object.assign(revealer, { filter, run })

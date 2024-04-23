@@ -82,20 +82,20 @@ function Launcher() {
             favs.reveal_child = text === ""
             help.reveal_child = text.split(" ").length === 1 && text?.startsWith(":")
 
-            if (text?.startsWith(":nx"))
-                nix.filter(text.substring(3))
+            if (text?.startsWith(":nx "))
+                nix.filter(text.substring(4))
             else
-                nix.filter("")
+                nix.filter()
 
-            if (text?.startsWith(":sh"))
-                sh.filter(text.substring(3))
+            if (text?.startsWith(":sh "))
+                sh.filter(text.substring(4))
             else
-                sh.filter("")
+                sh.filter()
 
-            if (text?.startsWith(":cp"))
-                clip.filter(text.substring(3))
+            if (text?.startsWith(":cp "))
+                clip.filter(text.substring(4))
             else
-                clip.filter("")
+                clip.filter()
 
             if (!text?.startsWith(":"))
                 applauncher.filter(text)
