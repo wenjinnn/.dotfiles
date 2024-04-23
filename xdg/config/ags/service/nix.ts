@@ -84,8 +84,8 @@ class Nix extends Service {
         this.ready = false
         this.#db = {}
 
-        // const search = await bash(`nix search ${nixpkgs} --json`)
-        const search = ""
+        const search = await bash(`nix search ${nixpkgs} --json`)
+        // const search = ""
         if (!search) {
             this.ready = true
             return

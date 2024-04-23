@@ -99,6 +99,7 @@ export function NixRun() {
     })
 
     async function filter(term: string) {
+        term = term.trim()
         iconVisible.value = Boolean(term)
 
         if (!term)
