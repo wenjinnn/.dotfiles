@@ -54,7 +54,7 @@ function Launcher() {
         child: Widget.Box(
             { vertical: true },
             HelpButton("sh", "run a binary"),
-            HelpButton("cp", "run a clipboard history"),
+            HelpButton("cp", "choose a clipboard history"),
             isnix ? HelpButton("nx", options.launcher.nix.pkgs.bind().as(pkg =>
                 `run a nix package from ${pkg}`,
             )) : Widget.Box(),

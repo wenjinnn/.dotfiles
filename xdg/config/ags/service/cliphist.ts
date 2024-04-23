@@ -31,7 +31,7 @@ class Cliphist extends Service {
             this.#proc = Utils.subprocess([
                 "bash",
                 "-c",
-                'wl-paste --watch bash -c \'cliphist store && echo "cliphist changed"\'',
+                'wl-paste --no-newline --watch bash -c \'cliphist store && echo "cliphist changed"\'',
             ],
             _ => { this.#onChange() },
             err => logError(err),
@@ -41,7 +41,7 @@ class Cliphist extends Service {
     }
 
     #onChange() {
-        this.#history = Utils.exec("cliphist list").split("\n")
+        this.#history = Utils.exec("cliphist list").split(/\n/)
         this.emit("changed")
         this.notify("cliphist-value")
 
@@ -61,6 +61,7 @@ class Cliphist extends Service {
     }
 
     readonly query = (term: string) => {
+        term = term.trim()
         if (!term)
             return this.#history
 
