@@ -214,17 +214,6 @@ return {
       { "b0o/SchemaStore.nvim" },
       { "onsails/lspkind.nvim" },
       {
-        "VidocqH/lsp-lens.nvim",
-        opts = {
-          sections = { -- Enable / Disable specific request, formatter example looks 'Format Requests'
-            definition = true,
-            references = true,
-            implements = true,
-            git_authors = true,
-          },
-        },
-      },
-      {
         "mfussenegger/nvim-jdtls",
         keys = {
           {
