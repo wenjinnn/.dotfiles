@@ -9,14 +9,24 @@ return {
       -- Navigation
       {
         "]c",
-        '&diff ? "]c" : "<cmd>Gitsigns next_hunk<CR>"',
-        expr = true,
+        function()
+          if vim.wo.diff then
+            vim.cmd.normal({ "]c", bang = true })
+          else
+            require("gitsigns").nav_hunk("next")
+          end
+        end,
         desc = "Next Hunk",
       },
       {
         "[c",
-        '&diff ? "[c" : "<cmd>Gitsigns prev_hunk<CR>"',
-        expr = true,
+        function()
+          if vim.wo.diff then
+            vim.cmd.normal({ "[c", bang = true })
+          else
+            require("gitsigns").nav_hunk("prev")
+          end
+        end,
         desc = "Prev Hunk",
       },
       -- Actions
