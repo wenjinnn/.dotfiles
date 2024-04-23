@@ -6,10 +6,10 @@ nnoremap <silent> <M-l> <cmd>wincmd ><CR>
 " These commands will navigate through buffers in order regardless of which mode you are using
 " e.g. if you change the order of buffers :bnext and :bprevious will not respect the custom ordering
 " These commands will move the current buffer backwards or forwards in the bufferline
-nnoremap <silent>[b <cmd>bn<CR>
-nnoremap <silent>]b <cmd>bp<CR>
-nnoremap <silent>[t <cmd>tabn<cr>
-nnoremap <silent>]t <cmd>tabp<cr>
+nnoremap <silent>[b <cmd>bp<CR>
+nnoremap <silent>]b <cmd>bn<CR>
+nnoremap <silent>[t <cmd>tabp<cr>
+nnoremap <silent>]t <cmd>tabn<cr>
 nnoremap <silent><leader>S <cmd>windo set scrollbind!<CR>
 nnoremap <silent><leader>X <cmd>only<CR>
 " nnoremap <silent><leader>a <cmd>Alpha<CR>
