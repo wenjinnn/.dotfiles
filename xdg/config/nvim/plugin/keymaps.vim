@@ -2,14 +2,14 @@ nnoremap <silent> <M-h> <cmd>wincmd <<CR>
 nnoremap <silent> <M-j> <cmd>wincmd +<CR>
 nnoremap <silent> <M-k> <cmd>wincmd -<CR>
 nnoremap <silent> <M-l> <cmd>wincmd ><CR>
-noremap <silent> <M-n> :tabn<cr>
-noremap <silent> <M-p> :tabp<cr>
 " cnoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 " These commands will navigate through buffers in order regardless of which mode you are using
 " e.g. if you change the order of buffers :bnext and :bprevious will not respect the custom ordering
 " These commands will move the current buffer backwards or forwards in the bufferline
-nnoremap <silent><c-n> <cmd>bn<CR>
-nnoremap <silent><c-p> <cmd>bp<CR>
+nnoremap <silent>[b <cmd>bn<CR>
+nnoremap <silent>]b <cmd>bp<CR>
+nnoremap <silent>[t <cmd>tabn<cr>
+nnoremap <silent>]t <cmd>tabp<cr>
 nnoremap <silent><leader>S <cmd>windo set scrollbind!<CR>
 nnoremap <silent><leader>X <cmd>only<CR>
 " nnoremap <silent><leader>a <cmd>Alpha<CR>
@@ -34,7 +34,6 @@ nnoremap <silent> <leader>h <cmd>noh<CR>
 nnoremap <leader>K <cmd>norm! K<CR>
 nnoremap [q <cmd>cprev<CR>
 nnoremap ]q <cmd>cnext<CR>
-
 
 nnoremap <silent> <leader>q <cmd>copen<cr>
 
