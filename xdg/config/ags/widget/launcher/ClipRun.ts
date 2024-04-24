@@ -76,6 +76,8 @@ export function ClipRun() {
             return
         }
 
+        term = term.trim()
+
         iconVisible.value = Boolean(term)
 
         const found = query(term)

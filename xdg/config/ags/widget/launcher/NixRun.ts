@@ -110,7 +110,9 @@ export function NixRun() {
         if (!term)
             revealer.reveal_child = false
 
-        if (term.trim()) {
+        term = term.trim()
+
+        if (term) {
             const found = await nix.query(term)
             list.children = found.map(k => Item(nix.db[k]))
             revealer.reveal_child = true

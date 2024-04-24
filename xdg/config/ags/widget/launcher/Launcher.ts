@@ -107,6 +107,9 @@ function Launcher() {
         entry.select_region(0, -1)
         entry.grab_focus()
         applauncher.filter("")
+        nix.reveal_child = false
+        sh.reveal_child = false
+        clip.reveal_child = false
     }
 
     const layout = Widget.Box({
