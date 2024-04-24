@@ -139,31 +139,22 @@ const options = mkOptions(OPTIONS, {
     },
 
     launcher: {
-        width: opt(0),
+        width: opt(420),
         margin: opt(80),
+        height: opt(410),
         nix: {
             pkgs: opt("nixpkgs/nixos-unstable"),
-            max: opt(8),
+            max: opt(100),
         },
         sh: {
-            max: opt(16),
+            max: opt(100),
         },
         clip: {
-            height: opt(410),
+            max: opt(1000),
         },
         apps: {
             iconSize: opt(62),
-            max: opt(6),
-            favorites: opt([
-                [
-                    "microsoft-edge",
-                    "code",
-                    "mpv",
-                    "org.gnome.Nautilus",
-                    "org.gnome.Calendar",
-                    "dbeaver",
-                ],
-            ]),
+            max: opt(1000),
         },
     },
 

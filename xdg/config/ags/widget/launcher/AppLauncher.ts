@@ -6,6 +6,7 @@ import icons from "lib/icons"
 const apps = await Service.import("applications")
 const { query } = apps
 const { iconSize } = options.launcher.apps
+const { height } = options.launcher
 
 const QuickAppButton = (app: Application) => Widget.Button({
     hexpand: true,
@@ -64,25 +65,6 @@ const AppItem = (app: Application) => {
         },
     })
 }
-export function Favorites() {
-    const favs = options.launcher.apps.favorites.bind()
-    return Widget.Revealer({
-        visible: favs.as(f => f.length > 0),
-        child: Widget.Box({
-            vertical: true,
-            children: favs.as(favs => favs.flatMap(fs => [
-                Widget.Separator(),
-                Widget.Box({
-                    class_name: "quicklaunch horizontal",
-                    children: fs
-                        .map(f => query(f)?.[0])
-                        .filter(f => f)
-                        .map(QuickAppButton),
-                }),
-            ])),
-        }),
-    })
-}
 
 export function Launcher() {
     const applist = Variable(query(""))
@@ -107,11 +89,19 @@ export function Launcher() {
             .hook(apps, () => applist.value = query(""), "notify::frequents"),
     })
 
-    return Object.assign(list, {
+    const revealer = Widget.Revealer({
+        child: Widget.Scrollable({
+            css: height.bind().as(v => `min-height: ${v}pt;`),
+            child: list,
+        }),
+    })
+
+    return Object.assign(revealer, {
         filter(text: string | null) {
+            revealer.reveal_child = true
             first = query(text || "")[0]
             list.children.reduce((i, item) => {
-                if (!text || i >= max.value) {
+                if (i >= max.value) {
                     item.reveal_child = false
                     return i
                 }

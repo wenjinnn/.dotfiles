@@ -5,6 +5,7 @@ import { bash, dependencies } from "lib/utils"
 const iconVisible = Variable(false)
 
 const MAX = options.launcher.sh.max
+const { height } = options.launcher
 const BINS = `${Utils.CACHE_DIR}/binaries`
 bash("{ IFS=:; ls -H $PATH; } | sort ")
     .then(bins => Utils.writeFile(bins, BINS))
@@ -69,7 +70,10 @@ export function ShRun() {
     })
 
     const revealer = Widget.Revealer({
-        child: list,
+        child: Widget.Scrollable({
+            css: height.bind().as(v => `min-height: ${v}pt;`),
+            child: list,
+        }),
     })
 
     async function filter(term: string) {

@@ -7,13 +7,14 @@ import cliphist from "service/cliphist"
 
 const iconVisible = Variable(false)
 
-const { height } = options.launcher.clip
+const { height } = options.launcher
+const { max } = options.launcher.clip
 function query(filter: string) {
     if (!dependencies("cliphist"))
         return [] as string[]
 
     const list = cliphist.query(filter)
-    return list
+    return list.slice(0, max.value)
 }
 
 function run(args: string) {

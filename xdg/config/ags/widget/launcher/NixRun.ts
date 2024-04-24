@@ -1,8 +1,10 @@
 import icons from "lib/icons"
+import options from "options"
 import nix, { type Nixpkg } from "service/nix"
 
 const iconVisible = Variable(false)
 
+const { height } = options.launcher
 function Item(pkg: Nixpkg) {
     const name = Widget.Label({
         class_name: "name",
@@ -95,7 +97,10 @@ export function NixRun() {
     })
 
     const revealer = Widget.Revealer({
-        child: list,
+        child: Widget.Scrollable({
+            css: height.bind().as(v => `min-height: ${v}pt;`),
+            child: list,
+        }),
     })
 
     async function filter(term: string) {
