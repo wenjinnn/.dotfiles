@@ -40,7 +40,9 @@ function Item(bin: string) {
         Widget.Button({
             child: Widget.Label({
                 label: bin,
+                wrap: true,
                 hpack: "start",
+                justification: "left",
             }),
             class_name: "sh-item",
             on_clicked: () => {

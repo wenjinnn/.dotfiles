@@ -31,7 +31,10 @@ function ClipItem(item: string) {
         Widget.Button({
             child: Widget.Label({
                 label: item,
+                wrap: true,
+                xalign: 0,
                 hpack: "start",
+                justification: "left",
             }),
             class_name: "clip-item",
             on_clicked: () => {
