@@ -104,15 +104,12 @@ export function NixRun() {
     })
 
     async function filter(term: string) {
-        term = term.trim()
         iconVisible.value = Boolean(term)
 
         if (!term)
             revealer.reveal_child = false
 
-        term = term.trim()
-
-        if (term) {
+        if (term.trim()) {
             const found = await nix.query(term)
             list.children = found.map(k => Item(nix.db[k]))
             revealer.reveal_child = true

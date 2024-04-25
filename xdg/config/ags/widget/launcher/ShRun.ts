@@ -84,9 +84,7 @@ export function ShRun() {
         if (!term)
             revealer.reveal_child = false
 
-        term = term.trim()
-
-        if (term) {
+        if (term.trim()) {
             const found = await query(term)
             list.children = found.map(Item)
             revealer.reveal_child = true

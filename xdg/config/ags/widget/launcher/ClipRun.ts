@@ -71,14 +71,13 @@ export function ClipRun() {
     })
 
     async function filter(term: string) {
-        if (term === undefined) {
+
+        iconVisible.value = Boolean(term)
+
+        if (!iconVisible.value) {
             revealer.reveal_child = false
             return
         }
-
-        term = term.trim()
-
-        iconVisible.value = Boolean(term)
 
         const found = query(term)
         list.children = found.map(ClipItem)
