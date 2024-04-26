@@ -31,7 +31,6 @@ function Item(pkg: Nixpkg) {
         justification: "left",
         wrap: true,
         hpack: "start",
-        max_width_chars: 40,
     }) : null
 
     return Widget.Box(
