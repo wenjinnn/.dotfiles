@@ -338,10 +338,10 @@
             "Super, 9, workspace, 9"
             "Super, 0, workspace, 10"
             "Super, S, togglespecialworkspace"
+            "Alt, Tab, cyclenext"
+            "Super, T, bringactivetotop"
             # "Super, C, togglespecialworkspace, kdeconnect"
-            # bind = SUPER, Tab, cyclenext
             # "Super, Tab, exec, ags -b hypr -t overview"
-            # "Super, Tab, bringactivetotop,   # bring it to the top"
             # Move window to workspace Control + Super + [0-9]
             "ControlSuper, 1, movetoworkspacesilent, 1"
             "ControlSuper, 2, movetoworkspacesilent, 2"
