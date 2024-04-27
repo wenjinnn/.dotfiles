@@ -10,6 +10,7 @@
     ags
     hypridle
     hyprlock
+    hyprshade
   ];
 
   home.packages = (with pkgs; [
@@ -55,15 +56,6 @@
     categories = ["Development"];
     type = "Application";
     genericName = "SQL Integrated Development Environment";
-  };
-
-  services.wlsunset = {
-    enable = true;
-    package = pkgs.unstable.wlsunset;
-    # Beijing lat/long.
-    latitude = "39.9";
-    longitude = "116.3";
-    # systemdTarget = "hyprland-session.target";
   };
 
   systemd.user = {
@@ -144,12 +136,10 @@
             "HYPRCURSOR_SIZE, 24"
           ];
           exec-once = [
-            # "sleep 1 && swww init && swww img ~/.config/eww/images/wallpaper --transition-fps 60 --transition-type random --transition-pos && systemctl --user start swww-next.timer &"
             "echo 'Xft.dpi: 192' | xrdb -merge"
-            # "wlsunset -S 06:30 -s 18:30"
             "kdeconnect-indicator"
-            # "hypridle"
             "ags -b hypr"
+            "hyprshade auto"
             "fcitx5 -d --replace"
             "hyprctl dispatch exec [workspace 9 silent] foot btop"
             "hyprctl dispatch exec [workspace 10 silent] evolution"

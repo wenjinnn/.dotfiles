@@ -27,5 +27,6 @@
   translate-shell = import ./translate-shell.nix;
   hypridle = import ./hypridle.nix;
   hyprlock = import ./hyprlock.nix;
+  hyprshade = import ./hyprshade.nix;
   aria2 = import ./aria2.nix;
 }
