@@ -21,15 +21,15 @@ The [ags config](https://github.com/wenjinnn/config/tree/nixos/xdg/config/ags) b
 
 * add hibernate button for powermenu, need to setup swap to make it work.  
 * use [hyprlock](https://github.com/hyprwm/hyprlock) instead of lockscreen.js (more security, see this [issue](https://github.com/Aylur/dotfiles/issues/72))  
-* add a clipboard menu depends on [cliphist](https://github.com/sentriz/cliphist), to trigger it, type `:cp` when luncher active
+* add a clipboard menu depends on [cliphist](https://github.com/sentriz/cliphist), to trigger it, type `:cp` when launcher active
 * ocr for screenshot powered by [tesseract](https://github.com/tesseract-ocr/tesseract)
 * some bug fix for chinese font and [more](https://github.com/Aylur/dotfiles/issues/122)
-* remove favorite list on luncher, instead with whole applications list.
-* add scroll bar for all luncher.
+* remove favorite list on launcher, instead with whole applications list.
+* add scroll bar for all launcher.
 
 # Must have
 
-Almost as same as [Aylur/dotfiles](https://github.com/Aylur/dotfiles) with these additional pkg:
+Almost as same as [Aylur/dotfiles](https://github.com/Aylur/dotfiles) (except asusctl) with these additional pkg:
 
 * cliphist  
 * tesseract
