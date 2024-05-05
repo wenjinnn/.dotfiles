@@ -7,8 +7,6 @@
         zlib
         openssl.dev
         pkg-config
-        jdk8
-        jdk17
         jdk21
         nodejs
       ]);
