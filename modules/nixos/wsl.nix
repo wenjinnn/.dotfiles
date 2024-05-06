@@ -6,6 +6,9 @@
   imports = [
     inputs.nixos-wsl.nixosModules.wsl
   ];
-  wsl.enable = true;
-  wsl.defaultUser = "${username}";
+  wsl = {
+    enable = true;
+    defaultUser = "${username}";
+    startMenuLaunchers = true;
+  };
 }
