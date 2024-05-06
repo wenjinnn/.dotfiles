@@ -25,6 +25,7 @@
 
   home.packages = with pkgs; [
     microsoft-edge
+    bash
     gimp
     obs-studio
     scrcpy
