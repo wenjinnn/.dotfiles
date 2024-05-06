@@ -110,7 +110,7 @@ return {
       },
       {
         "<leader>di",
-        repeatable("n", "<plug>(DapStepInto)", dap.step_back),
+        repeatable("n", "<plug>(DapStepInto)", dap.step_into),
         desc = "Dap Step Into",
       },
       { "<leader>dO", repeatable("n", "<plug>(DapStepOut)", dap.step_out), desc = "Dap Step Out" },
