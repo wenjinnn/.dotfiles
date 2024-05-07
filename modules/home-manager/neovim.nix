@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: let
-  repoPath = "${config.home.homeDirectory}/project/my/config";
+  repoPath = ../../.;
 in {
   home.packages = with pkgs; [
     lua-language-server
