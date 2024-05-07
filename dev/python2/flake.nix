@@ -26,9 +26,6 @@
         packages = with pkgs;
           [python2 virtualenv]
           ++ (with pkgs.python2Packages; [pip setuptools]);
-        shellHook = ''
-          exec zsh
-        '';
       };
     });
   };
