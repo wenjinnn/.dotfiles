@@ -35,7 +35,7 @@
         variable = "HTTP_PROXY";
         default = "";
         format = "[$env_value]($style) ";
-        style = "bright-blue bold dimmed";
+        style = "bright-blue bold";
       };
     };
   };
