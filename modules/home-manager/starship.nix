@@ -29,7 +29,6 @@
       continuation_prompt = "▶▶ ";
       fill.symbol = " ";
       format = "$os$all";
-      right_format = "$shlvl$time$memory_usage$localip";
       env_var.HTTP_PROXY = {
         variable = "HTTP_PROXY";
         default = "";
