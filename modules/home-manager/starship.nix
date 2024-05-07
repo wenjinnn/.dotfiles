@@ -26,7 +26,6 @@
       status.disabled = false;
       sudo.disabled = false;
       time.disabled = false;
-      battery.display.threshold = 20;
       continuation_prompt = "▶▶ ";
       fill.symbol = " ";
       format = "$os$all";
