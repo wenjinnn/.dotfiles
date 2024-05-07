@@ -30,9 +30,6 @@
     devShells = forEachSupportedSystem ({pkgs}: {
       default = pkgs.mkShell {
         packages = with pkgs; [node2nix nodejs pnpm yarn];
-        shellHook = ''
-          exec zsh
-        '';
       };
     });
   };
