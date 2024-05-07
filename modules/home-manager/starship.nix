@@ -31,6 +31,12 @@
       fill.symbol = " ";
       format = "$os$all";
       right_format = "$shlvl$time$memory_usage$localip";
+      env_var.HTTP_PROXY = {
+        variable = "HTTP_PROXY";
+        default = "";
+        format = "[$env_value]($style) ";
+        style = "bright-blue bold dimmed";
+      };
     };
   };
 
