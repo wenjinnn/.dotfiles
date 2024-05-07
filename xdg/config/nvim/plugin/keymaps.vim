@@ -57,11 +57,6 @@ nnoremap <silent> <leader>l <cmd>Lazy<CR>
 " ctags
 nnoremap <silent> <leader>C <cmd>!ctags<CR>
 
-if &diff != 0
-    nnoremap <silent> gl <cmd>diffget LO<CR>
-    nnoremap <silent> gr <cmd>diffget RE<CR>
-endif
-
 if exists('g:vscode')
     nnoremap K <cmd>call VSCodeNotify('editor.action.showHover')<CR>
     nnoremap gd <cmd>call VSCodeNotify('editor.action.peekDefinition')<CR>

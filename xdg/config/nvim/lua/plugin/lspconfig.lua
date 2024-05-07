@@ -2,7 +2,7 @@ local not_vscode = require("util").not_vscode
 return {
   {
     "neovim/nvim-lspconfig",
-    cond = not_vscode or not vim.o.diff,
+    cond = not_vscode,
     event = "BufRead",
     keys = {
       { "K", "<cmd>lua vim.lsp.buf.hover()<CR>", desc = "Lsp Hover" },
