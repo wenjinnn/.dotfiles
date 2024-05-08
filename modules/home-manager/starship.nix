@@ -15,6 +15,18 @@
         truncate_to_repo = false;
       };
       git_metrics.disabled = false;
+      git_status = {
+        diverged = "$ahead_count⇕$behind_count";
+        conflicted = "=$count";
+        ahead = "⇡$count";
+        behind = "⇣$count";
+        untracked = "?$count";
+        stashed = "+$count";
+        modified = "!$count";
+        staged = "$$count";
+        renamed = "»$count";
+        deleted = "✘$count";
+      };
       localip = {
         ssh_only = false;
         disabled = false;
