@@ -35,6 +35,7 @@
         symbol = "🛰️ ";
         format = "$symbol[$env_value]($style) ";
         style = "bright-blue bold";
+        description = "The proxy environment variable";
       };
     };
   };
