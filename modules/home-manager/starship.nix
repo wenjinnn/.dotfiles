@@ -43,9 +43,8 @@
       format = "$os$all";
       env_var.HTTP_PROXY = {
         variable = "HTTP_PROXY";
-        default = "unset";
-        symbol = "🛰️ ";
-        format = "$symbol[$env_value]($style) ";
+        default = "";
+        format = "(🛰️ [$env_value]($style) )";
         style = "bright-blue bold";
         description = "The proxy environment variable";
       };
