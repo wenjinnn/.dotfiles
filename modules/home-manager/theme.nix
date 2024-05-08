@@ -5,9 +5,9 @@
     qt6Packages.qt6ct
   ];
 
-  home.sessionVariables = {
-    GTK_THEME = "Adwaita-dark";
-  };
+# home.sessionVariables = {
+#   GTK_THEME = "Adwaita-dark";
+# };
 
   services = {
     xsettingsd = {
