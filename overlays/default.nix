@@ -36,6 +36,18 @@ in rec {
           ]);
       });
     });
+    foot = prev.foot.overrideAttrs (old: {
+      src = prev.fetchFromGitea {
+        domain = "codeberg.org";
+        owner = "queezle";
+        repo = "foot";
+        rev = "70a3c2f505de128b32d725bbe87306a4f7b1e9cb";
+        hash = "sha256-74R4aVv+mK4vxsh8l1OoAE02w/KgeYA7cdRWG1paYpU=";
+      };
+      mesonFlags = old.mesonFlags ++ [
+        "-Dext-underline=true"
+      ];
+    });
     matugen = inputs.matugen.packages.${final.system}.default;
     ags = inputs.ags.packages.${final.system}.default;
     hyprlock = (inputs.hyprlock.packages.${final.system}.default.override {mesa = final.mesa;});
