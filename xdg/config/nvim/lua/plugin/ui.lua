@@ -22,6 +22,28 @@ return {
     "kyazdani42/nvim-web-devicons",
     lazy = true,
   },
+  { "MunifTanjim/nui.nvim", lazy = true },
+  {
+    "folke/noice.nvim",
+    event = "VimEnter",
+    opts = {
+      lsp = {
+        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.stylize_markdown"] = true,
+          ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+        },
+      },
+      views = {
+        mini = {
+          win_options = {
+            winblend = 0,
+          },
+        },
+      },
+    },
+  },
   {
     "folke/todo-comments.nvim",
     cond = not_vscode,
@@ -75,12 +97,6 @@ return {
         end
         return nvim_navic.get_location()
       end
-      local lsp = function()
-        if not pcall(require, "lsp-progress") then
-          return ""
-        end
-        return require("lsp-progress").progress()
-      end
       return {
         options = {
           icons_enabled = true,
@@ -106,7 +122,7 @@ return {
         sections = {
           lualine_a = { "mode" },
           lualine_b = { "branch", "diff", "diagnostics" },
-          lualine_c = { "filename", navic, lsp },
+          lualine_c = { "filename", navic },
           lualine_x = { "encoding", "fileformat", "filetype" },
           lualine_y = { "progress" },
           lualine_z = { "location" },

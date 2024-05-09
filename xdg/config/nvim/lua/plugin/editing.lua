@@ -134,17 +134,6 @@ return {
     config = true,
   },
   {
-    "echasnovski/mini.splitjoin",
-    keys = { { "gsj", desc = "Splitjoin" } },
-    config = function()
-      require("mini.splitjoin").setup({
-        mappings = {
-          toggle = "gsj",
-        },
-      })
-    end,
-  },
-  {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
       {
@@ -212,7 +201,7 @@ return {
           "xml",
         },
       },
-      ensure_installed = {}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+      ensure_installed = { "vim", "regex", "markdown", "lua", "bash", "hurl", "markdown_inline" }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
       ignore_install = {}, -- List of parsers to ignore installing
       auto_install = true,
       highlight = {

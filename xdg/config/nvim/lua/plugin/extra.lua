@@ -2,17 +2,20 @@ local not_vscode = require("util").not_vscode
 return {
   -- rest client
   {
-    "NTBBloodbath/rest.nvim",
+    "jellydn/hurl.nvim",
     cond = not_vscode,
-    main = "rest-nvim",
+    ft = "hurl",
     lazy = true,
     config = true,
-    version = "v1.2.1",
-    ft = { "http" },
     keys = {
-      { "<leader>re", "<plug>RestNvim", desc = "RestNvim Run" },
-      { "<leader>rp", "<plug>RestNvimPreview", desc = "RestNvim Preview" },
-      { "<leader>rr", "<plug>RestNvimLast", desc = "RestNvim Run Last" },
+      -- Run API request
+      { "<leader>rA", "<cmd>HurlRunner<CR>", desc = "Run All requests" },
+      { "<leader>ra", "<cmd>HurlRunnerAt<CR>", desc = "Run Api request" },
+      { "<leader>re", "<cmd>HurlRunnerToEntry<CR>", desc = "Run Api request to entry" },
+      { "<leader>rt", "<cmd>HurlToggleMode<CR>", desc = "Hurl Toggle Mode" },
+      { "<leader>rv", "<cmd>HurlVerbose<CR>", desc = "Run Api in verbose mode" },
+      -- Run Hurl request in visual mode
+      { "<leader>ra", ":HurlRunner<CR>", desc = "Hurl Runner", mode = "v" },
     },
   },
   {
@@ -94,21 +97,19 @@ return {
   },
   -- db manage
   {
-    "kristijanhusak/vim-dadbod-ui",
-    init = function()
-      vim.g.db_ui_winwidth = 30
-      vim.g.db_ui_save_location = vim.fn.stdpath("data") .. "/db_ui_queries"
-      vim.g.db_ui_save_location = vim.fn.stdpath("data") .. "/db_ui_queries"
-      vim.g.dadbod_completion_mark = ""
-    end,
-    dependencies = {
-      { "tpope/vim-dadbod" },
-    },
+    "kndndrj/nvim-dbee",
     keys = {
-      { "<leader><leader>d", "<cmd>DBUIToggle<cr>", desc = "DBUI Toggle" },
+      { "<leader><leader>d", "<cmd>Dbee toggle<cr>", desc = "Dbee Toggle" },
     },
+    build = function()
+      -- Install tries to automatically detect the install method.
+      -- if it fails, try calling it with one of these parameters:
+      --    "curl", "wget", "bitsadmin", "go"
+      require("dbee").install()
+    end,
+    opts = {},
     cond = not_vscode,
-    cmd = "DBUIToggle",
+    cmd = "Dbee toggle",
   },
   -- powerful replace tool
   {

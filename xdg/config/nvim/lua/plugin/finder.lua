@@ -1,6 +1,24 @@
 local not_vscode = require("util").not_vscode
 return {
   {
+    "echasnovski/mini.files",
+    cond = not_vscode,
+    init = function()
+      vim.g.loaded_netrw = 1
+      vim.g.loaded_netrwPlugin = 1
+    end,
+    lazy = true,
+    keys = {
+      { "<leader>fe", "<cmd>:lua MiniFiles.open()<cr>", desc = "MiniFiles Open" },
+    },
+    opts = {
+      windows = {
+        preview = true,
+        width_preview = 40,
+      },
+    },
+  },
+  {
     "nvim-telescope/telescope.nvim",
     cond = not_vscode,
     event = "BufRead",
@@ -13,7 +31,6 @@ return {
       { "<leader>fc", "<cmd>Telescope commands<cr>", desc = "Telescope Commands" },
       { "<leader>fa", "<cmd>Telescope autocommands<cr>", desc = "Telescope Autocommands" },
       { "<leader>fk", "<cmd>Telescope keymaps<cr>", desc = "Telescope Keymaps" },
-      { "<leader>fe", "<cmd>Telescope file_browser<cr>", desc = "Telescope File Browser" },
       {
         "<leader>fE",
         "<cmd>lua require('telescope').extensions.rest.select_env()<cr>",
@@ -77,6 +94,7 @@ return {
         '<cmd>lua require"telescope.builtin".diagnostics{bufnr=0}<cr>',
         desc = "Telescope Buf Diagnostics",
       },
+      { "<leader>fn", "<cmd>Telescope noice<cr>", desc = "Telescope Noice" },
     },
     dependencies = {
       { "debugloop/telescope-undo.nvim" },
@@ -86,14 +104,6 @@ return {
       },
       { "nvim-telescope/telescope-ui-select.nvim" },
       { "nvim-telescope/telescope-live-grep-args.nvim" },
-      {
-        "nvim-telescope/telescope-file-browser.nvim",
-        branch = "feat/tree",
-        init = function()
-          vim.g.loaded_netrw = 1
-          vim.g.loaded_netrwPlugin = 1
-        end,
-      },
       {
         "ahmedkhalf/project.nvim",
         main = "project_nvim",
@@ -139,7 +149,6 @@ return {
       local toggle_preview = function()
         layout.toggle_preview(vim.fn.bufnr())
       end
-      local fb_actions = require("telescope._extensions.file_browser.actions")
       require("telescope").setup({
         defaults = {
           file_ignore_patterns = fileIgnoreTable or { "^.git/", "^node_modules/" },
@@ -216,34 +225,6 @@ return {
               preview_height = 0.5,
             },
           },
-          file_browser = {
-            hidden = true,
-            wrap_results = false,
-            initial_mode = "normal",
-            hide_parent_dir = false,
-            respect_gitignore = false,
-            select_buffer = true,
-            grouped = true,
-            auto_depth = true,
-            initial_browser = "tree",
-            follow = true,
-            path = "%:p:h",
-            prompt_path = true,
-            hijack_netrw = true,
-            mappings = {
-              ["i"] = {
-                ["<A-o>"] = fb_actions.open,
-                ["<C-b>"] = fb_actions.backspace,
-                ["<C-o>"] = "select_default",
-              },
-              ["n"] = {
-                -- your custom normal mode mappings
-                ["b"] = fb_actions.backspace,
-                ["o"] = "select_default",
-                ["<A-o>"] = fb_actions.open,
-              },
-            },
-          },
         },
       })
 
@@ -261,9 +242,8 @@ return {
       require("telescope").load_extension("undo")
       require("telescope").load_extension("ui-select")
       require("telescope").load_extension("live_grep_args")
-      require("telescope").load_extension("file_browser")
-      require("telescope").load_extension("rest")
       require("telescope").load_extension("scope")
+      require("telescope").load_extension("noice")
     end,
   },
 }

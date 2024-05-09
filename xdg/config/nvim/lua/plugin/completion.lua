@@ -18,7 +18,11 @@ return {
     { "octaltree/cmp-look" },
     { "petertriho/cmp-git" },
     { "rcarriga/cmp-dap" },
-    { "kristijanhusak/vim-dadbod-completion" },
+    {
+      "MattiasMTS/cmp-dbee",
+      ft = "sql", -- optional but good to have
+      opts = {},
+    },
   },
   config = function()
     local cmp = require("cmp")
@@ -132,7 +136,7 @@ return {
             loud = true,
           },
         },
-        { name = "vim-dadbod-completion" },
+        { name = "cmp-dbee" },
         { name = "orgmode" },
       },
       formatting = {
