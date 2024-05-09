@@ -104,5 +104,4 @@ return {
       })
     end,
   },
-  { "tpope/vim-fugitive", event = "CmdLineEnter" },
 }
