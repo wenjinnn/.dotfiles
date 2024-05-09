@@ -27,8 +27,6 @@ return {
   config = function()
     local cmp = require("cmp")
     local lspkind = require("lspkind")
-    local cmp_buffer = require("cmp_buffer")
-    local menu_source_width = 50
     local feedkey = function(key, mode)
       vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
     end

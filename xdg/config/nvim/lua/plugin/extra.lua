@@ -98,6 +98,7 @@ return {
   -- db manage
   {
     "kndndrj/nvim-dbee",
+    main = "dbee",
     keys = {
       { "<leader><leader>d", "<cmd>Dbee toggle<cr>", desc = "Dbee Toggle" },
     },
@@ -108,6 +109,7 @@ return {
       require("dbee").install()
     end,
     opts = {},
+    lazy = true,
     cond = not_vscode,
     cmd = "Dbee toggle",
   },
