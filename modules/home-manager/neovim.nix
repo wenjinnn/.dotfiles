@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: let
-  repoPath = ../../.;
+  repoPath = "${config.home.homeDirectory}/project/my/config";
 in {
   home.packages = with pkgs; [
     lua-language-server
@@ -32,7 +32,6 @@ in {
       source = ../../xdg/config/nvim;
       recursive = true;
     };
-    ".config/nvim/lazy-lock.json".enable = false;
   };
   programs.neovim = {
     enable = true;
