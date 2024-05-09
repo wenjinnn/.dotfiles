@@ -8,7 +8,6 @@ return {
   dependencies = {
     { "rafamadriz/friendly-snippets" },
     { "hrsh7th/vim-vsnip" },
-    { "hrsh7th/vim-vsnip-integ" },
     { "hrsh7th/cmp-vsnip" },
     { "hrsh7th/cmp-buffer" },
     { "hrsh7th/cmp-nvim-lsp" },
