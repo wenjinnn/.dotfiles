@@ -6,7 +6,15 @@ return {
     cond = not_vscode,
     ft = "hurl",
     lazy = true,
-    config = true,
+    opts = {
+      mode = "popup",
+      env_file = {
+        ".envrc",
+        ".env",
+        "vars.env",
+        "hurl.env",
+      },
+    },
     keys = {
       -- Run API request
       { "<leader>rA", "<cmd>HurlRunner<CR>", desc = "Run All requests" },
