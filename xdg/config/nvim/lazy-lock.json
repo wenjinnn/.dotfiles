@@ -54,7 +54,6 @@
   "rainbow-delimiters.nvim": { "branch": "master", "commit": "265c561c4d82d84b2f06a94f47d1121306ac7a38" },
   "scope.nvim": { "branch": "main", "commit": "86a0f5b594b08b2ad65f470ffdee81654942b6ac" },
   "sonarlint.nvim": { "branch": "main", "commit": "f75fb20383e3472e2275a75b49b2c222ef644627" },
-  "telescope-file-browser.nvim": { "branch": "feat/tree", "commit": "c3a1fb351fdff7e9450994a3115c1162d523e793" },
   "telescope-fzf-native.nvim": { "branch": "main", "commit": "9ef21b2e6bb6ebeaf349a0781745549bbb870d27" },
   "telescope-live-grep-args.nvim": { "branch": "master", "commit": "731a046da7dd3adff9de871a42f9b7fb85f60f47" },
   "telescope-ui-select.nvim": { "branch": "master", "commit": "6e51d7da30bd139a6950adf2a47fda6df9fa06d2" },
