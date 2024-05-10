@@ -18,8 +18,8 @@ return {
     { "petertriho/cmp-git" },
     { "rcarriga/cmp-dap" },
     {
-      "MattiasMTS/cmp-dbee",
-      ft = "sql", -- optional but good to have
+      "wenjinnn/cmp-dbee",
+      ft = "sql",
       opts = {},
     },
   },
@@ -156,6 +156,7 @@ return {
             latex_symbols = "latex",
             dap = "dap",
             git = "git",
+            ["cmp-dbee"] = "dbee",
             ["vim-dadbod-completion"] = "dadbod",
           }
           local item_maxwidth = 30
