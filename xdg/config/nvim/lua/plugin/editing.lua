@@ -142,6 +142,7 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    version = "*",
     dependencies = {
       {
         "nvim-treesitter/nvim-treesitter-textobjects",
@@ -226,6 +227,7 @@ return {
       auto_install = true,
       highlight = {
         enable = not_vscode, -- false will disable the whole extension
+        additional_vim_regex_highlighting = false,
       },
       autotag = { enable = true },
       indent = { enable = true },
