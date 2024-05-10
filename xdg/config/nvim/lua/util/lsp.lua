@@ -13,17 +13,23 @@ M.opts = opts
 
 function M.setup(client, bufnr)
   if client.server_capabilities.documentHighlightProvider then
-    vim.api.nvim_exec(
-      [[
-        augroup lsp_document_highlight
-          autocmd! *
-          autocmd CursorHold * silent! lua vim.lsp.buf.document_highlight()
-          autocmd CursorHoldI * silent! lua vim.lsp.buf.document_highlight()
-          autocmd CursorMoved * silent! lua vim.lsp.buf.clear_references()
-        augroup END
-      ]],
-      false
-    )
+    vim.api.nvim_create_augroup("lsp_document_highlight", {
+      clear = false,
+    })
+    vim.api.nvim_clear_autocmds({
+      buffer = bufnr,
+      group = "lsp_document_highlight",
+    })
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+      group = "lsp_document_highlight",
+      buffer = bufnr,
+      callback = vim.lsp.buf.document_highlight,
+    })
+    vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+      group = "lsp_document_highlight",
+      buffer = bufnr,
+      callback = vim.lsp.buf.clear_references,
+    })
   end
 end
 

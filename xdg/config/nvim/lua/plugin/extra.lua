@@ -15,6 +15,14 @@ return {
         "hurl.env",
       },
     },
+    init = function()
+      vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+        pattern = "*.hurl",
+        callback = function()
+          vim.bo.filetype = "hurl"
+        end,
+      })
+    end,
     keys = {
       -- Run API request
       { "<leader>rA", "<cmd>HurlRunner<CR>", desc = "Run All requests" },

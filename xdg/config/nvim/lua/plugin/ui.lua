@@ -215,6 +215,7 @@ return {
         "orghelp",
         "orgagenda",
         "httpResult",
+        "dbee",
         "",
       },
       mappings = {},

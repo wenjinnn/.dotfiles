@@ -6,6 +6,7 @@
   repoPath = "${config.home.homeDirectory}/project/my/config";
 in {
   home.packages = with pkgs; [
+    hurl
     lua-language-server
     vscode-langservers-extracted
     clang-tools

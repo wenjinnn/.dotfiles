@@ -129,7 +129,6 @@
     pandoc
     gh
     yq
-    hurl
   ];
 
   # xresources.properties = {
