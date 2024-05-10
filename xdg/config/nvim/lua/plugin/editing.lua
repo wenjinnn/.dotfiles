@@ -131,7 +131,14 @@ return {
   {
     "echasnovski/mini.comment",
     event = "BufRead",
-    config = true,
+    opts = {
+      options = {
+        custom_commentstring = function()
+          return require("ts_context_commentstring").calculate_commentstring()
+            or vim.bo.commentstring
+        end,
+      },
+    },
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -164,7 +171,6 @@ return {
       {
         "JoosepAlviste/nvim-ts-context-commentstring",
         config = function()
-          vim.g.skip_ts_context_commentstring_module = true
           require("ts_context_commentstring").setup({
             enable_autocmd = false,
           })
@@ -187,26 +193,41 @@ return {
       -- during startup.
       require("lazy.core.loader").add_to_rtp(plugin)
       require("nvim-treesitter.query_predicates")
+      vim.g.skip_ts_context_commentstring_module = true
     end,
     opts = {
-      autotag = {
-        enable = true,
-        filetypes = {
-          "html",
-          "javascript",
-          "javascriptreact",
-          "typescriptreact",
-          "svelte",
-          "vue",
-          "xml",
-        },
-      },
-      ensure_installed = { "vim", "regex", "markdown", "lua", "bash", "hurl", "markdown_inline" }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+      ensure_installed = {
+        -- noice.nvim dependencies
+        "vim",
+        "regex",
+        "markdown",
+        "lua",
+        "bash",
+        "hurl",
+        "markdown_inline",
+        -- autotag dependencies
+        "astro",
+        "glimmer",
+        "html",
+        "javascript",
+        "markdown",
+        "php",
+        "svelte",
+        "tsx",
+        "typescript",
+        "vue",
+        "xml",
+        -- personal frequently used
+        "nix",
+        "java",
+        "rust",
+      }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
       ignore_install = {}, -- List of parsers to ignore installing
       auto_install = true,
       highlight = {
         enable = not_vscode, -- false will disable the whole extension
       },
+      autotag = { enable = true },
       indent = { enable = true },
       autopairs = {
         enable = not_vscode,
