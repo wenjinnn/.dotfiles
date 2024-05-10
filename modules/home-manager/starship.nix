@@ -16,7 +16,7 @@
       };
       git_metrics.disabled = false;
       git_status = {
-        diverged = "$ahead_count⇕$behind_count";
+        diverged = "⇡$ahead_count⇣$behind_count";
         conflicted = "=$count";
         ahead = "⇡$count";
         behind = "⇣$count";
