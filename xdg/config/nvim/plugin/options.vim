@@ -2,11 +2,16 @@ filetype on
 filetype plugin on
 set noeb
 syntax on
+set breakindent
+set signcolumn=yes
+set splitright
+set splitbelow
 set grepprg=rg\ --vimgrep
 set grepformat=%f:%l:%c:%m
 set formatoptions=jcroqlnt
 set clipboard+=unnamedplus
-set inccommand=nosplit
+set inccommand=split
+set scrolloff=10
 set cmdheight=1
 set showcmd
 set ruler
@@ -43,7 +48,7 @@ set sidescroll=10
 set list
 " set listchars=tab:>~,space:·,precedes:«,extends:»,trail:·,eol:↴
 if &buftype != 'terminal'
-    set listchars=tab:>-,precedes:«,extends:»,trail:·,lead:·,eol:↴
+    set listchars=tab:>-,precedes:«,extends:»,trail:·,lead:·,eol:↴,nbsp:␣
 else
     set signcolumn=yes
     set listchars=tab:>-,precedes:«,extends:»,trail:·,lead:·
