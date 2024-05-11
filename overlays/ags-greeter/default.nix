@@ -22,7 +22,6 @@
   networkmanager,
   gtk3,
   which,
-  hyprland,
   matugen,
 }: let
   name = "ags-greeter";
@@ -37,7 +36,6 @@
     agsOverride
     matugen
     fzf
-    hyprland
     slurp
     wf-recorder
     wl-clipboard

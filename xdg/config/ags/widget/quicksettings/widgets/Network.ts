@@ -26,6 +26,7 @@ export const WifiSelection = () => Menu({
             setup: self => self.hook(wifi, () => self.children =
                 wifi.access_points
                     .sort((a, b) => b.strength - a.strength)
+                    .slice(0, 20)
                     .map(ap => Widget.Button({
                         on_clicked: () => {
                             if (dependencies("nmcli"))

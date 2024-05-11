@@ -1,5 +1,6 @@
 import PanelButton from "../PanelButton"
 import icons from "lib/icons"
+
 const notifications = await Service.import("notifications")
 const bluetooth = await Service.import("bluetooth")
 const audio = await Service.import("audio")
@@ -30,9 +31,9 @@ const DNDIndicator = () => Widget.Icon({
 const BluetoothIndicator = () => Widget.Overlay({
     class_name: "bluetooth",
     passThrough: true,
+    visible: bluetooth.bind("enabled"),
     child: Widget.Icon({
         icon: icons.bluetooth.enabled,
-        visible: bluetooth.bind("enabled"),
     }),
     overlay: Widget.Label({
         hpack: "end",
