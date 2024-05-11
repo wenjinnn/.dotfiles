@@ -17,11 +17,7 @@ return {
     { "octaltree/cmp-look" },
     { "petertriho/cmp-git" },
     { "rcarriga/cmp-dap" },
-    {
-      "wenjinnn/cmp-dbee",
-      ft = "sql",
-      opts = {},
-    },
+    { "wenjinnn/cmp-dbee" },
   },
   config = function()
     local cmp = require("cmp")
@@ -278,8 +274,29 @@ return {
       end,
       sources = {
         { name = "dap", keyword_length = 1 },
+        { name = "buffer" },
+      },
+    })
+    cmp.setup.filetype({ "sql" }, {
+      sources = {
+        {
+          name = "vsnip",
+          max_item_count = 10,
+        },
+        { name = "cmp-dbee" },
+        {
+          name = "look",
+          max_item_count = 5,
+          keyword_length = 2,
+          option = {
+            convert_case = true,
+            loud = true,
+          },
+        },
+        { name = "buffer" },
       },
     })
     require("cmp_git").setup()
+    require("cmp-dbee").setup({})
   end,
 }

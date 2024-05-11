@@ -1,6 +1,7 @@
 local not_vscode = require("util").not_vscode
 -- git
 return {
+  { "tpope/vim-fugitive" },
   {
     "lewis6991/gitsigns.nvim",
     event = "BufRead",
