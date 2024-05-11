@@ -25,9 +25,9 @@ NVIM_APPNAME=wenjinnn/config/xdg/config/nvim nvim
 
 ## Principle and Goal
 
-* Simple, yet powerful.
-* Avoid sidebar and instead with float window, focus on editing.
-* Avoid extra UI plugins if it didn't provide a useful information (e.g. gitsigns provide a useful git status color info at numberline).
+* Simple, yet powerful, always on develop.
+* Avoid sidebar, focus on editing. personally, I prefer to use float window, sidebar buffer just distract me a lot.
+* Avoid extra UI plugins. In common scenarios, [noice.nvim](https://github.com/folke/noice.nvim) and [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) with [telescope-ui-select.nvim](https://github.com/nvim-telescope/telescope-ui-select.nvim) already done well enough for notify and float window.
 
 ## Directory notes
 
@@ -103,8 +103,8 @@ just some filetype settings
 + [Mofiqul/vscode.nvim](https://dotfyle.com/plugins/Mofiqul/vscode.nvim)
 ### comment
 
-+ [numToStr/Comment.nvim](https://dotfyle.com/plugins/numToStr/Comment.nvim)
 + [JoosepAlviste/nvim-ts-context-commentstring](https://dotfyle.com/plugins/JoosepAlviste/nvim-ts-context-commentstring)
++ [echasnovski/mini.comment](https://dotfyle.com/plugins/echasnovski/mini.comment)
 + [folke/todo-comments.nvim](https://dotfyle.com/plugins/folke/todo-comments.nvim)
 ### completion
 
@@ -114,14 +114,13 @@ just some filetype settings
 + [mfussenegger/nvim-dap](https://dotfyle.com/plugins/mfussenegger/nvim-dap)
 ### editing-support
 
-+ [echasnovski/mini.splitjoin](https://dotfyle.com/plugins/echasnovski/mini.splitjoin)
 + [windwp/nvim-ts-autotag](https://dotfyle.com/plugins/windwp/nvim-ts-autotag)
 + [debugloop/telescope-undo.nvim](https://dotfyle.com/plugins/debugloop/telescope-undo.nvim)
 + [HiPhish/rainbow-delimiters.nvim](https://dotfyle.com/plugins/HiPhish/rainbow-delimiters.nvim)
 + [windwp/nvim-autopairs](https://dotfyle.com/plugins/windwp/nvim-autopairs)
 ### file-explorer
 
-+ [nvim-telescope/telescope-file-browser.nvim](https://github.com/nvim-telescope/telescope-file-browser.nvim)
++ [echasnovski/mini.files](https://dotfyle.com/plugins/echasnovski/mini.files)
 ### formatting
 
 + [stevearc/conform.nvim](https://dotfyle.com/plugins/stevearc/conform.nvim)
@@ -144,7 +143,6 @@ just some filetype settings
 
 + [neovim/nvim-lspconfig](https://dotfyle.com/plugins/neovim/nvim-lspconfig)
 + [mfussenegger/nvim-jdtls](https://dotfyle.com/plugins/mfussenegger/nvim-jdtls)
-+ [linrongbin16/lsp-progress.nvim](https://dotfyle.com/plugins/linrongbin16/lsp-progress.nvim)
 + [b0o/SchemaStore.nvim](https://dotfyle.com/plugins/b0o/SchemaStore.nvim)
 + [nvimtools/none-ls.nvim](https://dotfyle.com/plugins/nvimtools/none-ls.nvim)
 + [onsails/lspkind.nvim](https://dotfyle.com/plugins/onsails/lspkind.nvim)
@@ -166,6 +164,7 @@ just some filetype settings
 ### nvim-dev
 
 + [nvim-lua/plenary.nvim](https://dotfyle.com/plugins/nvim-lua/plenary.nvim)
++ [MunifTanjim/nui.nvim](https://dotfyle.com/plugins/MunifTanjim/nui.nvim)
 ### plugin-manager
 
 + [folke/lazy.nvim](https://dotfyle.com/plugins/folke/lazy.nvim)
@@ -198,14 +197,20 @@ just some filetype settings
 + [nvim-treesitter/nvim-treesitter-textobjects](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-textobjects)
 + [kylechui/nvim-surround](https://dotfyle.com/plugins/kylechui/nvim-surround)
 + [nvim-treesitter/nvim-treesitter](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter)
-### web-development
+### terminal-integration
 
-+ [NTBBloodbath/rest.nvim](https://dotfyle.com/plugins/NTBBloodbath/rest.nvim)
++ [akinsho/toggleterm.nvim](https://dotfyle.com/plugins/akinsho/toggleterm.nvim)
+### utility
+
++ [jellydn/hurl.nvim](https://dotfyle.com/plugins/jellydn/hurl.nvim)
++ [kndndrj/nvim-dbee](https://dotfyle.com/plugins/kndndrj/nvim-dbee)
++ [folke/noice.nvim](https://dotfyle.com/plugins/folke/noice.nvim)
 ## Language Servers
 
-+ jdtls
++ astro
 + groovyls
 + html
++ jdtls
 + lemminx
 + pyright
 + rust_analyzer
