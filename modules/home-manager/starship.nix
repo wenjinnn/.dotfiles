@@ -23,7 +23,7 @@
         untracked = "?$count";
         stashed = "+$count";
         modified = "!$count";
-        staged = "$$count";
+        staged = "\\$$count";
         renamed = "»$count";
         deleted = "✘$count";
       };
