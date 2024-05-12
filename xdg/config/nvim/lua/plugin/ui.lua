@@ -23,10 +23,7 @@ return {
       }
     end,
   },
-  {
-    "kyazdani42/nvim-web-devicons",
-    lazy = true,
-  },
+  { "kyazdani42/nvim-web-devicons", lazy = true },
   { "MunifTanjim/nui.nvim", lazy = true },
   {
     "folke/noice.nvim",
