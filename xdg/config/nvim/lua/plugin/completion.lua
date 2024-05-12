@@ -3,7 +3,6 @@ local not_vscode = require("util").not_vscode
 return {
   "hrsh7th/nvim-cmp",
   cond = not_vscode,
-  module = false,
   event = { "InsertEnter", "CmdLineEnter" },
   dependencies = {
     { "rafamadriz/friendly-snippets" },
