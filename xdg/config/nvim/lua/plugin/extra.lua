@@ -37,10 +37,11 @@ return {
   {
     "nvim-orgmode/orgmode",
     cond = not_vscode,
-    event = "VeryLazy",
+    event = "BufReadPre",
     opts = function()
       local config = {
         org_agenda_files = { "~/project/my/archive/org/*" },
+        win_split_mode = "float",
         notifications = {
           enabled = true,
         },
@@ -190,31 +191,60 @@ return {
     end,
   },
   {
-    "folke/which-key.nvim",
+    "echasnovski/mini.clue",
     cond = not_vscode,
-    event = "VeryLazy",
-    config = function()
-      require("which-key").setup()
-      local wk = require("which-key")
-      wk.register({
-        f = {
-          name = "Telescope Finder",
-          i = { name = "BuildIn | Reloader" },
-          m = { name = "Mark" },
-          h = { name = "History | Help | Highlight" },
-          w = { name = "Workspace | LSP Action" },
-          s = { name = "Spectre" },
+    opts = function()
+      local miniclue = require("mini.clue")
+      return {
+        triggers = {
+          -- Leader triggers
+          { mode = "n", keys = "<Leader>" },
+          { mode = "x", keys = "<Leader>" },
+
+          -- Built-in completion
+          { mode = "i", keys = "<C-x>" },
+
+          -- `g` key
+          { mode = "n", keys = "g" },
+          { mode = "x", keys = "g" },
+
+          { mode = "n", keys = "g" },
+          -- Marks
+          { mode = "n", keys = "'" },
+          { mode = "n", keys = "`" },
+          { mode = "x", keys = "'" },
+          { mode = "x", keys = "`" },
+
+          -- Registers
+          { mode = "n", keys = '"' },
+          { mode = "x", keys = '"' },
+          { mode = "i", keys = "<C-r>" },
+          { mode = "c", keys = "<C-r>" },
+
+          -- Window commands
+          { mode = "n", keys = "<C-w>" },
+
+          -- `z` key
+          { mode = "n", keys = "z" },
+          { mode = "x", keys = "z" },
+
+          -- mini.bracketed
+          { mode = "n", keys = "]" },
+          { mode = "n", keys = "[" },
         },
-        c = { name = "Code" },
-        d = { name = "DAP" },
-        o = { name = "Orgmode" },
-        m = { name = "Markdown | Format | Marks" },
-        r = { name = "Rename | Rest" },
-        s = { name = "Source | Session" },
-        t = { name = "Translate" },
-        w = { name = "Workspace" },
-        g = { name = "Git" },
-      }, { prefix = "<leader>" })
+
+        clues = {
+          -- Enhance this by adding descriptions for <Leader> mapping groups
+          miniclue.gen_clues.builtin_completion(),
+          miniclue.gen_clues.g(),
+          miniclue.gen_clues.marks(),
+          miniclue.gen_clues.registers(),
+          miniclue.gen_clues.windows({
+            submode_resize = true,
+          }),
+          miniclue.gen_clues.z(),
+        },
+      }
     end,
   },
   {

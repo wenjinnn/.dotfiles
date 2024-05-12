@@ -1,13 +1,7 @@
-nnoremap <silent> <M-h> <cmd>wincmd <<CR>
-nnoremap <silent> <M-j> <cmd>wincmd +<CR>
-nnoremap <silent> <M-k> <cmd>wincmd -<CR>
-nnoremap <silent> <M-l> <cmd>wincmd ><CR>
 " cnoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 " These commands will navigate through buffers in order regardless of which mode you are using
 " e.g. if you change the order of buffers :bnext and :bprevious will not respect the custom ordering
 " These commands will move the current buffer backwards or forwards in the bufferline
-nnoremap <silent>[b <cmd>bp<CR>
-nnoremap <silent>]b <cmd>bn<CR>
 nnoremap <silent>[t <cmd>tabp<cr>
 nnoremap <silent>]t <cmd>tabn<cr>
 nnoremap <silent><leader>S <cmd>windo set scrollbind!<CR>
@@ -15,25 +9,12 @@ nnoremap <silent><leader>X <cmd>only<CR>
 " nnoremap <silent><leader>a <cmd>Alpha<CR>
 nnoremap <silent><leader><leader>b <c-^>
 
-" copy to system clipboard
-vmap <leader>y "+y
-
-" paste to vim register
-nnoremap <leader>p "+p
-nnoremap <leader>0 "0p
-vmap <leader>p "+p
-vmap <leader>0 "0p
-
 " Add undo break-points
 inoremap , ,<c-g>u
 inoremap . .<c-g>u
 inoremap ; ;<c-g>u
 
-nnoremap <silent> <leader>h <cmd>noh<CR>
-
 nnoremap <leader>K <cmd>norm! K<CR>
-nnoremap [q <cmd>cprev<CR>
-nnoremap ]q <cmd>cnext<CR>
 
 nnoremap <silent> <leader>q <cmd>copen<cr>
 

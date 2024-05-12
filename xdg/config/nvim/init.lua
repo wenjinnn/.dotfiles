@@ -1,5 +1,6 @@
 -- my nvim config write in lua
 vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 local lockpath = os.getenv("LAZY_NVIM_LOCK_PATH")

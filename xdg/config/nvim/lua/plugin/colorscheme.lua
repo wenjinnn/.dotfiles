@@ -27,10 +27,4 @@ return {
       }
     end,
   },
-  {
-    "NvChad/nvim-colorizer.lua",
-    event = "BufRead",
-    cond = not_vscode,
-    config = true,
-  },
 }

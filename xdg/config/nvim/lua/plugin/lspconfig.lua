@@ -23,28 +23,6 @@ return {
         "<cmd>lua vim.diagnostic.open_float()<CR>",
         desc = "Diagnostic Float",
       },
-      { "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", desc = "Prev Diagnostic" },
-      { "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", desc = "Next Diagnostic" },
-      {
-        "[e",
-        "<cmd>lua vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })<CR>",
-        desc = "Prev Error Diagnostic",
-      },
-      {
-        "]e",
-        "<cmd>lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })<CR>",
-        desc = "Next Error Diagnostic",
-      },
-      {
-        "[w",
-        "<cmd>lua vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })<CR>",
-        desc = "Prev Warn Diagnostic",
-      },
-      {
-        "]w",
-        "<cmd>lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })<CR>",
-        desc = "Prev Warn Diagnostic",
-      },
       {
         "<leader>wa",
         "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>",
@@ -86,7 +64,7 @@ return {
         desc = "Telescope Lsp Incoming Calls",
       },
       {
-        "gO",
+        "gR",
         "<cmd>Telescope lsp_outgoing_calls<CR>",
         desc = "Telescope Lsp_outgoing Calls",
       },

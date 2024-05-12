@@ -13,6 +13,11 @@ return {
           starter.sections.sessions(5, true),
           starter.sections.recent_files(5, true, true),
           starter.sections.recent_files(5, false, true),
+          {
+            name = "Agenda",
+            action = "lua require'orgmode.api.agenda'.agenda()",
+            section = "Org",
+          },
           starter.sections.builtin_actions(),
         },
       }
@@ -25,7 +30,8 @@ return {
   { "MunifTanjim/nui.nvim", lazy = true },
   {
     "folke/noice.nvim",
-    event = "VimEnter",
+    event = "CmdLineEnter",
+    lazy = true,
     opts = {
       lsp = {
         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
@@ -43,27 +49,6 @@ return {
         },
       },
     },
-  },
-  {
-    "folke/todo-comments.nvim",
-    cond = not_vscode,
-    event = "BufRead",
-    config = true,
-    keys = function()
-      local todo_comments = require("todo-comments")
-      return {
-        {
-          "]t",
-          todo_comments.jump_next,
-          desc = "Next todo comment",
-        },
-        {
-          "[t",
-          todo_comments.jump_prev,
-          desc = "Previous todo comment",
-        },
-      }
-    end,
   },
   {
     "nvim-lualine/lualine.nvim",
@@ -304,11 +289,6 @@ return {
     end,
   },
   {
-    "HiPhish/rainbow-delimiters.nvim",
-    event = "BufRead",
-    cond = not_vscode,
-  },
-  {
     "echasnovski/mini.indentscope",
     event = "BufRead",
     lazy = true,
@@ -317,6 +297,24 @@ return {
       return {
         draw = {
           animation = require("mini.indentscope").gen_animation.none(),
+        },
+      }
+    end,
+  },
+  {
+    "echasnovski/mini.hipatterns",
+    event = "BufRead",
+    cond = not_vscode,
+    opts = function()
+      local hipatterns = require("mini.hipatterns")
+      local hi_words = require("mini.extra").gen_highlighter.words
+      return {
+        highlighters = {
+          fixme = hi_words({ "FIXME", "Fixme", "fixme" }, "MiniHipatternsFixme"),
+          hack = hi_words({ "HACK", "Hack", "hack" }, "MiniHipatternsHack"),
+          todo = hi_words({ "TODO", "Todo", "todo" }, "MiniHipatternsTodo"),
+          note = hi_words({ "NOTE", "Note", "note" }, "MiniHipatternsNote"),
+          hex_color = hipatterns.gen_highlighter.hex_color(),
         },
       }
     end,

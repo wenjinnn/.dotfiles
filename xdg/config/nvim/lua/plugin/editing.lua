@@ -108,27 +108,6 @@ return {
     end,
   },
   {
-    "kylechui/nvim-surround",
-    event = "BufRead",
-    config = function()
-      require("nvim-surround").setup({
-        keymaps = {
-          insert = "<C-g>s",
-          insert_line = "<C-g>S",
-          normal = "gs",
-          normal_cur = "gss",
-          normal_line = "gS",
-          normal_cur_line = "gSS",
-          visual = "gs",
-          visual_line = "gS",
-          delete = "gsd",
-          change = "gsc",
-          change_line = "gsC",
-        },
-      })
-    end,
-  },
-  {
     "echasnovski/mini.comment",
     event = "BufRead",
     opts = {
@@ -139,6 +118,55 @@ return {
         end,
       },
     },
+  },
+  {
+    "echasnovski/mini.pairs",
+    event = "InsertEnter",
+    opts = {},
+  },
+  {
+    "echasnovski/mini.surround",
+    event = "BufRead",
+    opts = {},
+  },
+  {
+    "echasnovski/mini.splitjoin",
+    event = "BufRead",
+    opts = {},
+  },
+  {
+    "echasnovski/mini.ai",
+    event = "BufRead",
+    opts = function()
+      local gen_ai_spec = require("mini.extra").gen_ai_spec
+      return {
+        custom_textobjects = {
+          B = gen_ai_spec.buffer(),
+          D = gen_ai_spec.diagnostic(),
+          I = gen_ai_spec.indent(),
+          L = gen_ai_spec.line(),
+          N = gen_ai_spec.number(),
+        },
+      }
+    end,
+  },
+  {
+    "echasnovski/mini.align",
+    event = "BufRead",
+    opts = {},
+  },
+  {
+    "echasnovski/mini.bracketed",
+    event = "BufRead",
+    opts = {
+        treesitter = { suffix = 'n', options = {} },
+        comment    = { suffix = 'e', options = {} },
+    },
+  },
+  {
+    "echasnovski/mini.move",
+    event = "BufRead",
+    opts = {},
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -179,8 +207,9 @@ return {
       },
       { "windwp/nvim-ts-autotag" },
       {
-        "windwp/nvim-autopairs",
-        opts = { check_ts = true },
+        "HiPhish/rainbow-delimiters.nvim",
+        event = "BufRead",
+        cond = not_vscode,
       },
     },
     build = ":TSUpdate",
@@ -270,10 +299,6 @@ return {
         },
         move = {
           enable = true,
-          goto_next_start = { ["]f"] = "@function.outer" },
-          goto_next_end = { ["]F"] = "@function.outer" },
-          goto_previous_start = { ["[f"] = "@function.outer" },
-          goto_previous_end = { ["[F"] = "@function.outer" },
         },
       },
     },
