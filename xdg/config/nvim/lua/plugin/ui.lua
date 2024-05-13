@@ -24,7 +24,19 @@ return {
     end,
   },
   { "kyazdani42/nvim-web-devicons", lazy = true },
-  { "echasnovski/mini.notify", event = "BufReadPre", lazy = true, opts = {} },
+  {
+    "echasnovski/mini.notify",
+    event = "BufReadPre",
+    lazy = true,
+    opts = {},
+    keys = {
+      {
+        "<leader>n",
+        "<cmd>lua MiniNotify.show_history()<CR>",
+        desc = "Notify History",
+      },
+    },
+  },
   {
     "nvim-lualine/lualine.nvim",
     event = "UIEnter",
