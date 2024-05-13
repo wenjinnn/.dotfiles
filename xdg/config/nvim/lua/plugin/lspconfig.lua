@@ -24,6 +24,11 @@ return {
         desc = "Diagnostic Float",
       },
       {
+        "<leader><leader>D",
+        "<cmd>lua MiniBasics.toggle_diagnostic()<CR>",
+        desc = "Toggle Diagnostic",
+      },
+      {
         "<leader>wa",
         "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>",
         desc = "Lsp Add Workspace Folder",
@@ -40,8 +45,6 @@ return {
       },
       { "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", desc = "Lsp Rename" },
       { "<leader>Q", "<cmd>lua vim.diagnostic.setloclist()<CR>", desc = "Lsp Diagnostic Loclist" },
-      { "<leader>n", "<cmd>lua vim.diagnostic.hide(nil, 0)<CR>", desc = "Hide Diagnostic" },
-      { "<leader>N", "<cmd>lua vim.diagnostic.show(nil, 0)<CR>", desc = "Show Diagnostic" },
       {
         "<leader>fws",
         "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
