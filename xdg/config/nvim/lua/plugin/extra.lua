@@ -127,6 +127,7 @@ return {
     keys = {
       { "<leader><leader>d", "<cmd>DBUIToggle<cr>", desc = "DBUI Toggle" },
     },
+    ft = { "sql", "mysql", "plsql" },
     cond = not_vscode,
     cmd = "DBUIToggle",
   },
