@@ -28,6 +28,7 @@ NVIM_APPNAME=wenjinnn/config/xdg/config/nvim nvim
 * Simple, yet powerful, always on develop.
 * Avoid sidebar, focus on editing. personally, I prefer to use float window, sidebar buffer just distract me a lot.
 * Avoid extra UI plugins. In common scenarios, [noice.nvim](https://github.com/folke/noice.nvim) and [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) with [telescope-ui-select.nvim](https://github.com/nvim-telescope/telescope-ui-select.nvim) already done well enough for notify and float window.
+* Provide out-of-box experience for web development
 
 ## Directory notes
 
@@ -89,7 +90,6 @@ just some filetype settings
 1. [tmux](https://github.com/tmux/tmux) & [oh-my-tmux](https://github.com/gpakosz/.tmux) for terminal multiplexing, I'm using only at wsl.
 2. [lazygit](https://github.com/jesseduffield/lazygit) smooth git operation.
 
-
 ## Main Plugins
 
 ### bars-and-lines
@@ -97,7 +97,7 @@ just some filetype settings
 + [SmiteshP/nvim-navic](https://dotfyle.com/plugins/SmiteshP/nvim-navic)
 ### color
 
-+ [NvChad/nvim-colorizer.lua](https://dotfyle.com/plugins/NvChad/nvim-colorizer.lua)
++ [echasnovski/mini.hipatterns](https://dotfyle.com/plugins/echasnovski/mini.hipatterns)
 ### colorscheme
 
 + [Mofiqul/vscode.nvim](https://dotfyle.com/plugins/Mofiqul/vscode.nvim)
@@ -105,7 +105,6 @@ just some filetype settings
 
 + [JoosepAlviste/nvim-ts-context-commentstring](https://dotfyle.com/plugins/JoosepAlviste/nvim-ts-context-commentstring)
 + [echasnovski/mini.comment](https://dotfyle.com/plugins/echasnovski/mini.comment)
-+ [folke/todo-comments.nvim](https://dotfyle.com/plugins/folke/todo-comments.nvim)
 ### completion
 
 + [hrsh7th/nvim-cmp](https://dotfyle.com/plugins/hrsh7th/nvim-cmp)
@@ -114,16 +113,21 @@ just some filetype settings
 + [mfussenegger/nvim-dap](https://dotfyle.com/plugins/mfussenegger/nvim-dap)
 ### editing-support
 
++ [echasnovski/mini.splitjoin](https://dotfyle.com/plugins/echasnovski/mini.splitjoin)
++ [echasnovski/mini.basics](https://dotfyle.com/plugins/echasnovski/mini.basics)
 + [windwp/nvim-ts-autotag](https://dotfyle.com/plugins/windwp/nvim-ts-autotag)
++ [echasnovski/mini.move](https://dotfyle.com/plugins/echasnovski/mini.move)
++ [echasnovski/mini.ai](https://dotfyle.com/plugins/echasnovski/mini.ai)
 + [debugloop/telescope-undo.nvim](https://dotfyle.com/plugins/debugloop/telescope-undo.nvim)
 + [HiPhish/rainbow-delimiters.nvim](https://dotfyle.com/plugins/HiPhish/rainbow-delimiters.nvim)
-+ [windwp/nvim-autopairs](https://dotfyle.com/plugins/windwp/nvim-autopairs)
++ [echasnovski/mini.pairs](https://dotfyle.com/plugins/echasnovski/mini.pairs)
 ### file-explorer
 
 + [echasnovski/mini.files](https://dotfyle.com/plugins/echasnovski/mini.files)
 ### formatting
 
 + [stevearc/conform.nvim](https://dotfyle.com/plugins/stevearc/conform.nvim)
++ [echasnovski/mini.align](https://dotfyle.com/plugins/echasnovski/mini.align)
 ### fuzzy-finder
 
 + [nvim-telescope/telescope.nvim](https://dotfyle.com/plugins/nvim-telescope/telescope.nvim)
@@ -138,7 +142,7 @@ just some filetype settings
 + [echasnovski/mini.indentscope](https://dotfyle.com/plugins/echasnovski/mini.indentscope)
 ### keybinding
 
-+ [folke/which-key.nvim](https://dotfyle.com/plugins/folke/which-key.nvim)
++ [echasnovski/mini.clue](https://dotfyle.com/plugins/echasnovski/mini.clue)
 ### lsp
 
 + [neovim/nvim-lspconfig](https://dotfyle.com/plugins/neovim/nvim-lspconfig)
@@ -158,6 +162,7 @@ just some filetype settings
 ### motion
 
 + [folke/flash.nvim](https://dotfyle.com/plugins/folke/flash.nvim)
++ [echasnovski/mini.bracketed](https://dotfyle.com/plugins/echasnovski/mini.bracketed)
 ### note-taking
 
 + [nvim-orgmode/orgmode](https://dotfyle.com/plugins/nvim-orgmode/orgmode)
@@ -195,7 +200,7 @@ just some filetype settings
 ### syntax
 
 + [nvim-treesitter/nvim-treesitter-textobjects](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-textobjects)
-+ [kylechui/nvim-surround](https://dotfyle.com/plugins/kylechui/nvim-surround)
++ [echasnovski/mini.surround](https://dotfyle.com/plugins/echasnovski/mini.surround)
 + [nvim-treesitter/nvim-treesitter](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter)
 ### terminal-integration
 
