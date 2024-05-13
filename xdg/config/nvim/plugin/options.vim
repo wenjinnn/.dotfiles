@@ -10,7 +10,7 @@ set formatoptions=jcroqlnt
 set clipboard+=unnamedplus
 set inccommand=split
 set scrolloff=10
-set cmdheight=0
+set cmdheight=1
 set showcmd
 set ruler
 if exists('g:started_by_firenvim')

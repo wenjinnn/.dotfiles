@@ -16,7 +16,7 @@ return {
     { "octaltree/cmp-look" },
     { "petertriho/cmp-git" },
     { "rcarriga/cmp-dap" },
-    { "wenjinnn/cmp-dbee" },
+    { "kristijanhusak/vim-dadbod-completion" },
   },
   config = function()
     local cmp = require("cmp")
@@ -276,13 +276,14 @@ return {
         { name = "buffer" },
       },
     })
-    cmp.setup.filetype({ "sql" }, {
+    cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
       sources = {
         {
           name = "vsnip",
           max_item_count = 10,
         },
-        { name = "cmp-dbee" },
+        { name = "vim-dadbod-completion" },
+        { name = "buffer" },
         {
           name = "look",
           max_item_count = 5,
@@ -292,10 +293,8 @@ return {
             loud = true,
           },
         },
-        { name = "buffer" },
       },
     })
     require("cmp_git").setup()
-    require("cmp-dbee").setup({})
   end,
 }

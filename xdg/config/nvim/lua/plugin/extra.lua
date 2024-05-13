@@ -114,21 +114,49 @@ return {
   },
   -- db manage
   {
-    "kndndrj/nvim-dbee",
-    main = "dbee",
-    keys = {
-      { "<leader><leader>d", "<cmd>Dbee toggle<cr>", desc = "Dbee Toggle" },
-    },
-    build = function()
-      -- Install tries to automatically detect the install method.
-      -- if it fails, try calling it with one of these parameters:
-      --    "curl", "wget", "bitsadmin", "go"
-      require("dbee").install()
+    "kristijanhusak/vim-dadbod-ui",
+    init = function()
+      vim.g.db_ui_winwidth = 30
+      vim.g.db_ui_save_location = vim.fn.stdpath("data") .. "/db_ui_queries"
+      vim.g.db_ui_save_location = vim.fn.stdpath("data") .. "/db_ui_queries"
+      vim.g.dadbod_completion_mark = ""
     end,
-    opts = {},
-    lazy = true,
+    dependencies = {
+      { "tpope/vim-dadbod" },
+    },
+    keys = {
+      { "<leader><leader>d", "<cmd>DBUIToggle<cr>", desc = "DBUI Toggle" },
+    },
     cond = not_vscode,
-    cmd = "Dbee toggle",
+    cmd = "DBUIToggle",
+  },
+  -- powerful replace tool
+  {
+    "windwp/nvim-spectre",
+    cond = not_vscode,
+    keys = {
+      {
+        "<leader>fss",
+        '<cmd>lua require("spectre").toggle()<CR>',
+        desc = "Toggle Spectre",
+      },
+      {
+        "<leader>fsw",
+        '<cmd>lua require("spectre").open_visual({select_word=true})<CR>',
+        desc = "Spectre Search Current Word",
+      },
+      {
+        "<leader>fsw",
+        '<cmd>lua require("spectre").open_visual({select_word=true})<CR>',
+        mode = "v",
+        desc = "Spectre Search Current Word",
+      },
+      {
+        "<leader>fsf",
+        '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>',
+        desc = "Search On Current File",
+      },
+    },
   },
   -- powerful replace tool
   {

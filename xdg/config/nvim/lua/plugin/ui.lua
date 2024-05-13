@@ -24,29 +24,7 @@ return {
     end,
   },
   { "kyazdani42/nvim-web-devicons", lazy = true },
-  { "MunifTanjim/nui.nvim", lazy = true },
-  {
-    "folke/noice.nvim",
-    event = "CmdLineEnter",
-    lazy = true,
-    opts = {
-      lsp = {
-        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-        override = {
-          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-          ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
-        },
-      },
-      views = {
-        mini = {
-          win_options = {
-            winblend = 0,
-          },
-        },
-      },
-    },
-  },
+  { "echasnovski/mini.notify", event = "BufReadPre", lazy = true, opts = {} },
   {
     "nvim-lualine/lualine.nvim",
     event = "UIEnter",
