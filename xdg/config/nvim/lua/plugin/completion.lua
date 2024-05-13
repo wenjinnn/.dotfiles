@@ -283,7 +283,15 @@ return {
           max_item_count = 10,
         },
         { name = "vim-dadbod-completion" },
-        { name = "buffer" },
+        {
+          name = "buffer",
+          max_item_count = 10,
+          option = {
+            get_bufnrs = function()
+              return vim.api.nvim_list_bufs()
+            end,
+          },
+        },
         {
           name = "look",
           max_item_count = 5,
