@@ -27,6 +27,7 @@ return {
   {
     "folke/noice.nvim",
     event = { "CursorMoved", "CmdLineEnter", "BufReadPre" },
+    cond = not_vscode,
     lazy = true,
     opts = {
       lsp = {

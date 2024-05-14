@@ -3,6 +3,7 @@ return {
   {
     "tiagovla/scope.nvim",
     config = true,
+    cond = not_vscode,
     event = "BufRead",
     keys = {
       {

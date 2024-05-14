@@ -58,6 +58,7 @@ return {
   -- markdown preview
   {
     "iamcco/markdown-preview.nvim",
+    cond = not_vscode,
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
     keys = {
       { "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", desc = "Markdown Preview Toggle" },
