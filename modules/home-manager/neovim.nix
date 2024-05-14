@@ -19,6 +19,9 @@ in {
     python311Packages.pip
     python311Packages.python-lsp-server
     tree-sitter
+    # for vim-dadbod
+    mysql
+    redis
   ];
 
   home.sessionVariables = {
