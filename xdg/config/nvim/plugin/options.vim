@@ -9,7 +9,7 @@ set grepformat=%f:%l:%c:%m
 set formatoptions=jcroqlnt
 set clipboard+=unnamedplus
 set inccommand=split
-set cmdheight=0
+set cmdheight=1
 set showcmd
 set ruler
 if exists('g:started_by_firenvim')

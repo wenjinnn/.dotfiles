@@ -27,7 +27,7 @@ NVIM_APPNAME=wenjinnn/config/xdg/config/nvim nvim
 
 * Simple, yet powerful, always on develop.
 * Avoid sidebar, focus on editing. personally, I prefer to use float window, sidebar buffer just distract me a lot.
-* Avoid extra UI plugins. In common scenarios, [noice.nvim](https://github.com/folke/noice.nvim) and [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) with [telescope-ui-select.nvim](https://github.com/nvim-telescope/telescope-ui-select.nvim) already done well enough for notify and float window.
+* Avoid extra UI plugins. In common scenarios, [mini.notify](https://github.com/echasnovski/mini.notify) and [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) with [telescope-ui-select.nvim](https://github.com/nvim-telescope/telescope-ui-select.nvim) already done well enough for notify and float window.
 * Provide out-of-box experience for web development
 
 ## Directory notes
