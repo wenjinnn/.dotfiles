@@ -100,6 +100,7 @@ vim.api.nvim_create_autocmd("FileType", {
     "tsplayground",
     "checkhealth",
     "httpResult",
+    "dbout",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false

@@ -117,16 +117,34 @@ return {
   {
     "kristijanhusak/vim-dadbod-ui",
     init = function()
-      vim.g.db_ui_winwidth = 30
+      vim.g.db_ui_use_nerd_fonts = 1
       vim.g.db_ui_save_location = vim.fn.stdpath("data") .. "/db_ui_queries"
-      vim.g.db_ui_save_location = vim.fn.stdpath("data") .. "/db_ui_queries"
-      vim.g.dadbod_completion_mark = ""
+      vim.g.vim_dadbod_completion_mark = ""
+      -- set filetype to sql to make snip completion work
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "mysql,plsql",
+        callback = function()
+          vim.bo.filetype = "sql"
+        end,
+      })
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "sql",
+        callback = function()
+          vim.api.nvim_set_keymap(
+            "x",
+            "<C-m>",
+            "db#op_exec()",
+            { expr = true, desc = "DB Exec Current Query" }
+          )
+        end,
+      })
     end,
     dependencies = {
       { "tpope/vim-dadbod" },
     },
     keys = {
       { "<leader><leader>d", "<cmd>DBUIToggle<cr>", desc = "DBUI Toggle" },
+      { "<leader>e", "db#op_exec()", mode = { "n", "x" }, desc = "DB Exec" },
     },
     ft = { "sql", "mysql", "plsql" },
     cond = not_vscode,
@@ -261,6 +279,8 @@ return {
           -- mini.bracketed
           { mode = "n", keys = "]" },
           { mode = "n", keys = "[" },
+
+          { mode = "n", keys = "\\" },
         },
 
         clues = {
