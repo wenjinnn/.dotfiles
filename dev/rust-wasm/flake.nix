@@ -44,10 +44,14 @@
           openssl
           pkg-config
           rustc-wasm32
-          cargo-deny
+          cargo-generate
           cargo-edit
           cargo-watch
           rust-analyzer
+          wasm-bindgen-cli
+          wasm-pack
+          dart-sass
+          trunk
         ];
       };
     });
