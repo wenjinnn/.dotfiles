@@ -9,7 +9,6 @@ set grepformat=%f:%l:%c:%m
 set formatoptions=jcroqlnt
 set clipboard+=unnamedplus
 set inccommand=split
-set scrolloff=10
 set cmdheight=0
 set showcmd
 set ruler
