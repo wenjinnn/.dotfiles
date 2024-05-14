@@ -25,15 +25,24 @@ return {
   },
   { "kyazdani42/nvim-web-devicons", lazy = true },
   {
-    "echasnovski/mini.notify",
-    event = "BufReadPre",
+    "folke/noice.nvim",
+    event = { "CursorMoved", "CmdLineEnter", "BufReadPre" },
     lazy = true,
-    opts = {},
-    keys = {
-      {
-        "<leader>n",
-        "<cmd>lua MiniNotify.show_history()<CR>",
-        desc = "Notify History",
+    opts = {
+      lsp = {
+        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.stylize_markdown"] = true,
+          ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+        },
+      },
+      views = {
+        mini = {
+          win_options = {
+            winblend = 0,
+          },
+        },
       },
     },
   },

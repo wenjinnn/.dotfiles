@@ -8,6 +8,7 @@ return {
     lazy = true,
     opts = {
       mode = "popup",
+      show_notification = true,
       env_file = {
         ".envrc",
         ".env",
@@ -269,7 +270,6 @@ return {
           miniclue.gen_clues.marks(),
           miniclue.gen_clues.registers(),
           miniclue.gen_clues.windows({
-            submode_navigate = true,
             submode_resize = true,
           }),
           miniclue.gen_clues.z(),

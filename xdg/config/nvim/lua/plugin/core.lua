@@ -16,4 +16,5 @@ return {
     },
   },
   { "echasnovski/mini.extra", lazy = true, opts = {} },
+  { "MunifTanjim/nui.nvim", lazy = true },
 }
