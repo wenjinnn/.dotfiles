@@ -38,6 +38,12 @@ return {
           desc = "Format",
         },
         {
+          "<leader>md",
+          "<cmd>DiffFormat<cr>",
+          mode = { "n" },
+          desc = "Diff Format",
+        },
+        {
           "<leader>mM",
           toggle_auto_format,
           mode = { "n", "v" },
@@ -63,6 +69,7 @@ return {
         end
         local filetype = vim.api.nvim_buf_get_option(0, "filetype")
         local format = require("conform").format
+        -- stylua range format mass up indent, so use fall format for now
         if filetype == "lua" then
           format({
             lsp_fallback = true,
