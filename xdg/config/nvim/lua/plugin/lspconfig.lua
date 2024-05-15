@@ -44,7 +44,7 @@ return {
         desc = "Lsp List Workspace Folder",
       },
       { "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", desc = "Lsp Rename" },
-      { "<leader>Q", "<cmd>lua vim.diagnostic.setloclist()<CR>", desc = "Lsp Diagnostic Loclist" },
+      { "<leader>Q", "<cmd>lua vim.diagnostic.setloclist()<CR>", desc = "Lsp Diagnostic Location List" },
       {
         "<leader>fws",
         "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
@@ -157,7 +157,7 @@ return {
             end,
             -- ['lemminx'] = function()
             --   local lemminx_jars = {}
-            --   for _, bundle in ipairs(vim.split(vim.fn.glob('/home/hewenjin/.lemminx/' .. '/*.jar'), '\n')) do
+            --   for _, bundle in ipairs(vim.split(vim.fn.glob('/home/wenjin/.lemminx/' .. '/*.jar'), '\n')) do
             --     table.insert(lemminx_jars, bundle)
             --   end
             --   require 'lspconfig'.lemminx.setup {
