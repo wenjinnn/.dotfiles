@@ -31,20 +31,35 @@ return {
           == nil
     end
 
+    local cmp_vsnip_source_config = {
+      name = "vsnip",
+      max_item_count = 10,
+    }
+
+    local cmp_buffer_source_config = {
+      name = "buffer",
+      max_item_count = 10,
+      option = {
+        get_bufnrs = function()
+          return vim.api.nvim_list_bufs()
+        end,
+      },
+    }
+    local cmp_look_source_config = {
+      name = "look",
+      max_item_count = 5,
+      keyword_length = 2,
+      option = {
+        convert_case = true,
+        loud = true,
+      },
+    }
+    local vim_dadbod_completion_config = { name = "vim-dadbod-completion" }
+
     cmp.setup({
-      completion = {
-        completeopt = "menu,menuone,noinsert,preview",
-      },
-      view = {
-        entries = "custom", -- can be "custom", "wildmenu" or "native"
-      },
       window = {
         documentation = {
           max_width = 70,
-          winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
-        },
-        completion = {
-          -- winhighlight = 'Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:PmenuSel,Search:None'
         },
       },
       experimental = {
@@ -72,13 +87,7 @@ return {
           i = cmp.mapping.abort(),
           c = cmp.mapping.close(),
         }),
-        ["<CR>"] = cmp.mapping({
-          i = cmp.mapping.confirm({
-            -- behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-          }),
-          c = cmp.mapping.confirm({ select = true }),
-        }),
+        ["<CR>"] = cmp.mapping(cmp.mapping.confirm({ select = true })),
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
@@ -99,35 +108,16 @@ return {
         end, { "i", "s" }),
       }),
       sources = {
-        {
-          name = "vsnip",
-          max_item_count = 10,
-        },
+        cmp_vsnip_source_config,
         { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },
         { name = "git" },
-        {
-          name = "buffer",
-          max_item_count = 10,
-          option = {
-            get_bufnrs = function()
-              return vim.api.nvim_list_bufs()
-            end,
-          },
-        },
+        cmp_buffer_source_config,
         {
           name = "path",
           max_item_count = 10,
         },
-        {
-          name = "look",
-          max_item_count = 5,
-          keyword_length = 2,
-          option = {
-            convert_case = true,
-            loud = true,
-          },
-        },
+        cmp_look_source_config,
         { name = "cmp-dbee" },
         { name = "orgmode" },
       },
@@ -136,7 +126,6 @@ return {
         deprecated = true,
         fields = { "abbr", "menu", "kind" },
         format = function(entry, vim_item)
-          -- lsp auto completion & snip
           local item_source = {
             buffer = "buf",
             nvim_lsp = "lsp",
@@ -180,22 +169,10 @@ return {
           return final_item
         end,
       },
-      -- sorting = {
-      --   comparators = {
-      --     function(...) return cmp_buffer:compare_locality(...) end,
-      --     -- The rest of your comparators...
-      --   }
-      -- }
     })
-    -- If you want insert `(` after select function or method item
-    -- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-    -- local cmp = require('cmp')
-    -- cmp.event:on(
-    --   'confirm_done',
-    --   cmp_autopairs.on_confirm_done()
-    -- )
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline(":", {
+      -- we want manually trigger completion in cmdline, like vim native behavior
       completion = {
         autocomplete = false,
       },
@@ -278,29 +255,10 @@ return {
     })
     cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
       sources = {
-        {
-          name = "vsnip",
-          max_item_count = 10,
-        },
-        { name = "vim-dadbod-completion" },
-        {
-          name = "buffer",
-          max_item_count = 10,
-          option = {
-            get_bufnrs = function()
-              return vim.api.nvim_list_bufs()
-            end,
-          },
-        },
-        {
-          name = "look",
-          max_item_count = 5,
-          keyword_length = 2,
-          option = {
-            convert_case = true,
-            loud = true,
-          },
-        },
+        cmp_vsnip_source_config,
+        vim_dadbod_completion_config,
+        cmp_buffer_source_config,
+        cmp_look_source_config,
       },
     })
     require("cmp_git").setup()

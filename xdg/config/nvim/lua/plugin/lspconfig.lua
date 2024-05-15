@@ -155,21 +155,6 @@ return {
                 end,
               })
             end,
-            -- ['lemminx'] = function()
-            --   local lemminx_jars = {}
-            --   for _, bundle in ipairs(vim.split(vim.fn.glob('/home/wenjin/.lemminx/' .. '/*.jar'), '\n')) do
-            --     table.insert(lemminx_jars, bundle)
-            --   end
-            --   require 'lspconfig'.lemminx.setup {
-            --     cmd = {
-            --       'java',
-            --       -- 'lemminx',
-            --       '-cp',
-            --       vim.fn.join(lemminx_jars, ':'),
-            --       'org.eclipse.lemminx.XMLServerLauncher'
-            --     }
-            --   }
-            -- end
           })
         end,
       },
@@ -237,12 +222,6 @@ return {
           local cspell = require("cspell")
           -- register any number of sources simultaneously
           local sources = {
-            -- null_ls.builtins.formatting.google_java_format,
-            -- null_ls.builtins.diagnostics.cspell.with({
-            --   diagnostics_postprocess = function(diagnostic)
-            --     diagnostic.severity = vim.diagnostic.severity["INFO"]
-            --   end,
-            -- }),
             cspell.diagnostics.with({
               diagnostics_postprocess = function(diagnostic)
                 diagnostic.severity = vim.diagnostic.severity["INFO"]

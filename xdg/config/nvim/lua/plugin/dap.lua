@@ -12,6 +12,7 @@ return {
         env = { ["NVIM_DAP_TOGGLETERM"] = 1 },
         clear_env = true,
         on_open = function(term)
+          -- HACK dap restart session will disappear toggleterm winbar, so we reset winbar at every time we open term
           require("toggleterm.ui").set_winbar(term)
         end,
       })
@@ -19,7 +20,7 @@ return {
       return new_term.bufnr, new_term.window
     end
 
-    -- dap repl completion
+    -- dap repl completion, we use cmp-dap now
     -- vim.api.nvim_create_autocmd("FileType", {
     --   pattern = "dap-repl",
     --   callback = function(args)
