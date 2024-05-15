@@ -107,31 +107,26 @@ return {
             function(server_name)
               -- default handler
               -- vim.lsp.set_log_level('debug')
-              local lsp_config_module = "lsp." .. server_name
-              local module_exist = pcall(require, lsp_config_module)
               local config = {
                 capabilities = lsp.make_capabilities(),
                 on_attach = function(client, bufnr)
                   lsp.setup(client, bufnr)
                 end,
               }
-              if module_exist then
+              local lsp_config_module = "lsp." .. server_name
+              local module_exist = pcall(require, lsp_config_module)
+              if module_exist and type(require(lsp_config_module)) == "table" then
                 local lsp_config = require(lsp_config_module)
-                if lsp_config.attach ~= nil then
-                  local on_attach = config.on_attach
-                  config.on_attach = function(client, bufnr)
-                    on_attach(client, bufnr)
-                    lsp_config.attach(client, bufnr)
+                for key, _ in pairs(lsp_config) do
+                  if key == "on_attach" then
+                    local on_attach = config.on_attach
+                    config.on_attach = function(client, bufnr)
+                      on_attach(client, bufnr)
+                      lsp_config[key](client, bufnr)
+                    end
+                  else
+                    config[key] = lsp_config[key]
                   end
-                end
-                if lsp_config.settings ~= nil then
-                  config.settings = lsp_config.settings
-                end
-                if lsp_config.init_options ~= nil then
-                  config.init_options = lsp_config.init_options
-                end
-                if lsp_config.filetypes ~= nil then
-                  config.filetypes = lsp_config.filetypes
                 end
               end
               require("lspconfig")[server_name].setup(config)
