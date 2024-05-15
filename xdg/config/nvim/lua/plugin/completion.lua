@@ -57,6 +57,9 @@ return {
     local vim_dadbod_completion_config = { name = "vim-dadbod-completion" }
 
     cmp.setup({
+      completion = {
+        completeopt = "menu,menuone,noinsert,preview",
+      },
       window = {
         documentation = {
           max_width = 70,
