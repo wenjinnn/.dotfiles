@@ -26,7 +26,8 @@ return {
   { "kyazdani42/nvim-web-devicons", lazy = true },
   {
     "echasnovski/mini.notify",
-    lazy = false,
+    lazy = true,
+    event = "BufReadPre",
     opts = {},
     keys = {
       {
