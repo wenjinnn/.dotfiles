@@ -101,7 +101,7 @@ function M.setup()
   local capabilities = lsp.make_capabilities()
   local root_dir = require("jdtls.setup").find_root({ "mvnw", "gradlew", ".git" })
   local workspace_name, _ = string.gsub(vim.fn.fnamemodify(root_dir, ":p"), "/", "_")
-  local mason_pkg_path = vim.fn.stdpath("data") .. "/mason/packages"
+  local mason_pkg_path = lsp.get_mason_pkg_path()
   local jdtls_path = mason_pkg_path .. "/jdtls"
   local config_path = vim.fn.stdpath("config") .. "/lua/lsp/jdtls"
 

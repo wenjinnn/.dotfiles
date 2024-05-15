@@ -104,57 +104,60 @@ return {
             -- The first entry (without a key) will be the default handler
             -- and will be called for each installed server that doesn't have
             -- a dedicated handler.
-            function(server_name) -- default handler (optional)
+            function(server_name)
+              -- default handler
               -- vim.lsp.set_log_level('debug')
-              if server_name ~= "jdtls" then
-                local lsp_config_path = "lsp." .. server_name
-                local capabilities = lsp.make_capabilities()
-                local config = {
-                  -- enable snippet support
-                  capabilities = capabilities,
-                  -- map buffer local keybindings when the language server attaches
-                  on_attach = function(client, bufnr)
-                    lsp.setup(client, bufnr)
-                    if
-                      pcall(require, lsp_config_path) and require(lsp_config_path).attach ~= nil
-                    then
-                      require(lsp_config_path).attach(client, bufnr)
-                    end
-                  end,
-                }
-                local settings = lsp_config_path .. ".settings"
-                if pcall(require, settings) then
-                  config.settings = require(settings)
+              local lsp_config_module = "lsp." .. server_name
+              local module_exist = pcall(require, lsp_config_module)
+              local config = {
+                capabilities = lsp.make_capabilities(),
+                on_attach = function(client, bufnr)
+                  lsp.setup(client, bufnr)
+                end,
+              }
+              if module_exist then
+                local lsp_config = require(lsp_config_module)
+                if lsp_config.attach ~= nil then
+                  local on_attach = config.on_attach
+                  config.on_attach = function(client, bufnr)
+                    on_attach(client, bufnr)
+                    lsp_config.attach(client, bufnr)
+                  end
                 end
-                require("lspconfig")[server_name].setup(config)
-              else
-                local jdtls = require("lsp.jdtls")
-                -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
-                vim.api.nvim_create_augroup("user_jdtls_setup", { clear = true })
-                vim.api.nvim_create_autocmd(
-                  { "FileType" },
-                  { group = "user_jdtls_setup", pattern = "java,ant", callback = jdtls.setup }
-                )
-                vim.api.nvim_create_autocmd({ "FileType" }, {
-                  group = "user_jdtls_setup",
-                  pattern = "xml",
-                  callback = function()
-                    local name = vim.fn.expand("%:t")
-                    if name == "pom.xml" then
-                      jdtls.setup()
-                    end
-                  end,
-                })
+                if lsp_config.settings ~= nil then
+                  config.settings = lsp_config.settings
+                end
+                if lsp_config.init_options ~= nil then
+                  config.init_options = lsp_config.init_options
+                end
+                if lsp_config.filetypes ~= nil then
+                  config.filetypes = lsp_config.filetypes
+                end
               end
+              require("lspconfig")[server_name].setup(config)
             end,
             -- -- Next, you can provide targeted overrides for specific servers.
             -- -- For example, a handler override for the `rust_analyzer`:
             -- ["rust_analyzer"] = function ()
             --     require("rust-tools").setup {}
             -- end
-            ["groovyls"] = function()
-              require("lspconfig").groovyls.setup({
-                root_dir = require("lspconfig.util").find_git_ancestor,
+            jdtls = function()
+              local jdtls = require("lsp.jdtls")
+              -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
+              vim.api.nvim_create_augroup("user_jdtls_setup", { clear = true })
+              vim.api.nvim_create_autocmd(
+                { "FileType" },
+                { group = "user_jdtls_setup", pattern = "java,ant", callback = jdtls.setup }
+              )
+              vim.api.nvim_create_autocmd({ "FileType" }, {
+                group = "user_jdtls_setup",
+                pattern = "xml",
+                callback = function()
+                  local name = vim.fn.expand("%:t")
+                  if name == "pom.xml" then
+                    jdtls.setup()
+                  end
+                end,
               })
             end,
             -- ['lemminx'] = function()

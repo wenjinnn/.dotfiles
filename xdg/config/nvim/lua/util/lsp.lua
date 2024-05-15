@@ -39,4 +39,8 @@ function M.make_capabilities()
   return capabilities
 end
 
+function M.get_mason_pkg_path()
+  return vim.fn.stdpath("data") .. "/mason/packages"
+end
+
 return M
