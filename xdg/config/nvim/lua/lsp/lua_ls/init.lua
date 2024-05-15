@@ -1,4 +1,5 @@
-return {
+local M = {}
+M.settings = {
   Lua = {
     runtime = {
       -- LuaJIT in the case of Neovim
@@ -36,3 +37,4 @@ return {
     },
   },
 }
+return M

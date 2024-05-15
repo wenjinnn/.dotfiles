@@ -1,4 +1,5 @@
-return {
+local M = {}
+M.settings = {
   yaml = {
     schemaStore = {
       -- You must disable built-in schemaStore support if you want to use
@@ -8,3 +9,4 @@ return {
     schemas = require("schemastore").yaml.schemas(),
   },
 }
+return M

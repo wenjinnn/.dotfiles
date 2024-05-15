@@ -1,6 +1,6 @@
 local M = {}
 
-function M.attach(_, bufnr)
+function M.on_attach(_, bufnr)
   vim.api.nvim_create_autocmd("BufWritePre", {
     buffer = bufnr,
     command = "EslintFixAll",

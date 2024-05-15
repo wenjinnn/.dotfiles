@@ -24,4 +24,7 @@ M.filetypes = {
   "typescript",
   "vue",
 }
+M.settings = {
+  format = { enable = false },
+}
 return M

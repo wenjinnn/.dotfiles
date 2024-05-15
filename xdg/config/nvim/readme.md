@@ -36,8 +36,8 @@ NVIM_APPNAME=wenjinnn/config/xdg/config/nvim nvim
 
 [./lua/lsp](https://github.com/wenjinnn/config/tree/main/xdg/config/nvim/lua/lsp)
 LSP config and settings
-* define a settings.lua at `<lspname>/settings.lua` will autoload by particular lsp
-* define a attach function at `<lspname>/init.lua` will auto execute by particular lsp
+* define a key-value pair table at `<lspname>/init.lua`, attribute in table will autoload by particular lsp
+* on_attach function in `<lspname>/init.lua` will auto execute by particular lsp, with a [setup warpper](https://github.com/wenjinnn/config/blob/e6188ed4f337fac55bd42280ccf1f3b1dd726964/xdg/config/nvim/lua/util/lsp.lua#L14C12-L34)
 
 [./lua/plugin](https://github.com/wenjinnn/config/tree/main/xdg/config/nvim/lua/plugin)
 plugins with particular settings and keymap
