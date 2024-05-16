@@ -11,7 +11,7 @@ repo's structure base on [nix-starter-config#standard](https://github.com/Mister
 
 # Stuff here
 
-* Editor: a well [configured nvim](https://github.com/wenjinnn/config/tree/nixos/xdg/config/nvim) (tested startup time are less than 30ms) that follows the [KISS principle](https://en.wikipedia.org/wiki/KISS_principle)
+* Editor: a well [configured nvim](https://github.com/wenjinnn/config/tree/nixos/xdg/config/nvim) (tested startup time are less than 30ms) that follows the [KISS principle](https://en.wikipedia.org/wiki/KISS_principle), you can try it with my single nvim configuration repo [wenvim](https://github.com/wenjinnn/wenvim)
 * Compositor: [Hyprland](https://github.com/hyprwm/Hyprland)  
 * Shell: [ags](https://github.com/Aylur/ags)  
 * Terminal emulator: [foot](https://codeberg.org/dnkl/foot) with [undercurl support patch](https://codeberg.org/dnkl/foot/pulls/1099)  
