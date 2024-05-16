@@ -46,6 +46,7 @@
           cargo-deny
           cargo-edit
           cargo-watch
+          cargo-tauri
           rust-analyzer
         ];
       };
