@@ -40,6 +40,10 @@ function M.make_capabilities()
 end
 
 function M.get_mason_pkg_path()
+  local mason_path = os.getenv("MASON")
+  if mason_path ~= nil then
+    return mason_path .. "/packages"
+  end
   return vim.fn.stdpath("data") .. "/mason/packages"
 end
 

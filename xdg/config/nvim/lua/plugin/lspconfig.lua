@@ -44,7 +44,11 @@ return {
         desc = "Lsp List Workspace Folder",
       },
       { "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", desc = "Lsp Rename" },
-      { "<leader>Q", "<cmd>lua vim.diagnostic.setloclist()<CR>", desc = "Lsp Diagnostic Location List" },
+      {
+        "<leader>Q",
+        "<cmd>lua vim.diagnostic.setloclist()<CR>",
+        desc = "Lsp Diagnostic Location List",
+      },
       {
         "<leader>fws",
         "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
@@ -192,27 +196,30 @@ return {
       },
       {
         url = "https://gitlab.com/schrieveslaach/sonarlint.nvim",
-        opts = {
-          server = {
-            cmd = {
-              "sonarlint-language-server",
-              -- Ensure that sonarlint-language-server uses stdio channel
-              "-stdio",
-              "-analyzers",
-              -- paths to the analyzers you need, using those for python and java in this example
-              vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarpython.jar"),
-              vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarcfamily.jar"),
-              vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarjava.jar"),
+        opts = function()
+          local mason_pkg_path = require("util.lsp").get_mason_pkg_path()
+          return {
+            server = {
+              cmd = {
+                "sonarlint-language-server",
+                -- Ensure that sonarlint-language-server uses stdio channel
+                "-stdio",
+                "-analyzers",
+                -- paths to the analyzers you need, using those for python and java in this example
+                mason_pkg_path .. "/share/sonarlint-analyzers/sonarpython.jar",
+                mason_pkg_path .. "/share/sonarlint-analyzers/sonarcfamily.jar",
+                mason_pkg_path .. "/share/sonarlint-analyzers/sonarjava.jar",
+              },
             },
-          },
-          filetypes = {
-            -- Tested and working
-            "python",
-            "cpp",
-            -- Requires nvim-jdtls, otherwise an error message will be printed
-            "java",
-          },
-        },
+            filetypes = {
+              -- Tested and working
+              "python",
+              "cpp",
+              -- Requires nvim-jdtls, otherwise an error message will be printed
+              "java",
+            },
+          }
+        end,
       },
       {
         "nvimtools/none-ls.nvim",
