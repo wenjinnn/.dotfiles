@@ -191,7 +191,6 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    version = "*",
     dependencies = {
       {
         "nvim-treesitter/nvim-treesitter-textobjects",

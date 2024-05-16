@@ -5,6 +5,7 @@ local mason_pkg_path = require("util.lsp").get_mason_pkg_path()
 local vue_language_server_mason_path = mason_pkg_path
   .. "/vue-language-server/node_modules/@vue/language-server"
 M.init_options = {
+  hostInfo = "neovim",
   plugins = {
     {
       name = "@vue/typescript-plugin",
@@ -18,13 +19,15 @@ M.init_options = {
   },
 }
 M.filetypes = {
-  "javascriptreact",
-  "typescriptreact",
   "javascript",
+  "javascriptreact",
+  "javascript.jsx",
   "typescript",
+  "typescriptreact",
+  "typescript.tsx",
   "vue",
 }
 M.settings = {
   format = { enable = false },
 }
-return M
+return {}
