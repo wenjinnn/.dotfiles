@@ -6,6 +6,8 @@
 <a href="https://dotfyle.com/wenjinnn/config-xdg-config-nvim"><img src="https://dotfyle.com/wenjinnn/config-xdg-config-nvim/badges/leaderkey?style=flat" /></a>
 <a href="https://dotfyle.com/wenjinnn/config-xdg-config-nvim"><img src="https://dotfyle.com/wenjinnn/config-xdg-config-nvim/badges/plugin-manager?style=flat" /></a>
 
+![screenshot](./screenshot.png)
+
 ## Principle and Goal
 
 * Simple, yet powerful, always on develop.
