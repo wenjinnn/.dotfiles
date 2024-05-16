@@ -314,24 +314,25 @@ return {
     lazy = true,
     priority = 100,
     event = "VimEnter",
-    keys = {
-      {
-        "<leader>sw",
-        '<cmd>:lua MiniSessions.write((vim.fn.getcwd():gsub("/", "_")))<CR>',
-        desc = "Session Write",
-      },
-      {
-        "<leader>sW",
-        ':lua MiniSessions.write((vim.fn.getcwd():gsub("/", "_")))',
-        desc = "Session Write Custom",
-      },
-      { "<leader>ss", "<cmd>:lua MiniSessions.select()<CR>", desc = "Session Select" },
-      {
-        "<leader>sd",
-        '<cmd>:lua MiniSessions.delete((vim.fn.getcwd():gsub("/", "_")))<CR>',
-        desc = "Session Delete",
-      },
-    },
+    keys = function()
+      local session_name = function()
+        local cwd = vim.fn.getcwd()
+        local parent_path = vim.fn.fnamemodify(cwd, ":h")
+        local current_tail_path = vim.fn.fnamemodify(cwd, ":t")
+        return string.format("%s@%s", current_tail_path, parent_path:gsub("/", "-"))
+      end
+      local write_session = function()
+        require("mini.sessions").write(session_name())
+      end
+      local delete_session = function()
+        require("mini.sessions").delete(session_name())
+      end
+      return {
+        { "<leader>sw", write_session, desc = "Session Write" },
+        { "<leader>sW", ":lua MiniSessions.write()", desc = "Session Write Custom" },
+        { "<leader>sd", delete_session, desc = "Session Delete" },
+      }
+    end,
     version = "*",
     opts = function()
       local function shutdown_term()
