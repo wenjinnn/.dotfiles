@@ -95,6 +95,7 @@
     lazygit
     jq
     lsd
+    duf
     cowsay
     file
     which
