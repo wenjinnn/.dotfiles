@@ -56,43 +56,6 @@ return {
     }
     local vim_dadbod_completion_config = { name = "vim-dadbod-completion" }
 
-    local mapping = cmp.mapping.preset.insert({
-      ["<C-n>"] = cmp.mapping({
-        i = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-        c = cmp.mapping.select_next_item(),
-      }),
-      ["<C-p>"] = cmp.mapping({
-        i = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-        c = cmp.mapping.select_prev_item(),
-      }),
-      ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-      ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-      ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-      ["<C-e>"] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      }),
-      ["<CR>"] = cmp.mapping.confirm({ select = true }),
-      ["<Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif vim.fn["vsnip#available"](1) == 1 then
-          feedkey("<Plug>(vsnip-expand-or-jump)", "")
-        elseif has_words_before() then
-          cmp.complete()
-        else
-          fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-        end
-      end, { "i", "s", "c" }),
-      ["<S-Tab>"] = cmp.mapping(function()
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-          feedkey("<Plug>(vsnip-jump-prev)", "")
-        end
-      end, { "i", "s", "c" }),
-    })
-
     cmp.setup({
       window = {
         documentation = {
@@ -107,20 +70,40 @@ return {
           vim.fn["vsnip#anonymous"](args.body)
         end,
       },
-      mapping = mapping,
+      mapping = cmp.mapping.preset.insert({
+        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-e>"] = cmp.mapping.abort(),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        ["<Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif vim.fn["vsnip#available"](1) == 1 then
+            feedkey("<Plug>(vsnip-expand-or-jump)", "")
+          elseif has_words_before() then
+            cmp.complete()
+          else
+            fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+          end
+        end, { "i", "s" }),
+        ["<S-Tab>"] = cmp.mapping(function()
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+            feedkey("<Plug>(vsnip-jump-prev)", "")
+          end
+        end, { "i", "s" }),
+      }),
       sources = {
         cmp_vsnip_source_config,
         { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },
         { name = "git" },
-        cmp_buffer_source_config,
-        {
-          name = "path",
-          max_item_count = 10,
-        },
-        cmp_look_source_config,
-        { name = "cmp-dbee" },
         { name = "orgmode" },
+        cmp_buffer_source_config,
+        { name = "path" },
+        cmp_look_source_config,
       },
       formatting = {
         expandable_indicator = false,
@@ -141,6 +124,7 @@ return {
             latex_symbols = "latex",
             dap = "dap",
             git = "git",
+            orgmode = "org",
             ["cmp-dbee"] = "dbee",
             ["vim-dadbod-completion"] = "dadbod",
           }
@@ -173,7 +157,7 @@ return {
     })
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline(":", {
-      mapping = mapping,
+      mapping = cmp.mapping.preset.cmdline(),
       sources = cmp.config.sources({
         { name = "path" },
       }, {
@@ -181,7 +165,7 @@ return {
       }),
     })
     cmp.setup.cmdline({ "/", "?" }, {
-      mapping = mapping,
+      mapping = cmp.mapping.preset.cmdline(),
       sources = cmp.config.sources({
         { name = "buffer" },
       }),
@@ -193,7 +177,7 @@ return {
       end,
       sources = {
         { name = "dap", keyword_length = 1 },
-        { name = "buffer" },
+        cmp_buffer_source_config,
       },
     })
     cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
