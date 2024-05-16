@@ -23,6 +23,10 @@ return {
           ["@interface"] = { link = "@constant" },
           ["@lsp.type.interface"] = { link = "@interface" },
           CmpItemMenu = { link = "Comment" },
+          -- vim-dadbod-ui
+          NotificationInfo = { link = "DiagnosticFloatingInfo" },
+          NotificationError = { link = "DiagnosticFloatingError" },
+          NotificationWarning = { link = "DiagnosticFloatingWarning" },
         },
       }
     end,
