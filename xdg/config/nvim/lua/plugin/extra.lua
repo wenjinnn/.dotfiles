@@ -145,7 +145,6 @@ return {
     },
     keys = {
       { "<leader><leader>d", "<cmd>DBUIToggle<cr>", desc = "DBUI Toggle" },
-      { "<leader>e", "db#op_exec()", mode = { "n", "x" }, desc = "DB Exec" },
     },
     ft = { "sql", "mysql", "plsql" },
     cond = not_vscode,
