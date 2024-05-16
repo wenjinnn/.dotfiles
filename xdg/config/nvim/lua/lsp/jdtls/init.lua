@@ -38,7 +38,6 @@ function M.setup()
     -- for all launch.json options see https://github.com/microsoft/vscode-java-debug#options
     require("dap.ext.vscode").load_launchjs()
     lsp.setup(client, bufnr)
-    local opts = lsp.opts
     lsp.set_keymap(
       bufnr,
       "n",
@@ -118,7 +117,6 @@ function M.setup()
     bundles,
     vim.split(vim.fn.glob(mason_pkg_path .. "/java-test/extension/server/*.jar"), "\n")
   )
-  -- vim.list_extend(bundles, vim.split(vim.fn.glob(mason_pkg_path .. '/google-java-format/server/*.jar'), '\n'))
   -- vim.list_extend(bundles, vim.split(vim.fn.glob(config_path .. '/vscode-java-dependency/server/*.jar'), '\n'))
 
   local jdtls_java_home = os.getenv("JDTLS_JAVA_HOME")

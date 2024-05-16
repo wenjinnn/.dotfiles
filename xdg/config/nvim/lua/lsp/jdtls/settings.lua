@@ -46,10 +46,6 @@ local M = {
       onType = {
         enabled = false,
       },
-      settings = {
-        url = config_path .. "/lua/lsp/jdtls/eclipse-java-google-style-custom.xml",
-        profile = "GoogleStyle",
-      },
     },
     maxConcurrentBuilds = 5,
     saveActions = {
