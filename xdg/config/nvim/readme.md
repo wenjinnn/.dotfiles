@@ -1,11 +1,17 @@
-### Personal nvim configuration
+### wenjinnn's neovim configuration
 
-# config/xdg/config/nvim
+# wenvim
 
 <a href="https://dotfyle.com/wenjinnn/config-xdg-config-nvim"><img src="https://dotfyle.com/wenjinnn/config-xdg-config-nvim/badges/plugins?style=flat" /></a>
 <a href="https://dotfyle.com/wenjinnn/config-xdg-config-nvim"><img src="https://dotfyle.com/wenjinnn/config-xdg-config-nvim/badges/leaderkey?style=flat" /></a>
 <a href="https://dotfyle.com/wenjinnn/config-xdg-config-nvim"><img src="https://dotfyle.com/wenjinnn/config-xdg-config-nvim/badges/plugin-manager?style=flat" /></a>
 
+## Principle and Goal
+
+* Simple, yet powerful, always on develop.
+* Avoid sidebar, focus on editing. personally, I prefer to use float window, sidebar buffer just distract me a lot.
+* Avoid extra UI plugins. In common scenarios, [mini.notify](https://github.com/echasnovski/mini.notify) and [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) with [telescope-ui-select.nvim](https://github.com/nvim-telescope/telescope-ui-select.nvim) already done well enough for notify and float window.
+* Provide out-of-box experience for web development
 
 ## Install Instructions
 
@@ -14,21 +20,14 @@
 Clone the repository and install the plugins:
 
 ```sh
-git clone git@github.com:wenjinnn/config ~/.config/wenjinnn/config
+git clone git@github.com:wenjinnn/wenvim ~/.config/wenjinnn/wenvim
 ```
 
 Open Neovim with this config:
 
 ```sh
-NVIM_APPNAME=wenjinnn/config/xdg/config/nvim nvim
+NVIM_APPNAME=wenjinnn/wenvim nvim
 ```
-
-## Principle and Goal
-
-* Simple, yet powerful, always on develop.
-* Avoid sidebar, focus on editing. personally, I prefer to use float window, sidebar buffer just distract me a lot.
-* Avoid extra UI plugins. In common scenarios, [mini.notify](https://github.com/echasnovski/mini.notify) and [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) with [telescope-ui-select.nvim](https://github.com/nvim-telescope/telescope-ui-select.nvim) already done well enough for notify and float window.
-* Provide out-of-box experience for web development
 
 ## Directory notes
 
