@@ -30,4 +30,4 @@ M.filetypes = {
 M.settings = {
   format = { enable = false },
 }
-return {}
+return M
