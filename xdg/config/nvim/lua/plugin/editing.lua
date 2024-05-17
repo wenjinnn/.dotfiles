@@ -227,7 +227,7 @@ return {
       },
       { "windwp/nvim-ts-autotag" },
       {
-        "HiPhish/rainbow-delimiters.nvim",
+        "wenjinnn/rainbow-delimiters.nvim",
         event = "BufRead",
         cond = not_vscode,
       },
