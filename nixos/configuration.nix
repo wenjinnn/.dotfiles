@@ -170,6 +170,8 @@
   };
   programs.zsh.enable = true;
 
+  programs.nix-ld.enable = true;
+
   systemd.sleep.extraConfig = ''
     [Sleep]
     HibernateMode=shutdown
