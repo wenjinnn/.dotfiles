@@ -52,52 +52,40 @@
     };
   };
 
-  # This will add each flake input as a registry
-  # To make nix3 commands consistent with your flake
-  nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-
-  # This will additionally add your inputs to the system's legacy channels
-  # Making legacy nix commands consistent as well, awesome!
-  nix.nixPath = ["/etc/nix/path"];
-
-  environment.wordlist.enable = true;
-  environment.etc =
-    lib.mapAttrs'
-    (name: value: {
-      name = "nix/path/${name}";
-      value.source = value.flake;
-    })
-    config.nix.registry;
-
-  nix.package = pkgs.nixFlakes;
-  nix.settings = {
-    # Enable flakes and new 'nix' command
-    experimental-features = "nix-command flakes";
-    # Deduplicate and optimize nix store
-    auto-optimise-store = true;
-    trusted-users = ["${username}"];
-    # the system-level substituers & trusted-public-keys
-    # given the users in this list the right to specify additional substituters via:
-    #    1. `nixConfig.substituers` in `flake.nix`
-    substituters = [
-      # cache mirror located in China
-      # status: https://mirror.sjtu.edu.cn/
-      "https://mirror.sjtu.edu.cn/nix-channels/store"
-      # status: https://mirrors.ustc.edu.cn/status/
-      # "https://mirrors.ustc.edu.cn/nix-channels/store"
-      "https://cache.nixos.org"
-    ];
-    trusted-public-keys = [
-      # the default public key of cache.nixos.org, it's built-in, no need to add it here
-      # "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-    ];
-  };
-
-  # do garbage collection weekly to keep disk usage low
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 1w";
+  nix = let
+    flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+  in {
+    settings = {
+      # Enable flakes and new 'nix' command
+      experimental-features = "nix-command flakes";
+      # Opinionated: disable global registry
+      flake-registry = "";
+      # Workaround for https://github.com/NixOS/nix/issues/9574
+      nix-path = config.nix.nixPath;
+      # Deduplicate and optimize nix store
+      auto-optimise-store = true;
+      trusted-users = ["${username}"];
+      # the system-level substituers & trusted-public-keys
+      # given the users in this list the right to specify additional substituters via:
+      #    1. `nixConfig.substituers` in `flake.nix`
+      substituters = [
+        # cache mirror located in China
+        # status: https://mirror.sjtu.edu.cn/
+        "https://mirror.sjtu.edu.cn/nix-channels/store"
+        # status: https://mirrors.ustc.edu.cn/status/
+        # "https://mirrors.ustc.edu.cn/nix-channels/store"
+        "https://cache.nixos.org"
+      ];
+      trusted-public-keys = [
+        # the default public key of cache.nixos.org, it's built-in, no need to add it here
+        # "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      ];
+    };
+    # Opinionated: make flake registry and nix path match flake inputs
+    registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
+    nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
+    # Opinionated: disable channels
+    channel.enable = false;
   };
 
   # Pick only one of the below networking options.
@@ -152,25 +140,29 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    git
-    parted
-    home-manager
-    tree
-  ];
+  environment = {
+    wordlist.enable = true;
+    systemPackages = with pkgs; [
+      neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+      wget
+      git
+      parted
+      home-manager
+      tree
+    ];
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
+  programs = {
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+    zsh.enable = true;
+    nix-ld.enable = true;
   };
-  programs.zsh.enable = true;
-
-  programs.nix-ld.enable = true;
 
   systemd.sleep.extraConfig = ''
     [Sleep]
@@ -182,9 +174,10 @@
   services.openssh = {
     enable = true;
     settings = {
-      # Forbid root login through SSH.
+      # Opinionated: forbid root login through SSH.
       PermitRootLogin = "no";
-      # Use keys only. Remove if you want to SSH using password (not recommended)
+      # Opinionated: use keys only.
+      # Remove if you want to SSH using passwords
       PasswordAuthentication = false;
     };
   };
