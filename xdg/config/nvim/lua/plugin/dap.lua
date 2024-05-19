@@ -3,6 +3,10 @@ local not_vscode = require("util").not_vscode
 return {
   "mfussenegger/nvim-dap",
   cond = not_vscode,
+  dependencies = {
+    "theHamsta/nvim-dap-virtual-text",
+    opts = {},
+  },
   config = function()
     local dap = require("dap")
     dap.defaults.fallback.terminal_win_cmd = function()

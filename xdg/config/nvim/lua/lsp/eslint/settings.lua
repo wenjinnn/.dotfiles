@@ -1,4 +1,3 @@
-local node_path = os.getenv("ESLINT_LIBRARY")
 return {
   format = { enable = true },
   autoFixOnSave = true,
@@ -6,7 +5,6 @@ return {
     mode = "all",
     rules = { "!debugger", "!no-only-tests/*" },
   },
-  nodePath = node_path or "",
   lintTask = {
     enable = true,
   },

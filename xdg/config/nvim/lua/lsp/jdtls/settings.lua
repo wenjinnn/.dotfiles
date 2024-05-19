@@ -62,6 +62,9 @@ local M = {
         enabled = true,
       },
     },
+    inlayHints = {
+      parameterNames = { enabled = "all" },
+    },
     contentProvider = { preferred = "fernflower" },
     templates = {
       fileHeader = {

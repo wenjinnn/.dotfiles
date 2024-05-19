@@ -65,10 +65,6 @@ just some filetype settings
 
 `DAP_HOST_PORT` like above, but for host port
 
-### Javascript
-
-`ESLINT_LIBRARY` for define eslint extra library, see this [issue](https://github.com/williamboman/mason-lspconfig.nvim/issues/311#issuecomment-1883626084)
-
 ### Java
 
 `JAVA_HOME` fallback java home

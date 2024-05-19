@@ -116,18 +116,6 @@ return {
     end,
   },
   {
-    "echasnovski/mini.comment",
-    event = "BufRead",
-    opts = {
-      options = {
-        custom_commentstring = function()
-          return require("ts_context_commentstring").calculate_commentstring()
-            or vim.bo.commentstring
-        end,
-      },
-    },
-  },
-  {
     "echasnovski/mini.pairs",
     event = "InsertEnter",
     opts = {},
@@ -217,20 +205,8 @@ return {
           end
         end,
       },
-      {
-        "JoosepAlviste/nvim-ts-context-commentstring",
-        config = function()
-          require("ts_context_commentstring").setup({
-            enable_autocmd = false,
-          })
-        end,
-      },
       { "windwp/nvim-ts-autotag" },
-      {
-        "wenjinnn/rainbow-delimiters.nvim",
-        event = "BufRead",
-        cond = not_vscode,
-      },
+      { "wenjinnn/rainbow-delimiters.nvim" },
     },
     build = ":TSUpdate",
     event = { "BufReadPre" },
@@ -272,6 +248,8 @@ return {
         "java",
         "rust",
         "sql",
+        "css",
+        "scss",
       }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
       ignore_install = {}, -- List of parsers to ignore installing
       auto_install = true,
