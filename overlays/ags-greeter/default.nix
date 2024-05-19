@@ -22,7 +22,7 @@
   networkmanager,
   gtk3,
   which,
-  matugen,
+  unstable,
 }: let
   name = "ags-greeter";
   agsOverride = ags.override {extraPackages = [accountsservice];};
@@ -34,7 +34,7 @@
     brightnessctl
     swww
     agsOverride
-    matugen
+    unstable.matugen
     fzf
     slurp
     wf-recorder

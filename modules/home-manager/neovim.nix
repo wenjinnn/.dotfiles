@@ -38,6 +38,7 @@ in {
     };
   };
   programs.neovim = {
+    package = pkgs.unstable.neovim-unwrapped;
     enable = true;
     viAlias = true;
     vimAlias = true;

@@ -10,7 +10,7 @@
     inputs.ags.homeManagerModules.default
   ];
   home.packages = with pkgs; [
-    matugen
+    unstable.matugen
     dart-sass
     bun
   ];
