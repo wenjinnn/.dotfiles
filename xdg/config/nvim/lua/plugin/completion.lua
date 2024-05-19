@@ -113,9 +113,6 @@ return {
       experimental = {
         ghost_text = true,
       },
-      completion = {
-        completeopt = "menu,menuone,noinsert",
-      },
       snippet = {
         expand = function(args)
           vim.snippet.expand(args.body)
