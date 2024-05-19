@@ -13,7 +13,7 @@ return {
       },
     },
   },
-  { "RRethy/vim-illuminate" },
+  { "RRethy/vim-illuminate", event = "BufReadPre", lazy = true },
   {
     "stevearc/conform.nvim",
     cond = not_vscode,
