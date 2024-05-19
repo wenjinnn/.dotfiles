@@ -37,7 +37,6 @@ function M.setup()
     require("jdtls.dap").setup_dap_main_class_configs()
     -- for all launch.json options see https://github.com/microsoft/vscode-java-debug#options
     require("dap.ext.vscode").load_launchjs()
-    lsp.setup(client, bufnr)
     lsp.set_keymap(
       bufnr,
       "n",
