@@ -6,8 +6,7 @@ return {
   event = { "InsertEnter", "CmdLineEnter" },
   dependencies = {
     { "rafamadriz/friendly-snippets" },
-    { "hrsh7th/vim-vsnip" },
-    { "hrsh7th/cmp-vsnip" },
+    { "garymjr/nvim-snippets", opts = { friendly_snippets = true } },
     { "hrsh7th/cmp-buffer" },
     { "hrsh7th/cmp-nvim-lsp" },
     { "hrsh7th/cmp-path" },
@@ -21,6 +20,7 @@ return {
   config = function()
     local cmp = require("cmp")
     local lspkind = require("lspkind")
+    local util = require("util")
     local feedkey = function(key, mode)
       vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
     end
@@ -31,8 +31,8 @@ return {
           == nil
     end
 
-    local cmp_vsnip_source_config = {
-      name = "vsnip",
+    local snippets_source_config = {
+      name = "snippets",
       max_item_count = 10,
     }
 
@@ -56,6 +56,54 @@ return {
     }
     local vim_dadbod_completion_config = { name = "vim-dadbod-completion" }
 
+    local combined_cr_mapping = {
+      ["<S-CR>"] = cmp.mapping.confirm({
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      }),
+      ["<C-CR>"] = function(fallback)
+        cmp.abort()
+        fallback()
+      end,
+    }
+    local insert_extra_mapping = {
+      ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-f>"] = cmp.mapping.scroll_docs(4),
+      ["<C-Space>"] = cmp.mapping.complete(),
+      ["<C-e>"] = cmp.mapping.abort(),
+      ["<CR>"] = function(fallback)
+        if cmp.core.view:visible() or vim.fn.pumvisible() == 1 then
+          util.create_undo()
+          if cmp.confirm({ select = true }) then
+            return
+          end
+        end
+        return fallback()
+      end,
+      ["<Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif vim.snippet.active({ direction = 1 }) then
+          feedkey("<cmd>lua vim.snippet.jump(1)<CR>", "")
+        elseif has_words_before() then
+          cmp.complete()
+        else
+          fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+        end
+      end, { "i", "s" }),
+      ["<S-Tab>"] = cmp.mapping(function()
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif vim.snippet.active({ direction = -1 }) then
+          feedkey("<cmd>lua vim.snippet.jump(-1)<CR>", "")
+        end
+      end, { "i", "s" }),
+    }
+
+    for key, value in pairs(combined_cr_mapping) do
+      insert_extra_mapping[key] = value
+    end
+
     cmp.setup({
       window = {
         documentation = {
@@ -65,38 +113,17 @@ return {
       experimental = {
         ghost_text = true,
       },
+      completion = {
+        completeopt = "menu,menuone,noinsert",
+      },
       snippet = {
         expand = function(args)
-          vim.fn["vsnip#anonymous"](args.body)
+          vim.snippet.expand(args.body)
         end,
       },
-      mapping = cmp.mapping.preset.insert({
-        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-e>"] = cmp.mapping.abort(),
-        ["<CR>"] = cmp.mapping.confirm({ select = true }),
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif vim.fn["vsnip#available"](1) == 1 then
-            feedkey("<Plug>(vsnip-expand-or-jump)", "")
-          elseif has_words_before() then
-            cmp.complete()
-          else
-            fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-          end
-        end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function()
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-            feedkey("<Plug>(vsnip-jump-prev)", "")
-          end
-        end, { "i", "s" }),
-      }),
+      mapping = cmp.mapping.preset.insert(insert_extra_mapping),
       sources = {
-        cmp_vsnip_source_config,
+        snippets_source_config,
         { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },
         { name = "git" },
@@ -113,7 +140,7 @@ return {
           local item_source = {
             buffer = "buf",
             nvim_lsp = "lsp",
-            vsnip = "snip",
+            snippets = "snip",
             nvim_lsp_signature_help = "sign",
             path = "path",
             cmp_tabnine = "tabnine",
@@ -126,7 +153,7 @@ return {
             git = "git",
             orgmode = "org",
             ["cmp-dbee"] = "dbee",
-            ["vim-dadbod-completion"] = "dadbod",
+            ["vim-dadbod-completion"] = "db",
           }
           local item_maxwidth = 30
           local ellipsis_char = "…"
@@ -157,7 +184,7 @@ return {
     })
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline(":", {
-      mapping = cmp.mapping.preset.cmdline(),
+      mapping = cmp.mapping.preset.cmdline(combined_cr_mapping),
       sources = cmp.config.sources({
         { name = "path" },
       }, {
@@ -165,7 +192,7 @@ return {
       }),
     })
     cmp.setup.cmdline({ "/", "?" }, {
-      mapping = cmp.mapping.preset.cmdline(),
+      mapping = cmp.mapping.preset.cmdline(combined_cr_mapping),
       sources = cmp.config.sources({
         { name = "buffer" },
       }),
@@ -182,7 +209,7 @@ return {
     })
     cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
       sources = {
-        cmp_vsnip_source_config,
+        snippets_source_config,
         vim_dadbod_completion_config,
         cmp_buffer_source_config,
         cmp_look_source_config,

@@ -113,24 +113,13 @@ return {
               -- vim.lsp.set_log_level('debug')
               local config = {
                 capabilities = lsp.make_capabilities(),
-                on_attach = function(client, bufnr)
-                  lsp.setup(client, bufnr)
-                end,
               }
               local lsp_config_module = "lsp." .. server_name
               local module_exist = pcall(require, lsp_config_module)
               if module_exist and type(require(lsp_config_module)) == "table" then
                 local lsp_config = require(lsp_config_module)
                 for key, _ in pairs(lsp_config) do
-                  if key == "on_attach" then
-                    local on_attach = config.on_attach
-                    config.on_attach = function(client, bufnr)
-                      on_attach(client, bufnr)
-                      lsp_config[key](client, bufnr)
-                    end
-                  else
-                    config[key] = lsp_config[key]
-                  end
+                  config[key] = lsp_config[key]
                 end
               end
               require("lspconfig")[server_name].setup(config)

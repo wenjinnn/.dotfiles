@@ -13,6 +13,7 @@ return {
       },
     },
   },
+  { "RRethy/vim-illuminate" },
   {
     "stevearc/conform.nvim",
     cond = not_vscode,
