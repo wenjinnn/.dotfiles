@@ -14,6 +14,18 @@ return {
         desc = "Code Action",
       },
       {
+        "<leader>cl",
+        vim.lsp.codelens.run,
+        desc = "Run Codelens",
+        mode = { "n", "v" },
+      },
+      {
+        "<leader>cL",
+        vim.lsp.codelens.refresh,
+        desc = "Refresh & Display Codelens",
+        mode = { "n" },
+      },
+      {
         "<leader>k",
         "<cmd>lua vim.lsp.buf.signature_help()<CR>",
         desc = "Lsp Signature Help",
@@ -102,15 +114,22 @@ return {
               -- vim.lsp.set_log_level('debug')
               local config = {
                 capabilities = lsp.make_capabilities(),
+                inlay_hints = { enabled = true },
+                codelens = { enabled = true },
+                document_highlight = { enabled = true },
+                on_attach = function(client, bufnr)
+                  lsp.setup(client, bufnr)
+                end,
               }
               local lsp_config_module = "lsp." .. server_name
               local module_exist = pcall(require, lsp_config_module)
               if module_exist and type(require(lsp_config_module)) == "table" then
                 local lsp_config = require(lsp_config_module)
-                for key, _ in pairs(lsp_config) do
-                  config[key] = lsp_config[key]
+                for key, val in pairs(lsp_config) do
+                  config[key] = val
                 end
               end
+
               require("lspconfig")[server_name].setup(config)
             end,
             -- -- Next, you can provide targeted overrides for specific servers.
