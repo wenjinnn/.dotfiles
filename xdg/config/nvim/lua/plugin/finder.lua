@@ -50,7 +50,11 @@ return {
       { "<leader>fj", "<cmd>Telescope jumplist<cr>", desc = "Telescope Jumplist" },
       { "<leader>fu", "<cmd>Telescope undo<cr>", desc = "Telescope Undo" },
       { "<leader>fp", "<cmd>Telescope projects<cr>", desc = "Telescope Projects" },
-      { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Telescope Buffers" },
+      {
+        "<leader>fb",
+        "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>",
+        desc = "Telescope Buffers",
+      },
       { "<leader>fm", "<cmd>Telescope marks<cr>", desc = "Telescope Marks" },
       { "<leader>gc", "<cmd>Telescope git_commits<cr>", desc = "Telescope Git Commits" },
       { "<leader>gh", "<cmd>Telescope git_stash<cr>", desc = "Telescope Git Stash" },
