@@ -75,7 +75,6 @@ opt.pumheight = 20
 opt.shortmess:append({ I = true })
 opt.sessionoptions:append({ "winpos", "globals", "skiprtp" })
 
--- HACK: causes freezes on <= 0.9, so only enable on >= 0.10 for now
 opt.foldlevel = 99
 opt.foldmethod = "expr"
 opt.foldexpr = "v:lua.require'util'.foldexpr()"
