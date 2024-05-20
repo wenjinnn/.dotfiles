@@ -76,7 +76,7 @@ opt.fileencodings:append({ "gbk", "cp936", "gb2312", "gb18030", "big5", "euc-jp"
 opt.termguicolors = true
 opt.completeopt = { "menu", "menuone", "noinsert" }
 opt.pumheight = 20
-opt.shortmess:append({ W = true, I = true, c = true, C = true })
+opt.shortmess:append({ I = true })
 opt.sessionoptions:append({ "winpos", "globals", "skiprtp" })
 
 -- HACK: causes freezes on <= 0.9, so only enable on >= 0.10 for now
