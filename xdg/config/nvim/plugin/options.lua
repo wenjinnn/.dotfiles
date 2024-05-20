@@ -53,12 +53,8 @@ opt.listchars = {
   extends = "»",
   trail = "·",
   lead = "·",
-  eol = "↴",
   nbsp = "␣",
 }
-if vim.bo.buftype == "terminal" then
-  opt.listchars:remove({ "eol" })
-end
 
 opt.undofile = true
 opt.undodir = vim.fn.stdpath("data") .. "/undo"
