@@ -83,17 +83,6 @@ return {
     },
     dependencies = {
       {
-        "SmiteshP/nvim-navic",
-        module = false,
-        opts = {
-          lsp = {
-            auto_attach = true,
-            preference = { "pyright" },
-          },
-          click = true,
-        },
-      },
-      {
         "williamboman/mason.nvim",
         opts = { PATH = "append" },
         cmd = "Mason",

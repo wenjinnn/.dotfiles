@@ -206,6 +206,7 @@ return {
           end
         end,
       },
+      { "nvim-treesitter/nvim-treesitter-context" },
       { "windwp/nvim-ts-autotag" },
       { "wenjinnn/rainbow-delimiters.nvim" },
     },

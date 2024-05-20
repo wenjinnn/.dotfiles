@@ -59,16 +59,6 @@ return {
       },
     },
     opts = function()
-      local navic = function()
-        if not pcall(require, "nvim-navic") then
-          return ""
-        end
-        local nvim_navic = require("nvim-navic")
-        if not nvim_navic.is_available() then
-          return ""
-        end
-        return nvim_navic.get_location()
-      end
       return {
         options = {
           icons_enabled = true,
