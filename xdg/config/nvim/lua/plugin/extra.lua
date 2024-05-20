@@ -7,7 +7,6 @@ return {
     ft = "hurl",
     lazy = true,
     opts = {
-      mode = "popup",
       show_notification = true,
       env_file = {
         ".envrc",
