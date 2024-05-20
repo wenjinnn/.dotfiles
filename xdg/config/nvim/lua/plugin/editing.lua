@@ -13,7 +13,6 @@ return {
       },
     },
   },
-  { "RRethy/vim-illuminate", event = "BufReadPre", lazy = true },
   {
     "stevearc/conform.nvim",
     cond = not_vscode,
@@ -225,13 +224,18 @@ return {
     end,
     opts = {
       ensure_installed = {
-        -- noice.nvim dependencies
+        -- basic
         "vim",
+        "vimdoc",
         "regex",
         "markdown",
         "lua",
+        "luadoc",
+        "luap",
+        "query",
         "bash",
         "hurl",
+        "diff",
         "markdown_inline",
         -- autotag dependencies
         "astro",
