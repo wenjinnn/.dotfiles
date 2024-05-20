@@ -77,14 +77,17 @@ opt.sessionoptions:append({ "winpos", "globals", "skiprtp" })
 
 -- HACK: causes freezes on <= 0.9, so only enable on >= 0.10 for now
 opt.foldlevel = 99
-if vim.fn.has("nvim-0.10") == 1 then
-  vim.opt.foldmethod = "expr"
-  vim.opt.foldexpr = "v:lua.require'util'.foldexpr()"
-  vim.opt.foldtext = ""
-  vim.opt.fillchars = "fold: "
-else
-  vim.opt.foldmethod = "indent"
-end
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.require'util'.foldexpr()"
+opt.foldtext = ""
+opt.fillchars = {
+  foldopen = "",
+  foldclose = "",
+  fold = " ",
+  foldsep = " ",
+  diff = "╱",
+  eob = " ",
+}
 
 if not vim.g.vscode then
   vim.cmd.colorscheme("vscode")
