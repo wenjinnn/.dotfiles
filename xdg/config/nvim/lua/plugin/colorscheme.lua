@@ -8,6 +8,7 @@ return {
       local c = require("vscode.colors").get_colors()
       return {
         transparent = true,
+        terminal_colors = false,
         group_overrides = {
           -- this supports the same val table as vim.api.nvim_set_hl
           -- use colors from this colorscheme by requiring vscode.colors!
