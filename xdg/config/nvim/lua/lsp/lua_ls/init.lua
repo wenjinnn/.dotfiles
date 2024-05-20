@@ -23,6 +23,12 @@ M.on_init = function(client)
       -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
       -- library = vim.api.nvim_get_runtime_file("", true)
     },
+    hint = {
+      enable = true,
+    },
+    codeLens = {
+      enable = true,
+    },
   })
 end
 M.settings = {
