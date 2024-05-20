@@ -52,7 +52,7 @@
     name = "DBeaver";
     comment = "SQL Integrated Development Environment";
     icon = "dbeaver";
-    exec = "env GDK_BACKEND=x11 ${pkgs.dbeaver}/bin/dbeaver";
+    exec = "${pkgs.unstable.dbeaver-bin}/bin/dbeaver";
     categories = ["Development"];
     type = "Application";
     genericName = "SQL Integrated Development Environment";

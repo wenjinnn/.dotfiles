@@ -32,7 +32,6 @@
     libreoffice
     evolution
     evolution-ews
-    dbeaver
     gnome.gnome-tweaks
     gnome.gnome-themes-extra
     gnome.dconf-editor
@@ -43,6 +42,7 @@
     telegram-desktop
     discord
     unstable.nixfmt-rfc-style
+    unstable.dbeaver-bin
     nur.repos.wenjinnn.wechat-universal
     nur.repos.wenjinnn.hiddify-next
     nur.repos.xddxdd.dingtalk
