@@ -33,12 +33,6 @@ return {
       { "<leader>fa", "<cmd>Telescope autocommands<cr>", desc = "Telescope Autocommands" },
       { "<leader>fk", "<cmd>Telescope keymaps<cr>", desc = "Telescope Keymaps" },
       {
-        "<leader>fE",
-        "<cmd>lua require('telescope').extensions.rest.select_env()<cr>",
-        desc = "Telescope Rest Env",
-      },
-
-      {
         "<leader>fg",
         '<cmd>lua require("telescope").extensions.live_grep_args.live_grep_args()<cr>',
         desc = "Telescope Live Grep Args",

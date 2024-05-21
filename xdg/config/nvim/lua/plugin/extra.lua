@@ -1,6 +1,5 @@
 local not_vscode = require("util").not_vscode
 return {
-  -- rest client
   {
     "jellydn/hurl.nvim",
     cond = not_vscode,
