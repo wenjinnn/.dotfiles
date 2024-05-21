@@ -78,7 +78,6 @@ opt.sessionoptions:append({ "winpos", "globals", "skiprtp" })
 opt.foldlevel = 99
 opt.foldmethod = "expr"
 opt.foldexpr = "v:lua.require'util'.foldexpr()"
-opt.foldtext = ""
 opt.fillchars = {
   foldopen = "",
   foldclose = "",
