@@ -16,9 +16,11 @@
     ];
   };
 
-  inputs = {
+  inputs = let 
+      stable-version = "23.11";
+    in {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-${stable-version}";
     # You can access packages and modules from different nixpkgs revs
     # at the same time. Here's an working example:
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -28,8 +30,14 @@
     nur.url = "github:nix-community/NUR";
 
     # Home manager
-    home-manager.url = "github:nix-community/home-manager/release-23.11";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-${stable-version}";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-on-droid = {
+      url = "github:nix-community/nix-on-droid/release-${stable-version}";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     ags.url = "github:Aylur/ags";
 
     # TODO: Add any other flake you might need
@@ -46,6 +54,7 @@
     self,
     nixpkgs,
     home-manager,
+    nix-on-droid,
     nixos-hardware,
     nur,
     ...
@@ -104,6 +113,18 @@
           nur.nixosModules.nur
         ];
       };
+      nix-on-droid = nix-on-droid.lib.nixOnDroidConfiguration {
+        specialArgs = {inherit inputs outputs username;};
+        pkgs = import nixpkgs {
+          system = "aarch64-linux";
+          overlays = [
+            nix-on-droid.overlays.default
+          ];
+        };
+        modules = [
+          ./nixos/configuration.nix
+        ];
+      };
     };
 
     # Standalone home-manager configuration entrypoint
@@ -127,6 +148,14 @@
           # > Our main home-manager configuration file <
           ./home-manager/home.nix
           ./home-manager/hosts/nixos-wsl.nix
+        ];
+      };
+      "wenjin@nix-on-droid" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.aarch64-linux; # Home-manager requires 'pkgs' instance
+        extraSpecialArgs = {inherit inputs outputs username;};
+        modules = [
+          # > Our main home-manager configuration file <
+          ./home-manager/home.nix
         ];
       };
     };
