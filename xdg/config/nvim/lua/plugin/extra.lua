@@ -32,7 +32,6 @@ return {
     opts = function()
       local config = {
         org_agenda_files = { "~/project/my/archive/org/*" },
-        win_split_mode = "float",
         notifications = {
           enabled = true,
         },
