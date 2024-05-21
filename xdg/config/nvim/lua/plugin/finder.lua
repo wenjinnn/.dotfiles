@@ -25,7 +25,7 @@ return {
     cmd = "Telescope",
     keys = {
       -- for mason filter
-      { "<leader>L", "<cmd>Mason<CR>", desc = "Mason" },
+      { "<leader>M", "<cmd>Mason<CR>", desc = "Mason" },
       { "<leader>ss", "<cmd>:lua MiniSessions.select()<CR>", desc = "Session Select" },
       { "<leader>ff", "<cmd>Telescope find_files hidden=true<cr>", desc = "Telescope Find Files" },
       { "<leader>fo", "<cmd>Telescope oldfiles only_cwd=true<cr>", desc = "Telescope Oldfiles" },

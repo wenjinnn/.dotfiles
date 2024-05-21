@@ -19,9 +19,9 @@ map("i", ";", ";<c-g>u")
 map("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
 
 -- lazy
-map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
+map("n", "<leader>L", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
-map("n", "<leader>a", "<cmd>lopen<cr>", { desc = "Location List" })
+map("n", "<leader>l", "<cmd>lopen<cr>", { desc = "Location List" })
 map("n", "<leader>q", "<cmd>copen<cr>", { desc = "Quickfix List" })
 
 map("n", "<leader>C", "<cmd>!catgs<cr>", { desc = "Ctags" })
