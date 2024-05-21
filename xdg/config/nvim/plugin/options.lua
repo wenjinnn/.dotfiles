@@ -2,8 +2,6 @@ local opt = vim.opt
 
 opt.errorbells = false
 opt.breakindent = true
-opt.breakindent = true
-opt.signcolumn = "yes"
 opt.grepprg = "rg --vimgrep"
 opt.grepformat = "%f:%l:%c:%m"
 opt.formatoptions = "jcroqlnt"
@@ -19,6 +17,8 @@ else
   opt.laststatus = 2
 end
 opt.number = true
+opt.signcolumn = "yes"
+opt.relativenumber = true
 opt.cursorline = true
 opt.virtualedit = { "block", "onemore" }
 -- ignore filetype when file search
@@ -59,7 +59,6 @@ opt.listchars = {
 opt.undofile = true
 opt.undodir = vim.fn.stdpath("data") .. "/undo"
 opt.wrap = true
-opt.relativenumber = true
 opt.mouse = "a"
 
 -- search

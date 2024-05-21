@@ -202,6 +202,10 @@ return {
       },
       { "nvim-treesitter/nvim-treesitter-context" },
       { "windwp/nvim-ts-autotag" },
+      {
+        "JoosepAlviste/nvim-ts-context-commentstring",
+        opts = { enable_autocmd = false },
+      },
       { "hiphish/rainbow-delimiters.nvim" },
     },
     build = ":TSUpdate",
@@ -216,6 +220,14 @@ return {
       require("lazy.core.loader").add_to_rtp(plugin)
       require("nvim-treesitter.query_predicates")
       vim.g.skip_ts_context_commentstring_module = true
+      local get_option = vim.filetype.get_option
+      -- FIX native comment not work for jsx or vue template, relate issue: https://github.com/neovim/neovim/issues/28830
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.filetype.get_option = function(filetype, option)
+        return option == "commentstring"
+            and require("ts_context_commentstring.internal").calculate_commentstring()
+          or get_option(filetype, option)
+      end
     end,
     opts = {
       ensure_installed = {
