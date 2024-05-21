@@ -1,5 +1,4 @@
 local M = {}
-
 function M.set_keymap(bufnr, ...)
   vim.api.nvim_buf_set_keymap(bufnr, ...)
 end
@@ -28,14 +27,15 @@ function M.setup(client, bufnr)
     })
   end
   -- inlay hint
-  vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  if client.supports_method("textDocument/inlayHint", { bufnr = bufnr }) then
+    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  end
   -- code lens
   if client.supports_method("textDocument/codeLens", { bufnr = bufnr }) then
-    vim.lsp.codelens.refresh()
     vim.api.nvim_create_autocmd({ "BufEnter", "InsertLeave" }, {
       buffer = bufnr,
       callback = function()
-        vim.lsp.codelens.refresh({ bufnr = bufnr })
+        pcall(vim.lsp.codelens.refresh, { bufnr = bufnr })
       end,
     })
   end
