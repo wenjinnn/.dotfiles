@@ -67,7 +67,7 @@ return {
         if not vim.fn.has("git") or not vim.g.conform_autoformat or not buffer_readable then
           return
         end
-        local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+        local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
         local format = require("conform").format
         -- stylua range format mass up indent, so use fall format for now
         if filetype == "lua" then
