@@ -173,11 +173,6 @@ return {
     },
   },
   {
-    "echasnovski/mini.move",
-    event = "BufRead",
-    opts = {},
-  },
-  {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
       {
