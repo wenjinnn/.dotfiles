@@ -207,7 +207,7 @@ return {
       },
       { "nvim-treesitter/nvim-treesitter-context" },
       { "windwp/nvim-ts-autotag" },
-      { "wenjinnn/rainbow-delimiters.nvim" },
+      { "hiphish/rainbow-delimiters.nvim" },
     },
     build = ":TSUpdate",
     event = { "BufReadPre" },
