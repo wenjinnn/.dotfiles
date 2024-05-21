@@ -32,10 +32,11 @@ function M.setup(client, bufnr)
   end
   -- code lens
   if client.supports_method("textDocument/codeLens", { bufnr = bufnr }) then
+    vim.lsp.codelens.refresh({ bufnr = bufnr })
     vim.api.nvim_create_autocmd({ "BufEnter", "InsertLeave" }, {
       buffer = bufnr,
       callback = function()
-        pcall(vim.lsp.codelens.refresh, { bufnr = bufnr })
+        vim.lsp.codelens.refresh({ bufnr = bufnr })
       end,
     })
   end
