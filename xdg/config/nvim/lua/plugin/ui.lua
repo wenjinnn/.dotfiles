@@ -206,7 +206,7 @@ return {
         -- size can be a number or function which is passed the current terminal
         size = get_height,
         open_mapping = [[<c-\><c-\>]],
-        hide_numbers = true, -- hide the number column in toggleterm buffers
+        hide_numbers = false, -- hide the number column in toggleterm buffers
         shade_terminals = true,
         -- shading_factor = 1,       -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
         start_in_insert = true,
@@ -221,6 +221,12 @@ return {
           width = get_width,
           height = get_height,
         },
+        on_open = function()
+          local ol = vim.opt_local
+          ol.number = false
+          ol.signcolumn = "no"
+          ol.relativenumber = false
+        end,
         winbar = {
           enabled = true,
           name_formatter = function(term) --  term: Terminal
