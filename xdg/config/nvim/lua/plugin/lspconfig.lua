@@ -71,10 +71,19 @@ return {
         "<cmd>Telescope lsp_document_symbols<cr>",
         desc = "Telescope Lsp Document Symbols",
       },
-      { "gd", "<cmd>Telescope lsp_definitions<CR>", desc = "Telescope Lsp Definitions" },
+      {
+        "gd",
+        "<cmd>Telescope lsp_definitions reuse_win=true<CR>",
+        desc = "Telescope Lsp Definitions",
+      },
+      {
+        "gt",
+        "<cmd>Telescope lsp_type_definitions reuse_win=true<CR>",
+        desc = "Telescope Lsp Definitions",
+      },
       {
         "gi",
-        "<cmd>Telescope lsp_implementations<CR>",
+        "<cmd>Telescope lsp_implementations reuse_win=true<CR>",
         desc = "Telescope Lsp Implementations",
       },
       {
@@ -180,7 +189,7 @@ return {
             desc = "JdtUpdateHotcode",
           },
           {
-            "gt",
+            "gT",
             '<cmd>lua require("jdtls.tests").goto_subjects()<CR>',
             desc = "Jdt Test Goto Subjects",
           },
