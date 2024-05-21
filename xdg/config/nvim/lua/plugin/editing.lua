@@ -201,7 +201,7 @@ return {
         end,
       },
       { "nvim-treesitter/nvim-treesitter-context" },
-      { "windwp/nvim-ts-autotag" },
+      { "windwp/nvim-ts-autotag", opts = {} },
       {
         "JoosepAlviste/nvim-ts-context-commentstring",
         opts = { enable_autocmd = false },
@@ -270,11 +270,7 @@ return {
         enable = not_vscode, -- false will disable the whole extension
         additional_vim_regex_highlighting = false,
       },
-      autotag = { enable = true },
       indent = { enable = true },
-      autopairs = {
-        enable = not_vscode,
-      },
       textobjects = {
         select = {
           enable = true,
