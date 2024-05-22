@@ -55,7 +55,6 @@
   "nvim-web-devicons": { "branch": "master", "commit": "e37bb1feee9e7320c76050a55443fa843b4b6f83" },
   "orgmode": { "branch": "master", "commit": "d2fde796eec52d9ecc4ac045a6d1b3bff83cbfe7" },
   "plenary.nvim": { "branch": "master", "commit": "a3e3bc82a3f95c5ed0d7201546d5d2c19b20d683" },
-  "project.nvim": { "branch": "main", "commit": "8c6bad7d22eef1b71144b401c9f74ed01526a4fb" },
   "rainbow-delimiters.nvim": { "branch": "master", "commit": "9c6e2e23ecd8abd280ebd7dc55a9c29d8a911aa3" },
   "scope.nvim": { "branch": "main", "commit": "86a0f5b594b08b2ad65f470ffdee81654942b6ac" },
   "sonarlint.nvim": { "branch": "main", "commit": "a8b529eeadfd91499d50015981502f2d8cf47a0a" },
