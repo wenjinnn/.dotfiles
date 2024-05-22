@@ -43,7 +43,6 @@ return {
       { "<leader>fi", "<cmd>Telescope loclist<cr>", desc = "Telescope Loclist" },
       { "<leader>fj", "<cmd>Telescope jumplist<cr>", desc = "Telescope Jumplist" },
       { "<leader>fu", "<cmd>Telescope undo<cr>", desc = "Telescope Undo" },
-      { "<leader>fp", "<cmd>Telescope projects<cr>", desc = "Telescope Projects" },
       {
         "<leader>fb",
         "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>",
@@ -103,19 +102,6 @@ return {
       },
       { "nvim-telescope/telescope-ui-select.nvim" },
       { "nvim-telescope/telescope-live-grep-args.nvim" },
-      {
-        "ahmedkhalf/project.nvim",
-        main = "project_nvim",
-        opts = {
-          -- All the patterns used to detect root dir, when **"pattern"** is in
-          detection_methods = { "lsp", "pattern" },
-          -- detection_methods
-          patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
-          -- Show hidden files in telescope
-          show_hidden = true,
-          silent_chdir = false,
-        },
-      },
     },
     config = function()
       local function flash(prompt_bufnr)
@@ -236,7 +222,6 @@ return {
         end,
       })
 
-      require("telescope").load_extension("projects")
       require("telescope").load_extension("fzf")
       require("telescope").load_extension("undo")
       require("telescope").load_extension("ui-select")
