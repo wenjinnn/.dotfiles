@@ -11,6 +11,7 @@
 ## Principle and Goal
 
 * Simple, yet powerful, always on develop.
+* Lazy load all plugins if it could, to optimize startup time to the shortest possible time, right now on my PC, the startup time are less then 30ms.
 * Avoid sidebar, focus on editing. personally, I prefer to use float window, sidebar buffer just distract me a lot.
 * Avoid extra UI plugins. In common scenarios, [mini.notify](https://github.com/echasnovski/mini.notify) and [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) with [telescope-ui-select.nvim](https://github.com/nvim-telescope/telescope-ui-select.nvim) already done well enough for notify and float window.
 * Provide out-of-box experience for web development
