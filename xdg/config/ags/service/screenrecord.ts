@@ -20,7 +20,7 @@ class Recorder extends Service {
     recording = false
     timer = 0
 
-    async start() {
+    async start(ext = "mp4", params: string) {
         if (!dependencies("slurp", "wf-recorder"))
             return
 
@@ -28,8 +28,11 @@ class Recorder extends Service {
             return
 
         Utils.ensureDirectory(this.#recordings)
-        this.#file = `${this.#recordings}/${now()}.mp4`
-        sh(`wf-recorder -g "${await sh("slurp")}" -f ${this.#file} --pixel-format yuv420p`)
+        this.#file = `${this.#recordings}/${now()}.${ext}`
+        const size = await sh("slurp")
+        if (!size)
+            return
+        sh(`wf-recorder -g "${size}" -f ${this.#file} ${params}`)
 
         this.recording = true
         this.changed("recording")
