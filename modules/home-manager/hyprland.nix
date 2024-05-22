@@ -268,7 +268,7 @@
             # Snapshot
             # "SuperShift, S, exec, grim -g \"$(slurp)\" - | wl-copy"
             "Super,Print,  ${e} -r 'recorder.start()'"
-            "ControlSuper,Print,  ${e} -r 'recorder.start(true)'"
+            "ControlSuper,Print,  ${e} -r 'recorder.start(\"gif\", \"-c gif\")'"
             ",Print,         ${e} -r 'recorder.screenshot(true)'"
             "Shift,Print,    ${e} -r 'recorder.screenshot()'"
             "ControlShiftSuper, P, exec, playerctl play-pause"
