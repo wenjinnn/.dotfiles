@@ -17,7 +17,7 @@
 
 ## Install Instructions
 
- > Install requires Neovim 0.9+. Always review the code before installing a configuration.
+ > Install requires Neovim 0.10+. Always review the code before installing a configuration.
 
 Clone the repository and install the plugins:
 
@@ -88,9 +88,6 @@ just some filetype settings
 
 ## Main Plugins
 
-### bars-and-lines
-
-+ [SmiteshP/nvim-navic](https://dotfyle.com/plugins/SmiteshP/nvim-navic)
 ### color
 
 + [echasnovski/mini.hipatterns](https://dotfyle.com/plugins/echasnovski/mini.hipatterns)
@@ -100,22 +97,21 @@ just some filetype settings
 ### comment
 
 + [JoosepAlviste/nvim-ts-context-commentstring](https://dotfyle.com/plugins/JoosepAlviste/nvim-ts-context-commentstring)
-+ [echasnovski/mini.comment](https://dotfyle.com/plugins/echasnovski/mini.comment)
 ### completion
 
 + [hrsh7th/nvim-cmp](https://dotfyle.com/plugins/hrsh7th/nvim-cmp)
 ### debugging
 
 + [mfussenegger/nvim-dap](https://dotfyle.com/plugins/mfussenegger/nvim-dap)
++ [theHamsta/nvim-dap-virtual-text](https://dotfyle.com/plugins/theHamsta/nvim-dap-virtual-text)
 ### editing-support
 
 + [echasnovski/mini.splitjoin](https://dotfyle.com/plugins/echasnovski/mini.splitjoin)
++ [nvim-treesitter/nvim-treesitter-context](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-context)
 + [echasnovski/mini.basics](https://dotfyle.com/plugins/echasnovski/mini.basics)
 + [windwp/nvim-ts-autotag](https://dotfyle.com/plugins/windwp/nvim-ts-autotag)
-+ [echasnovski/mini.move](https://dotfyle.com/plugins/echasnovski/mini.move)
 + [echasnovski/mini.ai](https://dotfyle.com/plugins/echasnovski/mini.ai)
 + [debugloop/telescope-undo.nvim](https://dotfyle.com/plugins/debugloop/telescope-undo.nvim)
-+ [HiPhish/rainbow-delimiters.nvim](https://dotfyle.com/plugins/HiPhish/rainbow-delimiters.nvim)
 + [echasnovski/mini.pairs](https://dotfyle.com/plugins/echasnovski/mini.pairs)
 ### file-explorer
 
@@ -169,12 +165,6 @@ just some filetype settings
 ### plugin-manager
 
 + [folke/lazy.nvim](https://dotfyle.com/plugins/folke/lazy.nvim)
-### project
-
-+ [ahmedkhalf/project.nvim](https://dotfyle.com/plugins/ahmedkhalf/project.nvim)
-### remote-development
-
-+ [miversen33/netman.nvim](https://dotfyle.com/plugins/miversen33/netman.nvim)
 ### search
 
 + [windwp/nvim-spectre](https://dotfyle.com/plugins/windwp/nvim-spectre)
