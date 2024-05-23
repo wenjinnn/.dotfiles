@@ -73,6 +73,7 @@ function M.not_vscode()
 end
 
 M.skip_foldexpr = {} ---@type table<number,boolean>
+M.skip_buftype = { help = true, terminal = true } ---@type table<string,boolean>
 local skip_check = assert(vim.uv.new_check())
 
 function M.foldexpr()
@@ -84,7 +85,7 @@ function M.foldexpr()
   end
 
   -- don't use treesitter folds for non-file buffers
-  if vim.bo[buf].buftype ~= "" then
+  if M.skip_buftype[vim.bo[buf].buftype] then
     return "0"
   end
 
