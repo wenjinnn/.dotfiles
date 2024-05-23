@@ -92,7 +92,6 @@ return {
         '<cmd>lua require"telescope.builtin".diagnostics{bufnr=0}<cr>',
         desc = "Telescope Buf Diagnostics",
       },
-      { "<leader>fn", "<cmd>Telescope noice<cr>", desc = "Telescope Noice" },
     },
     dependencies = {
       { "debugloop/telescope-undo.nvim" },
