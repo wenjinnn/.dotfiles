@@ -31,5 +31,17 @@
         </toolchain>
       </toolchains>
     '';
+    ".m2/settings.xml".text = ''
+      <settings>
+          <mirrors>
+              <mirror>
+                  <id>maven-default-http-blocker</id>
+                  <mirrorOf>dummy</mirrorOf>
+                  <name>Dummy mirror to override default blocking mirror that blocks http</name>
+                  <url>http://0.0.0.0/</url>
+              </mirror>
+          </mirrors>
+      </settings>
+    '';
   };
 }
