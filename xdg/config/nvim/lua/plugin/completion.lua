@@ -81,10 +81,10 @@ return {
         return fallback()
       end,
       ["<Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif vim.snippet.active({ direction = 1 }) then
+        if vim.snippet.active({ direction = 1 }) then
           feedkey("<cmd>lua vim.snippet.jump(1)<CR>", "")
+        elseif cmp.visible() then
+          cmp.select_next_item()
         elseif has_words_before() then
           cmp.complete()
         else
@@ -92,10 +92,10 @@ return {
         end
       end, { "i", "s" }),
       ["<S-Tab>"] = cmp.mapping(function()
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif vim.snippet.active({ direction = -1 }) then
+        if vim.snippet.active({ direction = -1 }) then
           feedkey("<cmd>lua vim.snippet.jump(-1)<CR>", "")
+        elseif cmp.visible() then
+          cmp.select_prev_item()
         end
       end, { "i", "s" }),
     }
