@@ -1,10 +1,14 @@
 local M = {}
-function M.set_keymap(bufnr, ...)
-  vim.api.nvim_buf_set_keymap(bufnr, ...)
+function M.set_keymap(bufnr, mode, lhs, rhs, opts)
+  opts = M.make_opts(opts)
+  vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
 end
 
-local opts = { noremap = true, silent = true }
-M.opts = opts
+M.opts = { noremap = true, silent = true }
+
+function M.make_opts(opts)
+  return vim.tbl_extend("keep", opts, M.opts)
+end
 
 function M.setup(client, bufnr)
   if client.server_capabilities.documentHighlightProvider then
@@ -40,6 +44,7 @@ function M.setup(client, bufnr)
       end,
     })
   end
+  M.setup_buf_map(bufnr)
 end
 
 function M.make_capabilities()
@@ -54,6 +59,54 @@ function M.get_mason_pkg_path()
     return mason_path .. "/packages"
   end
   return vim.fn.stdpath("data") .. "/mason/packages"
+end
+
+function M.setup_buf_map(bufnr)
+  local map = M.set_keymap
+  map(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { desc = "Lsp Hover" })
+  map(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { desc = "Lsp Declaration" })
+  map(
+    bufnr,
+    "n",
+    "gd",
+    "<cmd>Telescope lsp_definitions reuse_win=true<CR>",
+    { desc = "Telescope Lsp Definitions" }
+  )
+  map(
+    bufnr,
+    "n",
+    "gt",
+    "<cmd>Telescope lsp_type_definitions reuse_win=true<CR>",
+    { desc = "Telescope Lsp Definitions" }
+  )
+  map(
+    bufnr,
+    "n",
+    "gi",
+    "<cmd>Telescope lsp_implementations reuse_win=true<CR>",
+    { desc = "Telescope Lsp Implementations" }
+  )
+  map(
+    bufnr,
+    "n",
+    "gI",
+    "<cmd>Telescope lsp_incoming_calls<CR>",
+    { desc = "Telescope Lsp Incoming Calls" }
+  )
+  map(
+    bufnr,
+    "n",
+    "gR",
+    "<cmd>Telescope lsp_outgoing_calls<CR>",
+    { desc = "Telescope Lsp_outgoing Calls" }
+  )
+  map(
+    bufnr,
+    "n",
+    "gr",
+    "<cmd>Telescope lsp_references show_line=false include_declaration=false<CR>",
+    { desc = "Telescope Lsp References" }
+  )
 end
 
 return M

@@ -80,6 +80,13 @@ function M.setup()
       "<Cmd>lua require('jdtls').extract_method(true)<CR>",
       { noremap = true, silent = true, desc = "Jdt Extract Method" }
     )
+    lsp.set_keymap(
+      bufnr,
+      "n",
+      "gT",
+      '<cmd>lua require("jdtls.tests").goto_subjects()<CR>',
+      { desc = "Jdt Test Goto Subjects" }
+    )
     -- If using nvim-dap
     -- This requires java-debug and vscode-java-test bundles, see install steps in this README further below.
     lsp.set_keymap(

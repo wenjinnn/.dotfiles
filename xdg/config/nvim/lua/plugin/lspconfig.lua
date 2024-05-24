@@ -5,8 +5,6 @@ return {
     cond = not_vscode,
     event = "BufRead",
     keys = {
-      { "K", "<cmd>lua vim.lsp.buf.hover()<CR>", desc = "Lsp Hover" },
-      { "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", desc = "Lsp Declaration" },
       {
         "<leader>ca",
         "<cmd>lua vim.lsp.buf.code_action()<CR>",
@@ -71,36 +69,6 @@ return {
         "<cmd>Telescope lsp_document_symbols<cr>",
         desc = "Telescope Lsp Document Symbols",
       },
-      {
-        "gd",
-        "<cmd>Telescope lsp_definitions reuse_win=true<CR>",
-        desc = "Telescope Lsp Definitions",
-      },
-      {
-        "gt",
-        "<cmd>Telescope lsp_type_definitions reuse_win=true<CR>",
-        desc = "Telescope Lsp Definitions",
-      },
-      {
-        "gi",
-        "<cmd>Telescope lsp_implementations reuse_win=true<CR>",
-        desc = "Telescope Lsp Implementations",
-      },
-      {
-        "gI",
-        "<cmd>Telescope lsp_incoming_calls<CR>",
-        desc = "Telescope Lsp Incoming Calls",
-      },
-      {
-        "gR",
-        "<cmd>Telescope lsp_outgoing_calls<CR>",
-        desc = "Telescope Lsp_outgoing Calls",
-      },
-      {
-        "gr",
-        "<cmd>Telescope lsp_references show_line=false include_declaration=false<CR>",
-        desc = "Telescope Lsp References",
-      },
     },
     dependencies = {
       {
@@ -134,9 +102,7 @@ return {
               local module_exist = pcall(require, lsp_config_module)
               if module_exist and type(require(lsp_config_module)) == "table" then
                 local lsp_config = require(lsp_config_module)
-                for key, val in pairs(lsp_config) do
-                  config[key] = val
-                end
+                config = vim.tbl_deep_extend("force", config, lsp_config)
               end
 
               require("lspconfig")[server_name].setup(config)
@@ -187,11 +153,6 @@ return {
             "<leader>ch",
             "<cmd>JdtUpdateHotcode<CR>",
             desc = "JdtUpdateHotcode",
-          },
-          {
-            "gT",
-            '<cmd>lua require("jdtls.tests").goto_subjects()<CR>',
-            desc = "Jdt Test Goto Subjects",
           },
           {
             "<leader>cg",
