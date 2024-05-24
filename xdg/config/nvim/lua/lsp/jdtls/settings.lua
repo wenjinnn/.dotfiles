@@ -87,7 +87,7 @@ local M = {
     },
     import = {
       gradle = { enabled = true },
-      generatesMetadataFilesAtProjectRoot = true,
+      generatesMetadataFilesAtProjectRoot = false,
       maven = { enabled = true },
       exclusions = {
         "**/node_modules/**",

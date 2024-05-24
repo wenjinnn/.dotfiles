@@ -148,6 +148,7 @@ function M.setup()
       "-Dlog.protocol=true",
       "-Dlog.level=ALL",
       "-Dfile.encoding=utf-8",
+      "-Djava.import.generatesMetadataFilesAtProjectRoot=false",
       "-Xms256m",
       -- "-Xmx1G",
       -- "-XX:+UseZGC",
