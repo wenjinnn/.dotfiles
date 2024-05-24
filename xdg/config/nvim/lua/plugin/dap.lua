@@ -5,7 +5,7 @@ return {
   cond = not_vscode,
   dependencies = {
     "theHamsta/nvim-dap-virtual-text",
-    opts = { all_frames = true },
+    opts = { all_frames = true, virt_text_pos = "eol" },
   },
   config = function()
     local dap = require("dap")
