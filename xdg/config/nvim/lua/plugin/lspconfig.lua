@@ -164,7 +164,7 @@ return {
       {
         url = "https://gitlab.com/schrieveslaach/sonarlint.nvim",
         opts = function()
-          local mason_pkg_path = require("util.lsp").get_mason_pkg_path()
+          local mason_path = require("util.lsp").get_mason_path()
           return {
             server = {
               cmd = {
@@ -173,9 +173,9 @@ return {
                 "-stdio",
                 "-analyzers",
                 -- paths to the analyzers you need, using those for python and java in this example
-                mason_pkg_path .. "/share/sonarlint-analyzers/sonarpython.jar",
-                mason_pkg_path .. "/share/sonarlint-analyzers/sonarcfamily.jar",
-                mason_pkg_path .. "/share/sonarlint-analyzers/sonarjava.jar",
+                mason_path .. "/share/sonarlint-analyzers/sonarpython.jar",
+                mason_path .. "/share/sonarlint-analyzers/sonarcfamily.jar",
+                mason_path .. "/share/sonarlint-analyzers/sonarjava.jar",
               },
             },
             filetypes = {
