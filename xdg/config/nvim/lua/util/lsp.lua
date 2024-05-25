@@ -144,7 +144,7 @@ end
 
 function M.chdir(path)
   ---@diagnostic disable-next-line: undefined-field
-  vim.uv.chdir(path)
+  vim.cmd.cd(path)
 end
 
 return M
