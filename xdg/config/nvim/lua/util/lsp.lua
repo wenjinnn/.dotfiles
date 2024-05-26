@@ -56,7 +56,7 @@ end
 function M.get_mason_path()
   local mason_path = os.getenv("MASON")
   if mason_path ~= nil then
-    return mason_path .. "/packages"
+    return mason_path
   end
   return vim.fn.stdpath("data") .. "/mason"
 end
