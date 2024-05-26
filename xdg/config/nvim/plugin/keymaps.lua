@@ -24,7 +24,7 @@ map("n", "<leader>L", "<cmd>Lazy<cr>", { desc = "Lazy" })
 map("n", "<leader>l", "<cmd>lopen<cr>", { desc = "Location List" })
 map("n", "<leader>q", "<cmd>copen<cr>", { desc = "Quickfix List" })
 
-map("n", "<leader>C", "<cmd>!catgs<cr>", { desc = "Ctags" })
+map("n", "<leader>C", "<cmd>!ctags<cr>", { desc = "Ctags" })
 
 if vim.g.vscode then
   local action = function(action, opts)
