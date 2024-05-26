@@ -34,7 +34,9 @@ function M.setup()
       }
     end
     require("jdtls").setup_dap()
-    require("jdtls.dap").setup_dap_main_class_configs()
+    require("jdtls.dap").setup_dap_main_class_configs({
+      config_overrides = { vmArgs = "-Xms128m -Xmx512m" },
+    })
     -- for all launch.json options see https://github.com/microsoft/vscode-java-debug#options
     require("dap.ext.vscode").load_launchjs()
     lsp.setup(client, bufnr)
