@@ -188,6 +188,10 @@ end
 -- auto change root
 vim.api.nvim_create_autocmd("BufEnter", {
   callback = function(ctx)
-    require("util.lsp").setup_cwd(ctx.buf)
+    local root = vim.fs.root(ctx.buf, { ".git", ".svn", "Makefile", "mvnw", "package.json" })
+    if root and root ~= "." and root ~= vim.fn.getcwd() then
+      vim.cmd.cd(root)
+      vim.notify("Set CWD to " .. root)
+    end
   end,
 })

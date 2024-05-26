@@ -45,7 +45,6 @@ function M.setup(client, bufnr)
     })
   end
   M.setup_buf_map(bufnr)
-  M.setup_cwd(bufnr)
 end
 
 function M.make_capabilities()
@@ -113,43 +112,6 @@ function M.setup_buf_map(bufnr)
     "<cmd>Telescope lsp_references show_line=false include_declaration=false<CR>",
     { desc = "Telescope Lsp References" }
   )
-end
-
-function M.detect_root(bufnr)
-  local buf_ft = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
-  local clients = vim.lsp.get_clients({ bufnr = bufnr })
-  if next(clients) == nil then
-    return nil
-  end
-
-  for _, client in pairs(clients) do
-    ---@diagnostic disable-next-line: undefined-field
-    local filetypes = client.config.filetypes
-    if filetypes and vim.tbl_contains(filetypes, buf_ft) then
-      -- return first match root and lsp client name
-      return client.config.root_dir, client.name
-    end
-  end
-end
-
-function M.setup_cwd(bufnr)
-  local cwd = vim.fn.getcwd()
-  local root, client_name = M.detect_root(bufnr)
-  if root and root ~= cwd then
-    M.chdir(root)
-    vim.notify("Set CWD to " .. root .. " using " .. client_name)
-    return
-  end
-  root = vim.fs.root(bufnr, { ".git", ".svn", "Makefile", "mvnw", "package.json" })
-  if root and root ~= "." and root ~= cwd then
-    M.chdir(root)
-    vim.notify("Set CWD to " .. root)
-  end
-end
-
-function M.chdir(path)
-  ---@diagnostic disable-next-line: undefined-field
-  vim.cmd.cd(path)
 end
 
 return M
