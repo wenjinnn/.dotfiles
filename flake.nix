@@ -139,8 +139,6 @@
         ];
       };
 
-      # set path to home-manager flake
-      home-manager-path = home-manager.outPath;
     };
 
     # Standalone home-manager configuration entrypoint
@@ -164,6 +162,14 @@
           # > Our main home-manager configuration file <
           ./home-manager/home.nix
           ./home-manager/hosts/nixos-wsl.nix
+        ];
+      };
+      "wenjin@nix-on-droid" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.aarch64-linux; # Home-manager requires 'pkgs' instance
+        extraSpecialArgs = {inherit inputs outputs username;};
+        modules = [
+          # > Our main home-manager configuration file <
+          ./home-manager/home.nix
         ];
       };
     };

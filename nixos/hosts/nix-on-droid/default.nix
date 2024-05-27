@@ -5,6 +5,7 @@
   environment.packages = with pkgs; [
     # User-facing stuff that you really really want to have
     neovim # or some other editor, e.g. nano or neovim
+    home-manager
 
     # Some common stuff that people expect to have
     #procps
@@ -41,9 +42,9 @@
   #time.timeZone = "Europe/Berlin";
 
   # Configure home-manager
-  home-manager = {
-    config = ../../../home-manager/home.nix;
-    backupFileExtension = "hm-bak";
-    useGlobalPkgs = true;
-  };
+  # home-manager = {
+  #   config = ../../../home-manager/home.nix;
+  #   backupFileExtension = "hm-bak";
+  #   useGlobalPkgs = true;
+  # };
 }
