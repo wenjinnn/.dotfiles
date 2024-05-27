@@ -164,14 +164,6 @@
           ./home-manager/hosts/nixos-wsl.nix
         ];
       };
-      "wenjin@nix-on-droid" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.aarch64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = {inherit inputs outputs username;};
-        modules = [
-          # > Our main home-manager configuration file <
-          ./home-manager/hosts/nix-on-droid.nix
-        ];
-      };
     };
   };
 }

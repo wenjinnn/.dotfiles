@@ -43,9 +43,9 @@
   #time.timeZone = "Europe/Berlin";
 
   # Configure home-manager
-  # home-manager = {
-  #   config = ../../../home-manager/home.nix;
-  #   backupFileExtension = "hm-bak";
-  #   useGlobalPkgs = true;
-  # };
+  home-manager = {
+    config = ../../../home-manager/hosts/nix-on-droid.nix;
+    backupFileExtension = "hm-bak";
+    useGlobalPkgs = true;
+  };
 }
