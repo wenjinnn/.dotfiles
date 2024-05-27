@@ -27,7 +27,8 @@
 
   # TODO: Set your username
   home = {
-    username = "${username}";
+    username = "nix-on-droid";
+    homeDirectory = "/data/data/com.termux.nix/files/home";
   };
 
   # Add stuff for your user as you see fit:
