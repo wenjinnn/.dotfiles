@@ -116,7 +116,7 @@
     # Available through 'nix-on-droid switch --flake path/to/flake#device'
     nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
       modules = [
-        ./nix-on-droid.nix
+        ./nixos/hosts/nix-on-droid
 
         # list of extra modules for Nix-on-Droid system
         # { nix.registry.nixpkgs.flake = nixpkgs; }
@@ -127,7 +127,7 @@
       ];
 
       # list of extra special args for Nix-on-Droid modules
-      extraSpecialArgs = {inherit inputs outputs username;};
+      extraSpecialArgs = {inherit username;};
 
       # set nixpkgs instance, it is recommended to apply `nix-on-droid.overlays.default`
       pkgs = import nixpkgs {
@@ -164,14 +164,6 @@
           # > Our main home-manager configuration file <
           ./home-manager/home.nix
           ./home-manager/hosts/nixos-wsl.nix
-        ];
-      };
-      "wenjin@nix-on-droid" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.aarch64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = {inherit inputs outputs username;};
-        modules = [
-          # > Our main home-manager configuration file <
-          ./home-manager/home.nix
         ];
       };
     };
