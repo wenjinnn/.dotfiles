@@ -127,7 +127,7 @@
       ];
 
       # list of extra special args for Nix-on-Droid modules
-      extraSpecialArgs = {inherit username;};
+      extraSpecialArgs = {username = "nix-on-droid";};
 
       # set nixpkgs instance, it is recommended to apply `nix-on-droid.overlays.default`
       pkgs = import nixpkgs {
