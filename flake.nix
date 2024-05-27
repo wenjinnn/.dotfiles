@@ -138,6 +138,8 @@
           # add other overlays
         ];
       };
+      # set path to home-manager flake
+      home-manager-path = home-manager.outPath;
 
     };
 
