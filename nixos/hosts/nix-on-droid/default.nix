@@ -6,6 +6,7 @@
     # User-facing stuff that you really really want to have
     neovim # or some other editor, e.g. nano or neovim
     home-manager
+    git
 
     # Some common stuff that people expect to have
     #procps

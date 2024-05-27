@@ -169,7 +169,7 @@
         extraSpecialArgs = {inherit inputs outputs username;};
         modules = [
           # > Our main home-manager configuration file <
-          ./home-manager/home.nix
+          ./home-manager/hosts/nix-on-droid.nix
         ];
       };
     };
