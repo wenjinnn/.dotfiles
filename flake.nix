@@ -111,18 +111,36 @@
           nur.nixosModules.nur
         ];
       };
-      nix-on-droid = nix-on-droid.lib.nixOnDroidConfiguration {
-        specialArgs = {inherit inputs outputs username;};
-        pkgs = import nixpkgs {
-          system = "aarch64-linux";
-          overlays = [
-            nix-on-droid.overlays.default
-          ];
-        };
-        modules = [
-          ./nixos/configuration.nix
+    };
+
+    # Available through 'nix-on-droid switch --flake path/to/flake#device'
+    nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
+      modules = [
+        ./nix-on-droid.nix
+
+        # list of extra modules for Nix-on-Droid system
+        # { nix.registry.nixpkgs.flake = nixpkgs; }
+        # ./path/to/module.nix
+
+        # or import source out-of-tree modules like:
+        # flake.nixOnDroidModules.module
+      ];
+
+      # list of extra special args for Nix-on-Droid modules
+      extraSpecialArgs = {inherit inputs outputs username;};
+
+      # set nixpkgs instance, it is recommended to apply `nix-on-droid.overlays.default`
+      pkgs = import nixpkgs {
+        system = "aarch64-linux";
+
+        overlays = [
+          nix-on-droid.overlays.default
+          # add other overlays
         ];
       };
+
+      # set path to home-manager flake
+      home-manager-path = home-manager.outPath;
     };
 
     # Standalone home-manager configuration entrypoint
