@@ -10,7 +10,6 @@
   imports = [
     # If you want to use modules your own flake exports (from modules/home-manager):
     # outputs.homeManagerModules.example
-    ../../modules/home-manager/git.nix {inherit username;}
     ../../modules/home-manager/zsh.nix
     ../../modules/home-manager/starship.nix
     ../../modules/home-manager/git-sync.nix
