@@ -104,8 +104,22 @@ local M = {
     autobuild = { enabled = true },
     completion = {
       filteredTypes = {
-        "java.awt.List",
         "com.sun.*",
+        "io.micrometer.shaded.*",
+        "java.awt.*",
+        "jdk.*",
+        "sun.*",
+      },
+      project = {
+        resourceFilters = {
+          "build",
+          "node_modules",
+          "\\.git",
+          "\\.idea",
+          "\\.cache",
+          "\\.vscode",
+          "\\.settings",
+        },
       },
       overwrite = false,
       guessMethodArguments = true,
