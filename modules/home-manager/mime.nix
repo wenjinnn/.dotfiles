@@ -3,6 +3,7 @@ let
   file-manager = "org.gnome.Nautilus.desktop";
   image-viewer = "org.gnome.Loupe.desktop";
   mail = "org.gnome.Evolution.desktop";
+  code = "code.desktop";
 in {
   xdg.mimeApps = rec {
     enable = true;
@@ -15,6 +16,7 @@ in {
       "x-scheme-handler/mailto" = mail;
       "application/xhtml+xml" = browser;
       "text/html" = browser;
+      "text/plain" = code;
 
       "application/pdf" = browser;
 
