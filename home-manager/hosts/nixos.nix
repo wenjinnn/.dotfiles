@@ -41,6 +41,7 @@
     bottles
     telegram-desktop
     discord
+    showmethekey
     unstable.nixfmt-rfc-style
     unstable.dbeaver-bin
     nur.repos.wenjinnn.wechat-universal
