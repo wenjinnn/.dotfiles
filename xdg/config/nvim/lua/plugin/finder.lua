@@ -10,6 +10,17 @@ return {
     lazy = true,
     keys = {
       { "<leader>fe", "<cmd>:lua MiniFiles.open()<cr>", desc = "MiniFiles Open" },
+      {
+        "<leader>fE",
+        function()
+          if vim.fn.filereadable(vim.fn.bufname("%")) > 0 then
+            MiniFiles.open(vim.api.nvim_buf_get_name(0))
+          else
+            MiniFiles.open()
+          end
+        end,
+        desc = "MiniFiles Open Current",
+      },
     },
     opts = {
       windows = {
