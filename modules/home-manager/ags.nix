@@ -6,20 +6,13 @@
   pkgs,
   ...
 }: {
-  imports = [
-    inputs.ags.homeManagerModules.default
-  ];
   home.packages = with pkgs; [
     unstable.matugen
     dart-sass
     bun
+    ags
   ];
-  # ags
-  programs.ags = {
-    enable = true;
-    configDir = ../../xdg/config/ags;
-    extraPackages = with pkgs; [
-      accountsservice
-    ];
+  home.file.".config/ags" = {
+    source = ../../xdg/config/ags;
   };
 }

@@ -26,7 +26,6 @@
     pulseaudio
     gnupg
     libsForQt5.kdeconnect-kde
-    swww
     blueberry
     cliphist
     glib
@@ -35,6 +34,7 @@
     xorg.xrdb
     wl-gammactl
   ]) ++ (with pkgs.unstable; [
+    swww
     xwaylandvideobridge
     hyprcursor
     hyprpicker

@@ -11,7 +11,6 @@
   dart-sass,
   fd,
   brightnessctl,
-  accountsservice,
   slurp,
   wf-recorder,
   wl-clipboard,
@@ -22,10 +21,9 @@
   networkmanager,
   gtk3,
   which,
-  unstable,
+  matugen,
 }: let
   name = "ags-greeter";
-  agsOverride = ags.override {extraPackages = [accountsservice];};
 
   dependencies = [
     which
@@ -33,8 +31,8 @@
     fd
     brightnessctl
     swww
-    agsOverride
-    unstable.matugen
+    ags
+    matugen
     fzf
     slurp
     wf-recorder
@@ -51,12 +49,12 @@
 
   greeter = writeShellScript "greeter" ''
     export PATH=$PATH:${addBins dependencies}
-    ${cage}/bin/cage -ds -m last  -- ${bash}/bin/bash -c "${wlr-randr}/bin/wlr-randr --output eDP-1 --scale 2 && ${agsOverride}/bin/ags -c ${config}/greeter.js"
+    ${cage}/bin/cage -ds -m last  -- ${bash}/bin/bash -c "${wlr-randr}/bin/wlr-randr --output eDP-1 --scale 2 && ${ags}/bin/ags -c ${config}/greeter.js"
   '';
 
   desktop = writeShellScript name ''
     export PATH=$PATH:${addBins dependencies}
-    ${agsOverride}/bin/ags -b ${name} -c ${config}/config.js $@
+    ${ags}/bin/ags -b ${name} -c ${config}/config.js $@
   '';
 
   config = stdenv.mkDerivation {

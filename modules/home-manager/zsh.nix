@@ -10,7 +10,7 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     history = {
       size = 99999;
       ignoreAllDups = true;

@@ -18,7 +18,7 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     # You can access packages and modules from different nixpkgs revs
     # at the same time. Here's an working example:
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -29,19 +29,16 @@
 
     # Home manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    ags.url = "github:Aylur/ags";
 
     # TODO: Add any other flake you might need
     nixos-hardware.url = "github:nixos/nixos-hardware";
-    hypridle.url = "github:hyprwm/hypridle";
-    hyprlock.url = "github:hyprwm/hyprlock";
 
     # Shameless plug: looking for a way to nixify your themes and make
     # everything match nicely? Try nix-colors!

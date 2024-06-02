@@ -47,7 +47,7 @@
       ];
       name = "adwaita-dark";
     };
-    platformTheme = "gtk";
+    platformTheme.name = "gtk";
   };
 
   gtk = {

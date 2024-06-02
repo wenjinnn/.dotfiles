@@ -48,8 +48,17 @@ in rec {
         "-Dext-underline=true"
       ];
     });
-    ags = inputs.ags.packages.${final.system}.default;
-    hyprlock = (inputs.hyprlock.packages.${final.system}.default.override {mesa = final.mesa;});
+    ags = prev.ags.overrideAttrs (old: {
+      buildInputs = old.buildInputs
+      ++ (with prev.pkgs; [
+        accountsservice
+        gtk3
+        libdbusmenu-gtk3
+        gvfs
+        libnotify
+        pam
+      ]);
+    });
     ags-greeter = final.callPackage ./ags-greeter {};
   };
 
