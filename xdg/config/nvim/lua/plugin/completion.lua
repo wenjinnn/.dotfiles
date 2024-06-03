@@ -77,6 +77,9 @@ return {
           if cmp.confirm({ select = true }) then
             return
           end
+        elseif vim.snippet.active({ direction = 1 }) then
+          feedkey("<cmd>lua vim.snippet.jump(1)<CR>", "")
+          return
         end
         return fallback()
       end,
