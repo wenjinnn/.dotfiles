@@ -86,6 +86,14 @@ return {
     local dap_sessions = function()
       dap_cursor_float(dap_widgets.sessions, "dap-sessions")
     end
+    local dap_repl = function()
+      dap.repl.toggle()
+      vim.cmd("wincmd p")
+      local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
+      if filetype == "dap-repl" then
+        vim.cmd("startinsert")
+      end
+    end
     return {
       { "<leader>db", dap.toggle_breakpoint, desc = "Dap Toggle Breakpoint" },
       {
@@ -127,7 +135,7 @@ return {
       { "<leader>dB", dap_condition_breakpoint, desc = "Dap Condition Breakpoint" },
       { "<leader>dl", dap_log_breakpoint, desc = "Dap Log Breakpoint" },
       { "<leader>dE", dap_exception_breakpoint, desc = "Dap Exception Breakpoint" },
-      { "<leader>dR", dap.repl.toggle, desc = "Dap Repl Toggle" },
+      { "<leader>dR", dap_repl, desc = "Dap Repl Toggle" },
       { "<leader>dr", dap.run_last, desc = "Dap Run Last" },
       { "<leader>ds", dap_scopes, desc = "Dap Scopes" },
       { "<leader>df", dap_frames, desc = "Dap Frames" },
