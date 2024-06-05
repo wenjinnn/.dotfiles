@@ -91,18 +91,25 @@
     "d '/var/cache/greeter' - greeter greeter - -"
   ];
 
-  system.activationScripts.wallpaper = ''
-    GDK_SCALE=2
-    PATH=$PATH:${pkgs.coreutils}/bin:${pkgs.gawk}/bin:${pkgs.jq}/bin
-    CACHE="/var/cache/greeter"
-    OPTS="$CACHE/options.json"
+  system.activationScripts.wallpaper = let
+      wp = pkgs.writeShellScript "wp" ''
+        CACHE="/var/cache/greeter"
+        OPTS="$CACHE/options.json"
+        HOME="/home/$(find /home -maxdepth 1 -printf '%f\n' | tail -n 1)"
 
-    cp /home/${username}/.cache/ags/options.json $OPTS
-    chown greeter:greeter $OPTS
+        mkdir -p "$CACHE"
+        chown greeter:greeter $CACHE
 
-    BG=$(cat $OPTS | jq -r '.wallpaper // "/home/${username}/.config/background"')
+        if [[ -f "$HOME/.cache/ags/options.json" ]]; then
+          cp $HOME/.cache/ags/options.json $OPTS
+          chown greeter:greeter $OPTS
+        fi
 
-    cp $BG $CACHE/background
-    chown greeter:greeter $CACHE/background
-  '';
+        if [[ -f "$HOME/.config/background" ]]; then
+          cp "$HOME/.config/background" $CACHE/background
+          chown greeter:greeter "$CACHE/background"
+        fi
+      '';
+    in
+      builtins.readFile wp;
 }
