@@ -86,8 +86,6 @@ opt.fillchars = {
   eob = " ",
 }
 
-if not vim.g.vscode then
-  vim.cmd.colorscheme("vscode")
-else
+if vim.g.vscode then
   vim.notify = require("vscode-neovim").notify
 end

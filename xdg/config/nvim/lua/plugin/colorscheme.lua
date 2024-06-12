@@ -4,6 +4,9 @@ return {
     "Mofiqul/vscode.nvim",
     cond = not_vscode,
     priority = 1000,
+    init = function()
+      vim.cmd.colorscheme("vscode")
+    end,
     opts = function()
       local c = require("vscode.colors").get_colors()
       return {
