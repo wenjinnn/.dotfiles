@@ -1,9 +1,10 @@
 local function augroup(name)
   return vim.api.nvim_create_augroup("wenvim_" .. name, { clear = true })
 end
+local au = vim.api.nvim_create_autocmd
 
 -- Check if we need to reload the file when it changed
-vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+au({ "FocusGained", "TermClose", "TermLeave" }, {
   group = augroup("checktime"),
   callback = function()
     if vim.o.buftype ~= "nofile" then
@@ -13,7 +14,7 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
 })
 
 -- Highlight on yank, already include in mini.basic
--- vim.api.nvim_create_autocmd("TextYankPost", {
+-- autocmd("TextYankPost", {
 --   group = augroup("highlight_yank"),
 --   callback = function()
 --     vim.highlight.on_yank()
@@ -21,7 +22,7 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
 -- })
 
 -- resize splits if window got resized
-vim.api.nvim_create_autocmd({ "VimResized" }, {
+au({ "VimResized" }, {
   group = augroup("resize_splits"),
   callback = function()
     local current_tab = vim.fn.tabpagenr()
@@ -31,7 +32,7 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
 })
 
 -- go to last loc when opening a buffer
-vim.api.nvim_create_autocmd("BufReadPost", {
+au("BufReadPost", {
   group = augroup("last_loc"),
   callback = function(event)
     local exclude = { "gitcommit" }
@@ -49,7 +50,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- wrap and check for spell in text filetypes
--- vim.api.nvim_create_autocmd("FileType", {
+-- autocmd("FileType", {
 --   group = augroup("wrap_spell"),
 --   pattern = { "gitcommit", "markdown" },
 --   callback = function()
@@ -59,7 +60,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 -- })
 
 -- Fix conceallevel for json files
-vim.api.nvim_create_autocmd({ "FileType" }, {
+au({ "FileType" }, {
   group = augroup("json_conceal"),
   pattern = { "json", "jsonc", "json5" },
   callback = function()
@@ -68,7 +69,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 })
 
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+au({ "BufWritePre" }, {
   group = augroup("auto_create_dir"),
   callback = function(event)
     if event.match:match("^%w%w+://") then
@@ -80,7 +81,7 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 })
 
 -- close some filetypes with <q>
-vim.api.nvim_create_autocmd("FileType", {
+au("FileType", {
   group = augroup("close_with_q"),
   pattern = {
     "PlenaryTestPopup",
@@ -107,7 +108,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- wrap vim diff buffer
-vim.api.nvim_create_autocmd({ "VimEnter" }, {
+au({ "VimEnter" }, {
   group = augroup("vim_enter"),
   pattern = "*",
   callback = function(event)
@@ -118,7 +119,7 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 })
 
 -- auto update when BufLeave
-vim.api.nvim_create_autocmd("BufLeave", {
+au("BufLeave", {
   pattern = "*",
   callback = function()
     local buffer_readable = vim.fn.filereadable(vim.fn.bufname("%")) > 0
@@ -130,7 +131,7 @@ vim.api.nvim_create_autocmd("BufLeave", {
 
 -- fcitx5 rime auto switch to asciimode
 if vim.fn.has("fcitx5") then
-  vim.api.nvim_create_autocmd({ "InsertLeave" }, {
+  au({ "InsertLeave" }, {
     group = augroup("fcitx5_rime"),
     pattern = "*",
     callback = function(event)
@@ -143,7 +144,7 @@ end
 
 -- sync wsl clipboard
 if vim.fn.has("wsl") then
-  vim.api.nvim_create_autocmd({ "TextYankPost" }, {
+  au({ "TextYankPost" }, {
     group = augroup("wsl_yank"),
     pattern = "*",
     callback = function(event)
@@ -153,7 +154,7 @@ if vim.fn.has("wsl") then
 end
 
 -- force commentstring to include spaces
-vim.api.nvim_create_autocmd({ "CursorHold", "FileType" }, {
+au({ "CursorHold", "FileType" }, {
   desc = "Force commentstring to include spaces",
   group = augroup("commentstring_spaces"),
   callback = function(event)
@@ -165,7 +166,7 @@ vim.api.nvim_create_autocmd({ "CursorHold", "FileType" }, {
 -- Copy/Paste when using ssh on a remote server
 -- Only works on Neovim >= 0.10.0
 if vim.clipboard and vim.clipboard.osc52 then
-  vim.api.nvim_create_autocmd("VimEnter", {
+  au("VimEnter", {
     group = augroup("ssh_clipboard"),
     callback = function()
       if vim.env.SSH_CONNECTION and vim.clipboard.osc52 then
@@ -186,7 +187,7 @@ if vim.clipboard and vim.clipboard.osc52 then
 end
 
 -- auto change root
-vim.api.nvim_create_autocmd("BufEnter", {
+au("BufEnter", {
   callback = function(ctx)
     local root = vim.fs.root(ctx.buf, { ".git", ".svn", "Makefile", "mvnw", "package.json" })
     if root and root ~= "." and root ~= vim.fn.getcwd() then
@@ -194,4 +195,18 @@ vim.api.nvim_create_autocmd("BufEnter", {
       vim.notify("Set CWD to " .. root)
     end
   end,
+})
+
+au({ "InsertLeave" }, {
+  desc = "set relativenumber",
+  group = augroup("set_relativenumber"),
+  pattern = "*.*",
+  command = "set relativenumber",
+})
+
+au({ "InsertEnter" }, {
+  desc = "set number",
+  group = augroup("set_number"),
+  pattern = "*",
+  command = "set number norelativenumber",
 })
