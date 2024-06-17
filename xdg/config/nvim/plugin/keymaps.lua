@@ -15,6 +15,11 @@ map("i", ",", ",<c-g>u")
 map("i", ".", ".<c-g>u")
 map("i", ";", ";<c-g>u")
 
+-- copy/paste to system clipboard
+map("n", "<leader>y", '"+y', {silent = true, desc = "Yank To System Clipboard"})
+map("n", "<leader>Y", '"+Y', {silent = true, desc = "Yank Line To System Clipboard"})
+map("n", "<leader>p", '"+p', {silent = true, desc = "Paste From System Clipboard"})
+
 --keywordprg
 map("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
 
