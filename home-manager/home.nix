@@ -129,6 +129,7 @@
     pandoc
     gh
     yq
+    quicktype
   ];
 
   # xresources.properties = {
