@@ -196,17 +196,3 @@ au("BufEnter", {
     end
   end,
 })
-
-au({ "InsertLeave" }, {
-  desc = "set relativenumber",
-  group = augroup("set_relativenumber"),
-  pattern = "*.*",
-  command = "set relativenumber",
-})
-
-au({ "InsertEnter" }, {
-  desc = "set number",
-  group = augroup("set_number"),
-  pattern = "*",
-  command = "set number norelativenumber",
-})
