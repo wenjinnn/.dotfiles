@@ -267,8 +267,8 @@ return {
       ignore_install = { "org" }, -- List of parsers to ignore installing
       auto_install = true,
       highlight = {
-        enable = true, -- false will disable the whole extension
-        additional_vim_regex_highlighting = { "org" },
+        enable = not_vscode, -- false will disable the whole extension
+        additional_vim_regex_highlighting = false,
       },
       indent = { enable = true },
       textobjects = {

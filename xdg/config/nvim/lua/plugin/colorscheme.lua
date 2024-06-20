@@ -26,6 +26,7 @@ return {
           TelescopePreviewTitle = { link = "lualine_a_normal" },
           ["@interface"] = { link = "@constant" },
           ["@lsp.type.interface"] = { link = "@interface" },
+          ["@org.hyperlink"] = { link = "Underlined" },
           CmpItemMenu = { link = "Comment" },
           -- vim-dadbod-ui
           NotificationInfo = { link = "DiagnosticFloatingInfo" },
