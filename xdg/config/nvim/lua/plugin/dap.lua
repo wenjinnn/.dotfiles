@@ -3,6 +3,7 @@ local not_vscode = require("util").not_vscode
 return {
   "mfussenegger/nvim-dap",
   cond = not_vscode,
+  lazy = true,
   dependencies = {
     "theHamsta/nvim-dap-virtual-text",
     opts = { all_frames = true, virt_text_pos = "eol" },
