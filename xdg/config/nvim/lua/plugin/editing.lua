@@ -264,11 +264,11 @@ return {
         "css",
         "scss",
       }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-      ignore_install = {}, -- List of parsers to ignore installing
+      ignore_install = { "org" }, -- List of parsers to ignore installing
       auto_install = true,
       highlight = {
-        enable = not_vscode, -- false will disable the whole extension
-        additional_vim_regex_highlighting = false,
+        enable = true, -- false will disable the whole extension
+        additional_vim_regex_highlighting = { "org" },
       },
       indent = { enable = true },
       textobjects = {

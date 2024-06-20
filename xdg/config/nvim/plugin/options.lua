@@ -54,6 +54,7 @@ opt.listchars = {
   trail = "·",
   lead = "·",
   nbsp = "␣",
+  conceal = "_",
 }
 
 opt.undofile = true
@@ -85,6 +86,9 @@ opt.fillchars = {
   diff = "╱",
   eob = " ",
 }
+
+vim.opt.conceallevel = 2
+vim.opt.concealcursor = "nc"
 
 if vim.g.vscode then
   vim.notify = require("vscode-neovim").notify

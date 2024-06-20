@@ -31,7 +31,7 @@ return {
     opts = {},
     keys = {
       {
-        "<leader>n",
+        "<leader>N",
         "<cmd>lua MiniNotify.show_history()<CR>",
         desc = "Notify History",
       },
