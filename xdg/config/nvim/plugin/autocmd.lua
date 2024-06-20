@@ -119,15 +119,15 @@ au({ "VimEnter" }, {
 })
 
 -- auto update when BufLeave
-au("BufLeave", {
-  pattern = "*",
-  callback = function()
-    local buffer_readable = vim.fn.filereadable(vim.fn.bufname("%")) > 0
-    if not vim.bo.readonly and buffer_readable then
-      vim.cmd("update")
-    end
-  end,
-})
+-- au("BufLeave", {
+--   pattern = "*",
+--   callback = function()
+--     local buffer_readable = vim.fn.filereadable(vim.fn.bufname("%")) > 0
+--     if not vim.bo.readonly and buffer_readable then
+--       vim.cmd("update")
+--     end
+--   end,
+-- })
 
 -- fcitx5 rime auto switch to asciimode
 if vim.fn.has("fcitx5") then
