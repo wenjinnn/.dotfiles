@@ -105,6 +105,12 @@ return {
     end
 
     cmp.setup({
+      enabled = function()
+        local bufname = vim.api.nvim_buf_get_name(0)
+        if bufname:match("org%-roam%-select$") ~= nil then
+          return false
+        end
+      end,
       window = {
         documentation = {
           max_width = 70,
