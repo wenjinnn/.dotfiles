@@ -25,7 +25,6 @@
     playerctl
     pulseaudio
     gnupg
-    libsForQt5.kdeconnect-kde
     blueberry
     cliphist
     glib
