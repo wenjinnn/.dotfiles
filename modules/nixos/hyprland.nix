@@ -21,6 +21,7 @@
     loupe
     adwaita-icon-theme
     nautilus
+    file-roller
     baobab
     gnome-text-editor
     gnome-calendar
