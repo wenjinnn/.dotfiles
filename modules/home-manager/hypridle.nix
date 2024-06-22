@@ -4,7 +4,7 @@
   ...
 }: {
   services.hypridle = let 
-    hyprlock = "${pkgs.unstable.hyprlock}/bin/hyprlock";
+    hyprlock = "${pkgs.hyprlock}/bin/hyprlock";
     hyprctl = "${pkgs.unstable.hyprland}/bin/hyprctl";
     loginctl = "${pkgs.systemd}/bin/loginctl";
   in {
