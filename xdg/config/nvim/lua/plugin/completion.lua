@@ -105,10 +105,6 @@ return {
     end
 
     cmp.setup({
-      enabled = function()
-        local buftype = vim.api.nvim_get_option_value("buftype", { buf = 0 })
-        return buftype ~= "nofile"
-      end,
       window = {
         documentation = {
           max_width = 70,
