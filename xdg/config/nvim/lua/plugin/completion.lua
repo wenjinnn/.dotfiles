@@ -110,6 +110,7 @@ return {
         if bufname:match("org%-roam%-select$") ~= nil then
           return false
         end
+        return true
       end,
       window = {
         documentation = {
