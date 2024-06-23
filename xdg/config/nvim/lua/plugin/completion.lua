@@ -106,11 +106,8 @@ return {
 
     cmp.setup({
       enabled = function()
-        local bufname = vim.api.nvim_buf_get_name(0)
-        if bufname:match("org%-roam%-select$") ~= nil then
-          return false
-        end
-        return true
+        local buftype = vim.api.nvim_get_option_value("buftype", { buf = 0 })
+        return buftype ~= "nofile"
       end,
       window = {
         documentation = {
