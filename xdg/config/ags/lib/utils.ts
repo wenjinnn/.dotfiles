@@ -83,10 +83,13 @@ export function dependencies(...bins: string[]) {
  * run app detached
  */
 export function launchApp(app: Application) {
-    const exe = app.executable
+    let exe = app.executable
         .split(/\s+/)
         .filter(str => !str.startsWith("%") && !str.startsWith("@"))
         .join(" ")
+
+    if (dependencies("xdg-terminal-exec") && app.app.get_boolean("Terminal"))
+        exe = `xdg-terminal-exec ${exe}`
 
     bash(`${exe} &`)
     app.frequency += 1

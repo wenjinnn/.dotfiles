@@ -46,5 +46,14 @@
     };
   };
 
+  xdg.terminal-exec = {
+    enable = true;
+    settings = {
+      default = [
+        "org.codeberg.dnkl.foot.desktop"
+      ];
+    };
+  };
+
   networking.hostName = "nixos";
 }
