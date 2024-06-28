@@ -88,9 +88,6 @@ opt.fillchars = {
   eob = " ",
 }
 
-vim.opt.conceallevel = 2
-vim.opt.concealcursor = "nc"
-
 if vim.g.vscode then
   vim.notify = require("vscode-neovim").notify
 end
