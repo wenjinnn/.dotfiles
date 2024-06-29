@@ -32,6 +32,10 @@
     #./hardware-configuration.nix
   ];
 
+  programs.kdeconnect = {
+    package = pkgs.kdePackages.kdeconnect-kde;
+    enable = true;
+  };
 
   services = {
     printing.enable = true;
