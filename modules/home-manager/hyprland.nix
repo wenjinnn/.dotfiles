@@ -57,6 +57,12 @@
     genericName = "SQL Integrated Development Environment";
   };
 
+  services.kdeconnect = {
+    package = pkgs.kdePackages.kdeconnect-kde;
+    enable = true;
+    indicator = true;
+  };
+
   systemd.user = {
     services = {
       bingwallpaper-get = {
@@ -136,7 +142,6 @@
           ];
           exec-once = [
             "echo 'Xft.dpi: 192' | xrdb -merge"
-            "kdeconnect-indicator"
             "ags -b hypr"
             "hyprshade auto"
             "fcitx5 -d --replace"
