@@ -30,4 +30,5 @@
   hyprshade = import ./hyprshade.nix;
   aria2 = import ./aria2.nix;
   starship = import ./starship.nix;
+  ripgrep = import ./ripgrep.nix;
 }
