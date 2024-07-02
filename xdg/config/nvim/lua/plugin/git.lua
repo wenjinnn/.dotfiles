@@ -1,110 +1,43 @@
 local not_vscode = require("util").not_vscode
 -- git
 return {
-  { "tpope/vim-fugitive", event = "CmdLineEnter", lazy = true },
   {
-    "lewis6991/gitsigns.nvim",
-    event = "BufRead",
+    "echasnovski/mini.diff",
+    event = "BufReadPre",
     cond = not_vscode,
+    opts = {},
     keys = {
-      -- Navigation
       {
-        "]c",
-        function()
-          if vim.wo.diff then
-            vim.cmd.normal({ "]c", bang = true })
-          else
-            require("gitsigns").nav_hunk("next")
-          end
-        end,
-        desc = "Next Hunk",
+        "<leader>go",
+        "<cmd>lua MiniDiff.toggle_overlay()<CR>",
+        desc = "Git Toggle Overlay",
+      },
+    },
+  },
+  {
+    "echasnovski/mini-git",
+    main = "mini.git",
+    event = "BufReadPre",
+    cond = not_vscode,
+    opts = {},
+    keys = {
+      {
+        "<leader>gc",
+        "<cmd>lua MiniGit.show_at_cursor()<CR>",
+        desc = "Git Show At Cursor",
       },
       {
-        "[c",
-        function()
-          if vim.wo.diff then
-            vim.cmd.normal({ "[c", bang = true })
-          else
-            require("gitsigns").nav_hunk("prev")
-          end
-        end,
-        desc = "Prev Hunk",
-      },
-      -- Actions
-      {
-        "<leader>gs",
-        "<cmd>Gitsigns stage_hunk<CR>",
+        "<leader>gh",
+        "<cmd>lua MiniGit.show_range_history()<CR>",
         mode = { "n", "v" },
-        desc = "Gitsigns Stage Hunk",
-      },
-      {
-        "<leader>gr",
-        "<cmd>Gitsigns reset_hunk<CR>",
-        mode = { "n", "v" },
-        desc = "Gitsigns Reset Hunk",
-      },
-      {
-        "<leader>gS",
-        "<cmd>Gitsigns stage_buffer<CR>",
-        desc = "Gitsigns Stage Buffer",
-      },
-      {
-        "<leader>gu",
-        "<cmd>Gitsigns undo_stage_hunk<CR>",
-        desc = "Gitsigns Undo Stage Buffer",
-      },
-      {
-        "<leader>gR",
-        "<cmd>Gitsigns reset_buffer<CR>",
-        desc = "Gitsigns Reset Buffer",
-      },
-      {
-        "<leader>gp",
-        "<cmd>Gitsigns preview_hunk<CR>",
-        desc = "Gitsigns Preview Hunk",
-      },
-      {
-        "<leader>gb",
-        '<cmd>lua require"gitsigns".blame_line{full=true}<CR>',
-        desc = "Gitsigns Full Blame Line",
-      },
-      {
-        "<leader>gB",
-        "<cmd>Gitsigns toggle_current_line_blame<CR>",
-        desc = "Gitsigns Toggle Current Line Blame",
+        desc = "Git Show Range History",
       },
       {
         "<leader>gd",
-        "<cmd>Gitsigns diffthis<CR>",
-        desc = "Gitsigns Diffthis",
-      },
-      {
-        "<leader>gD",
-        '<cmd>lua require"gitsigns".diffthis("~")<CR>',
-        desc = "Gitsigns Diffthis Prev Commit",
-      },
-      {
-        "<leader>gt",
-        "<cmd>Gitsigns toggle_deleted<CR>",
-        desc = "Gitsigns Toggle Deleted",
-      },
-      -- Text object
-      {
-        "ih",
-        ":<C-U>Gitsigns select_hunk<CR>",
-        mode = { "o", "x" },
-        desc = "Gitsigns Select Hunk",
+        "<cmd>lua MiniGit.show_diff_source()<CR>",
+        mode = { "n", "v" },
+        desc = "Git Show Diff Source",
       },
     },
-    config = function()
-      require("gitsigns").setup({
-        signcolumn = false,
-        numhl = true,
-        current_line_blame = true,
-        current_line_blame_opts = {
-          delay = 500,
-        },
-      })
-    end,
   },
 }
