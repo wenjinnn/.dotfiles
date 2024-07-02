@@ -30,6 +30,15 @@ return {
     },
   },
   {
+    "echasnovski/mini.visits",
+    lazy = true,
+    opts = {},
+    keys = {
+      { "<leader>a", "<cmd>lua MiniVisits.add_label()<cr>", desc = "MiniVisits add label" },
+      { "<leader>A", "<cmd>lua MiniVisits.remove_label()<cr>", desc = "MiniVisits remove label" },
+    },
+  },
+  {
     "echasnovski/mini.pick",
     opts = {},
     lazy = true,
