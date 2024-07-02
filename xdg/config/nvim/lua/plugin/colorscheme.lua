@@ -15,15 +15,8 @@ return {
         group_overrides = {
           -- this supports the same val table as vim.api.nvim_set_hl
           -- use colors from this colorscheme by requiring vscode.colors!
-          TelescopePromptNormal = { link = "Pmenu" },
-          TelescopeResultsNormal = { link = "Pmenu" },
-          TelescopePreviewNormal = { fg = c.vscFront, bg = c.vscBack },
-          TelescopePreviewBorder = { fg = c.vscFront, bg = c.vscBack },
-          TelescopeResultsBorder = { link = "Pmenu" },
-          TelescopePromptBorder = { link = "Pmenu" },
-          TelescopePromptTitle = { link = "lualine_a_insert" },
-          TelescopeResultsTitle = { link = "lualine_a_normal" },
-          TelescopePreviewTitle = { link = "lualine_a_normal" },
+          ["MiniPickMatchCurrent"] = { link = "PmenuSel" },
+          ["MiniFilesCursorLine"] = { link = "PmenuSel" },
           ["@interface"] = { link = "@constant" },
           ["@lsp.type.interface"] = { link = "@interface" },
           ["@org.hyperlink"] = { link = "Underlined" },

@@ -9,65 +9,55 @@ return {
         "<leader>ca",
         "<cmd>lua vim.lsp.buf.code_action()<CR>",
         mode = { "n", "v" },
-        desc = "Code Action",
+        desc = "Code action",
       },
       {
         "<leader>cl",
         vim.lsp.codelens.run,
-        desc = "Run Codelens",
+        desc = "Run codelens",
         mode = { "n", "v" },
       },
       {
         "<leader>cL",
         vim.lsp.codelens.refresh,
-        desc = "Refresh & Display Codelens",
+        desc = "Refresh & display codelens",
         mode = { "n" },
       },
       {
         "<leader>k",
         "<cmd>lua vim.lsp.buf.signature_help()<CR>",
-        desc = "Lsp Signature Help",
+        desc = "Lsp signature help",
       },
       {
         "<leader>D",
         "<cmd>lua vim.diagnostic.open_float()<CR>",
-        desc = "Diagnostic Float",
+        desc = "Diagnostic float",
       },
       {
         "<leader><leader>D",
         "<cmd>lua MiniBasics.toggle_diagnostic()<CR>",
-        desc = "Toggle Diagnostic",
+        desc = "Toggle diagnostic",
       },
       {
         "<leader>wa",
         "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>",
-        desc = "Lsp Add Workspace Folder",
+        desc = "Lsp add workspace folder",
       },
       {
         "<leader>wr",
         "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>",
-        desc = "Lsp Remove Workspace Folder",
+        desc = "Lsp remove workspace folder",
       },
       {
         "<leader>wl",
         "<cmd>lua vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
-        desc = "Lsp List Workspace Folder",
+        desc = "Lsp list workspace folder",
       },
-      { "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", desc = "Lsp Rename" },
+      { "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", desc = "Lsp rename" },
       {
         "<leader>Q",
         "<cmd>lua vim.diagnostic.setloclist()<CR>",
-        desc = "Lsp Diagnostic Location List",
-      },
-      {
-        "<leader>fws",
-        "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
-        desc = "Telescope Lsp Dynamic Workspace Symbols",
-      },
-      {
-        "<leader>fwS",
-        "<cmd>Telescope lsp_document_symbols<cr>",
-        desc = "Telescope Lsp Document Symbols",
+        desc = "Lsp diagnostic location list",
       },
     },
     dependencies = {
@@ -142,22 +132,22 @@ return {
           {
             "<leader>cC",
             "<cmd>JdtCompile full<CR>",
-            desc = "JdtCompile full",
+            desc = "Jdt compile full",
           },
           {
             "<leader>cc",
             "<cmd>JdtCompile incremental<CR>",
-            desc = "JdtCompile incremental",
+            desc = "Jdt compile incremental",
           },
           {
             "<leader>ch",
             "<cmd>JdtUpdateHotcode<CR>",
-            desc = "JdtUpdateHotcode",
+            desc = "Jdt update hotcode",
           },
           {
             "<leader>cg",
             '<cmd>lua require("jdtls.tests").generate()<CR>',
-            desc = "Jdt Test Generate",
+            desc = "Jdt test generate",
           },
         },
       },
@@ -192,7 +182,6 @@ return {
         "nvimtools/none-ls.nvim",
         main = "null-ls",
         opts = function()
-          local null_ls = require("null-ls")
           local cspell = require("cspell")
           -- register any number of sources simultaneously
           local sources = {
@@ -202,7 +191,6 @@ return {
               end,
             }),
             cspell.code_actions,
-            null_ls.builtins.code_actions.gitsigns,
           }
           return { sources = sources }
         end,

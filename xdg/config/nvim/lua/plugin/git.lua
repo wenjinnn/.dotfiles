@@ -10,7 +10,7 @@ return {
       {
         "<leader>go",
         "<cmd>lua MiniDiff.toggle_overlay()<CR>",
-        desc = "Git Toggle Overlay",
+        desc = "Git toggle overlay",
       },
     },
   },
@@ -24,19 +24,19 @@ return {
       {
         "<leader>gc",
         "<cmd>lua MiniGit.show_at_cursor()<CR>",
-        desc = "Git Show At Cursor",
+        desc = "Git show at cursor",
       },
       {
         "<leader>gh",
         "<cmd>lua MiniGit.show_range_history()<CR>",
         mode = { "n", "v" },
-        desc = "Git Show Range History",
+        desc = "Git show range history",
       },
       {
         "<leader>gd",
         "<cmd>lua MiniGit.show_diff_source()<CR>",
         mode = { "n", "v" },
-        desc = "Git Show Diff Source",
+        desc = "Git show diff source",
       },
     },
   },

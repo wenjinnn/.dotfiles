@@ -22,8 +22,8 @@ return {
     build = "sh install.sh",
     event = "BufRead",
     keys = {
-      { "<leader>rs", "<Plug>SnipRun", desc = "Run Snip", mode = { "n", "v" } },
-      { "<leader>rS", "<Plug>SnipRunOperator", desc = "Run Snip Operator" },
+      { "<leader>rs", "<Plug>SnipRun", desc = "Run snip", mode = { "n", "v" } },
+      { "<leader>rS", "<Plug>SnipRunOperator", desc = "Run snip operator" },
     },
   },
 }

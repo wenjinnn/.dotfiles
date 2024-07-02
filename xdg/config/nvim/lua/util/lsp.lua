@@ -68,50 +68,38 @@ end
 
 function M.setup_buf_map(bufnr)
   local map = M.set_keymap
-  map(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { desc = "Lsp Hover" })
-  map(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { desc = "Lsp Declaration" })
-  map(
-    bufnr,
-    "n",
-    "gd",
-    "<cmd>Telescope lsp_definitions reuse_win=true<CR>",
-    { desc = "Telescope Lsp Definitions" }
-  )
+  map(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { desc = "Lsp hover" })
+  map(bufnr, "n", "gD", "<cmd>Pick lsp scope='declaration'<CR>", { desc = "Lsp declaration" })
+  map(bufnr, "n", "gd", "<cmd>Pick lsp scope='definition'<CR>", { desc = "Pick lsp definition" })
   map(
     bufnr,
     "n",
     "gt",
-    "<cmd>Telescope lsp_type_definitions reuse_win=true<CR>",
-    { desc = "Telescope Lsp Definitions" }
+    "<cmd>Pick lsp scope='type_definition'<CR>",
+    { desc = "Pick lsp type definition" }
   )
   map(
     bufnr,
     "n",
     "gi",
-    "<cmd>Telescope lsp_implementations reuse_win=true<CR>",
-    { desc = "Telescope Lsp Implementations" }
+    "<cmd>Pick lsp scope='implementation'<CR>",
+    { desc = "Pick lsp implementation" }
   )
   map(
     bufnr,
     "n",
     "gI",
-    "<cmd>Telescope lsp_incoming_calls<CR>",
-    { desc = "Telescope Lsp Incoming Calls" }
+    "<cmd>lua vim.lsp.buf.incoming_calls()<CR>",
+    { desc = "Lsp incoming calls" }
   )
   map(
     bufnr,
     "n",
     "gR",
-    "<cmd>Telescope lsp_outgoing_calls<CR>",
-    { desc = "Telescope Lsp_outgoing Calls" }
+    "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>",
+    { desc = "Lsp outgoing calls" }
   )
-  map(
-    bufnr,
-    "n",
-    "gr",
-    "<cmd>Telescope lsp_references show_line=false include_declaration=false<CR>",
-    { desc = "Telescope Lsp References" }
-  )
+  map(bufnr, "n", "gr", "<cmd>Pick lsp scope='references'<CR>", { desc = "Pick lsp references" })
 end
 
 return M

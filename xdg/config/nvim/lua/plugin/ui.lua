@@ -33,7 +33,7 @@ return {
       {
         "<leader>N",
         "<cmd>lua MiniNotify.show_history()<CR>",
-        desc = "Notify History",
+        desc = "Notify history",
       },
     },
   },
@@ -45,17 +45,17 @@ return {
       {
         "<leader>b",
         '<cmd>exe "LualineBuffersJump!" . v:count1<CR>',
-        desc = "Lualine Buffers Jump",
+        desc = "Lualine buffers jump",
       },
       {
         "<c-j>",
         '<cmd>exe "LualineBuffersJump!" . v:count1<CR>',
-        desc = "Lualine Buffers Jump",
+        desc = "Lualine buffers jump",
       },
       {
         "<leader>B",
         "<cmd>LualineBuffersJump $<CR>",
-        desc = "Lualine Buffers Jump",
+        desc = "Lualine buffers jump",
       },
     },
     opts = function()
@@ -130,7 +130,7 @@ return {
     "chentoast/marks.nvim",
     cond = not_vscode,
     keys = {
-      { "<leader>mt", "<cmd>MarksToggleSigns<cr>", desc = "Marks Toggle Signs" },
+      { "<leader>mt", "<cmd>MarksToggleSigns<cr>", desc = "Marks toggle signs" },
     },
     event = "BufRead",
     opts = {
@@ -193,7 +193,7 @@ return {
     lazy = true,
     keys = {
       { [[<c-\><c-\>]], desc = "ToggleTerm" },
-      { "<leader>ft", "<cmd>TermSelect<cr>", desc = "Term Select" },
+      { "<leader>ft", "<cmd>TermSelect<cr>", desc = "Term select" },
     },
     config = function()
       local get_height = function()

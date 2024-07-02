@@ -9,7 +9,7 @@ return {
       {
         "<leader>mb",
         "<cmd>ScopeMoveBuf<cr>",
-        desc = "Move Buf To Tab",
+        desc = "Move buf to tab",
       },
     },
   },
@@ -41,13 +41,13 @@ return {
           "<leader>md",
           "<cmd>DiffFormat<cr>",
           mode = { "n" },
-          desc = "Diff Format",
+          desc = "Diff format",
         },
         {
           "<leader>mM",
           toggle_auto_format,
           mode = { "n", "v" },
-          desc = "Auto Format Toggle",
+          desc = "Auto format toggle",
         },
       }
     end,
@@ -111,7 +111,7 @@ return {
       vim.api.nvim_create_autocmd("BufWritePre", {
         pattern = "*",
         callback = diff_format,
-        desc = "Auto Format changed lines",
+        desc = "Auto format changed lines",
       })
     end,
   },

@@ -96,54 +96,54 @@ return {
       end
     end
     return {
-      { "<leader>db", dap.toggle_breakpoint, desc = "Dap Toggle Breakpoint" },
+      { "<leader>db", dap.toggle_breakpoint, desc = "Dap toggle breakpoint" },
       {
         "<leader>dq",
         function()
           dap.list_breakpoints()
           vim.cmd("copen")
         end,
-        desc = "Dap List Breakpoints",
+        desc = "Dap list breakpoints",
       },
-      { "<leader>dd", dap.clear_breakpoints, desc = "Dap Clear Breakpoint" },
-      { "<leader>dc", dap.continue, desc = "Dap Continue" },
+      { "<leader>dd", dap.clear_breakpoints, desc = "Dap clear breakpoint" },
+      { "<leader>dc", dap.continue, desc = "Dap continue" },
       {
         "<leader>dC",
         repeatable("n", "<plug>(DapRunToCursor)", dap.run_to_cursor),
-        desc = "Dap Run To Cursor",
+        desc = "Dap run to cursor",
       },
       {
         "<leader>do",
         repeatable("n", "<plug>(DapStepOver)", dap.step_over),
-        desc = "Dap Step Over",
+        desc = "Dap step over",
       },
       {
         "<leader>dp",
         repeatable("n", "<plug>(DapStepBack)", dap.step_back),
-        desc = "Dap Step Back",
+        desc = "Dap step back",
       },
       {
         "<leader>di",
         repeatable("n", "<plug>(DapStepInto)", dap.step_into),
-        desc = "Dap Step Into",
+        desc = "Dap step into",
       },
-      { "<leader>dO", repeatable("n", "<plug>(DapStepOut)", dap.step_out), desc = "Dap Step Out" },
+      { "<leader>dO", repeatable("n", "<plug>(DapStepOut)", dap.step_out), desc = "Dap step out" },
       {
         "<leader>de",
         repeatable("n", "<plug>(DapReverseContinue)", dap.reverse_continue),
-        desc = "Dap Reverse Continue",
+        desc = "Dap reverse continue",
       },
-      { "<leader>dB", dap_condition_breakpoint, desc = "Dap Condition Breakpoint" },
-      { "<leader>dl", dap_log_breakpoint, desc = "Dap Log Breakpoint" },
-      { "<leader>dE", dap_exception_breakpoint, desc = "Dap Exception Breakpoint" },
-      { "<leader>dR", dap_repl, desc = "Dap Repl Toggle" },
-      { "<leader>dr", dap.run_last, desc = "Dap Run Last" },
-      { "<leader>ds", dap_scopes, desc = "Dap Scopes" },
-      { "<leader>df", dap_frames, desc = "Dap Frames" },
-      { "<leader>de", dap_expression, desc = "Dap Expression" },
-      { "<leader>dt", dap_threads, desc = "Dap Threads" },
-      { "<leader>dS", dap_sessions, desc = "Dap Sessions" },
-      { "<leader>dh", dap_hover, desc = "Dap Hover" },
+      { "<leader>dB", dap_condition_breakpoint, desc = "Dap condition breakpoint" },
+      { "<leader>dl", dap_log_breakpoint, desc = "Dap log breakpoint" },
+      { "<leader>dE", dap_exception_breakpoint, desc = "Dap exception breakpoint" },
+      { "<leader>dR", dap_repl, desc = "Dap repl toggle" },
+      { "<leader>dr", dap.run_last, desc = "Dap run last" },
+      { "<leader>ds", dap_scopes, desc = "Dap scopes" },
+      { "<leader>df", dap_frames, desc = "Dap frames" },
+      { "<leader>de", dap_expression, desc = "Dap expression" },
+      { "<leader>dt", dap_threads, desc = "Dap threads" },
+      { "<leader>dS", dap_sessions, desc = "Dap sessions" },
+      { "<leader>dh", dap_hover, desc = "Dap hover" },
     }
   end,
 }
