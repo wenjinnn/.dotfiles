@@ -16,7 +16,6 @@ return {
           -- this supports the same val table as vim.api.nvim_set_hl
           -- use colors from this colorscheme by requiring vscode.colors!
           ["MiniPickMatchCurrent"] = { link = "PmenuSel" },
-          ["MiniFilesCursorLine"] = { link = "PmenuSel" },
           ["@interface"] = { link = "@constant" },
           ["@lsp.type.interface"] = { link = "@interface" },
           ["@org.hyperlink"] = { link = "Underlined" },
