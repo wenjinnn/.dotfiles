@@ -27,7 +27,7 @@ return {
   {
     "echasnovski/mini.notify",
     lazy = true,
-    event = "BufReadPre",
+    event = "BufRead",
     opts = {},
     keys = {
       {

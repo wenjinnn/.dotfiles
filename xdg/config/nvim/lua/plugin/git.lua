@@ -3,7 +3,7 @@ local not_vscode = require("util").not_vscode
 return {
   {
     "echasnovski/mini.diff",
-    event = "BufReadPre",
+    event = "BufRead",
     cond = not_vscode,
     opts = {},
     keys = {
@@ -17,7 +17,7 @@ return {
   {
     "echasnovski/mini-git",
     main = "mini.git",
-    event = "BufReadPre",
+    event = "BufRead",
     cond = not_vscode,
     opts = {},
     keys = {
