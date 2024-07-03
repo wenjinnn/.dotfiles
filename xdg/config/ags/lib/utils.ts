@@ -91,6 +91,9 @@ export function launchApp(app: Application) {
     if (dependencies("xdg-terminal-exec") && app.app.get_boolean("Terminal"))
         exe = `xdg-terminal-exec ${exe}`
 
+    if (dependencies("hyprctl"))
+        exe = `hyprctl dispatch -- exec ${exe}`
+
     bash(`${exe} &`)
     app.frequency += 1
 }
