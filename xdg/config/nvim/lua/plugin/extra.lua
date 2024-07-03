@@ -128,23 +128,18 @@ return {
     cond = not_vscode,
     keys = {
       {
-        "<leader>fss",
+        "<leader>st",
         '<cmd>lua require("spectre").toggle()<CR>',
         desc = "Toggle spectre",
       },
       {
-        "<leader>fsw",
+        "<leader>sv",
         '<cmd>lua require("spectre").open_visual({select_word=true})<CR>',
+        mode = { "n", "v" },
         desc = "Spectre search current word",
       },
       {
-        "<leader>fsw",
-        '<cmd>lua require("spectre").open_visual({select_word=true})<CR>',
-        mode = "v",
-        desc = "Spectre search current word",
-      },
-      {
-        "<leader>fsf",
+        "<leader>sf",
         '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>',
         desc = "Search on current file",
       },
