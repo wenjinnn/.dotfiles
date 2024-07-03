@@ -20,6 +20,10 @@ response=$(wget -qO- "${bing_img_url}?${bing_img_params}" --header="${bing_img_h
 
 if [[ $? -eq 0 ]]; then
     images=$(echo "${response}" | jq -r '.images')
+    if [[ -f "${images}" ]]; then
+        echo "get image failed"
+        exit 1
+    fi
     latest=$(echo "${images}" | jq -r '.[0]')
     startdate=$(echo "${latest}" | jq -r '.startdate')
     urlbase=$(echo "${latest}" | jq -r '.urlbase')
