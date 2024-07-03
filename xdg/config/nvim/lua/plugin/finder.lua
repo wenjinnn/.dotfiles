@@ -73,7 +73,7 @@ return {
       },
       {
         "<leader>fS",
-        "<cmd>Pick lsp scope='workspace_symbol'<cr>",
+        "<cmd>Pick lsp scope='workspace_symbol' symbol_query=vim.fn.input('Symbol:\\ ')<cr>",
         desc = "Pick lsp workspace symbol",
       },
       { "<leader>fm", "<cmd>Pick marks<cr>", desc = "Pick marks" },
