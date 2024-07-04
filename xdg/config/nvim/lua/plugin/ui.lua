@@ -26,18 +26,11 @@ return {
   {
     "echasnovski/mini.icons",
     opts = {},
+    event = "UIEnter",
     lazy = true,
-    specs = {
-      { "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
-    },
-    init = function()
-      -- properly lazy-loads nvim-web-devicons and mini.icons, see https://www.reddit.com/r/neovim/comments/1duf3w7/comment/lbgbc6a/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-      package.preload["nvim-web-devicons"] = function()
-        -- needed since it will be false when loading and mini will fail
-        package.loaded["nvim-web-devicons"] = {}
-        require("mini.icons").mock_nvim_web_devicons()
-        return package.loaded["nvim-web-devicons"]
-      end
+    config = function(_, opts)
+      require("mini.icons").setup(opts)
+      MiniIcons.mock_nvim_web_devicons()
     end,
   },
   {
