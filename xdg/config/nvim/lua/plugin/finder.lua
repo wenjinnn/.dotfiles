@@ -65,7 +65,10 @@ return {
       { "<leader>fh", "<cmd>Pick history<cr>", desc = "Pick history" },
       { "<leader>fL", "<cmd>Pick hl_groups<cr>", desc = "Pick hl groups" },
       { "<leader>fk", "<cmd>Pick keymaps<cr>", desc = "Pick keymaps" },
-      { "<leader>fl", "<cmd>Pick list<cr>", desc = "Pick list" },
+      { "<leader>fl", "<cmd>Pick list scope='location'<cr>", desc = "Pick location" },
+      { "<leader>fj", "<cmd>Pick list scope='jump'<cr>", desc = "Pick jump" },
+      { "<leader>fq", "<cmd>Pick list scope='quickfix'<cr>", desc = "Pick quickfix" },
+      { "<leader>fC", "<cmd>Pick list scope='change'<cr>", desc = "Pick change" },
       {
         "<leader>fs",
         "<cmd>Pick lsp scope='document_symbol'<cr>",
