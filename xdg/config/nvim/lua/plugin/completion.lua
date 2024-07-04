@@ -19,7 +19,6 @@ return {
   },
   config = function()
     local cmp = require("cmp")
-    local lspkind = require("lspkind")
     local util = require("util")
     local feedkey = function(key, mode)
       vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
@@ -55,6 +54,27 @@ return {
       },
     }
     local vim_dadbod_completion_config = { name = "vim-dadbod-completion" }
+
+    local item_source = {
+      buffer = "buf",
+      nvim_lsp = "lsp",
+      snippets = "snip",
+      nvim_lsp_signature_help = "sign",
+      path = "path",
+      cmp_tabnine = "tabnine",
+      look = "look",
+      cmdline = "cmd",
+      treesitter = "treesitter",
+      nvim_lua = "lua",
+      latex_symbols = "latex",
+      dap = "dap",
+      git = "git",
+      orgmode = "org",
+      ["cmp-dbee"] = "dbee",
+      ["vim-dadbod-completion"] = "db",
+    }
+    local item_maxwidth = 30
+    local ellipsis_char = "…"
 
     local combined_cr_mapping = {
       ["<S-CR>"] = cmp.mapping.confirm({
@@ -139,48 +159,20 @@ return {
         deprecated = true,
         fields = { "abbr", "menu", "kind" },
         format = function(entry, vim_item)
-          local item_source = {
-            buffer = "buf",
-            nvim_lsp = "lsp",
-            snippets = "snip",
-            nvim_lsp_signature_help = "sign",
-            path = "path",
-            cmp_tabnine = "tabnine",
-            look = "look",
-            cmdline = "cmd",
-            treesitter = "treesitter",
-            nvim_lua = "lua",
-            latex_symbols = "latex",
-            dap = "dap",
-            git = "git",
-            orgmode = "org",
-            ["cmp-dbee"] = "dbee",
-            ["vim-dadbod-completion"] = "db",
-          }
-          local item_maxwidth = 30
-          local ellipsis_char = "…"
-          local lspkind_format = lspkind.cmp_format({
-            mode = "symbol", -- show only symbol annotations
-            maxwidth = item_maxwidth, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-            ellipsis_char = ellipsis_char, -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
-
-            -- The function below will be called before any actual modifications from lspkind
-            -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-            before = function(entry, inner_item)
-              local menu = inner_item.menu
-              if menu ~= nil and menu:len() > item_maxwidth then
-                menu = menu:sub(0, item_maxwidth) .. ellipsis_char
-                inner_item.menu = menu
-              end
-              return inner_item
-            end,
-          })
-          local final_item = lspkind_format(entry, vim_item)
+          local icon, _ = require("mini.icons").get("lsp", vim_item.kind)
+          if icon ~= nil then
+            vim_item.kind = icon
+          end
+          local menu = vim_item.menu
+          if menu ~= nil and menu:len() > item_maxwidth then
+            menu = menu:sub(0, item_maxwidth) .. ellipsis_char
+            vim_item.menu = menu
+          end
           local source = (item_source)[entry.source.name]
           if source ~= nil then
-            final_item.kind = final_item.kind .. " " .. source .. " "
+            vim_item.kind = vim_item.kind .. " " .. source .. " "
           end
-          return final_item
+          return vim_item
         end,
       },
     })

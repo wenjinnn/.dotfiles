@@ -125,7 +125,6 @@ return {
         end,
       },
       { "b0o/SchemaStore.nvim" },
-      { "onsails/lspkind.nvim" },
       {
         "mfussenegger/nvim-jdtls",
         keys = {
