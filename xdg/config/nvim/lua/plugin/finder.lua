@@ -80,7 +80,7 @@ return {
       { "<leader>fo", "<cmd>Pick oldfiles<cr>", desc = "Pick oldfiles" },
       { "<leader>fO", "<cmd>Pick options<cr>", desc = "Pick options" },
       { "<leader>fr", "<cmd>Pick registers<cr>", desc = "Pick registers" },
-      { "<leader>fp", "<cmd>Pick spell_suggest<cr>", desc = "Pick spell suggest" },
+      { "<leader>fp", "<cmd>Pick spellsuggest<cr>", desc = "Pick spell suggest" },
       { "<leader>ft", "<cmd>Pick treesitter<cr>", desc = "Pick treesitter" },
       { "<leader>fv", "<cmd>Pick visit_paths<cr>", desc = "Pick visit paths" },
       { "<leader>fV", "<cmd>Pick visit_labels<cr>", desc = "Pick visit labels" },
