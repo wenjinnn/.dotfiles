@@ -31,6 +31,7 @@ return {
   },
   {
     "echasnovski/mini.visits",
+    event = "BufReadPre",
     lazy = true,
     opts = {},
     keys = {
