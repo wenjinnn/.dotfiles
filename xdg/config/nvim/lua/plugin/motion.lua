@@ -90,6 +90,14 @@ return {
         end,
         desc = "Flash diagnostic",
       },
+      {
+        "<leader>*",
+        mode = { "n" },
+        function()
+          require("flash").jump({ pattern = vim.fn.expand("<cword>") })
+        end,
+        desc = "Flash jump cursor word",
+      },
     },
   },
 }
