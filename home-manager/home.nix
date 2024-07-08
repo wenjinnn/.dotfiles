@@ -131,6 +131,7 @@
     gh
     yq
     quicktype
+    openpomodoro-cli
   ];
 
   # xresources.properties = {
