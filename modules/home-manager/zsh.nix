@@ -32,6 +32,7 @@
         "systemd"
         "fzf"
         "sudo"
+        "tmux"
       ];
     };
     shellAliases = {
@@ -43,10 +44,6 @@
     initExtraFirst = ''
       if [[ -n "''${NVIM_DAP_TOGGLETERM}" ]]; then
           return
-      fi
-      # TMUX
-      if [ -x "$(command -v tmux)" ] && [ -n "''${DISPLAY}" ] && [ "''${TERM_PROGRAM}" != "vscode" ] && [ "''${XDG_SESSION_DESKTOP}" != "hyprland" ] && [ -z "''${TMUX}" ]; then
-          tmux attach || tmux >/dev/null 2>&1
       fi
     '';
     initExtra = let
