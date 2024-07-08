@@ -160,7 +160,6 @@
         modules = [
           # > Our main home-manager configuration file <
           ./home-manager/home.nix
-          ./home-manager/hosts/nixos-wsl.nix
         ];
       };
     };
