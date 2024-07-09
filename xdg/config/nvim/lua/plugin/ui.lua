@@ -231,11 +231,7 @@ return {
           height = get_height,
         },
         on_open = function()
-          local ol = vim.opt_local
-          ol.number = false
-          ol.signcolumn = "no"
-          ol.relativenumber = false
-          ol.spell = false
+          require("util").setup_toggleterm_opt()
         end,
         winbar = {
           enabled = true,

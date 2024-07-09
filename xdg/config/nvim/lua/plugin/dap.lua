@@ -19,6 +19,7 @@ return {
         on_open = function(term)
           -- HACK dap restart session will disappear toggleterm winbar, so we reset winbar at every time we open term
           require("toggleterm.ui").set_winbar(term)
+          require("util").setup_toggleterm_opt()
         end,
       })
       new_term:toggle()
