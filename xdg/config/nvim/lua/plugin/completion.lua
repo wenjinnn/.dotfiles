@@ -210,6 +210,7 @@ return {
         command = { "look", "${prefix}", "${path}" },
       },
       first_case_insensitive = true,
+      max_number_items = 10,
       document = {
         enable = true,
         command = { "wn", "${label}", "-over" },
