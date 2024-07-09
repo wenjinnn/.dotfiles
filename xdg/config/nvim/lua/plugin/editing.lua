@@ -101,7 +101,7 @@ return {
         for _, range in pairs(ranges) do
           format({
             lsp_fallback = true,
-            timeout_ms = 500,
+            timeout_ms = 1000,
             range = range,
           })
         end
