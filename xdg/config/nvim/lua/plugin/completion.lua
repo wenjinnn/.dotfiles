@@ -44,7 +44,11 @@ return {
         end,
       },
     }
-    local cmp_dict_source = { name = "dictionary", keyword_length = 2 }
+    local cmp_dict_source = {
+      name = "dictionary",
+      keyword_length = 2,
+      max_item_count = 10,
+    }
     local dadbod_source = { name = "vim-dadbod-completion" }
 
     local item_sources = {
@@ -210,7 +214,6 @@ return {
         command = { "look", "${prefix}", "${path}" },
       },
       first_case_insensitive = true,
-      max_number_items = 10,
       document = {
         enable = true,
         command = { "wn", "${label}", "-over" },
