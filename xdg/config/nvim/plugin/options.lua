@@ -4,10 +4,10 @@ opt.errorbells = false
 opt.breakindent = true
 opt.grepprg = "rg --vimgrep"
 opt.grepformat = "%f:%l:%c:%m"
+opt.jumpoptions = "view"
 opt.formatoptions = "jcroqlnt"
-if not vim.env.SSH_TTY then
-  opt.clipboard = "unnamedplus" -- Sync with system clipboard
-end
+opt.linebreak = true
+opt.clipboard = vim.env.SSH_TTY and "" or "unnamedplus" -- Sync with system clipboard
 opt.inccommand = "nosplit"
 opt.cmdheight = 1
 opt.showcmd = true
@@ -45,6 +45,10 @@ opt.shiftwidth = 4
 opt.shiftround = true
 opt.softtabstop = 4
 opt.sidescroll = 10
+opt.sidescrolloff = 8
+opt.scrolloff = 5
+opt.spelllang = { "en" }
+opt.spelloptions:append("noplainbuffer")
 
 opt.list = true
 opt.listchars = {
@@ -58,7 +62,7 @@ opt.listchars = {
 }
 
 opt.undofile = true
-opt.undodir = vim.fn.stdpath("data") .. "/undo"
+opt.undolevels = 10000
 opt.wrap = true
 opt.mouse = "a"
 
@@ -75,6 +79,10 @@ opt.completeopt = { "menu", "menuone", "noinsert" }
 opt.pumheight = 20
 opt.shortmess:append({ I = true })
 opt.sessionoptions:append({ "winpos", "globals", "skiprtp" })
+
+opt.wildmode = "longest:full,full"
+opt.winminwidth = 5
+opt.smoothscroll = true
 
 opt.foldlevel = 99
 opt.foldmethod = "expr"

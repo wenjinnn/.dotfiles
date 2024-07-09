@@ -9,7 +9,6 @@ return {
     opts = {
       basic = true,
       extra_ui = true,
-      win_borders = "solid",
       mappings = {
         windows = false,
       },
