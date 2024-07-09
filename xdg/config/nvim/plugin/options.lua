@@ -47,7 +47,7 @@ opt.softtabstop = 4
 opt.sidescroll = 10
 opt.sidescrolloff = 8
 opt.scrolloff = 5
-opt.spelllang = { "en" }
+opt.spelllang = { "en", "cjk" }
 opt.spelloptions:append("noplainbuffer")
 
 opt.list = true
