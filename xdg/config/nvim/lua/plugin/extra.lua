@@ -177,6 +177,15 @@ return {
     cond = not_vscode,
     opts = function()
       local miniclue = require("mini.clue")
+      local z_post_keys = { zl = "z", zh = "z", zL = "z", zH = "z" }
+      local clue_z_keys = miniclue.gen_clues.z()
+      for _, v in ipairs(clue_z_keys) do
+        for key, postkeys in pairs(z_post_keys) do
+          if v.keys == key then
+            v.postkeys = postkeys
+          end
+        end
+      end
       return {
         triggers = {
           -- Leader triggers
@@ -226,7 +235,7 @@ return {
           miniclue.gen_clues.windows({
             submode_resize = true,
           }),
-          miniclue.gen_clues.z(),
+          clue_z_keys,
         },
       }
     end,
