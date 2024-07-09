@@ -116,6 +116,18 @@ return {
     end,
   },
   {
+    "mfussenegger/nvim-lint",
+    config = function()
+      local lint = require("lint")
+      -- TODO maybe add more linter in future by lint.linters_by_ft
+      vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
+        callback = function()
+          lint.try_lint()
+        end,
+      })
+    end,
+  },
+  {
     "echasnovski/mini.pairs",
     event = "InsertEnter",
     opts = {},

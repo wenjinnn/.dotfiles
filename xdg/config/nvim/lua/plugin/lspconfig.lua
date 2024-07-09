@@ -177,24 +177,6 @@ return {
           }
         end,
       },
-      {
-        "nvimtools/none-ls.nvim",
-        main = "null-ls",
-        opts = function()
-          local cspell = require("cspell")
-          -- register any number of sources simultaneously
-          local sources = {
-            cspell.diagnostics.with({
-              diagnostics_postprocess = function(diagnostic)
-                diagnostic.severity = vim.diagnostic.severity["INFO"]
-              end,
-            }),
-            cspell.code_actions,
-          }
-          return { sources = sources }
-        end,
-      },
-      { "davidmh/cspell.nvim" },
     },
   },
 }
