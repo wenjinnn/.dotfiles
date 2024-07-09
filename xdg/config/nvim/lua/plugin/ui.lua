@@ -235,6 +235,7 @@ return {
           ol.number = false
           ol.signcolumn = "no"
           ol.relativenumber = false
+          ol.spell = false
         end,
         winbar = {
           enabled = true,
