@@ -12,7 +12,7 @@ return {
     { "hrsh7th/cmp-path" },
     { "hrsh7th/cmp-cmdline" },
     { "hrsh7th/cmp-nvim-lsp-signature-help" },
-    { "octaltree/cmp-look" },
+    { "uga-rosa/cmp-dictionary" },
     { "petertriho/cmp-git" },
     { "rcarriga/cmp-dap" },
     { "kristijanhusak/vim-dadbod-completion" },
@@ -30,12 +30,12 @@ return {
           == nil
     end
 
-    local snippets_source_config = {
+    local snippets_source = {
       name = "snippets",
       max_item_count = 10,
     }
 
-    local cmp_buffer_source_config = {
+    local cmp_buffer_source = {
       name = "buffer",
       max_item_count = 10,
       option = {
@@ -44,27 +44,20 @@ return {
         end,
       },
     }
-    local cmp_look_source_config = {
-      name = "look",
-      max_item_count = 5,
-      keyword_length = 2,
-      option = {
-        convert_case = true,
-        loud = true,
-      },
-    }
-    local vim_dadbod_completion_config = { name = "vim-dadbod-completion" }
+    local cmp_dict_source = { name = "dictionary", keyword_length = 2 }
+    local dadbod_source = { name = "vim-dadbod-completion" }
 
-    local item_source = {
+    local item_sources = {
       buffer = "buf",
       nvim_lsp = "lsp",
       snippets = "snip",
       nvim_lsp_signature_help = "sign",
       path = "path",
       cmp_tabnine = "tabnine",
-      look = "look",
+      spell = "spell",
       cmdline = "cmd",
       treesitter = "treesitter",
+      dictionary = "dict",
       nvim_lua = "lua",
       latex_symbols = "latex",
       dap = "dap",
@@ -145,14 +138,14 @@ return {
       },
       mapping = cmp.mapping.preset.insert(insert_extra_mapping),
       sources = {
-        snippets_source_config,
+        snippets_source,
         { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },
         { name = "git" },
         { name = "orgmode" },
-        cmp_buffer_source_config,
+        cmp_buffer_source,
         { name = "path" },
-        cmp_look_source_config,
+        cmp_dict_source,
       },
       formatting = {
         expandable_indicator = false,
@@ -168,7 +161,7 @@ return {
             menu = menu:sub(0, item_maxwidth) .. ellipsis_char
             vim_item.menu = menu
           end
-          local source = (item_source)[entry.source.name]
+          local source = (item_sources)[entry.source.name]
           if source ~= nil then
             vim_item.kind = vim_item.kind .. " " .. source .. " "
           end
@@ -198,17 +191,29 @@ return {
       end,
       sources = {
         { name = "dap", keyword_length = 1 },
-        cmp_buffer_source_config,
+        cmp_buffer_source,
       },
     })
     cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
       sources = {
-        snippets_source_config,
-        vim_dadbod_completion_config,
-        cmp_buffer_source_config,
-        cmp_look_source_config,
+        snippets_source,
+        dadbod_source,
+        cmp_buffer_source,
+        cmp_dict_source,
       },
     })
     require("cmp_git").setup()
+    require("cmp_dictionary").setup({
+      paths = { os.getenv("WORDLIST") or "/usr/share/dict/words" },
+      external = {
+        enable = true,
+        command = { "look", "${prefix}", "${path}" },
+      },
+      first_case_insensitive = true,
+      document = {
+        enable = true,
+        command = { "wn", "${label}", "-over" },
+      },
+    })
   end,
 }

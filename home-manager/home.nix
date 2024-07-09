@@ -133,6 +133,8 @@
     yq
     quicktype
     openpomodoro-cli
+    # for nvim dict
+    wordnet
   ];
 
   # xresources.properties = {
