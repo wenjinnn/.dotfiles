@@ -4,6 +4,7 @@
   ...
 }: let
   repoPath = "${config.home.homeDirectory}/project/my/config";
+  archivePath = "${config.home.homeDirectory}/project/my/archive";
 in {
   home.packages = with pkgs; [
     hurl
@@ -29,6 +30,7 @@ in {
     JAVA_17_HOME = "${pkgs.jdk17}/lib/openjdk";
     JAVA_21_HOME = "${pkgs.jdk21}/lib/openjdk";
     LAZY_NVIM_LOCK_PATH = "${repoPath}/xdg/config/nvim/";
+    NVIM_SPELLFILE = "${archivePath}/nvim/spell/en.utf-8.add";
   };
   home.file = {
     ".config/nvim" = {
