@@ -3,27 +3,11 @@ return {
   {
     "folke/flash.nvim",
     event = "BufRead",
-    opts = function()
-      local opts = {
-        label = {
-          uppercase = false,
-        },
-        modes = {
-          search = {
-            enabled = false,
-          },
-        },
-      }
-      if not vim.g.vscode then
-        opts.highlight = {
-          groups = {
-            label = "lualine_a_normal",
-            backdrop = "LineNr",
-          },
-        }
-      end
-      return opts
-    end,
+    opts = {
+      label = {
+        uppercase = false,
+      },
+    },
     keys = {
       {
         "s",
