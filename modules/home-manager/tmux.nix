@@ -25,7 +25,7 @@
           set -g @catppuccin_window_status_icon_enable "yes"
           set -g @catppuccin_window_default_text "#W"
           set -g @catppuccin_window_current_text "#W"
-          set -g @catppuccin_status_modules_right "up_time date_time directory user host"
+          set -g @catppuccin_status_modules_right "directory up_time date_time user host"
           set -g @catppuccin_status_modules_left "session"
           set -g @catppuccin_status_left_separator "█"
           set -g @catppuccin_status_right_separator "█"
