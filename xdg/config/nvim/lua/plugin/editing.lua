@@ -117,6 +117,8 @@ return {
   },
   {
     "mfussenegger/nvim-lint",
+    cond = not_vscode,
+    event = "BufRead",
     config = function()
       local lint = require("lint")
       -- TODO maybe add more linter in future by lint.linters_by_ft
