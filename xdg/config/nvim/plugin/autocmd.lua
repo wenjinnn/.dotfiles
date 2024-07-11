@@ -142,17 +142,6 @@ if vim.fn.has("fcitx5") then
   })
 end
 
--- sync wsl clipboard
-if vim.fn.has("wsl") then
-  au({ "TextYankPost" }, {
-    group = augroup("wsl_yank"),
-    pattern = "*",
-    callback = function(event)
-      vim.cmd("call system('/mnt/c/windows/system32/clip.exe ',@\")")
-    end,
-  })
-end
-
 -- force commentstring to include spaces
 au({ "CursorHold", "FileType" }, {
   desc = "Force commentstring to include spaces",
