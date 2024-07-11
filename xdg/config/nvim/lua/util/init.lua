@@ -41,7 +41,6 @@ function M.mason_package_init()
       \ lemminx
       \ luaformatter
       \ lua-language-server
-      \ marksman
       \ volar
       \ jdtls
       \ vscode-java-decompiler
@@ -63,6 +62,8 @@ function M.mason_package_init()
       \ sonarlint-language-server
       \ jq
       \ jsonls
+      \ vale
+      \ vale_ls
     ]])
   end
 end
