@@ -123,9 +123,7 @@ return {
       local lint = require("lint")
       -- just use the default lint
       -- TODO maybe add more linter in future
-      lint.linters_by_ft = {
-        java = { "checkstyle" },
-      }
+      lint.linters_by_ft = {}
       vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
         callback = function()
           lint.try_lint()
