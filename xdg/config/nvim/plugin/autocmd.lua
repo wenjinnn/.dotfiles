@@ -131,28 +131,26 @@ au({ "CursorHold", "FileType" }, {
   end,
 })
 
--- Copy/Paste when using ssh on a remote server
--- Only works on Neovim >= 0.10.0
-if vim.clipboard and vim.clipboard.osc52 then
-  au("VimEnter", {
-    group = augroup("ssh_clipboard"),
-    callback = function()
-      if vim.env.SSH_CONNECTION and vim.clipboard.osc52 then
-        vim.g.clipboard = {
-          name = "OSC 52",
-          copy = {
-            ["+"] = require("vim.clipboard.osc52").copy,
-            ["*"] = require("vim.clipboard.osc52").copy,
-          },
-          paste = {
-            ["+"] = require("vim.clipboard.osc52").paste,
-            ["*"] = require("vim.clipboard.osc52").paste,
-          },
-        }
-      end
-    end,
-  })
-end
+-- Copy/Paste when using wsl
+au("VimEnter", {
+  group = augroup("clipboard"),
+  callback = function()
+    if vim.fn.has("wsl") then
+      vim.g.clipboard = {
+        name = "WslClipboard",
+        copy = {
+          ["+"] = "clip.exe",
+          ["*"] = "clip.exe",
+        },
+        paste = {
+          ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+          ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+        },
+        cache_enabled = 0,
+      }
+    end
+  end,
+})
 
 -- auto change root
 au("BufEnter", {

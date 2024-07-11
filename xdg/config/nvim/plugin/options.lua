@@ -7,21 +7,7 @@ opt.grepformat = "%f:%l:%c:%m"
 opt.jumpoptions = "view"
 opt.formatoptions = "jcroqlnt"
 opt.linebreak = true
-opt.clipboard = vim.env.SSH_TTY and "" or "unnamedplus" -- Sync with system clipboard
-if vim.fn.has("wsl") then
-  vim.g.clipboard = {
-    name = "WslClipboard",
-    copy = {
-      ["+"] = "clip.exe",
-      ["*"] = "clip.exe",
-    },
-    paste = {
-      ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-      ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-    },
-    cache_enabled = 0,
-  }
-end
+opt.clipboard = vim.env.SSH_TTY and "" or "unnamedplus"
 opt.inccommand = "nosplit"
 opt.cmdheight = 1
 opt.showcmd = true
