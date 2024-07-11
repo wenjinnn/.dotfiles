@@ -37,6 +37,12 @@ in {
       source = ../../xdg/config/nvim;
       recursive = true;
     };
+    ".config/vale/.vale.ini".text = ''
+        MinAlertLevel = suggestion
+
+        [*]
+        BasedOnStyles = Vale
+    '';
   };
   programs.neovim = {
     package = pkgs.unstable.neovim-unwrapped;
