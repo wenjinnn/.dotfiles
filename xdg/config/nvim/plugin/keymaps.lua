@@ -16,9 +16,10 @@ map("i", ".", ".<c-g>u")
 map("i", ";", ";<c-g>u")
 
 -- copy/paste to system clipboard
-map("n", "<leader>y", '"+y', { silent = true, desc = "Yank to system clipboard" })
+map({ "n", "v" }, "<leader>y", '"+y', { silent = true, desc = "Yank to system clipboard" })
 map("n", "<leader>Y", '"+Y', { silent = true, desc = "Yank line to system clipboard" })
-map("n", "<leader>p", '"+p', { silent = true, desc = "Paste from system clipboard" })
+map("n", "<leader>p", '"0p', { silent = true, desc = "Paste from last yank" })
+map("n", "<leader>P", '"+p', { silent = true, desc = "Paste from system clipboard" })
 
 --keywordprg
 map("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
