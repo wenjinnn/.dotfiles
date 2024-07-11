@@ -135,7 +135,7 @@ au({ "CursorHold", "FileType" }, {
 au("VimEnter", {
   group = augroup("clipboard"),
   callback = function()
-    if vim.fn.has("wsl") then
+    if vim.fn.has("wsl") ~= 0 then
       vim.g.clipboard = {
         name = "WslClipboard",
         copy = {
