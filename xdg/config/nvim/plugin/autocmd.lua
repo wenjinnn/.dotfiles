@@ -49,16 +49,6 @@ au("BufReadPost", {
   end,
 })
 
--- wrap and check for spell in text filetypes
--- autocmd("FileType", {
---   group = augroup("wrap_spell"),
---   pattern = { "gitcommit", "markdown" },
---   callback = function()
---     vim.opt_local.wrap = true
---     vim.opt_local.spell = true
---   end,
--- })
-
 -- Fix conceallevel for json files
 au({ "FileType" }, {
   group = augroup("json_conceal"),
@@ -117,17 +107,6 @@ au({ "VimEnter" }, {
     end
   end,
 })
-
--- auto update when BufLeave
--- au("BufLeave", {
---   pattern = "*",
---   callback = function()
---     local buffer_readable = vim.fn.filereadable(vim.fn.bufname("%")) > 0
---     if not vim.bo.readonly and buffer_readable then
---       vim.cmd("update")
---     end
---   end,
--- })
 
 -- fcitx5 rime auto switch to asciimode
 if vim.fn.has("fcitx5") then
