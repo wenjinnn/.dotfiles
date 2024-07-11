@@ -121,10 +121,15 @@ return {
     event = "BufRead",
     config = function()
       local lint = require("lint")
-      -- TODO maybe add more linter in future by lint.linters_by_ft
-      vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
+      -- just use the default lint
+      -- TODO maybe add more linter in future
+      lint.linters_by_ft = {
+        java = { "checkstyle" },
+      }
+      vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
         callback = function()
           lint.try_lint()
+          lint.try_lint("compiler")
         end,
       })
     end,
