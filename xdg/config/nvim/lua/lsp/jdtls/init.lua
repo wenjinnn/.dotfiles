@@ -155,6 +155,8 @@ function M.setup()
       "-Xmx1G",
       -- follows 4 line args is for optimize memory use, see https://github.com/redhat-developer/vscode-java/pull/1262#discussion_r386912240
       "-XX:+UseParallelGC",
+      "-XX:MinHeapFreeRatio=5",
+      "-XX:MaxHeapFreeRatio=10",
       "-XX:GCTimeRatio=4",
       "-XX:AdaptiveSizePolicyWeight=90",
       "-Dsun.zip.disableMemoryMapping=true",
