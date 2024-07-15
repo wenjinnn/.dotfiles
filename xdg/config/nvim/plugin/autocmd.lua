@@ -162,3 +162,12 @@ au("BufEnter", {
     end
   end,
 })
+
+-- try to fix snippet session error in 0.10
+au("BufLeave", {
+  callback = function()
+    if vim.snippet.active({ direction = 1 }) then
+      vim.snippet.stop()
+    end
+  end,
+})
