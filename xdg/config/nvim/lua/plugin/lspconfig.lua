@@ -59,6 +59,21 @@ return {
         "<cmd>lua vim.diagnostic.setloclist()<CR>",
         desc = "Lsp diagnostic location list",
       },
+      {
+        "<leader>ch",
+        "<cmd>lua vim.lsp.buf.hover()<CR>",
+        desc = "Lsp hover",
+      },
+      {
+        "<leader>cI",
+        "<cmd>lua vim.lsp.buf.incoming_calls()<CR>",
+        desc = "Lsp incoming calls",
+      },
+      {
+        "<leader>ch",
+        "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>",
+        desc = "Lsp outgoing calls",
+      },
     },
     dependencies = {
       {
@@ -126,31 +141,6 @@ return {
       },
       { "b0o/SchemaStore.nvim" },
       {
-        "mfussenegger/nvim-jdtls",
-        keys = {
-          {
-            "<leader>cC",
-            "<cmd>JdtCompile full<CR>",
-            desc = "Jdt compile full",
-          },
-          {
-            "<leader>cc",
-            "<cmd>JdtCompile incremental<CR>",
-            desc = "Jdt compile incremental",
-          },
-          {
-            "<leader>cH",
-            "<cmd>JdtUpdateHotcode<CR>",
-            desc = "Jdt update hotcode",
-          },
-          {
-            "<leader>cg",
-            '<cmd>lua require("jdtls.tests").generate()<CR>',
-            desc = "Jdt test generate",
-          },
-        },
-      },
-      {
         url = "https://gitlab.com/schrieveslaach/sonarlint.nvim",
         opts = function()
           local mason_path = require("util.lsp").get_mason_path()
@@ -176,6 +166,86 @@ return {
             },
           }
         end,
+      },
+      {
+        "mfussenegger/nvim-jdtls",
+        ft = { "java", "xml" },
+        lazy = true,
+        keys = {
+          {
+            "<leader>cC",
+            "<cmd>JdtCompile full<CR>",
+            desc = "Jdt compile full",
+          },
+          {
+            "<leader>cc",
+            "<cmd>JdtCompile incremental<CR>",
+            desc = "Jdt compile incremental",
+          },
+          {
+            "<leader>cH",
+            "<cmd>JdtUpdateHotcode<CR>",
+            desc = "Jdt update hotcode",
+          },
+          {
+            "<leader>cg",
+            '<cmd>lua require("jdtls.tests").generate()<CR>',
+            desc = "Jdt test generate",
+          },
+          {
+
+            "<leader>co",
+            "<Cmd>lua require('jdtls').organize_imports()<CR>",
+            desc = "Jdt Organize Imports",
+          },
+          {
+            "<leader>cv",
+            "<Cmd>lua require('jdtls').extract_variable()<CR>",
+            desc = "Jdt Extract Variable",
+          },
+          {
+
+            mode = "v",
+            "<leader>cv",
+            "<Cmd>lua require('jdtls').extract_variable(true)<CR>",
+            desc = "Jdt Extract Variable",
+          },
+          {
+            "<leader>cV",
+            "<Cmd>lua require('jdtls').extract_constant()<CR>",
+            desc = "Jdt Extract Constant",
+          },
+          {
+            mode = "v",
+            "<leader>cV",
+            "<Cmd>lua require('jdtls').extract_constant(true)<CR>",
+            desc = "Jdt Extract Constant",
+          },
+          {
+            mode = "v",
+            "<leader>cm",
+            "<Cmd>lua require('jdtls').extract_method(true)<CR>",
+            desc = "Jdt Extract Method",
+          },
+          {
+            "<leader>cT",
+            '<cmd>lua require("jdtls.tests").goto_subjects()<CR>',
+            desc = "Jdt Test Goto Subjects",
+          },
+          -- If using nvim-dap
+          -- This requires java-debug and vscode-java-test bundles, see install steps in this README further below.
+          {
+            "<leader>da",
+            "<Cmd>lua require('jdtls').test_class()<CR>",
+            desc = "Jdt Test Class",
+          },
+
+          {
+            "<leader>dm",
+            "<Cmd>lua require('jdtls').test_nearest_method()<CR>",
+            desc = "Jdt Test Method",
+          },
+        },
       },
     },
   },

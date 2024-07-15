@@ -44,7 +44,6 @@ function M.setup(client, bufnr)
       end,
     })
   end
-  M.setup_buf_map(bufnr)
 end
 
 function M.make_capabilities()
@@ -64,25 +63,6 @@ end
 function M.get_mason_pkg_path()
   local mason_path = os.getenv("MASON")
   return mason_path .. "/packages"
-end
-
-function M.setup_buf_map(bufnr)
-  local map = M.set_keymap
-  map(bufnr, "n", "<leader>ch", "<cmd>lua vim.lsp.buf.hover()<CR>", { desc = "Lsp hover" })
-  map(
-    bufnr,
-    "n",
-    "<leader>cI",
-    "<cmd>lua vim.lsp.buf.incoming_calls()<CR>",
-    { desc = "Lsp incoming calls" }
-  )
-  map(
-    bufnr,
-    "n",
-    "<leader>cO",
-    "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>",
-    { desc = "Lsp outgoing calls" }
-  )
 end
 
 return M
