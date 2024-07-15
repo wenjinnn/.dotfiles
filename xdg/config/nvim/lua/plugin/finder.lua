@@ -99,7 +99,7 @@ return {
       {
         "<leader>ci",
         "<cmd>Pick lsp scope='implementation'<CR>",
-        { desc = "Pick lsp implementation" },
+        desc = "Pick lsp implementation",
       },
       {
         "<leader>ct",
