@@ -20,7 +20,7 @@ return {
       {
         "<leader>cL",
         vim.lsp.codelens.refresh,
-        desc = "Refresh & display codelens",
+        desc = "Refresh codelens",
         mode = { "n" },
       },
       {
@@ -139,7 +139,7 @@ return {
             desc = "Jdt compile incremental",
           },
           {
-            "<leader>ch",
+            "<leader>cH",
             "<cmd>JdtUpdateHotcode<CR>",
             desc = "Jdt update hotcode",
           },

@@ -56,7 +56,12 @@ return {
       { "<leader>fb", "<cmd>Pick buffers<cr>", desc = "Pick buffers" },
       { "<leader>fc", "<cmd>Pick cli<cr>", desc = "Pick cli" },
       { "<leader>fr", "<cmd>Pick resume<cr>", desc = "Pick resume" },
-      { "<leader>fd", "<cmd>Pick diagnostic<cr>", desc = "Pick diagnostic" },
+      {
+        "<leader>fd",
+        "<cmd>Pick diagnostic scope='current'<cr>",
+        desc = "Pick current diagnostic",
+      },
+      { "<leader>fD", "<cmd>Pick diagnostic scope='all'<cr>", desc = "Pick all diagnostic" },
       { "<leader>gb", "<cmd>Pick git_branches<cr>", desc = "Pick git branches" },
       { "<leader>gC", "<cmd>Pick git_commits<cr>", desc = "Pick git commits" },
       { "<leader>gc", "<cmd>Pick git_commits path='%'<cr>", desc = "Pick git commits current" },
@@ -88,6 +93,19 @@ return {
       { "<leader>ft", "<cmd>Pick treesitter<cr>", desc = "Pick treesitter" },
       { "<leader>fv", "<cmd>Pick visit_paths<cr>", desc = "Pick visit paths" },
       { "<leader>fV", "<cmd>Pick visit_labels<cr>", desc = "Pick visit labels" },
+      { "<leader>cd", "<cmd>Pick lsp scope='definition'<CR>", desc = "Pick lsp definition" },
+      { "<leader>cD", "<cmd>Pick lsp scope='declaration'<CR>", desc = "Pick lsp declaration" },
+      { "<leader>cr", "<cmd>Pick lsp scope='references'<cr>", desc = "Pick lsp references" },
+      {
+        "<leader>ci",
+        "<cmd>Pick lsp scope='implementation'<CR>",
+        { desc = "Pick lsp implementation" },
+      },
+      {
+        "<leader>ct",
+        "<cmd>Pick lsp scope='type_definition'<cr>",
+        desc = "Pick lsp type definition",
+      },
       -- let mini.pick load at mini.sessions mason loaded
       { "<leader>ss", "<cmd>lua MiniSessions.select()<cr>", desc = "Session select" },
       { "<leader>M", "<cmd>Mason<CR>", desc = "Mason" },
