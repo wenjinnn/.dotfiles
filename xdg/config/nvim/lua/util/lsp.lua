@@ -72,7 +72,7 @@ function M.setup_buf_map(bufnr)
   map(
     bufnr,
     "n",
-    "<leader>ci",
+    "<leader>cI",
     "<cmd>lua vim.lsp.buf.incoming_calls()<CR>",
     { desc = "Lsp incoming calls" }
   )
