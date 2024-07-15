@@ -9,7 +9,7 @@ return {
         "<leader>ca",
         "<cmd>lua vim.lsp.buf.code_action()<CR>",
         mode = { "n", "v" },
-        desc = "Code action",
+        desc = "Lsp code action",
       },
       {
         "<leader>cl",

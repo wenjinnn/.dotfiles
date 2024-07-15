@@ -153,7 +153,7 @@ function M.setup()
       "-Djava.import.generatesMetadataFilesAtProjectRoot=false",
       "-Xms256m",
       "-Xmx1G",
-      -- follows 4 line args is for optimize memory use, see https://github.com/redhat-developer/vscode-java/pull/1262#discussion_r386912240
+      -- The following 6 lines is for optimize memory use, see https://github.com/redhat-developer/vscode-java/pull/1262#discussion_r386912240
       "-XX:+UseParallelGC",
       "-XX:MinHeapFreeRatio=5",
       "-XX:MaxHeapFreeRatio=10",
