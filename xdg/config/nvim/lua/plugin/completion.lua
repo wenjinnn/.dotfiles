@@ -151,15 +151,22 @@ return {
         deprecated = true,
         fields = { "abbr", "menu", "kind" },
         format = function(entry, vim_item)
+          --- limit vim_item sub attribute width
+          ---@param item string
+          ---@return string limited string
+          local function limit_width(item)
+            if item ~= nil and item:len() > item_maxwidth then
+              item = item:sub(0, item_maxwidth) .. ellipsis_char
+              return item
+            end
+            return item
+          end
           local icon, _ = require("mini.icons").get("lsp", vim_item.kind)
           if icon ~= nil then
             vim_item.kind = icon
           end
-          local menu = vim_item.menu
-          if menu ~= nil and menu:len() > item_maxwidth then
-            menu = menu:sub(0, item_maxwidth) .. ellipsis_char
-            vim_item.menu = menu
-          end
+          vim_item.menu = limit_width(vim_item.menu)
+          vim_item.abbr = limit_width(vim_item.abbr)
           local source = (item_sources)[entry.source.name]
           if source ~= nil then
             vim_item.kind = vim_item.kind .. " " .. source .. " "
