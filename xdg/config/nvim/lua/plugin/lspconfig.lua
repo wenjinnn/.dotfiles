@@ -141,36 +141,7 @@ return {
       },
       { "b0o/SchemaStore.nvim" },
       {
-        url = "https://gitlab.com/schrieveslaach/sonarlint.nvim",
-        opts = function()
-          local mason_path = require("util.lsp").get_mason_path()
-          return {
-            server = {
-              cmd = {
-                "sonarlint-language-server",
-                -- Ensure that sonarlint-language-server uses stdio channel
-                "-stdio",
-                "-analyzers",
-                -- paths to the analyzers you need, using those for python and java in this example
-                mason_path .. "/share/sonarlint-analyzers/sonarpython.jar",
-                mason_path .. "/share/sonarlint-analyzers/sonarcfamily.jar",
-                mason_path .. "/share/sonarlint-analyzers/sonarjava.jar",
-              },
-            },
-            filetypes = {
-              -- Tested and working
-              "python",
-              "cpp",
-              -- Requires nvim-jdtls, otherwise an error message will be printed
-              "java",
-            },
-          }
-        end,
-      },
-      {
         "mfussenegger/nvim-jdtls",
-        ft = { "java", "xml" },
-        lazy = true,
         keys = {
           {
             "<leader>cC",
@@ -246,6 +217,36 @@ return {
             desc = "Jdt Test Method",
           },
         },
+      },
+      {
+        url = "https://gitlab.com/schrieveslaach/sonarlint.nvim",
+        lazy = true,
+        opts = function()
+          local mason_path = require("util.lsp").get_mason_path()
+          return {
+            server = {
+              cmd = {
+                "sonarlint-language-server",
+                -- Ensure that sonarlint-language-server uses stdio channel
+                "-stdio",
+                "-analyzers",
+                -- paths to the analyzers you need, using those for python and java in this example
+                mason_path .. "/share/sonarlint-analyzers/sonarpython.jar",
+                mason_path .. "/share/sonarlint-analyzers/sonarcfamily.jar",
+                mason_path .. "/share/sonarlint-analyzers/sonarjava.jar",
+              },
+              settings = require("lsp.sonarlint-language-server").settings,
+            },
+
+            filetypes = {
+              -- Tested and working
+              "python",
+              "cpp",
+              -- Requires nvim-jdtls, otherwise an error message will be printed
+              "java",
+            },
+          }
+        end,
       },
     },
   },
