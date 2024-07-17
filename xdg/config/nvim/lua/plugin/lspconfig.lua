@@ -29,16 +29,6 @@ return {
         desc = "Lsp signature help",
       },
       {
-        "<leader>D",
-        "<cmd>lua vim.diagnostic.open_float()<CR>",
-        desc = "Diagnostic float",
-      },
-      {
-        "<leader><leader>D",
-        "<cmd>lua MiniBasics.toggle_diagnostic()<CR>",
-        desc = "Toggle diagnostic",
-      },
-      {
         "<leader>wa",
         "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>",
         desc = "Lsp add workspace folder",
