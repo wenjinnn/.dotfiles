@@ -91,7 +91,6 @@ return {
         for _, range in pairs(ranges) do
           format({
             lsp_fallback = true,
-            async = true,
             timeout_ms = 500,
             range = range,
           })
