@@ -26,14 +26,6 @@ return {
       return new_term.bufnr, new_term.window
     end
 
-    -- dap repl completion, we use cmp-dap now
-    -- vim.api.nvim_create_autocmd("FileType", {
-    --   pattern = "dap-repl",
-    --   callback = function(args)
-    --     require("dap.ext.autocompl").attach()
-    --   end,
-    -- })
-
     dap.adapters.gdb = {
       type = "executable",
       command = "gdb",

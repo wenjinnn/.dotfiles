@@ -1,47 +1,49 @@
 local M = {}
-local lsp = require("util.lsp")
+
+function M.setup_dap()
+  -- local util = require("jdtls.util")
+
+  -- dap.adapters.java = function(callback)
+  --   util.execute_command({ command = 'vscode.java.startDebugSession' }, function(err0, port)
+  --     assert(not err0, vim.inspect(err0))
+  --     -- print("puerto:", port)
+  --     callback({
+  --       type = 'server';
+  --       host = '127.0.0.1';
+  --       port = port;
+  --     })
+  --   end)
+  -- end
+  require("jdtls").setup_dap()
+  require("jdtls.dap").setup_dap_main_class_configs({
+    config_overrides = { vmArgs = "-Xms128m -Xmx512m" },
+  })
+  local dap = require("dap")
+  -- for all launch.json options see https://github.com/microsoft/vscode-java-debug#options
+  require("dap.ext.vscode").load_launchjs()
+  local project_name = os.getenv("PROJECT_NAME")
+  local host_name = os.getenv("DAP_HOST")
+  local host_port = os.getenv("DAP_HOST_PORT")
+  if project_name then
+    dap.configurations.java = {
+      {
+        type = "java",
+        request = "attach",
+        projectName = project_name or nil,
+        name = "Java attach: " .. project_name,
+        hostName = host_name or "127.0.0.1",
+        port = host_port or 5005,
+      },
+    }
+  end
+end
+
 function M.setup()
+  local lsp = require("util.lsp")
   local on_attach = function(client, bufnr)
-    -- require'jdtls'.setup_dap({hotcodereplace = 'auto'})
-    local dap = require("dap")
-    local util = require("jdtls.util")
-
-    -- dap.adapters.java = function(callback)
-    --   util.execute_command({ command = 'vscode.java.startDebugSession' }, function(err0, port)
-    --     assert(not err0, vim.inspect(err0))
-    --     -- print("puerto:", port)
-    --     callback({
-    --       type = 'server';
-    --       host = '127.0.0.1';
-    --       port = port;
-    --     })
-    --   end)
-    -- end
-
-    local project_name = os.getenv("PROJECT_NAME")
-    local host_name = os.getenv("DAP_HOST")
-    local host_port = os.getenv("DAP_HOST_PORT")
-    if project_name then
-      dap.configurations.java = {
-        {
-          type = "java",
-          request = "attach",
-          projectName = project_name or nil,
-          name = "Java attach: " .. project_name,
-          hostName = host_name or "127.0.0.1",
-          port = host_port or 5005,
-        },
-      }
-    end
-    require("jdtls").setup_dap()
-    require("jdtls.dap").setup_dap_main_class_configs({
-      config_overrides = { vmArgs = "-Xms128m -Xmx512m" },
-    })
-    -- for all launch.json options see https://github.com/microsoft/vscode-java-debug#options
-    require("dap.ext.vscode").load_launchjs()
+    M.setup_dap()
     lsp.setup(client, bufnr)
   end
-  local capabilities = lsp.make_capabilities()
   local root_dir = require("jdtls.setup").find_root({ "mvnw", "gradlew", ".git" })
   local workspace_name, _ = string.gsub(vim.fn.fnamemodify(root_dir, ":p"), "/", "_")
   local mason_pkg_path = lsp.get_mason_pkg_path()
@@ -61,7 +63,11 @@ function M.setup()
     bundles,
     vim.split(vim.fn.glob(mason_pkg_path .. "/java-test/extension/server/*.jar"), "\n")
   )
-  -- vim.list_extend(bundles, vim.split(vim.fn.glob(config_path .. '/vscode-java-dependency/server/*.jar'), '\n'))
+  -- TODO implement vscode-java-dependency for nvim
+  -- vim.list_extend(
+  --   bundles,
+  --   vim.split(vim.fn.glob(config_path .. "/vscode-java-dependency/server/*.jar"), "\n")
+  -- )
 
   local jdtls_java_home = os.getenv("JDTLS_JAVA_HOME")
   local java_cmd = "java"
@@ -70,7 +76,7 @@ function M.setup()
   end
   local config = {
     settings = require("lsp.jdtls.settings"),
-    capabilities = capabilities,
+    capabilities = lsp.make_capabilities(),
     on_attach = on_attach,
     name = "jdtls",
     filetypes = { "java", "xml", "gradle", "groovy" },
