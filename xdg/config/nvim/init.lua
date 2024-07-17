@@ -19,6 +19,9 @@ local lazy_config = {
   dev = {
     path = "~/project/my",
   },
+  ui = {
+    backdrop = 100,
+  },
 }
 if lockpath then
   lazy_config.lockfile = lockpath .. "/lazy-lock.json"
