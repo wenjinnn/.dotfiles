@@ -50,11 +50,6 @@ return {
         desc = "Lsp diagnostic location list",
       },
       {
-        "<leader>ch",
-        "<cmd>lua vim.lsp.buf.hover()<CR>",
-        desc = "Lsp hover",
-      },
-      {
         "<leader>cI",
         "<cmd>lua vim.lsp.buf.incoming_calls()<CR>",
         desc = "Lsp incoming calls",
