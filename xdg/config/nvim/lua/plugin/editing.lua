@@ -63,8 +63,9 @@ return {
         notify_on_error = false,
       })
       local diff_format = function()
-        local buffer_readable = vim.fn.filereadable(vim.fn.bufname("%")) > 0
-        if not vim.fn.has("git") or not vim.g.conform_autoformat or not buffer_readable then
+        local ok, data = pcall(MiniDiff.get_buf_data)
+        local hunks = data.hunks
+        if not ok or not hunks or not vim.g.conform_autoformat then
           return
         end
         local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
@@ -77,31 +78,21 @@ return {
           })
           return
         end
-        local filename = vim.fn.expand("%:p")
-        local lines = vim.fn.system("git diff --unified=0 " .. filename):gmatch("[^\n\r]+")
         local ranges = {}
-        for line in lines do
-          if line:find("^@@") then
-            local line_nums = line:match("%+.- ")
-            if line_nums:find(",") then
-              local _, _, first, second = line_nums:find("(%d+),(%d+)")
-              table.insert(ranges, {
-                start = { tonumber(first), 0 },
-                ["end"] = { tonumber(first) + tonumber(second) + 1, 0 },
-              })
-            else
-              local first = tonumber(line_nums:match("%d+"))
-              table.insert(ranges, {
-                start = { first, 0 },
-                ["end"] = { first + 1, 0 },
-              })
-            end
+        for _, hunk in pairs(hunks) do
+          if hunk.type ~= "delete" then
+            -- always insert to index 1 so format below could start from last hunk, which this sort didn't mess up range
+            table.insert(ranges, 1, {
+              start = { hunk.buf_start, 0 },
+              ["end"] = { hunk.buf_start + hunk.buf_count, 0 },
+            })
           end
         end
         for _, range in pairs(ranges) do
           format({
             lsp_fallback = true,
-            timeout_ms = 1000,
+            async = true,
+            timeout_ms = 500,
             range = range,
           })
         end
