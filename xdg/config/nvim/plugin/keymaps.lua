@@ -1,6 +1,4 @@
 local map = vim.keymap.set
-map("n", "[t", "<cmd>tabp<cr>", { silent = true, desc = "Previous tab" })
-map("n", "]t", "<cmd>tabn<cr>", { silent = true, desc = "Next tab" })
 map(
   "n",
   "<leader>S",

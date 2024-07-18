@@ -32,9 +32,9 @@ return {
 
       return {
         {
+          mode = { "n", "v" },
           "<leader>mm",
           '<cmd>lua require"conform".format({async = true, lsp_fallback = true})<cr>',
-          mode = { "n", "v" },
           desc = "Format",
         },
         { "<leader>md", "<cmd>DiffFormat<cr>", desc = "Diff format" },
@@ -156,10 +156,7 @@ return {
   {
     "echasnovski/mini.bracketed",
     event = "BufRead",
-    opts = {
-      treesitter = { suffix = "n", options = {} },
-      comment = { suffix = "e", options = {} },
-    },
+    opts = {},
   },
   {
     "nvim-treesitter/nvim-treesitter",
