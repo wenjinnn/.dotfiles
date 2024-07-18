@@ -30,7 +30,7 @@ function M.mason_package_init()
       MasonInstall
       \ typescript-language-server
       \ dot-language-server
-      \ cspell
+      \ stylua
       \ vim-language-server
       \ emmet-ls
       \ html-lsp

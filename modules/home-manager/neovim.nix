@@ -15,7 +15,7 @@ in {
     rustfmt
     lemminx
     marksman
-    stylua
+    # stylua
     unstable.luajitPackages.luarocks-nix
     python311Packages.pip
     python311Packages.python-lsp-server
