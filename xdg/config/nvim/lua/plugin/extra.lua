@@ -278,6 +278,13 @@ return {
           desc = "Session write custom",
         },
         { "<leader>sd", delete_session, desc = "Session delete" },
+        {
+          "<leader>sD",
+          function()
+            MiniSessions.delete(vim.fn.input("Session name: "))
+          end,
+          desc = "Session delete custom",
+        },
       }
     end,
     version = "*",
