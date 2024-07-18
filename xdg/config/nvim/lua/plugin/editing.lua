@@ -37,18 +37,8 @@ return {
           mode = { "n", "v" },
           desc = "Format",
         },
-        {
-          "<leader>md",
-          "<cmd>DiffFormat<cr>",
-          mode = { "n" },
-          desc = "Diff format",
-        },
-        {
-          "<leader>mM",
-          toggle_auto_format,
-          mode = { "n", "v" },
-          desc = "Auto format toggle",
-        },
+        { "<leader>md", "<cmd>DiffFormat<cr>", desc = "Diff format" },
+        { "<leader>mM", toggle_auto_format, desc = "Auto format toggle" },
       }
     end,
     init = function()
@@ -60,26 +50,22 @@ return {
         formatters_by_ft = {
           lua = { "stylua" },
         },
-        notify_on_error = false,
       })
+      local range_ignore_filetypes = { "lua" }
       local diff_format = function()
-        local ok, data = pcall(MiniDiff.get_buf_data)
-        local hunks = data.hunks
-        if not ok or not hunks or not vim.g.conform_autoformat then
+        local data = MiniDiff.get_buf_data()
+        if not data or not data.hunks or not vim.g.conform_autoformat then
+          vim.notify("No hunks in this buffer or auto format is currently disabled")
           return
         end
-        local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
         local format = require("conform").format
-        -- stylua range format mass up indent, so use fall format for now
-        if filetype == "lua" then
-          format({
-            lsp_fallback = true,
-            timeout_ms = 500,
-          })
+        -- stylua range format mass up indent, so use full format for now
+        if vim.tbl_contains(range_ignore_filetypes, vim.bo.filetype) then
+          format({ lsp_fallback = true, timeout_ms = 500 })
           return
         end
         local ranges = {}
-        for _, hunk in pairs(hunks) do
+        for _, hunk in pairs(data.hunks) do
           if hunk.type ~= "delete" then
             -- always insert to index 1 so format below could start from last hunk, which this sort didn't mess up range
             table.insert(ranges, 1, {
@@ -89,11 +75,7 @@ return {
           end
         end
         for _, range in pairs(ranges) do
-          format({
-            lsp_fallback = true,
-            timeout_ms = 500,
-            range = range,
-          })
+          format({ lsp_fallback = true, timeout_ms = 500, range = range })
         end
       end
       vim.api.nvim_create_user_command("DiffFormat", diff_format, { desc = "Format changed lines" })
