@@ -59,7 +59,6 @@
   "orgmode": { "branch": "master", "commit": "85c1b443387ec4dd4eee5f7e2d837c13dd82d452" },
   "plenary.nvim": { "branch": "master", "commit": "a3e3bc82a3f95c5ed0d7201546d5d2c19b20d683" },
   "rainbow-delimiters.nvim": { "branch": "master", "commit": "b29da4a6061a88270e875b38367d82c04c856128" },
-  "scope.nvim": { "branch": "main", "commit": "86a0f5b594b08b2ad65f470ffdee81654942b6ac" },
   "sniprun": { "branch": "master", "commit": "f2302d4081914c3312456c91dc6965dfeec266b1" },
   "sonarlint.nvim": { "branch": "main", "commit": "3ccb3e5452b0c075e4fb7dbee436d4e65d34d294" },
   "toggleterm.nvim": { "branch": "main", "commit": "cd55bf6aab3f88c259fa29ea86bbdcb1a325687d" },

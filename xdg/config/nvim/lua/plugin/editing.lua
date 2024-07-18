@@ -1,19 +1,6 @@
 local not_vscode = require("util").not_vscode
 return {
   {
-    "tiagovla/scope.nvim",
-    config = true,
-    cond = not_vscode,
-    event = "BufRead",
-    keys = {
-      {
-        "<leader>mb",
-        "<cmd>ScopeMoveBuf<cr>",
-        desc = "Move buf to tab",
-      },
-    },
-  },
-  {
     "stevearc/conform.nvim",
     cond = not_vscode,
     event = "BufRead",
