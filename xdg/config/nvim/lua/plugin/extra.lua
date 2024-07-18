@@ -272,7 +272,7 @@ return {
         { "<leader>sw", write_session, desc = "Session write" },
         {
           "<leader>sW",
-          ":lua MiniSessions.write(vim.fn.input('Session name:\\ '))",
+          '<cmd>MiniSessions.write(vim.fn.input("Session name: "))<cr>',
           desc = "Session write custom",
         },
         { "<leader>sd", delete_session, desc = "Session delete" },
