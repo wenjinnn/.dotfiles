@@ -48,14 +48,39 @@ return {
       local pick = require("mini.pick")
       pick.setup(opts)
       vim.ui.select = pick.ui_select
+      -- pick grep function that pass args to rg
+      pick.registry.grep_args = function()
+        local args = vim.fn.input("Ripgrep args: ")
+        local command = {
+          "rg",
+          "--column",
+          "--line-number",
+          "--no-heading",
+          "--field-match-separator=\\0",
+          "--no-follow",
+          "--color=never",
+        }
+        local args_table = vim.fn.split(args, " ")
+        vim.list_extend(command, args_table)
+        print(vim.inspect(command))
+
+        local show_with_icons = function(buf_id, items, query)
+          return pick.default_show(buf_id, items, query, { show_icons = true })
+        end
+        return pick.builtin.cli(
+          { command = command },
+          { source = { name = string.format("Grep (rg %s)", args), show = show_with_icons } }
+        )
+      end
     end,
     keys = {
       { "<leader>ff", "<cmd>Pick files<cr>", desc = "Pick files" },
       { "<leader>fg", "<cmd>Pick grep_live<cr>", desc = "Pick grep live" },
+      { "<leader>fG", "<cmd>Pick grep_args<cr>", desc = "Pick grep with rg args" },
       { "<leader>fH", "<cmd>Pick help<cr>", desc = "Pick help" },
       { "<leader>fb", "<cmd>Pick buffers<cr>", desc = "Pick buffers" },
       { "<leader>fc", "<cmd>Pick cli<cr>", desc = "Pick cli" },
-      { "<leader>fr", "<cmd>Pick resume<cr>", desc = "Pick resume" },
+      { "<leader>fR", "<cmd>Pick resume<cr>", desc = "Pick resume" },
       {
         "<leader>fd",
         "<cmd>Pick diagnostic scope='current'<cr>",
@@ -67,7 +92,7 @@ return {
       { "<leader>gc", "<cmd>Pick git_commits path='%'<cr>", desc = "Pick git commits current" },
       { "<leader>gf", "<cmd>Pick git_files<cr>", desc = "Pick git files" },
       { "<leader>gH", "<cmd>Pick git_hunks<cr>", desc = "Pick git hunks" },
-      { "<leader>fp", "<cmd>Pick git_hunks<cr>", desc = "Pick hipatterns" },
+      { "<leader>fP", "<cmd>Pick hipatterns<cr>", desc = "Pick hipatterns" },
       { "<leader>fh", "<cmd>Pick history<cr>", desc = "Pick history" },
       { "<leader>fL", "<cmd>Pick hl_groups<cr>", desc = "Pick hl groups" },
       { "<leader>fk", "<cmd>Pick keymaps<cr>", desc = "Pick keymaps" },
