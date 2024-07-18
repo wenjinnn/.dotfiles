@@ -97,7 +97,7 @@ just some filetype settings
 + [echasnovski/mini.hipatterns](https://dotfyle.com/plugins/echasnovski/mini.hipatterns)
 ### colorscheme
 
-+ [Mofiqul/vscode.nvim](https://dotfyle.com/plugins/Mofiqul/vscode.nvim)
++ [catppuccin/nvim](https://dotfyle.com/plugins/catppuccin/nvim)
 ### comment
 
 + [JoosepAlviste/nvim-ts-context-commentstring](https://dotfyle.com/plugins/JoosepAlviste/nvim-ts-context-commentstring)
@@ -106,8 +106,8 @@ just some filetype settings
 + [hrsh7th/nvim-cmp](https://dotfyle.com/plugins/hrsh7th/nvim-cmp)
 ### debugging
 
-+ [theHamsta/nvim-dap-virtual-text](https://dotfyle.com/plugins/theHamsta/nvim-dap-virtual-text)
 + [mfussenegger/nvim-dap](https://dotfyle.com/plugins/mfussenegger/nvim-dap)
++ [theHamsta/nvim-dap-virtual-text](https://dotfyle.com/plugins/theHamsta/nvim-dap-virtual-text)
 ### editing-support
 
 + [echasnovski/mini.pairs](https://dotfyle.com/plugins/echasnovski/mini.pairs)
@@ -130,9 +130,6 @@ just some filetype settings
 
 + [echasnovski/mini.diff](https://dotfyle.com/plugins/echasnovski/mini.diff)
 + [echasnovski/mini-git](https://dotfyle.com/plugins/echasnovski/mini-git)
-### icon
-
-+ [kyazdani42/nvim-web-devicons](https://dotfyle.com/plugins/kyazdani42/nvim-web-devicons)
 ### indent
 
 + [echasnovski/mini.indentscope](https://dotfyle.com/plugins/echasnovski/mini.indentscope)
@@ -141,10 +138,9 @@ just some filetype settings
 + [echasnovski/mini.clue](https://dotfyle.com/plugins/echasnovski/mini.clue)
 ### lsp
 
-+ [nvimtools/none-ls.nvim](https://dotfyle.com/plugins/nvimtools/none-ls.nvim)
-+ [onsails/lspkind.nvim](https://dotfyle.com/plugins/onsails/lspkind.nvim)
 + [neovim/nvim-lspconfig](https://dotfyle.com/plugins/neovim/nvim-lspconfig)
 + [mfussenegger/nvim-jdtls](https://dotfyle.com/plugins/mfussenegger/nvim-jdtls)
++ [mfussenegger/nvim-lint](https://dotfyle.com/plugins/mfussenegger/nvim-lint)
 + [b0o/SchemaStore.nvim](https://dotfyle.com/plugins/b0o/SchemaStore.nvim)
 ### lsp-installer
 
@@ -170,6 +166,9 @@ just some filetype settings
 ### plugin-manager
 
 + [folke/lazy.nvim](https://dotfyle.com/plugins/folke/lazy.nvim)
+### preconfigured
+
++ [LazyVim/LazyVim](https://dotfyle.com/plugins/LazyVim/LazyVim)
 ### search
 
 + [windwp/nvim-spectre](https://dotfyle.com/plugins/windwp/nvim-spectre)
