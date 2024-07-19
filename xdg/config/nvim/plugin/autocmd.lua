@@ -155,7 +155,7 @@ au("VimEnter", {
 -- auto change root
 au("BufEnter", {
   callback = function(ctx)
-    local root = vim.fs.root(ctx.buf, { ".git", ".svn", "Makefile", "mvnw", "package.json" })
+    local root = vim.fs.root(ctx.buf, { ".git", ".svn", "Makefile" })
     if root and root ~= "." and root ~= vim.fn.getcwd() then
       vim.cmd.cd(root)
       vim.notify("Set CWD to " .. root)
