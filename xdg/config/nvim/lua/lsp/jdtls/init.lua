@@ -44,7 +44,7 @@ function M.setup()
     M.setup_dap()
     lsp.setup(client, bufnr)
   end
-  local root_dir = require("jdtls.setup").find_root({ "mvnw", "gradlew", ".git" })
+  local root_dir = require("jdtls.setup").find_root({ "mvnw", "gradlew", ".mvn", ".git", ".svn" })
   local workspace_name, _ = string.gsub(vim.fn.fnamemodify(root_dir, ":p"), "/", "_")
   local mason_pkg_path = lsp.get_mason_pkg_path()
   local jdtls_path = mason_pkg_path .. "/jdtls"
