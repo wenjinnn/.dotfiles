@@ -136,67 +136,6 @@ return {
     end,
   },
   {
-    "chentoast/marks.nvim",
-    cond = not_vscode,
-    keys = {
-      { "<leader>mt", "<cmd>MarksToggleSigns<cr>", desc = "Marks toggle signs" },
-    },
-    event = "BufRead",
-    opts = {
-      -- which builtin marks to show. default {}
-      builtin_marks = { ".", "<", ">", "^" },
-      -- sign priorities for each type of mark - builtin marks, uppercase marks, lowercase
-      -- marks, and bookmarks.
-      -- can be either a table with all/none of the keys, or a single number, in which case
-      -- the priority applies to all marks.
-      -- default 10.
-      sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
-      -- disables mark tracking for specific filetypes. default {}
-      excluded_filetypes = {
-        "null-ls-info",
-        "TelescopePrompt",
-        "rnvimr",
-        "toggleterm",
-        "minifiles",
-        "minifiles-help",
-        "tfm",
-        "dap-repl",
-        "dap-float",
-        "Term",
-        "lazygit",
-        "lspinfo",
-        "translate",
-        "translator",
-        "translatorborder",
-        "translator_history",
-        "glowpreview",
-        "help",
-        "zsh",
-        "lazy",
-        "org",
-        "orghelp",
-        "orgagenda",
-        "httpResult",
-        "dbee",
-        "noice",
-        "",
-      },
-      -- disables mark tracking for specific buftypes. default {}
-      excluded_buftypes = {
-        "nofile",
-      },
-      mappings = {},
-      -- marks.nvim allows you to configure up to 10 bookmark groups, each with its own
-      -- sign/virttext. Bookmarks can be used to group together positions and quickly move
-      -- across multiple buffers. default sign is '!@#$%^&*()' (from 0 to 9), and
-      -- default virt_text is "".
-      -- bookmark_0 = {
-      --   sign = "⚑",
-      --   virt_text = "hello world"
-      -- },
-    },
-  },
-  {
     "akinsho/toggleterm.nvim",
     cond = not_vscode,
     lazy = true,
