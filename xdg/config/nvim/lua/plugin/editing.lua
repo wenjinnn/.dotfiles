@@ -34,17 +34,10 @@ return {
     end,
     config = function()
       require("conform").setup({})
-      local range_ignore_filetypes = { "lua" }
       local diff_format = function()
         local data = MiniDiff.get_buf_data()
         if not data or not data.hunks or not vim.g.conform_autoformat then
           vim.notify("No hunks in this buffer or auto format is currently disabled")
-          return
-        end
-        local format = require("conform").format
-        -- stylua range format mass up indent, so use full format for now
-        if vim.tbl_contains(range_ignore_filetypes, vim.bo.filetype) then
-          format({ lsp_fallback = true, timeout_ms = 500 })
           return
         end
         local ranges = {}
@@ -58,7 +51,7 @@ return {
           end
         end
         for _, range in pairs(ranges) do
-          format({ lsp_fallback = true, timeout_ms = 500, range = range })
+          require("conform").format({ lsp_fallback = true, timeout_ms = 500, range = range })
         end
       end
       vim.api.nvim_create_user_command("DiffFormat", diff_format, { desc = "Format changed lines" })
