@@ -1,7 +1,6 @@
 local not_vscode = require("util").not_vscode
 
 return {
-  -- buffer | statusline | icon | treeview | startup buffer
   {
     "echasnovski/mini.starter",
     event = "VimEnter",
@@ -26,7 +25,7 @@ return {
   {
     "echasnovski/mini.icons",
     opts = {},
-    event = { "BufReadPre", "CursorHold", "CursorMoved" },
+    event = "VeryLazy",
     lazy = true,
     config = function(_, opts)
       require("mini.icons").setup(opts)
