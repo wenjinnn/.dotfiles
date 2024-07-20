@@ -29,6 +29,20 @@ M.on_init = function(client)
     codeLens = {
       enable = true,
     },
+    format = {
+      enable = true,
+      defaultConfig = {
+        align_call_args = "false",
+        align_function_params = "false",
+        align_continuous_assign_statement = "false",
+        align_continuous_rect_table_field = "false",
+        align_if_branch = "false",
+        align_array_table = "false",
+        align_continuous_similar_call_args = "false",
+        align_continuous_inline_comment = "false",
+        align_chain_expr = "none",
+      },
+    },
   })
 end
 M.settings = {

@@ -33,11 +33,7 @@ return {
       vim.g.conform_autoformat = true
     end,
     config = function()
-      require("conform").setup({
-        formatters_by_ft = {
-          lua = { "stylua" },
-        },
-      })
+      require("conform").setup({})
       local range_ignore_filetypes = { "lua" }
       local diff_format = function()
         local data = MiniDiff.get_buf_data()
@@ -199,7 +195,7 @@ return {
       vim.filetype.get_option = function(filetype, option)
         return option == "commentstring"
             and require("ts_context_commentstring.internal").calculate_commentstring()
-          or get_option(filetype, option)
+            or get_option(filetype, option)
       end
     end,
     opts = {
