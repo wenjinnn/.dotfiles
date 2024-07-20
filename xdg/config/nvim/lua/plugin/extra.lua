@@ -150,13 +150,13 @@ return {
     cmd = "Translate",
     keys = {
       -- Display translation in a window
-      { "<leader>tt", "<cmd>Translate ZH<CR>", mode = { "n", "x" } },
+      { "<leader>tt", "<cmd>Translate ZH<CR>", mode = { "n", "x" }, desc = "Translate to a pop window" },
       -- Replace the text with translation
-      { "<leader>tr", "<cmd>Translate ZH -output=replace<CR>", mode = { "n", "x" } },
+      { "<leader>tr", "<cmd>Translate ZH -output=replace<CR>", mode = { "n", "x" }, desc = "Translate and replace" },
       -- Insert the text with translation
-      { "<leader>ti", "<cmd>Translate ZH -output=insert<CR>", mode = { "n", "x" } },
+      { "<leader>ti", "<cmd>Translate ZH -output=insert<CR>", mode = { "n", "x" }, desc = "Translate and insert word" },
       -- copy translation to register
-      { "<leader>ty", "<cmd>Translate ZH -output=register<CR>", mode = { "n", "x" } },
+      { "<leader>ty", "<cmd>Translate ZH -output=register<CR>", mode = { "n", "x" }, desc = "Translate to register" },
     },
     cond = not_vscode,
     opts = function()
