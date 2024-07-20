@@ -26,7 +26,7 @@ return {
   {
     "echasnovski/mini.icons",
     opts = {},
-    event = "UIEnter",
+    event = { "BufReadPre", "CursorHold", "CursorMoved" },
     lazy = true,
     config = function(_, opts)
       require("mini.icons").setup(opts)
@@ -48,8 +48,8 @@ return {
   },
   {
     "nvim-lualine/lualine.nvim",
-    event = "UIEnter",
-    cond = not_vscode and not vim.g.started_by_firenvim,
+    event = "BufReadPre",
+    cond = not_vscode or not vim.g.started_by_firenvim,
     keys = {
       {
         "<leader>b",

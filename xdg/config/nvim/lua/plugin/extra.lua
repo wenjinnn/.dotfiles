@@ -173,7 +173,7 @@ return {
   },
   {
     "echasnovski/mini.clue",
-    event = "VeryLazy",
+    event = "BufRead",
     cond = not_vscode,
     opts = function()
       local miniclue = require("mini.clue")

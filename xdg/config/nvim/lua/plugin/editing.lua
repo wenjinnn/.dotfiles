@@ -143,6 +143,27 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    event = { "BufReadPre" },
+    cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
+    init = function(plugin)
+      -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
+      -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
+      -- no longer trigger the **nvim-treeitter** module to be loaded in time.
+      -- Luckily, the only thins that those plugins need are the custom queries, which we make available
+      -- during startup.
+      require("lazy.core.loader").add_to_rtp(plugin)
+      require("nvim-treesitter.query_predicates")
+      vim.g.skip_ts_context_commentstring_module = true
+      local get_option = vim.filetype.get_option
+      -- FIX native comment not work for jsx or vue template, relate issue: https://github.com/neovim/neovim/issues/28830
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.filetype.get_option = function(filetype, option)
+        return option == "commentstring"
+            and require("ts_context_commentstring.internal").calculate_commentstring()
+            or get_option(filetype, option)
+      end
+    end,
     dependencies = {
       {
         "nvim-treesitter/nvim-treesitter-textobjects",
@@ -177,27 +198,6 @@ return {
       },
       { "hiphish/rainbow-delimiters.nvim" },
     },
-    build = ":TSUpdate",
-    event = { "BufReadPre" },
-    cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
-    init = function(plugin)
-      -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
-      -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
-      -- no longer trigger the **nvim-treeitter** module to be loaded in time.
-      -- Luckily, the only thins that those plugins need are the custom queries, which we make available
-      -- during startup.
-      require("lazy.core.loader").add_to_rtp(plugin)
-      require("nvim-treesitter.query_predicates")
-      vim.g.skip_ts_context_commentstring_module = true
-      local get_option = vim.filetype.get_option
-      -- FIX native comment not work for jsx or vue template, relate issue: https://github.com/neovim/neovim/issues/28830
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.filetype.get_option = function(filetype, option)
-        return option == "commentstring"
-            and require("ts_context_commentstring.internal").calculate_commentstring()
-            or get_option(filetype, option)
-      end
-    end,
     opts = {
       ensure_installed = {
         -- basic

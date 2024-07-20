@@ -11,11 +11,8 @@ opt.clipboard = vim.env.SSH_TTY and "" or "unnamedplus"
 opt.inccommand = "nosplit"
 opt.cmdheight = 1
 opt.showcmd = true
-if vim.g.started_by_firenvim ~= nil then
-  opt.laststatus = 0
-else
-  opt.laststatus = 2
-end
+-- laststatus will set to 2 when lualine.nvim loaded, which at BufReadPre event
+opt.laststatus = 0
 opt.number = true
 opt.signcolumn = "yes"
 opt.relativenumber = true
