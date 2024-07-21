@@ -2,8 +2,8 @@
 # Screenshots
 |  |  |
 | :-------------: | :--------------: |
-| ![application menu](https://github.com/user-attachments/assets/18995b64-8804-499a-82f1-e504ba316254 "application menu")  | clipboard history ![clipboard manage](https://github.com/user-attachments/assets/c0107d3e-113c-4d48-8bc7-80e1d2ee788d "clipboard manage") |
-| logout menu ![logout menu](https://github.com/user-attachments/assets/17183dc5-a355-4f3a-82f8-8fc509527e0c "logout menu") | OCR for screenshot ![OCR for screenshot](https://github.com/user-attachments/assets/cd305ebc-4a70-42fc-92d8-c078c752e77e "OCR for screenshot")
+| ![application menu](https://github.com/user-attachments/assets/18995b64-8804-499a-82f1-e504ba316254 "application menu")  | ![clipboard manage](https://github.com/user-attachments/assets/c0107d3e-113c-4d48-8bc7-80e1d2ee788d "clipboard manage") |
+| ![logout menu](https://github.com/user-attachments/assets/17183dc5-a355-4f3a-82f8-8fc509527e0c "logout menu") | ![OCR for screenshot](https://github.com/user-attachments/assets/cd305ebc-4a70-42fc-92d8-c078c752e77e "OCR for screenshot")
 
 The old Arch config at [Arch branch](https://github.com/wenjinnn/config/tree/arch).
 
