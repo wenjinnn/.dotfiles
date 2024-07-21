@@ -1,12 +1,18 @@
-### wenjinnn's neovim configuration
 
 # wenvim
+### wenjinnn's neovim configuration
 
 <a href="https://dotfyle.com/wenjinnn/config-xdg-config-nvim"><img src="https://dotfyle.com/wenjinnn/config-xdg-config-nvim/badges/plugins?style=flat" /></a>
 <a href="https://dotfyle.com/wenjinnn/config-xdg-config-nvim"><img src="https://dotfyle.com/wenjinnn/config-xdg-config-nvim/badges/leaderkey?style=flat" /></a>
 <a href="https://dotfyle.com/wenjinnn/config-xdg-config-nvim"><img src="https://dotfyle.com/wenjinnn/config-xdg-config-nvim/badges/plugin-manager?style=flat" /></a>
 
-![screenshot](./screenshot.png)
+| | | |
+| :-------------: | :--------------: | :--------------: |
+| starter ![starter](https://github.com/user-attachments/assets/736dae00-311e-44c1-8840-a33fd6fd1b53) | auto completion ![auto completion](https://github.com/user-attachments/assets/b6ac8e5a-9a49-4df7-adfe-2ed5ad7b2f04) | lazy.nvim ![lazy.nvim](https://github.com/user-attachments/assets/a6936d88-b634-4048-98c1-726b8c67c12f) |
+| HTTP request with hurl ![HTTP request](https://github.com/user-attachments/assets/34a03fc4-f8fb-47db-96d0-d0c7f671058f) | key clue ![key clue](https://github.com/user-attachments/assets/9c73e035-87f4-4be9-b973-639b9690ded3) | pick anything ![pick anything](https://github.com/user-attachments/assets/57d9064a-3630-472d-bf22-28fef9be5619) |
+ | LSP process and notify ![LSP process and notify](https://github.com/user-attachments/assets/25a624d2-c080-4cda-b45c-3e3af8499563) | file explorer ![file explorer](https://github.com/user-attachments/assets/9f1ae398-21fd-4d70-a3bf-92f5f0b3d69b) | DAP with toggleterm.nvim integration ![DAP with toggleterm.nvim integration](https://github.com/user-attachments/assets/7e03ff54-a959-48d7-8e34-1dff6fe295e6) |
+ | code action ![code action](https://github.com/user-attachments/assets/c3fb3dc8-233c-4f07-9392-c0c3dedc8825) | LSP jump to ![LSP jump to](https://github.com/user-attachments/assets/cf15f776-ae51-424d-b456-7254392be4dd) | LSP symbol ![LSP symbol](https://github.com/user-attachments/assets/93bf429d-f9fc-4681-96ac-0cfed750c51d) |
+
 
 ## Principle and Goal
 
@@ -15,6 +21,9 @@
 * Avoid sidebar, focus on editing. personally, I prefer to use float window, sidebar buffer just distract me a lot.
 * Avoid extra UI plugins. In common scenarios, [mini.notify](https://github.com/echasnovski/mini.notify) and [mini.pick](https://github.com/echasnovski/mini.pick) with `vim.ui.select()` wrapper already done well enough for notify and float window.
 * Provide out-of-box experience for web development
+
+> [!NOTE]
+> This configuration only guaranteed to be compatible with the latest stable version.
 
 ## Install Instructions
 
@@ -57,6 +66,8 @@ just some filetype settings
 `LAZY_NVIM_LOCK_PATH` lazy.nvim lockfile path, if not set, fallback to lazy.nvim default setting
 
 `TELESCOPE_FILE_IGNORE_PATTERNS` telescope.nvim file ignore patterns, if not set, the pattern is { "^.git/", "^node_modules/" }
+
+`NVIM_SPELLFILE` nvim spell file location
 
 ### Dap
 
@@ -166,9 +177,7 @@ just some filetype settings
 ### plugin-manager
 
 + [folke/lazy.nvim](https://dotfyle.com/plugins/folke/lazy.nvim)
-### preconfigured
 
-+ [LazyVim/LazyVim](https://dotfyle.com/plugins/LazyVim/LazyVim)
 ### search
 
 + [windwp/nvim-spectre](https://dotfyle.com/plugins/windwp/nvim-spectre)
