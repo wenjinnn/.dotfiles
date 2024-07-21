@@ -1,5 +1,9 @@
 # Personal NixOS config with Flake and Home Manager
-![screenshot](./screenshot.png)
+# Screenshots
+|  |  |
+| :-------------: | :--------------: |
+| application menu ![application menu](https://github.com/user-attachments/assets/18995b64-8804-499a-82f1-e504ba316254)  | clipboard history ![clipboard history](https://github.com/user-attachments/assets/c0107d3e-113c-4d48-8bc7-80e1d2ee788d) |
+| logout menu ![logout menu](https://github.com/user-attachments/assets/17183dc5-a355-4f3a-82f8-8fc509527e0c) | OCR for screenshot ![OCR for screenshot](https://github.com/user-attachments/assets/cd305ebc-4a70-42fc-92d8-c078c752e77e)
 
 The old Arch config at [Arch branch](https://github.com/wenjinnn/config/tree/arch).
 
@@ -7,7 +11,7 @@ The old Arch config at [Arch branch](https://github.com/wenjinnn/config/tree/arc
 
 For a lone time I'm seeking for a solution to manage my OS config, The Arch branch is a way that I manage my home config, but that's not enough, NixOS provided capability to manage system wide config, or even more, with Flake I can manage configuration of multiple system.
 
-repo's structure base on [nix-starter-config#standard](https://github.com/Misterio77/nix-starter-configs/tree/main/standard)
+Repo's structure base on [nix-starter-config#standard](https://github.com/Misterio77/nix-starter-configs/tree/main/standard)
 
 # Stuff here
 
@@ -19,13 +23,14 @@ repo's structure base on [nix-starter-config#standard](https://github.com/Mister
 
 The [ags config](https://github.com/wenjinnn/config/tree/nixos/xdg/config/ags) base on [Aylur/dotfiles](https://github.com/Aylur/dotfiles), with these different:
 
-* add hibernate button for powermenu, need to setup swap to make it work.  
-* use [hyprlock](https://github.com/hyprwm/hyprlock) instead of lockscreen.js (more security, see this [issue](https://github.com/Aylur/dotfiles/issues/72))  
-* add a clipboard menu depends on [cliphist](https://github.com/sentriz/cliphist), to trigger it, type `:cp` when launcher active
-* ocr for screenshot powered by [tesseract](https://github.com/tesseract-ocr/tesseract)
-* some bug fix for chinese font and [more](https://github.com/Aylur/dotfiles/issues/122)
-* remove favorite list on launcher, instead with whole applications list.
-* add scroll bar for all launcher.
+* Add hibernate button for powermenu, need to setup swap to make it work.  
+* Use [hyprlock](https://github.com/hyprwm/hyprlock) instead of lockscreen.js (more security, see this [issue](https://github.com/Aylur/dotfiles/issues/72))  
+* Add a clipboard menu depends on [cliphist](https://github.com/sentriz/cliphist), to trigger it, type `:cp` when launcher active
+* Ocr for screenshot powered by [tesseract](https://github.com/tesseract-ocr/tesseract)
+* Some bug fix for chinese font and [more](https://github.com/Aylur/dotfiles/issues/122)
+* Remove favorite list on launcher, instead with whole applications list.
+* Add scroll bar for all launcher.
+* Some fix for 4k screen display.
 
 # Must have
 
@@ -43,7 +48,7 @@ Almost as same as [Aylur/dotfiles](https://github.com/Aylur/dotfiles) (except as
 
 For NixOS users:
 
-replace [hardware-configuration.nix](https://github.com/wenjinnn/config/blob/nixos/nixos/hosts/nixos/hardware-configuration.nix) with your own, and change the [username](https://github.com/wenjinnn/config/blob/1d08b37c56696a953e1c40c0ea9307acf0c1539d/flake.nix#L63) variable, you may also need remove this [line](https://github.com/wenjinnn/config/blob/3c58b72f83b4a4e421ef0fc72a808e2ce31ca68b/flake.nix#L94) from nixos hardware or replace it with your hardware model. Then execute in local repo path:
+Replace [hardware-configuration.nix](https://github.com/wenjinnn/config/blob/nixos/nixos/hosts/nixos/hardware-configuration.nix) with your own, and change the [username](https://github.com/wenjinnn/config/blob/1d08b37c56696a953e1c40c0ea9307acf0c1539d/flake.nix#L63) variable, you may also need remove this [line](https://github.com/wenjinnn/config/blob/3c58b72f83b4a4e421ef0fc72a808e2ce31ca68b/flake.nix#L94) from nixos hardware or replace it with your hardware model. Then execute in local repo path:
 ```
 $ sudo nixos-rebuild switch --flake .#nixos
 $ home-manager switch --flake .#wenjin@nixos
