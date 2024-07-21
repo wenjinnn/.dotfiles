@@ -22,6 +22,7 @@ return {
     opts = {},
     keys = {
       {
+        mode = { "n", "x" },
         "<leader>ga",
         "<cmd>lua MiniGit.show_at_cursor()<CR>",
         desc = "Git show at cursor",
