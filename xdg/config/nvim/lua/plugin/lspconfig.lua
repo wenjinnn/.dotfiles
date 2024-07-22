@@ -195,12 +195,6 @@ return {
             "<Cmd>lua require('jdtls').test_class()<CR>",
             desc = "Jdt Test Class",
           },
-          -- manually setup dap since it will unexpectedly failed sometimes, see readme of https://github.com/mfussenegger/nvim-jdtls
-          {
-            "<leader>dj",
-            "<Cmd>lua require('lsp.jdtls').setup_dap()<CR>",
-            desc = "Jdt setup dap",
-          },
           {
             "<leader>dm",
             "<Cmd>lua require('jdtls').test_nearest_method()<CR>",

@@ -88,6 +88,13 @@ return {
         vim.cmd("startinsert")
       end
     end
+    local dap_continue = function()
+      -- fix java dap setup failed sometime
+      if vim.bo.filetype == "java" and dap.configurations.java == nil then
+        require('lsp.jdtls').setup_dap()
+      end
+      dap.continue()
+    end
     return {
       { "<leader>db", dap.toggle_breakpoint, desc = "Dap toggle breakpoint" },
       {
@@ -99,7 +106,7 @@ return {
         desc = "Dap list breakpoints",
       },
       { "<leader>dd", dap.clear_breakpoints, desc = "Dap clear breakpoint" },
-      { "<leader>dc", dap.continue, desc = "Dap continue" },
+      { "<leader>dc", dap_continue, desc = "Dap continue" },
       {
         "<leader>dC",
         repeatable("n", "<plug>(DapRunToCursor)", dap.run_to_cursor),
