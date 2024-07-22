@@ -154,6 +154,7 @@ au("VimEnter", {
 
 -- auto change root
 au("BufEnter", {
+  group = augroup("auto_change_root"),
   callback = function(ctx)
     local root = vim.fs.root(ctx.buf, { ".git", ".svn", "Makefile" })
     if root and root ~= "." and root ~= vim.fn.getcwd() then
@@ -165,9 +166,15 @@ au("BufEnter", {
 
 -- try to fix snippet session error in 0.10
 au("BufLeave", {
+  group = augroup("fix_snippet_session"),
   callback = function()
     if vim.snippet.active({ direction = 1 }) then
       vim.snippet.stop()
     end
   end,
+})
+-- terminal buffer specific options
+au("TermOpen", {
+  group = augroup("terminal_buffer"),
+  callback = require("util").setup_term_opt,
 })

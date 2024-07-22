@@ -48,6 +48,9 @@ return {
       local pick = require("mini.pick")
       pick.setup(opts)
       vim.ui.select = pick.ui_select
+      local show_with_icons = function(buf_id, items, query)
+        return pick.default_show(buf_id, items, query, { show_icons = true })
+      end
       -- pick grep function that pass args to rg
       pick.registry.grep_args = function()
         local args = vim.fn.input("Ripgrep args: ")
@@ -62,21 +65,33 @@ return {
         }
         local args_table = vim.fn.split(args, " ")
         vim.list_extend(command, args_table)
-        print(vim.inspect(command))
 
-        local show_with_icons = function(buf_id, items, query)
-          return pick.default_show(buf_id, items, query, { show_icons = true })
-        end
         return pick.builtin.cli(
           { command = command },
           { source = { name = string.format("Grep (rg %s)", args), show = show_with_icons } }
         )
       end
+      -- -- select terminals
+      pick.registry.terminals = function(local_opts)
+        local buffers_output = vim.api.nvim_exec('buffers' .. (local_opts.include_unlisted and '!' or '') .. " R",
+          true)
+        local items = {}
+        for _, l in ipairs(vim.split(buffers_output, '\n')) do
+          local buf_str, name = l:match('^%s*%d+'), l:match('"(.*)"')
+          local buf_id = tonumber(buf_str)
+          local item = { text = name, bufnr = buf_id }
+          table.insert(items, item)
+        end
+
+        local opts = { source = { name = 'Terminal buffers', show = show_with_icons, items = items } }
+        return MiniPick.start(opts)
+      end
     end,
     keys = {
+      { "<leader>ft", "<cmd>Pick terminals<cr>", desc = "Pick terminals" },
+      { "<leader>fG", "<cmd>Pick grep_args<cr>", desc = "Pick grep with rg args" },
       { "<leader>ff", "<cmd>Pick files<cr>", desc = "Pick files" },
       { "<leader>fg", "<cmd>Pick grep_live<cr>", desc = "Pick grep live" },
-      { "<leader>fG", "<cmd>Pick grep_args<cr>", desc = "Pick grep with rg args" },
       { "<leader>fH", "<cmd>Pick help<cr>", desc = "Pick help" },
       { "<leader>fb", "<cmd>Pick buffers<cr>", desc = "Pick buffers" },
       { "<leader>fc", "<cmd>Pick cli<cr>", desc = "Pick cli" },
@@ -115,7 +130,7 @@ return {
       { "<leader>fO", "<cmd>Pick options<cr>", desc = "Pick options" },
       { "<leader>fr", "<cmd>Pick registers<cr>", desc = "Pick registers" },
       { "<leader>fp", "<cmd>Pick spellsuggest<cr>", desc = "Pick spell suggest" },
-      { "<leader>ft", "<cmd>Pick treesitter<cr>", desc = "Pick treesitter" },
+      { "<leader>fT", "<cmd>Pick treesitter<cr>", desc = "Pick treesitter" },
       { "<leader>fv", "<cmd>Pick visit_paths<cr>", desc = "Pick visit paths" },
       { "<leader>fV", "<cmd>Pick visit_labels<cr>", desc = "Pick visit labels" },
       { "<leader>cd", "<cmd>Pick lsp scope='definition'<CR>", desc = "Pick lsp definition" },

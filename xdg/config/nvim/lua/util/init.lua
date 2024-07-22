@@ -156,7 +156,7 @@ function M.maximize(state)
   })
 end
 
-function M.setup_toggleterm_opt()
+function M.setup_term_opt()
   local ol = vim.opt_local
   ol.number = false
   ol.signcolumn = "no"

@@ -289,26 +289,12 @@ return {
         },
       }
     end,
-    version = "*",
     opts = function()
-      local function shutdown_term()
-        local terms = require("toggleterm.terminal")
-        local terminals = terms.get_all()
-        for _, terminal in pairs(terminals) do
-          terminal:shutdown()
-        end
-      end
       return {
         directory = vim.fn.stdpath("state") .. "/sessions/",
         file = "session.vim",
         -- Whether to force possibly harmful actions (meaning depends on function)
         force = { read = false, write = true, delete = true },
-        hooks = {
-          -- Before successful action
-          pre = { read = nil, write = shutdown_term, delete = nil },
-          -- After successful action
-          post = { read = nil, write = nil, delete = nil },
-        },
       }
     end,
   },

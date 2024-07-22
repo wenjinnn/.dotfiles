@@ -10,22 +10,7 @@ return {
   },
   config = function()
     local dap = require("dap")
-    dap.defaults.fallback.terminal_win_cmd = function()
-      local Terminal = require("toggleterm.terminal").Terminal
-      local new_term = Terminal:new({
-        -- start zsh without rc file
-        env = { ["NVIM_DAP_TOGGLETERM"] = 1 },
-        clear_env = true,
-        on_open = function(term)
-          -- HACK dap restart session will disappear toggleterm winbar, so we reset winbar at every time we open term
-          require("toggleterm.ui").set_winbar(term)
-          require("util").setup_toggleterm_opt()
-        end,
-      })
-      new_term:toggle()
-      return new_term.bufnr, new_term.window
-    end
-
+    dap.defaults.fallback.terminal_win_cmd = "tabnew"
     dap.adapters.gdb = {
       type = "executable",
       command = "gdb",
