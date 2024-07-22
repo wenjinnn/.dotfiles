@@ -73,10 +73,10 @@ return {
       end
       -- -- select terminals
       pick.registry.terminals = function(local_opts)
-        local buffers_output = vim.api.nvim_exec('buffers' .. (local_opts.include_unlisted and '!' or '') .. " R",
-          true)
+        local buffers_output = vim.api.nvim_exec2("buffers" .. (local_opts.include_unlisted and "!" or "") .. " R",
+          { output = true })
         local items = {}
-        for _, l in ipairs(vim.split(buffers_output, '\n')) do
+        for _, l in ipairs(vim.split(buffers_output.output, '\n')) do
           local buf_str, name = l:match('^%s*%d+'), l:match('"(.*)"')
           local buf_id = tonumber(buf_str)
           local item = { text = name, bufnr = buf_id }
