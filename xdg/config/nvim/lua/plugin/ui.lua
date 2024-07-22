@@ -47,7 +47,7 @@ return {
   },
   {
     "nvim-lualine/lualine.nvim",
-    event = "BufReadPre",
+    event = "UIEnter",
     cond = not_vscode or not vim.g.started_by_firenvim,
     keys = {
       {
