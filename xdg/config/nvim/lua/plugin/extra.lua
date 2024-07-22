@@ -199,7 +199,6 @@ return {
           { mode = "n", keys = "g" },
           { mode = "x", keys = "g" },
 
-          { mode = "n", keys = "g" },
           -- Marks
           { mode = "n", keys = "'" },
           { mode = "n", keys = "`" },
@@ -224,6 +223,9 @@ return {
           { mode = "n", keys = "[" },
 
           { mode = "n", keys = "\\" },
+          -- Operator-pending mode key
+          { mode = "o", keys = "a" },
+          { mode = "o", keys = "i" },
         },
 
         clues = {
