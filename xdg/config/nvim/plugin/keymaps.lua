@@ -32,6 +32,8 @@ map("n", "<leader>C", "<cmd>!ctags<cr>", { desc = "Ctags" })
 
 map("n", "<leader>F", "<cmd>lua require'util'.maximize()<cr>", { desc = "Maximize current buffer" })
 
+map("t", "<Esc>", "<C-\\><C-n>")
+
 if vim.g.vscode then
   local action = function(action, opts)
     return function()

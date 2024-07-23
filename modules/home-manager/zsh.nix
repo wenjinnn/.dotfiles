@@ -31,7 +31,6 @@
         "extract"
         "systemd"
         "fzf"
-        "sudo"
         "tmux"
       ];
     };
