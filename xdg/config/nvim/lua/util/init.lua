@@ -164,15 +164,7 @@ function M.setup_term_opt()
   ol.spell = false
 end
 
-function M.kill_dap_terminals()
-  local dap = require("dap")
-  local sessions = dap.sessions()
-  if #sessions == 0 then
-    return
-  end
-  for _ = 1, #sessions do
-    dap.terminate()
-  end
+function M.delete_dap_terminals()
   local dap_terminals_output = vim.api.nvim_exec2("filter /\\[dap-terminal\\]/ buffers", { output = true })
   local dap_terminals = vim.split(dap_terminals_output.output, "\n")
 

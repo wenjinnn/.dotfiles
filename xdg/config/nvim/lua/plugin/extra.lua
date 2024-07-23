@@ -297,9 +297,9 @@ return {
         force = { read = false, write = true, delete = true },
         hooks = {
           -- Before successful action
-          pre = { read = nil, write = require("util").kill_dap_terminals, delete = nil },
+          pre = { read = nil, write = nil, delete = nil },
           -- After successful action
-          post = { read = nil, write = nil, delete = nil },
+          post = { read = require("util").delete_dap_terminals, write = nil, delete = nil },
         },
       }
     end,

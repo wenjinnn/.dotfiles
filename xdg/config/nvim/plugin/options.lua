@@ -79,7 +79,7 @@ opt.completeopt = { "menu", "menuone", "noinsert" }
 opt.pumheight = 20
 opt.shortmess:append({ I = true })
 opt.sessionoptions:append({ "winpos", "globals", "skiprtp" })
-
+opt.sessionoptions:remove({ "tabpages" })
 opt.wildmode = "longest:full,full"
 opt.winminwidth = 5
 opt.smoothscroll = true
