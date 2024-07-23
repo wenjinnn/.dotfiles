@@ -76,15 +76,16 @@ return {
         local buffers_output = vim.api.nvim_exec2("buffers" .. (local_opts.include_unlisted and "!" or "") .. " R",
           { output = true })
         local items = {}
-        for _, l in ipairs(vim.split(buffers_output.output, '\n')) do
-          local buf_str, name = l:match('^%s*%d+'), l:match('"(.*)"')
-          local buf_id = tonumber(buf_str)
-          local item = { text = name, bufnr = buf_id }
-          table.insert(items, item)
+        if buffers_output.output ~= '' then
+          for _, l in ipairs(vim.split(buffers_output.output, '\n')) do
+            local buf_str, name = l:match('^%s*%d+'), l:match('"(.*)"')
+            local buf_id = tonumber(buf_str)
+            local item = { text = name, bufnr = buf_id }
+            table.insert(items, item)
+          end
         end
-
-        local opts = { source = { name = 'Terminal buffers', show = show_with_icons, items = items } }
-        return MiniPick.start(opts)
+        local terminal_opts = { source = { name = 'Terminal buffers', show = show_with_icons, items = items } }
+        return MiniPick.start(terminal_opts)
       end
     end,
     keys = {
