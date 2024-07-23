@@ -295,6 +295,12 @@ return {
         file = "session.vim",
         -- Whether to force possibly harmful actions (meaning depends on function)
         force = { read = false, write = true, delete = true },
+        hooks = {
+          -- Before successful action
+          pre = { read = nil, write = require("util").kill_dap_terminals, delete = nil },
+          -- After successful action
+          post = { read = nil, write = nil, delete = nil },
+        },
       }
     end,
   },

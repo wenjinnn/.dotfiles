@@ -164,4 +164,27 @@ function M.setup_term_opt()
   ol.spell = false
 end
 
+function M.kill_dap_terminals()
+  local dap = require("dap")
+  local sessions = dap.sessions()
+  if #sessions == 0 then
+    return
+  end
+  for _ = 1, #sessions do
+    dap.terminate()
+  end
+  local dap_terminals_output = vim.api.nvim_exec2("filter /\\[dap-terminal\\]/ buffers", { output = true })
+  local dap_terminals = vim.split(dap_terminals_output.output, "\n")
+
+  local buffers_index = {}
+  for _, terminal in ipairs(dap_terminals) do
+    local buffer_args = vim.split(vim.trim(terminal), " ")
+    table.insert(buffers_index, buffer_args[1])
+  end
+
+  if #buffers_index > 0 then
+    vim.cmd("bd! " .. vim.fn.join(buffers_index, " "))
+  end
+end
+
 return M
