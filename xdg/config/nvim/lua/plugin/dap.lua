@@ -14,7 +14,7 @@ return {
     local dap = require("dap")
     dap.defaults.fallback.terminal_win_cmd = function()
       local cur_win = api.nvim_get_current_win()
-      api.nvim_command("tabnew")
+      api.nvim_command("enew")
       local bufnr = api.nvim_get_current_buf()
       util.setup_term_opt(bufnr)
       local win = api.nvim_get_current_win()
