@@ -1,4 +1,6 @@
 local not_vscode = require("util").not_vscode
+local api = vim.api
+local util = require("util")
 -- nvim debug
 return {
   "mfussenegger/nvim-dap",
@@ -10,7 +12,15 @@ return {
   },
   config = function()
     local dap = require("dap")
-    dap.defaults.fallback.terminal_win_cmd = "tabnew"
+    dap.defaults.fallback.terminal_win_cmd = function()
+      local cur_win = api.nvim_get_current_win()
+      api.nvim_command("tabnew")
+      local bufnr = api.nvim_get_current_buf()
+      util.setup_term_opt(bufnr)
+      local win = api.nvim_get_current_win()
+      api.nvim_set_current_win(cur_win)
+      return bufnr, win
+    end
     dap.adapters.gdb = {
       type = "executable",
       command = "gdb",
@@ -31,7 +41,6 @@ return {
     }
   end,
   keys = function()
-    local util = require("util")
     local dap = require("dap")
     local dap_widgets = require("dap.ui.widgets")
     local repeatable = util.make_repeatable_keymap
