@@ -8,13 +8,7 @@ return {
     keys = function()
       local toggle_auto_format = function()
         vim.g.conform_autoformat = not vim.g.conform_autoformat
-        local status
-        if vim.g.conform_autoformat then
-          status = "on"
-        else
-          status = "off"
-        end
-        vim.notify("Autoformat: " .. status)
+        vim.notify("Autoformat: " .. vim.g.conform_autoformat and "on" or "off")
       end
 
       return {
@@ -135,6 +129,7 @@ return {
           -- Tweak function call to not detect dot in function name
           f = gen_spec.function_call({ name_pattern = '[%w_]' }),
           -- Function definition (needs treesitter queries with these captures)
+          -- This need nvim-treesitter-textobjects, see https://github.com/echasnovski/mini.nvim/issues/947#issuecomment-2154242659
           F = gen_spec.treesitter({ a = '@function.outer', i = '@function.inner' }),
           -- Make `|` select both edges in non-balanced way
           o = gen_spec.treesitter({

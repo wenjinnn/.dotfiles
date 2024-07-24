@@ -97,8 +97,8 @@ return {
 
               require("lspconfig")[server_name].setup(config)
             end,
-            -- -- Next, you can provide targeted overrides for specific servers.
-            -- -- For example, a handler override for the `rust_analyzer`:
+            -- Next, you can provide targeted overrides for specific servers.
+            -- For example, a handler override for the `rust_analyzer`:
             -- ["rust_analyzer"] = function ()
             --     require("rust-tools").setup {}
             -- end

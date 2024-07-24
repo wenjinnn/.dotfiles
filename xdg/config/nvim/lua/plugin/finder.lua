@@ -71,7 +71,7 @@ return {
           { source = { name = string.format("Grep (rg %s)", args), show = show_with_icons } }
         )
       end
-      -- -- select terminals
+      -- select terminals
       pick.registry.terminals = function(local_opts)
         local buffers_output = vim.api.nvim_exec2("buffers" .. (local_opts.include_unlisted and "!" or "") .. " R",
           { output = true })
