@@ -122,6 +122,7 @@ return {
     event = "BufRead",
     opts = function()
       local gen_ai_spec = require("mini.extra").gen_ai_spec
+      local gen_spec = require("mini.ai").gen_spec
       return {
         custom_textobjects = {
           B = gen_ai_spec.buffer(),
@@ -129,6 +130,19 @@ return {
           I = gen_ai_spec.indent(),
           L = gen_ai_spec.line(),
           N = gen_ai_spec.number(),
+          -- Tweak argument to be recognized only inside `()` between `;`
+          a = gen_spec.argument({ brackets = { '%b()' }, separator = ';' }),
+          -- Tweak function call to not detect dot in function name
+          f = gen_spec.function_call({ name_pattern = '[%w_]' }),
+          -- Function definition (needs treesitter queries with these captures)
+          F = gen_spec.treesitter({ a = '@function.outer', i = '@function.inner' }),
+          -- Make `|` select both edges in non-balanced way
+          o = gen_spec.treesitter({
+            a = { '@conditional.outer', '@loop.outer' },
+            i = { '@conditional.inner', '@loop.inner' },
+          }),
+          c = gen_spec.treesitter({ a = '@class.outer', i = '@class.inner' }),
+          ['|'] = gen_spec.pair('|', '|', { type = 'non-balanced' }),
         },
       }
     end,
@@ -167,31 +181,7 @@ return {
       end
     end,
     dependencies = {
-      {
-        "nvim-treesitter/nvim-treesitter-textobjects",
-        config = function()
-          -- When in diff mode, we want to use the default
-          -- vim text objects c & C instead of the treesitter ones.
-          local move = require("nvim-treesitter.textobjects.move") ---@type table<string,fun(...)>
-          local configs = require("nvim-treesitter.configs")
-          for name, fn in pairs(move) do
-            if name:find("goto") == 1 then
-              move[name] = function(q, ...)
-                if vim.wo.diff then
-                  local config = configs.get_module("textobjects.move")[name] ---@type table<string,string>
-                  for key, query in pairs(config or {}) do
-                    if q == query and key:find("[%]%[][cC]") then
-                      vim.cmd("normal! " .. key)
-                      return
-                    end
-                  end
-                end
-                return fn(q, ...)
-              end
-            end
-          end
-        end,
-      },
+      { "nvim-treesitter/nvim-treesitter-textobjects" },
       { "nvim-treesitter/nvim-treesitter-context" },
       { "windwp/nvim-ts-autotag", opts = {} },
       {
@@ -242,43 +232,6 @@ return {
         additional_vim_regex_highlighting = false,
       },
       indent = { enable = true },
-      textobjects = {
-        select = {
-          enable = true,
-          -- Automatically jump forward to textobj, similar to targets.vim
-          lookahead = true,
-          keymaps = {
-            -- You can use the capture groups defined in textobjects.scm
-            ["af"] = "@function.outer",
-            ["if"] = "@function.inner",
-            ["ac"] = "@class.outer",
-            ["ic"] = "@class.inner",
-          },
-          -- You can choose the select mode (default is charwise 'v')
-          selection_modes = {
-            ["@parameter.outer"] = "v", -- charwise
-            ["@function.outer"] = "V", -- linewise
-            ["@class.outer"] = "<c-v>", -- blockwise
-          },
-          -- If you set this to `true` (default is `false`) then any textobject is
-          -- extended to include preceding xor succeeding whitespace. Succeeding
-          -- whitespace has priority in order to act similarly to eg the built-in
-          -- `ap`.
-          include_surrounding_whitespace = true,
-        },
-        incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = "<C-space>",
-            node_incremental = "<C-space>",
-            scope_incremental = false,
-            node_decremental = "<bs>",
-          },
-        },
-        move = {
-          enable = true,
-        },
-      },
     },
     config = function(_, opts)
       if type(opts.ensure_installed) == "table" then
