@@ -8,7 +8,7 @@ return {
     keys = function()
       local toggle_auto_format = function()
         vim.g.conform_autoformat = not vim.g.conform_autoformat
-        vim.notify("Autoformat: " .. vim.g.conform_autoformat and "on" or "off")
+        vim.notify("Autoformat: " .. (vim.g.conform_autoformat and "on" or "off"))
       end
 
       return {
@@ -26,8 +26,9 @@ return {
       vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
       vim.g.conform_autoformat = true
     end,
-    config = function()
-      require("conform").setup({})
+    opts = {},
+    config = function(_, opts)
+      require("conform").setup(opts)
       local diff_format = function()
         local data = MiniDiff.get_buf_data()
         if not data or not data.hunks or not vim.g.conform_autoformat then
