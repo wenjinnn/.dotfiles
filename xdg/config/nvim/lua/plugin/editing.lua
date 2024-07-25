@@ -161,7 +161,12 @@ return {
   {
     "echasnovski/mini.align",
     event = "BufRead",
-    opts = {},
+    opts = {
+      mappings = {
+        start = "<leader>a",
+        start_with_preview = "<leader>A",
+      },
+    },
   },
   {
     "echasnovski/mini.bracketed",

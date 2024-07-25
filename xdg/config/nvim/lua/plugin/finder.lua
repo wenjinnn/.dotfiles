@@ -35,8 +35,8 @@ return {
     lazy = true,
     opts = {},
     keys = {
-      { "<leader>a", "<cmd>lua MiniVisits.add_label()<cr>", desc = "MiniVisits add label" },
-      { "<leader>A", "<cmd>lua MiniVisits.remove_label()<cr>", desc = "MiniVisits remove label" },
+      { "<leader>v", "<cmd>lua MiniVisits.add_label()<cr>", desc = "MiniVisits add label" },
+      { "<leader>V", "<cmd>lua MiniVisits.remove_label()<cr>", desc = "MiniVisits remove label" },
     },
   },
   {
