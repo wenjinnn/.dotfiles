@@ -174,7 +174,8 @@ au("BufLeave", {
   end,
 })
 -- terminal buffer specific options
-au("TermOpen", {
+au({ "TermEnter", "TermOpen" }, {
   group = augroup("terminal_buffer"),
+  pattern = "*",
   callback = require("util").setup_term_opt,
 })
