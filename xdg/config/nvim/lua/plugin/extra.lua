@@ -306,7 +306,6 @@ return {
   },
   {
     "jbyuki/venn.nvim",
-    event = "BufRead",
     cmd = { "VBox" },
     keys = {
       { "<leader>vv", ":VBox<cr>", mode = "v", desc = "Draw a single line box or arrow" },

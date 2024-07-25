@@ -3,7 +3,7 @@ return {
   {
     "stevearc/conform.nvim",
     cond = not_vscode,
-    event = "BufRead",
+    event = "CmdLineEnter",
     cmd = { "DiffFormat", "Format" },
     keys = function()
       local toggle_auto_format = function()
