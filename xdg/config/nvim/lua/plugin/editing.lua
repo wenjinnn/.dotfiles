@@ -154,6 +154,7 @@ return {
           c = gen_spec.treesitter({ a = '@class.outer', i = '@class.inner' }),
           ['|'] = gen_spec.pair('|', '|', { type = 'non-balanced' }),
         },
+        n_lines = 500,
       }
     end,
   },
