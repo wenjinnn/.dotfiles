@@ -304,4 +304,18 @@ return {
       }
     end,
   },
+  {
+    "jbyuki/venn.nvim",
+    event = "BufRead",
+    cmd = { "VBox" },
+    keys = {
+      { "<leader>vv", ":VBox<cr>", mode = "v", desc = "Draw a single line box or arrow" },
+      { "<leader>vd", ":VBoxD<cr>", mode = "v", desc = "Draw a double line box or arrow" },
+      { "<leader>vh", ":VBoxH<cr>", mode = "v", desc = "Draw a heavy line box or arrow" },
+      { "<leader>vo", ":VBoxO<cr>", mode = "v", desc = "Draw over a existing box or arrow" },
+      { "<leader>vO", ":VBoxDO<cr>", mode = "v", desc = "Draw over a doulbe line on a existing box or arrow" },
+      { "<leader>vH", ":VBoxHO<cr>", mode = "v", desc = "Draw over a heavy line on a existing box or arrow" },
+      { "<leader>vf", ":VFill<cr>", mode = "v", desc = "Draw fill a area with a solid color" },
+    }
+  },
 }

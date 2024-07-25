@@ -61,6 +61,7 @@
   "sniprun": { "branch": "master", "commit": "f2302d4081914c3312456c91dc6965dfeec266b1" },
   "sonarlint.nvim": { "branch": "main", "commit": "e2a44717af984114fd7da0d5e084240ef269f088" },
   "translate.nvim": { "branch": "main", "commit": "30cc9e9f339b61e7bd40bc1ba7af73ea193bf589" },
+  "venn.nvim": { "branch": "main", "commit": "b09c2f36ddf70b498281845109bedcf08a7e0de0" },
   "vim-dadbod": { "branch": "master", "commit": "7888cb7164d69783d3dce4e0283decd26b82538b" },
   "vim-dadbod-completion": { "branch": "master", "commit": "c3a56c652af9367c5a7b658ed7ed4dc494f430b0" },
   "vim-dadbod-ui": { "branch": "master", "commit": "954877c3396ad4bf5624fcbe7b5673ac43cd0928" },
