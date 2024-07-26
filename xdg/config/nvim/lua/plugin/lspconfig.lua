@@ -3,7 +3,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     cond = not_vscode,
-    event = "BufRead",
+    event = { "BufRead", "SessionLoadPost" },
     keys = {
       {
         "<leader>ca",
