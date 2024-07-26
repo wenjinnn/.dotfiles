@@ -164,15 +164,6 @@ au("BufEnter", {
   end,
 })
 
--- try to fix snippet session error in 0.10
-au("BufLeave", {
-  group = augroup("fix_snippet_session"),
-  callback = function()
-    if vim.snippet.active({ direction = 1 }) then
-      vim.snippet.stop()
-    end
-  end,
-})
 -- terminal buffer specific options
 au({ "TermEnter", "TermOpen" }, {
   group = augroup("terminal_buffer"),
