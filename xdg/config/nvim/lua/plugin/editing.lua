@@ -83,29 +83,11 @@ return {
   {
     "echasnovski/mini.surround",
     event = "BufRead",
-    opts = {
-      mappings = {
-        add = "ys", -- Add surrounding in Normal and Visual modes
-        delete = "ds", -- Delete surrounding
-        find = "gsf", -- Find surrounding (to the right)
-        find_left = "gsF", -- Find surrounding (to the left)
-        highlight = "gsh", -- Highlight surrounding
-        replace = "cs", -- Replace surrounding
-        update_n_lines = "gsn", -- Update `n_lines`
-
-        suffix_last = "l", -- Suffix to search with "prev" method
-        suffix_next = "n", -- Suffix to search with "next" method
-      },
-    },
+    opts = {},
     config = function(_, opts)
       require("mini.surround").setup(opts)
-      -- make mini.surround behavior like vim-surround
-      -- Remap adding surrounding to Visual mode selection
-      vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
-
-      -- Make special mapping for "add surrounding for line"
-      vim.keymap.set('n', 'yss', 'ys_', { remap = true })
-    end
+      vim.keymap.set({ "n", "x" }, "s", "<Nop>")
+    end,
   },
   {
     "echasnovski/mini.splitjoin",
