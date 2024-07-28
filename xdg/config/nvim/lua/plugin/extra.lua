@@ -218,6 +218,9 @@ return {
           { mode = "n", keys = "z" },
           { mode = "x", keys = "z" },
 
+          -- mini.surround
+          { mode = "n", keys = "s" },
+
           -- mini.bracketed
           { mode = "n", keys = "]" },
           { mode = "n", keys = "[" },
@@ -235,9 +238,39 @@ return {
           miniclue.gen_clues.marks(),
           miniclue.gen_clues.registers(),
           miniclue.gen_clues.windows({
+            submode_move = true,
+            submode_navigate = true,
             submode_resize = true,
           }),
           clue_z_keys,
+          -- mini.bracketed
+          { mode = "n", keys = "]b", postkeys = "]" },
+          { mode = "n", keys = "]c", postkeys = "]" },
+          { mode = "n", keys = "]d", postkeys = "]" },
+          { mode = "n", keys = "]h", postkeys = "]" },
+          { mode = "n", keys = "]i", postkeys = "]" },
+          { mode = "n", keys = "]j", postkeys = "]" },
+          { mode = "n", keys = "]l", postkeys = "]" },
+          { mode = "n", keys = "]q", postkeys = "]" },
+          { mode = "n", keys = "]t", postkeys = "]" },
+          { mode = "n", keys = "]u", postkeys = "]" },
+          { mode = "n", keys = "]w", postkeys = "]" },
+          { mode = "n", keys = "]x", postkeys = "]" },
+          { mode = "n", keys = "]y", postkeys = "]" },
+
+          { mode = "n", keys = "[b", postkeys = "[" },
+          { mode = "n", keys = "[c", postkeys = "[" },
+          { mode = "n", keys = "[d", postkeys = "[" },
+          { mode = "n", keys = "[h", postkeys = "[" },
+          { mode = "n", keys = "[i", postkeys = "[" },
+          { mode = "n", keys = "[j", postkeys = "[" },
+          { mode = "n", keys = "[l", postkeys = "[" },
+          { mode = "n", keys = "[q", postkeys = "[" },
+          { mode = "n", keys = "[t", postkeys = "[" },
+          { mode = "n", keys = "[u", postkeys = "[" },
+          { mode = "n", keys = "[w", postkeys = "[" },
+          { mode = "n", keys = "[x", postkeys = "[" },
+          { mode = "n", keys = "[y", postkeys = "[" },
         },
       }
     end,
