@@ -27,6 +27,7 @@
     translate-shell
     ripgrep
     tmux
+    sops
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
 

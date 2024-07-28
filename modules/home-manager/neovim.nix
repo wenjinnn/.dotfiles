@@ -31,6 +31,7 @@ in {
     JAVA_21_HOME = "${pkgs.jdk21}/lib/openjdk";
     LAZY_NVIM_LOCK_PATH = "${repoPath}/xdg/config/nvim/";
     NVIM_SPELLFILE = "${archivePath}/nvim/spell/en.utf-8.add";
+    SOPS_SECRETS = "${repoPath}/secrets.yaml";
   };
   home.file = {
     ".config/nvim" = {

@@ -39,6 +39,7 @@
 
     # TODO: Add any other flake you might need
     nixos-hardware.url = "github:nixos/nixos-hardware";
+    sops-nix.url = "github:Mic92/sops-nix";
 
     # Shameless plug: looking for a way to nixify your themes and make
     # everything match nicely? Try nix-colors!
@@ -52,6 +53,7 @@
     nix-on-droid,
     nixos-hardware,
     nur,
+    sops-nix,
     ...
   } @ inputs: let
     inherit (self) outputs;
