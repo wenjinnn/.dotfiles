@@ -122,7 +122,7 @@ return {
     cond = not_vscode,
     cmd = "DBUIToggle",
   },
-  -- powerful replace tool
+  -- search and replace tool
   {
     "windwp/nvim-spectre",
     cond = not_vscode,
@@ -348,6 +348,67 @@ return {
       { "<leader>vO", ":VBoxDO<cr>", mode = "v", desc = "Draw over a doulbe line on a existing box or arrow" },
       { "<leader>vH", ":VBoxHO<cr>", mode = "v", desc = "Draw over a heavy line on a existing box or arrow" },
       { "<leader>vf", ":VFill<cr>", mode = "v", desc = "Draw fill a area with a solid color" },
-    }
+    },
+  },
+  {
+    "olimorris/codecompanion.nvim",
+    event = "BufRead",
+    opts = function()
+      local adapter = "anthropic"
+      if vim.fn.has("ollama") then
+        local handle = io.popen("ollama ps")
+        if handle then
+          for line in handle:lines() do
+            local first_word = line:match("%S+")
+            if first_word ~= nil and first_word ~= "NAME" then
+              adapter = "ollama"
+              break
+            end
+          end
+        end
+      end
+      return {
+        adapters = {
+          anthropic = function()
+            return require("codecompanion.adapters").use("anthropic", {
+              env = {
+                api_key = "cmd:sops exec-env $SOPS_SECRETS 'echo -n $ANTHROPIC_API_KEY'",
+              },
+            })
+          end,
+          ollama = function()
+            return require("codecompanion.adapters").use("ollama", {
+              schema = {
+                model = {
+                  default = "llama3.1",
+                },
+              },
+            })
+          end,
+        },
+        strategies = {
+          chat = { adapter = adapter },
+          inline = { adapter = adapter },
+          agent = { adapter = adapter },
+        },
+        default_prompts = {
+          ["Custom Prompt"] = { opts = { mapping = "<Leader>Cp" } },
+          ["Senior Developer"] = { opts = { mapping = "<Leader>Cs" } },
+          ["Explain"] = { opts = { mapping = "<Leader>Ce" } },
+          ["Unit Tests"] = { opts = { mapping = "<Leader>Ct" } },
+          ["Code Advisor"] = { opts = { mapping = "<Leader>Cd" } },
+          ["Buffer selection"] = { opts = { mapping = "<Leader>Cb" } },
+          ["Explain LSP Diagnostics"] = { opts = { mapping = "<Leader>Cl" } },
+          ["Generate a Commit Message"] = { opts = { mapping = "<Leader>Cm" } },
+        },
+      }
+    end,
+    keys = {
+      { mode = { "n", "v" }, "<leader>Ca", "<cmd>CodeCompanionActions<cr>", desc = "Code companion actions" },
+      { "<leader>Cc", "<cmd>CodeCompanion<cr>", desc = "Code companion" },
+      { "<leader>CC", "<cmd>CodeCompanionChat<cr>", desc = "Code companion chat" },
+      { mode = { "n", "v" }, "<leader>CT", "<cmd>CodeCompanionToggle<cr>", desc = "Code companion toggle" },
+      { mode = { "v" }, "<leader>CA", "<cmd>CodeCompanionAdd<cr>", desc = "Code companion add" },
+    },
   },
 }

@@ -28,8 +28,7 @@ map("n", "<leader>L", "<cmd>Lazy<cr>", { desc = "Lazy" })
 map("n", "<leader>l", "<cmd>lopen<cr>", { desc = "Location list" })
 map("n", "<leader>q", "<cmd>copen<cr>", { desc = "Quickfix list" })
 
-map("n", "<leader>C", "<cmd>!ctags<cr>", { desc = "Ctags" })
-
+map("n", "<leader>]", "<cmd>!ctags<cr>", { desc = "Ctags" })
 map("n", "<leader>F", "<cmd>lua require'util'.maximize()<cr>", { desc = "Maximize current buffer" })
 
 if vim.g.vscode then
