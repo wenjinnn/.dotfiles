@@ -71,9 +71,9 @@ return {
           { source = { name = string.format("Grep (rg %s)", args), show = show_with_icons } }
         )
       end
-      -- select terminals
-      pick.registry.terminals = function(local_opts)
-        local buffers_output = vim.api.nvim_exec2("buffers" .. (local_opts.include_unlisted and "!" or "") .. " R",
+      local function get_terminal_items(local_opts)
+        local cmd_opts = local_opts or {}
+        local buffers_output = vim.api.nvim_exec2("buffers" .. (cmd_opts.include_unlisted and "!" or "") .. " R",
           { output = true })
         local items = {}
         if buffers_output.output ~= '' then
@@ -84,12 +84,29 @@ return {
             table.insert(items, item)
           end
         end
-        local terminal_opts = { source = { name = 'Terminal buffers', show = show_with_icons, items = items } }
+        return items
+      end
+      -- select terminals
+      pick.registry.terminals = function(local_opts)
+        local items = get_terminal_items(local_opts)
+        local terminal_opts = { source = { name = "Terminal buffers", show = show_with_icons, items = items } }
         return MiniPick.start(terminal_opts)
       end
+      vim.api.nvim_create_user_command("PickOrNewTerminal",
+        function()
+          local items = get_terminal_items()
+          if #items == 0 then
+            vim.cmd("terminal")
+          elseif #items == 1 then
+            vim.cmd("buffer " .. items[1].bufnr)
+          else
+            vim.cmd("Pick terminals")
+          end
+        end
+        , { desc = "Format changed lines" })
     end,
     keys = {
-      { "<leader>ft", "<cmd>Pick terminals<cr>", desc = "Pick terminals" },
+      { "<leader>ft", "<cmd>PickOrNewTerminal<cr>", desc = "Pick terminals or new one" },
       { "<leader>fG", "<cmd>Pick grep_args<cr>", desc = "Pick grep with rg args" },
       { "<leader>ff", "<cmd>Pick files<cr>", desc = "Pick files" },
       { "<leader>fg", "<cmd>Pick grep_live<cr>", desc = "Pick grep live" },
