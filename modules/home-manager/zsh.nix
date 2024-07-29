@@ -46,7 +46,7 @@
       fi
     '';
     initExtra = let
-      proxyPort = "2334";
+      proxyPort = "12334";
       proxyAddr = "http://127.0.0.1:${proxyPort}";
     in ''
       COMPLETION_WAITING_DOTS="true"
