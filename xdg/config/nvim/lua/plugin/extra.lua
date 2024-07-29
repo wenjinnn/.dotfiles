@@ -237,11 +237,7 @@ return {
           miniclue.gen_clues.g(),
           miniclue.gen_clues.marks(),
           miniclue.gen_clues.registers(),
-          miniclue.gen_clues.windows({
-            submode_move = true,
-            submode_navigate = true,
-            submode_resize = true,
-          }),
+          miniclue.gen_clues.windows({ submode_resize = true }),
           clue_z_keys,
           -- mini.bracketed
           { mode = "n", keys = "]b", postkeys = "]" },
