@@ -41,103 +41,169 @@ return {
     }
   end,
   keys = function()
-    local dap = require("dap")
-    local dap_widgets = require("dap.ui.widgets")
     local repeatable = util.make_repeatable_keymap
-    local dap_condition_breakpoint = function()
-      dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
-    end
-    local dap_log_breakpoint = function()
-      dap.set_breakpoint(nil, nil, vim.fn.input("Log point message: "))
-    end
-    local dap_exception_breakpoint = function()
-      dap.set_exception_breakpoints("default")
-    end
-    local dap_hover = function()
-      dap_widgets.hover("<cexpr>", { title = "dap-hover" })
-    end
     local dap_cursor_float = function(widget, title)
-      dap_widgets.cursor_float(widget, { title = title })
-    end
-    local dap_scopes = function()
-      dap_cursor_float(dap_widgets.scopes, "dap-scopes")
-    end
-    local dap_frames = function()
-      dap_cursor_float(dap_widgets.frames, "dap-frames")
-    end
-    local dap_expression = function()
-      dap_cursor_float(dap_widgets.expression, "dap-expression")
-    end
-    local dap_threads = function()
-      dap_cursor_float(dap_widgets.threads, "dap-threads")
-    end
-    local dap_sessions = function()
-      dap_cursor_float(dap_widgets.sessions, "dap-sessions")
-    end
-    local dap_repl = function()
-      dap.repl.toggle()
-      vim.cmd("wincmd p")
-      local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
-      if filetype == "dap-repl" then
-        vim.cmd("startinsert")
-      end
-    end
-    local dap_continue = function()
-      -- fix java dap setup failed sometime
-      if vim.bo.filetype == "java" and dap.configurations.java == nil then
-        require('lsp.jdtls').setup_dap()
-      end
-      dap.continue()
+      require("dap.ui.widgets").cursor_float(widget, { title = title })
     end
     return {
-      { "<leader>db", dap.toggle_breakpoint, desc = "Dap toggle breakpoint" },
+      {
+        "<leader>db",
+        function()
+          require("dap").toggle_breakpoint()
+        end,
+        desc = "Dap toggle breakpoint",
+      },
       {
         "<leader>dq",
         function()
-          dap.list_breakpoints()
+          require("dap").list_breakpoints()
           vim.cmd("copen")
         end,
         desc = "Dap list breakpoints",
       },
-      { "<leader>dd", dap.clear_breakpoints, desc = "Dap clear breakpoint" },
-      { "<leader>dc", dap_continue, desc = "Dap continue" },
+      {
+        "<leader>dd",
+        function()
+          require("dap").clear_breakpoints()
+        end,
+        desc = "Dap clear breakpoint",
+      },
+      {
+        "<leader>dc",
+        function()
+          -- fix java dap setup failed sometime
+          if vim.bo.filetype == "java" and require("dap").configurations.java == nil then
+            require("lsp.jdtls").setup_dap()
+          end
+          require("dap").continue()
+        end,
+        desc = "Dap continue",
+      },
       {
         "<leader>dC",
-        repeatable("n", "<plug>(DapRunToCursor)", dap.run_to_cursor),
+        function()
+          repeatable("n", "<plug>(DapRunToCursor)", require("dap").run_to_cursor)
+        end,
         desc = "Dap run to cursor",
       },
       {
         "<leader>do",
-        repeatable("n", "<plug>(DapStepOver)", dap.step_over),
+        function()
+          repeatable("n", "<plug>(DapStepOver)", require("dap").step_over)
+        end,
         desc = "Dap step over",
       },
       {
         "<leader>dp",
-        repeatable("n", "<plug>(DapStepBack)", dap.step_back),
+        function()
+          repeatable("n", "<plug>(DapStepBack)", require("dap").step_back)
+        end,
         desc = "Dap step back",
       },
       {
         "<leader>di",
-        repeatable("n", "<plug>(DapStepInto)", dap.step_into),
+        function()
+          repeatable("n", "<plug>(DapStepInto)", require("dap").step_into)
+        end,
         desc = "Dap step into",
       },
-      { "<leader>dO", repeatable("n", "<plug>(DapStepOut)", dap.step_out), desc = "Dap step out" },
+      {
+        "<leader>dO",
+        function()
+          repeatable("n", "<plug>(DapStepOut)", require("dap").step_out)
+        end
+        ,
+        desc = "Dap step out",
+      },
       {
         "<leader>de",
-        repeatable("n", "<plug>(DapReverseContinue)", dap.reverse_continue),
+        function()
+          repeatable("n", "<plug>(DapReverseContinue)", require("dap").reverse_continue)
+        end,
         desc = "Dap reverse continue",
       },
-      { "<leader>dB", dap_condition_breakpoint, desc = "Dap condition breakpoint" },
-      { "<leader>dl", dap_log_breakpoint, desc = "Dap log breakpoint" },
-      { "<leader>dE", dap_exception_breakpoint, desc = "Dap exception breakpoint" },
-      { "<leader>dR", dap_repl, desc = "Dap repl toggle" },
-      { "<leader>dr", dap.run_last, desc = "Dap run last" },
-      { "<leader>ds", dap_scopes, desc = "Dap scopes" },
-      { "<leader>df", dap_frames, desc = "Dap frames" },
-      { "<leader>de", dap_expression, desc = "Dap expression" },
-      { "<leader>dt", dap_threads, desc = "Dap threads" },
-      { "<leader>dS", dap_sessions, desc = "Dap sessions" },
-      { "<leader>dh", dap_hover, desc = "Dap hover" },
+      {
+        "<leader>dB",
+        function()
+          require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
+        end,
+        desc = "Dap condition breakpoint",
+      },
+      {
+        "<leader>dl",
+        function()
+          require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))
+        end,
+        desc = "Dap log breakpoint",
+      },
+      {
+        "<leader>dE",
+        function()
+          require("dap").set_exception_breakpoints("default")
+        end,
+        desc = "Dap exception breakpoint",
+      },
+      {
+        "<leader>dR",
+        function()
+          require("dap").repl.toggle()
+          vim.cmd("wincmd p")
+          local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
+          if filetype == "dap-repl" then
+            vim.cmd("startinsert")
+          end
+        end,
+        desc = "Dap repl toggle",
+      },
+      {
+        "<leader>dr",
+        function()
+          require("dap").run_last()
+        end,
+        desc = "Dap run last",
+      },
+      {
+        "<leader>ds",
+        function()
+          dap_cursor_float(require("dap.ui.widgets").scopes, "dap-scopes")
+        end,
+        desc = "Dap scopes",
+      },
+      {
+        "<leader>df",
+        function()
+          dap_cursor_float(require("dap.ui.widgets").frames, "dap-frames")
+        end,
+        desc = "Dap frames",
+      },
+      {
+        "<leader>de",
+        function()
+          dap_cursor_float(require("dap.ui.widgets").expression, "dap-expression")
+        end,
+        desc = "Dap expression",
+      },
+      {
+        "<leader>dt",
+        function()
+          dap_cursor_float(require("dap.ui.widgets").threads, "dap-threads")
+        end,
+        desc = "Dap threads",
+      },
+      {
+        "<leader>dS",
+        function()
+          dap_cursor_float(require("dap.ui.widgets").sessions, "dap-sessions")
+        end,
+        desc = "Dap sessions",
+      },
+      {
+        "<leader>dh",
+        function()
+          require("dap.ui.widgets").hover("<cexpr>", { title = "dap-hover" })
+        end,
+        desc = "Dap hover",
+      },
     }
   end,
 }
