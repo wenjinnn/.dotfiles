@@ -355,7 +355,7 @@ return {
     event = "BufRead",
     opts = function()
       local adapter = "anthropic"
-      if vim.fn.has("ollama") then
+      if vim.fn.has("ollama") == 1 then
         local handle = io.popen("ollama ps")
         if handle then
           for line in handle:lines() do
