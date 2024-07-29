@@ -105,7 +105,7 @@ return {
         callback = function()
           vim.api.nvim_set_keymap(
             "x",
-            "<C-m>",
+            "<leader>rq",
             "db#op_exec()",
             { expr = true, desc = "DB exec current query" }
           )
