@@ -13,15 +13,18 @@ return {
       },
       {
         "<leader>cl",
-        vim.lsp.codelens.run,
+        "<cmd>lua vim.lsp.codelens.run()<cr>",
         desc = "Run codelens",
-        mode = { "n", "v" },
       },
       {
         "<leader>cL",
-        vim.lsp.codelens.refresh,
+        "<cmd>lua vim.lsp.codelens.refresh()<cr>",
         desc = "Refresh codelens",
-        mode = { "n" },
+      },
+      {
+        "<leader>cH",
+        "<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<cr>",
+        desc = "Lsp inlay hint toggle",
       },
       {
         "<leader>k",
@@ -123,7 +126,7 @@ return {
             desc = "Jdt compile incremental",
           },
           {
-            "<leader>cH",
+            "<leader>cu",
             "<cmd>JdtUpdateHotcode<CR>",
             desc = "Jdt update hotcode",
           },

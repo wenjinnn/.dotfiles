@@ -81,45 +81,32 @@ return {
       },
       {
         "<leader>dC",
-        function()
-          repeatable("n", "<plug>(DapRunToCursor)", require("dap").run_to_cursor)
-        end,
+        repeatable("n", "<plug>(DapRunToCursor)", require("dap").run_to_cursor),
         desc = "Dap run to cursor",
       },
       {
         "<leader>do",
-        function()
-          repeatable("n", "<plug>(DapStepOver)", require("dap").step_over)
-        end,
+        repeatable("n", "<plug>(DapStepOver)", require("dap").step_over),
         desc = "Dap step over",
       },
       {
         "<leader>dp",
-        function()
-          repeatable("n", "<plug>(DapStepBack)", require("dap").step_back)
-        end,
+        repeatable("n", "<plug>(DapStepBack)", require("dap").step_back),
         desc = "Dap step back",
       },
       {
         "<leader>di",
-        function()
-          repeatable("n", "<plug>(DapStepInto)", require("dap").step_into)
-        end,
+        repeatable("n", "<plug>(DapStepInto)", require("dap").step_into),
         desc = "Dap step into",
       },
       {
         "<leader>dO",
-        function()
-          repeatable("n", "<plug>(DapStepOut)", require("dap").step_out)
-        end
-        ,
+        repeatable("n", "<plug>(DapStepOut)", require("dap").step_out),
         desc = "Dap step out",
       },
       {
         "<leader>de",
-        function()
-          repeatable("n", "<plug>(DapReverseContinue)", require("dap").reverse_continue)
-        end,
+        repeatable("n", "<plug>(DapReverseContinue)", require("dap").reverse_continue),
         desc = "Dap reverse continue",
       },
       {
