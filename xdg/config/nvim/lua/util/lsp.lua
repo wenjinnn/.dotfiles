@@ -65,4 +65,23 @@ function M.get_mason_pkg_path()
   return mason_path .. "/packages"
 end
 
+function M.make_lspconfig(server_name)
+  local config = {
+    capabilities = M.make_capabilities(),
+    inlay_hints = { enabled = true },
+    codelens = { enabled = true },
+    document_highlight = { enabled = true },
+    on_attach = function(client, bufnr)
+      M.setup(client, bufnr)
+    end,
+  }
+  local lsp_config_module = "lsp." .. server_name
+  local module_exist = pcall(require, lsp_config_module)
+  if module_exist and type(require(lsp_config_module)) == "table" then
+    local lsp_config = require(lsp_config_module)
+    config = vim.tbl_deep_extend("force", config, lsp_config)
+  end
+  return config
+end
+
 return M

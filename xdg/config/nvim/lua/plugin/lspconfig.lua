@@ -29,17 +29,17 @@ return {
         desc = "Lsp signature help",
       },
       {
-        "<leader>wa",
+        "<leader>cw",
         "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>",
         desc = "Lsp add workspace folder",
       },
       {
-        "<leader>wr",
+        "<leader>cW",
         "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>",
         desc = "Lsp remove workspace folder",
       },
       {
-        "<leader>wl",
+        "<leader>cf",
         "<cmd>lua vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
         desc = "Lsp list workspace folder",
       },
@@ -69,7 +69,6 @@ return {
       {
         "williamboman/mason-lspconfig.nvim",
         config = function()
-          local lsp = require("util.lsp")
           require("mason-lspconfig").setup()
           require("util").mason_package_init()
           require("mason-lspconfig").setup_handlers({
@@ -79,22 +78,7 @@ return {
             function(server_name)
               -- default handler
               -- vim.lsp.set_log_level('debug')
-              local config = {
-                capabilities = lsp.make_capabilities(),
-                inlay_hints = { enabled = true },
-                codelens = { enabled = true },
-                document_highlight = { enabled = true },
-                on_attach = function(client, bufnr)
-                  lsp.setup(client, bufnr)
-                end,
-              }
-              local lsp_config_module = "lsp." .. server_name
-              local module_exist = pcall(require, lsp_config_module)
-              if module_exist and type(require(lsp_config_module)) == "table" then
-                local lsp_config = require(lsp_config_module)
-                config = vim.tbl_deep_extend("force", config, lsp_config)
-              end
-
+              local config = require("util.lsp").make_lspconfig(server_name)
               require("lspconfig")[server_name].setup(config)
             end,
             -- Next, you can provide targeted overrides for specific servers.
