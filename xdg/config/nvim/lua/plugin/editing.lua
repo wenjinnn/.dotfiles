@@ -26,7 +26,11 @@ return {
       vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
       vim.g.conform_autoformat = true
     end,
-    opts = {},
+    opts = {
+      formatters_by_ft = {
+        nix = { "nixfmt" },
+      },
+    },
     config = function(_, opts)
       require("conform").setup(opts)
       local diff_format = function()
