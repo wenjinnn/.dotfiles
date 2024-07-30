@@ -15,6 +15,7 @@ in {
     rustfmt
     lemminx
     marksman
+    unstable.nixfmt-rfc-style
     # stylua
     unstable.luajitPackages.luarocks-nix
     python311Packages.pip
