@@ -91,24 +91,24 @@
   ];
 
   system.activationScripts.wallpaper = let
-      wp = pkgs.writeShellScript "wp" ''
-        CACHE="/var/cache/greeter"
-        OPTS="$CACHE/options.json"
-        HOME="/home/$(find /home -maxdepth 1 -printf '%f\n' | tail -n 1)"
+    wp = pkgs.writeShellScript "wp" ''
+      CACHE="/var/cache/greeter"
+      OPTS="$CACHE/options.json"
+      HOME="/home/$(find /home -maxdepth 1 -printf '%f\n' | tail -n 1)"
 
-        mkdir -p "$CACHE"
-        chown greeter:greeter $CACHE
+      mkdir -p "$CACHE"
+      chown greeter:greeter $CACHE
 
-        if [[ -f "$HOME/.cache/ags/options.json" ]]; then
-          cp $HOME/.cache/ags/options.json $OPTS
-          chown greeter:greeter $OPTS
-        fi
+      if [[ -f "$HOME/.cache/ags/options.json" ]]; then
+        cp $HOME/.cache/ags/options.json $OPTS
+        chown greeter:greeter $OPTS
+      fi
 
-        if [[ -f "$HOME/.config/background" ]]; then
-          cp "$HOME/.config/background" $CACHE/background
-          chown greeter:greeter "$CACHE/background"
-        fi
-      '';
-    in
-      builtins.readFile wp;
+      if [[ -f "$HOME/.config/background" ]]; then
+        cp "$HOME/.config/background" $CACHE/background
+        chown greeter:greeter "$CACHE/background"
+      fi
+    '';
+  in
+    builtins.readFile wp;
 }

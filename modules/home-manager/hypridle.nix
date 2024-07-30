@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  services.hypridle = let 
+  services.hypridle = let
     hyprlock = "${pkgs.hyprlock}/bin/hyprlock";
     hyprctl = "${pkgs.unstable.hyprland}/bin/hyprctl";
     loginctl = "${pkgs.systemd}/bin/loginctl";
@@ -15,7 +15,6 @@
         lock_cmd = "pidof hyprlock || ${hyprlock}";
         before_sleep_cmd = "${hyprctl} dispatch dpms off";
         after_sleep_cmd = "${hyprctl} dispatch dpms on && ${loginctl} lock-session";
-
       };
       listener = [
         {
@@ -28,7 +27,6 @@
           on-resume = "${hyprctl} dispatch dpms on";
         }
       ];
-
     };
   };
 }

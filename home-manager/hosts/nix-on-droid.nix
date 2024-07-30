@@ -91,7 +91,6 @@
     yq
   ];
 
-
   programs.bash.enable = true;
   # Enable home-manager
   programs.home-manager.enable = true;

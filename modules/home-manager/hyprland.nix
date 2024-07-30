@@ -6,38 +6,40 @@
   pkgs,
   ...
 }: {
-  imports = with outputs.homeManagerModules;[
+  imports = with outputs.homeManagerModules; [
     ags
     hypridle
     hyprlock
     hyprshade
   ];
 
-  home.packages = (with pkgs; [
-    wayshot
-    wf-recorder
-    imagemagick
-    slurp
-    tesseract
-    pavucontrol
-    swappy
-    brightnessctl
-    playerctl
-    pulseaudio
-    gnupg
-    blueberry
-    cliphist
-    glib
-    wl-clipboard
-    xdg-utils
-    xorg.xrdb
-    wl-gammactl
-  ]) ++ (with pkgs.unstable; [
-    swww
-    xwaylandvideobridge
-    hyprcursor
-    hyprpicker
-  ]);
+  home.packages =
+    (with pkgs; [
+      wayshot
+      wf-recorder
+      imagemagick
+      slurp
+      tesseract
+      pavucontrol
+      swappy
+      brightnessctl
+      playerctl
+      pulseaudio
+      gnupg
+      blueberry
+      cliphist
+      glib
+      wl-clipboard
+      xdg-utils
+      xorg.xrdb
+      wl-gammactl
+    ])
+    ++ (with pkgs.unstable; [
+      swww
+      xwaylandvideobridge
+      hyprcursor
+      hyprpicker
+    ]);
 
   xdg.desktopEntries."org.gnome.Settings" = {
     name = "Settings";

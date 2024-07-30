@@ -139,7 +139,6 @@
       };
       # set path to home-manager flake
       home-manager-path = home-manager.outPath;
-
     };
 
     # Standalone home-manager configuration entrypoint

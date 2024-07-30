@@ -44,9 +44,11 @@ in rec {
         rev = "70a3c2f505de128b32d725bbe87306a4f7b1e9cb";
         hash = "sha256-74R4aVv+mK4vxsh8l1OoAE02w/KgeYA7cdRWG1paYpU=";
       };
-      mesonFlags = old.mesonFlags ++ [
-        "-Dext-underline=true"
-      ];
+      mesonFlags =
+        old.mesonFlags
+        ++ [
+          "-Dext-underline=true"
+        ];
     });
     ags = prev.ags.overrideAttrs (old: {
       src = prev.fetchFromGitHub {
@@ -56,15 +58,16 @@ in rec {
         hash = "sha256-RyGbiO1pgyf3cP3XROy21qsAHBfuttxlox+Z4hZiMqU=";
         fetchSubmodules = true;
       };
-      buildInputs = old.buildInputs
-      ++ (with prev.pkgs; [
-        accountsservice
-        gtk3
-        libdbusmenu-gtk3
-        gvfs
-        libnotify
-        pam
-      ]);
+      buildInputs =
+        old.buildInputs
+        ++ (with prev.pkgs; [
+          accountsservice
+          gtk3
+          libdbusmenu-gtk3
+          gvfs
+          libnotify
+          pam
+        ]);
     });
     ags-greeter = final.callPackage ./ags-greeter {};
   };

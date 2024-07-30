@@ -1,7 +1,4 @@
-{ 
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   programs.aria2 = {
     enable = true;
     # TODO get bt-tracker from https://github.com/ngosang/trackerslist, maybe write a script later.

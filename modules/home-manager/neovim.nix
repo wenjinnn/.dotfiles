@@ -40,10 +40,10 @@ in {
       recursive = true;
     };
     ".config/vale/.vale.ini".text = ''
-        MinAlertLevel = suggestion
+      MinAlertLevel = suggestion
 
-        [*]
-        BasedOnStyles = Vale
+      [*]
+      BasedOnStyles = Vale
     '';
   };
   programs.neovim = {
@@ -64,8 +64,9 @@ in {
     #   xml2lua
     #   mimetypes
     # ];
-    extraPython3Packages = pyPkgs: with pyPkgs; [
-      pynvim
-    ];
+    extraPython3Packages = pyPkgs:
+      with pyPkgs; [
+        pynvim
+      ];
   };
 }

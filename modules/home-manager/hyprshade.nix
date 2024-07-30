@@ -1,8 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
-
+{pkgs, ...}: {
   home.packages = [
     pkgs.unstable.hyprshade
   ];

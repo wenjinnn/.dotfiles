@@ -1,5 +1,4 @@
 {pkgs, ...}: {
-
   services = {
     xsettingsd = {
       enable = true;
@@ -49,5 +48,4 @@
       name = "MoreWaita";
     };
   };
-
 }
