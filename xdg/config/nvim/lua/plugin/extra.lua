@@ -364,7 +364,7 @@ return {
           ["Senior Developer"] = { opts = { mapping = "<Leader>Cs" } },
           ["Explain"] = { opts = { mapping = "<Leader>Ce" } },
           ["Unit Tests"] = { opts = { mapping = "<Leader>Ct" } },
-          ["Fix Code"] = { opts = { mapping = "<Leader>Cf" } },
+          ["Fix code"] = { opts = { mapping = "<Leader>Cf" } },
           ["Buffer selection"] = { opts = { mapping = "<Leader>Cb" } },
           ["Explain LSP Diagnostics"] = { opts = { mapping = "<Leader>Cl" } },
           ["Generate a Commit Message"] = { opts = { mapping = "<Leader>Cm" } },
