@@ -76,9 +76,9 @@ return {
         local buffers_output = vim.api.nvim_exec2("buffers" .. (cmd_opts.include_unlisted and "!" or "") .. " R",
           { output = true })
         local items = {}
-        if buffers_output.output ~= '' then
-          for _, l in ipairs(vim.split(buffers_output.output, '\n')) do
-            local buf_str, name = l:match('^%s*%d+'), l:match('"(.*)"')
+        if buffers_output.output ~= "" then
+          for _, l in ipairs(vim.split(buffers_output.output, "\n")) do
+            local buf_str, name = l:match("^%s*%d+"), l:match('"(.*)"')
             local buf_id = tonumber(buf_str)
             local item = { text = name, bufnr = buf_id }
             table.insert(items, item)
@@ -114,11 +114,7 @@ return {
       { "<leader>fb", "<cmd>Pick buffers<cr>", desc = "Pick buffers" },
       { "<leader>fc", "<cmd>Pick cli<cr>", desc = "Pick cli" },
       { "<leader>fR", "<cmd>Pick resume<cr>", desc = "Pick resume" },
-      {
-        "<leader>fd",
-        "<cmd>Pick diagnostic scope='current'<cr>",
-        desc = "Pick current diagnostic",
-      },
+      { "<leader>fd", "<cmd>Pick diagnostic scope='current'<cr>", desc = "Pick current diagnostic" },
       { "<leader>fD", "<cmd>Pick diagnostic scope='all'<cr>", desc = "Pick all diagnostic" },
       { "<leader>gb", "<cmd>Pick git_branches<cr>", desc = "Pick git branches" },
       { "<leader>gC", "<cmd>Pick git_commits<cr>", desc = "Pick git commits" },
@@ -133,16 +129,6 @@ return {
       { "<leader>fj", "<cmd>Pick list scope='jump'<cr>", desc = "Pick jump" },
       { "<leader>fq", "<cmd>Pick list scope='quickfix'<cr>", desc = "Pick quickfix" },
       { "<leader>fC", "<cmd>Pick list scope='change'<cr>", desc = "Pick change" },
-      {
-        "<leader>fs",
-        "<cmd>Pick lsp scope='document_symbol'<cr>",
-        desc = "Pick lsp document symbol",
-      },
-      {
-        "<leader>fS",
-        "<cmd>Pick lsp scope='workspace_symbol' symbol_query=vim.fn.input('Symbol:\\ ')<cr>",
-        desc = "Pick lsp workspace symbol",
-      },
       { "<leader>fm", "<cmd>Pick marks<cr>", desc = "Pick marks" },
       { "<leader>fo", "<cmd>Pick oldfiles<cr>", desc = "Pick oldfiles" },
       { "<leader>fO", "<cmd>Pick options<cr>", desc = "Pick options" },
@@ -154,15 +140,13 @@ return {
       { "<leader>cd", "<cmd>Pick lsp scope='definition'<CR>", desc = "Pick lsp definition" },
       { "<leader>cD", "<cmd>Pick lsp scope='declaration'<CR>", desc = "Pick lsp declaration" },
       { "<leader>cr", "<cmd>Pick lsp scope='references'<cr>", desc = "Pick lsp references" },
+      { "<leader>ci", "<cmd>Pick lsp scope='implementation'<CR>", desc = "Pick lsp implementation" },
+      { "<leader>ct", "<cmd>Pick lsp scope='type_definition'<cr>", desc = "Pick lsp type definition" },
+      { "<leader>fs", "<cmd>Pick lsp scope='document_symbol'<cr>", desc = "Pick lsp document symbol" },
       {
-        "<leader>ci",
-        "<cmd>Pick lsp scope='implementation'<CR>",
-        desc = "Pick lsp implementation",
-      },
-      {
-        "<leader>ct",
-        "<cmd>Pick lsp scope='type_definition'<cr>",
-        desc = "Pick lsp type definition",
+        "<leader>fS",
+        "<cmd>Pick lsp scope='workspace_symbol' symbol_query=vim.fn.input('Symbol:\\ ')<cr>",
+        desc = "Pick lsp workspace symbol"
       },
       -- let mini.pick load at mini.sessions mason loaded
       { "<leader>ss", "<cmd>lua MiniSessions.select()<cr>", desc = "Session select" },

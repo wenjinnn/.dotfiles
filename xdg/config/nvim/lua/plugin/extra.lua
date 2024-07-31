@@ -246,7 +246,6 @@ return {
     keys = {
       { "<leader>x", "<cmd>lua MiniBufremove.delete()<CR>", desc = "Buf delete" },
     },
-    version = "*",
     cond = not_vscode,
     config = true,
   },
@@ -254,7 +253,6 @@ return {
     "echasnovski/mini.sessions",
     cond = not_vscode,
     lazy = true,
-    priority = 100,
     event = "VimEnter",
     keys = function()
       local session_name = function()
@@ -263,14 +261,14 @@ return {
         local current_tail_path = vim.fn.fnamemodify(cwd, ":t")
         return string.format("%s@%s", current_tail_path, parent_path:gsub("/", "-"))
       end
-      local write_session = function()
-        require("mini.sessions").write(session_name())
-      end
-      local delete_session = function()
-        require("mini.sessions").delete(session_name())
-      end
       return {
-        { "<leader>sw", write_session, desc = "Session write" },
+        {
+          "<leader>sw",
+          function()
+            require("mini.sessions").write(session_name())
+          end,
+          desc = "Session write",
+        },
         {
           "<leader>sW",
           function()
@@ -278,7 +276,13 @@ return {
           end,
           desc = "Session write custom",
         },
-        { "<leader>sd", delete_session, desc = "Session delete" },
+        {
+          "<leader>sd",
+          function()
+            require("mini.sessions").delete(session_name())
+          end,
+          desc = "Session delete",
+        },
         {
           "<leader>sD",
           function()
@@ -290,8 +294,6 @@ return {
     end,
     opts = function()
       return {
-        directory = vim.fn.stdpath("state") .. "/sessions/",
-        file = "session.vim",
         -- Whether to force possibly harmful actions (meaning depends on function)
         force = { read = false, write = true, delete = true },
         hooks = {

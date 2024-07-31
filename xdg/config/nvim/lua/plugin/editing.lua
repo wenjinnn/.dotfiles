@@ -5,23 +5,27 @@ return {
     cond = not_vscode,
     event = "CmdLineEnter",
     cmd = { "DiffFormat", "Format" },
-    keys = function()
-      local toggle_auto_format = function()
-        vim.g.conform_autoformat = not vim.g.conform_autoformat
-        vim.notify("Autoformat: " .. (vim.g.conform_autoformat and "on" or "off"))
-      end
-
-      return {
-        {
-          mode = { "n", "v" },
-          "<leader>mm",
-          '<cmd>lua require"conform".format({async = true, lsp_fallback = true})<cr>',
-          desc = "Format",
-        },
-        { "<leader>md", "<cmd>DiffFormat<cr>", desc = "Diff format" },
-        { "<leader>mM", toggle_auto_format, desc = "Auto format toggle" },
-      }
-    end,
+    keys = {
+      {
+        mode = { "n", "v" },
+        "<leader>mm",
+        '<cmd>lua require"conform".format({async = true, lsp_fallback = true})<cr>',
+        desc = "Format",
+      },
+      {
+        "<leader>md",
+        "<cmd>DiffFormat<cr>",
+        desc = "Diff format",
+      },
+      {
+        "<leader>mM",
+        function()
+          vim.g.conform_autoformat = not vim.g.conform_autoformat
+          vim.notify("Autoformat: " .. (vim.g.conform_autoformat and "on" or "off"))
+        end,
+        desc = "Auto format toggle",
+      },
+    },
     init = function()
       vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
       vim.g.conform_autoformat = true
@@ -98,7 +102,7 @@ return {
     event = "BufRead",
     opts = function()
       local gen_hook = require("mini.splitjoin").gen_hook
-      local curly = { brackets = { '%b{}' } }
+      local curly = { brackets = { "%b{}" } }
       -- Add trailing comma when splitting inside curly brackets
       local add_comma_curly = gen_hook.add_trailing_separator(curly)
 
@@ -127,19 +131,19 @@ return {
           L = gen_ai_spec.line(),
           N = gen_ai_spec.number(),
           -- Tweak argument to be recognized only inside `()` between `;`
-          a = gen_spec.argument({ brackets = { '%b()' }, separator = ';' }),
+          a = gen_spec.argument({ brackets = { "%b()" }, separator = ";" }),
           -- Tweak function call to not detect dot in function name
-          f = gen_spec.function_call({ name_pattern = '[%w_]' }),
+          f = gen_spec.function_call({ name_pattern = "[%w_]" }),
           -- Function definition (needs treesitter queries with these captures)
           -- This need nvim-treesitter-textobjects, see https://github.com/echasnovski/mini.nvim/issues/947#issuecomment-2154242659
-          F = gen_spec.treesitter({ a = '@function.outer', i = '@function.inner' }),
+          F = gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
           -- Make `|` select both edges in non-balanced way
           o = gen_spec.treesitter({
-            a = { '@conditional.outer', '@loop.outer' },
-            i = { '@conditional.inner', '@loop.inner' },
+            a = { "@conditional.outer", "@loop.outer" },
+            i = { "@conditional.inner", "@loop.inner" },
           }),
-          c = gen_spec.treesitter({ a = '@class.outer', i = '@class.inner' }),
-          ['|'] = gen_spec.pair('|', '|', { type = 'non-balanced' }),
+          c = gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),
+          ["|"] = gen_spec.pair("|", "|", { type = "non-balanced" }),
         },
         n_lines = 500,
       }
@@ -148,12 +152,7 @@ return {
   {
     "echasnovski/mini.align",
     event = "BufRead",
-    opts = {
-      mappings = {
-        start = "<leader>a",
-        start_with_preview = "<leader>A",
-      },
-    },
+    opts = {},
   },
   {
     "echasnovski/mini.bracketed",
