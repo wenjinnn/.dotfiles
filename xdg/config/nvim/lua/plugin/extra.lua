@@ -74,9 +74,7 @@ return {
         },
       }
     end,
-    build = function()
-      vim.fn["firenvim#install"](0)
-    end,
+    build = ":call firenvim#install(0)",
     config = function()
       vim.api.nvim_set_keymap(
         "n",
