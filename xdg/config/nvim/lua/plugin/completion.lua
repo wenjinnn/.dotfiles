@@ -161,9 +161,10 @@ return {
             end
             return item
           end
-          local icon, _ = require("mini.icons").get("lsp", vim_item.kind)
+          local icon, hl = require("mini.icons").get("lsp", vim_item.kind)
           if icon ~= nil then
             vim_item.kind = icon
+            vim_item.kind_hl_group = hl
           end
           vim_item.menu = limit_width(vim_item.menu)
           vim_item.abbr = limit_width(vim_item.abbr)
