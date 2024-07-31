@@ -367,6 +367,11 @@ return {
           ["Explain LSP Diagnostics"] = { opts = { mapping = "<Leader>Cl" } },
           ["Generate a Commit Message"] = { opts = { mapping = "<Leader>Cm" } },
         },
+        display = {
+          chat = {
+            show_settings = true,
+          },
+        },
       }
     end,
     keys = {
