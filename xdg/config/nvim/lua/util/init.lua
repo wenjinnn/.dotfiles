@@ -36,6 +36,7 @@ function M.mason_package_init()
       \ prettier
       \ sqlls
       \ python-lsp-server
+      \ debugpy
       \ yaml-language-server
       \ lemminx
       \ luaformatter
@@ -46,7 +47,6 @@ function M.mason_package_init()
       \ java-debug-adapter
       \ java-test
       \ google-java-format
-      \ pyright
       \ bash-language-server
       \ eslint-lsp
       \ rust-analyzer
@@ -63,7 +63,6 @@ function M.mason_package_init()
       \ jsonls
       \ vale
       \ vale_ls
-      \ debugpy
     ]])
   end
 end
