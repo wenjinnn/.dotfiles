@@ -1,5 +1,5 @@
 local M = {}
-function M.set_keymap(bufnr, mode, lhs, rhs, opts)
+function M.set_buf_keymap(bufnr, mode, lhs, rhs, opts)
   opts = M.make_opts(opts)
   vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
 end

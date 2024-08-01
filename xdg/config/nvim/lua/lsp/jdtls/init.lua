@@ -1,19 +1,7 @@
 local M = {}
+local lsp = require("util.lsp")
 
 function M.setup_dap()
-  -- local util = require("jdtls.util")
-
-  -- dap.adapters.java = function(callback)
-  --   util.execute_command({ command = 'vscode.java.startDebugSession' }, function(err0, port)
-  --     assert(not err0, vim.inspect(err0))
-  --     -- print("puerto:", port)
-  --     callback({
-  --       type = 'server';
-  --       host = '127.0.0.1';
-  --       port = port;
-  --     })
-  --   end)
-  -- end
   require("jdtls").setup_dap()
   require("jdtls.dap").setup_dap_main_class_configs({
     config_overrides = { vmArgs = "-Xms128m -Xmx512m" },
@@ -38,10 +26,106 @@ function M.setup_dap()
   end
 end
 
+function M.setup_jdtls_buf_keymap(bufnr)
+    lsp.set_buf_keymap(
+      bufnr,
+      "n",
+      "<leader>cc",
+      "<cmd>JdtCompile full<CR>",
+      { desc = "Jdt compile full" }
+    )
+    lsp.set_buf_keymap(
+      bufnr,
+      "n",
+      "<leader>cc",
+      "<cmd>JdtCompile incremental<CR>",
+      { desc = "Jdt compile incremental" }
+    )
+    lsp.set_buf_keymap(
+      bufnr,
+      "n",
+      "<leader>cu",
+      "<cmd>JdtUpdateHotcode<CR>",
+      { desc = "Jdt update hotcode" }
+    )
+    lsp.set_buf_keymap(
+      bufnr,
+      "n",
+      "<leader>cg",
+      "<cmd>lua require('jdtls.tests').generate()<CR>",
+      { desc = "Jdt test generate" }
+    )
+    lsp.set_buf_keymap(
+      bufnr,
+      "n",
+      "<leader>co",
+      "<Cmd>lua require('jdtls').organize_imports()<CR>",
+      { desc = "Jdt Organize Imports" }
+    )
+    lsp.set_buf_keymap(
+      bufnr,
+      "n",
+      "<leader>cv",
+      "<Cmd>lua require('jdtls').extract_variable()<CR>",
+      { desc = "Jdt Extract Variable" }
+    )
+    lsp.set_buf_keymap(
+      bufnr,
+      "v",
+      "<leader>cv",
+      "<Cmd>lua require('jdtls').extract_variable(true)<CR>",
+      { desc = "Jdt Extract Variable" }
+    )
+    lsp.set_buf_keymap(
+      bufnr,
+      "n",
+      "<leader>cV",
+      "<Cmd>lua require('jdtls').extract_constant()<CR>",
+      { noremap = true, silent = true, desc = "Jdt Extract Constant" }
+    )
+    lsp.set_buf_keymap(
+      bufnr,
+      "v",
+      "<leader>cV",
+      "<Cmd>lua require('jdtls').extract_constant(true)<CR>",
+      { noremap = true, silent = true, desc = "Jdt Extract Constant" }
+    )
+    lsp.set_buf_keymap(
+      bufnr,
+      "v",
+      "<leader>cm",
+      "<Cmd>lua require('jdtls').extract_method(true)<CR>",
+      { noremap = true, silent = true, desc = "Jdt Extract Method" }
+    )
+    lsp.set_buf_keymap(
+      bufnr,
+      "n",
+      "<leader>cT",
+      '<cmd>lua require("jdtls.tests").goto_subjects()<CR>',
+      { desc = "Jdt Test Goto Subjects" }
+    )
+    -- If using nvim-dap
+    -- This requires java-debug and vscode-java-test bundles, see install steps in this README further below.
+    lsp.set_buf_keymap(
+      bufnr,
+      "n",
+      "<leader>da",
+      "<Cmd>lua require('jdtls').test_class()<CR>",
+      { noremap = true, silent = true, desc = "Jdt Test Class" }
+    )
+    lsp.set_buf_keymap(
+      bufnr,
+      "n",
+      "<leader>dm",
+      "<Cmd>lua require('jdtls').test_nearest_method()<CR>",
+      { noremap = true, silent = true, desc = "Jdt Test Method" }
+    )
+end
+
 function M.setup()
-  local lsp = require("util.lsp")
   local on_attach = function(client, bufnr)
     M.setup_dap()
+    M.setup_jdtls_buf_keymap(bufnr)
     lsp.setup(client, bufnr)
   end
   local root_dir = require("jdtls.setup").find_root({ "mvnw", "gradlew", ".mvn", ".git", ".svn" })

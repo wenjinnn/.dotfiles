@@ -7,8 +7,17 @@ return {
   cond = not_vscode,
   lazy = true,
   dependencies = {
-    "theHamsta/nvim-dap-virtual-text",
-    opts = { all_frames = true, virt_text_pos = "eol" },
+    {
+      "theHamsta/nvim-dap-virtual-text",
+      opts = { all_frames = true, virt_text_pos = "eol" },
+    },
+    {
+      "mfussenegger/nvim-dap-python",
+      ft = "python",
+      config = function()
+        require("dap-python").setup("python")
+      end,
+    },
   },
   config = function()
     local dap = require("dap")
