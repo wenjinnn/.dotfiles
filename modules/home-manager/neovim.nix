@@ -6,25 +6,29 @@
   repoPath = "${config.home.homeDirectory}/project/my/config";
   archivePath = "${config.home.homeDirectory}/project/my/archive";
 in {
-  home.packages = with pkgs; [
-    hurl
-    lua-language-server
-    vscode-langservers-extracted
-    clang-tools
-    rust-analyzer
-    rustfmt
-    lemminx
-    marksman
-    unstable.nixfmt-rfc-style
-    # stylua
-    unstable.luajitPackages.luarocks-nix
-    python311Packages.pip
-    python311Packages.python-lsp-server
-    tree-sitter
-    # for vim-dadbod
-    mysql
-    redis
-  ];
+  home.packages =
+    (with pkgs; [
+      hurl
+      lua-language-server
+      vscode-langservers-extracted
+      clang-tools
+      rust-analyzer
+      rustfmt
+      lemminx
+      marksman
+      alejandra
+      unstable.nixfmt-rfc-style
+      stylua
+      unstable.luajitPackages.luarocks-nix
+      tree-sitter
+      # for vim-dadbod
+      mysql
+      redis
+    ])
+    ++ (with pkgs.python311Packages; [
+      python-lsp-server
+      pip
+    ]);
 
   home.sessionVariables = {
     JAVA_8_HOME = "${pkgs.jdk8}/lib/openjdk";
