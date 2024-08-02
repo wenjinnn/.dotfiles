@@ -243,4 +243,68 @@ return {
     },
     main = "nvim-treesitter.configs",
   },
+  {
+    "echasnovski/mini.bufremove",
+    keys = {
+      { "<leader>x", "<cmd>lua MiniBufremove.delete()<CR>", desc = "Buf delete" },
+    },
+    cond = not_vscode,
+    config = true,
+  },
+  {
+    "echasnovski/mini.sessions",
+    cond = not_vscode,
+    lazy = true,
+    event = "VimEnter",
+    keys = function()
+      local session_name = function()
+        local cwd = vim.fn.getcwd()
+        local parent_path = vim.fn.fnamemodify(cwd, ":h")
+        local current_tail_path = vim.fn.fnamemodify(cwd, ":t")
+        return string.format("%s@%s", current_tail_path, parent_path:gsub("/", "-"))
+      end
+      return {
+        {
+          "<leader>sw",
+          function()
+            require("mini.sessions").write(session_name())
+          end,
+          desc = "Session write",
+        },
+        {
+          "<leader>sW",
+          function()
+            MiniSessions.write(vim.fn.input("Session name: "))
+          end,
+          desc = "Session write custom",
+        },
+        {
+          "<leader>sd",
+          function()
+            require("mini.sessions").delete(session_name())
+          end,
+          desc = "Session delete",
+        },
+        {
+          "<leader>sD",
+          function()
+            MiniSessions.delete(vim.fn.input("Session name: "))
+          end,
+          desc = "Session delete custom",
+        },
+      }
+    end,
+    opts = function()
+      return {
+        -- Whether to force possibly harmful actions (meaning depends on function)
+        force = { read = false, write = true, delete = true },
+        hooks = {
+          -- Before successful action
+          pre = { read = nil, write = nil, delete = nil },
+          -- After successful action
+          post = { read = require("util").delete_dap_terminals, write = nil, delete = nil },
+        },
+      }
+    end,
+  },
 }
