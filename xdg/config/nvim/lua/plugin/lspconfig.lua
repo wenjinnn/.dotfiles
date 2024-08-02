@@ -23,7 +23,7 @@ return {
       },
       {
         "<leader>cH",
-        "<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<cr>",
+        "<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({bufnr = 0}), {bufnr = 0})<cr>",
         desc = "Lsp inlay hint toggle",
       },
       {
