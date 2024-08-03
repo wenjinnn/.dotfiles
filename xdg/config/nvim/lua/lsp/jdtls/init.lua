@@ -122,7 +122,7 @@ function M.setup_jdtls_buf_keymap(bufnr)
   )
 end
 
-function M.setup()
+function M.start()
   local on_attach = function(client, bufnr)
     M.setup_dap()
     M.setup_jdtls_buf_keymap(bufnr)
@@ -130,78 +130,68 @@ function M.setup()
   end
   local root_dir = require("jdtls.setup").find_root({ "mvnw", "gradlew", ".mvn", ".git", ".svn" })
   local workspace_name, _ = string.gsub(vim.fn.fnamemodify(root_dir, ":p"), "/", "_")
-  local mason_pkg_path = lsp.get_mason_pkg_path()
-  local jdtls_path = mason_pkg_path .. "/jdtls"
-  local config_path = vim.fn.stdpath("config") .. "/lua/lsp/jdtls"
-
+  local jdtls_data_path = vim.fn.stdpath("data") .. "/jdtls"
   local bundles = {
     vim.fn.glob(
-      mason_pkg_path .. "/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar"
+      (os.getenv("JAVA_DEBUG_PATH") or jdtls_data_path) .. "/com.microsoft.java.debug.plugin-*.jar"
     ),
   }
   vim.list_extend(
     bundles,
-    vim.split(vim.fn.glob(mason_pkg_path .. "/vscode-java-decompiler/server/*.jar"), "\n")
+    vim.split((vim.fn.glob(os.getenv("JAVA_TEST_PATH") or jdtls_data_path) .. "/java-test/extension/server/*.jar"), "\n")
   )
-  vim.list_extend(
-    bundles,
-    vim.split(vim.fn.glob(mason_pkg_path .. "/java-test/extension/server/*.jar"), "\n")
-  )
-  -- TODO implement vscode-java-dependency for nvim
-  -- vim.list_extend(
-  --   bundles,
-  --   vim.split(vim.fn.glob(config_path .. "/vscode-java-dependency/server/*.jar"), "\n")
-  -- )
 
-  local jdtls_java_home = os.getenv("JDTLS_JAVA_HOME")
-  local java_cmd = "java"
-  if jdtls_java_home then
-    java_cmd = jdtls_java_home .. "/bin/java"
-  end
+  local jdtls_cache_path = vim.fn.stdpath("cache") .. "/jdtls"
+  local lombok_path = os.getenv("LOMBOK_PATH")
   local config = {
     settings = require("lsp.jdtls.settings"),
     capabilities = lsp.make_capabilities(),
     on_attach = on_attach,
     name = "jdtls",
-    filetypes = { "java", "xml", "gradle", "groovy" },
+    filetypes = { "java", "ant" },
     init_options = {
       bundles = bundles,
     },
     cmd = {
-      java_cmd,
-      "-Declipse.application=org.eclipse.jdt.ls.core.id1",
-      "-Dosgi.bundles.defaultStartLevel=4",
-      "-Declipse.product=org.eclipse.jdt.ls.core.product",
-      "-Dlog.protocol=true",
-      "-Dlog.level=ALL",
-      "-Dfile.encoding=utf-8",
-      "-Djava.import.generatesMetadataFilesAtProjectRoot=false",
-      "-Xms256m",
-      "-Xmx1G",
+      "jdtls",
+      "--jvm-arg=-Dlog.protocol=true",
+      "--jvm-arg=-Dlog.level=ALL",
+      "--jvm-arg=-Dfile.encoding=utf-8",
+      "--jvm-arg=-Djava.import.generatesMetadataFilesAtProjectRoot=false",
+      "--jvm-arg=-Xms256m",
+      "--jvm-arg=-Xmx1G",
       -- The following 6 lines is for optimize memory use, see https://github.com/redhat-developer/vscode-java/pull/1262#discussion_r386912240
-      "-XX:+UseParallelGC",
-      "-XX:MinHeapFreeRatio=5",
-      "-XX:MaxHeapFreeRatio=10",
-      "-XX:GCTimeRatio=4",
-      "-XX:AdaptiveSizePolicyWeight=90",
-      "-Dsun.zip.disableMemoryMapping=true",
-      "--add-modules=ALL-SYSTEM",
-      "--add-opens",
-      "java.base/java.util=ALL-UNNAMED",
-      "--add-opens",
-      "java.base/java.lang=ALL-UNNAMED",
-      "-javaagent:" .. jdtls_path .. "/lombok.jar",
-      "-jar",
-      vim.fn.glob(jdtls_path .. "/plugins/org.eclipse.equinox.launcher_*.jar"),
+      "--jvm-arg=-XX:+UseParallelGC",
+      "--jvm-arg=-XX:MinHeapFreeRatio=5",
+      "--jvm-arg=-XX:MaxHeapFreeRatio=10",
+      "--jvm-arg=-XX:GCTimeRatio=4",
+      "--jvm-arg=-XX:AdaptiveSizePolicyWeight=90",
+      "--jvm-arg=-Dsun.zip.disableMemoryMapping=true",
+      "--jvm-arg=-javaagent:" .. lombok_path .. "/lombok.jar",
       "-configuration",
-      jdtls_path .. "/config_linux",
+      jdtls_cache_path .. "/config",
       "-data",
-      jdtls_path .. "/workspace/" .. workspace_name,
+      jdtls_cache_path .. "/workspace/" .. workspace_name,
     },
   }
 
   -- Server
   require("jdtls").start_or_attach(config)
+end
+
+function M.setup()
+  vim.api.nvim_create_augroup("user_jdtls_setup", { clear = true })
+  vim.api.nvim_create_autocmd(
+    { "FileType" },
+    {
+      group = "user_jdtls_setup",
+      pattern = {
+        "java",
+        "ant",
+      },
+      callback = M.start,
+    }
+  )
 end
 
 return M

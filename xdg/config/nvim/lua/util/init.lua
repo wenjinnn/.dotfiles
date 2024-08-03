@@ -16,57 +16,6 @@ function M.make_repeatable_keymap(mode, lhs, rhs)
   return lhs
 end
 
--- download mason package on fresh init
-function M.mason_package_init()
-  local installed_pkgs = require("mason-registry").get_installed_packages()
-  local install_confirm = ""
-  if #installed_pkgs == 0 then
-    install_confirm = vim.fn.input("No package installed yet, install default package now ? (via Mason) Y/n = ")
-  end
-  install_confirm = string.lower(install_confirm)
-  if install_confirm == "y" then
-    vim.cmd([[
-      MasonInstall
-      \ typescript-language-server
-      \ dot-language-server
-      \ stylua
-      \ vim-language-server
-      \ emmet-ls
-      \ html-lsp
-      \ prettier
-      \ sqlls
-      \ python-lsp-server
-      \ debugpy
-      \ yaml-language-server
-      \ lemminx
-      \ luaformatter
-      \ lua-language-server
-      \ volar
-      \ jdtls
-      \ vscode-java-decompiler
-      \ java-debug-adapter
-      \ java-test
-      \ google-java-format
-      \ bash-language-server
-      \ eslint-lsp
-      \ rust-analyzer
-      \ clang-format
-      \ taplo
-      \ clangd
-      \ codelldb
-      \ cpplint
-      \ cpptools
-      \ gradle-language-server
-      \ glow
-      \ sonarlint-language-server
-      \ jq
-      \ jsonls
-      \ vale
-      \ vale_ls
-    ]])
-  end
-end
-
 -- test is in vscode
 function M.not_vscode()
   return not vim.g.vscode

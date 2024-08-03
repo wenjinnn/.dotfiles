@@ -6,7 +6,6 @@ local java_8_home = os.getenv("JAVA_8_HOME")
 local java_17_home = os.getenv("JAVA_17_HOME")
 local java_21_home = os.getenv("JAVA_21_HOME")
 local config_path = vim.fn.stdpath("config")
-local data_path = vim.fn.stdpath("data")
 local M = {
   java = {
     settings = {
@@ -18,7 +17,6 @@ local M = {
         java = {
           home = jdtls_java_home or java_home,
         },
-        vmargs = "-Xmx2G -Xms1G -javaagent:'" .. data_path .. "/mason/packages/jdtls/lombok.jar'",
       },
     },
     eclipse = {

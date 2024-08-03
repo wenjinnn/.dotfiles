@@ -127,7 +127,6 @@ return {
           "quickfix",
           "man",
           "lazy",
-          "mason",
         },
       }
     end,
