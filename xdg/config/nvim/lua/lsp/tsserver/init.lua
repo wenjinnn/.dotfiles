@@ -12,13 +12,12 @@ local inlay_hints_settings = {
   includeInlayVariableTypeHintsWhenTypeMatchesName = false,
 }
 M.init_options = {
-  hostInfo = "neovim",
   plugins = {
     {
       name = "@vue/typescript-plugin",
       -- environment variable has highest priority, then relative path, then absolute path
       location = vue_language_server_path
-        or "node_modules/@vue/language-server"
+          or "node_modules/@vue/language-server"
         or "/usr/local/lib/node_modules/@vue/language-server",
       languages = { "javascript", "typescript", "vue" },
     },

@@ -3,6 +3,7 @@ return {
   jdtls = require("lsp.jdtls"),
   jsonls = require("lsp.jsonls"),
   lua_ls = require("lsp.lua_ls"),
+  volar = require("lsp.volar"),
   tsserver = require("lsp.tsserver"),
   yamlls = require("lsp.yamlls"),
   nixd = require("lsp.nixd"),

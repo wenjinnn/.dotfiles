@@ -22,12 +22,14 @@ in {
       vale-ls
       rustfmt
       lemminx
-      typescript
       alejandra
       nixfmt-rfc-style
       stylua
       luajitPackages.luarocks-nix
       tree-sitter
+      typescript
+      typescript-language-server
+      vue-language-server
       # for vim-dadbod
       mysql
       redis
@@ -74,10 +76,6 @@ in {
 
     extraWrapperArgs = [
       "--suffix"
-      "JDTLS_PATH"
-      ":"
-      "${pkgs.unstable.jdt-language-server}/share/java/jdtls"
-      "--suffix"
       "JAVA_TEST_PATH"
       ":"
       "${pkgs.unstable.vscode-extensions.vscjava.vscode-java-test}/share/vscode/extensions/vscjava.vscode-java-test/server"
@@ -105,6 +103,10 @@ in {
       "VUE_LANGUAGE_SERVER_PATH"
       ":"
       "${pkgs.unstable.vue-language-server}/lib/node_modules/@vue/language-server"
+      "--suffix"
+      "TYPESCRIPT_LIBRARY"
+      ":"
+      "${pkgs.unstable.typescript}/lib/node_modules/typescript/lib"
     ];
   };
 }
