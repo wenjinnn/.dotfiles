@@ -148,9 +148,8 @@ return {
         "<cmd>Pick lsp scope='workspace_symbol' symbol_query=vim.fn.input('Symbol:\\ ')<cr>",
         desc = "Pick lsp workspace symbol"
       },
-      -- let mini.pick load at mini.sessions mason loaded
+      -- let mini.pick load at mini.sessions loaded
       { "<leader>ss", "<cmd>lua MiniSessions.select()<cr>", desc = "Session select" },
-      { "<leader>M", "<cmd>Mason<CR>", desc = "Mason" },
     },
   },
 }

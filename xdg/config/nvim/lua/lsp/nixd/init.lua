@@ -1,6 +1,6 @@
 return {
   settings = {
-    ["nil"] = {
+    nixd = {
       formatting = {
         command = { "alejandra", "--" },
       },

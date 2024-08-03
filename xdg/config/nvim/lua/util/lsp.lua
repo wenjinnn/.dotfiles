@@ -52,20 +52,7 @@ function M.make_capabilities()
   return capabilities
 end
 
-function M.get_mason_path()
-  local mason_path = os.getenv("MASON")
-  if mason_path ~= nil then
-    return mason_path
-  end
-  return vim.fn.stdpath("data") .. "/mason"
-end
-
-function M.get_mason_pkg_path()
-  local mason_path = os.getenv("MASON")
-  return mason_path .. "/packages"
-end
-
-function M.make_lspconfig(server_name)
+function M.make_lspconfig(opts)
   local config = {
     capabilities = M.make_capabilities(),
     inlay_hints = { enabled = true },
@@ -75,11 +62,8 @@ function M.make_lspconfig(server_name)
       M.setup(client, bufnr)
     end,
   }
-  local lsp_config_module = "lsp." .. server_name
-  local module_exist = pcall(require, lsp_config_module)
-  if module_exist and type(require(lsp_config_module)) == "table" then
-    local lsp_config = require(lsp_config_module)
-    config = vim.tbl_deep_extend("force", config, lsp_config)
+  if type(opts) == "table" then
+    config = vim.tbl_deep_extend("force", config, opts)
   end
   return config
 end
