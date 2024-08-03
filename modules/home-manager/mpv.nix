@@ -18,7 +18,7 @@
       mpvScripts.mpris
       mpvScripts.uosc
       mpvScripts.mpv-cheatsheet
-      # mpvScripts.visualizer
+      mpvScripts.visualizer
       mpvScripts.cutter
       mpvScripts.autoload
       mpvScripts.thumbfast
