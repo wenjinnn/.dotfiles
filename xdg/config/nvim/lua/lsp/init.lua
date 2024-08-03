@@ -15,4 +15,5 @@ return {
   vale_ls = {},
   vimls = {},
   clangd = {},
+  taplo = {},
 }

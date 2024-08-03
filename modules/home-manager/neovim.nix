@@ -30,6 +30,9 @@ in {
       typescript
       typescript-language-server
       vue-language-server
+      yaml-language-server
+      vim-language-server
+      taplo
       # for vim-dadbod
       mysql
       redis
