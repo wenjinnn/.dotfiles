@@ -20,7 +20,8 @@
 * Lazy load all plugins if it could, to optimize startup time to the shortest possible time, right now on my PC, the startup time are less then 30ms.
 * Avoid sidebar, focus on editing. personally, I prefer to use float window, sidebar buffer just distract me a lot.
 * Avoid extra UI plugins. In common scenarios, [mini.notify](https://github.com/echasnovski/mini.notify) and [mini.pick](https://github.com/echasnovski/mini.pick) with `vim.ui.select()` wrapper already done well enough for notify and float window.
-* Provide out-of-box experience for web development
+* Provide out-of-box experience for web development.
+* AI powered.
 
 > [!NOTE]
 > This configuration only guaranteed to be compatible with the latest stable version.
@@ -188,9 +189,6 @@ just some filetype settings
 ### plugin-manager
 
 + [folke/lazy.nvim](https://dotfyle.com/plugins/folke/lazy.nvim)
-### preconfigured
-
-+ [LazyVim/LazyVim](https://dotfyle.com/plugins/LazyVim/LazyVim)
 ### search
 
 + [windwp/nvim-spectre](https://dotfyle.com/plugins/windwp/nvim-spectre)
