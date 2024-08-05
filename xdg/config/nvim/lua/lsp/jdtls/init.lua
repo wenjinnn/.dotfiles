@@ -133,12 +133,12 @@ function M.start()
   local jdtls_data_path = vim.fn.stdpath("data") .. "/jdtls"
   local bundles = {
     vim.fn.glob(
-      (os.getenv("JAVA_DEBUG_PATH") or jdtls_data_path) .. "/com.microsoft.java.debug.plugin-*.jar"
+      (os.getenv("JAVA_DEBUG_PATH") or jdtls_data_path) .. "/server/com.microsoft.java.debug.plugin-*.jar"
     ),
   }
   vim.list_extend(
     bundles,
-    vim.split((vim.fn.glob(os.getenv("JAVA_TEST_PATH") or jdtls_data_path) .. "/java-test/extension/server/*.jar"), "\n")
+    vim.split((vim.fn.glob((os.getenv("JAVA_TEST_PATH") or jdtls_data_path) .. "/server/*.jar")), "\n")
   )
 
   local jdtls_cache_path = vim.fn.stdpath("cache") .. "/jdtls"
@@ -148,7 +148,7 @@ function M.start()
     capabilities = lsp.make_capabilities(),
     on_attach = on_attach,
     name = "jdtls",
-    filetypes = { "java", "ant" },
+    filetypes = { "java" },
     init_options = {
       bundles = bundles,
     },
@@ -158,7 +158,6 @@ function M.start()
       "--jvm-arg=-Dlog.level=ALL",
       "--jvm-arg=-Dfile.encoding=utf-8",
       "--jvm-arg=-Djava.import.generatesMetadataFilesAtProjectRoot=false",
-      "--jvm-arg=-Xms256m",
       "--jvm-arg=-Xmx1G",
       -- The following 6 lines is for optimize memory use, see https://github.com/redhat-developer/vscode-java/pull/1262#discussion_r386912240
       "--jvm-arg=-XX:+UseParallelGC",
@@ -185,10 +184,7 @@ function M.setup()
     { "FileType" },
     {
       group = "user_jdtls_setup",
-      pattern = {
-        "java",
-        "ant",
-      },
+      pattern = "java",
       callback = M.start,
     }
   )
