@@ -18,7 +18,13 @@ return {
   { "MunifTanjim/nui.nvim", lazy = true },
   {
     "michaelb/sniprun",
-    build = "sh install.sh",
+    event = "CmdLineEnter",
+    build = "sh ./install.sh 1",
+    opts = {
+      repl_enable = { "Lua_nvim" },
+      selected_interpreters = { "Lua_nvim" },
+      live_mode_toggle = "enable",
+    },
     keys = {
       { "<leader>rs", "<Plug>SnipRun", desc = "Run snip", mode = { "n", "v" } },
       { "<leader>rS", "<Plug>SnipRunOperator", desc = "Run snip operator" },
