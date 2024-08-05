@@ -101,6 +101,7 @@ local M = {
     },
     autobuild = { enabled = true },
     completion = {
+      maxResults = 0,
       filteredTypes = {
         "com.sun.*",
         "io.micrometer.shaded.*",
