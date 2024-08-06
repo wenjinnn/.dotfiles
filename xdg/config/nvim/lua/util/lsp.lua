@@ -58,9 +58,6 @@ end
 function M.make_lspconfig(opts)
   local config = {
     capabilities = M.make_capabilities(),
-    inlay_hints = { enabled = true },
-    codelens = { enabled = true },
-    document_highlight = { enabled = true },
     on_attach = function(client, bufnr)
       M.setup(client, bufnr)
     end,
