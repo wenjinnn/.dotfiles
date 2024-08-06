@@ -142,7 +142,7 @@ function M.start()
   )
 
   local jdtls_cache_path = vim.fn.stdpath("cache") .. "/jdtls"
-  local lombok_path = os.getenv("LOMBOK_PATH")
+  local lombok_path = os.getenv("LOMBOK_PATH") or jdtls_cache_path
   local config = {
     settings = require("lsp.jdtls.settings"),
     capabilities = lsp.make_capabilities(),
