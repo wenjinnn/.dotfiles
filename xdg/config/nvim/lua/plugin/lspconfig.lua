@@ -1,4 +1,5 @@
 local not_vscode = require("util").not_vscode
+local sonarlint_path = os.getenv("SONARLINT_PATH")
 return {
   {
     "neovim/nvim-lspconfig",
@@ -21,9 +22,9 @@ return {
       { "mfussenegger/nvim-jdtls" },
       {
         url = "https://gitlab.com/schrieveslaach/sonarlint.nvim",
+        cond = sonarlint_path ~= nil,
         lazy = true,
         opts = function()
-          local sonarlint_path = os.getenv("SONARLINT_PATH") or vim.fn.stdpath("data") .. "/sonarlint"
           return {
             server = {
               cmd = {

@@ -142,7 +142,7 @@ function M.start()
   )
 
   local jdtls_cache_path = vim.fn.stdpath("cache") .. "/jdtls"
-  local lombok_path = os.getenv("LOMBOK_PATH") or jdtls_cache_path
+  local lombok_path = os.getenv("LOMBOK_PATH")
   local config = {
     settings = require("lsp.jdtls.settings"),
     capabilities = lsp.make_capabilities(),
@@ -166,7 +166,7 @@ function M.start()
       "--jvm-arg=-XX:GCTimeRatio=4",
       "--jvm-arg=-XX:AdaptiveSizePolicyWeight=90",
       "--jvm-arg=-Dsun.zip.disableMemoryMapping=true",
-      "--jvm-arg=-javaagent:" .. lombok_path .. "/lombok.jar",
+      lombok_path ~= nil and string.format("--jvm-arg=-javaagent:%s/lombok.jar", lombok_path) or "",
       "-configuration",
       jdtls_cache_path .. "/config",
       "-data",
