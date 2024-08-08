@@ -45,8 +45,8 @@ return {
       },
     },
   },
-  { "echasnovski/mini.statusline", opts = {} },
-  { "echasnovski/mini.tabline", opts = {} },
+  { "echasnovski/mini.statusline", opts = {}, event = "UIEnter" },
+  { "echasnovski/mini.tabline", opts = {}, event = "UIEnter" },
   {
     "echasnovski/mini.indentscope",
     event = "BufRead",
