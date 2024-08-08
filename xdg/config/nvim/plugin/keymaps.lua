@@ -29,8 +29,7 @@ map("n", "<leader>l", "<cmd>lopen<cr>", { desc = "Location list" })
 map("n", "<leader>q", "<cmd>copen<cr>", { desc = "Quickfix list" })
 
 map("n", "<leader>]", "<cmd>!ctags<cr>", { desc = "Ctags" })
-map("n", "<leader>F", "<cmd>lua require'util'.maximize()<cr>", { desc = "Maximize current buffer" })
-
+map("n", "<leader>z", "<cmd>lua require'util'.maximize()<cr>", { desc = "Maximize current buffer" })
 if vim.g.vscode then
   local action = function(action, opts)
     return function()
