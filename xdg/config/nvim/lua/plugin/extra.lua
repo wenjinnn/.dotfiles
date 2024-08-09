@@ -128,7 +128,7 @@ return {
       { "tpope/vim-dadbod" },
     },
     keys = {
-      { "<leader><leader>d", "<cmd>DBUIToggle<cr>", desc = "DBUI toggle" },
+      { "<leader>D", "<cmd>DBUIToggle<cr>", desc = "DBUI toggle" },
     },
     ft = { "sql", "mysql", "plsql" },
     cond = not_vscode,
