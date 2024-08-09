@@ -14,20 +14,22 @@ return {
       },
     },
   },
-  { "echasnovski/mini.extra", lazy = true, opts = {} },
   { "MunifTanjim/nui.nvim", lazy = true },
   {
-    "michaelb/sniprun",
-    event = "CmdLineEnter",
-    build = "sh ./install.sh 1",
-    opts = {
-      repl_enable = { "Lua_nvim" },
-      selected_interpreters = { "Lua_nvim" },
-      live_mode_toggle = "enable",
-    },
+    "echasnovski/mini.misc",
+    event = "VeryLazy",
+    lazy = true,
     keys = {
-      { "<leader>rs", "<Plug>SnipRun", desc = "Run snip", mode = { "n", "v" } },
-      { "<leader>rS", "<Plug>SnipRunOperator", desc = "Run snip operator" },
+      { "<leader>z", "<cmd>lua MiniMisc.zoom()<cr>", desc = "Zoom current window" },
     },
+    config = function()
+      require("mini.misc").setup()
+      MiniMisc.setup_auto_root()
+      MiniMisc.setup_termbg_sync()
+      MiniMisc.setup_restore_cursor()
+
+      local use_nested_comments = function() MiniMisc.use_nested_comments() end
+      vim.api.nvim_create_autocmd("BufEnter", { callback = use_nested_comments })
+    end,
   },
 }

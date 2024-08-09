@@ -44,6 +44,9 @@ return {
     opts = {},
     lazy = true,
     event = "BufRead",
+    dependencies = {
+      { "echasnovski/mini.extra", lazy = true, opts = {} },
+    },
     config = function(_, opts)
       local pick = require("mini.pick")
       pick.setup(opts)

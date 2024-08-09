@@ -1,6 +1,20 @@
 local not_vscode = require("util").not_vscode
 return {
   {
+    "michaelb/sniprun",
+    event = "CmdLineEnter",
+    build = "sh ./install.sh 1",
+    opts = {
+      repl_enable = { "Lua_nvim" },
+      selected_interpreters = { "Lua_nvim" },
+      live_mode_toggle = "enable",
+    },
+    keys = {
+      { "<leader>rs", "<Plug>SnipRun", desc = "Run snip", mode = { "n", "v" } },
+      { "<leader>rS", "<Plug>SnipRunOperator", desc = "Run snip operator" },
+    },
+  },
+  {
     "jellydn/hurl.nvim",
     cond = not_vscode,
     ft = "hurl",
@@ -158,32 +172,6 @@ return {
         desc = "Search on current file",
       },
     },
-  },
-  {
-    "uga-rosa/translate.nvim",
-    cmd = "Translate",
-    keys = {
-      -- Display translation in a window
-      { "<leader>tt", "<cmd>Translate ZH<CR>", mode = { "n", "x" }, desc = "Translate to a pop window" },
-      -- Replace the text with translation
-      { "<leader>tr", "<cmd>Translate ZH -output=replace<CR>", mode = { "n", "x" }, desc = "Translate and replace" },
-      -- Insert the text with translation
-      { "<leader>ti", "<cmd>Translate ZH -output=insert<CR>", mode = { "n", "x" }, desc = "Translate and insert word" },
-      -- copy translation to register
-      { "<leader>ty", "<cmd>Translate ZH -output=register<CR>", mode = { "n", "x" }, desc = "Translate to register" },
-    },
-    cond = not_vscode,
-    opts = function()
-      local default_command = "google"
-      if vim.fn.executable("trans") then
-        default_command = "translate_shell"
-      end
-      return {
-        default = {
-          command = default_command,
-        },
-      }
-    end,
   },
   {
     "jbyuki/venn.nvim",
