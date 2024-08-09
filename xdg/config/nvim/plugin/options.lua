@@ -83,16 +83,7 @@ opt.smoothscroll = true
 
 opt.foldlevel = 99
 opt.foldmethod = "expr"
-opt.foldexpr = "v:lua.require'util'.foldexpr()"
-opt.fillchars = {
-  foldopen = "",
-  foldclose = "",
-  fold = " ",
-  foldsep = " ",
-  diff = "╱",
-  eob = " ",
-}
-
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 if vim.g.vscode then
   vim.notify = require("vscode-neovim").notify
 end
