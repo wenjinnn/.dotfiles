@@ -1,7 +1,5 @@
 local home = os.getenv("HOME")
 local jdtls_maven_settings = os.getenv("JDTLS_MAVEN_SETTINGS")
-local jdtls_java_home = os.getenv("JDTLS_JAVA_HOME")
-local java_home = os.getenv("JAVA_HOME")
 local java_8_home = os.getenv("JAVA_8_HOME")
 local java_17_home = os.getenv("JAVA_17_HOME")
 local java_21_home = os.getenv("JAVA_21_HOME")
@@ -11,22 +9,11 @@ local M = {
     settings = {
       url = config_path .. "/lua/lsp/jdtls/settings.prefs",
     },
-    jdt = {
-      ls = {
-        lombokSupport = { enabled = true },
-        java = {
-          home = jdtls_java_home or java_home,
-        },
-      },
-    },
     eclipse = {
       downloadSources = true,
     },
     symbols = {
       includeSourceMethodDeclarations = true,
-    },
-    quickfix = {
-      showAt = true,
     },
     selectionRange = { enabled = true },
     recommendations = {
@@ -142,13 +129,6 @@ local M = {
         template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
       },
     },
-    decompiler = {
-      fernflower = {
-        asc = 1,
-        ind = "    ",
-      },
-    },
-    home = java_21_home or "/usr/lib/jvm/java-21-openjdk/",
     configuration = {
       updateBuildConfiguration = "automatic",
       maven = {
