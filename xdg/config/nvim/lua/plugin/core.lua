@@ -3,7 +3,7 @@ now(function()
   add({ source = "nvim-lua/plenary.nvim" })
 end)
 
-now(function()
+later(function()
   require("mini.misc").setup()
   MiniMisc.setup_auto_root()
   MiniMisc.setup_termbg_sync()
@@ -13,11 +13,11 @@ now(function()
   vim.keymap.set("n", "<leader>z", "<cmd>lua MiniMisc.zoom()<cr>", { desc = "Zoom current window" })
 end)
 
-now(function()
+later(function()
   require("mini.extra").setup()
 end)
 
-now(function()
+later(function()
   require("mini.basics").setup({
     basic = true,
     extra_ui = true,

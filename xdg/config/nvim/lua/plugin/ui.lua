@@ -4,6 +4,7 @@ if in_vscode() then
 end
 local now, later = MiniDeps.now, MiniDeps.later
 local map = vim.keymap.set
+
 now(function()
   local starter = require("mini.starter")
   starter.setup({
@@ -29,6 +30,7 @@ now(function()
     },
   })
 end)
+
 now(function()
   require("mini.icons").setup()
   MiniIcons.mock_nvim_web_devicons()
@@ -60,6 +62,7 @@ later(function()
     },
   })
 end)
+
 later(function()
   local miniclue = require("mini.clue")
   local z_post_keys = { zl = "z", zh = "z", zL = "z", zH = "z" }

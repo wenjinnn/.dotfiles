@@ -36,7 +36,7 @@ later(function()
   end, { desc = "MiniVisits remove label" })
 end)
 
-now(function()
+later(function()
   require("mini.pick").setup()
   vim.ui.select = MiniPick.ui_select
   local show_with_icons = function(buf_id, items, query)
