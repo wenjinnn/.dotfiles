@@ -1,13 +1,13 @@
-local not_vscode = require("util").not_vscode
-return {
-  {
-    "catppuccin/nvim",
-    cond = not_vscode,
-    name = "catppuccin",
-    priority = 1000,
-    opts = {
-      integrations = {
-        native_lsp = {
+local in_vscode = require("util").in_vscode
+if in_vscode() then
+  return
+end
+local add, now = MiniDeps.add, MiniDeps.now
+now(function()
+  add({ source = "catppuccin/nvim" })
+  require("catppuccin").setup({
+    integrations = {
+      native_lsp = {
           enabled = true,
           underlines = {
             errors = { "undercurl" },
@@ -17,9 +17,6 @@ return {
           },
         },
       },
-    },
-    init = function()
-      vim.cmd.colorscheme("catppuccin")
-    end,
-  },
-}
+  })
+  vim.cmd.colorscheme("catppuccin")
+end)

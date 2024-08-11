@@ -1,35 +1,32 @@
-return {
-  -- base plugin
-  { "nvim-lua/plenary.nvim", lazy = true },
-  { "tpope/vim-repeat", event = "BufRead", lazy = true },
-  {
-    "echasnovski/mini.basics",
-    event = "VeryLazy",
-    lazy = true,
-    opts = {
-      basic = true,
-      extra_ui = true,
-      mappings = {
-        windows = false,
-      },
-    },
-  },
-  { "MunifTanjim/nui.nvim", lazy = true },
-  {
-    "echasnovski/mini.misc",
-    event = "VeryLazy",
-    lazy = true,
-    keys = {
-      { "<leader>z", "<cmd>lua MiniMisc.zoom()<cr>", desc = "Zoom current window" },
-    },
-    config = function()
-      require("mini.misc").setup()
-      MiniMisc.setup_auto_root()
-      MiniMisc.setup_termbg_sync()
-      MiniMisc.setup_restore_cursor()
+local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+now(function()
+  add({ source = "nvim-lua/plenary.nvim" })
+end)
 
-      local use_nested_comments = function() MiniMisc.use_nested_comments() end
-      vim.api.nvim_create_autocmd("BufEnter", { callback = use_nested_comments })
-    end,
-  },
-}
+now(function()
+  require("mini.misc").setup()
+  MiniMisc.setup_auto_root()
+  MiniMisc.setup_termbg_sync()
+  MiniMisc.setup_restore_cursor()
+  local use_nested_comments = function() MiniMisc.use_nested_comments() end
+  vim.api.nvim_create_autocmd("BufEnter", { callback = use_nested_comments })
+  vim.keymap.set("n", "<leader>z", "<cmd>lua MiniMisc.zoom()<cr>", { desc = "Zoom current window" })
+end)
+
+now(function()
+  require("mini.extra").setup()
+end)
+
+now(function()
+  require("mini.basics").setup({
+    basic = true,
+    extra_ui = true,
+    mappings = {
+      windows = false,
+    },
+  })
+end)
+
+later(function()
+  add({ source = "tpope/vim-repeat" })
+end)

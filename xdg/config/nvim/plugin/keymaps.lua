@@ -21,9 +21,6 @@ map("n", "<leader>p", '"+p', { silent = true, desc = "Paste from system clipboar
 --keywordprg
 map("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
 
--- lazy
-map("n", "<leader>L", "<cmd>Lazy<cr>", { desc = "Lazy" })
-
 map("n", "<leader>l", "<cmd>lopen<cr>", { desc = "Location list" })
 map("n", "<leader>q", "<cmd>copen<cr>", { desc = "Quickfix list" })
 
