@@ -110,6 +110,7 @@ later(function()
       "sql",
       "css",
       "scss",
+      "yaml",
     }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
     ignore_install = { "org" }, -- List of parsers to ignore installing
     auto_install = true,
