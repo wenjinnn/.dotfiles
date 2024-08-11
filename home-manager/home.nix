@@ -134,6 +134,7 @@
     yq
     quicktype
     openpomodoro-cli
+    cloc
     # for nvim dict
     wordnet
   ];
