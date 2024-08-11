@@ -141,6 +141,8 @@ function M.start()
     vim.split((vim.fn.glob((os.getenv("JAVA_TEST_PATH") or jdtls_data_path) .. "/server/*.jar")), "\n")
   )
 
+  local extendedClientCapabilities = require("jdtls").extendedClientCapabilities
+  extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
   local jdtls_cache_path = vim.fn.stdpath("cache") .. "/jdtls"
   local lombok_path = os.getenv("LOMBOK_PATH")
   local config = {
@@ -151,6 +153,7 @@ function M.start()
     filetypes = { "java" },
     init_options = {
       bundles = bundles,
+      extendedClientCapabilities = extendedClientCapabilities;
     },
     cmd = {
       "jdtls",
