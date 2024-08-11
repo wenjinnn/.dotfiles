@@ -22,7 +22,6 @@ later(function()
   })
   local cmp = require("cmp")
   local util = require("util")
-  local feedkey = util.feedkey
   local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0
@@ -77,6 +76,9 @@ later(function()
       select = true,
     }),
     ["<C-CR>"] = function(fallback)
+      if vim.snippet.active({ direction = 1 }) then
+        vim.snippet.stop()
+      end
       cmp.abort()
       fallback()
     end,
@@ -97,7 +99,7 @@ later(function()
     end,
     ["<Tab>"] = cmp.mapping(function(fallback)
       if vim.snippet.active({ direction = 1 }) then
-        feedkey("<cmd>lua vim.snippet.jump(1)<CR>", "")
+        vim.snippet.jump(1)
       elseif cmp.visible() then
         cmp.select_next_item()
       elseif has_words_before() then
@@ -108,7 +110,7 @@ later(function()
     end, { "i", "s" }),
     ["<S-Tab>"] = cmp.mapping(function()
       if vim.snippet.active({ direction = -1 }) then
-        feedkey("<cmd>lua vim.snippet.jump(-1)<CR>", "")
+        vim.snippet.jump(-1)
       elseif cmp.visible() then
         cmp.select_prev_item()
       end
