@@ -3,9 +3,8 @@ local lsp = require("util.lsp")
 
 function M.setup_dap()
   require("jdtls").setup_dap()
-  local jdtls_dap_vmargs = coroutine.yield("try to get jdtls dap vm args from editor config")
   require("jdtls.dap").setup_dap_main_class_configs({
-    config_overrides = { vmArgs = jdtls_dap_vmargs or "-Xms128m -Xmx512m" },
+    config_overrides = { vmArgs = "-Xms128m -Xmx512m" },
   })
   local dap = require("dap")
   -- for all launch.json options see https://github.com/microsoft/vscode-java-debug#options
@@ -26,8 +25,6 @@ function M.setup_dap()
     }
   end
 end
-
-M._setup_dap_coroutine = coroutine.wrap(M.setup_dap)
 
 function M.setup_jdtls_buf_keymap(bufnr)
   lsp.set_buf_keymap(
@@ -127,7 +124,7 @@ end
 
 function M.start()
   local on_attach = function(client, bufnr)
-    M._setup_dap_coroutine()
+    M.setup_dap()
     M.setup_jdtls_buf_keymap(bufnr)
     lsp.setup(client, bufnr)
   end
@@ -148,8 +145,6 @@ function M.start()
   extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
   local jdtls_cache_path = vim.fn.stdpath("cache") .. "/jdtls"
   local lombok_path = os.getenv("LOMBOK_PATH")
-  local jdtls_vmarg_xmx = coroutine.yield("try to get jdtls xmx vmarg")
-
   local config = {
     settings = require("lsp.jdtls.settings"),
     capabilities = lsp.make_capabilities(),
@@ -158,7 +153,7 @@ function M.start()
     filetypes = { "java" },
     init_options = {
       bundles = bundles,
-      extendedClientCapabilities = extendedClientCapabilities,
+      extendedClientCapabilities = extendedClientCapabilities;
     },
     cmd = {
       "jdtls",
@@ -166,7 +161,7 @@ function M.start()
       "--jvm-arg=-Dlog.level=ALL",
       "--jvm-arg=-Dfile.encoding=utf-8",
       "--jvm-arg=-Djava.import.generatesMetadataFilesAtProjectRoot=false",
-      "--jvm-arg=-Xmx" .. (jdtls_vmarg_xmx or "1G"),
+      "--jvm-arg=-Xmx1G",
       -- The following 6 lines is for optimize memory use, see https://github.com/redhat-developer/vscode-java/pull/1262#discussion_r386912240
       "--jvm-arg=-XX:+UseParallelGC",
       "--jvm-arg=-XX:MinHeapFreeRatio=5",
@@ -186,23 +181,14 @@ function M.start()
   require("jdtls").start_or_attach(config)
 end
 
-M._start_coroutine = coroutine.wrap(M.start)
-
 function M.setup()
-  require("editorconfig").properties.jdtls_vmarg_xmx = function(_, val)
-    M._start_coroutine(val)
-  end
-
-  require("editorconfig").properties.jdtls_dap_vmargs = function(_, val)
-    M._setup_dap_coroutine(val)
-  end
   vim.api.nvim_create_augroup("user_jdtls_setup", { clear = true })
   vim.api.nvim_create_autocmd(
     { "FileType" },
     {
       group = "user_jdtls_setup",
       pattern = "java",
-      callback = M._start_coroutine,
+      callback = M.start,
     }
   )
 end

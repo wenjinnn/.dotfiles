@@ -61,12 +61,6 @@ common utils
 [./after](https://github.com/wenjinnn/config/tree/main/xdg/config/nvim/after)
 just some filetype settings
 
-## Custom editorconfig properties:
-
-`jdtls_vmarg_xmx` Xmx vmarg for jdtls
-
-`jdtls_dap_vmargs` Vmargs for jdtls dap
-
 ## Defined environment variables cheatsheets:
 
 ### Common
