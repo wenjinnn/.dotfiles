@@ -182,11 +182,11 @@ function M.start()
 end
 
 function M.setup()
-  require("util").augroup("jdtls_setup")
+  local jdtls_setup_group = require("util").augroup("jdtls_setup")
   vim.api.nvim_create_autocmd(
     { "FileType" },
     {
-      group = "user_jdtls_setup",
+      group = jdtls_setup_group,
       pattern = "java",
       callback = M.start,
     }
