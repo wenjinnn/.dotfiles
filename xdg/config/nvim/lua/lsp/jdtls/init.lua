@@ -182,7 +182,7 @@ function M.start()
 end
 
 function M.setup()
-  vim.api.nvim_create_augroup("user_jdtls_setup", { clear = true })
+  require("util").augroup("jdtls_setup")
   vim.api.nvim_create_autocmd(
     { "FileType" },
     {

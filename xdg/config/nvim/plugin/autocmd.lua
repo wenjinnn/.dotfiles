@@ -1,6 +1,4 @@
-local function augroup(name)
-  return vim.api.nvim_create_augroup("wenvim_" .. name, { clear = true })
-end
+local augroup = require("util").augroup
 local au = vim.api.nvim_create_autocmd
 
 -- Check if we need to reload the file when it changed
