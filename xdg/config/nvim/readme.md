@@ -65,7 +65,7 @@ just some filetype settings
 
 ### Common
 
-`LAZY_NVIM_LOCK_PATH` lazy.nvim lockfile path, if not set, fallback to lazy.nvim default setting
+`NVIM_MINI_DEPS_SNAP` mini.deps snap path, if not set, fallback to mini.deps default setting
 
 `TELESCOPE_FILE_IGNORE_PATTERNS` telescope.nvim file ignore patterns, if not set, the pattern is { "^.git/", "^node_modules/" }
 
@@ -121,9 +121,6 @@ just some filetype settings
 ### code-runner
 
 + [michaelb/sniprun](https://dotfyle.com/plugins/michaelb/sniprun)
-### color
-
-+ [echasnovski/mini.hipatterns](https://dotfyle.com/plugins/echasnovski/mini.hipatterns)
 ### colorscheme
 
 + [catppuccin/nvim](https://dotfyle.com/plugins/catppuccin/nvim)
@@ -139,83 +136,41 @@ just some filetype settings
 + [theHamsta/nvim-dap-virtual-text](https://dotfyle.com/plugins/theHamsta/nvim-dap-virtual-text)
 ### editing-support
 
-+ [echasnovski/mini.pairs](https://dotfyle.com/plugins/echasnovski/mini.pairs)
-+ [echasnovski/mini.splitjoin](https://dotfyle.com/plugins/echasnovski/mini.splitjoin)
-+ [nvim-treesitter/nvim-treesitter-context](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-context)
-+ [echasnovski/mini.basics](https://dotfyle.com/plugins/echasnovski/mini.basics)
 + [windwp/nvim-ts-autotag](https://dotfyle.com/plugins/windwp/nvim-ts-autotag)
-+ [echasnovski/mini.ai](https://dotfyle.com/plugins/echasnovski/mini.ai)
-### file-explorer
-
-+ [echasnovski/mini.files](https://dotfyle.com/plugins/echasnovski/mini.files)
++ [nvim-treesitter/nvim-treesitter-context](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-context)
 ### formatting
 
-+ [echasnovski/mini.align](https://dotfyle.com/plugins/echasnovski/mini.align)
 + [stevearc/conform.nvim](https://dotfyle.com/plugins/stevearc/conform.nvim)
-### fuzzy-finder
-
-+ [echasnovski/mini.pick](https://dotfyle.com/plugins/echasnovski/mini.pick)
-### git
-
-+ [echasnovski/mini.diff](https://dotfyle.com/plugins/echasnovski/mini.diff)
-+ [echasnovski/mini-git](https://dotfyle.com/plugins/echasnovski/mini-git)
-### indent
-
-+ [echasnovski/mini.indentscope](https://dotfyle.com/plugins/echasnovski/mini.indentscope)
-### keybinding
-
-+ [echasnovski/mini.clue](https://dotfyle.com/plugins/echasnovski/mini.clue)
 ### lsp
 
-+ [neovim/nvim-lspconfig](https://dotfyle.com/plugins/neovim/nvim-lspconfig)
-+ [mfussenegger/nvim-jdtls](https://dotfyle.com/plugins/mfussenegger/nvim-jdtls)
 + [mfussenegger/nvim-lint](https://dotfyle.com/plugins/mfussenegger/nvim-lint)
++ [neovim/nvim-lspconfig](https://dotfyle.com/plugins/neovim/nvim-lspconfig)
 + [b0o/SchemaStore.nvim](https://dotfyle.com/plugins/b0o/SchemaStore.nvim)
++ [mfussenegger/nvim-jdtls](https://dotfyle.com/plugins/mfussenegger/nvim-jdtls)
 ### markdown-and-latex
 
 + [iamcco/markdown-preview.nvim](https://dotfyle.com/plugins/iamcco/markdown-preview.nvim)
-### motion
-
-+ [folke/flash.nvim](https://dotfyle.com/plugins/folke/flash.nvim)
-+ [echasnovski/mini.bracketed](https://dotfyle.com/plugins/echasnovski/mini.bracketed)
 ### note-taking
 
 + [chipsenkbeil/org-roam.nvim](https://dotfyle.com/plugins/chipsenkbeil/org-roam.nvim)
-+ [nvim-orgmode/orgmode](https://dotfyle.com/plugins/nvim-orgmode/orgmode)
 + [jbyuki/venn.nvim](https://dotfyle.com/plugins/jbyuki/venn.nvim)
++ [nvim-orgmode/orgmode](https://dotfyle.com/plugins/nvim-orgmode/orgmode)
 ### nvim-dev
 
-+ [nvim-lua/plenary.nvim](https://dotfyle.com/plugins/nvim-lua/plenary.nvim)
 + [MunifTanjim/nui.nvim](https://dotfyle.com/plugins/MunifTanjim/nui.nvim)
-### plugin-manager
-
-+ [folke/lazy.nvim](https://dotfyle.com/plugins/folke/lazy.nvim)
++ [nvim-lua/plenary.nvim](https://dotfyle.com/plugins/nvim-lua/plenary.nvim)
 ### search
 
-+ [windwp/nvim-spectre](https://dotfyle.com/plugins/windwp/nvim-spectre)
-### session
-
-+ [echasnovski/mini.sessions](https://dotfyle.com/plugins/echasnovski/mini.sessions)
++ [MagicDuck/grug-far.nvim](https://dotfyle.com/plugins/MagicDuck/grug-far.nvim)
 ### snippet
 
 + [rafamadriz/friendly-snippets](https://dotfyle.com/plugins/rafamadriz/friendly-snippets)
-### split-and-window
-
-+ [echasnovski/mini.bufremove](https://dotfyle.com/plugins/echasnovski/mini.bufremove)
-### startup
-
-+ [echasnovski/mini.starter](https://dotfyle.com/plugins/echasnovski/mini.starter)
-### statusline
-
-+ [nvim-lualine/lualine.nvim](https://dotfyle.com/plugins/nvim-lualine/lualine.nvim)
 ### syntax
 
-+ [nvim-treesitter/nvim-treesitter-textobjects](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-textobjects)
-+ [echasnovski/mini.surround](https://dotfyle.com/plugins/echasnovski/mini.surround)
 + [nvim-treesitter/nvim-treesitter](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter)
++ [nvim-treesitter/nvim-treesitter-textobjects](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-textobjects)
 ### utility
 
-+ [echasnovski/mini.notify](https://dotfyle.com/plugins/echasnovski/mini.notify)
 + [echasnovski/mini.nvim](https://dotfyle.com/plugins/echasnovski/mini.nvim)
 + [jellydn/hurl.nvim](https://dotfyle.com/plugins/jellydn/hurl.nvim)
 
