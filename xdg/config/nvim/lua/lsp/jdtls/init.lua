@@ -4,7 +4,7 @@ local lsp = require("util.lsp")
 function M.setup_dap()
   require("jdtls").setup_dap()
   require("jdtls.dap").setup_dap_main_class_configs({
-    config_overrides = { vmArgs = "-Xms128m -Xmx512m" },
+    config_overrides = { vmArgs = os.getenv("JDTLS_DAP_VMARGS") or "-Xms128m -Xmx512m" },
   })
   local dap = require("dap")
   -- for all launch.json options see https://github.com/microsoft/vscode-java-debug#options
@@ -161,7 +161,7 @@ function M.start()
       "--jvm-arg=-Dlog.level=ALL",
       "--jvm-arg=-Dfile.encoding=utf-8",
       "--jvm-arg=-Djava.import.generatesMetadataFilesAtProjectRoot=false",
-      "--jvm-arg=-Xmx1G",
+      "--jvm-arg=-Xmx" .. (os.getenv("JDTLS_XMX") or "1G"),
       -- The following 6 lines is for optimize memory use, see https://github.com/redhat-developer/vscode-java/pull/1262#discussion_r386912240
       "--jvm-arg=-XX:+UseParallelGC",
       "--jvm-arg=-XX:MinHeapFreeRatio=5",

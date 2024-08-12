@@ -99,6 +99,10 @@ just some filetype settings
 
 `LOMBOK_PATH` path to [lombok](https://projectlombok.org/) java agent jar
 
+`JDTLS_XMX` jdtls xmx jvm arg value
+
+`JDTLS_DAP_VMARGS` jdtls dap vm args
+
 ### Sonarlint
 `SONARLINT_PATH` path to sonarlint language server jars
 
