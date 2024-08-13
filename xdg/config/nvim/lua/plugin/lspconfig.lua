@@ -3,7 +3,7 @@ if in_vscode() then
   return
 end
 local add, later = MiniDeps.add, MiniDeps.later
-local map = vim.keymap.set
+local map = require("util").map
 
 later(function()
   add({
@@ -51,23 +51,23 @@ later(function()
       },
     })
   end
-  map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Lsp code action" })
-  map("n", "<leader>cl", vim.lsp.codelens.run, { desc = "Run codelens" })
-  map("n", "<leader>cL", vim.lsp.codelens.refresh, { desc = "Refresh codelens" })
-  map("n", "<leader>k", vim.lsp.buf.signature_help, { desc = "Lsp signature help" })
-  map("n", "<leader>cw", vim.lsp.buf.add_workspace_folder, { desc = "Lsp add workspace folder" })
-  map("n", "<leader>cW", vim.lsp.buf.remove_workspace_folder, { desc = "Lsp remove workspace folder" })
-  map("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Lsp rename" })
-  map("n", "<leader>Q", vim.diagnostic.setloclist, { desc = "Lsp diagnostic location list" })
-  map("n", "<leader>cI", vim.lsp.buf.incoming_calls, { desc = "Lsp incoming calls" })
-  map("n", "<leader>ch", vim.lsp.buf.outgoing_calls, { desc = "Lsp outgoing calls" })
+  map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Lsp code action")
+  map("n", "<leader>cl", vim.lsp.codelens.run, "Run codelens")
+  map("n", "<leader>cL", vim.lsp.codelens.refresh, "Refresh codelens")
+  map("n", "<leader>k", vim.lsp.buf.signature_help, "Lsp signature help")
+  map("n", "<leader>cw", vim.lsp.buf.add_workspace_folder, "Lsp add workspace folder")
+  map("n", "<leader>cW", vim.lsp.buf.remove_workspace_folder, "Lsp remove workspace folder")
+  map("n", "<leader>rn", vim.lsp.buf.rename, "Lsp rename")
+  map("n", "<leader>Q", vim.diagnostic.setloclist, "Lsp diagnostic location list")
+  map("n", "<leader>cI", vim.lsp.buf.incoming_calls, "Lsp incoming calls")
+  map("n", "<leader>ch", vim.lsp.buf.outgoing_calls, "Lsp outgoing calls")
   map("n", "<leader>cH",
     function()
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
     end,
-    { desc = "Lsp inlay hint toggle" })
+    "Lsp inlay hint toggle")
   map("n", "<leader>cf", function()
       vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end,
-    { desc = "Lsp list workspace folder" })
+    "Lsp list workspace folder")
 end)

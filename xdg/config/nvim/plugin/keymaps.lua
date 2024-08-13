@@ -1,11 +1,6 @@
-local map = vim.keymap.set
-map(
-  "n",
-  "<leader>S",
-  "<cmd>windo set scrollbind!<CR>",
-  { silent = true, desc = "Scroll all buffer" }
-)
-map("n", "<leader>X", "<cmd>only<CR>", { silent = true, desc = "Only" })
+local map = require("util").map
+map("n", "<leader>S", "<cmd>windo set scrollbind!<CR>", "Scroll all buffer")
+map("n", "<leader>X", "<cmd>only<CR>", "Only")
 
 -- Add undo break-points
 map("i", ",", ",<c-g>u")
@@ -13,18 +8,16 @@ map("i", ".", ".<c-g>u")
 map("i", ";", ";<c-g>u")
 
 -- copy/paste to system clipboard
-map({ "n", "v" }, "<leader>y", '"+y', { silent = true, desc = "Yank to system clipboard" })
-map("n", "<leader>Y", '"+Y', { silent = true, desc = "Yank line to system clipboard" })
-map({ "n", "v" }, "<leader>0", '"0p', { silent = true, desc = "Paste from last yank" })
-map("n", "<leader>p", '"+p', { silent = true, desc = "Paste from system clipboard" })
+map({ "n", "v" }, "<leader>y", '"+y', "Yank to system clipboard")
+map("n", "<leader>Y", '"+Y', "Yank line to system clipboard")
+map({ "n", "v" }, "<leader>0", '"0p', "Paste from last yank")
+map("n", "<leader>p", '"+p', "Paste from system clipboard")
 
 --keywordprg
-map("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
-
-map("n", "<leader>l", "<cmd>lopen<cr>", { desc = "Location list" })
-map("n", "<leader>q", "<cmd>copen<cr>", { desc = "Quickfix list" })
-
-map("n", "<leader>]", "<cmd>!ctags<cr>", { desc = "Ctags" })
+map("n", "<leader>K", "<cmd>norm! K<cr>", "Keywordprg")
+map("n", "<leader>l", "<cmd>lopen<cr>", "Location list")
+map("n", "<leader>q", "<cmd>copen<cr>", "Quickfix list")
+map("n", "<leader>]", "<cmd>!ctags<cr>", "Ctags")
 if vim.g.vscode then
   local action = function(action, opts)
     return function()

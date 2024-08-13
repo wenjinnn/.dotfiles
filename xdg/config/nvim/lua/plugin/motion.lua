@@ -1,5 +1,5 @@
 local add, later = MiniDeps.add, MiniDeps.later
-local map = vim.keymap.set
+local map = require("util").map
 later(function()
   add({ source = "folke/flash.nvim" })
   local flash = require("flash")
@@ -17,12 +17,13 @@ later(function()
   au("FileType", "qf", revert_cr, "Revert <CR>")
   au("CmdwinEnter", "*", revert_cr, "Revert <CR>")
 
-  map({ "n", "x", "o" }, "<CR>", flash.jump, { desc = "Flash jump" })
-  map({ "n", "x", "o" }, "<S-CR>", flash.treesitter, { desc = "Flash treesitter" })
-  map("o", "r", flash.remote, { desc = "Remote flash" })
-  map({ "o", "x" }, "R", flash.treesitter_search, { desc = "Flash treesitter search" })
-  map("c", "<c-s>", flash.toggle, { desc = "Toggle flash search" })
+  map({ "n", "x", "o" }, "<CR>", flash.jump, "Flash jump")
+  map({ "n", "x", "o" }, "<S-CR>", flash.treesitter, "Flash treesitter")
+  map("o", "r", flash.remote, "Remote flash")
+  map({ "o", "x" }, "R", flash.treesitter_search, "Flash treesitter search")
+  map("c", "<c-s>", flash.toggle, "Toggle flash search")
   map("n", "<leader>*", function()
-    require("flash").jump({ pattern = vim.fn.expand("<cword>") })
-  end, { desc = "Flash jump cursor word" })
+      require("flash").jump({ pattern = vim.fn.expand("<cword>") })
+    end,
+    "Flash jump cursor word")
 end)

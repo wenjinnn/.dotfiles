@@ -14,12 +14,14 @@ later(function()
   })
   local dap = require("dap")
   local api = vim.api
-  local map = vim.keymap.set
   local util = require("util")
+  local map = util.map
   local repeatable = util.make_repeatable_keymap
+  local dap_ui_widgets = require("dap.ui.widgets")
   local dap_cursor_float = function(widget, title)
-    require("dap.ui.widgets").cursor_float(widget, { title = title })
+    dap_ui_widgets.cursor_float(widget, { title = title })
   end
+
   dap.defaults.fallback.terminal_win_cmd = function()
     local cur_win = api.nvim_get_current_win()
     api.nvim_command("tabnew")
@@ -29,11 +31,13 @@ later(function()
     api.nvim_set_current_win(cur_win)
     return bufnr, win
   end
+
   dap.adapters.gdb = {
     type = "executable",
     command = "gdb",
     args = { "-i", "dap" },
   }
+
   dap.configurations.rust = {
     {
       name = "Launch",
@@ -50,122 +54,108 @@ later(function()
   require("nvim-dap-virtual-text").setup({
     all_frames = true, virt_text_pos = "eol",
   })
+
+  map("n", "<leader>db", dap.toggle_breakpoint, "Dap toggle breakpoint")
+  map("n", "<leader>dd", dap.clear_breakpoints, "Dap clear breakpoint")
+  map("n", "<leader>dr", dap.run_last, "Dap run last")
+  map("n", "<leader>dC",
+    repeatable("n", "<plug>(DapRunToCursor)", function()
+      dap.run_to_cursor()
+    end),
+    "Dap run to cursor")
+  map("n", "<leader>do",
+    repeatable("n", "<plug>(DapStepOver)", function()
+      dap.step_over()
+    end),
+    "Dap step over")
+  map("n", "<leader>dp",
+    repeatable("n", "<plug>(DapStepBack)", function()
+      dap.step_back()
+    end),
+    "Dap step back")
+  map("n", "<leader>di",
+    repeatable("n", "<plug>(DapStepInto)", function()
+      dap.step_into()
+    end),
+    "Dap step into")
+  map("n", "<leader>dO",
+    repeatable("n", "<plug>(DapStepOut)", function()
+      dap.step_out()
+    end),
+    "Dap step out")
   map("n",
-    "<leader>db",
-    function()
-      require("dap").toggle_breakpoint()
-    end,
-    { desc = "Dap toggle breakpoint" }
-  )
+    "<leader>de",
+    repeatable("n", "<plug>(DapReverseContinue)", function()
+      dap.reverse_continue()
+    end),
+    "Dap reverse continue")
   map("n", "<leader>dq",
     function()
-      require("dap").list_breakpoints()
+      dap.list_breakpoints()
       vim.cmd("copen")
-    end,
-    { desc = "Dap list breakpoints" })
-  map("n", "<leader>dd",
-    function()
-      require("dap").clear_breakpoints()
-    end,
-    { desc = "Dap clear breakpoint" })
+    end, "Dap list breakpoints")
   map("n", "<leader>dc",
     function()
       -- fix java dap setup failed sometime
       if vim.bo.filetype == "java" and require("dap").configurations.java == nil then
         require("lsp.jdtls").setup_dap()
       end
-      require("dap").continue()
+      dap.continue()
     end,
-    { desc = "Dap continue" })
-  map("n", "<leader>dC",
-    repeatable("n", "<plug>(DapRunToCursor)", function()
-      require("dap").run_to_cursor()
-    end),
-    { desc = "Dap run to cursor" })
-  map("n", "<leader>do",
-    repeatable("n", "<plug>(DapStepOver)", function()
-      require("dap").step_over()
-    end),
-    { desc = "Dap step over" })
-  map("n", "<leader>dp",
-    repeatable("n", "<plug>(DapStepBack)", function()
-      require("dap").step_back()
-    end),
-    { desc = "Dap step back" })
-  map("n", "<leader>di",
-    repeatable("n", "<plug>(DapStepInto)", function()
-      require("dap").step_into()
-    end),
-    { desc = "Dap step into" })
-  map("n", "<leader>dO",
-    repeatable("n", "<plug>(DapStepOut)", function()
-      require("dap").step_out()
-    end),
-    { desc = "Dap step out" })
-  map("n",
-    "<leader>de",
-    repeatable("n", "<plug>(DapReverseContinue)", function()
-      require("dap").reverse_continue()
-    end),
-    { desc = "Dap reverse continue" })
+    "Dap continue")
   map("n", "<leader>dB",
     function()
-      require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
+      dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
     end,
-    { desc = "Dap condition breakpoint" })
+    "Dap condition breakpoint")
   map("n", "<leader>dl",
     function()
-      require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))
+      dap.set_breakpoint(nil, nil, vim.fn.input("Log point message: "))
     end,
-    { desc = "Dap log breakpoint" })
+    "Dap log breakpoint")
   map("n", "<leader>dE",
     function()
-      require("dap").set_exception_breakpoints("default")
+      dap.set_exception_breakpoints("default")
     end,
-    { desc = "Dap exception breakpoint" })
+    "Dap exception breakpoint")
   map("n", "<leader>dR",
     function()
-      require("dap").repl.toggle()
+      dap.repl.toggle()
       vim.cmd("wincmd p")
       local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
       if filetype == "dap-repl" then
         vim.cmd("startinsert")
       end
     end,
-    { desc = "Dap repl toggle" })
-  map("n", "<leader>dr",
-    function()
-      require("dap").run_last()
-    end,
-    { desc = "Dap run last" })
+    "Dap repl toggle")
   map("n", "<leader>ds",
     function()
-      dap_cursor_float(require("dap.ui.widgets").scopes, "dap-scopes")
+      dap_cursor_float(dap_ui_widgets.scopes, "dap-scopes")
     end,
-    { desc = "Dap scopes" })
+    "Dap scopes")
   map("n", "<leader>df",
     function()
-      dap_cursor_float(require("dap.ui.widgets").frames, "dap-frames")
+      dap_cursor_float(dap_ui_widgets.frames, "dap-frames")
     end,
-    { desc = "Dap frames" })
+    "Dap frames")
   map("n", "<leader>de",
     function()
-      dap_cursor_float(require("dap.ui.widgets").expression, "dap-expression")
+      dap_cursor_float(dap_ui_widgets.expression, "dap-expression")
     end,
-    { desc = "Dap expression" })
+    "Dap expression")
   map("n", "<leader>dt",
     function()
-      dap_cursor_float(require("dap.ui.widgets").threads, "dap-threads")
+      dap_cursor_float(dap_ui_widgets.threads, "dap-threads")
     end,
-    { desc = "Dap threads" })
+    "Dap threads")
   map("n", "<leader>dS",
     function()
-      dap_cursor_float(require("dap.ui.widgets").sessions, "dap-sessions")
+      dap_cursor_float(dap_ui_widgets.sessions, "dap-sessions")
     end,
-    { desc = "Dap sessions" })
+    "Dap sessions")
   map("n", "<leader>dh",
     function()
-      require("dap.ui.widgets").hover("<cexpr>", { title = "dap-hover" })
+      dap_ui_widgets.hover("<cexpr>", { title = "dap-hover" })
     end,
-    { desc = "Dap hover" })
+    "Dap hover")
 end)

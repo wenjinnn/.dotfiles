@@ -1,6 +1,6 @@
 local in_vscode = require("util").in_vscode
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
-local map = vim.keymap.set
+local map = require("util").map
 
 later(function()
   local gen_ai_spec = require("mini.extra").gen_ai_spec
@@ -164,32 +164,32 @@ if not in_vscode() then
       function()
         require("mini.sessions").write(session_name())
       end,
-      { desc = "Session write" })
+      "Session write")
     map("n", "<leader>sW",
       function()
         MiniSessions.write(vim.fn.input("Session name: "))
       end,
-      { desc = "Session write custom" })
+      "Session write custom")
     map("n", "<leader>sd",
       function()
         require("mini.sessions").delete(session_name())
       end,
-      { desc = "Session delete" })
+      "Session delete")
     map("n", "<leader>sD",
       function()
         MiniSessions.delete(vim.fn.input("Session name: "))
       end,
-      { desc = "Session delete custom" })
+      "Session delete custom")
     map("n", "<leader>ss",
       function()
         MiniSessions.select()
       end,
-      { desc = "Session select" })
+      "Session select")
   end)
 
   later(function()
     require("mini.bufremove").setup()
-    map("n", "<leader>x", "<cmd>lua MiniBufremove.delete()<CR>", { desc = "Buf delete" })
+    map("n", "<leader>x", "<cmd>lua MiniBufremove.delete()<CR>", "Buf delete")
   end)
 
   later(function()
@@ -241,18 +241,19 @@ if not in_vscode() then
       callback = diff_format,
       desc = "Auto format changed lines",
     })
+
+    map("n", "<leader>md", "<cmd>DiffFormat<cr>", "Diff format")
     map({ "n", "v" },
       "<leader>mm",
-      '<cmd>lua require"conform".format({async = true, lsp_fallback = true})<cr>',
-      { desc = "Format" })
-    map("n", "<leader>md",
-      "<cmd>DiffFormat<cr>",
-      { desc = "Diff format" })
+      function()
+        require("conform").format({ async = true, lsp_fallback = true })
+      end,
+      "Format")
     map("n", "<leader>mM",
       function()
         vim.g.conform_autoformat = not vim.g.conform_autoformat
         vim.notify("Autoformat: " .. (vim.g.conform_autoformat and "on" or "off"))
       end,
-      { desc = "Auto format toggle" })
+      "Auto format toggle")
   end)
 end

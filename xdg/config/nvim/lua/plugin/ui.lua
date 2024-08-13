@@ -3,7 +3,7 @@ if in_vscode() then
   return
 end
 local now, later = MiniDeps.now, MiniDeps.later
-local map = vim.keymap.set
+local map = require("util").map
 
 now(function()
   local starter = require("mini.starter")
@@ -39,8 +39,7 @@ end)
 later(function()
   require("mini.notify").setup()
   MiniIcons.mock_nvim_web_devicons()
-  map("n", "<leader>N", MiniNotify.show_history, { desc = "Notify history" }
-  )
+  map("n", "<leader>N", MiniNotify.show_history, "Notify history")
 end)
 
 now(function()

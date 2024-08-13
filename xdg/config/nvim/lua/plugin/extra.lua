@@ -1,5 +1,5 @@
 local in_vscode = require("util").in_vscode
-local map = vim.keymap.set
+local map = require("util").map
 local add, later = MiniDeps.add, MiniDeps.later
 
 later(function()
@@ -17,20 +17,20 @@ later(function()
     selected_interpreters = { "Lua_nvim" },
     live_mode_toggle = "enable",
   })
-  map({ "n", "v" }, "<leader>rs", "<Plug>SnipRun", { desc = "Run snip" })
-  map("n", "<leader>rS", "<Plug>SnipRunOperator", { desc = "Run snip operator" })
+  map({ "n", "v" }, "<leader>rs", "<Plug>SnipRun", "Run snip")
+  map("n", "<leader>rS", "<Plug>SnipRunOperator", "Run snip operator")
 end)
 
 later(function()
   -- ascii draw in neovim
   add({ source = "jbyuki/venn.nvim" })
-  map("v", "<leader>vv", ":VBox<cr>", { desc = "Draw a single line box or arrow" })
-  map("v", "<leader>vd", ":VBoxD<cr>", { desc = "Draw a double line box or arrow" })
-  map("v", "<leader>vh", ":VBoxH<cr>", { desc = "Draw a heavy line box or arrow" })
-  map("v", "<leader>vo", ":VBoxO<cr>", { desc = "Draw over a existing box or arrow" })
-  map("v", "<leader>vO", ":VBoxDO<cr>", { desc = "Draw over a doulbe line on a existing box or arrow" })
-  map("v", "<leader>vH", ":VBoxHO<cr>", { desc = "Draw over a heavy line on a existing box or arrow" })
-  map("v", "<leader>vf", ":VFill<cr>", { desc = "Draw fill a area with a solid color" })
+  map("v", "<leader>vv", ":VBox<cr>", "Draw a single line box or arrow")
+  map("v", "<leader>vd", ":VBoxD<cr>", "Draw a double line box or arrow")
+  map("v", "<leader>vh", ":VBoxH<cr>", "Draw a heavy line box or arrow")
+  map("v", "<leader>vo", ":VBoxO<cr>", "Draw over a existing box or arrow")
+  map("v", "<leader>vO", ":VBoxDO<cr>", "Draw over a doulbe line on a existing box or arrow")
+  map("v", "<leader>vH", ":VBoxHO<cr>", "Draw over a heavy line on a existing box or arrow")
+  map("v", "<leader>vf", ":VFill<cr>", "Draw fill a area with a solid color")
 end)
 
 if not in_vscode() then
@@ -50,13 +50,13 @@ if not in_vscode() then
       },
     })
     -- Run API request
-    map("n", "<leader>rA", "<cmd>HurlRunner<CR>", { desc = "Run all requests" })
-    map("n", "<leader>ra", "<cmd>HurlRunnerAt<CR>", { desc = "Run api request" })
-    map("n", "<leader>re", "<cmd>HurlRunnerToEntry<CR>", { desc = "Run api request to entry" })
-    map("n", "<leader>rt", "<cmd>HurlToggleMode<CR>", { desc = "Hurl toggle mode" })
-    map("n", "<leader>rv", "<cmd>HurlVerbose<CR>", { desc = "Run api in verbose mode" })
+    map("n", "<leader>rA", "<cmd>HurlRunner<CR>", "Run all requests")
+    map("n", "<leader>ra", "<cmd>HurlRunnerAt<CR>", "Run api request")
+    map("n", "<leader>re", "<cmd>HurlRunnerToEntry<CR>", "Run api request to entry")
+    map("n", "<leader>rt", "<cmd>HurlToggleMode<CR>", "Hurl toggle mode")
+    map("n", "<leader>rv", "<cmd>HurlVerbose<CR>", "Run api in verbose mode")
     -- Run Hurl request in visual mode
-    map("v", "<leader>ra", ":HurlRunner<CR>", { desc = "Hurl runner" })
+    map("v", "<leader>ra", ":HurlRunner<CR>", "Hurl runner")
   end)
 
   -- markdown preview in browser
@@ -84,7 +84,7 @@ if not in_vscode() then
       disable_filename = 0,
       toc = {},
     }
-    map("n", "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", { desc = "Markdown preview toggle" })
+    map("n", "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", "Markdown preview toggle")
   end)
   -- neovim in browser
   later(function()
@@ -109,12 +109,7 @@ if not in_vscode() then
       },
     }
     if vim.g.started_by_firenvim then
-      map(
-        "n",
-        "<C-[>",
-        "<Cmd>call firenvim#focus_page()<CR>",
-        { desc = "Firenvim focus page" }
-      )
+      map("n", "<C-[>", "<Cmd>call firenvim#focus_page()<CR>", "Firenvim focus page")
     end
   end)
   -- db manage
@@ -136,15 +131,10 @@ if not in_vscode() then
     vim.api.nvim_create_autocmd("FileType", {
       pattern = "sql",
       callback = function()
-        vim.api.nvim_set_keymap(
-          "x",
-          "<leader>rq",
-          "db#op_exec()",
-          { expr = true, desc = "DB exec current query" }
-        )
+        map("x", "<leader>rq", "db#op_exec()", { expr = true, desc = "DB exec current query" })
       end,
     })
-    map("n", "<leader>D", "<cmd>DBUIToggle<cr>", { desc = "DBUI toggle" })
+    map("n", "<leader>D", "<cmd>DBUIToggle<cr>", "DBUI toggle")
   end)
 
   -- search and replace tool
@@ -169,19 +159,16 @@ if not in_vscode() then
     })
   end)
 
-  map("n", "<leader>Fg",
-    "<cmd>GrugFar<CR>",
-    { desc = "Toggle GrugFar" })
+  map("n", "<leader>Fg", "<cmd>GrugFar<CR>", "Toggle GrugFar")
   map({ "n", "v" }, "<leader>Fv",
     function()
       require("grug-far").grug_far({ prefills = { search = vim.fn.expand("<cword>") } })
     end,
-    { desc = "GrugFar search current word" })
+    "GrugFar search current word")
   map("n", "<leader>Ff", function()
       require("grug-far").grug_far({ prefills = { paths = vim.fn.expand("%") } })
     end,
-    { desc = "Search on current file" }
-  )
+    "Search on current file")
   -- AI companion
   later(function()
     add({ source = "olimorris/codecompanion.nvim" })
@@ -238,8 +225,8 @@ if not in_vscode() then
       },
     })
   end)
-  map({ "n", "v" }, "<leader>Ca", "<cmd>CodeCompanionActions<cr>", { desc = "Code companion actions" })
-  map("n", "<leader>CC", "<cmd>CodeCompanionChat<cr>", { desc = "Code companion chat" })
-  map({ "n", "v" }, "<leader>CT", "<cmd>CodeCompanionToggle<cr>", { desc = "Code companion toggle" })
-  map("v", "<leader>CA", "<cmd>CodeCompanionAdd<cr>", { desc = "Code companion add" })
+  map({ "n", "v" }, "<leader>Ca", "<cmd>CodeCompanionActions<cr>", "Code companion actions")
+  map("n", "<leader>CC", "<cmd>CodeCompanionChat<cr>", "Code companion chat")
+  map({ "n", "v" }, "<leader>CT", "<cmd>CodeCompanionToggle<cr>", "Code companion toggle")
+  map("v", "<leader>CA", "<cmd>CodeCompanionAdd<cr>", "Code companion add")
 end
