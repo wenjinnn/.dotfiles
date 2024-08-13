@@ -55,8 +55,9 @@ function M.feedkey(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
-function M.augroup(name)
-  return vim.api.nvim_create_augroup("wenvim_" .. name, { clear = true })
+function M.augroup(name, opts)
+  local final_opts = opts or { clear = true }
+  return vim.api.nvim_create_augroup("wenvim_" .. name, final_opts)
 end
 
 return M

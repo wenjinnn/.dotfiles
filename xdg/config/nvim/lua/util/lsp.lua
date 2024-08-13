@@ -12,7 +12,7 @@ end
 
 function M.setup(client, bufnr)
   if client.server_capabilities.documentHighlightProvider then
-    local lsp_document_highlight = require("util").augroup("lsp_document_highlight")
+    local lsp_document_highlight = require("util").augroup("lsp_document_highlight", { clear = false })
     vim.api.nvim_clear_autocmds({
       buffer = bufnr,
       group = lsp_document_highlight,
