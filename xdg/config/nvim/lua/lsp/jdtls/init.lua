@@ -1,8 +1,8 @@
 local M = {}
 local lsp = require("util.lsp")
-
+local jdtls = require("jdtls")
 function M.setup_dap()
-  require("jdtls").setup_dap()
+  jdtls.setup_dap()
   require("jdtls.dap").setup_dap_main_class_configs({
     config_overrides = { vmArgs = os.getenv("JDTLS_DAP_VMARGS") or "-Xms128m -Xmx512m" },
   })
@@ -27,99 +27,32 @@ function M.setup_dap()
 end
 
 function M.setup_jdtls_buf_keymap(bufnr)
-  lsp.set_buf_keymap(
-    bufnr,
-    "n",
-    "<leader>cC",
-    "<cmd>JdtCompile full<CR>",
-    { desc = "Jdt compile full" }
-  )
-  lsp.set_buf_keymap(
-    bufnr,
-    "n",
-    "<leader>cc",
-    "<cmd>JdtCompile incremental<CR>",
-    { desc = "Jdt compile incremental" }
-  )
-  lsp.set_buf_keymap(
-    bufnr,
-    "n",
-    "<leader>cu",
-    "<cmd>JdtUpdateHotcode<CR>",
-    { desc = "Jdt update hotcode" }
-  )
-  lsp.set_buf_keymap(
-    bufnr,
-    "n",
-    "<leader>cg",
-    "<cmd>lua require('jdtls.tests').generate()<CR>",
-    { desc = "Jdt test generate" }
-  )
-  lsp.set_buf_keymap(
-    bufnr,
-    "n",
-    "<leader>co",
-    "<Cmd>lua require('jdtls').organize_imports()<CR>",
-    { desc = "Jdt Organize Imports" }
-  )
-  lsp.set_buf_keymap(
-    bufnr,
-    "n",
-    "<leader>cv",
-    "<Cmd>lua require('jdtls').extract_variable()<CR>",
-    { desc = "Jdt Extract Variable" }
-  )
-  lsp.set_buf_keymap(
-    bufnr,
-    "v",
-    "<leader>cv",
-    "<Cmd>lua require('jdtls').extract_variable(true)<CR>",
-    { desc = "Jdt Extract Variable" }
-  )
-  lsp.set_buf_keymap(
-    bufnr,
-    "n",
-    "<leader>cV",
-    "<Cmd>lua require('jdtls').extract_constant()<CR>",
-    { noremap = true, silent = true, desc = "Jdt Extract Constant" }
-  )
-  lsp.set_buf_keymap(
-    bufnr,
-    "v",
-    "<leader>cV",
-    "<Cmd>lua require('jdtls').extract_constant(true)<CR>",
-    { noremap = true, silent = true, desc = "Jdt Extract Constant" }
-  )
-  lsp.set_buf_keymap(
-    bufnr,
-    "v",
-    "<leader>cm",
-    "<Cmd>lua require('jdtls').extract_method(true)<CR>",
-    { noremap = true, silent = true, desc = "Jdt Extract Method" }
-  )
-  lsp.set_buf_keymap(
-    bufnr,
-    "n",
-    "<leader>cT",
-    '<cmd>lua require("jdtls.tests").goto_subjects()<CR>',
-    { desc = "Jdt Test Goto Subjects" }
-  )
+  local map = lsp.buf_map(bufnr)
+  map("<leader>cC", "<cmd>JdtCompile full<CR>", "Jdt compile full")
+  map("<leader>cc", "<cmd>JdtCompile incremental<CR>", "Jdt compile incremental")
+  map("<leader>cu", "<cmd>JdtUpdateHotcode<CR>", "Jdt update hotcode")
+  map("<leader>cg", "<cmd>lua require'jdtls.tests'.generate()<cr>", "Jdt test generate")
+  map("<leader>co", "<cmd>lua require'jdtls'.organize_imports()<cr>", "Jdt Organize Imports")
+  map("<leader>cv", "<cmd>lua require'jdtls'.extract_variable()<cr>", "Jdt Extract Variable")
+  map("<leader>cT", "<cmd>lua require'jdtls.tests'.goto_subjects()<cr>", "Jdt Test Goto Subjects")
   -- If using nvim-dap
   -- This requires java-debug and vscode-java-test bundles, see install steps in this README further below.
-  lsp.set_buf_keymap(
-    bufnr,
-    "n",
-    "<leader>da",
-    "<Cmd>lua require('jdtls').test_class()<CR>",
-    { noremap = true, silent = true, desc = "Jdt Test Class" }
-  )
-  lsp.set_buf_keymap(
-    bufnr,
-    "n",
-    "<leader>dm",
-    "<Cmd>lua require('jdtls').test_nearest_method()<CR>",
-    { noremap = true, silent = true, desc = "Jdt Test Method" }
-  )
+  map("<leader>da", "<cmd>lua require'jdtls'.test_class()<cr>", "Jdt Test Class")
+  map("<leader>dm", "<cmd>lua require'jdtls'.test_nearest_method()<cr>", "Jdt Test Method")
+  map("<leader>cV", "<cmd>lua require'jdtls'.extract_constant()<cr>", "Jdt Extract Constant")
+  map("<leader>cv",
+    "<cmd>lua require'jdtls'.extract_variable(true)<cr>",
+    "Jdt Extract Variable",
+    "v")
+  map("<leader>cV",
+    "<cmd>lua require'jdtls'.extract_constant(true)<cr>",
+    "Jdt Extract Constant",
+    "v")
+  map(
+    "<leader>cm",
+    "<cmd>lua require'jdtls'.extract_method(true)<cr>",
+    "Jdt Extract Method",
+    "v")
 end
 
 function M.start()
@@ -138,10 +71,10 @@ function M.start()
   }
   vim.list_extend(
     bundles,
-    vim.split((vim.fn.glob((os.getenv("JAVA_TEST_PATH") or jdtls_data_path) .. "/server/*.jar")), "\n")
+    vim.split(vim.fn.glob((os.getenv("JAVA_TEST_PATH") or jdtls_data_path) .. "/server/*.jar", true),
+      "\n")
   )
-
-  local extendedClientCapabilities = require("jdtls").extendedClientCapabilities
+  local extendedClientCapabilities = jdtls.extendedClientCapabilities
   extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
   local jdtls_cache_path = vim.fn.stdpath("cache") .. "/jdtls"
   local lombok_path = os.getenv("LOMBOK_PATH")
@@ -149,11 +82,10 @@ function M.start()
     settings = require("lsp.jdtls.settings"),
     capabilities = lsp.make_capabilities(),
     on_attach = on_attach,
-    name = "jdtls",
     filetypes = { "java" },
     init_options = {
       bundles = bundles,
-      extendedClientCapabilities = extendedClientCapabilities;
+      extendedClientCapabilities = extendedClientCapabilities,
     },
     cmd = {
       "jdtls",
@@ -161,6 +93,7 @@ function M.start()
       "--jvm-arg=-Dlog.level=ALL",
       "--jvm-arg=-Dfile.encoding=utf-8",
       "--jvm-arg=-Djava.import.generatesMetadataFilesAtProjectRoot=false",
+      "--jvm-arg=-Xms256m",
       "--jvm-arg=-Xmx" .. (os.getenv("JDTLS_XMX") or "1G"),
       -- The following 6 lines is for optimize memory use, see https://github.com/redhat-developer/vscode-java/pull/1262#discussion_r386912240
       "--jvm-arg=-XX:+UseParallelGC",
@@ -178,13 +111,12 @@ function M.start()
   }
 
   -- Server
-  require("jdtls").start_or_attach(config)
+  jdtls.start_or_attach(config)
 end
 
 function M.setup()
   local jdtls_setup_group = require("util").augroup("jdtls_setup")
-  vim.api.nvim_create_autocmd(
-    { "FileType" },
+  vim.api.nvim_create_autocmd( { "FileType" },
     {
       group = jdtls_setup_group,
       pattern = "java",

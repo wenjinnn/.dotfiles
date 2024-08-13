@@ -1,7 +1,11 @@
 local M = {}
-function M.set_buf_keymap(bufnr, mode, lhs, rhs, opts)
-  opts = M.make_opts(opts)
-  vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+
+function M.buf_map(bufnr)
+  return function(lhs, rhs, desc, mode)
+    local final_mode = mode or "n";
+    local opts = M.make_opts({ desc = desc })
+    vim.api.nvim_buf_set_keymap(bufnr, final_mode, lhs, rhs, opts)
+  end
 end
 
 M.opts = { noremap = true, silent = true }
