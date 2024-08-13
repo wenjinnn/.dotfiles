@@ -31,6 +31,8 @@ later(function()
         cmd = {
           "java",
           "-jar",
+          "-Xms128m",
+          "-Xmx512m",
           sonarlint_path .. "/server/sonarlint-ls.jar",
           -- Ensure that sonarlint-language-server uses stdio channel
           "-stdio",
