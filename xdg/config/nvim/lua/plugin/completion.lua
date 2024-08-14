@@ -70,24 +70,16 @@ later(function()
   local item_maxwidth = 30
   local ellipsis_char = "…"
 
-  local combined_cr_mapping = {
-    ["<S-CR>"] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    }),
-    ["<C-CR>"] = function(fallback)
-      if vim.snippet.active({ direction = 1 }) then
-        vim.snippet.stop()
-      end
-      cmp.abort()
-      fallback()
-    end,
-  }
   local insert_extra_mapping = {
     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
-    ["<C-e>"] = cmp.mapping.abort(),
+    ["<C-e>"] = cmp.mapping(function()
+      if vim.snippet.active({ direction = 1 }) then
+        vim.snippet.stop()
+      end
+      cmp.mapping.abort()
+    end, { "i", "s" }),
     ["<CR>"] = function(fallback)
       if cmp.core.view:visible() or vim.fn.pumvisible() == 1 then
         util.create_undo()
@@ -116,10 +108,6 @@ later(function()
       end
     end, { "i", "s" }),
   }
-
-  for key, value in pairs(combined_cr_mapping) do
-    insert_extra_mapping[key] = value
-  end
 
   cmp.setup({
     window = {
@@ -178,7 +166,7 @@ later(function()
   })
   -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline(":", {
-    mapping = cmp.mapping.preset.cmdline(combined_cr_mapping),
+    mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
       { name = "path" },
     }, {
@@ -186,7 +174,7 @@ later(function()
     }),
   })
   cmp.setup.cmdline({ "/", "?" }, {
-    mapping = cmp.mapping.preset.cmdline(combined_cr_mapping),
+    mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
       { name = "buffer" },
     }),
