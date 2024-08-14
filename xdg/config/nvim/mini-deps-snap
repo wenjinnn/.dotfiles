@@ -11,7 +11,6 @@ return {
   ["codecompanion.nvim"] = "9d1cb7e1cdc7eae03918a017d948e651ac7bcde2",
   ["conform.nvim"] = "667102f26106709cddd2dff1f699610df5b94d7f",
   firenvim = "bb70728c13c305ff35193586d5f6ce68668af063",
-  ["flash.nvim"] = "34c7be146a91fec3555c33fe89c7d643f6ef5cf1",
   ["friendly-snippets"] = "00ebcaa159e817150bd83bfe2d51fa3b3377d5c4",
   ["grug-far.nvim"] = "536b23dcf3165a622654544e5f9f395584e73b57",
   ["hurl.nvim"] = "88dd2ffdf40e2778e9277dcb167224bf1447a5da",
