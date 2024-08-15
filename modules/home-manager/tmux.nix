@@ -38,9 +38,9 @@
     extraConfig = ''
       set -g status off
       set -g pane-border-status top
-      set -g pane-border-format '#[bold][#S]:#I/#{session_windows}:#{pane_index} #{pane_current_command} \
-      #{pane_current_path} #{?window_zoomed_flag,Z ,}\
-      #{?#{&&:#{pane_active},#{client_prefix}},P ,}#[default]'
+      set -g pane-border-format '#[bold]#{?#{&&:#{pane_active},#{client_prefix}},#[underscore],} \
+      [#S]:#I/#{session_windows}:#{pane_index} #{pane_current_command} #{pane_current_path} \
+      #{?window_zoomed_flag,Z ,}#[default]'
       # True color support
       set -ag terminal-overrides ",$TERM:RGB"
       # Undercurl support
