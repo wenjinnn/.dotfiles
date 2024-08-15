@@ -13,22 +13,6 @@
     terminal = "tmux-256color";
     plugins = with pkgs.tmuxPlugins; [
       {
-        plugin = catppuccin;
-        extraConfig = ''
-          set -g @catppuccin_window_left_separator "█"
-          set -g @catppuccin_window_middle_separator "█"
-          set -g @catppuccin_window_right_separator "█"
-          set -g @catppuccin_window_status_enable "yes"
-          set -g @catppuccin_window_status_icon_enable "yes"
-          set -g @catppuccin_window_default_text "#W"
-          set -g @catppuccin_window_current_text "#W"
-          set -g @catppuccin_status_modules_right "directory up_time date_time user host"
-          set -g @catppuccin_status_modules_left "session"
-          set -g @catppuccin_status_left_separator "█"
-          set -g @catppuccin_status_right_separator "█"
-        '';
-      }
-      {
         plugin = continuum;
         extraConfig = ''
           set -g @continuum-restore 'on'
@@ -52,6 +36,11 @@
       pain-control
     ];
     extraConfig = ''
+      set -g status off
+      set -g pane-border-status top
+      set -g pane-border-format '#[bold][#S]:#I/#{session_windows}:#{pane_index} #{pane_current_command} \
+      #{pane_current_path} #{?window_zoomed_flag,Z ,}\
+      #{?#{&&:#{pane_active},#{client_prefix}},P ,}#[default]'
       # True color support
       set -ag terminal-overrides ",$TERM:RGB"
       # Undercurl support
