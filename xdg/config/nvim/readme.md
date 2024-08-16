@@ -125,9 +125,6 @@ just some filetype settings
 ### code-runner
 
 + [michaelb/sniprun](https://dotfyle.com/plugins/michaelb/sniprun)
-### colorscheme
-
-+ [catppuccin/nvim](https://dotfyle.com/plugins/catppuccin/nvim)
 ### comment
 
 + [JoosepAlviste/nvim-ts-context-commentstring](https://dotfyle.com/plugins/JoosepAlviste/nvim-ts-context-commentstring)
