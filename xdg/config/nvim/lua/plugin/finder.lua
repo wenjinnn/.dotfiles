@@ -56,11 +56,11 @@ later(function()
       { source = { name = string.format("Grep (rg %s)", args), show = show_with_icons } }
     )
   end
-  local function get_terminal_items(local_opts)
-    local cmd_opts = local_opts or {}
-    local buffers_output = vim.api.nvim_exec2("buffers" .. (cmd_opts.include_unlisted and "!" or "") .. " R",
-      { output = true })
+  local function filter_buffers(pattern, cmd_opts)
+    cmd_opts = cmd_opts or {}
     local items = {}
+    local buffers_output = vim.api.nvim_exec2("filter" .. (cmd_opts.revert and "! " or " ") .. pattern .. " ls",
+      { output = true })
     if buffers_output.output ~= "" then
       for _, l in ipairs(vim.split(buffers_output.output, "\n")) do
         local buf_str, name = l:match("^%s*%d+"), l:match('"(.*)"')
@@ -70,6 +70,11 @@ later(function()
       end
     end
     return items
+  end
+  local function get_terminal_items(local_opts)
+    local dap_terms = filter_buffers("/^\\[dap-terminal\\]/")
+    local terms = filter_buffers("/^term:\\/\\//")
+    return vim.list_extend(terms, dap_terms)
   end
   -- select terminals
   MiniPick.registry.terminals = function(local_opts)
