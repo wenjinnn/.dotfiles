@@ -1,7 +1,6 @@
 local in_vscode = require("util").in_vscode
 local map = require("util").map
-local add, later = MiniDeps.add, MiniDeps.later
-
+local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 later(function()
   add({
     source = "michaelb/sniprun",
@@ -87,7 +86,7 @@ if not in_vscode() then
     map("n", "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", "Markdown preview toggle")
   end)
   -- neovim in browser
-  later(function()
+  now(function()
     add({
       source = "glacambre/firenvim",
       hooks = {
