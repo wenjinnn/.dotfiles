@@ -28,7 +28,6 @@
         '';
       }
       open
-      cpu
       yank
       sensible
       logging
