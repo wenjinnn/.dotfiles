@@ -16,10 +16,12 @@ later(function()
   local api = vim.api
   local util = require("util")
   local map = util.map
-  local repeatable = util.make_repeatable_keymap
-  local dap_ui_widgets = require("dap.ui.widgets")
-  local dap_cursor_float = function(widget, title)
-    dap_ui_widgets.cursor_float(widget, { title = title })
+  local repeat_map = util.make_repeatable_keymap
+  local widgets = require("dap.ui.widgets")
+  local dap_ui = function(widget, title)
+    return function()
+      widgets.cursor_float(widget, { title = title })
+    end
   end
 
   dap.defaults.fallback.terminal_win_cmd = function()
@@ -50,6 +52,15 @@ later(function()
       stopAtBeginningOfMainSubprogram = false,
     },
   }
+
+  vim.api.nvim_create_autocmd({ "FileType" }, {
+    pattern = "dap-repl",
+    group = util.augroup("dap_repl"),
+    callback = function()
+      require("dap.ext.autocompl").attach()
+    end,
+  })
+
   require("dap-python").setup("python")
   require("nvim-dap-virtual-text").setup({
     all_frames = true, virt_text_pos = "eol",
@@ -58,42 +69,23 @@ later(function()
   map("n", "<leader>db", dap.toggle_breakpoint, "Dap toggle breakpoint")
   map("n", "<leader>dd", dap.clear_breakpoints, "Dap clear breakpoint")
   map("n", "<leader>dr", dap.run_last, "Dap run last")
-  map("n", "<leader>dC",
-    repeatable("n", "<plug>(DapRunToCursor)", function()
-      dap.run_to_cursor()
-    end),
-    "Dap run to cursor")
-  map("n", "<leader>do",
-    repeatable("n", "<plug>(DapStepOver)", function()
-      dap.step_over()
-    end),
-    "Dap step over")
-  map("n", "<leader>dp",
-    repeatable("n", "<plug>(DapStepBack)", function()
-      dap.step_back()
-    end),
-    "Dap step back")
-  map("n", "<leader>di",
-    repeatable("n", "<plug>(DapStepInto)", function()
-      dap.step_into()
-    end),
-    "Dap step into")
-  map("n", "<leader>dO",
-    repeatable("n", "<plug>(DapStepOut)", function()
-      dap.step_out()
-    end),
-    "Dap step out")
-  map("n",
-    "<leader>de",
-    repeatable("n", "<plug>(DapReverseContinue)", function()
-      dap.reverse_continue()
-    end),
-    "Dap reverse continue")
+  repeat_map("n", "<leader>dC", dap.run_to_cursor, "Dap run to cursor")
+  repeat_map("n", "<leader>do", dap.step_over, "Dap step over")
+  repeat_map("n", "<leader>dp", dap.step_back, "Dap step back")
+  repeat_map("n", "<leader>di", dap.step_into, "Dap step into")
+  repeat_map("n", "<leader>dO", dap.step_out, "Dap step out")
+  repeat_map("n", "<leader>de", dap.reverse_continue, "Dap reverse continue")
+  map("n", "<leader>ds", dap_ui(widgets.scopes, "dap-scopes"), "Dap scopes")
+  map("n", "<leader>df", dap_ui(widgets.frames, "dap-frames"), "Dap frames")
+  map("n", "<leader>de", dap_ui(widgets.expression, "dap-expression"), "Dap expression")
+  map("n", "<leader>dt", dap_ui(widgets.threads, "dap-threads"), "Dap threads")
+  map("n", "<leader>dS", dap_ui(widgets.sessions, "dap-sessions"), "Dap sessions")
   map("n", "<leader>dq",
     function()
       dap.list_breakpoints()
       vim.cmd("copen")
-    end, "Dap list breakpoints")
+    end,
+    "Dap list breakpoints")
   map("n", "<leader>dc",
     function()
       -- fix java dap setup failed sometime
@@ -128,34 +120,9 @@ later(function()
       end
     end,
     "Dap repl toggle")
-  map("n", "<leader>ds",
-    function()
-      dap_cursor_float(dap_ui_widgets.scopes, "dap-scopes")
-    end,
-    "Dap scopes")
-  map("n", "<leader>df",
-    function()
-      dap_cursor_float(dap_ui_widgets.frames, "dap-frames")
-    end,
-    "Dap frames")
-  map("n", "<leader>de",
-    function()
-      dap_cursor_float(dap_ui_widgets.expression, "dap-expression")
-    end,
-    "Dap expression")
-  map("n", "<leader>dt",
-    function()
-      dap_cursor_float(dap_ui_widgets.threads, "dap-threads")
-    end,
-    "Dap threads")
-  map("n", "<leader>dS",
-    function()
-      dap_cursor_float(dap_ui_widgets.sessions, "dap-sessions")
-    end,
-    "Dap sessions")
   map("n", "<leader>dh",
     function()
-      dap_ui_widgets.hover("<cexpr>", { title = "dap-hover" })
+      widgets.hover("<cexpr>", { title = "dap-hover" })
     end,
     "Dap hover")
 end)
