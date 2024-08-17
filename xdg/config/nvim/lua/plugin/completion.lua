@@ -16,7 +16,6 @@ later(function()
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "uga-rosa/cmp-dictionary",
       "petertriho/cmp-git",
-      "rcarriga/cmp-dap",
       "kristijanhusak/vim-dadbod-completion",
     },
   })
@@ -54,17 +53,11 @@ later(function()
     snippets = "snip",
     nvim_lsp_signature_help = "sign",
     path = "path",
-    cmp_tabnine = "tabnine",
-    spell = "spell",
     cmdline = "cmd",
-    treesitter = "treesitter",
     dictionary = "dict",
-    nvim_lua = "lua",
     latex_symbols = "latex",
-    dap = "dap",
     git = "git",
     orgmode = "org",
-    ["cmp-dbee"] = "dbee",
     ["vim-dadbod-completion"] = "db",
   }
   local item_maxwidth = 30
@@ -178,16 +171,6 @@ later(function()
     sources = cmp.config.sources({
       { name = "buffer" },
     }),
-  })
-  cmp.setup.filetype({ "dap-repl" }, {
-    enabled = function()
-      return vim.api.nvim_get_option_value("buftype", { buf = 0 }) ~= "prompt"
-          or require("cmp_dap").is_dap_buffer()
-    end,
-    sources = {
-      { name = "dap", keyword_length = 1 },
-      cmp_buffer_source,
-    },
   })
   cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
     sources = {
