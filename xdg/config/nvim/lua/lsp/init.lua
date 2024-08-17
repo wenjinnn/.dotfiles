@@ -16,4 +16,5 @@ return {
   vimls = {},
   clangd = {},
   taplo = {},
+  rust_analyzer = {},
 }
