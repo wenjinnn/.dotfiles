@@ -178,7 +178,7 @@ if not in_vscode() then
   later(function()
     add({ source = "olimorris/codecompanion.nvim" })
     local adapter = "anthropic"
-    if vim.fn.has("ollama") == 1 then
+    if vim.fn.executable("ollama") == 1 then
       local handle = io.popen("ollama ps")
       if handle then
         for line in handle:lines() do
