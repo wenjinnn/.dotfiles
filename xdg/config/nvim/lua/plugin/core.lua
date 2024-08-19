@@ -6,13 +6,11 @@ end)
 later(function()
   require("mini.misc").setup()
   MiniMisc.setup_auto_root()
+  MiniMisc.setup_termbg_sync()
   MiniMisc.setup_restore_cursor()
   local use_nested_comments = function() MiniMisc.use_nested_comments() end
   vim.api.nvim_create_autocmd("BufEnter", { callback = use_nested_comments })
   require("util").map("n", "<leader>z", "<cmd>lua MiniMisc.zoom()<cr>", "Zoom current window")
-  if not vim.g.started_by_firenvim then
-    MiniMisc.setup_termbg_sync()
-  end
 end)
 
 later(function()
