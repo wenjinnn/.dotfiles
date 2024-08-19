@@ -31,8 +31,6 @@ later(function()
         cmd = {
           "java",
           "-jar",
-          "-Xms128m",
-          "-Xmx512m",
           sonarlint_path .. "/server/sonarlint-ls.jar",
           -- Ensure that sonarlint-language-server uses stdio channel
           "-stdio",
@@ -48,7 +46,6 @@ later(function()
         -- Tested and working
         "python",
         "cpp",
-        -- Requires nvim-jdtls, otherwise an error message will be printed
         "java",
       },
     })
