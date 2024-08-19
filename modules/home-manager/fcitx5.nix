@@ -19,6 +19,7 @@
     fcitx5.addons = with pkgs; [
       fcitx5-rime
       fcitx5-mozc
+      fcitx5-chinese-addons
     ];
   };
 }
