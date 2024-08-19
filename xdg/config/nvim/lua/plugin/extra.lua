@@ -114,7 +114,7 @@ if not in_vscode() then
       },
     }
     if vim.g.started_by_firenvim then
-      map("n", "<C-[>", "<Cmd>call firenvim#focus_page()<CR>", "Firenvim focus page")
+      map("n", "<Esc><Esc>", "<Cmd>call firenvim#focus_page()<CR>", "Firenvim focus page")
     end
   end)
   -- db manage
