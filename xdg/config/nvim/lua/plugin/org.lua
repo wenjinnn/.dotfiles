@@ -18,4 +18,7 @@ later(function()
     config.org_default_notes_file = default_notes_file
   end
   require("orgmode").setup(config)
+  require("org-roam").setup({
+    directory = "~/project/my/archive/org/roam",
+  })
 end)
