@@ -5,12 +5,13 @@
   config,
   pkgs,
   ...
-}: {
+}: let
+  # use stable mesa to fix mesa multiple version error
+  hyprlock = pkgs.unstable.hyprlock.override {mesa = pkgs.mesa;};
+  hyprland = pkgs.unstable.hyprland.override {mesa = pkgs.mesa;};
+in {
   imports = with outputs.homeManagerModules; [
     ags
-    hypridle
-    hyprlock
-    hyprshade
   ];
 
   home.packages =
@@ -39,8 +40,10 @@
       xwaylandvideobridge
       hyprcursor
       hyprpicker
+      hyprshade
     ]);
 
+  # custom desktop entries
   xdg.desktopEntries."org.gnome.Settings" = {
     name = "Settings";
     comment = "Gnome Control Center";
@@ -65,6 +68,7 @@
     indicator = true;
   };
 
+  # custom wallpaper services
   systemd.user = {
     services = {
       bingwallpaper-get = {
@@ -119,11 +123,99 @@
     };
   };
 
+  # hyprlock configuration
+  programs.hyprlock = {
+    enable = true;
+    package = hyprlock;
+    settings = {
+      background = [
+        {
+          path = "screenshot";
+          blur_passes = 3;
+          blur_size = 3;
+          noise = 0.0117;
+          contrast = 0.8916;
+          brightness = 0.8172;
+          vibrancy = 0.1696;
+          vibrancy_darkness = 0.0;
+        }
+      ];
+      input-field = [
+        {
+          placeholder_text = "";
+        }
+      ];
+      label = [
+        {
+          text_align = "right";
+          halign = "center";
+          valign = "center";
+          text = "Hi there, $USER";
+          font_size = 50;
+          font_family = "Sans";
+          position = "0, 80";
+        }
+        {
+          text_align = "right";
+          halign = "center";
+          valign = "center";
+          text = "$TIME";
+          font_size = 150;
+          font_family = "Sans";
+          position = "0, 300";
+        }
+      ];
+    };
+  };
+
+  # hypridle configuration
+  services.hypridle = let
+    hyprlockBin = "${hyprlock}/bin/hyprlock";
+    hyprctlBin = "${hyprland}/bin/hyprctl";
+    loginctlBin = "${pkgs.systemd}/bin/loginctl";
+  in {
+    enable = true;
+    package = pkgs.unstable.hypridle;
+    settings = {
+      general = {
+        lock_cmd = "pidof hyprlock || ${hyprlockBin}";
+        before_sleep_cmd = "${hyprctlBin} dispatch dpms off";
+        after_sleep_cmd = "${hyprctlBin} dispatch dpms on && ${loginctlBin} lock-session";
+      };
+      listener = [
+        {
+          timeout = 300;
+          on-timeout = "${loginctlBin} lock-session";
+        }
+        {
+          timeout = 360;
+          on-timeout = "${hyprctlBin} dispatch dpms off";
+          on-resume = "${hyprctlBin} dispatch dpms on";
+        }
+      ];
+    };
+  };
+
+  # hyprshade configuration
+  home.file = {
+    ".config/hypr/hyprshade.toml".text = ''
+      [[shades]]
+      name = "vibrance"
+      default = true  # shader to use during times when there is no other shader scheduled
+
+      [[shades]]
+      name = "blue-light-filter"
+      start_time = 18:30:00
+      end_time = 06:00:00   # optional if you have more than one shade with start_time
+    '';
+  };
+
+  # hyprland configuration
   wayland = {
     windowManager = {
       hyprland = {
         enable = true;
-        package = pkgs.unstable.hyprland;
+        package = hyprland;
         xwayland.enable = true;
         systemd.enable = true;
         settings = {
@@ -143,6 +235,7 @@
             "HYPRCURSOR_SIZE, 24"
           ];
           exec-once = [
+            # xrdb dpi scale have batter effect in 4k screen
             "echo 'Xft.dpi: 192' | xrdb -merge"
             "ags -b hypr"
             "hyprshade auto"

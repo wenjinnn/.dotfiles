@@ -25,9 +25,6 @@
   vscode = import ./vscode.nix;
   direnv = import ./direnv.nix;
   translate-shell = import ./translate-shell.nix;
-  hypridle = import ./hypridle.nix;
-  hyprlock = import ./hyprlock.nix;
-  hyprshade = import ./hyprshade.nix;
   aria2 = import ./aria2.nix;
   starship = import ./starship.nix;
   ripgrep = import ./ripgrep.nix;
