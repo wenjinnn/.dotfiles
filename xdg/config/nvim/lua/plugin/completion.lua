@@ -172,6 +172,9 @@ later(function()
       { name = "buffer" },
     }),
   })
+  cmp.setup.filetype({ "org-roam-select" }, {
+    enabled = false,
+  })
   cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
     sources = {
       snippets_source,
