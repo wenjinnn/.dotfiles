@@ -413,7 +413,7 @@ in {
             # Fullscreen
             "Super, F, fullscreen, 1"
             "SuperShift, F, fullscreen, 0"
-            "ControlSuper, F, fakefullscreen, 0"
+            "ControlSuper, F, fullscreenstate, 3"
             # Switching
             "Super, 1, workspace, 1"
             "Super, 2, workspace, 2"
