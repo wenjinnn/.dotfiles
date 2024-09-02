@@ -193,14 +193,14 @@ if not in_vscode() then
     require("codecompanion").setup({
       adapters = {
         anthropic = function()
-          return require("codecompanion.adapters").use("anthropic", {
+          return require("codecompanion.adapters").extend("anthropic", {
             env = {
               api_key = "cmd:sops exec-env $SOPS_SECRETS 'echo -n $ANTHROPIC_API_KEY'",
             },
           })
         end,
         ollama = function()
-          return require("codecompanion.adapters").use("ollama", {
+          return require("codecompanion.adapters").extend("ollama", {
             schema = {
               model = {
                 default = "llama3.1",
