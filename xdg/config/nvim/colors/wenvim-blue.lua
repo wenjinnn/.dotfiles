@@ -15,7 +15,7 @@ vim.g.terminal_color_14 = palette.cyan_mid2
 vim.g.terminal_color_15 = palette.fg_mid2
 vim.api.nvim_set_hl(0, "@lsp.type.interface", { link = "@interface" })
 vim.api.nvim_set_hl(0, "@interface", { link = "@constant" })
-
+vim.api.nvim_set_hl(0, "@lsp.type.class", { link = "@punctuation" })
 local function override_hl(name, opts)
   local hl = vim.api.nvim_get_hl(0, { name = name })
   hl = vim.tbl_deep_extend("force", hl, opts)
