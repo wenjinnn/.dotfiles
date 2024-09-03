@@ -26,7 +26,3 @@ later(function()
     },
   })
 end)
-
-later(function()
-  add({ source = "tpope/vim-repeat" })
-end)

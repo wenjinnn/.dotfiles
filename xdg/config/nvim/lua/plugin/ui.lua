@@ -116,6 +116,13 @@ later(function()
       miniclue.gen_clues.registers(),
       miniclue.gen_clues.windows({ submode_resize = true }),
       clue_z_keys,
+      -- nvim-dap
+      { mode = "n", keys = "<Leader>dC", postkeys = "<Leader>d" },
+      { mode = "n", keys = "<Leader>do", postkeys = "<Leader>d" },
+      { mode = "n", keys = "<Leader>dp", postkeys = "<Leader>d" },
+      { mode = "n", keys = "<Leader>di", postkeys = "<Leader>d" },
+      { mode = "n", keys = "<Leader>dO", postkeys = "<Leader>d" },
+      { mode = "n", keys = "<Leader>de", postkeys = "<Leader>d" },
     },
   })
 end)

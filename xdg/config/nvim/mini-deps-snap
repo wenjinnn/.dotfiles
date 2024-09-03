@@ -38,6 +38,5 @@ return {
   ["venn.nvim"] = "b09c2f36ddf70b498281845109bedcf08a7e0de0",
   ["vim-dadbod"] = "7888cb7164d69783d3dce4e0283decd26b82538b",
   ["vim-dadbod-completion"] = "880f7e9f2959e567c718d52550f9fae1aa07aa81",
-  ["vim-dadbod-ui"] = "2f344874918a3ab6bbe68fb866b3f003a639a5d2",
-  ["vim-repeat"] = "65846025c15494983dafe5e3b46c8f88ab2e9635"
+  ["vim-dadbod-ui"] = "2f344874918a3ab6bbe68fb866b3f003a639a5d2"
 }

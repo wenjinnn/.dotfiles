@@ -1,24 +1,5 @@
 local M = {}
 
--- make repeatable keymap
-function M.make_repeatable_keymap(mode, lhs, rhs, opts)
-  vim.validate({
-    mode = { mode, { "string", "table" } },
-    rhs = { rhs, { "string", "function" }, lhs = { name = "string" } },
-  })
-  if opts == nil or (type(opts) == "table" and opts.desc == nil) then
-    error("opts must be string or table with desc key value pair");
-  end
-  local desc = type(opts) == "string" and opts or opts.desc
-  local plug_name = string.format("<Plug>(%s)", desc:gsub("%s", ""))
-  vim.keymap.set(mode, plug_name, function()
-    rhs()
-    vim.fn["repeat#set"](vim.api.nvim_replace_termcodes(plug_name, true, true, true))
-  end)
-  M.map(mode, lhs, plug_name, opts)
-  return plug_name
-end
-
 -- test is in vscode
 function M.in_vscode()
   return vim.g.vscode
