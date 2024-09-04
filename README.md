@@ -19,7 +19,7 @@ Repo's structure base on [nix-starter-config#standard](https://github.com/Mister
 * Compositor: [Hyprland](https://github.com/hyprwm/Hyprland)  
 * Shell: [ags](https://github.com/Aylur/ags)  
 * Terminal emulator: [foot](https://codeberg.org/dnkl/foot) with [undercurl support patch](https://codeberg.org/dnkl/foot/pulls/1099)  
-* Wallpaper: [swww](https://github.com/LGFae/swww) and two small script, [swww-switch](https://github.com/wenjinnn/config/blob/nixos/pkgs/swww-switch/swww-switch.sh) for pick a random Wallpaper to switch, and [bingwallpaper-get](https://github.com/wenjinnn/config/blob/nixos/pkgs/bingwallpaper-get/bingwallpaper-get.sh) for download daliy bingwallpaper, set [timer](https://github.com/wenjinnn/config/blob/1d08b37c56696a953e1c40c0ea9307acf0c1539d/modules/home-manager/hyprland.nix#L69-L115) via systemd timer.
+* Wallpaper: [hyprpaper](https://github.com/hyprwm/hyprpaper) and some small script, [random choose a pic](https://github.com/wenjinnn/config/blob/4748ecfcd14b1f4c8e780789c4eb40ca1688629e/xdg/config/ags/service/wallpaper.ts#L79) to switch to it, and [fetchBing](https://github.com/wenjinnn/config/blob/4748ecfcd14b1f4c8e780789c4eb40ca1688629e/xdg/config/ags/service/wallpaper.ts#L49-L82) for download daliy bingwallpaper and switch to immediately.
 
 The [ags config](https://github.com/wenjinnn/config/tree/nixos/xdg/config/ags) base on [Aylur/dotfiles](https://github.com/Aylur/dotfiles), with these different:
 
