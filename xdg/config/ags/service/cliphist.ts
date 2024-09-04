@@ -1,4 +1,4 @@
-import { dependencies } from "lib/utils"
+import { dependencies, bash } from "lib/utils"
 
 class Cliphist extends Service {
     static {
@@ -29,22 +29,33 @@ class Cliphist extends Service {
         super()
         if (dependencies("wl-paste", "cliphist")) {
             this.#proc = Utils.subprocess([
+                "wl-paste",
+                "--no-newline",
+                "--watch",
                 "bash",
                 "-c",
-                'wl-paste --no-newline --watch bash -c \'cliphist store && echo "cliphist changed"\'',
+                "cliphist store && cliphist list | head -n 1",
             ],
-            _ => { this.#onChange() },
+            item => this.#onChange(item),
+            err => logError(err),
+            )
+            Utils.subprocess([
+                "cliphist",
+                "list",
+            ],
+            item => this.#history.push(item),
             err => logError(err),
             )
         }
-        this.#onChange()
     }
 
-    #onChange() {
-        this.#history = Utils.exec("cliphist list").split(/\n/)
+    #onChange(item) {
+        if (this.history[this.history.length - 1] === item)
+            return
+
+        this.#history.unshift(item)
         this.emit("changed")
         this.notify("cliphist-value")
-
         this.emit("cliphist-changed", this.#history)
     }
 
