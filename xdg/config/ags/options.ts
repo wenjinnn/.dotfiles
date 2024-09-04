@@ -7,7 +7,7 @@ const options = mkOptions(OPTIONS, {
     autotheme: opt(true),
 
     wallpaper: {
-        resolution: opt<import("service/wallpaper").Resolution>(1920),
+        resolution: opt<import("service/wallpaper").Resolution>("UHD"),
         market: opt<import("service/wallpaper").Market>("random"),
     },
 

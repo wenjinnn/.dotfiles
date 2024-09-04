@@ -1,7 +1,8 @@
 import options from "options"
-import { dependencies, sh } from "lib/utils"
+import { dependencies, bash, sh, randomNum } from "lib/utils"
+import GLib from "gi://GLib"
 
-export type Resolution = 1920 | 1366 | 3840
+export type Resolution = 1920 | 1366 | 3840 | "UHD"
 export type Market =
     | "random"
     | "en-US"
@@ -12,6 +13,7 @@ export type Market =
     | "en-NZ"
     | "en-CA"
 
+const BING_URL = "https://www.bing.com"
 const WP = `${Utils.HOME}/.config/background`
 const Cache = `${Utils.HOME}/Pictures/BingWallpaper`
 
@@ -24,39 +26,35 @@ class Wallpaper extends Service {
 
     #blockMonitor = false
 
-    #wallpaper() {
-        if (!dependencies("swww"))
+    async #wallpaper(path = WP) {
+        if (!dependencies("hyprpaper"))
             return
 
-        sh("hyprctl cursorpos").then(pos => {
-            sh([
-                "swww", "img",
-                "--invert-y",
-                "--transition-type", "grow",
-                "--transition-pos", pos.replace(" ", ""),
-                WP,
-            ]).then(() => {
-                this.changed("wallpaper")
-            })
-        })
+        const old = await sh(`readlink ${WP}`)
+        await sh(`hyprctl hyprpaper preload '${path}'`)
+        await sh(`hyprctl hyprpaper wallpaper ',${path}'`)
+        await sh(`hyprctl hyprpaper unload '${old}'`)
+        this.changed("wallpaper")
     }
 
     async #setWallpaper(path: string) {
         this.#blockMonitor = true
 
-        await sh(`cp ${path} ${WP}`)
-        this.#wallpaper()
+        this.#wallpaper(path)
+        await sh(`ln -sf ${path} ${WP}`)
 
         this.#blockMonitor = false
     }
 
-    async #fetchBing() {
-        const res = await Utils.fetch("https://bing.biturl.top/", {
+    async #fetchBing(idx = 0) {
+        const resolutionValue = options.wallpaper.resolution.value
+        const res = await Utils.fetch(`${BING_URL}/HPImageArchive.aspx`, {
             params: {
-                resolution: options.wallpaper.resolution.value,
-                format: "json",
+                resolution: resolutionValue,
+                format: "js",
                 image_format: "jpg",
-                index: "random",
+                mbl: 1,
+                n: 10,
                 mkt: options.wallpaper.market.value,
             },
         }).then(res => res.text())
@@ -64,24 +62,33 @@ class Wallpaper extends Service {
         if (!res.startsWith("{"))
             return console.warn("bing api", res)
 
-        const { url } = JSON.parse(res)
-        const file = `${Cache}/${url.replace("https://www.bing.com/th?id=", "")}`
+        const { images } = JSON.parse(res)
+        if (images.length === 0)
+            return console.warn("bing api images", res)
 
-        if (dependencies("curl")) {
+        const latest = images[idx]
+        const url = `${BING_URL}${latest.urlbase}_${resolutionValue}.jpg`
+        const imageName = latest.urlbase.replace("/th?id=OHR.", "")
+        const file = `${Cache}/${latest.startdate}-${imageName}_${resolutionValue}.jpg`
+
+        if (dependencies("curl") && !GLib.file_test(file, GLib.FileTest.EXISTS)) {
             Utils.ensureDirectory(Cache)
             await sh(`curl "${url}" --output ${file}`)
             this.#setWallpaper(file)
+        } else {
+            const randomPic = await bash(`find ${Cache}/*.jpg -maxdepth 1 -type f | shuf -n 1`)
+            this.#setWallpaper(randomPic)
         }
     }
 
-    readonly random = () => { this.#fetchBing() }
+    readonly random = () => { this.#fetchBing(randomNum(0, 7)) }
     readonly set = (path: string) => { this.#setWallpaper(path) }
     get wallpaper() { return WP }
 
     constructor() {
         super()
 
-        if (!dependencies("swww"))
+        if (!dependencies("hyprpaper"))
             return this
 
         // gtk portal
@@ -90,9 +97,7 @@ class Wallpaper extends Service {
                 this.#wallpaper()
         })
 
-        Utils.execAsync("swww init")
-            .then(this.#wallpaper)
-            .catch(() => null)
+        Utils.interval(3_600_000, () => this.#fetchBing(0).catch(err => logError(err)))
     }
 }
 

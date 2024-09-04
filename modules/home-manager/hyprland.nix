@@ -36,7 +36,7 @@ in {
       wl-gammactl
     ])
     ++ (with pkgs.unstable; [
-      swww
+      hyprpaper
       xwaylandvideobridge
       hyprcursor
       hyprpicker
@@ -68,58 +68,12 @@ in {
     indicator = true;
   };
 
-  # custom wallpaper services
-  systemd.user = {
-    services = {
-      bingwallpaper-get = {
-        Unit = {
-          Description = "Download bing wallpaper to target path";
-        };
-        Service = {
-          Type = "oneshot";
-          Environment = "HOME=${config.home.homeDirectory}";
-          ExecStart = "${pkgs.bingwallpaper-get}/bin/bingwallpaper-get";
-          ExecStartPost = "${pkgs.swww-switch}/bin/swww-switch";
-        };
-        Install = {
-          WantedBy = ["default.target"];
-        };
-      };
-      swww-random = {
-        Unit = {
-          Description = "switch random wallpaper powered by swww";
-          After = "bingwallpaper-get.service";
-        };
-        Service = {
-          Type = "oneshot";
-          Environment = "HOME=${config.home.homeDirectory}";
-          ExecStart = "${pkgs.swww-switch}/bin/swww-switch random";
-        };
-        Install = {
-          WantedBy = ["default.target"];
-        };
-      };
-    };
-    timers = {
-      bingwallpaper-get = {
-        Unit = {
-          Description = "Download bing wallpaper timer";
-        };
-        Timer = {
-          OnCalendar = "hourly";
-        };
-        Install = {WantedBy = ["timers.target"];};
-      };
-      swww-random = {
-        Unit = {
-          Description = "switch random wallpaper powered by swww timer";
-        };
-        Timer = {
-          OnUnitActiveSec = "60min";
-          OnBootSec = "60min";
-        };
-        Install = {WantedBy = ["timers.target"];};
-      };
+  services.hyprpaper = {
+    enable = true;
+    package = pkgs.unstable.hyprpaper;
+    settings = {
+      ipc = "on";
+      splash = true;
     };
   };
 
