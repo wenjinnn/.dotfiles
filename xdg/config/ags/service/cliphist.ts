@@ -50,7 +50,7 @@ class Cliphist extends Service {
     }
 
     #onChange(item) {
-        if (this.history[this.history.length - 1] === item)
+        if (this.history[0] === item)
             return
 
         this.#history.unshift(item)
