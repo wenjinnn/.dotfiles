@@ -28,16 +28,19 @@ class Cliphist extends Service {
     constructor() {
         super()
         if (dependencies("wl-paste", "cliphist")) {
-            this.#proc = Utils.subprocess([
+            const initCommand = [
                 "wl-paste",
                 "--no-newline",
                 "--watch",
                 "bash",
                 "-c",
                 "cliphist store && cliphist list | head -n 1",
-            ],
-            item => this.#onChange(item),
-            err => logError(err),
+            ]
+            // kill all subprocess that started by previous ags process since ags will not kill subprocess when quit
+            Utils.exec(`pkill -f "${initCommand.join(" ")}"`)
+            this.#proc = Utils.subprocess(initCommand,
+                item => this.#onChange(item),
+                err => logError(err),
             )
             Utils.subprocess([
                 "cliphist",
