@@ -33,6 +33,7 @@ in {
       yaml-language-server
       vim-language-server
       taplo
+      gopls
       # for vim-dadbod
       mysql
       redis

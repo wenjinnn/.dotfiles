@@ -17,4 +17,5 @@ return {
   clangd = {},
   taplo = {},
   rust_analyzer = {},
+  gopls = {},
 }
