@@ -115,7 +115,7 @@ just some filetype settings
 
 ### Must have
 1. [ripgrep](https://github.com/BurntSushi/ripgrep) depend by many plugin.
-2. All the LSP package that configured in [lua/lsp/init.lua](lua/lsp/init.lua),
+2. All the LSP package that configured in [lua/lsp/init.lua](lua/lsp/init.lua), if you're going to use.
 
 ### Recommend
 1. [tmux](https://github.com/tmux/tmux) for terminal multiplexing, I'm almost using it only in WSL.
