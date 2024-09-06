@@ -34,6 +34,7 @@ in {
       vim-language-server
       taplo
       gopls
+      html-tidy
       # for vim-dadbod
       mysql
       redis
