@@ -24,8 +24,11 @@
 * AI powered.
 
 > [!NOTE]
-> This configuration only guaranteed to be compatible with the latest stable version.
-> I'm not using mason.nvim now, The LSP package should managed by you own system.
+> This configuration only guaranteed to be compatible with the latest stable version.  
+> I'm not using mason.nvim now, The LSP package should managed by you own system.  
+> To make [olimorris/codecompanion.nvim](https://dotfyle.com/plugins/olimorris/codecompanion.nvim) work,
+> you need to setup your own api key in [lua/plugin/extra.lua](lua/plugin/extra.lua#L198).  
+> To get all the custom keymap clue you need, just press `space`.
 
 ## Install Instructions
 
@@ -45,20 +48,20 @@ NVIM_APPNAME=wenjinnn/wenvim nvim
 
 ## Directory notes
 
-[./plugin](https://github.com/wenjinnn/config/tree/main/xdg/config/nvim/plugin) vim custom autocmd keymap option and more
+[plugin](plugin) vim custom autocmd keymap option and more
 
-[./lua/lsp](https://github.com/wenjinnn/config/tree/main/xdg/config/nvim/lua/lsp)
+[lua/lsp](lua/lsp)
 LSP config and settings
 * define a key-value pair table at `<lspname>/init.lua`, attribute in table will autoload by particular lsp
 * on_attach function in `<lspname>/init.lua` will auto execute by particular lsp, with a [setup warpper](https://github.com/wenjinnn/config/blob/e6188ed4f337fac55bd42280ccf1f3b1dd726964/xdg/config/nvim/lua/util/lsp.lua#L14C12-L34)
 
-[./lua/plugin](https://github.com/wenjinnn/config/tree/main/xdg/config/nvim/lua/plugin)
+[lua/plugin](lua/plugin)
 plugins with particular settings and keymap
 
-[./lua/util](https://github.com/wenjinnn/config/tree/main/xdg/config/nvim/lua/plugin)
+[lua/util](lua/util)
 common utils
 
-[./after](https://github.com/wenjinnn/config/tree/main/xdg/config/nvim/after)
+[after](after)
 just some filetype settings
 
 ## Defined environment variables cheatsheets:
@@ -111,10 +114,11 @@ just some filetype settings
 `VUE_LANGUAGE_SERVER_PATH` path to vue language server
 
 ### Must have
-1. [ripgrep](https://github.com/BurntSushi/ripgrep) and [fd](https://github.com/sharkdp/fd) for many plugin.
+1. [ripgrep](https://github.com/BurntSushi/ripgrep) depend by many plugin.
+2. All the LSP package that configured in [lua/lsp/init.lua](lua/lsp/init.lua),
 
 ### Recommend
-1. [tmux](https://github.com/tmux/tmux) & [oh-my-tmux](https://github.com/gpakosz/.tmux) for terminal multiplexing, I'm using only at wsl.
+1. [tmux](https://github.com/tmux/tmux) for terminal multiplexing, I'm almost using it only in WSL.
 2. [lazygit](https://github.com/jesseduffield/lazygit) smooth git operation.
 
 ## Main Plugins
