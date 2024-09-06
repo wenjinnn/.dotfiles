@@ -4,7 +4,7 @@ return {
   jsonls = require("lsp.jsonls"),
   lua_ls = require("lsp.lua_ls"),
   volar = require("lsp.volar"),
-  tsserver = require("lsp.tsserver"),
+  ts_ls = require("lsp.ts_ls"),
   yamlls = require("lsp.yamlls"),
   nixd = require("lsp.nixd"),
   pylsp = require("lsp.pylsp"),
