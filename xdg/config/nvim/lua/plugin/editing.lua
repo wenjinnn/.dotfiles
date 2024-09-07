@@ -91,6 +91,7 @@ later(function()
       "hurl",
       "diff",
       "markdown_inline",
+      "make",
       -- autotag dependencies
       "astro",
       "glimmer",
