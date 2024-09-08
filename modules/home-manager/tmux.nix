@@ -12,13 +12,12 @@
     keyMode = "vi";
     terminal = "tmux-256color";
     plugins = with pkgs.tmuxPlugins; [
-      {
-        plugin = continuum;
-        extraConfig = ''
-          set -g @continuum-restore 'on'
-          set -g @continuum-save-interval '15'
-        '';
-      }
+      open
+      yank
+      sensible
+      logging
+      sessionist
+      pain-control
       {
         plugin = resurrect;
         extraConfig = ''
@@ -27,12 +26,13 @@
           set -g @resurrect-strategy-nvim 'session'
         '';
       }
-      open
-      yank
-      sensible
-      logging
-      sessionist
-      pain-control
+      {
+        plugin = continuum;
+        extraConfig = ''
+          set -g @continuum-restore 'on'
+          set -g @continuum-save-interval '15'
+        '';
+      }
     ];
     extraConfig = ''
       set -g status off
