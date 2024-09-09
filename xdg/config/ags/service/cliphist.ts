@@ -1,5 +1,7 @@
 import { dependencies, bash } from "lib/utils"
 
+const MAX_ITEM = 750
+
 class Cliphist extends Service {
     static {
         Service.register(
@@ -57,6 +59,9 @@ class Cliphist extends Service {
             return
 
         this.#history.unshift(item)
+        if (this.#history.length > MAX_ITEM)
+            this.#history.pop()
+
         this.emit("changed")
         this.notify("cliphist-value")
         this.emit("cliphist-changed", this.#history)
