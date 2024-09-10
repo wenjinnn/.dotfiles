@@ -38,6 +38,7 @@ in {
       # for vim-dadbod
       mysql
       redis
+      oracle-instantclient
     ])
     ++ (with pkgs.unstable.python311Packages; [
       python-lsp-server
