@@ -52,15 +52,6 @@ in {
     categories = ["X-Preferences"];
     terminal = false;
   };
-  xdg.desktopEntries.dbeaver = {
-    name = "DBeaver";
-    comment = "SQL Integrated Development Environment";
-    icon = "dbeaver";
-    exec = "${pkgs.unstable.dbeaver-bin}/bin/dbeaver";
-    categories = ["Development"];
-    type = "Application";
-    genericName = "SQL Integrated Development Environment";
-  };
 
   services.kdeconnect = {
     package = pkgs.kdePackages.kdeconnect-kde;
