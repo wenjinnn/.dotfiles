@@ -9,18 +9,18 @@ function M.setup_dap()
   local dap = require("dap")
   -- for all launch.json options see https://github.com/microsoft/vscode-java-debug#options
   require("dap.ext.vscode").load_launchjs()
-  local project_name = os.getenv("PROJECT_NAME")
+  local project_name = os.getenv("DAP_PROJECT_NAME")
   local host_name = os.getenv("DAP_HOST")
-  local host_port = os.getenv("DAP_HOST_PORT")
-  if project_name then
+  local host_port = os.getenv("DAP_HOST_PORT") or 5005
+  if host_name ~= nil then
     dap.configurations.java = {
       {
         type = "java",
         request = "attach",
         projectName = project_name or nil,
-        name = "Java attach: " .. project_name,
-        hostName = host_name or "127.0.0.1",
-        port = host_port or 5005,
+        name = string.format("Java attach: %s:%s %s", host_name, host_port, project_name),
+        hostName = host_name,
+        port = host_port,
       },
     }
   end

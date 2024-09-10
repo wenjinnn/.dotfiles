@@ -76,7 +76,7 @@ just some filetype settings
 
 ### Dap
 
-`PROJECT_NAME` nvim-dap config for dap configuration `projectName`
+`DAP_PROJECT_NAME` nvim-dap config for dap configuration `projectName`
 
 `DAP_HOST` nvim-dap config for setting host, most used at remote debug situations.
 
