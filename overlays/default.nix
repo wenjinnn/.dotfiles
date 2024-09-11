@@ -54,8 +54,8 @@ in rec {
       src = prev.fetchFromGitHub {
         owner = "wenjinnn";
         repo = "ags";
-        rev = "eda6839128efb1e233a4a40b2b4459710fd59e14";
-        hash = "sha256-RyGbiO1pgyf3cP3XROy21qsAHBfuttxlox+Z4hZiMqU=";
+        rev = "08043a95130f674b621370260bc153769e167d2e";
+        hash = "sha256-8fhWCcixq0lR/AhZG/U8Kcw6UPOMxM571WiQ2demcoE=";
         fetchSubmodules = true;
       };
       buildInputs =
