@@ -4,5 +4,5 @@ all:
 	sudo nixos-rebuild switch --flake .#$(HOSTNAME) && home-manager switch --flake .#$(USER)@$(HOSTNAME) -b backup
 home:
 	home-manager switch --flake .#$(USER)@$(HOSTNAME) -b backup
-nixos:
+system:
 	sudo nixos-rebuild switch --flake .#$(HOSTNAME)
