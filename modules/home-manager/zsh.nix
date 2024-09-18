@@ -33,6 +33,9 @@
         "fzf"
         "tmux"
       ];
+      extraConfig = ''
+        COMPLETION_WAITING_DOTS=true
+      '';
     };
     shellAliases = {
       lg = "lazygit";
@@ -40,16 +43,10 @@
       py = "python";
       y = "yazi";
     };
-    initExtraFirst = ''
-      if [[ -n "''${NVIM_DAP_TOGGLETERM}" ]]; then
-          return
-      fi
-    '';
     initExtra = let
       proxyPort = "12334";
       proxyAddr = "http://127.0.0.1:${proxyPort}";
     in ''
-      COMPLETION_WAITING_DOTS="true"
       bindkey '^ ' autosuggest-accept
       PROXY_ENV=(http_proxy ftp_proxy https_proxy all_proxy HTTP_PROXY HTTPS_PROXY FTP_PROXY ALL_PROXY)
       NO_PROXY_ENV=(no_proxy NO_PROXY)
