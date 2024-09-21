@@ -33,7 +33,7 @@ class Wallpaper extends Service {
         const old = await sh(`readlink ${WP}`)
         await sh(`hyprctl hyprpaper preload '${path}'`)
         await sh(`hyprctl hyprpaper wallpaper ',${path}'`)
-        await sh(`hyprctl hyprpaper unload '${old}'`)
+        Utils.timeout(1000, () => sh(`hyprctl hyprpaper unload '${old}'`))
         this.changed("wallpaper")
     }
 
