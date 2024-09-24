@@ -33,7 +33,6 @@ class Wallpaper extends Service {
         const old = await sh(`readlink ${WP}`)
         await sh(`hyprctl hyprpaper preload '${path}'`)
         await sh(`hyprctl hyprpaper wallpaper ',${path}'`)
-        Utils.timeout(1000, () => sh(`hyprctl hyprpaper unload '${old}'`))
         this.changed("wallpaper")
     }
 
@@ -97,7 +96,10 @@ class Wallpaper extends Service {
                 this.#wallpaper()
         })
 
-        Utils.interval(3_600_000, () => this.#fetchBing(0).catch(err => logError(err)))
+        Utils.interval(3_600_000, () => {
+            this.#fetchBing(0).catch(err => logError(err))
+            sh("hyprctl hyprpaper unload all")
+        })
     }
 }
 
