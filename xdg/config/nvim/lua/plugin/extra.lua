@@ -214,7 +214,7 @@ if not in_vscode() then
         inline = { adapter = adapter },
         agent = { adapter = adapter },
       },
-      pre_defined_prompts = {
+      prompt_library = {
         ["Custom Prompt"] = { opts = { mapping = "<Leader>Cp" } },
         ["Explain"] = { opts = { mapping = "<Leader>Ce" } },
         ["Unit Tests"] = { opts = { mapping = "<Leader>Ct" } },
