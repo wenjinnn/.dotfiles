@@ -18,7 +18,7 @@ Repo's structure base on [nix-starter-config#standard](https://github.com/Mister
 * Editor: a well [configured nvim](https://github.com/wenjinnn/config/tree/nixos/xdg/config/nvim) (tested startup time are less than 30ms) that follows the [KISS principle](https://en.wikipedia.org/wiki/KISS_principle), you can try it with my single nvim configuration repo [wenvim](https://github.com/wenjinnn/wenvim)
 * Compositor: [Hyprland](https://github.com/hyprwm/Hyprland)  
 * Shell: [ags](https://github.com/Aylur/ags)  
-* Terminal emulator: [foot](https://codeberg.org/dnkl/foot) with [undercurl support patch](https://codeberg.org/dnkl/foot/pulls/1099)  
+* Terminal emulator: [foot](https://codeberg.org/dnkl/foot)
 * Wallpaper: [hyprpaper](https://github.com/hyprwm/hyprpaper) and some small script, [random choose a pic](https://github.com/wenjinnn/config/blob/4748ecfcd14b1f4c8e780789c4eb40ca1688629e/xdg/config/ags/service/wallpaper.ts#L79) to switch to it, and [fetchBing](https://github.com/wenjinnn/config/blob/4748ecfcd14b1f4c8e780789c4eb40ca1688629e/xdg/config/ags/service/wallpaper.ts#L49-L82) for download daliy bingwallpaper and switch to immediately.
 
 The [ags config](https://github.com/wenjinnn/config/tree/nixos/xdg/config/ags) base on [Aylur/dotfiles](https://github.com/Aylur/dotfiles), with these different:

@@ -1,7 +1,8 @@
-{
+{pkgs, ...}: {
   # foot
   programs.foot = {
     enable = true;
+    package = pkgs.unstable.foot;
     server.enable = true;
     settings = {
       main = {
@@ -13,9 +14,7 @@
       scrollback = {
         lines = 10000;
       };
-      # cursor = {
-      #   color = "1e1e1e cccccc";
-      # };
+      # catppuccin foot colorscheme from https://github.com/catppuccin/foot
       colors = {
         foreground = "cdd6f4";
         background = "1e1e2e";
