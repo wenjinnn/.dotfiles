@@ -35,29 +35,26 @@ later(function()
 end)
 
 if not in_vscode() then
-  -- hurl client
+  vim.filetype.add({ extension = { ["http"] = "http" } })
+  -- http client
   later(function()
-    add({
-      source = "jellydn/hurl.nvim",
-      depends = { "MunifTanjim/nui.nvim" },
+    add({ source = "mistweaverco/kulala.nvim" })
+    require("kulala").setup({
+      winbar = true,
     })
-    require("hurl").setup({
-      show_notification = true,
-      env_file = {
-        ".envrc",
-        ".env",
-        "vars.env",
-        "hurl.env",
-      },
-    })
-    -- Run API request
-    map("n", "<leader>rA", "<cmd>HurlRunner<CR>", "Run all requests")
-    map("n", "<leader>ra", "<cmd>HurlRunnerAt<CR>", "Run api request")
-    map("n", "<leader>re", "<cmd>HurlRunnerToEntry<CR>", "Run api request to entry")
-    map("n", "<leader>rt", "<cmd>HurlToggleMode<CR>", "Hurl toggle mode")
-    map("n", "<leader>rv", "<cmd>HurlVerbose<CR>", "Run api in verbose mode")
-    -- Run Hurl request in visual mode
-    map("v", "<leader>ra", ":HurlRunner<CR>", "Hurl runner")
+    map("n", "<leader>re", "<cmd>lua require('kulala').run()<cr>", "Execute request")
+    map("n", "<leader>ra", "<cmd>lua require('kulala').run_all()<cr>", "Execute all request")
+    map("n", "<leader>rr", "<cmd>lua require('kulala').replay()<cr>", "Replay last run request")
+    map("n", "<leader>rt", "<cmd>lua require('kulala').show_stats()<cr>", "Shows statistics of the last run request")
+    map("n", "<leader>rp", "<cmd>lua require('kulala').scratchpad()<cr>", "Opens scratchpad")
+    map("n", "<leader>ri", "<cmd>lua require('kulala').inspect()<cr>", "Inspect current request")
+    map("n", "<leader>rv", "<cmd>lua require('kulala').toggle_view()<cr>", "Toggle between body and headers")
+    map("n", "<leader>rc", "<cmd>lua require('kulala').copy()<cr>", "Copy current request as a curl command")
+    map("n", "<leader>rf", "<cmd>lua require('kulala').search()<cr>", "searches for http files")
+    map("n", "<leader>rE", "<cmd>lua require('kulala').set_selected_env()<cr>", "Sets selected environment")
+    map("n", "<leader>rp", "<cmd>lua require('kulala').from_curl()<cr>", "Paste curl from clipboard as http request")
+    map("n", "]r", "<cmd>lua require('kulala').jump_prev()<cr>", "Jump to previous request")
+    map("n", "[r", "<cmd>lua require('kulala').jump_next()<cr>", "Jump to next request")
   end)
 
   -- markdown preview in browser
