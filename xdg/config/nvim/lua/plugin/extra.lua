@@ -232,6 +232,6 @@ if not in_vscode() then
   end)
   map({ "n", "v" }, "<leader>Ca", "<cmd>CodeCompanionActions<cr>", "Code companion actions")
   map("n", "<leader>CC", "<cmd>CodeCompanionChat<cr>", "Code companion chat")
-  map({ "n", "v" }, "<leader>CT", "<cmd>CodeCompanionToggle<cr>", "Code companion toggle")
+  map({ "n", "v" }, "<leader>CT", "<cmd>CodeCompanionChat Toggle<cr>", "Code companion toggle")
   map("v", "<leader>CA", "<cmd>CodeCompanionAdd<cr>", "Code companion add")
 end
