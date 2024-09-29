@@ -8,6 +8,7 @@ return {
   yamlls = require("lsp.yamlls"),
   nixd = require("lsp.nixd"),
   pylsp = require("lsp.pylsp"),
+  texlab = require("lsp.texlab"),
   bashls = {},
   cssls = {},
   html = {},
@@ -18,5 +19,4 @@ return {
   taplo = {},
   rust_analyzer = {},
   gopls = {},
-  texlab = {},
 }
