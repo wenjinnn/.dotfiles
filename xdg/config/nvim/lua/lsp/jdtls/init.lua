@@ -18,7 +18,7 @@ function M.setup_dap()
         type = "java",
         request = "attach",
         projectName = project_name or "",
-        name = string.format("Java attach: %s:%s %s", host_name, host_port, project_name),
+        name = string.format("Java attach: %s:%s %s", host_name, host_port, project_name or ""),
         hostName = host_name,
         port = host_port,
       },
