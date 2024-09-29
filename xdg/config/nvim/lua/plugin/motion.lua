@@ -7,4 +7,8 @@ later(function()
       dim = true,
     },
   })
+  vim.keymap.set(
+    "n", "<CR>",
+    "<Cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.single_character)<CR>"
+  )
 end)
