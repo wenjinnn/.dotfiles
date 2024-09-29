@@ -18,4 +18,5 @@ return {
   taplo = {},
   rust_analyzer = {},
   gopls = {},
+  texlab = {},
 }

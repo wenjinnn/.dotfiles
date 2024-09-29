@@ -32,6 +32,7 @@ in {
       vue-language-server
       yaml-language-server
       vim-language-server
+      texlab
       taplo
       gopls
       libxml2
