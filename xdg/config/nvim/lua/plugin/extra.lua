@@ -53,8 +53,8 @@ if not in_vscode() then
     map("n", "<leader>rf", "<cmd>lua require('kulala').search()<cr>", "searches for http files")
     map("n", "<leader>rE", "<cmd>lua require('kulala').set_selected_env()<cr>", "Sets selected environment")
     map("n", "<leader>rp", "<cmd>lua require('kulala').from_curl()<cr>", "Paste curl from clipboard as http request")
-    map("n", "]r", "<cmd>lua require('kulala').jump_prev()<cr>", "Jump to previous request")
-    map("n", "[r", "<cmd>lua require('kulala').jump_next()<cr>", "Jump to next request")
+    map("n", "[r", "<cmd>lua require('kulala').jump_prev()<cr>", "Jump to previous request")
+    map("n", "]r", "<cmd>lua require('kulala').jump_next()<cr>", "Jump to next request")
   end)
 
   -- markdown preview in browser
