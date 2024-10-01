@@ -200,7 +200,7 @@ if not in_vscode() then
           return require("codecompanion.adapters").extend("ollama", {
             schema = {
               model = {
-                default = "llama3.1",
+                default = "llama3.2",
               },
             },
           })
