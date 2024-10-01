@@ -113,6 +113,11 @@ just some filetype settings
 
 `VUE_LANGUAGE_SERVER_PATH` path to vue language server
 
+### AI
+
+`NVIM_AI_ADAPTER` ai adapter for codecompanion.nvim, default to `ollama`
+`NVIM_OLLAMA_MODEL` ollama model to use for codecompanion.nvim, default to `llama3.2`
+
 ### Must have
 1. [ripgrep](https://github.com/BurntSushi/ripgrep) depend by many plugin.
 2. All the LSP package that configured in [lua/lsp/init.lua](lua/lsp/init.lua), if you're going to use.

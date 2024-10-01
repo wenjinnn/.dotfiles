@@ -174,19 +174,8 @@ if not in_vscode() then
   -- AI companion
   later(function()
     add({ source = "olimorris/codecompanion.nvim" })
-    local adapter = "anthropic"
-    if vim.fn.executable("ollama") == 1 then
-      local handle = io.popen("ollama ps")
-      if handle then
-        for line in handle:lines() do
-          local first_word = line:match("%S+")
-          if first_word ~= nil and first_word ~= "NAME" then
-            adapter = "ollama"
-            break
-          end
-        end
-      end
-    end
+    local adapter = os.getenv("NVIM_AI_ADAPTER") or "anthropic"
+    local ollama_model = os.getenv("NVIM_OLLAMA_MODEL") or "llama3.2"
     require("codecompanion").setup({
       adapters = {
         anthropic = function()
@@ -200,7 +189,7 @@ if not in_vscode() then
           return require("codecompanion.adapters").extend("ollama", {
             schema = {
               model = {
-                default = "llama3.2",
+                default = ollama_model,
               },
             },
           })
