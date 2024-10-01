@@ -174,7 +174,7 @@ if not in_vscode() then
   -- AI companion
   later(function()
     add({ source = "olimorris/codecompanion.nvim" })
-    local adapter = os.getenv("NVIM_AI_ADAPTER") or "anthropic"
+    local adapter = os.getenv("NVIM_AI_ADAPTER") or "ollama"
     local ollama_model = os.getenv("NVIM_OLLAMA_MODEL") or "llama3.2"
     require("codecompanion").setup({
       adapters = {
