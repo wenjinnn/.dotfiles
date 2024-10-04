@@ -125,7 +125,7 @@ in {
       general = {
         lock_cmd = "pidof hyprlock || ${hyprlockBin}";
         before_sleep_cmd = "${hyprctlBin} dispatch dpms off";
-        after_sleep_cmd = "${hyprctlBin} dispatch dpms on && ${loginctlBin} lock-session";
+        after_sleep_cmd = "${hyprctlBin} dispatch dpms on && ${loginctlBin} lock-session; hyprshade auto";
       };
       listener = [
         {
