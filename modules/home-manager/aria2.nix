@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   programs.aria2 = {
     enable = true;
     # TODO get bt-tracker from https://github.com/ngosang/trackerslist, maybe write a script later.
@@ -8,6 +12,7 @@
     settings = {
       listen-port = 4001;
       dht-listen-port = 4000;
+      dir = "${config.home.homeDirectory}/Downloads/aria2";
       enable-rpc = true;
       rpc-listen-all = true;
       rpc-allow-origin-all = true;
