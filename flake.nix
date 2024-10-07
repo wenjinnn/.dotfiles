@@ -99,6 +99,7 @@
           nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
           {nixpkgs.overlays = [nur.overlay];}
           nur.nixosModules.nur
+          sops-nix.nixosModules.sops
         ];
       };
       nixos-wsl = nixpkgs.lib.nixosSystem {
@@ -108,6 +109,7 @@
           ./nixos/configuration.nix
           ./nixos/hosts/nixos-wsl
           nur.nixosModules.nur
+          sops-nix.nixosModules.sops
         ];
       };
     };

@@ -18,4 +18,6 @@
   bluetooth = import ./bluetooth.nix;
   waydroid = import ./waydroid.nix;
   ollama = import ./ollama.nix;
+  mihomo = import ./mihomo.nix;
+  sops = import ./sops.nix;
 }

@@ -3,7 +3,7 @@
   networking.firewall = {
     enable = true;
     checkReversePath = "loose";
-    trustedInterfaces = ["tun*"];
+    trustedInterfaces = ["tun*" "Meta"];
     allowedTCPPorts = [80 443 4001];
     allowedUDPPortRanges = [
       {
