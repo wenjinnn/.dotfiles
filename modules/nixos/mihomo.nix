@@ -283,6 +283,7 @@
     proxy-groups:
       # 使用 WARP 的用户需要手动在下方的 proxies 字段内添加 WARP
       # 例如 [WARP, 全部节点, 自动选择, 香港, 台湾, 日本, 新加坡, 美国, 其它地区, DIRECT],
+      - { name: 自动选择, <<: *use, tolerance: 2, type: url-test }
       - {
           name: 节点选择,
           type: select,
@@ -318,7 +319,10 @@
       - {
           name: 订阅,
           type: select,
-          use: p1,
+          use:
+            [
+              p1,
+            ],
         }
       - {
           name: 国内,
@@ -354,7 +358,6 @@
           filter: "(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates)).*",
         }
       - { name: 全部节点, <<: *use }
-      - { name: 自动选择, <<: *use, tolerance: 2, type: url-test }
 
     rules:
       # 若需禁用 QUIC 请取消注释 QUIC 两条规则
