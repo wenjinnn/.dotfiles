@@ -55,7 +55,7 @@
         behavior: domain
         format: yaml
         path: ./rule_provider/r1.yaml
-        url: "${config.sops.placeholder.MIHOMO_PROVIDER}""
+        url: "${config.sops.placeholder.MIHOMO_PROVIDER}"
         interval: 600
 
     mode: rule
