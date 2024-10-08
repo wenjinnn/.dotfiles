@@ -344,12 +344,12 @@
       # 其他就是所有规则没匹配到的
       # 可以理解为 ACL4SSR 配置里的 漏网之鱼
       # 换言之，其他走代理就是绕过中国大陆地址，不走就是 GFWList 模式
-      - {
-          name: 局域网,
-          type: select,
-          filter: "192.168.*|172.16.*|172.1.*|10.0.*",
-          proxies: [ DIRECT ]
-        }
+      # - {
+      #     name: 局域网,
+      #     type: select,
+      #     filter: "192.168.*|172.16.*|172.1.1.*",
+      #     proxies: [ DIRECT ]
+      #   }
       - { name: 其他, <<: *pr }
 
       # 分隔,下面是地区分组
@@ -368,7 +368,11 @@
     rules:
       # 若需禁用 QUIC 请取消注释 QUIC 两条规则
       # 防止 YouTube 等使用 QUIC 导致速度不佳, 禁用 443 端口 UDP 流量（不包括国内）
-
+      - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+      - IP-CIDR,192.168.1.0/32,DIRECT
+      - IP-CIDR,172.1.1.1/24,DIRECT
+      - IP-CIDR,172.16.1.0/32,DIRECT
+      - IP-CIDR,10.0.0.0/32,DIRECT
     # - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,cn))),REJECT # quic
       - AND,((RULE-SET,anti-AD),(NOT,((RULE-SET,anti-AD-white)))),广告拦截 # 感谢 Telegram @nextyahooquery 提供的建议
     # - GEOSITE,biliintl,哔哩东南亚
@@ -401,7 +405,6 @@
       - GEOSITE,CN,国内
       - GEOIP,CN,国内
       - RULE-SET,r1,订阅
-      - MATCH,局域网
       - MATCH,其他
   '';
 }
