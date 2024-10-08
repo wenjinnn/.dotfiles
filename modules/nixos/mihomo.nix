@@ -344,6 +344,12 @@
       # 其他就是所有规则没匹配到的
       # 可以理解为 ACL4SSR 配置里的 漏网之鱼
       # 换言之，其他走代理就是绕过中国大陆地址，不走就是 GFWList 模式
+      - {
+          name: 局域网,
+          type: select,
+          filter: "192.168.*|172.16.*|172.1.*|10.0.*",
+          proxies: [ DIRECT ]
+        }
       - { name: 其他, <<: *pr }
 
       # 分隔,下面是地区分组
@@ -395,6 +401,7 @@
       - GEOSITE,CN,国内
       - GEOIP,CN,国内
       - RULE-SET,r1,订阅
+      - MATCH,局域网
       - MATCH,其他
   '';
 }
