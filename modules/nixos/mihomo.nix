@@ -48,14 +48,6 @@
         path: ./rule_provider/anti-AD-white.yaml
         url: "https://raw.githubusercontent.com/privacy-protection-tools/dead-horse/master/anti-ad-white-for-clash.yaml?"
         interval: 600
-      # subscription custom
-      r1:
-        type: http
-        behavior: domain
-        format: yaml
-        path: ./rule_provider/r1.yaml
-        url: "${config.sops.placeholder.MIHOMO_PROVIDER}"
-        interval: 600
 
     mode: rule
     ipv6: true
@@ -367,6 +359,8 @@
 
       - GEOSITE,openai,AI
       - GEOSITE,anthropic,AI
+      - DOMAIN-SUFFIX,claude.ai,AI
+      - DOMAIN-SUFFIX,claudeusercontent.com,AI
       - GEOSITE,apple,universal
       - GEOSITE,apple-cn,universal
       - GEOSITE,ehentai,universal
@@ -392,7 +386,6 @@
       - GEOIP,twitter,universal
       - GEOSITE,CN,local
       - GEOIP,CN,local
-      - RULE-SET,r1,all
       - MATCH,universal
   '';
 }
