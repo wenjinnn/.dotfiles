@@ -200,15 +200,6 @@ if not in_vscode() then
         inline = { adapter = adapter },
         agent = { adapter = adapter },
       },
-      prompt_library = {
-        ["Custom Prompt"] = { opts = { mapping = "<Leader>Cp" } },
-        ["Explain"] = { opts = { mapping = "<Leader>Ce" } },
-        ["Unit Tests"] = { opts = { mapping = "<Leader>Ct" } },
-        ["Fix code"] = { opts = { mapping = "<Leader>Cf" } },
-        ["Buffer selection"] = { opts = { mapping = "<Leader>Cb" } },
-        ["Explain LSP Diagnostics"] = { opts = { mapping = "<Leader>Cl" } },
-        ["Generate a Commit Message"] = { opts = { mapping = "<Leader>Cm" } },
-      },
       display = {
         chat = {
           show_settings = true,
@@ -217,7 +208,6 @@ if not in_vscode() then
     })
   end)
   map({ "n", "v" }, "<leader>Ca", "<cmd>CodeCompanionActions<cr>", "Code companion actions")
-  map("n", "<leader>CC", "<cmd>CodeCompanionChat<cr>", "Code companion chat")
-  map({ "n", "v" }, "<leader>CT", "<cmd>CodeCompanionChat Toggle<cr>", "Code companion toggle")
+  map("n", "<leader>CC", "<cmd>CodeCompanionChat Toggle<cr>", "Code companion chat")
   map("v", "<leader>CA", "<cmd>CodeCompanionAdd<cr>", "Code companion add")
 end
