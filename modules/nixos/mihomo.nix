@@ -27,6 +27,8 @@
           tolerance: 100
         path: ./proxy_provider/p1.yaml
         url: "${config.sops.placeholder.MIHOMO_PROVIDER}"
+        override:
+          udp: true
 
       # local-subscription:
         # path: ./proxy_provider/local.yaml
