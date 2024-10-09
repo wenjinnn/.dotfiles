@@ -355,10 +355,10 @@
       # 若需禁用 QUIC 请取消注释 QUIC 两条规则
       # 防止 YouTube 等使用 QUIC 导致速度不佳, 禁用 443 端口 UDP 流量（不包括国内）
       - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
-      - IP-CIDR,192.168.1.0/32,DIRECT
+      - IP-CIDR,192.168.1.0/24,DIRECT
       - IP-CIDR,172.1.1.1/24,DIRECT
-      - IP-CIDR,172.16.1.0/32,DIRECT
-      - IP-CIDR,10.0.0.0/32,DIRECT
+      - IP-CIDR,172.16.1.0/24,DIRECT
+      - IP-CIDR,10.0.0.0/24,DIRECT
     # - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,cn))),REJECT # quic
       - AND,((RULE-SET,anti-AD),(NOT,((RULE-SET,anti-AD-white)))),ad-block # 感谢 Telegram @nextyahooquery 提供的建议
     # - GEOSITE,biliintl,video
