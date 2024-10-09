@@ -63,19 +63,14 @@
     geodata-mode: true
 
     geox-url:
-      geoip: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat"
-      geosite: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
-      mmdb: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
-      asn: "https://mirror.ghproxy.com/https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
+      geoip: "https://hub.gitmirror.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
+      geosite: "https://hub.gitmirror.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+      mmdb: "https://hub.gitmirror.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
 
-    # 进程匹配模式
-    # 路由器上请设置为 off
-    # always 开启，强制匹配所有进程
-    # strict 默认，由 Clash 判断是否开启
-    # off 不匹配进程，推荐在路由器上使用此模式
+    # default: strict
     find-process-mode: strict
 
-    # 缓解移动设备耗电问题
+    # set it to bigger number to reduce the power consumption issue on mobile devices
     # https://github.com/vernesong/OpenClash/issues/2614
     keep-alive-interval: 1800
 
