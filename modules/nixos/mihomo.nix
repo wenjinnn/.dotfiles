@@ -120,12 +120,14 @@
     # tun 模式
     tun:
       enable: true  # enable 'true'
-      stack: system  # or 'gvisor'
+      stack: mixed  # 'gvisor' 'system' 'mixed'
       dns-hijack:
         - "any:53"
         - "tcp://any:53"
       auto-route: true
+      auto-redirect: true
       auto-detect-interface: true
+      strict-route: true
 
     # dns 设置
     # 已配置 ipv6
