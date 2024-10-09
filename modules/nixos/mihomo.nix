@@ -48,30 +48,6 @@
         path: ./rule_provider/anti-AD-white.yaml
         url: "https://raw.githubusercontent.com/privacy-protection-tools/dead-horse/master/anti-ad-white-for-clash.yaml?"
         interval: 600
-      private_domain:
-        type: http
-        interval: 86400
-        behavior: domain
-        format: mrs
-        url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"
-      cn_domain:
-        type: http
-        interval: 86400
-        behavior: domain
-        format: mrs
-        url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"
-      geolocation-!cn:
-        type: http
-        interval: 86400
-        behavior: domain
-        format: mrs
-        url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"
-      private_ip:
-        type: http
-        interval: 86400
-        behavior: ipcidr
-        format: mrs
-        url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"
 
     mode: rule
     ipv6: true
@@ -161,10 +137,10 @@
         - https://120.53.53.53/dns-query
         - https://223.5.5.5/dns-query
       nameserver-policy:
-        "rule-set:cn_domain,private_domain":
+        "geosite:cn":
           - https://120.53.53.53/dns-query
           - https://223.5.5.5/dns-query
-        "rule-set:geolocation-!cn":
+        "geosite:geolocation-!cn":
           - "https://dns.cloudflare.com/dns-query"
           - "https://dns.google/dns-query"
 
@@ -359,8 +335,8 @@
         - p1
 
     rules:
-      - RULE-SET,private_ip,DIRECT,no-resolve
-      - RULE-SET,private_domain,DIRECT,no-resolve
+      - GEOSITE,private,DIRECT,no-resolve
+      - GEOIP,private,DIRECT,no-resolve
       # 若需禁用 QUIC 请取消注释 QUIC 两条规则
       # 防止 YouTube 等使用 QUIC 导致速度不佳, 禁用 443 端口 UDP 流量（不包括国内）
     # - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,cn))),REJECT # quic
