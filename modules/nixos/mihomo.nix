@@ -357,6 +357,7 @@
       # 防止 YouTube 等使用 QUIC 导致速度不佳, 禁用 443 端口 UDP 流量（不包括国内）
       - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
       - IP-CIDR,192.168.1.0/24,DIRECT
+      - IP-CIDR,192.168.10.0/24,DIRECT
       - IP-CIDR,172.1.1.1/24,DIRECT
       - IP-CIDR,172.16.1.0/24,DIRECT
       - IP-CIDR,10.0.0.0/24,DIRECT
