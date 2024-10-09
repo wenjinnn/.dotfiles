@@ -45,7 +45,7 @@ function M.augroup(name, opts)
 end
 
 function M.map(mode, lhs, rhs, opts)
-  local final_opts = {}
+  local final_opts = { noremap = true, silent = true }
   if type(opts) == "string" then
     final_opts.desc = opts
   elseif type(opts) == "table" then
