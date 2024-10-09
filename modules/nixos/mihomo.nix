@@ -48,6 +48,30 @@
         path: ./rule_provider/anti-AD-white.yaml
         url: "https://raw.githubusercontent.com/privacy-protection-tools/dead-horse/master/anti-ad-white-for-clash.yaml?"
         interval: 600
+      private_domain:
+        type: http
+        interval: 86400
+        behavior: domain
+        format: mrs
+        url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"
+      cn_domain:
+        type: http
+        interval: 86400
+        behavior: domain
+        format: mrs
+        url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"
+      geolocation-!cn:
+        type: http
+        interval: 86400
+        behavior: domain
+        format: mrs
+        url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"
+      private_ip:
+        type: http
+        interval: 86400
+        behavior: ipcidr
+        format: mrs
+        url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"
 
     mode: rule
     ipv6: true
@@ -62,14 +86,11 @@
 
     geodata-mode: true
 
-    # Geo 数据库下载地址
-    # 使用 FastGit 代理 (https://fgit.cf)
-    # 源地址 https://github.com/MetaCubeX/meta-rules-dat
-    # 可以更换镜像站但不要更换其他数据库，可能导致无法启动
     geox-url:
-      geoip: "https://hub.gitmirror.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
-      geosite: "https://hub.gitmirror.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
-      mmdb: "https://hub.gitmirror.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
+      geoip: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat"
+      geosite: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+      mmdb: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
+      asn: "https://mirror.ghproxy.com/https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
 
     # 进程匹配模式
     # 路由器上请设置为 off
@@ -125,33 +146,27 @@
     # 已配置 ipv6
     dns:
       enable: true
-      listen: :1053
       ipv6: true
-      # 路由器个人建议使用 redir-host 以最佳兼容性
-      # 其他设备可以使用 fake-ip
+      respect-rules: true
       enhanced-mode: fake-ip
-      fake-ip-range: 28.0.0.1/8
       fake-ip-filter:
-        - '*'
-        - '+.lan'
-        - '+.local'
-      default-nameserver:
-        - 223.5.5.5
-        - 119.29.29.29
-        - 114.114.114.114
-        - '[2402:4e00::]'
-        - '[2400:3200::1]'
+        - "*"
+        - "+.lan"
+        - "+.local"
+        - "+.market.xiaomi.com"
       nameserver:
-        - 'tls://8.8.4.4#dns'
-        - 'tls://1.0.0.1#dns'
-        - 'tls://[2001:4860:4860::8844]#dns'
-        - 'tls://[2606:4700:4700::1001]#dns'
+        - https://120.53.53.53/dns-query
+        - https://223.5.5.5/dns-query
       proxy-server-nameserver:
-        - https://doh.pub/dns-query
+        - https://120.53.53.53/dns-query
+        - https://223.5.5.5/dns-query
       nameserver-policy:
-        "geosite:cn,private":
-          - https://doh.pub/dns-query
-          - https://dns.alidns.com/dns-query
+        "rule-set:cn_domain,private_domain":
+          - https://120.53.53.53/dns-query
+          - https://223.5.5.5/dns-query
+        "rule-set:geolocation-!cn":
+          - "https://dns.cloudflare.com/dns-query"
+          - "https://dns.google/dns-query"
 
     # 多入站端口设置
     # listeners:
@@ -344,14 +359,10 @@
         - p1
 
     rules:
+      - RULE-SET,private_ip,DIRECT,no-resolve
+      - RULE-SET,private_domain,DIRECT,no-resolve
       # 若需禁用 QUIC 请取消注释 QUIC 两条规则
       # 防止 YouTube 等使用 QUIC 导致速度不佳, 禁用 443 端口 UDP 流量（不包括国内）
-      - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
-      - IP-CIDR,192.168.1.0/24,DIRECT
-      - IP-CIDR,192.168.10.0/24,DIRECT
-      - IP-CIDR,172.1.1.1/24,DIRECT
-      - IP-CIDR,172.16.1.0/24,DIRECT
-      - IP-CIDR,10.0.0.0/24,DIRECT
     # - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,cn))),REJECT # quic
       - AND,((RULE-SET,anti-AD),(NOT,((RULE-SET,anti-AD-white)))),ad-block # 感谢 Telegram @nextyahooquery 提供的建议
     # - GEOSITE,biliintl,video
