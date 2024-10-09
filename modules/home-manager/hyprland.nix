@@ -341,8 +341,8 @@
             "SuperShift, Page_Up, movetoworkspace, -1"
             "ControlShiftSuper, L, movetoworkspace, +1"
             "ControlShiftSuper, H, movetoworkspace, -1"
-            "AltShiftSuper, L, movecurrentworkspacetomonitor, +1"
-            "AltShiftSuper, H, movecurrentworkspacetomonitor, -1"
+            "AltSuper, L, movecurrentworkspacetomonitor, +1"
+            "AltSuper, H, movecurrentworkspacetomonitor, -1"
             "SuperShift, mouse_down, movetoworkspace, -1"
             "SuperShift, mouse_up, movetoworkspace, +1"
             # Fullscreen
