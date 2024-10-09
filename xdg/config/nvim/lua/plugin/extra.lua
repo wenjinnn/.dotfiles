@@ -175,7 +175,7 @@ if not in_vscode() then
   later(function()
     add({ source = "olimorris/codecompanion.nvim" })
     local adapter = os.getenv("NVIM_AI_ADAPTER") or "ollama"
-    local ollama_model = os.getenv("NVIM_OLLAMA_MODEL") or "llama3.2"
+    local ollama_model = os.getenv("NVIM_OLLAMA_MODEL") or "llama3.2:latest"
     require("codecompanion").setup({
       adapters = {
         anthropic = function()
@@ -196,18 +196,45 @@ if not in_vscode() then
         end,
       },
       strategies = {
-        chat = { adapter = adapter },
+        chat = {
+          adapter = adapter,
+          slash_commands = {
+            buffer = {
+              opts = {
+                provider = "mini_pick",
+              },
+            },
+            file = {
+              opts = {
+                provider = "mini_pick",
+              },
+            },
+            help = {
+              opts = {
+                provider = "mini_pick",
+              },
+            },
+          },
+        },
         inline = { adapter = adapter },
         agent = { adapter = adapter },
       },
       display = {
+        action_palette = {
+          provider = "mini_pick",
+        },
         chat = {
           show_settings = true,
+        },
+        diff = {
+          provider = "mini_diff",
         },
       },
     })
   end)
   map({ "n", "v" }, "<leader>Ca", "<cmd>CodeCompanionActions<cr>", "Code companion actions")
-  map("n", "<leader>CC", "<cmd>CodeCompanionChat Toggle<cr>", "Code companion chat")
+  map({ "n", "v" }, "<leader>CC", "<cmd>CodeCompanionChat Toggle<cr>", "Code companion chat")
   map("v", "<leader>CA", "<cmd>CodeCompanionAdd<cr>", "Code companion add")
+  -- Expand 'cc' into 'CodeCompanion' in the command line
+  vim.cmd([[cab cc CodeCompanion]])
 end
