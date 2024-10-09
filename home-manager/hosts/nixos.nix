@@ -32,9 +32,9 @@
     libreoffice
     evolution
     evolution-ews
-    gnome.gnome-tweaks
-    gnome.gnome-themes-extra
-    gnome.dconf-editor
+    gnome-tweaks
+    gnome-themes-extra
+    dconf-editor
     wireshark
     mitmproxy
     waydroid
