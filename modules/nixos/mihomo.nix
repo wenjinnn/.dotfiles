@@ -258,7 +258,6 @@
         - singapore
         - japan
         - USA
-        - other-region
         use:
         - p1
         filter: "S1|S2"
