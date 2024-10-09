@@ -5,11 +5,7 @@
   config,
   pkgs,
   ...
-}: let
-  # use stable mesa to fix mesa multiple version error
-  hyprlock = pkgs.unstable.hyprlock.override {mesa = pkgs.mesa;};
-  hyprland = pkgs.unstable.hyprland.override {mesa = pkgs.mesa;};
-in {
+}: {
   imports = with outputs.homeManagerModules; [
     ags
   ];
@@ -34,8 +30,6 @@ in {
       xdg-utils
       xorg.xrdb
       wl-gammactl
-    ])
-    ++ (with pkgs.unstable; [
       hyprpaper
       xwaylandvideobridge
       hyprcursor
@@ -61,7 +55,6 @@ in {
 
   services.hyprpaper = {
     enable = true;
-    package = pkgs.unstable.hyprpaper;
     settings = {
       ipc = "on";
       splash = true;
@@ -71,7 +64,6 @@ in {
   # hyprlock configuration
   programs.hyprlock = {
     enable = true;
-    package = hyprlock;
     settings = {
       background = [
         {
@@ -115,12 +107,11 @@ in {
 
   # hypridle configuration
   services.hypridle = let
-    hyprlockBin = "${hyprlock}/bin/hyprlock";
-    hyprctlBin = "${hyprland}/bin/hyprctl";
+    hyprlockBin = "${pkgs.hyprlock}/bin/hyprlock";
+    hyprctlBin = "${pkgs.hyprland}/bin/hyprctl";
     loginctlBin = "${pkgs.systemd}/bin/loginctl";
   in {
     enable = true;
-    package = pkgs.unstable.hypridle;
     settings = {
       general = {
         lock_cmd = "pidof hyprlock || ${hyprlockBin}";
@@ -160,7 +151,6 @@ in {
     windowManager = {
       hyprland = {
         enable = true;
-        package = hyprland;
         xwayland.enable = true;
         systemd.enable = true;
         settings = {

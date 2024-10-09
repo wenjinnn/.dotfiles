@@ -7,10 +7,10 @@
     gnumake
     cmake
     gcc
-    unstable.gdb
+    gdb
     nodejs
     jdk21
-    (maven.override {jdk = pkgs.jdk21;})
+    maven
     rustc
     cargo
   ];

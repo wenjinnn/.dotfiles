@@ -7,7 +7,7 @@
   ...
 }: {
   home.packages = with pkgs; [
-    unstable.matugen
+    matugen
     dart-sass
     bun
     ags

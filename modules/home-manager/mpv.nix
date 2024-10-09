@@ -14,7 +14,7 @@
   # };
   programs.mpv = {
     enable = true;
-    scripts = with pkgs.unstable; [
+    scripts = with pkgs; [
       mpvScripts.mpris
       mpvScripts.uosc
       mpvScripts.mpv-cheatsheet

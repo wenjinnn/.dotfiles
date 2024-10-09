@@ -7,7 +7,7 @@
   archivePath = "${config.home.homeDirectory}/project/my/archive";
 in {
   home.packages =
-    (with pkgs.unstable; [
+    (with pkgs; [
       hurl
       jdt-language-server
       lombok
@@ -41,7 +41,7 @@ in {
       redis
       oracle-instantclient
     ])
-    ++ (with pkgs.unstable.python311Packages; [
+    ++ (with pkgs.python311Packages; [
       python-lsp-server
       pip
     ]);
@@ -65,7 +65,6 @@ in {
     '';
   };
   programs.neovim = {
-    package = pkgs.unstable.neovim-unwrapped;
     enable = true;
     viAlias = true;
     vimAlias = true;
@@ -85,15 +84,15 @@ in {
       "--suffix"
       "JAVA_TEST_PATH"
       ":"
-      "${pkgs.unstable.vscode-extensions.vscjava.vscode-java-test}/share/vscode/extensions/vscjava.vscode-java-test"
+      "${pkgs.vscode-extensions.vscjava.vscode-java-test}/share/vscode/extensions/vscjava.vscode-java-test"
       "--suffix"
       "JAVA_DEBUG_PATH"
       ":"
-      "${pkgs.unstable.vscode-extensions.vscjava.vscode-java-debug}/share/vscode/extensions/vscjava.vscode-java-debug"
+      "${pkgs.vscode-extensions.vscjava.vscode-java-debug}/share/vscode/extensions/vscjava.vscode-java-debug"
       "--suffix"
       "LOMBOK_PATH"
       ":"
-      "${pkgs.unstable.lombok}/share/java"
+      "${pkgs.lombok}/share/java"
       "--suffix"
       "NVIM_MINI_DEPS_SNAP"
       ":"
@@ -105,15 +104,15 @@ in {
       "--suffix"
       "SONARLINT_PATH"
       ":"
-      "${pkgs.unstable.vscode-extensions.sonarsource.sonarlint-vscode}/share/vscode/extensions/sonarsource.sonarlint-vscode/"
+      "${pkgs.vscode-extensions.sonarsource.sonarlint-vscode}/share/vscode/extensions/sonarsource.sonarlint-vscode/"
       "--suffix"
       "VUE_LANGUAGE_SERVER_PATH"
       ":"
-      "${pkgs.unstable.vue-language-server}/lib/node_modules/@vue/language-server"
+      "${pkgs.vue-language-server}/lib/node_modules/@vue/language-server"
       "--suffix"
       "TYPESCRIPT_LIBRARY"
       ":"
-      "${pkgs.unstable.typescript}/lib/node_modules/typescript/lib"
+      "${pkgs.typescript}/lib/node_modules/typescript/lib"
     ];
   };
 }

@@ -2,7 +2,6 @@
   # foot
   programs.foot = {
     enable = true;
-    package = pkgs.unstable.foot;
     server.enable = true;
     settings = {
       main = {

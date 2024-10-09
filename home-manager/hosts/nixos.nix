@@ -28,7 +28,7 @@
     gimp
     obs-studio
     scrcpy
-    unstable.rustdesk-flutter
+    rustdesk-flutter
     libreoffice
     evolution
     evolution-ews
@@ -42,7 +42,7 @@
     telegram-desktop
     discord
     showmethekey
-    unstable.dbeaver-bin
+    dbeaver-bin
     nur.repos.wenjinnn.wechat-universal
     nur.repos.xddxdd.dingtalk
     nur.repos.xddxdd.qq

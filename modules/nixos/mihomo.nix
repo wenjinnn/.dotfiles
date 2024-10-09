@@ -9,9 +9,8 @@
   ];
   services.mihomo = {
     enable = true;
-    package = pkgs.unstable.mihomo;
     configFile = config.sops.templates."mihomo.yaml".path;
-    webui = pkgs.unstable.metacubexd;
+    webui = pkgs.metacubexd;
     tunMode = true;
   };
 

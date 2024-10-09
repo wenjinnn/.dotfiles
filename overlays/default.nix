@@ -26,15 +26,13 @@ in rec {
     electron = prev.electron.override {
       commandLineArgs = electron-flags;
     };
-    gnome = prev.gnome.overrideScope' (gself: gsuper: {
-      nautilus = gsuper.nautilus.overrideAttrs (nsuper: {
-        buildInputs =
-          nsuper.buildInputs
-          ++ (with prev.gst_all_1; [
-            gst-plugins-good
-            gst-plugins-bad
-          ]);
-      });
+    nautilus = prev.nautilus.overrideAttrs (nsuper: {
+      buildInputs =
+        nsuper.buildInputs
+        ++ (with prev.gst_all_1; [
+          gst-plugins-good
+          gst-plugins-bad
+        ]);
     });
     ags = prev.ags.overrideAttrs (old: {
       src = prev.fetchFromGitHub {
@@ -60,11 +58,11 @@ in rec {
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
-  unstable-packages = final: _prev: {
-    unstable = import inputs.nixpkgs-unstable {
-      system = final.system;
-      config.allowUnfree = true;
-      overlays = [modifications];
-    };
-  };
+  # unstable-packages = final: _prev: {
+  #   unstable = import inputs.nixpkgs-unstable {
+  #     system = final.system;
+  #     config.allowUnfree = true;
+  #     overlays = [modifications];
+  #   };
+  # };
 }

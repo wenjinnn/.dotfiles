@@ -44,7 +44,7 @@
     };
 
     iconTheme = {
-      package = pkgs.unstable.morewaita-icon-theme;
+      package = pkgs.morewaita-icon-theme;
       name = "MoreWaita";
     };
   };

@@ -2,12 +2,12 @@
   config,
   pkgs,
   username,
+  inputs,
   ...
 }: {
   # can't work with custom gnome module from ./gnome.nix
   programs.hyprland = {
     enable = true;
-    package = pkgs.unstable.hyprland;
     xwayland.enable = true;
   };
   xdg.portal = {
@@ -15,9 +15,7 @@
     wlr.enable = true;
   };
 
-  environment.systemPackages = with pkgs;
-  with gnome; [
-    gnome.adwaita-icon-theme
+  environment.systemPackages = with pkgs; [
     loupe
     adwaita-icon-theme
     nautilus
