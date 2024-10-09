@@ -131,15 +131,16 @@
         - "+.local"
         - "+.market.xiaomi.com"
       nameserver:
-        - https://120.53.53.53/dns-query
-        - https://223.5.5.5/dns-query
+        - 'tls://8.8.4.4#dns'
+        - 'tls://1.0.0.1#dns'
+        - 'tls://[2001:4860:4860::8844]#dns'
+        - 'tls://[2606:4700:4700::1001]#dns'
       proxy-server-nameserver:
-        - https://120.53.53.53/dns-query
-        - https://223.5.5.5/dns-query
+        - https://doh.pub/dns-query
       nameserver-policy:
-        "geosite:cn":
-          - https://120.53.53.53/dns-query
-          - https://223.5.5.5/dns-query
+        "geosite:cn,private":
+          - https://doh.pub/dns-query
+          - https://dns.alidns.com/dns-query
         "geosite:geolocation-!cn":
           - "https://dns.cloudflare.com/dns-query"
           - "https://dns.google/dns-query"
