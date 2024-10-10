@@ -59,7 +59,7 @@ class Wallpaper extends Service {
         }).then(res => res.text())
 
         if (!res.startsWith("{"))
-            return console.warn("bing api", res)
+            return console.warn(`bing api res: ${res}`)
 
         const { images } = JSON.parse(res)
         if (images.length === 0)
@@ -90,6 +90,7 @@ class Wallpaper extends Service {
         if (!dependencies("hyprpaper"))
             return this
 
+        this.#wallpaper()
         // gtk portal
         Utils.monitorFile(WP, () => {
             if (!this.#blockMonitor)
