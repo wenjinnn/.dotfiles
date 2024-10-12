@@ -43,9 +43,9 @@
     discord
     showmethekey
     dbeaver-bin
-    nur.repos.wenjinnn.wechat-universal
+    wechat-uos
+    qq
     nur.repos.xddxdd.dingtalk
-    nur.repos.xddxdd.qq
     nur.repos.linyinfeng.wemeet
   ];
 }
