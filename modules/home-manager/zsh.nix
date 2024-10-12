@@ -11,7 +11,6 @@
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
-    defaultKeymap = "emacs";
     history = {
       size = 99999;
       ignoreAllDups = true;
@@ -48,7 +47,8 @@
       proxyPort = "12334";
       proxyAddr = "http://127.0.0.1:${proxyPort}";
     in ''
-      bindkey '^ ' autosuggest-accept
+      bindkey '^[[D' wd_browse_widget
+      bindkey '^b' backward-char
       PROXY_ENV=(http_proxy ftp_proxy https_proxy all_proxy HTTP_PROXY HTTPS_PROXY FTP_PROXY ALL_PROXY)
       NO_PROXY_ENV=(no_proxy NO_PROXY)
       proxy_addr=${proxyAddr}
