@@ -11,6 +11,7 @@
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
+    defaultKeymap = "emacs";
     history = {
       size = 99999;
       ignoreAllDups = true;
