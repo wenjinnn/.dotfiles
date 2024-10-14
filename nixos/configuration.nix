@@ -126,6 +126,8 @@
   # Enable sound.
   # sound.enable = true;
   hardware.pulseaudio.enable = false;
+  # fix sound mute on every startup. see https://github.com/NixOS/nixpkgs/issues/330606#issuecomment-2282803917
+  hardware.alsa.enablePersistence = true;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
