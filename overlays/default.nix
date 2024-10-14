@@ -23,9 +23,6 @@ in rec {
     vscode = prev.vscode.override {
       commandLineArgs = electron-flags;
     };
-    electron = prev.electron.override {
-      commandLineArgs = electron-flags;
-    };
     nautilus = prev.nautilus.overrideAttrs (nsuper: {
       buildInputs =
         nsuper.buildInputs
