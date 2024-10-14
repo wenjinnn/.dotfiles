@@ -43,6 +43,7 @@
     discord
     showmethekey
     dbeaver-bin
+    redisinsight
     wechat-uos
     qq
     nur.repos.xddxdd.dingtalk
