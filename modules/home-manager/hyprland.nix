@@ -225,7 +225,7 @@
             dim_inactive = false;
 
             blur = {
-              enabled = true;
+              enabled = false;
               size = 8;
               passes = 3;
               new_optimizations = "on";
