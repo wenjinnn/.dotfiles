@@ -56,8 +56,8 @@ in rec {
       src = prev.fetchFromGitHub {
         owner = "jtheoof";
         repo = "swappy";
-        rev = "c8518bf9b99410edf8d64f21994aabb12ca14d42";
-        hash = "sha256-tKLtdRpGZmIizBQE59rCjDwyxBL+FKV+mOIZMmdu5c8=";
+        rev = "fca4f6dcdb05c78ad63a0924412a4ef3345484a0";
+        hash = "sha256-gwlUklfr/NA7JIkB9YloS9f8+3h5y3rSs3ISeVXAPZk=";
       };
     });
   };
