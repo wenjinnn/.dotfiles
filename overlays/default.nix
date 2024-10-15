@@ -51,6 +51,15 @@ in rec {
         ]);
     });
     ags-greeter = final.callPackage ./ags-greeter {};
+    # IM support patch
+    swappy = prev.swappy.overrideAttrs (old: {
+      src = prev.fetchFromGitHub {
+        owner = "jtheoof";
+        repo = "swappy";
+        rev = "c8518bf9b99410edf8d64f21994aabb12ca14d42";
+        hash = "sha256-tKLtdRpGZmIizBQE59rCjDwyxBL+FKV+mOIZMmdu5c8=";
+      };
+    });
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
