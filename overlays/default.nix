@@ -17,9 +17,17 @@ in rec {
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
-    microsoft-edge = prev.microsoft-edge.override {
-      commandLineArgs = electron-flags;
-    };
+    microsoft-edge = prev.microsoft-edge.overrideAttrs (old: let
+      baseName = "microsoft-edge";
+      channel = "stable";
+      version = "128.0.2739.67";
+      revision = "1";
+    in {
+      src = prev.fetchurl {
+        url = "https://packages.microsoft.com/repos/edge/pool/main/m/${baseName}-${channel}/${baseName}-${channel}_${version}-${revision}_amd64.deb";
+        hash = "sha256-Y8PxyAibuEhwKJpqnhtBy1F2Kn+ONw6NVtC25R+fFVo=";
+      };
+    });
     vscode = prev.vscode.override {
       commandLineArgs = electron-flags;
     };
@@ -31,6 +39,7 @@ in rec {
           gst-plugins-bad
         ]);
     });
+    # fix hyprland switch workspace event error patch
     ags = prev.ags.overrideAttrs (old: {
       src = prev.fetchFromGitHub {
         owner = "wenjinnn";
@@ -50,6 +59,7 @@ in rec {
           pam
         ]);
     });
+    # rename astal to ags greeter
     ags-greeter = final.callPackage ./ags-greeter {};
     # IM support patch
     swappy = prev.swappy.overrideAttrs (old: {
