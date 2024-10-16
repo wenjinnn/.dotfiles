@@ -15,12 +15,18 @@
     wlr.enable = true;
   };
 
+  programs.nautilus-open-any-terminal = {
+    enable = true;
+    terminal = "foot";
+  };
+
   environment.systemPackages = with pkgs; [
     loupe
     adwaita-icon-theme
-    nautilus
     file-roller
     baobab
+    nautilus
+    nautilus-python
     gnome-text-editor
     gnome-calendar
     gnome-boxes
@@ -35,7 +41,6 @@
     wayshot
     pavucontrol
     brightnessctl
-    swww
   ];
 
   systemd = {
