@@ -113,11 +113,6 @@
     lsof
     fhs
     appimage-run
-    # nix related
-    #
-    # it provides the command `nom` works just like `nix`
-    # with more details log output
-    nix-output-monitor
     zip
     unzip
     glib
@@ -138,6 +133,11 @@
     frp
     # for nvim dict
     wordnet
+    # nix related
+    #
+    # it provides the command `nom` works just like `nix`
+    # with more details log output
+    nix-output-monitor
   ];
 
   # xresources.properties = {
