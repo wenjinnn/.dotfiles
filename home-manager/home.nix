@@ -85,7 +85,7 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')/
-    neofetch
+    fastfetch
     ffmpeg
     distrobox
     bat
