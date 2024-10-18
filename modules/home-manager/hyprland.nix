@@ -105,27 +105,23 @@
   };
 
   # hypridle configuration
-  services.hypridle = let
-    hyprlockBin = "${pkgs.hyprlock}/bin/hyprlock";
-    hyprctlBin = "${pkgs.hyprland}/bin/hyprctl";
-    loginctlBin = "${pkgs.systemd}/bin/loginctl";
-  in {
+  services.hypridle = {
     enable = true;
     settings = {
       general = {
-        lock_cmd = "pidof hyprlock || ${hyprlockBin}";
-        before_sleep_cmd = "${hyprctlBin} dispatch dpms off";
-        after_sleep_cmd = "${hyprctlBin} dispatch dpms on && ${loginctlBin} lock-session; hyprshade auto";
+        lock_cmd = "pidof hyprlock || hyprlock";
+        before_sleep_cmd = "hyprctl dispatch dpms off";
+        after_sleep_cmd = "hyprctl dispatch dpms on && loginctl lock-session; hyprshade auto";
       };
       listener = [
         {
           timeout = 300;
-          on-timeout = "${loginctlBin} lock-session";
+          on-timeout = "loginctl lock-session";
         }
         {
           timeout = 360;
-          on-timeout = "${hyprctlBin} dispatch dpms off";
-          on-resume = "${hyprctlBin} dispatch dpms on";
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
         }
       ];
     };
