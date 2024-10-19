@@ -63,6 +63,7 @@ const options = mkOptions(OPTIONS, {
     },
 
     bar: {
+        onAllMonitor: opt(false),
         flatButtons: opt(true),
         position: opt<"top" | "bottom">("top"),
         corners: opt(80),

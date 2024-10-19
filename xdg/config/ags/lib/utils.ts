@@ -4,6 +4,7 @@ import icons, { substitutes } from "./icons"
 import Gtk from "gi://Gtk?version=3.0"
 import Gdk from "gi://Gdk"
 import GLib from "gi://GLib?version=2.0"
+import options from "options"
 
 export type Binding<T> = import("types/service").Binding<any, any, T>
 
@@ -50,7 +51,7 @@ export async function sh(cmd: string | string[]) {
 }
 
 export function forMonitors(widget: (monitor: number) => Gtk.Window) {
-    const n = Gdk.Display.get_default()?.get_n_monitors() || 1
+    const n = options.bar.onAllMonitor.value && Gdk.Display.get_default()?.get_n_monitors() || 1
     return range(n, 0).flatMap(widget)
 }
 
