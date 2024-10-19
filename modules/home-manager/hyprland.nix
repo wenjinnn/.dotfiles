@@ -4,6 +4,7 @@
   lib,
   config,
   pkgs,
+  username,
   ...
 }: {
   imports = with outputs.homeManagerModules; [
@@ -61,13 +62,15 @@
   };
 
   # hyprlock configuration
-  programs.hyprlock = {
+  programs.hyprlock = let
+    mainMonitor = "eDP-1";
+  in {
     enable = true;
     settings = {
       background = [
         {
           path = "screenshot";
-          blur_passes = 3;
+          blur_passes = 4;
           blur_size = 3;
           noise = 0.0117;
           contrast = 0.8916;
@@ -76,29 +79,107 @@
           vibrancy_darkness = 0.0;
         }
       ];
+      general = {
+        no_fade_in = false;
+        grace = 0;
+        disable_loading_bar = false;
+      };
       input-field = [
         {
-          placeholder_text = "";
+          monitor = mainMonitor;
+          size = "600, 120";
+          outline_thickness = 2;
+          dots_size = 0.2;
+          dots_spacing = 0.2;
+          dots_center = true;
+          outer_color = "rgba(255, 255, 255, 0)";
+          inner_color = "rgba(255, 255, 255, 0.1)";
+          font_color = "rgb(200, 200, 200)";
+          fade_on_empty = false;
+          placeholder_text = "<i><span foreground=\"##ffffff99\">🔒 Enter Pass</span></i>";
+          hide_input = false;
+          position = "0, -210";
+          halign = "center";
+          valign = "center";
+        }
+      ];
+      # USER-BOX
+      shape = [
+        {
+          monitor = mainMonitor;
+          size = "600, 120";
+          color = "rgba(255, 255, 255, .1)";
+          rounding = -1;
+          border_size = 0;
+          border_color = "rgba(253, 198, 135, 0)";
+          rotate = 0;
+          xray = false;
+
+          position = "0, -65";
+          halign = "center";
+          valign = "center";
+        }
+      ];
+      # Avatar
+      image = [
+        {
+          monitor = mainMonitor;
+          path = "/var/lib/AccountsService/icons/${username}";
+          border_size = 4.5;
+          border_color = "rgba(255, 255, 255, .65)";
+          size = 260;
+          rounding = -1;
+          rotate = 0;
+          reload_time = -1;
+          position = "0, 180";
+          halign = "center";
+          valign = "center";
         }
       ];
       label = [
+        # Day-Month-Date
         {
-          text_align = "right";
-          halign = "center";
-          valign = "center";
-          text = "Hi there, $USER";
+          monitor = mainMonitor;
+          text = "cmd[update:1000] echo -e \"$(date +\"%A, %B %d\")\"";
+          color = "rgba(216, 222, 233, 0.70)";
           font_size = 50;
-          font_family = "Sans";
-          position = "0, 80";
-        }
-        {
-          text_align = "right";
+          position = "0, 700";
           halign = "center";
           valign = "center";
-          text = "$TIME";
-          font_size = 150;
-          font_family = "Sans";
-          position = "0, 300";
+        }
+        # Time
+        {
+          monitor = mainMonitor;
+          text = "cmd[update:1000] echo \"<span>$(date +\"- %I:%M -\")</span>\"";
+          color = "rgba(216, 222, 233, 0.70)";
+          font_size = 240;
+          position = "0, 500";
+          halign = "center";
+          valign = "center";
+        }
+        # USER
+        {
+          monitor = mainMonitor;
+          text = "  $USER";
+          color = "rgba(216, 222, 233, 0.80)";
+          outline_thickness = 2;
+          dots_size = 0.2;
+          dots_spacing = 0.2;
+          dots_center = true;
+          font_size = 36;
+          position = "0, -65";
+          halign = "center";
+          valign = "center";
+        }
+        # CURRENT SONG
+        {
+          monitor = mainMonitor;
+          text = "cmd[update:1000] echo \"$(playerctl metadata --format '♫ {{title}} {{artist}}')\"";
+          color = "rgba(255, 255, 255, 0.6)";
+          font_size = 36;
+          position = "0, 50";
+          halign = "center";
+          valign = "bottom";
         }
       ];
     };
