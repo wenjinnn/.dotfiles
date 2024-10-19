@@ -196,11 +196,11 @@ in {
       };
       listener = [
         {
-          timeout = 10;
+          timeout = 300;
           on-timeout = "loginctl lock-session";
         }
         {
-          timeout = 20;
+          timeout = 360;
           on-timeout = "hyprctl dispatch dpms off";
           on-resume = "hyprctl dispatch dpms on";
         }
@@ -333,7 +333,6 @@ in {
             animate_mouse_windowdragging = false;
             #suppress_portal_warnings = true
             enable_swallow = true;
-            mouse_move_enables_dpms = true;
             key_press_enables_dpms = true;
             force_default_wallpaper = 0;
           };
