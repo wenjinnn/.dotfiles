@@ -6,7 +6,9 @@
   pkgs,
   username,
   ...
-}: {
+}: let
+  mainMonitor = "eDP-1";
+in {
   imports = with outputs.homeManagerModules; [
     ags
   ];
@@ -62,15 +64,13 @@
   };
 
   # hyprlock configuration
-  programs.hyprlock = let
-    mainMonitor = "eDP-1";
-  in {
+  programs.hyprlock = {
     enable = true;
     settings = {
       background = [
         {
           path = "screenshot";
-          blur_passes = 4;
+          blur_passes = 5;
           blur_size = 3;
           noise = 0.0117;
           contrast = 0.8916;
@@ -256,9 +256,9 @@
             "hyprctl dispatch exec [workspace 10 silent] evolution"
           ];
           monitor = [
-            ",highres,auto,auto"
-            "eDP-1, addreserved, 0, 0, 0, 0"
-            "eDP-1, highres,auto,2"
+            ",preferred,auto,auto"
+            "${mainMonitor}, addreserved, 0, 0, 0, 0"
+            "${mainMonitor}, highres,auto,2"
           ];
           input = {
             force_no_accel = false;
@@ -327,6 +327,7 @@
             force_zero_scaling = true;
           };
           misc = {
+            vrr = 1;
             focus_on_activate = true;
             animate_manual_resizes = false;
             animate_mouse_windowdragging = false;
