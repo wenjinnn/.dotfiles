@@ -114,7 +114,7 @@
     fhs
     appimage-run
     zip
-    unzip
+    unzipNLS
     glib
     killall
     k9s
