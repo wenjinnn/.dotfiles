@@ -150,7 +150,7 @@ in {
         # Time
         {
           monitor = mainMonitor;
-          text = "cmd[update:1000] echo \"<span>$(date +\"- %I:%M -\")</span>\"";
+          text = "cmd[update:1000] echo \"<span>$(date +\"- %H:%M -\")</span>\"";
           color = "rgba(216, 222, 233, 0.70)";
           font_size = 240;
           position = "0, 500";
@@ -196,11 +196,11 @@ in {
       };
       listener = [
         {
-          timeout = 300;
+          timeout = 10;
           on-timeout = "loginctl lock-session";
         }
         {
-          timeout = 360;
+          timeout = 20;
           on-timeout = "hyprctl dispatch dpms off";
           on-resume = "hyprctl dispatch dpms on";
         }
