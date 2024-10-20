@@ -13,31 +13,32 @@ in {
     ags
   ];
 
-  home.packages = with pkgs; [
-    wayshot
-    wf-recorder
-    imagemagick
-    slurp
-    tesseract
-    pavucontrol
-    swappy
-    brightnessctl
-    playerctl
-    pulseaudio
-    gnupg
-    blueberry
-    copyq
-    glib
-    wl-clipboard
-    xdg-utils
-    xorg.xrdb
-    wl-gammactl
-    hyprpaper
-    xwaylandvideobridge
-    hyprcursor
-    hyprpicker
-    hyprshade
-  ];
+  home.packages =
+    (with pkgs; [
+      wayshot
+      wf-recorder
+      imagemagick
+      slurp
+      tesseract
+      pavucontrol
+      swappy
+      brightnessctl
+      playerctl
+      pulseaudio
+      gnupg
+      blueberry
+      cliphist
+      glib
+      wl-clipboard
+      xdg-utils
+      xorg.xrdb
+      wl-gammactl
+      hyprpaper
+      xwaylandvideobridge
+      hyprcursor
+      hyprpicker
+      hyprshade
+    ]);
 
   # custom desktop entries
   xdg.desktopEntries."org.gnome.Settings" = {
@@ -249,7 +250,6 @@ in {
             # xrdb dpi scale have batter effect in 4k screen
             "echo 'Xft.dpi: 192' | xrdb -merge"
             "ags -b hypr"
-            "copyq"
             "hyprshade auto"
             "fcitx5 -d --replace"
             "hyprctl dispatch exec [workspace 9 silent] foot btop"
