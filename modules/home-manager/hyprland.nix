@@ -93,11 +93,11 @@ in {
           dots_size = 0.2;
           dots_spacing = 0.2;
           dots_center = true;
-          outer_color = "rgba(255, 255, 255, 0)";
-          inner_color = "rgba(255, 255, 255, 0.1)";
-          font_color = "rgb(200, 200, 200)";
-          fade_on_empty = false;
-          placeholder_text = "<i><span foreground=\"##ffffff99\">🔒 Enter Pass</span></i>";
+          # outer_color = "rgba(255, 255, 255, 0)";
+          # inner_color = "rgba(255, 255, 255, 0.1)";
+          # font_color = "rgb(200, 200, 200)";
+          fade_on_empty = true;
+          placeholder_text = "🔒 Enter Pass";
           hide_input = false;
           position = "0, -210";
           halign = "center";
