@@ -1,6 +1,6 @@
 import { dependencies, bash } from "lib/utils"
 
-const MAX_ITEM = 750
+const MAX_ITEM = 200
 
 class Cliphist extends Service {
     static {
@@ -36,7 +36,7 @@ class Cliphist extends Service {
                 "--watch",
                 "bash",
                 "-c",
-                "cliphist store && cliphist list | head -n 1",
+                `cliphist -max-items ${MAX_ITEM} store && cliphist list | head -n 1`,
             ]
             // kill all subprocess that started by previous ags process since ags will not kill subprocess when quit
             Utils.exec(`pkill -f "${initCommand.join(" ")}"`)
