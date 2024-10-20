@@ -176,6 +176,7 @@
   #
   #  /etc/profiles/per-user/wenjin/etc/profile.d/hm-session-vars.sh
   #
+  xdg.enable = true;
 
   programs.bash.enable = true;
   # Enable home-manager
