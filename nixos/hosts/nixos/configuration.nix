@@ -31,6 +31,9 @@
     # Import your generated (nixos-generate-config) hardware configuration
     #./hardware-configuration.nix
   ];
+  #
+  # fix sound mute on every startup. see https://github.com/NixOS/nixpkgs/issues/330606#issuecomment-2282803917
+  hardware.alsa.enablePersistence = true;
 
   programs.kdeconnect = {
     package = pkgs.kdePackages.kdeconnect-kde;
