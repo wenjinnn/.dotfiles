@@ -4,7 +4,7 @@
 # for a more complex example.
 keys:
   - &wenjin age1swanwyhp3k6nycu2q3pyurgugzj4wlxg84gaj272rky0xu8j7ynq2eek7w
-  - &wsl age12ayzjw7mlg778zuquvshy54p8q7af4ctw7tv979gr9m0cfehrs5sl7pt9d
+  - &wsl age1amyc588n2ljv64eeuj4p6pujau7te2ytq8q4yj0w5wmtdg2dd5vqs7vh8w
 creation_rules:
   - path_regex: ^secrets.yaml$
     key_groups:
