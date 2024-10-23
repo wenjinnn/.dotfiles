@@ -27,5 +27,8 @@
     ];
   };
 
-  networking.hostName = "nixos-wsl";
+  networking = {
+    firewall.enable = false;
+    hostName = "nixos-wsl";
+  };
 }
