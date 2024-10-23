@@ -15,7 +15,6 @@
     # outputs.nixosModules.interception-tools
     podman
     xserver
-    mihomo
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
