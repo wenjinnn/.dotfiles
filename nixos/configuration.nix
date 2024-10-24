@@ -14,7 +14,6 @@
     # If you want to use modules your own flake exports (from modules/nixos):
     # outputs.nixosModules.interception-tools
     podman
-    xserver
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
@@ -88,9 +87,6 @@
     channel.enable = false;
   };
 
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
   time.timeZone = "Asia/Shanghai";
 
   # Configure network proxy if necessary
