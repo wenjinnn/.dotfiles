@@ -19,7 +19,6 @@
     fonts
     hyprland
     bluetooth
-    ollama
     mihomo
 
     # Or modules from other flakes (such as nixos-hardware):
