@@ -44,7 +44,7 @@
       y = "yazi";
     };
     initExtra = let
-      proxyPort = "12334";
+      proxyPort = "7890";
       proxyAddr = "http://127.0.0.1:${proxyPort}";
     in ''
       bindkey '^[[D' wd_browse_widget
