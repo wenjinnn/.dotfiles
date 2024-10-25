@@ -18,7 +18,7 @@
     proxy-providers:
       p1:
         type: http
-        interval: 3600
+        interval: 36000
         health-check:
           enable: true
           url: https://cp.cloudflare.com
@@ -27,6 +27,19 @@
           tolerance: 100
         path: ./proxy_provider/p1.yaml
         url: "${config.sops.placeholder.MIHOMO_PROVIDER}"
+        override:
+          udp: true
+      p2:
+        type: http
+        interval: 36000
+        health-check:
+          enable: true
+          url: https://cp.cloudflare.com
+          interval: 300
+          timeout: 1000
+          tolerance: 100
+        path: ./proxy_provider/p2.yaml
+        url: "${config.sops.placeholder.MIHOMO_PROVIDER2}"
         override:
           udp: true
 
@@ -42,14 +55,14 @@
         format: yaml
         path: ./rule_provider/anti-AD.yaml
         url: "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml?"
-        interval: 600
+        interval: 6000
       anti-AD-white:
         type: http
         behavior: domain
         format: yaml
         path: ./rule_provider/anti-AD-white.yaml
         url: "https://raw.githubusercontent.com/privacy-protection-tools/dead-horse/master/anti-ad-white-for-clash.yaml?"
-        interval: 600
+        interval: 6000
 
     mode: rule
     ipv6: true
@@ -85,13 +98,13 @@
       store-fake-ip: true
 
     # 自动同步时间以防止时间不准导致无法正常联网
-    ntp:
-      enable: true
-      # 是否同步至系统时间，需要 root/管理员权限
-      write-to-system: false
-      server: time.apple.com
-      port: 123
-      interval: 30
+    # ntp:
+    #   enable: true
+    #   # 是否同步至系统时间，需要 root/管理员权限
+    #   write-to-system: false
+    #   server: time.apple.com
+    #   port: 123
+    #   interval: 30
 
     # 域名嗅探
     sniffer:
@@ -182,6 +195,7 @@
       - name: auto-fast
         type: url-test
         use:
+        - p2
         - p1
         tolerance: 2
       - name: manual
@@ -239,6 +253,15 @@
         - singapore
         - japan
         - USA
+        - france
+        - germany
+        - korea
+        - canada
+        - germany
+        - ireland
+        - SA
+        - netherlands
+        - france
         use:
         - p1
         filter: "S1|S2"
@@ -287,50 +310,107 @@
         - japan
         - singapore
         - USA
+        - korea
+        - canada
+        - germany
+        - russia
+        - ireland
+        - SA
+        - netherlands
+        - france
         - other-region
         - all
         - auto-fast
+
+      # continent
+      - name: asia
+        type: url-test
+        use:
+        - p2
+        filter: "(?i)亚|asia"
 
       # region
       - name: hongkong
         type: url-test
         use:
-        - p1
+        - p2
         filter: "(?i)港|hk|hongkong|hong kong"
       - name: taiwan
         type: url-test
         use:
-        - p1
+        - p2
         filter: "(?i)台|tw|taiwan"
       - name: japan
         type: url-test
         use:
-        - p1
+        - p2
         filter: "(?i)japan|jp|japan"
       - name: USA
         type: url-test
         use:
-        - p1
+        - p2
         filter: "(?i)美|us|unitedstates|united states"
       - name: UK
         type: url-test
         use:
-        - p1
+        - p2
         filter: "(?i)英|uk|unitedkingdom|united kingdom"
+      - name: korea
+        type: url-test
+        use:
+        - p2
+        filter: "(?i)韩|ko|korea"
+      - name: canada
+        type: url-test
+        use:
+        - p2
+        filter: "(?i)加|ca|canada"
+      - name: germany
+        type: url-test
+        use:
+        - p2
+        filter: "(?i)德|ge|germany"
+      - name: russia
+        type: url-test
+        use:
+        - p2
+        filter: "(?i)俄|ru|russia"
+      - name: ireland
+        type: url-test
+        use:
+        - p2
+        filter: "(?i)爱|ir|ireland"
+      - name: SA
+        type: url-test
+        use:
+        - p2
+        filter: "(?i)非|sa|south africa"
+      - name: netherlands
+        type: url-test
+        use:
+        - p2
+        filter: "(?i)荷|cl|netherlands"
+      - name: france
+        type: url-test
+        use:
+        - p2
+        filter: "(?i)法|fr|france"
       - name: singapore
         type: url-test
         use:
-        - p1
+        - p2
         filter: "(?i)(新|sg|singapore)"
       - name: other-region
         type: url-test
         use:
-        - p1
+        - p2
         filter: "(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates|英|uk|unitedkingdom)).*"
       - name: all
         type: url-test
         use:
         - p1
+        - p2
+
 
     rules:
       - GEOSITE,private,DIRECT,no-resolve

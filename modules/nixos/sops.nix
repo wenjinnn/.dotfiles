@@ -11,5 +11,6 @@
       keyFile = "${config.users.users.${username}.home}/.config/sops/age/keys.txt";
     };
     secrets.MIHOMO_PROVIDER = {};
+    secrets.MIHOMO_PROVIDER2 = {};
   };
 }
