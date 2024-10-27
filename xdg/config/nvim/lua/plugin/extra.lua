@@ -8,7 +8,7 @@ later(function()
   add({
     source = "michaelb/sniprun",
     hooks = {
-      post_install = build_sniprun,
+      post_install = function(args) later(build_sniprun(args)) end,
       post_checkout = build_sniprun,
     },
   })
@@ -59,13 +59,11 @@ if not in_vscode() then
 
   -- markdown preview in browser
   later(function()
-    local install_markdown_preview_bin = function()
-      vim.fn["mkdp#util#install"]()
-    end
+    local install_markdown_preview_bin = function() vim.fn["mkdp#util#install"]() end
     add({
       source = "iamcco/markdown-preview.nvim",
       hooks = {
-        post_install = install_markdown_preview_bin,
+        post_install = function() later(install_markdown_preview_bin) end,
         post_checkout = install_markdown_preview_bin,
       },
     })
@@ -88,13 +86,11 @@ if not in_vscode() then
   end)
   -- neovim in browser
   now(function()
-    local install_firenvim_bin = function()
-      vim.fn["firenvim#install"](0)
-    end
+    local install_firenvim_bin = function() vim.fn["firenvim#install"](0) end
     add({
       source = "glacambre/firenvim",
       hooks = {
-        post_install = install_firenvim_bin,
+        post_install = function() later(install_firenvim_bin) end,
         post_checkout = install_firenvim_bin,
       },
     })
