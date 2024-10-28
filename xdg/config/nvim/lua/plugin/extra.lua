@@ -38,7 +38,7 @@ if not in_vscode() then
   vim.filetype.add({ extension = { ["http"] = "http" } })
   -- http client
   later(function()
-    add({ source = "mistweaverco/kulala.nvim" })
+    add({ source = "wenjinnn/kulala.nvim" })
     require("kulala").setup({
       winbar = true,
     })
