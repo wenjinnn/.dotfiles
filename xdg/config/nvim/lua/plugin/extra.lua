@@ -230,7 +230,7 @@ if not in_vscode() then
   end)
   map({ "n", "v" }, "<leader>Ca", "<cmd>CodeCompanionActions<cr>", "Code companion actions")
   map({ "n", "v" }, "<leader>CC", "<cmd>CodeCompanionChat Toggle<cr>", "Code companion chat")
-  map("v", "<leader>CA", "<cmd>CodeCompanionAdd<cr>", "Code companion add")
+  map("v", "<leader>CA", "<cmd>CodeCompanionChat Add<cr>", "Code companion chat add")
   -- Expand 'cc' into 'CodeCompanion' in the command line
   vim.cmd([[cab cc CodeCompanion]])
 end
