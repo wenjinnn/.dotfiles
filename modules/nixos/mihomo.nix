@@ -425,6 +425,7 @@
 
       - GEOSITE,openai,AI
       - GEOSITE,anthropic,AI
+      - GEOSITE,xai,AI
       - DOMAIN-SUFFIX,claude.ai,AI
       - DOMAIN-SUFFIX,claudeusercontent.com,AI
       - GEOSITE,apple,universal
