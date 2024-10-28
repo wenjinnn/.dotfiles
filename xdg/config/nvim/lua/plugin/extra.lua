@@ -195,16 +195,6 @@ if not in_vscode() then
         chat = {
           adapter = adapter,
           slash_commands = {
-            buffer = {
-              opts = {
-                provider = "mini_pick",
-              },
-            },
-            file = {
-              opts = {
-                provider = "mini_pick",
-              },
-            },
             help = {
               opts = {
                 provider = "mini_pick",
