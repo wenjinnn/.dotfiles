@@ -134,6 +134,11 @@ later(function()
     enable_autocmd = false,
   })
   require("nvim-ts-autotag").setup()
+  map("n", "[e",
+    function()
+      require("treesitter-context").go_to_context(vim.v.count1)
+    end,
+    "treesitter context upward")
 end)
 
 later(function()
