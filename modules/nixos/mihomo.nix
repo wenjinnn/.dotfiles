@@ -261,7 +261,6 @@
         - ireland
         - SA
         - netherlands
-        - france
         use:
         - p1
         filter: "S1|S2"
@@ -327,6 +326,7 @@
         type: url-test
         use:
         - p2
+        - p1
         filter: "(?i)亚|asia"
 
       # region
@@ -334,82 +334,96 @@
         type: url-test
         use:
         - p2
+        - p1
         filter: "(?i)港|hk|hongkong|hong kong"
       - name: taiwan
         type: url-test
         use:
         - p2
+        - p1
         filter: "(?i)台|tw|taiwan"
       - name: japan
         type: url-test
         use:
         - p2
+        - p1
         filter: "(?i)japan|jp|japan"
       - name: USA
         type: url-test
         use:
         - p2
+        - p1
         filter: "(?i)美|unitedstates|united states"
       - name: UK
         type: url-test
         use:
-        - p2
+        - p1
         filter: "(?i)英|uk|unitedkingdom|united kingdom"
       - name: korea
         type: url-test
         use:
         - p2
+        - p1
         filter: "(?i)韩|korea"
       - name: canada
         type: url-test
         use:
         - p2
+        - p1
         filter: "(?i)加|canada"
       - name: germany
         type: url-test
         use:
         - p2
+        - p1
         filter: "(?i)德|ge|germany"
       - name: russia
         type: url-test
         use:
         - p2
+        - p1
         filter: "(?i)俄|russia"
       - name: ireland
         type: url-test
         use:
         - p2
-        filter: "(?i)爱|ir|ireland"
+        - p1
+        filter: "(?i)爱|ireland"
       - name: SA
         type: url-test
         use:
         - p2
+        - p1
         filter: "(?i)非|sa|south africa"
       - name: netherlands
         type: url-test
         use:
         - p2
+        - p1
         filter: "(?i)荷|cl|netherlands"
       - name: france
         type: url-test
         use:
         - p2
-        filter: "(?i)法|fr|france"
+        - p1
+        filter: "(?i)法|france"
       - name: singapore
         type: url-test
         use:
         - p2
+        - p1
         filter: "(?i)(新|sg|singapore)"
       - name: other-region
         type: url-test
         use:
         - p2
+        - p1
         filter: "(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates|英|uk|unitedkingdom)).*"
       - name: all
         type: url-test
         use:
-        - p1
         - p2
+        - p1
 
 
     rules:
