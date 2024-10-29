@@ -349,7 +349,7 @@
         type: url-test
         use:
         - p2
-        filter: "(?i)美|us|unitedstates|united states"
+        filter: "(?i)美|unitedstates|united states"
       - name: UK
         type: url-test
         use:
@@ -359,12 +359,12 @@
         type: url-test
         use:
         - p2
-        filter: "(?i)韩|ko|korea"
+        filter: "(?i)韩|korea"
       - name: canada
         type: url-test
         use:
         - p2
-        filter: "(?i)加|ca|canada"
+        filter: "(?i)加|canada"
       - name: germany
         type: url-test
         use:
@@ -374,7 +374,7 @@
         type: url-test
         use:
         - p2
-        filter: "(?i)俄|ru|russia"
+        filter: "(?i)俄|russia"
       - name: ireland
         type: url-test
         use:
@@ -425,6 +425,7 @@
 
       - GEOSITE,openai,AI
       - GEOSITE,anthropic,AI
+      - GEOSITE,x,AI
       - GEOSITE,xai,AI
       - DOMAIN-SUFFIX,claude.ai,AI
       - DOMAIN-SUFFIX,claudeusercontent.com,AI
