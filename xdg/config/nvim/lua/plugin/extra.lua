@@ -206,9 +206,6 @@ if not in_vscode() then
         agent = { adapter = adapter },
       },
       display = {
-        action_palette = {
-          provider = "mini_pick",
-        },
         chat = {
           show_settings = true,
         },
