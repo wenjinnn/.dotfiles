@@ -248,14 +248,13 @@ if not in_vscode() then
       desc = "Auto format changed lines",
     })
 
-    map("n", "<leader>md", "<cmd>DiffFormat<cr>", "Diff format")
     map({ "n", "v" },
-      "<leader>mm",
+      "<leader>cm",
       function()
         require("conform").format({ async = true, lsp_fallback = true })
       end,
       "Format")
-    map("n", "<leader>mM",
+    map("n", "<leader>cM",
       function()
         vim.g.conform_autoformat = not vim.g.conform_autoformat
         vim.notify("Autoformat: " .. (vim.g.conform_autoformat and "on" or "off"))
