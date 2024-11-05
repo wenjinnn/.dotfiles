@@ -2,14 +2,22 @@ local M = {}
 
 function M.setup_terminal_color(base_color)
   local palette = require("mini.hues").make_palette(base_color)
-  vim.g.terminal_color_8 = palette.bg_mid2
-  vim.g.terminal_color_9 = palette.red_mid2
-  vim.g.terminal_color_10 = palette.green_mid2
-  vim.g.terminal_color_11 = palette.yellow_mid2
-  vim.g.terminal_color_12 = palette.azure_mid2
-  vim.g.terminal_color_13 = palette.purple_mid2
-  vim.g.terminal_color_14 = palette.cyan_mid2
-  vim.g.terminal_color_15 = palette.fg_mid2
+  vim.g.terminal_color_0 = palette.bg_mid2
+  vim.g.terminal_color_1 = palette.red_mid2
+  vim.g.terminal_color_2 = palette.green_mid2
+  vim.g.terminal_color_3 = palette.yellow_mid2
+  vim.g.terminal_color_4 = palette.azure_mid2
+  vim.g.terminal_color_5 = palette.purple_mid2
+  vim.g.terminal_color_6 = palette.cyan_mid2
+  vim.g.terminal_color_7 = palette.fg_mid2
+  vim.g.terminal_color_8 = palette.bg_mid
+  vim.g.terminal_color_9 = palette.red_mid
+  vim.g.terminal_color_10 = palette.green_mid
+  vim.g.terminal_color_11 = palette.yellow_mid
+  vim.g.terminal_color_12 = palette.azure_mid
+  vim.g.terminal_color_13 = palette.purple_mid
+  vim.g.terminal_color_14 = palette.cyan_mid
+  vim.g.terminal_color_15 = palette.fg_mid
 end
 
 function M.override_hl(name, opts)
