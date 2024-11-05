@@ -2,7 +2,7 @@
 local base_color = {
   background = "#1e1e1e",
   foreground = "#e5e5e5",
-  saturation = "high",
+  saturation = "mediumhigh",
 }
 require("mini.hues").setup(base_color)
 require("util.color").setup_terminal_color(base_color)
