@@ -1,7 +1,7 @@
 ---@diagnostic disable: param-type-mismatch
 local base_color = {
-  background = "#1e1e1e",
-  foreground = "#e5e5e5",
+  background = "#1f1f1f",
+  foreground = "#d4d4d4",
   saturation = "mediumhigh",
 }
 require("mini.hues").setup(base_color)
