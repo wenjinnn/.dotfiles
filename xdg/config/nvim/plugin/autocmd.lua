@@ -109,3 +109,37 @@ au({ "TermEnter", "TermOpen" }, {
   pattern = "*",
   callback = require("util").setup_term_opt,
 })
+
+-- work with bigfile that bigger then 5MB
+-- modified from folke snacks.nvim
+local bigfile_size = 5 * 1024 * 1024
+vim.filetype.add({
+  pattern = {
+    [".*"] = {
+      function(path, buf)
+        return vim.bo[buf]
+            and vim.bo[buf].filetype ~= "bigfile"
+            and path
+            and vim.fn.getfsize(path) > bigfile_size
+            and "bigfile"
+            or nil
+      end,
+    },
+  },
+})
+
+au({ "FileType" }, {
+  group = augroup("bigfile", { clear = true }),
+  pattern = "bigfile",
+  callback = function(event)
+    local buf = event.buf
+    local path = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ":p:~:.")
+    local ft = vim.filetype.match({ buf = buf }) or ""
+    vim.notify(string.format("Big file detected `%s`.", path), vim.log.levels.WARN)
+    vim.api.nvim_buf_call(buf, function()
+      vim.schedule(function()
+        vim.bo[buf].syntax = ft
+      end)
+    end)
+  end,
+})

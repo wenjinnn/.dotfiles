@@ -22,6 +22,12 @@ now(function()
       end
     end,
     "MiniFiles open current")
+  vim.api.nvim_create_autocmd("User", {
+    pattern = "MiniFilesActionRename",
+    callback = function(event)
+      require("util.lsp").on_rename_file(event.data.from, event.data.to)
+    end,
+  })
 end)
 
 later(function()
