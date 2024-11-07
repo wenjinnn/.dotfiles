@@ -18,21 +18,9 @@ in rec {
     # ...
     # });
     # temporary fix microsoft-edge dev tool crash
-    microsoft-edge =
-      (prev.microsoft-edge.overrideAttrs (old: let
-        baseName = "microsoft-edge";
-        channel = "stable";
-        version = "128.0.2739.67";
-        revision = "1";
-      in {
-        src = prev.fetchurl {
-          url = "https://packages.microsoft.com/repos/edge/pool/main/m/${baseName}-${channel}/${baseName}-${channel}_${version}-${revision}_amd64.deb";
-          hash = "sha256-Y8PxyAibuEhwKJpqnhtBy1F2Kn+ONw6NVtC25R+fFVo=";
-        };
-      }))
-      .override {
-        commandLineArgs = electron-flags;
-      };
+    microsoft-edge = prev.microsoft-edge.override {
+      commandLineArgs = electron-flags;
+    };
     vscode = prev.vscode.override {
       commandLineArgs = electron-flags;
     };

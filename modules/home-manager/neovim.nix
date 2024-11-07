@@ -37,7 +37,7 @@ in {
       gopls
       libxml2
       # for vim-dadbod
-      mysql
+      mariadb
       redis
       oracle-instantclient
     ])
