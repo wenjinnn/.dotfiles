@@ -51,12 +51,17 @@ Almost as same as [Aylur/dotfiles](https://github.com/Aylur/dotfiles) (except as
 # Installation
 
 > [!NOTE]
-> The part of nixos configuration has many custom settings that may not suitable for you machine, use it directly maybe damage your system.
+> You can not use this repo directly for I'm using [sops-nix](https://github.com/Mic92/sops-nix) to manage my secrets in some modules. 
+> Even you remove all the modules that using sops secrets,
+> the part of nixos configuration still has many custom settings that may not suitable for you machine,
+> use it directly maybe damage your system.
 > Please always check the code before you use it.
 
 For NixOS users:
 
-Replace [hardware-configuration.nix](https://github.com/wenjinnn/config/blob/nixos/nixos/hosts/nixos/hardware-configuration.nix) with your own, and change the [username](https://github.com/wenjinnn/config/blob/1d08b37c56696a953e1c40c0ea9307acf0c1539d/flake.nix#L63) variable, you may also need remove this [line](https://github.com/wenjinnn/config/blob/3c58b72f83b4a4e421ef0fc72a808e2ce31ca68b/flake.nix#L94) from nixos hardware or replace it with your hardware model. Then execute in local repo path:
+Replace [hardware-configuration.nix](https://github.com/wenjinnn/config/blob/nixos/nixos/hosts/nixos/hardware-configuration.nix) with your own, and change the [username](https://github.com/wenjinnn/config/blob/1d08b37c56696a953e1c40c0ea9307acf0c1539d/flake.nix#L63) variable,  
+you may also need remove this [line](https://github.com/wenjinnn/config/blob/3c58b72f83b4a4e421ef0fc72a808e2ce31ca68b/flake.nix#L94) and other module that using sops secrets.
+from nixos hardware or replace it with your hardware model. Then execute in local repo path:
 ```
 $ sudo nixos-rebuild switch --flake .#nixos
 $ home-manager switch --flake .#wenjin@nixos
