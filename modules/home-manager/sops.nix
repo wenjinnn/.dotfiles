@@ -15,6 +15,9 @@
       sshKeyPaths = ["${config.home.homeDirectory}/.ssh/id_ed25519"];
       keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt"; # must have no password!
     };
+    secrets.OUTLOOK_CLIENT_ID = {};
+    secrets.GMAIL_CLIENT_ID = {};
+    secrets.GMAIL_CLIENT_SECRET = {};
   };
 
   home.packages = with pkgs; [

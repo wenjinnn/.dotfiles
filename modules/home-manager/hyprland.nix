@@ -186,6 +186,8 @@ in {
     };
   };
 
+  services.gnome-keyring.enable = true;
+
   # hypridle configuration
   services.hypridle = {
     enable = true;
@@ -252,8 +254,7 @@ in {
             "ags -b hypr"
             "hyprshade auto"
             "fcitx5 -d --replace"
-            "hyprctl dispatch exec [workspace 9 silent] foot btop"
-            "hyprctl dispatch exec [workspace 10 silent] evolution"
+            "hyprctl dispatch exec [workspace 10 silent] foot btop"
           ];
           monitor = [
             ",preferred,auto,auto"

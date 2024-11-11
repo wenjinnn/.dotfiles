@@ -29,8 +29,6 @@
     scrcpy
     rustdesk-flutter
     libreoffice
-    evolution
-    evolution-ews
     gnome-tweaks
     gnome-themes-extra
     dconf-editor

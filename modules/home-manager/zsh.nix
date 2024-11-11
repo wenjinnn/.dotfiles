@@ -42,6 +42,7 @@
       ll = "lsd -lah";
       py = "python";
       y = "yazi";
+      m = "neomutt";
     };
     initExtra = let
       proxyPort = "7890";

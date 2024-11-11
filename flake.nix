@@ -69,6 +69,8 @@
     # pass to it, with each system as an argument
     forAllSystems = nixpkgs.lib.genAttrs systems;
     username = "wenjin";
+    outlook = "hewenjin94@outlook.com";
+    gmail = "hewenjin1112@gmail.com";
   in {
     # Your custom packages
     # Accessible through 'nix build', 'nix shell', etc
@@ -91,7 +93,7 @@
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {inherit inputs outputs username;};
+        specialArgs = {inherit inputs outputs username outlook gmail;};
         modules = [
           # > Our main nixos configuration file <
           ./nixos/configuration.nix
@@ -148,7 +150,7 @@
     homeConfigurations = {
       "wenjin@nixos" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = {inherit inputs outputs username;};
+        extraSpecialArgs = {inherit inputs outputs username outlook gmail;};
         modules = [
           # > Our main home-manager configuration file <
           ./home-manager/home.nix
@@ -159,7 +161,7 @@
       };
       "wenjin@nixos-wsl" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = {inherit inputs outputs username;};
+        extraSpecialArgs = {inherit inputs outputs username outlook gmail;};
         modules = [
           # > Our main home-manager configuration file <
           ./home-manager/home.nix

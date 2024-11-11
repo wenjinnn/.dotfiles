@@ -29,4 +29,5 @@
   starship = import ./starship.nix;
   ripgrep = import ./ripgrep.nix;
   sops = import ./sops.nix;
+  mail = import ./mail.nix;
 }

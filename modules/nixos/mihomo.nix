@@ -271,9 +271,13 @@
         filter: "D1"
       - name: netflix
         type: url-test
+        proxies:
+        - taiwan
+        - singapore
+        - japan
+        - USA
         use:
-        - p1
-        filter: "Netflix"
+        - p2
       - name: video
         type: url-test
         proxies:

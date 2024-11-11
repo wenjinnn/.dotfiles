@@ -50,7 +50,6 @@ in {
     JAVA_8_HOME = "${pkgs.jdk8}/lib/openjdk";
     JAVA_17_HOME = "${pkgs.jdk17}/lib/openjdk";
     JAVA_21_HOME = "${pkgs.jdk21}/lib/openjdk";
-    SOPS_SECRETS = "${repoPath}/secrets.yaml";
   };
   home.file = {
     ".config/nvim" = {

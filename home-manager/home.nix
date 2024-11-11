@@ -28,6 +28,7 @@
     ripgrep
     tmux
     sops
+    mail
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
 
@@ -176,11 +177,21 @@
   #
   #  /etc/profiles/per-user/wenjin/etc/profile.d/hm-session-vars.sh
   #
+  home.sessionPath = [
+    # add oauth2 script
+    "${config.home.homeDirectory}/.local/bin"
+  ];
+  home.sessionVariables = {
+    SOPS_SECRETS = "${config.home.homeDirectory}/project/my/config/secrets.yaml";
+  };
+
   xdg.enable = true;
 
   programs.bash.enable = true;
   # Enable home-manager
   programs.home-manager.enable = true;
+  programs.gpg.enable = true;
+  services.gpg-agent.enable = true;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

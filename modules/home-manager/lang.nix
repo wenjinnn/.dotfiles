@@ -3,6 +3,7 @@
     (python311.withPackages (p: [
       p.python-pam
       p.debugpy
+      p.msal
     ]))
     gnumake
     cmake
