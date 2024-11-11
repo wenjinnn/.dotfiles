@@ -40,6 +40,7 @@ if not in_vscode() then
   later(function()
     add({ source = "mistweaverco/kulala.nvim" })
     require("kulala").setup({
+      display_mode = "float",
       winbar = true,
     })
     map("n", "<leader>re", "<cmd>lua require('kulala').run()<cr>", "Execute request")
