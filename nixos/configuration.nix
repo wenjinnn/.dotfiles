@@ -192,10 +192,12 @@
   services.offlineimap = {
     enable = true;
     install = true;
+    onCalendar = "*:0/10";
     path = with pkgs; [
       bash
       notmuch
       gnupg
+      sops
     ];
   };
 
