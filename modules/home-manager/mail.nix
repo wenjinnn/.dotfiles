@@ -6,6 +6,8 @@
   gmail,
   ...
 }: let
+  # for the follow script will be used in systemd unit, so we don't use ${sops_secrets} here
+  sops_secrets = "${config.home.homeDirectory}/project/my/config/secrets.yaml";
   mutt_oauth2 = "${pkgs.neomutt}/share/neomutt/oauth2/mutt_oauth2.py";
   # outlook token setup
   outlook_oauth2_token_path = "${config.home.homeDirectory}/.cache/neomutt/${outlook}.tokens";
@@ -14,7 +16,7 @@
     --verbose \
     --authorize \
     --provider microsoft \
-    --client-id $(sops exec-env $SOPS_SECRETS 'echo -e $OUTLOOK_CLIENT_ID') \
+    --client-id $(sops exec-env ${sops_secrets} 'echo -e $OUTLOOK_CLIENT_ID') \
     --client-secret "" \
     --authflow localhostauthcode \
     --email ${outlook}
@@ -29,8 +31,8 @@
     --verbose \
     --authorize \
     --provider google \
-    --client-id $(sops exec-env $SOPS_SECRETS 'echo -e $GMAIL_CLIENT_ID') \
-    --client-secret "$(sops exec-env $SOPS_SECRETS 'echo -e $GMAIL_CLIENT_SECRET')" \
+    --client-id $(sops exec-env ${sops_secrets} 'echo -e $GMAIL_CLIENT_ID') \
+    --client-secret "$(sops exec-env ${sops_secrets} 'echo -e $GMAIL_CLIENT_SECRET')" \
     --authflow localhostauthcode \
     --email ${gmail}
   '';
@@ -80,7 +82,7 @@ in {
             remotepasseval = false;
             auth_mechanisms = "XOAUTH2";
             oauth2_request_url = "https://login.microsoftonline.com/common/oauth2/v2.0/token";
-            oauth2_client_id_eval = ''get_output("sops exec-env $SOPS_SECRETS 'echo -e $OUTLOOK_CLIENT_ID'")'';
+            oauth2_client_id_eval = ''get_output("sops exec-env ${sops_secrets} 'echo -e $OUTLOOK_CLIENT_ID'")'';
             oauth2_client_secret = "";
             oauth2_access_token_eval = ''get_output("${outlook_oauth2_token}")'';
           };
@@ -133,8 +135,8 @@ in {
             remotepasseval = false;
             auth_mechanisms = "XOAUTH2";
             oauth2_request_url = "https://oauth2.googleapis.com/token";
-            oauth2_client_id_eval = ''get_output("sops exec-env $SOPS_SECRETS 'echo -e $GMAIL_CLIENT_ID'")'';
-            oauth2_client_secret_eval = ''get_output("sops exec-env $SOPS_SECRETS 'echo -e $GMAIL_CLIENT_SECRET'")'';
+            oauth2_client_id_eval = ''get_output("sops exec-env ${sops_secrets} 'echo -e $GMAIL_CLIENT_ID'")'';
+            oauth2_client_secret_eval = ''get_output("sops exec-env ${sops_secrets} 'echo -e $GMAIL_CLIENT_SECRET'")'';
             oauth2_access_token_eval = ''get_output("${gmail_oauth2_token}")'';
             nametrans = ''
               lambda foldername: re.sub ('^\[Gmail\]\/', ''',
