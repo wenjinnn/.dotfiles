@@ -161,6 +161,9 @@ in {
     neomutt = {
       enable = true;
       vimKeys = true;
+      extraConfig = ''
+        unauto_view "*"
+      '';
     };
     notmuch.enable = true;
     msmtp.enable = true;
@@ -176,4 +179,21 @@ in {
   };
 
   services.imapnotify.enable = true;
+
+  home.file = {
+    ".mailcap".text = ''
+      audio/*; xdg-open %s
+
+      image/*; xdg-open %s
+
+      application/msword; xdg-open %s
+      application/pdf; xdg-open %s
+      application/postscript ; xdg-open %s
+
+      application/x-gunzip; xdg-open %s
+      application/x-tar-gz; xdg-open %s
+
+      text/html; xdg-open %s ; nametemplate=%s.html
+    '';
+  };
 }
