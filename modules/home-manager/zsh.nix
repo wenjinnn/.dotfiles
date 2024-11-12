@@ -57,8 +57,6 @@
       if [ $(hostname) = "nixos-wsl" ]; then
         # get wsl host ip
         proxy_addr=http://$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):${proxyPort}
-        # security.pam.loginLimits not work at wsl for now, so here we set ulimit manually
-        ulimit -n 38192
       fi
 
       proxyIsSet(){
