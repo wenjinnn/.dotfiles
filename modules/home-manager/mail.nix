@@ -17,6 +17,7 @@
     --verbose \
     --authorize \
     --provider microsoft \
+    --encryption-pipe "gpg --encrypt --recipient 'wenjin for mail'" \
     --client-id $(sops exec-env ${sops_secrets} 'echo -e $OUTLOOK_CLIENT_ID') \
     --client-secret "" \
     --authflow localhostauthcode \
@@ -34,6 +35,7 @@
     --verbose \
     --authorize \
     --provider google \
+    --encryption-pipe "gpg --encrypt --recipient 'wenjin for mail'" \
     --client-id $(sops exec-env ${sops_secrets} 'echo -e $GMAIL_CLIENT_ID') \
     --client-secret "$(sops exec-env ${sops_secrets} 'echo -e $GMAIL_CLIENT_SECRET')" \
     --authflow localhostauthcode \

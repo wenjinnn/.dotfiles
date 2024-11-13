@@ -21,7 +21,7 @@
         tls_starttls = true;
         user = "${outlook}";
         # need to exec init_outlook_oauth2_token first, see ../home-manager/mail.nix
-        passwordeval = "\"GPG_TTY=$(tty) ${mutt_oauth2} ${outlook_oauth2_token_path}\"";
+        passwordeval = "\"${mutt_oauth2} ${outlook_oauth2_token_path}\"";
         tls_trust_file = "/etc/ssl/certs/ca-certificates.crt";
       };
     };
@@ -41,6 +41,10 @@
     rss2email = {
       enable = true;
       to = outlook;
+      config = {
+        from = outlook;
+        sendmail = "/run/wrappers/bin/sendmail";
+      };
       feeds = {
         hacknews.url = "https://rsshub.app/hackernews";
       };
