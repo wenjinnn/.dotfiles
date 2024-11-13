@@ -16,6 +16,7 @@
     podman
     ollama
     mihomo
+    mail
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
@@ -188,18 +189,6 @@
       value = "32768";
     }
   ];
-
-  services.offlineimap = {
-    enable = true;
-    install = true;
-    onCalendar = "*:0/10";
-    path = with pkgs; [
-      bash
-      notmuch
-      gnupg
-      sops
-    ];
-  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";

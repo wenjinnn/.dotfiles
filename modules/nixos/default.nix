@@ -20,4 +20,5 @@
   ollama = import ./ollama.nix;
   mihomo = import ./mihomo.nix;
   sops = import ./sops.nix;
+  mail = import ./mail.nix;
 }
