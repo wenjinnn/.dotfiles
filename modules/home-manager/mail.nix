@@ -12,6 +12,7 @@
   # outlook token setup
   outlook_oauth2_token_path = "${config.home.homeDirectory}/.cache/neomutt/${outlook}.tokens";
   init_outlook_oauth2_token = pkgs.writeShellScript "init_outlook_oauth2_token" ''
+    export GPG_TTY=$(tty)
     ${mutt_oauth2} ${outlook_oauth2_token_path} \
     --verbose \
     --authorize \
@@ -22,11 +23,13 @@
     --email ${outlook}
   '';
   outlook_oauth2_token = pkgs.writeShellScript "outlook_oauth2_token" ''
+    export GPG_TTY=$(tty)
     ${mutt_oauth2} ${outlook_oauth2_token_path}
   '';
   # gmail token setup
   gmail_oauth2_token_path = "${config.home.homeDirectory}/.cache/neomutt/${gmail}.tokens";
   init_gmail_oauth2_token = pkgs.writeShellScript "init_gmail_oauth2_token" ''
+    export GPG_TTY=$(tty)
     ${mutt_oauth2} ${gmail_oauth2_token_path} \
     --verbose \
     --authorize \
@@ -37,6 +40,7 @@
     --email ${gmail}
   '';
   gmail_oauth2_token = pkgs.writeShellScript "gmail_oauth2_token" ''
+    export GPG_TTY=$(tty)
     ${mutt_oauth2} ${gmail_oauth2_token_path}
   '';
 in {
