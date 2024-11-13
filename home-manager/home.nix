@@ -191,7 +191,11 @@
   # Enable home-manager
   programs.home-manager.enable = true;
   programs.gpg.enable = true;
-  services.gpg-agent.enable = true;
+  services.gpg-agent = {
+    enable = true;
+    maxCacheTtl = 60480000;
+    defaultCacheTtl = 60480000;
+  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
