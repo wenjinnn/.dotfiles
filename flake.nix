@@ -106,7 +106,7 @@
       };
       nixos-wsl = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {inherit inputs outputs username;};
+        specialArgs = {inherit inputs outputs username outlook gmail;};
         modules = [
           ./nixos/configuration.nix
           ./nixos/hosts/nixos-wsl
