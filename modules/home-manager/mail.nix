@@ -233,7 +233,7 @@ in {
           Description = "Feed rss source to email";
         };
         Service = let
-          basedir = "${config.home.homeDirectory}/.cache/rss2email";
+          basedir = "${config.home.homeDirectory}/project/my/archive/rss2email";
         in {
           ExecStartPre = pkgs.writeShellScript "checkRss2emailDb" ''
             if [ ! -f ${basedir}/db.json ]; then
