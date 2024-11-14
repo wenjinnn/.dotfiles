@@ -1,8 +1,5 @@
 {
   pkgs,
-  outlook,
-  username,
-  config,
   ...
 }: {
   programs.msmtp = {
@@ -19,17 +16,6 @@
         gnupg
         sops
       ];
-    };
-    rss2email = {
-      enable = true;
-      to = outlook;
-      config = {
-        from = outlook;
-        sendmail = "/run/wrappers/bin/sendmail";
-      };
-      feeds = {
-        hacknews.url = "https://rsshub.app/hackernews";
-      };
     };
   };
 }
