@@ -17,6 +17,7 @@
     --verbose \
     --authorize \
     --provider microsoft \
+    # should have a gpg key named 'wenjin for mail'
     --encryption-pipe "gpg --encrypt --recipient 'wenjin for mail'" \
     --client-id $(sops exec-env ${sops_secrets} 'echo -e $OUTLOOK_CLIENT_ID') \
     --client-secret "" \
@@ -35,6 +36,7 @@
     --verbose \
     --authorize \
     --provider google \
+    # should have a gpg key named 'wenjin for mail'
     --encryption-pipe "gpg --encrypt --recipient 'wenjin for mail'" \
     --client-id $(sops exec-env ${sops_secrets} 'echo -e $GMAIL_CLIENT_ID') \
     --client-secret "$(sops exec-env ${sops_secrets} 'echo -e $GMAIL_CLIENT_SECRET')" \
@@ -211,5 +213,54 @@ in {
 
       text/html; xdg-open %s ; nametemplate=%s.html
     '';
+  };
+
+  # rss2email setup
+  home.file.".config/rss2email/rss2email.cfg".text = ''
+    [DEFAULT]
+    from=${outlook}
+    sendmail=/run/wrappers/bin/sendmail
+    to=${outlook}
+
+    [feed.hacknews]
+    url=https://rsshub.app/hackernews
+  '';
+
+  systemd.user = {
+    services = {
+      rss2email = {
+        Unit = {
+          Description = "Feed rss source to email";
+        };
+        Service = let
+          basedir = "${config.home.homeDirectory}/.cache/rss2email";
+        in {
+          ExecStartPre = pkgs.writeShellScript "checkRss2emailDb" ''
+            if [ ! -f ${basedir}/db.json ]; then
+              mkdir -p ${basedir}
+              touch ${basedir}/db.json
+              echo '{"version":2,"feeds":[]}' > ${basedir}/db.json
+            fi
+          '';
+          ExecStart = "${pkgs.rss2email}/bin/r2e -c ${config.home.homeDirectory}/.config/rss2email/rss2email.cfg -d ${basedir}/db.json run";
+        };
+      };
+    };
+    timers = {
+      rss2email = {
+        Unit = {
+          Description = "Feed rss source to email timer";
+          PartOf = "rss2email.service";
+        };
+
+        Timer = {
+          OnBootSec = "0";
+          OnUnitActiveSec = "6h";
+        };
+        Install = {
+          WantedBy = ["default.target"];
+        };
+      };
+    };
   };
 }
