@@ -13,32 +13,31 @@ in {
     ags
   ];
 
-  home.packages =
-    (with pkgs; [
-      wayshot
-      wf-recorder
-      imagemagick
-      slurp
-      tesseract
-      pavucontrol
-      swappy
-      brightnessctl
-      playerctl
-      pulseaudio
-      gnupg
-      blueberry
-      cliphist
-      glib
-      wl-clipboard
-      xdg-utils
-      xorg.xrdb
-      wl-gammactl
-      hyprpaper
-      xwaylandvideobridge
-      hyprcursor
-      hyprpicker
-      hyprshade
-    ]);
+  home.packages = with pkgs; [
+    wayshot
+    wf-recorder
+    imagemagick
+    slurp
+    tesseract
+    pavucontrol
+    swappy
+    brightnessctl
+    playerctl
+    pulseaudio
+    gnupg
+    blueberry
+    cliphist
+    glib
+    wl-clipboard
+    xdg-utils
+    xorg.xrdb
+    wl-gammactl
+    hyprpaper
+    xwaylandvideobridge
+    hyprcursor
+    hyprpicker
+    hyprsunset
+  ];
 
   # custom desktop entries
   xdg.desktopEntries."org.gnome.Settings" = {
@@ -195,7 +194,7 @@ in {
       general = {
         lock_cmd = "pidof hyprlock || hyprlock";
         before_sleep_cmd = "hyprctl dispatch dpms off";
-        after_sleep_cmd = "hyprctl dispatch dpms on && loginctl lock-session; hyprshade auto";
+        after_sleep_cmd = "hyprctl dispatch dpms on && loginctl lock-session";
       };
       listener = [
         {
@@ -209,20 +208,6 @@ in {
         }
       ];
     };
-  };
-
-  # hyprshade configuration
-  home.file = {
-    ".config/hypr/hyprshade.toml".text = ''
-      [[shades]]
-      name = "vibrance"
-      default = true  # shader to use during times when there is no other shader scheduled
-
-      [[shades]]
-      name = "blue-light-filter"
-      start_time = 18:30:00
-      end_time = 06:00:00   # optional if you have more than one shade with start_time
-    '';
   };
 
   # hyprland configuration
@@ -252,7 +237,7 @@ in {
             # xrdb dpi scale have batter effect in 4k screen
             "echo 'Xft.dpi: 192' | xrdb -merge"
             "ags -b hypr"
-            "hyprshade auto"
+            "hyprsunset"
             "fcitx5 -d --replace"
             "hyprctl dispatch exec [workspace 10 silent] foot btop"
           ];
@@ -295,10 +280,13 @@ in {
           };
           decoration = {
             rounding = 10;
-            drop_shadow = "false";
-            shadow_range = 8;
-            shadow_render_power = 2;
-            "col.shadow" = "rgba(00000044)";
+            shadow = {
+              enabled = false;
+              range = 8;
+              render_power = 2;
+              color = "rgba(00000044)";
+            };
+            # "col.shadow" = "rgba(00000044)";
 
             dim_inactive = false;
 
@@ -337,6 +325,10 @@ in {
             key_press_enables_dpms = true;
             force_default_wallpaper = 0;
           };
+          workspace = [
+            "w[tv1], gapsout:0, gapsin:0"
+            "f[1], gapsout:0, gapsin:0"
+          ];
           windowrule = [
             "float, ^(steam)$"
             "tile,title:^(WPS)(.*)$"
@@ -356,6 +348,10 @@ in {
             "nofocus,class:^(xwaylandvideobridge)$"
             "noinitialfocus,class:^(xwaylandvideobridge)$"
             "maxsize 1 1,class:^(xwaylandvideobridge)$"
+            "bordersize 0, floating:0, onworkspace:w[tv1]"
+            "rounding 0, floating:0, onworkspace:w[tv1]"
+            "bordersize 0, floating:0, onworkspace:f[1]"
+            "rounding 0, floating:0, onworkspace:f[1]"
           ];
           layerrule = [
             # "blur, powermenu"

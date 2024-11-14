@@ -41,7 +41,7 @@
     showmethekey
     dbeaver-bin
     redisinsight
-    (wechat-uos.override {uosLicense = nur.repos.wenjinnn.wechat-license;})
+    wechat-uos
     qq
     nur.repos.xddxdd.dingtalk
     nur.repos.linyinfeng.wemeet

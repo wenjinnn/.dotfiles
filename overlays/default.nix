@@ -63,6 +63,14 @@ in rec {
         hash = "sha256-gwlUklfr/NA7JIkB9YloS9f8+3h5y3rSs3ISeVXAPZk=";
       };
     });
+    matugen = prev.matugen.overrideAttrs (old: {
+      src = prev.fetchFromGitHub {
+        owner = "InioX";
+        repo = "matugen";
+        rev = "refs/tags/v2.4.0";
+        hash = "sha256-l623fIVhVCU/ylbBmohAtQNbK0YrWlEny0sC/vBJ+dU=";
+      };
+    });
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
