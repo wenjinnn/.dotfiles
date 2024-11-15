@@ -28,7 +28,7 @@
         email-protocol = "lmtp";
         lmtp-server = "/var/run/dovecot2/lmtp";
         lmtp-auth = "False";
-        post-process = ''${pkgs.libnotify}/bin/notify-send "New Mail in:" "${username}"'';
+        # post-process = ''${pkgs.libnotify}/bin/notify-send "New Mail in:" "${username}"'';
       };
       feeds = {
         hacknews.url = "https://rsshub.app/hackernews";
