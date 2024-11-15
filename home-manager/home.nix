@@ -183,7 +183,7 @@
     "${config.home.homeDirectory}/.local/bin"
   ];
   home.sessionVariables = {
-    SOPS_SECRETS = "${config.home.homeDirectory}/project/my/config/secrets.yaml";
+    SOPS_SECRETS = "${config.home.homeDirectory}/.nix-config/secrets.yaml";
   };
 
   xdg.enable = true;

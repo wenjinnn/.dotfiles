@@ -7,7 +7,7 @@
   ...
 }: let
   # for the follow script will be used in systemd unit, so we don't use ${sops_secrets} here
-  sops_secrets = "${config.home.homeDirectory}/project/my/config/secrets.yaml";
+  sops_secrets = "${config.home.homeDirectory}/.nix-config/secrets.yaml";
   mutt_oauth2 = "${pkgs.neomutt}/share/neomutt/oauth2/mutt_oauth2.py";
   # outlook token setup
   outlook_oauth2_token_path = "${config.home.homeDirectory}/.cache/neomutt/${outlook}.tokens";

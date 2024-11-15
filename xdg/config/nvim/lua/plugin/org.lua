@@ -7,18 +7,18 @@ later(function()
     },
   })
   local config = {
-    org_agenda_files = { "~/project/my/archive/org/*" },
+    org_agenda_files = { "~/.archive/org/*" },
     notifications = {
       enabled = true,
     },
   }
-  local default_notes_file = "~/project/my/archive/org/refile.org"
+  local default_notes_file = "~/.archive/org/refile.org"
   default_notes_file = vim.fn.expand(default_notes_file)
   if vim.fn.filereadable(default_notes_file) == 1 then
     config.org_default_notes_file = default_notes_file
   end
   require("orgmode").setup(config)
   require("org-roam").setup({
-    directory = "~/project/my/archive/org/roam",
+    directory = "~/.archive/org/roam",
   })
 end)

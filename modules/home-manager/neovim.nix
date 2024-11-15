@@ -3,8 +3,8 @@
   pkgs,
   ...
 }: let
-  repoPath = "${config.home.homeDirectory}/project/my/config";
-  archivePath = "${config.home.homeDirectory}/project/my/archive";
+  repoPath = "${config.home.homeDirectory}/.nix-config";
+  archivePath = "${config.home.homeDirectory}/.archive";
 in {
   home.packages =
     (with pkgs; [
