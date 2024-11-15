@@ -132,6 +132,7 @@
     openpomodoro-cli
     cloc
     frp
+    xdg-utils
     # for nvim dict
     wordnet
     # nix related
