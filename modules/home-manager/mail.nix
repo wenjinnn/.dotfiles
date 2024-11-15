@@ -144,6 +144,9 @@ in {
         enable = true;
         postSyncHookCommand = notmuch_new;
         extraConfig = {
+          account = {
+            synclabels = "yes";
+          };
           local = {
             type = "GmailMaildir";
             nametrans = ''
