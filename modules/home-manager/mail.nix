@@ -173,6 +173,25 @@ in {
         };
       };
     };
+    # local mail box for read rss source
+    ${username} = {
+      realName = "${username}";
+      userName = "${username}";
+      address = "${username}@nixos.com";
+      maildir.path = "${username}";
+      neomutt = {
+        enable = true;
+        mailboxName = "${username}";
+      };
+      notmuch.enable = true;
+      passwordCommand = "";
+      imap = {
+        host = "localhost";
+      };
+      smtp = {
+        host = "localhost";
+      };
+    };
   };
 
   programs = {
@@ -215,52 +234,4 @@ in {
     '';
   };
 
-  # rss2email setup
-  home.file.".config/rss2email/rss2email.cfg".text = ''
-    [DEFAULT]
-    from=${outlook}
-    sendmail=/run/wrappers/bin/sendmail
-    to=${outlook}
-
-    [feed.hacknews]
-    url=https://rsshub.app/hackernews
-  '';
-
-  systemd.user = {
-    services = {
-      rss2email = {
-        Unit = {
-          Description = "Feed rss source to email";
-        };
-        Service = let
-          basedir = "${config.home.homeDirectory}/project/my/archive/rss2email";
-        in {
-          ExecStartPre = pkgs.writeShellScript "checkRss2emailDb" ''
-            if [ ! -f ${basedir}/db.json ]; then
-              mkdir -p ${basedir}
-              touch ${basedir}/db.json
-              echo '{"version":2,"feeds":[]}' > ${basedir}/db.json
-            fi
-          '';
-          ExecStart = "${pkgs.rss2email}/bin/r2e -c ${config.home.homeDirectory}/.config/rss2email/rss2email.cfg -d ${basedir}/db.json run";
-        };
-      };
-    };
-    timers = {
-      rss2email = {
-        Unit = {
-          Description = "Feed rss source to email timer";
-          PartOf = "rss2email.service";
-        };
-
-        Timer = {
-          OnBootSec = "0";
-          OnUnitActiveSec = "6h";
-        };
-        Install = {
-          WantedBy = ["default.target"];
-        };
-      };
-    };
-  };
 }
