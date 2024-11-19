@@ -112,10 +112,6 @@ in {
       "TYPESCRIPT_LIBRARY"
       ":"
       "${pkgs.typescript}/lib/node_modules/typescript/lib"
-      "--suffix"
-      "NIXD_FLAGS"
-      ":"
-      "--semantic-tokens=false"
     ];
   };
 }
