@@ -12,6 +12,7 @@
       mergetool.keepBackup = false;
       merge.tool = "vimdiff";
       diff.tool = "vimdiff";
+      core.autocrlf = "input";
     };
   };
 }
