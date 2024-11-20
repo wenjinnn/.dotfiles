@@ -1,7 +1,12 @@
-{username, ...}: {
+{
+  username,
+  pkgs,
+  ...
+}: {
   # git
   programs.git = {
     enable = true;
+    package = pkgs.gitAndTools.gitFull;
     userName = "${username}";
     userEmail = "hewenjin94@outlook.com";
     extraConfig = {
