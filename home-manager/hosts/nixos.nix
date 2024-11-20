@@ -22,6 +22,19 @@
     "openssl-1.1.1w"
   ];
 
+  gtk.gtk3.bookmarks = let
+    homePath = "file://${config.home.homeDirectory}";
+  in [
+    "${homePath}/Documents"
+    "${homePath}/Downloads"
+    "${homePath}/Music"
+    "${homePath}/Pictures"
+    "${homePath}/Public"
+    "${homePath}/Repo"
+    "${homePath}/Templates"
+    "${homePath}/Videos"
+  ];
+
   home.packages = with pkgs; [
     microsoft-edge
     gimp
