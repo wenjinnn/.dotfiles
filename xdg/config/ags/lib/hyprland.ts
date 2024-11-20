@@ -61,12 +61,6 @@ async function setupHyprland() {
         `general:col.inactive_border ${rgba(hyprland.inactiveBorder.value)}`,
         `decoration:rounding ${radius}`,
         `decoration:shadow:enabled ${shadows.value}`,
-        `workspace w[tv1], gapsout:${hyprland.gapsWhenOnly.value ? 0 : wm_gaps}, gapsin:${Math.floor(wm_gaps / 2)}`,
-        `workspace w[f1], gapsout:${hyprland.gapsWhenOnly.value ? 0 : wm_gaps}, gapsin:${Math.floor(wm_gaps / 2)}`,
-        `windowrulev2 bordersize ${hyprland.gapsWhenOnly.value ? 0 : width}, floating:${hyprland.gapsWhenOnly.value ? 0 : 1}, onworkspace:w[tv1]`,
-        `windowrulev2 rounding ${hyprland.gapsWhenOnly.value ? radius : 0}, floating:${hyprland.gapsWhenOnly.value ? 0 : 1}, onworkspace:w[tv1]`,
-        `windowrulev2 bordersize ${hyprland.gapsWhenOnly.value ? 0 : width}, floating:${hyprland.gapsWhenOnly.value ? 0 : 1}, onworkspace:w[f1]`,
-        `windowrulev2 rounding ${hyprland.gapsWhenOnly.value ? radius : 0}, floating:${hyprland.gapsWhenOnly.value ? 0 : 1}, onworkspace:w[f1]`,
     ])
 
     await sendBatch(App.windows.map(({ name }) => `layerrule unset, ${name}`))
