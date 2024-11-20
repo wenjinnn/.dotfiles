@@ -39,9 +39,6 @@ M.settings = {
     implementationsCodeLens = { enabled = true },
     referencesCodeLens = { enabled = true },
   },
-  watchOptions = {
-    excludeDirectories = { "**/node_modules", "_build", "temp/*", "**/dist" },
-  },
   javascript = {
     inlayHints = inlay_hints_settings,
     implementationsCodeLens = { enabled = true },
