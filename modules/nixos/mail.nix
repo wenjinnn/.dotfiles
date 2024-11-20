@@ -23,6 +23,7 @@
     rss2email = {
       enable = true;
       to = "${username}";
+      interval = "1h";
       config = {
         sendmail = "/run/wrappers/bin/sendmail";
         email-protocol = "lmtp";
