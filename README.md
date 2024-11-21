@@ -34,11 +34,12 @@ The [ags config](https://github.com/wenjinnn/config/tree/nixos/xdg/config/ags) b
 
 ## Known issues
 
-The clipboard menu item will be truncated if your cliphist item has new line character,
+1. The clipboard menu item will be truncated if your cliphist item has new line character,
 this mean's that any item after this specific item will be disappear in clipboard menu,
 but don't worry, the data is not damaged, you can find that specific item via lookup the `cliphist list` output
 and find the specific item id then delete it via `echo "<specific item id>" | cliphist delete`, then restart ags.  
 This is a known issue that related to ags, it will truncated program output if it encountered a new line character, but I'm not sure whether it's ags problem or GTK api problem currently. I'll fix it by commit some PR to upstream if I got some free time.
+2. At this point, the ags config is only compatible with ags v1, I'll move to ags v2 at future.
 
 # Must have
 
