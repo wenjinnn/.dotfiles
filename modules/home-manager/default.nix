@@ -30,4 +30,5 @@
   ripgrep = import ./ripgrep.nix;
   sops = import ./sops.nix;
   mail = import ./mail.nix;
+  zellij = import ./zellij.nix;
 }
