@@ -1,7 +1,6 @@
 {
   programs.zellij = {
     enable = true;
-    enableZshIntegration = true;
     settings = {
       ui.pane_frames.hide_session_name = true;
       pane_frames = false;
@@ -21,6 +20,7 @@
           };
         };
         "shared_except \"locked\" \"renametab\" \"renamepane\"" = {
+          "unbind \"Ctrl q\"" = [];
           "bind \"Q\"" = {
             Quit = [];
           };
