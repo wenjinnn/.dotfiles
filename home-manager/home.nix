@@ -27,7 +27,6 @@
     translate-shell
     ripgrep
     tmux
-    zellij
     sops
     mail
     # Or modules exported from other flakes (such as nix-colors):
