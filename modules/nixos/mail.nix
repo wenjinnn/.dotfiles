@@ -32,6 +32,7 @@
       };
       feeds = {
         hacknews.url = "https://rsshub.app/hackernews";
+        hyprland.url = "https://hyprland.org/rss.xml";
       };
     };
   };
