@@ -203,6 +203,47 @@ in {
       vimKeys = true;
       extraConfig = ''
         unauto_view "*"
+
+        # Patch mail highlight, copied from https://github.com/neomutt/dyk/issues/13
+        # Diff changes
+        color body brightgreen default "^[+].*"
+        color body brightred   default "^[-].*"
+
+        # Diff file
+        color body green       default "^[-][-][-] .*"
+        color body green       default "^[+][+][+] .*"
+
+        # Diff header
+        color body green       default "^diff .*"
+        color body green       default "^index .*"
+
+        # Diff chunk
+        color body cyan        default "^@@ .*"
+
+        # Linked issue
+        color body brightgreen default "^(close[ds]*|fix(e[ds])*|resolve[sd]*):* *#[0-9]+$"
+
+        # Credit
+        color body brightwhite default "(signed-off|co-authored)-by: .*"
+
+        # Markdown highlight, copied from https://github.com/neomutt/dyk/issues/12
+        # Title: # Text
+        color body brightcyan   default     '^#\+ .*'
+
+        # Bullet points, or numbered lists
+        color body brightred    default     '^ *[-*+] '
+        color body brightred    default     '^ *[0-9]+\. '
+
+        # Emphasis: _word_, *word*, /word/
+        color body brightyellow default     '\<_\S+_\>'
+        color body brightyellow default     '\*\<\S+\>\*'
+        color body brightyellow default     '/\<\S+\>/'
+
+        # Code block: `text`
+        color body brightwhite  brightblack '`[^`]+`'
+
+        # GitHub nick: (@flatcap)
+        color body green        default     '(@[-a-zA-Z0-9_]+)'
       '';
     };
     notmuch.enable = true;
