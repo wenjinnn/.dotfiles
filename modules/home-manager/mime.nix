@@ -1,7 +1,8 @@
 let
   browser = "microsoft-edge.desktop";
   file-manager = "org.gnome.Nautilus.desktop";
-  image-viewer = "org.gnome.Loupe.desktop";
+  image-viewer = "imv.desktop";
+  pdf-viewer = "org.pwmt.zathura.desktop";
   nvim = "nvim.desktop";
 in {
   xdg.mimeApps = rec {
@@ -16,7 +17,7 @@ in {
       "text/html" = browser;
       "text/plain" = nvim;
 
-      "application/pdf" = browser;
+      "application/pdf" = pdf-viewer;
 
       "image/jpeg" = image-viewer;
       "image/bmp" = image-viewer;

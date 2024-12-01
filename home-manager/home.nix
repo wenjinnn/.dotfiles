@@ -189,6 +189,17 @@
   xdg.enable = true;
 
   programs.bash.enable = true;
+
+  programs = {
+    imv.enable = true;
+    zathura = {
+      enable = true;
+      options = {
+        recolor = true;
+      };
+    };
+  };
+
   # Enable home-manager
   programs.home-manager.enable = true;
   programs.gpg.enable = true;
