@@ -204,6 +204,9 @@ in {
       extraConfig = ''
         unauto_view "*"
 
+        # Quote
+        color body brightcyan default "^[>].*"
+
         # Patch mail highlight, copied from https://github.com/neomutt/dyk/issues/13
         # Diff changes
         color body brightgreen default "^[+].*"
