@@ -133,6 +133,7 @@
     cloc
     frp
     xdg-utils
+    trashy
     # for nvim dict
     wordnet
     # nix related
