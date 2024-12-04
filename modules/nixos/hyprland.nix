@@ -28,7 +28,6 @@
     nautilus
     nautilus-python
     gnome-calendar
-    gnome-boxes
     gnome-system-monitor
     gnome-control-center
     gnome-weather
