@@ -187,7 +187,10 @@
     SOPS_SECRETS = "${config.home.homeDirectory}/.nix-config/secrets.yaml";
   };
 
-  xdg.enable = true;
+  xdg = {
+    enable = true;
+    userDirs.enable = true;
+  };
 
   programs.bash.enable = true;
 

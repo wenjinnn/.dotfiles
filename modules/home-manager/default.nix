@@ -31,4 +31,5 @@
   sops = import ./sops.nix;
   mail = import ./mail.nix;
   zellij = import ./zellij.nix;
+  mpd = import ./mpd.nix;
 }

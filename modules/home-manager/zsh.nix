@@ -43,6 +43,7 @@
       py = "python";
       y = "yazi";
       m = "neomutt";
+      n = "ncmpcpp";
     };
     initExtra = let
       proxyPort = "7890";
