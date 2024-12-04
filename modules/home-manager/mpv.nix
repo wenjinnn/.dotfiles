@@ -1,30 +1,18 @@
-{
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}: {
-  # home.file = {
-  #   ".config/mpv" = {
-  #     source = ../../xdg/config/mpv;
-  #     recursive = true;
-  #   };
-  # };
+{pkgs, ...}: {
   programs.mpv = {
     enable = true;
-    scripts = with pkgs; [
-      mpvScripts.mpris
-      mpvScripts.uosc
-      mpvScripts.mpv-cheatsheet
-      mpvScripts.visualizer
-      mpvScripts.cutter
-      mpvScripts.autoload
-      mpvScripts.thumbfast
-      mpvScripts.vr-reversal
-      mpvScripts.webtorrent-mpv-hook
-      mpvScripts.quality-menu
+    scripts = with pkgs.mpvScripts; [
+      memo
+      uosc
+      mpris
+      cutter
+      autoload
+      thumbfast
+      visualizer
+      vr-reversal
+      quality-menu
+      mpv-cheatsheet
+      webtorrent-mpv-hook
     ];
     config = {
       osd-bar = "no";
