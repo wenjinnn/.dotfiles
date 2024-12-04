@@ -27,7 +27,6 @@
     baobab
     nautilus
     nautilus-python
-    gnome-text-editor
     gnome-calendar
     gnome-boxes
     gnome-system-monitor
