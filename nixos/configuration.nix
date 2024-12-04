@@ -146,6 +146,7 @@
       wget
       git
       parted
+      fbida
       home-manager
       tree
     ];
