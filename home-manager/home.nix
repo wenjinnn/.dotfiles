@@ -134,7 +134,6 @@
     frp
     xdg-utils
     trashy
-    graphviz
     # for nvim dict
     wordnet
     # nix related
