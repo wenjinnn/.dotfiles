@@ -239,7 +239,6 @@ in {
             "ags -b hypr"
             "hyprsunset"
             "fcitx5 -d --replace"
-            "hyprctl dispatch exec [workspace 10 silent] foot btop"
           ];
           monitor = [
             ",preferred,auto,auto"
