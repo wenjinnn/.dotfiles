@@ -184,7 +184,9 @@
     "${config.home.homeDirectory}/.local/bin"
   ];
   home.sessionVariables = {
-    SOPS_SECRETS = "${config.home.homeDirectory}/.nix-config/secrets.yaml";
+    DOTFILES = "${config.home.homeDirectory}/.dotfiles";
+    ARCHIVE = "${config.home.homeDirectory}/.archive";
+    SOPS_SECRETS = "${config.home.sessionVariables.DOTFILES}/secrets.yaml";
   };
 
   xdg = {

@@ -2,10 +2,7 @@
   config,
   pkgs,
   ...
-}: let
-  repoPath = "${config.home.homeDirectory}/.nix-config";
-  archivePath = "${config.home.homeDirectory}/.archive";
-in {
+}: {
   home.packages =
     (with pkgs; [
       hurl
@@ -95,11 +92,11 @@ in {
       "--suffix"
       "NVIM_MINI_DEPS_SNAP"
       ":"
-      "${repoPath}/xdg/config/nvim/mini-deps-snap"
+      "${config.home.sessionVariables.DOTFILES}/xdg/config/nvim/mini-deps-snap"
       "--suffix"
       "NVIM_SPELLFILE"
       ":"
-      "${archivePath}/nvim/spell/en.utf-8.add"
+      "${config.home.sessionVariables.ARCHIVE}/nvim/spell/en.utf-8.add"
       "--suffix"
       "SONARLINT_PATH"
       ":"
