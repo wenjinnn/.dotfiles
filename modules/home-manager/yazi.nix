@@ -6,6 +6,7 @@
       manager = {
         show_hidden = true;
         show_symlink = true;
+        linemode = "mtime";
       };
       preview = {
         max_width = 1500;
