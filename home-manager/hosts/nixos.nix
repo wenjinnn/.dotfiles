@@ -57,7 +57,7 @@
     redisinsight
     wechat-uos
     qq
+    wemeet
     nur.repos.xddxdd.dingtalk
-    nur.repos.linyinfeng.wemeet
   ];
 }
