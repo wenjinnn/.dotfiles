@@ -134,6 +134,7 @@
     frp
     xdg-utils
     trashy
+    w3m
     nix-index
     # for nvim dict
     wordnet
