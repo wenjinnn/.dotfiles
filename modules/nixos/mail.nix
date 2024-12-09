@@ -31,9 +31,9 @@
         lmtp-auth = "False";
       };
       feeds = {
-        hacknews.url = "https://rsshub.app/hackernews";
         hyprland.url = "https://hyprland.org/rss.xml";
         neovim.url = "https://neovim.io/news.xml";
+        vaxry-blog.url = "https://blog.vaxry.net/feed";
       };
     };
   };
