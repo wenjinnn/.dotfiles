@@ -53,13 +53,12 @@ end)
 
 later(function()
   add({
-    source = "nvim-treesitter/nvim-treesitter-textobjects",
+    source = "nvim-treesitter/nvim-treesitter",
     depends = {
       "windwp/nvim-ts-autotag",
       "hiphish/rainbow-delimiters.nvim",
       "nvim-treesitter/nvim-treesitter-context",
       "JoosepAlviste/nvim-ts-context-commentstring",
-      "nvim-treesitter/nvim-treesitter",
     },
     hooks = {
       post_checkout = function()
@@ -67,6 +66,10 @@ later(function()
       end,
     },
   })
+  -- fix nvim-treesitter-textobjects occur an error when add it to nvim-treesitter depends
+  later(function()
+    add({ source = "nvim-treesitter/nvim-treesitter-textobjects" })
+  end)
   vim.g.skip_ts_context_commentstring_module = true
   local get_option = vim.filetype.get_option
   -- FIX native comment not work for jsx or vue template, relate issue: https://github.com/neovim/neovim/issues/28830
