@@ -207,6 +207,15 @@ in {
         # Quote
         color body brightcyan default "^[>].*"
 
+        # Link
+        color body brightyellow default "(https?|ftp)://[^ ]+"
+
+        # Code block start and end
+        color body cyan default "^\`\`\`.*$"
+
+        # mail address
+        color body yellow default "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+
         # Patch mail highlight, copied from https://github.com/neomutt/dyk/issues/13
         # Diff changes
         color body brightgreen default "^[+].*"
