@@ -56,7 +56,7 @@
     enable = true;
     settings = {
       default = [
-        "org.codeberg.dnkl.foot.desktop"
+        "org.codeberg.dnkl.footclient.desktop"
       ];
     };
   };

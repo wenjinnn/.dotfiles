@@ -12,7 +12,7 @@
       main = {
         font = "DejaVuSansM Nerd Font Mono:size=12";
         dpi-aware = "yes";
-        terminal = "${pkgs.foot}/bin/foot -e";
+        terminal = "${pkgs.foot}/bin/footclient -e";
         layer = "overlay";
       };
       colors = {

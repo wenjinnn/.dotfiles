@@ -365,7 +365,7 @@ in {
             "ControlSuper, Space, togglefloating, "
             "ControlSuperShift, Space, pin, "
             "ControlShiftSuper, Q, exec, hyprctl kill"
-            "Super, Return, exec, foot"
+            "Super, Return, exec, footclient"
             "SUPER, I, exec, XDG_CURRENT_DESKTOP=GNOME gnome-control-center"
             "ControlSuperShiftAlt, E, exit,"
             ", XF86PowerOff, ${e} -t powermenu"

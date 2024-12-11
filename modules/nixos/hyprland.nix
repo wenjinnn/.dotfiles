@@ -17,7 +17,7 @@
 
   programs.nautilus-open-any-terminal = {
     enable = true;
-    terminal = "foot";
+    terminal = "footclient";
   };
 
   environment.systemPackages = with pkgs; [
