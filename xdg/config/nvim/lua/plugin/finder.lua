@@ -99,7 +99,7 @@ later(function()
         vim.cmd("Pick terminals")
       end
     end
-    , { desc = "Format changed lines" })
+    , { desc = "Pick terminals or new one" })
   map("n", "<leader>ft", "<cmd>PickOrNewTerminal<cr>", "Pick terminals or new one")
   map("n", "<leader>fG", "<cmd>Pick grep_args<cr>", "Pick grep with rg args")
   map("n", "<leader>ff", "<cmd>Pick files<cr>", "Pick files")
