@@ -147,6 +147,9 @@
       git
       parted
       fbida
+      pciutils
+      mesa-demos
+      vulkan-tools
       home-manager
       tree
     ];
