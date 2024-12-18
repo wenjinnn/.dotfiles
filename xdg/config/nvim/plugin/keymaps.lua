@@ -3,7 +3,14 @@
 local map = require("util").map
 map("n", "<leader>S", "<cmd>windo set scrollbind!<CR>", "Scroll all buffer")
 map("n", "<leader>O", "<cmd>only<CR>", "Only")
-map("n", "<leader>X", "<cmd>windo diffthis<CR>", "Diffthis windowed buffers")
+local function toggle_win_diff()
+  if vim.wo.diff then
+    vim.cmd("windo diffoff")
+  else
+    vim.cmd("windo diffthis")
+  end
+end
+map("n", "<leader>X", toggle_win_diff, "Diffthis windowed buffers")
 -- Add undo break-points
 map("i", ",", ",<c-g>u")
 map("i", ".", ".<c-g>u")
