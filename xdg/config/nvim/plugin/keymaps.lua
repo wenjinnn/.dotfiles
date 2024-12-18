@@ -1,7 +1,9 @@
+-- The keymaps here are independent of plugins
+-- all the keymap that related to plugin it self are declared after plugin
 local map = require("util").map
 map("n", "<leader>S", "<cmd>windo set scrollbind!<CR>", "Scroll all buffer")
-map("n", "<leader>X", "<cmd>only<CR>", "Only")
-
+map("n", "<leader>O", "<cmd>only<CR>", "Only")
+map("n", "<leader>X", "<cmd>windo diffthis<CR>", "Diffthis windowed buffers")
 -- Add undo break-points
 map("i", ",", ",<c-g>u")
 map("i", ".", ".<c-g>u")
