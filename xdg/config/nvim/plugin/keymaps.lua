@@ -8,6 +8,7 @@ local function toggle_win_diff()
     vim.cmd("windo diffoff")
   else
     vim.cmd("windo diffthis")
+    vim.cmd("windo set wrap")
   end
 end
 map("n", "<leader>X", toggle_win_diff, "Diffthis windowed buffers")
