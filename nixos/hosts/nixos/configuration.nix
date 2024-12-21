@@ -40,32 +40,9 @@
     enable = true;
   };
 
-  environment = {
-    systemPackages = with pkgs; [
-      nvtopPackages.full
-      lact
-    ];
-  };
-
   services.ollama.acceleration = "rocm";
 
-  boot.initrd.kernelModules = ["amdgpu"];
-
-  services.xserver.videoDrivers = [
-    "modesetting"
-    "fbdev"
-    "amdgpu"
-  ];
-
-  hardware.graphics = {
-    enable32Bit = true;
-    extraPackages = with pkgs; [
-      amdvlk
-    ];
-    extraPackages32 = with pkgs; [
-      driversi686Linux.amdvlk
-    ];
-  };
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   systemd.packages = with pkgs; [lact];
   systemd.services.lactd.wantedBy = ["multi-user.target"];
