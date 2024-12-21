@@ -44,6 +44,8 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  boot.kernelParams = ["amdgpu.pcie_gen_cap=0x40000"];
+
   systemd.packages = with pkgs; [lact];
   systemd.services.lactd.wantedBy = ["multi-user.target"];
   services = {
