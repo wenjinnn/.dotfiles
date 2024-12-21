@@ -10,7 +10,10 @@
     packages = with pkgs; [
       noto-fonts-emoji
       sarasa-gothic
-      (nerdfonts.override {fonts = ["FiraCode" "Ubuntu" "UbuntuMono" "Mononoki" "CascadiaCode" "DejaVuSansMono"];})
+      nerd-fonts.fira-code
+      nerd-fonts.ubuntu
+      nerd-fonts.ubuntu-mono
+      nerd-fonts.caskaydia-cove
       font-awesome
       lexend
       material-symbols

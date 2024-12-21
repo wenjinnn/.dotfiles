@@ -42,7 +42,7 @@
 
   environment = {
     systemPackages = with pkgs; [
-      nvtop
+      nvtopPackages.full
       lact
     ];
   };
