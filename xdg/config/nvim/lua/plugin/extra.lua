@@ -115,7 +115,10 @@ if not in_vscode() then
   later(function()
     add({
       source = "tpope/vim-dadbod",
-      depends = { "kristijanhusak/vim-dadbod-ui" },
+      depends = {
+        "kristijanhusak/vim-dadbod-completion",
+        "kristijanhusak/vim-dadbod-ui",
+      },
     })
     vim.g.db_ui_use_nerd_fonts = 1
     vim.g.db_ui_save_location = vim.fn.stdpath("data") .. "/db_ui_queries"
