@@ -290,7 +290,6 @@ later(function()
     if vim.fn.pumvisible() ~= 0 then
       -- If popup is visible, confirm selected item or add new line otherwise
       local item_selected = vim.fn.complete_info()["selected"] ~= -1
-      print(item_selected)
       return item_selected and keys["ctrl-y"] or keys["ctrl-y_cr"]
     else
       return require("mini.pairs").cr()
