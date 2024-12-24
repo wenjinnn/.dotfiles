@@ -150,118 +150,163 @@ later(function()
   require("mini.pairs").setup()
 end)
 
-if not in_vscode() then
-  now(function()
-    require("mini.sessions").setup({
-      -- Whether to force possibly harmful actions (meaning depends on function)
-      force = { read = false, write = true, delete = true },
-      hooks = {
-        -- Before successful action
-        pre = { read = nil, write = nil, delete = nil },
-        -- After successful action
-        post = { read = require("util").delete_dap_terminals, write = nil, delete = nil },
-      },
-    })
-    local session_name = function()
-      local cwd = vim.fn.getcwd()
-      local parent_path = vim.fn.fnamemodify(cwd, ":h")
-      local current_tail_path = vim.fn.fnamemodify(cwd, ":t")
-      return string.format("%s@%s", current_tail_path, parent_path:gsub("/", "-"))
-    end
-
-    map("n", "<leader>sw",
-      function()
-        require("mini.sessions").write(session_name())
-      end,
-      "Session write")
-    map("n", "<leader>sW",
-      function()
-        MiniSessions.write(vim.fn.input("Session name: "))
-      end,
-      "Session write custom")
-    map("n", "<leader>sd",
-      function()
-        require("mini.sessions").delete(session_name())
-      end,
-      "Session delete")
-    map("n", "<leader>sD",
-      function()
-        MiniSessions.delete(vim.fn.input("Session name: "))
-      end,
-      "Session delete custom")
-    map("n", "<leader>ss",
-      function()
-        MiniSessions.select()
-      end,
-      "Session select")
-  end)
-
-  later(function()
-    require("mini.bufremove").setup()
-    map("n", "<leader>x", "<cmd>lua MiniBufremove.delete()<CR>", "Buf delete")
-  end)
-
-  later(function()
-    add({ source = "mfussenegger/nvim-lint" })
-    local lint = require("lint")
-    -- just use the default lint
-    -- TODO maybe add more linter in future
-    lint.linters_by_ft = {}
-    vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
-      callback = function()
-        lint.try_lint()
-        lint.try_lint("compiler")
-      end,
-    })
-  end)
-
-  later(function()
-    add({ source = "stevearc/conform.nvim" })
-    require("conform").setup({
-      formatters_by_ft = {
-        nix = { "alejandra" },
-      },
-    })
-    vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
-    vim.g.conform_autoformat = true
-    local diff_format = function()
-      local data = MiniDiff.get_buf_data()
-      if not data or not data.hunks or not vim.g.conform_autoformat then
-        vim.notify("No hunks in this buffer or auto format is currently disabled")
-        return
-      end
-      local ranges = {}
-      for _, hunk in pairs(data.hunks) do
-        if hunk.type ~= "delete" then
-          -- always insert to index 1 so format below could start from last hunk, which this sort didn't mess up range
-          table.insert(ranges, 1, {
-            start = { hunk.buf_start, 0 },
-            ["end"] = { hunk.buf_start + hunk.buf_count, 0 },
-          })
-        end
-      end
-      for _, range in pairs(ranges) do
-        require("conform").format({ lsp_fallback = true, timeout_ms = 500, range = range })
-      end
-    end
-    vim.api.nvim_create_user_command("DiffFormat", diff_format, { desc = "Format changed lines" })
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      pattern = "*",
-      callback = diff_format,
-      desc = "Auto format changed lines",
-    })
-
-    map({ "n", "v" },
-      "<leader>cm",
-      function()
-        require("conform").format({ async = true, lsp_fallback = true })
-      end,
-      "Format")
-    map("n", "<leader>cM",
-      function()
-        vim.g.conform_autoformat = not vim.g.conform_autoformat
-        vim.notify("Autoformat: " .. (vim.g.conform_autoformat and "on" or "off"))
-      end,
-      "Auto format toggle")
-  end)
+if in_vscode() then
+  return
 end
+
+now(function()
+  require("mini.sessions").setup({
+    -- Whether to force possibly harmful actions (meaning depends on function)
+    force = { read = false, write = true, delete = true },
+    hooks = {
+      -- Before successful action
+      pre = { read = nil, write = nil, delete = nil },
+      -- After successful action
+      post = { read = require("util").delete_dap_terminals, write = nil, delete = nil },
+    },
+  })
+  local session_name = function()
+    local cwd = vim.fn.getcwd()
+    local parent_path = vim.fn.fnamemodify(cwd, ":h")
+    local current_tail_path = vim.fn.fnamemodify(cwd, ":t")
+    return string.format("%s@%s", current_tail_path, parent_path:gsub("/", "-"))
+  end
+
+  map("n", "<leader>sw",
+    function()
+      require("mini.sessions").write(session_name())
+    end,
+    "Session write")
+  map("n", "<leader>sW",
+    function()
+      MiniSessions.write(vim.fn.input("Session name: "))
+    end,
+    "Session write custom")
+  map("n", "<leader>sd",
+    function()
+      require("mini.sessions").delete(session_name())
+    end,
+    "Session delete")
+  map("n", "<leader>sD",
+    function()
+      MiniSessions.delete(vim.fn.input("Session name: "))
+    end,
+    "Session delete custom")
+  map("n", "<leader>ss",
+    function()
+      MiniSessions.select()
+    end,
+    "Session select")
+end)
+
+later(function()
+  require("mini.bufremove").setup()
+  map("n", "<leader>x", "<cmd>lua MiniBufremove.delete()<CR>", "Buf delete")
+end)
+
+later(function()
+  add({ source = "mfussenegger/nvim-lint" })
+  local lint = require("lint")
+  -- just use the default lint
+  -- TODO maybe add more linter in future
+  lint.linters_by_ft = {}
+  vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+    callback = function()
+      lint.try_lint()
+      lint.try_lint("compiler")
+    end,
+  })
+end)
+
+later(function()
+  add({ source = "stevearc/conform.nvim" })
+  require("conform").setup({
+    formatters_by_ft = {
+      nix = { "alejandra" },
+    },
+  })
+  vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+  vim.g.conform_autoformat = true
+  local diff_format = function()
+    local data = MiniDiff.get_buf_data()
+    if not data or not data.hunks or not vim.g.conform_autoformat then
+      vim.notify("No hunks in this buffer or auto format is currently disabled")
+      return
+    end
+    local ranges = {}
+    for _, hunk in pairs(data.hunks) do
+      if hunk.type ~= "delete" then
+        -- always insert to index 1 so format below could start from last hunk, which this sort didn't mess up range
+        table.insert(ranges, 1, {
+          start = { hunk.buf_start, 0 },
+          ["end"] = { hunk.buf_start + hunk.buf_count, 0 },
+        })
+      end
+    end
+    for _, range in pairs(ranges) do
+      require("conform").format({ lsp_fallback = true, timeout_ms = 500, range = range })
+    end
+  end
+  vim.api.nvim_create_user_command("DiffFormat", diff_format, { desc = "Format changed lines" })
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*",
+    callback = diff_format,
+    desc = "Auto format changed lines",
+  })
+
+  map({ "n", "v" },
+    "<leader>cm",
+    function()
+      require("conform").format({ async = true, lsp_fallback = true })
+    end,
+    "Format")
+  map("n", "<leader>cM",
+    function()
+      vim.g.conform_autoformat = not vim.g.conform_autoformat
+      vim.notify("Autoformat: " .. (vim.g.conform_autoformat and "on" or "off"))
+    end,
+    "Auto format toggle")
+end)
+
+later(function()
+  add({ source = "rafamadriz/friendly-snippets" })
+  require("mini.completion").setup({
+    window = {
+      info = { border = "solid" },
+      signature = { border = "solid" },
+    },
+  })
+
+  local keycode = vim.keycode or function(x)
+    return vim.api.nvim_replace_termcodes(x, true, true, true)
+  end
+  local keys = {
+    ["cr"] = keycode("<CR>"),
+    ["ctrl-y"] = keycode("<C-y>"),
+    ["ctrl-y_cr"] = keycode("<C-y><CR>"),
+  }
+
+  local function cr_action()
+    if vim.fn.pumvisible() ~= 0 then
+      -- If popup is visible, confirm selected item or add new line otherwise
+      local item_selected = vim.fn.complete_info()["selected"] ~= -1
+      print(item_selected)
+      return item_selected and keys["ctrl-y"] or keys["ctrl-y_cr"]
+    else
+      return require("mini.pairs").cr()
+    end
+  end
+
+  map("i", "<CR>", cr_action, { expr = true })
+
+  local gen_loader = require("mini.snippets").gen_loader
+  require("mini.snippets").setup({
+    snippets = {
+      -- Load custom file with global snippets first (adjust for Windows)
+      gen_loader.from_file("~/.config/nvim/snippets/global.json"),
+      -- Load snippets based on current language by reading files from
+      -- "snippets/" subdirectories from 'runtimepath' directories.
+      gen_loader.from_lang(),
+    },
+  })
+end)
