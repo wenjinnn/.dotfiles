@@ -275,6 +275,7 @@ later(function()
       info = { border = "solid" },
       signature = { border = "solid" },
     },
+    set_vim_settings = false,
   })
 
   local keycode = vim.keycode or function(x)
