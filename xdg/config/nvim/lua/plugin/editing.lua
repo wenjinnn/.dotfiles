@@ -137,11 +137,10 @@ later(function()
     enable_autocmd = false,
   })
   require("nvim-ts-autotag").setup()
-  map("n", "[e",
-    function()
-      require("treesitter-context").go_to_context(vim.v.count1)
-    end,
-    "treesitter context upward")
+  local function go_to_context()
+    require("treesitter-context").go_to_context(vim.v.count1)
+  end
+  map("n", "[e", go_to_context, "treesitter context upward")
 end)
 
 later(function()
@@ -171,32 +170,23 @@ now(function()
     local current_tail_path = vim.fn.fnamemodify(cwd, ":t")
     return string.format("%s@%s", current_tail_path, parent_path:gsub("/", "-"))
   end
-
-  map("n", "<leader>sw",
-    function()
-      require("mini.sessions").write(session_name())
-    end,
-    "Session write")
-  map("n", "<leader>sW",
-    function()
-      MiniSessions.write(vim.fn.input("Session name: "))
-    end,
-    "Session write custom")
-  map("n", "<leader>sd",
-    function()
-      require("mini.sessions").delete(session_name())
-    end,
-    "Session delete")
-  map("n", "<leader>sD",
-    function()
-      MiniSessions.delete(vim.fn.input("Session name: "))
-    end,
-    "Session delete custom")
-  map("n", "<leader>ss",
-    function()
-      MiniSessions.select()
-    end,
-    "Session select")
+  local function session_write()
+    require("mini.sessions").write(session_name())
+  end
+  local function session_write_custom()
+    MiniSessions.write(vim.fn.input("Session name: "))
+  end
+  local function session_delete()
+    require("mini.sessions").delete(session_name())
+  end
+  local function session_delete_custom()
+    MiniSessions.delete(vim.fn.input("Session name: "))
+  end
+  map("n", "<leader>sw", session_write, "Session write")
+  map("n", "<leader>sW", session_write_custom, "Session write custom")
+  map("n", "<leader>sd", session_delete, "Session delete")
+  map("n", "<leader>sD", session_delete_custom, "Session delete custom")
+  map("n", "<leader>ss", MiniSessions.select, "Session select")
 end)
 
 later(function()
@@ -253,19 +243,15 @@ later(function()
     callback = diff_format,
     desc = "Auto format changed lines",
   })
-
-  map({ "n", "v" },
-    "<leader>cm",
-    function()
-      require("conform").format({ async = true, lsp_fallback = true })
-    end,
-    "Format")
-  map("n", "<leader>cM",
-    function()
-      vim.g.conform_autoformat = not vim.g.conform_autoformat
+  local function code_format()
+    require("conform").format({ async = true, lsp_fallback = true })
+  end
+  local function auto_format_toggle()
+    vim.g.conform_autoformat = not vim.g.conform_autoformat
       vim.notify("Autoformat: " .. (vim.g.conform_autoformat and "on" or "off"))
-    end,
-    "Auto format toggle")
+  end
+  map({ "n", "v" }, "<leader>cm", code_format, "Format")
+  map("n", "<leader>cM", auto_format_toggle, "Auto format toggle")
 end)
 
 later(function()
@@ -314,6 +300,7 @@ later(function()
   })
   map("n", "<leader>cS", "<cmd>ScissorsEditSnippet<cr>", "Snippet edit")
   map({ "n", "x" }, "<leader>cs", "<cmd>ScissorsAddNewSnippet<cr>", "Snippet add")
+
   add({ source = "danymat/neogen" })
   require("neogen").setup()
   map("n", "<leader>cA", "<cmd>Neogen<cr>", "Generate annotation")
