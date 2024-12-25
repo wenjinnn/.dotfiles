@@ -13,6 +13,8 @@
     ags
   ];
   home.file.".config/ags" = {
-    source = ../../xdg/config/ags;
+    source =
+      config.lib.file.mkOutOfStoreSymlink
+      "${config.home.sessionVariables.DOTFILES}/xdg/config/ags";
   };
 }
