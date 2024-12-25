@@ -4,6 +4,7 @@ if in_vscode() then
 end
 local now, later = MiniDeps.now, MiniDeps.later
 local map = require("util").map
+local feedkey = require("util").feedkey
 
 now(function()
   local starter = require("mini.starter")
@@ -14,16 +15,12 @@ now(function()
       starter.sections.recent_files(5, false, true),
       {
         name = "Agenda",
-        action = function()
-          require("util").feedkey("<leader>oa", "")
-        end,
+        action = function() feedkey("<leader>oa", "") end,
         section = "Org",
       },
       {
         name = "Capture",
-        action = function()
-          require("util").feedkey("<leader>oc", "")
-        end,
+        action = function() feedkey("<leader>oc", "") end,
         section = "Org",
       },
       starter.sections.builtin_actions(),
@@ -38,7 +35,6 @@ end)
 
 later(function()
   require("mini.notify").setup()
-  MiniIcons.mock_nvim_web_devicons()
   map("n", "<leader>N", MiniNotify.show_history, "Notify history")
 end)
 
@@ -46,6 +42,7 @@ now(function()
   require("mini.statusline").setup()
   require("mini.tabline").setup()
 end)
+
 later(function()
   local hipatterns = require("mini.hipatterns")
   local hi_words = require("mini.extra").gen_highlighter.words
