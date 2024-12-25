@@ -1,0 +1,16 @@
+{
+  "autocmd": {
+    "body": [
+      "vim.api.nvim_create_autocmd({ \"${1:event}\" }, {",
+      "  callback = function()",
+      "    $0",
+      "  end,",
+      "})"
+    ],
+    "prefix": "autocmd"
+  },
+  "keymap": {
+    "body": "vim.keymap.set(${1:mode}, ${2:lhs}, ${3:rhs}, $0)",
+    "prefix": "keymap"
+  }
+}
