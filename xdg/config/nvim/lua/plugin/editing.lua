@@ -269,7 +269,6 @@ later(function()
 end)
 
 later(function()
-  add({ source = "rafamadriz/friendly-snippets" })
   require("mini.completion").setup({
     window = {
       info = { border = "solid" },
@@ -299,14 +298,23 @@ later(function()
 
   map("i", "<CR>", cr_action, { expr = true })
 
+  add({ source = "rafamadriz/friendly-snippets" })
   local gen_loader = require("mini.snippets").gen_loader
   require("mini.snippets").setup({
     snippets = {
-      -- Load custom file with global snippets first (adjust for Windows)
-      gen_loader.from_file("~/.config/nvim/snippets/global.json"),
       -- Load snippets based on current language by reading files from
       -- "snippets/" subdirectories from 'runtimepath' directories.
       gen_loader.from_lang(),
     },
   })
+
+  add({ source = "chrisgrieser/nvim-scissors" })
+  require("scissors").setup({
+    snippetDir = vim.fn.stdpath("config") .. "/snippets",
+  })
+  map("n", "<leader>cS", "<cmd>ScissorsEditSnippet<cr>", "Snippet edit")
+  map({ "n", "x" }, "<leader>cs", "<cmd>ScissorsAddNewSnippet<cr>", "Snippet add")
+  add({ source = "danymat/neogen" })
+  require("neogen").setup()
+  map("n", "<leader>cA", "<cmd>Neogen<cr>", "Generate annotation")
 end)
