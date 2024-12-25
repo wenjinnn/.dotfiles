@@ -50,8 +50,9 @@
   };
   home.file = {
     ".config/nvim" = {
-      source = ../../xdg/config/nvim;
-      recursive = true;
+      source =
+        config.lib.file.mkOutOfStoreSymlink
+        "${config.home.sessionVariables.DOTFILES}/xdg/config/nvim";
     };
     ".config/vale/.vale.ini".text = ''
       MinAlertLevel = suggestion
@@ -89,10 +90,6 @@
       "LOMBOK_PATH"
       ":"
       "${pkgs.lombok}/share/java"
-      "--suffix"
-      "NVIM_MINI_DEPS_SNAP"
-      ":"
-      "${config.home.sessionVariables.DOTFILES}/xdg/config/nvim/mini-deps-snap"
       "--suffix"
       "NVIM_SPELLFILE"
       ":"
