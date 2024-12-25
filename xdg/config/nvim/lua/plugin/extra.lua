@@ -161,16 +161,15 @@ if not in_vscode() then
     })
   end)
 
+  local function grug_cursor_word()
+    require("grug-far").grug_far({ prefills = { search = vim.fn.expand("<cword>") } })
+  end
+  local function grug_current_file()
+    require("grug-far").grug_far({ prefills = { paths = vim.fn.expand("%") } })
+  end
   map("n", "<leader>Fg", "<cmd>GrugFar<CR>", "Toggle GrugFar")
-  map({ "n", "v" }, "<leader>Fv",
-    function()
-      require("grug-far").grug_far({ prefills = { search = vim.fn.expand("<cword>") } })
-    end,
-    "GrugFar search current word")
-  map("n", "<leader>Ff", function()
-      require("grug-far").grug_far({ prefills = { paths = vim.fn.expand("%") } })
-    end,
-    "Search on current file")
+  map({ "n", "v" }, "<leader>Fv", grug_cursor_word, "GrugFar search current word")
+  map("n", "<leader>Ff", grug_current_file, "Search on current file")
   -- AI companion
   later(function()
     add({ source = "olimorris/codecompanion.nvim" })

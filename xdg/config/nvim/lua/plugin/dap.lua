@@ -16,12 +16,6 @@ later(function()
   local api = vim.api
   local util = require("util")
   local map = util.map
-  local widgets = require("dap.ui.widgets")
-  local dap_ui = function(widget, title)
-    return function()
-      widgets.cursor_float(widget, { title = title })
-    end
-  end
 
   dap.defaults.fallback.terminal_win_cmd = function()
     local cur_win = api.nvim_get_current_win()
@@ -65,6 +59,46 @@ later(function()
     all_frames = true, virt_text_pos = "eol",
   })
 
+  local widgets = require("dap.ui.widgets")
+  local function dap_ui(widget, title)
+    return function()
+      widgets.cursor_float(widget, { title = title })
+    end
+  end
+
+  local function breakpoints_quickfix()
+    dap.list_breakpoints()
+    vim.cmd("copen")
+  end
+  local function dap_continue()
+    -- fix java dap setup failed sometime
+    if vim.bo.filetype == "java" and require("dap").configurations.java == nil then
+      require("lsp.jdtls").setup_dap()
+    end
+    dap.continue()
+  end
+
+  local function dap_set_breakpoint()
+    dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
+  end
+  local function dap_set_logpoint()
+    dap.set_breakpoint(nil, nil, vim.fn.input("Log point message: "))
+  end
+  local function dap_set_exc_breakpoint()
+    dap.set_exception_breakpoints("default")
+  end
+  local function dap_repl_toggle()
+    dap.repl.toggle()
+    vim.cmd("wincmd p")
+    local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
+    if filetype == "dap-repl" then
+      vim.cmd("startinsert")
+    end
+  end
+  local function dap_hover()
+    widgets.hover("<cexpr>", { title = "dap-hover" })
+  end
+
   map("n", "<leader>db", dap.toggle_breakpoint, "Dap toggle breakpoint")
   map("n", "<leader>dd", dap.clear_breakpoints, "Dap clear breakpoint")
   map("n", "<leader>dr", dap.run_last, "Dap run last")
@@ -79,49 +113,11 @@ later(function()
   map("n", "<leader>de", dap_ui(widgets.expression, "dap-expression"), "Dap expression")
   map("n", "<leader>dt", dap_ui(widgets.threads, "dap-threads"), "Dap threads")
   map("n", "<leader>dS", dap_ui(widgets.sessions, "dap-sessions"), "Dap sessions")
-  map("n", "<leader>dq",
-    function()
-      dap.list_breakpoints()
-      vim.cmd("copen")
-    end,
-    "Dap list breakpoints")
-  map("n", "<leader>dc",
-    function()
-      -- fix java dap setup failed sometime
-      if vim.bo.filetype == "java" and require("dap").configurations.java == nil then
-        require("lsp.jdtls").setup_dap()
-      end
-      dap.continue()
-    end,
-    "Dap continue")
-  map("n", "<leader>dB",
-    function()
-      dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
-    end,
-    "Dap condition breakpoint")
-  map("n", "<leader>dl",
-    function()
-      dap.set_breakpoint(nil, nil, vim.fn.input("Log point message: "))
-    end,
-    "Dap log breakpoint")
-  map("n", "<leader>dE",
-    function()
-      dap.set_exception_breakpoints("default")
-    end,
-    "Dap exception breakpoint")
-  map("n", "<leader>dR",
-    function()
-      dap.repl.toggle()
-      vim.cmd("wincmd p")
-      local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
-      if filetype == "dap-repl" then
-        vim.cmd("startinsert")
-      end
-    end,
-    "Dap repl toggle")
-  map("n", "<leader>dh",
-    function()
-      widgets.hover("<cexpr>", { title = "dap-hover" })
-    end,
-    "Dap hover")
+  map("n", "<leader>dq", breakpoints_quickfix, "Dap list breakpoints")
+  map("n", "<leader>dc", dap_continue, "Dap continue")
+  map("n", "<leader>dB", dap_set_breakpoint, "Dap condition breakpoint")
+  map("n", "<leader>dl", dap_set_logpoint, "Dap log breakpoint")
+  map("n", "<leader>dE", dap_set_exc_breakpoint, "Dap exception breakpoint")
+  map("n", "<leader>dR", dap_repl_toggle, "Dap repl toggle")
+  map("n", "<leader>dh", dap_hover, "Dap hover")
 end)

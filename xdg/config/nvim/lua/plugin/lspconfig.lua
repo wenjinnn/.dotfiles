@@ -50,6 +50,12 @@ later(function()
       },
     })
   end
+  local function inlay_hint_toggle()
+      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
+  end
+  local function list_workspace_folders()
+      vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end
   map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Lsp code action")
   map("n", "<leader>cl", vim.lsp.codelens.run, "Run codelens")
   map("n", "<leader>cL", vim.lsp.codelens.refresh, "Refresh codelens")
@@ -60,13 +66,6 @@ later(function()
   map("n", "<leader>Q", vim.diagnostic.setloclist, "Lsp diagnostic location list")
   map("n", "<leader>cI", vim.lsp.buf.incoming_calls, "Lsp incoming calls")
   map("n", "<leader>ch", vim.lsp.buf.outgoing_calls, "Lsp outgoing calls")
-  map("n", "<leader>cH",
-    function()
-      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
-    end,
-    "Lsp inlay hint toggle")
-  map("n", "<leader>cf", function()
-      vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end,
-    "Lsp list workspace folder")
+  map("n", "<leader>cH", inlay_hint_toggle, "Lsp inlay hint toggle")
+  map("n", "<leader>cf", list_workspace_folders, "Lsp list workspace folder")
 end)

@@ -12,16 +12,15 @@ now(function()
       width_preview = 40,
     },
   })
+  local function minifiles_open_current()
+    if vim.fn.filereadable(vim.fn.bufname("%")) > 0 then
+      MiniFiles.open(vim.api.nvim_buf_get_name(0))
+    else
+      MiniFiles.open()
+    end
+  end
   map("n", "<leader>fe", MiniFiles.open, "MiniFiles open")
-  map("n", "<leader>fE",
-    function()
-      if vim.fn.filereadable(vim.fn.bufname("%")) > 0 then
-        MiniFiles.open(vim.api.nvim_buf_get_name(0))
-      else
-        MiniFiles.open()
-      end
-    end,
-    "MiniFiles open current")
+  map("n", "<leader>fE", minifiles_open_current, "MiniFiles open current")
   vim.api.nvim_create_autocmd("User", {
     pattern = "MiniFilesActionRename",
     callback = function(event)
