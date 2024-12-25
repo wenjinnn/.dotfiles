@@ -66,10 +66,6 @@ just some filetype settings
 
 ## Defined environment variables cheatsheets:
 
-### Common
-
-`NVIM_SPELLFILE` nvim spell file location
-
 ### Dap
 
 `DAP_PROJECT_NAME` nvim-dap config for dap configuration `projectName`

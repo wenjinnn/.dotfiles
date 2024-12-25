@@ -43,7 +43,6 @@ opt.scrolloff = 5
 
 opt.spell = true
 opt.spelllang = { "en", "cjk" }
-opt.spellfile = os.getenv("NVIM_SPELLFILE") or ""
 opt.spelloptions:append({ "camel", "noplainbuffer" })
 
 opt.list = true
