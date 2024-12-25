@@ -46,3 +46,6 @@ wenjin
 json
 shantui
 linter
+textobject
+treesitter
+textobjects
