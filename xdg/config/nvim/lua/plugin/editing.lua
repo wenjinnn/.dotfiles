@@ -2,6 +2,7 @@ local in_vscode = require("util").in_vscode
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 local map = require("util").map
 
+-- textobject enhancement
 later(function()
   local gen_ai_spec = require("mini.extra").gen_ai_spec
   local gen_spec = require("mini.ai").gen_spec
@@ -31,6 +32,7 @@ later(function()
   })
 end)
 
+-- customize mini.splitjoin
 later(function()
   local gen_hook = require("mini.splitjoin").gen_hook
   local curly = { brackets = { "%b{}" } }
@@ -46,11 +48,13 @@ later(function()
   })
 end)
 
+-- setup mini.surround and disable original `s` functionality to reduce key wait time
 later(function()
   require("mini.surround").setup()
   vim.keymap.set({ "n", "x" }, "s", "<Nop>")
 end)
 
+-- treesitter related
 later(function()
   add({
     source = "nvim-treesitter/nvim-treesitter",
@@ -61,9 +65,7 @@ later(function()
       "JoosepAlviste/nvim-ts-context-commentstring",
     },
     hooks = {
-      post_checkout = function()
-        vim.cmd("TSUpdate")
-      end,
+      post_checkout = function() vim.cmd("TSUpdate") end,
     },
   })
   -- fix nvim-treesitter-textobjects occur an error when add it to nvim-treesitter depends
@@ -149,10 +151,12 @@ later(function()
   require("mini.pairs").setup()
 end)
 
+-- we don't need below plugins in vscode
 if in_vscode() then
   return
 end
 
+-- customize mini.sessions setup
 now(function()
   require("mini.sessions").setup({
     -- Whether to force possibly harmful actions (meaning depends on function)
@@ -194,6 +198,7 @@ later(function()
   map("n", "<leader>x", "<cmd>lua MiniBufremove.delete()<CR>", "Buf delete")
 end)
 
+-- basic lint setup
 later(function()
   add("mfussenegger/nvim-lint")
   local lint = require("lint")
@@ -208,6 +213,7 @@ later(function()
   })
 end)
 
+-- conform with some auto format setting
 later(function()
   add("stevearc/conform.nvim")
   require("conform").setup({
@@ -254,6 +260,7 @@ later(function()
   map("n", "<leader>cM", auto_format_toggle, "Auto format toggle")
 end)
 
+-- completion and snippets
 later(function()
   require("mini.completion").setup({
     window = {
