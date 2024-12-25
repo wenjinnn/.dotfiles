@@ -68,10 +68,6 @@ just some filetype settings
 
 ### Common
 
-`NVIM_MINI_DEPS_SNAP` mini.deps snap path, if not set, fallback to mini.deps default setting
-
-`TELESCOPE_FILE_IGNORE_PATTERNS` telescope.nvim file ignore patterns, if not set, the pattern is { "^.git/", "^node_modules/" }
-
 `NVIM_SPELLFILE` nvim spell file location
 
 ### Dap
