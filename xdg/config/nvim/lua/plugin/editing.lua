@@ -293,8 +293,11 @@ later(function()
 
   add("rafamadriz/friendly-snippets")
   local gen_loader = require("mini.snippets").gen_loader
+  local snippets_path = vim.fn.stdpath("config") .. "/snippets"
   require("mini.snippets").setup({
     snippets = {
+      -- Load custom file with global snippets first
+      gen_loader.from_file(snippets_path .. "/global.json"),
       -- Load snippets based on current language by reading files from
       -- "snippets/" subdirectories from 'runtimepath' directories.
       gen_loader.from_lang(),
@@ -303,7 +306,7 @@ later(function()
 
   add("chrisgrieser/nvim-scissors")
   require("scissors").setup({
-    snippetDir = vim.fn.stdpath("config") .. "/snippets",
+    snippetDir = snippets_path,
     jsonFormatter = "jq",
     backdrop = { enabled = false },
   })
