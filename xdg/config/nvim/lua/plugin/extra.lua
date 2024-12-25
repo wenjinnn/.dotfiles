@@ -27,7 +27,7 @@ end)
 
 later(function()
   -- ascii draw in neovim
-  add({ source = "jbyuki/venn.nvim" })
+  add("jbyuki/venn.nvim")
   map("v", "<leader>vv", ":VBox<cr>", "Draw a single line box or arrow")
   map("v", "<leader>vd", ":VBoxD<cr>", "Draw a double line box or arrow")
   map("v", "<leader>vh", ":VBoxH<cr>", "Draw a heavy line box or arrow")
@@ -41,7 +41,7 @@ end)
 vim.filetype.add({ extension = { ["http"] = "http" } })
 -- http client
 later(function()
-  add({ source = "mistweaverco/kulala.nvim" })
+  add("mistweaverco/kulala.nvim")
   require("kulala").setup({
     display_mode = "float",
     winbar = true,
@@ -143,7 +143,7 @@ end)
 
 -- search and replace tool
 later(function()
-  add({ source = "MagicDuck/grug-far.nvim" })
+  add("MagicDuck/grug-far.nvim")
   require("grug-far").setup({
     keymaps = {
       replace = { n = "<localleader>Fr" },
@@ -173,7 +173,7 @@ end)
 
 -- AI companion
 later(function()
-  add({ source = "olimorris/codecompanion.nvim" })
+  add("olimorris/codecompanion.nvim")
   local adapter = os.getenv("NVIM_AI_ADAPTER") or "ollama"
   local ollama_model = os.getenv("NVIM_OLLAMA_MODEL") or "llama3.2:latest"
   require("codecompanion").setup({
