@@ -1,6 +1,6 @@
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 now(function()
-  add({ source = "nvim-lua/plenary.nvim" })
+  add("nvim-lua/plenary.nvim")
 end)
 
 later(function()

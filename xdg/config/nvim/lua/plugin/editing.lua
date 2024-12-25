@@ -195,7 +195,7 @@ later(function()
 end)
 
 later(function()
-  add({ source = "mfussenegger/nvim-lint" })
+  add("mfussenegger/nvim-lint")
   local lint = require("lint")
   -- just use the default lint
   -- TODO maybe add more linter in future
@@ -209,7 +209,7 @@ later(function()
 end)
 
 later(function()
-  add({ source = "stevearc/conform.nvim" })
+  add("stevearc/conform.nvim")
   require("conform").setup({
     formatters_by_ft = {
       nix = { "alejandra" },
@@ -284,7 +284,7 @@ later(function()
 
   map("i", "<CR>", cr_action, { expr = true })
 
-  add({ source = "rafamadriz/friendly-snippets" })
+  add("rafamadriz/friendly-snippets")
   local gen_loader = require("mini.snippets").gen_loader
   require("mini.snippets").setup({
     snippets = {
@@ -294,7 +294,7 @@ later(function()
     },
   })
 
-  add({ source = "chrisgrieser/nvim-scissors" })
+  add("chrisgrieser/nvim-scissors")
   require("scissors").setup({
     snippetDir = vim.fn.stdpath("config") .. "/snippets",
     jsonFormatter = "jq",
@@ -303,7 +303,7 @@ later(function()
   map("n", "<leader>cS", "<cmd>ScissorsEditSnippet<cr>", "Snippet edit")
   map({ "n", "x" }, "<leader>cs", "<cmd>ScissorsAddNewSnippet<cr>", "Snippet add")
 
-  add({ source = "danymat/neogen" })
+  add("danymat/neogen")
   require("neogen").setup()
   map("n", "<leader>cA", "<cmd>Neogen<cr>", "Generate annotation")
 end)
