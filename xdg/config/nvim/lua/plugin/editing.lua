@@ -297,6 +297,8 @@ later(function()
   add({ source = "chrisgrieser/nvim-scissors" })
   require("scissors").setup({
     snippetDir = vim.fn.stdpath("config") .. "/snippets",
+    jsonFormatter = "jq",
+    backdrop = { enabled = false },
   })
   map("n", "<leader>cS", "<cmd>ScissorsEditSnippet<cr>", "Snippet edit")
   map({ "n", "x" }, "<leader>cs", "<cmd>ScissorsAddNewSnippet<cr>", "Snippet add")
