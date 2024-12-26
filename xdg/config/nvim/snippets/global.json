@@ -13,5 +13,20 @@
     "prefix": "ctime",
     "body": "$CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
     "description": "Insert current time (HH:MM:SS)"
+  },
+  "UUID": {
+    "prefix": "uuid",
+    "body": "$UUID",
+    "description": "Insert a version 4 UUID"
+  },
+  "Random digits": {
+    "prefix": "rd",
+    "body": "$RANDOM",
+    "description": "6 random Base-10 digits"
+  },
+  "Random hex digits": {
+    "prefix": "rdh",
+    "body": "$RANDOM_HEX",
+    "description": "6 random Base-16 digits"
   }
 }
