@@ -1,7 +1,5 @@
-local in_vscode = require("util").in_vscode
-if in_vscode() then
-  return
-end
+if vim.g.vscode then return end
+
 local now, later = MiniDeps.now, MiniDeps.later
 local map = require("util").map
 local feedkey = require("util").feedkey

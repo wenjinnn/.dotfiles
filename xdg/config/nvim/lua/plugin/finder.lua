@@ -1,8 +1,6 @@
-local in_vscode = require("util").in_vscode
+if vim.g.vscode then return end
+
 local map = require("util").map
-if in_vscode() then
-  return
-end
 local now, later = MiniDeps.now, MiniDeps.later
 
 now(function()

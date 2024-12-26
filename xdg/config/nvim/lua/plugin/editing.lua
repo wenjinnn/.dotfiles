@@ -1,4 +1,3 @@
-local in_vscode = require("util").in_vscode
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 local map = require("util").map
 
@@ -121,7 +120,7 @@ later(function()
     ignore_install = { "org" }, -- List of parsers to ignore installing
     auto_install = true,
     highlight = {
-      enable = not in_vscode(), -- false will disable the whole extension
+      enable = not vim.g.vscode, -- false will disable the whole extension
       additional_vim_regex_highlighting = false,
     },
     indent = { enable = true },
@@ -152,9 +151,7 @@ later(function()
 end)
 
 -- we don't need below plugins in vscode
-if in_vscode() then
-  return
-end
+if vim.g.vscode then return end
 
 -- customize mini.sessions setup
 now(function()
@@ -270,9 +267,8 @@ later(function()
     set_vim_settings = false,
   })
 
-  local keycode = vim.keycode or function(x)
-    return vim.api.nvim_replace_termcodes(x, true, true, true)
-  end
+  local keycode = vim.keycode or require("util").keycode
+
   local keys = {
     ["cr"] = keycode("<CR>"),
     ["ctrl-y"] = keycode("<C-y>"),
@@ -302,6 +298,16 @@ later(function()
       -- Load snippets based on current language by reading files from
       -- "snippets/" subdirectories from 'runtimepath' directories.
       gen_loader.from_lang(),
+      -- Load project-local snippets with `gen_loader.from_file()`
+      -- and relative path (file doesn't have to be present)
+      gen_loader.from_file(".vscode/project.code-snippets"),
+
+      -- Custom loader for language-specific project-local snippets
+      function(context)
+        local rel_path = ".vscode/" .. context.lang .. ".code-snippets"
+        if vim.fn.filereadable(rel_path) == 0 then return end
+        return MiniSnippets.read_file(rel_path)
+      end,
     },
   })
 
