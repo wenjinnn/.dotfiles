@@ -15,8 +15,9 @@ function M.make_opts(opts)
 end
 
 function M.setup(client, bufnr)
+  local augroup = require("util").augroup
   if client.server_capabilities.documentHighlightProvider then
-    local lsp_document_highlight = require("util").augroup("lsp_document_highlight", { clear = false })
+    local lsp_document_highlight = augroup("lsp_document_highlight", { clear = false })
     vim.api.nvim_clear_autocmds({
       buffer = bufnr,
       group = lsp_document_highlight,
@@ -40,7 +41,7 @@ function M.setup(client, bufnr)
   if client.supports_method("textDocument/codeLens", { bufnr = bufnr }) then
     vim.lsp.codelens.refresh({ bufnr = bufnr })
     vim.api.nvim_create_autocmd({ "BufEnter", "InsertLeave" }, {
-      group = require("util").augroup("lsp_codelens"),
+      group = augroup("lsp_codelens"),
       buffer = bufnr,
       callback = function()
         vim.lsp.codelens.refresh({ bufnr = bufnr })
@@ -54,7 +55,6 @@ function M.make_capabilities()
   capabilities.textDocument.completion.completionItem.resolveSupport = {
     properties = { "documentation" },
   }
-  -- capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
   return capabilities
 end
 
