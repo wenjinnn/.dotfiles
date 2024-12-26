@@ -16,10 +16,6 @@ lsp
 substituters
 param
 DTO
-acec
-wdcitri
-ruoyi
-aliyun
 apache
 auth
 localhost
@@ -28,7 +24,6 @@ neovim
 sql
 hewenjin
 ai
-wdciti
 stylua
 jdtls
 nvim
@@ -44,7 +39,6 @@ fcitx
 BIM
 wenjin
 json
-shantui
 linter
 textobject
 treesitter
