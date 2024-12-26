@@ -9,6 +9,10 @@
     ],
     "prefix": "autocmd"
   },
+  "invscode": {
+    "body": "if vim.g.vscode then return end",
+    "prefix": "invscode"
+  },
   "keymap": {
     "body": "vim.keymap.set(${1:mode}, ${2:lhs}, ${3:rhs}, $0)",
     "prefix": "keymap"

@@ -1,17 +1,5 @@
 local M = {}
 
--- test is in vscode
-function M.in_vscode()
-  return vim.g.vscode
-end
-
-M.CREATE_UNDO = vim.api.nvim_replace_termcodes("<c-G>u", true, true, true)
-function M.create_undo()
-  if vim.api.nvim_get_mode().mode == "i" then
-    vim.api.nvim_feedkeys(M.CREATE_UNDO, "n", false)
-  end
-end
-
 function M.setup_term_opt()
   vim.opt_local.number = false
   vim.opt_local.signcolumn = "no"
@@ -35,8 +23,12 @@ function M.delete_dap_terminals()
   end
 end
 
+function M.keycode(key)
+  return vim.api.nvim_replace_termcodes(key, true, true, true)
+end
+
 function M.feedkey(key, mode)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+  vim.api.nvim_feedkeys(M.keycode(key), mode, true)
 end
 
 function M.augroup(name, opts)

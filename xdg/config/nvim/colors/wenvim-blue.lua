@@ -4,6 +4,6 @@ local base_color = {
   foreground = "#c4c6cd",
 }
 require("mini.hues").setup(base_color)
-require("util.color").setup_terminal_color(base_color)
-require("util.color").setup_mini_hues_hl()
+require("util.color").setup_wenvim_color(base_color)
+
 vim.g.colors_name = "wenvim-blue"

@@ -38,4 +38,10 @@ function M.setup_mini_hues_hl()
   M.override_hl("DiagnosticHint", { italic = true })
   M.override_hl("DiagnosticOk", { italic = true })
 end
+
+function M.setup_wenvim_color(base_color)
+  M.setup_terminal_color(base_color)
+  M.setup_mini_hues_hl()
+end
+
 return M
