@@ -4,9 +4,10 @@ local lsp = require("util.lsp")
 function M.on_attach(client, bufnr)
   lsp.setup(client, bufnr)
   local map = lsp.buf_map(bufnr)
-  map("<leader>dm", "<cmd>lua require'dap-python'.test_method()<cr>", "Dap test method")
-  map("<leader>da", "<cmd>lua require'dap-python'.test_class()<cr>", "Dap test class")
-  map("<leader>dv", "<cmd>lua require'dap-python'.debug_selection()<cr>", "Dap debug selection", "v")
+  local dap_python = require("dap-python")
+  map("n", "<leader>dm", dap_python.test_method, "Dap test method")
+  map("n", "<leader>da", dap_python.test_class, "Dap test class")
+  map("v", "<leader>dv", dap_python.debug_selection, "Dap debug selection")
 end
 
 return M

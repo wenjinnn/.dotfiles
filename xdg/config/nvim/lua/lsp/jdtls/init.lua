@@ -28,31 +28,22 @@ end
 
 function M.setup_jdtls_buf_keymap(bufnr)
   local map = lsp.buf_map(bufnr)
-  map("<leader>cC", "<cmd>JdtCompile full<CR>", "Jdt compile full")
-  map("<leader>cc", "<cmd>JdtCompile incremental<CR>", "Jdt compile incremental")
-  map("<leader>cu", "<cmd>JdtUpdateHotcode<CR>", "Jdt update hotcode")
-  map("<leader>cg", "<cmd>lua require'jdtls.tests'.generate()<cr>", "Jdt test generate")
-  map("<leader>co", "<cmd>lua require'jdtls'.organize_imports()<cr>", "Jdt Organize Imports")
-  map("<leader>cv", "<cmd>lua require'jdtls'.extract_variable()<cr>", "Jdt Extract Variable")
-  map("<leader>cT", "<cmd>lua require'jdtls.tests'.goto_subjects()<cr>", "Jdt Test Goto Subjects")
+  local jdtls_tests = require("jdtls.tests")
+  map("n", "<leader>cC", "<cmd>JdtCompile full<CR>", "Jdt compile full")
+  map("n", "<leader>cc", "<cmd>JdtCompile incremental<CR>", "Jdt compile incremental")
+  map("n", "<leader>cu", "<cmd>JdtUpdateHotcode<CR>", "Jdt update hotcode")
+  map("n", "<leader>cg", jdtls_tests.generate, "Jdt test generate")
+  map("n", "<leader>co", jdtls.organize_imports, "Jdt Organize Imports")
+  map("n", "<leader>cv", jdtls.extract_variable, "Jdt Extract Variable")
+  map("n", "<leader>cT", jdtls_tests.goto_subjects, "Jdt Test Goto Subjects")
   -- If using nvim-dap
   -- This requires java-debug and vscode-java-test bundles, see install steps in this README further below.
-  map("<leader>da", "<cmd>lua require'jdtls'.test_class()<cr>", "Jdt Test Class")
-  map("<leader>dm", "<cmd>lua require'jdtls'.test_nearest_method()<cr>", "Jdt Test Method")
-  map("<leader>cV", "<cmd>lua require'jdtls'.extract_constant()<cr>", "Jdt Extract Constant")
-  map("<leader>cv",
-    "<cmd>lua require'jdtls'.extract_variable(true)<cr>",
-    "Jdt Extract Variable",
-    "v")
-  map("<leader>cV",
-    "<cmd>lua require'jdtls'.extract_constant(true)<cr>",
-    "Jdt Extract Constant",
-    "v")
-  map(
-    "<leader>cm",
-    "<cmd>lua require'jdtls'.extract_method(true)<cr>",
-    "Jdt Extract Method",
-    "v")
+  map("n", "<leader>da", jdtls.test_class, "Jdt Test Class")
+  map("n", "<leader>dm", jdtls.test_nearest_method, "Jdt Test Method")
+  map("n", "<leader>cV", jdtls.extract_constant, "Jdt Extract Constant")
+  map("v", "<leader>cv", function() jdtls.extract_variable(true) end, "Jdt Extract Variable")
+  map("v", "<leader>cV", function() jdtls.extract_constant(true) end, "Jdt Extract Constant")
+  map("v", "<leader>cm", function() jdtls.extract_method(true) end, "Jdt Extract Method")
 end
 
 function M.start()
@@ -61,19 +52,14 @@ function M.start()
     M.setup_jdtls_buf_keymap(bufnr)
     lsp.setup(client, bufnr)
   end
-  local root_dir = require("jdtls.setup").find_root({ "mvnw", "gradlew", ".mvn", ".git", ".svn" })
-  local workspace_name, _ = string.gsub(vim.fn.fnamemodify(root_dir, ":p"), "/", "_")
+  local root_dir = require("jdtls.setup").find_root({ "mvnw", "gradlew", ".git", ".svn" })
+  local ws_name, _ = string.gsub(vim.fn.fnamemodify(root_dir, ":p"), "/", "_")
   local jdtls_data_path = vim.fn.stdpath("data") .. "/jdtls"
-  local bundles = {
-    vim.fn.glob(
-      (os.getenv("JAVA_DEBUG_PATH") or jdtls_data_path) .. "/server/com.microsoft.java.debug.plugin-*.jar"
-    ),
-  }
-  vim.list_extend(
-    bundles,
-    vim.split(vim.fn.glob((os.getenv("JAVA_TEST_PATH") or jdtls_data_path) .. "/server/*.jar", true),
-      "\n")
-  )
+  local jdtls_debug_path = os.getenv("JAVA_DEBUG_PATH") or jdtls_data_path
+  local jdtls_test_path = os.getenv("JAVA_TEST_PATH") or jdtls_data_path
+  local bundles = { vim.fn.glob(jdtls_debug_path .. "/server/com.microsoft.java.debug.plugin-*.jar") }
+  local test_bundles = vim.split(vim.fn.glob(jdtls_test_path .. "/server/*.jar", true), "\n")
+  vim.list_extend(bundles, test_bundles)
   local extendedClientCapabilities = jdtls.extendedClientCapabilities
   extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
   local jdtls_cache_path = vim.fn.stdpath("cache") .. "/jdtls"
@@ -106,7 +92,7 @@ function M.start()
       "-configuration",
       jdtls_cache_path .. "/config",
       "-data",
-      jdtls_cache_path .. "/workspace/" .. workspace_name,
+      jdtls_cache_path .. "/workspace/" .. ws_name,
     },
   }
 
