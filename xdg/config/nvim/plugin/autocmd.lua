@@ -64,23 +64,11 @@ if vim.fn.has("fcitx5") then
   au({ "InsertLeave" }, {
     group = augroup("fcitx5_rime"),
     pattern = "*",
-    callback = function(event)
-      vim.cmd(
-        "silent call system('busctl call --user org.fcitx.Fcitx5 /rime org.fcitx.Fcitx.Rime1 SetAsciiMode b 1')"
-      )
+    callback = function()
+      vim.cmd("silent call system('busctl call --user org.fcitx.Fcitx5 /rime org.fcitx.Fcitx.Rime1 SetAsciiMode b 1')")
     end,
   })
 end
-
--- force commentstring to include spaces
-au({ "CursorHold", "FileType" }, {
-  desc = "Force commentstring to include spaces",
-  group = augroup("commentstring_spaces"),
-  callback = function(event)
-    local cs = vim.bo[event.buf].commentstring
-    vim.bo[event.buf].commentstring = cs:gsub("(%S)%%s", "%1 %%s"):gsub("%%s(%S)", "%%s %1")
-  end,
-})
 
 -- Copy/Paste when using wsl
 au("VimEnter", {
