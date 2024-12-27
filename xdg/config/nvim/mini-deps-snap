@@ -8,7 +8,7 @@ return {
   ["kulala.nvim"] = "c7efcd01afafae0ab68c2a77cd050b9795edd8ad",
   ["markdown-preview.nvim"] = "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee",
   ["mini.nvim"] = "c78332b4c71ad3c2a09efe6acd0a51283627258f",
-  neogen = "4e256e2bca92e530608880178ff853a3c5001048",
+  neogen = "dd0301bfba1f83a3bc009b5430fce7aa3cee6941",
   ["nvim-dap"] = "665d3569a86395fe0dab85efbdb26d7d2ee57e49",
   ["nvim-dap-python"] = "34282820bb713b9a5fdb120ae8dd85c2b3f49b51",
   ["nvim-dap-virtual-text"] = "df66808cd78b5a97576bbaeee95ed5ca385a9750",
