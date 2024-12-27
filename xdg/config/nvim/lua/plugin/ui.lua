@@ -39,7 +39,6 @@ end)
 now(function()
   require("mini.statusline").setup()
   require("mini.tabline").setup()
-  require("mini.cursorword").setup()
   require("mini.indentscope").setup({
     draw = {
       animation = require("mini.indentscope").gen_animation.none(),
