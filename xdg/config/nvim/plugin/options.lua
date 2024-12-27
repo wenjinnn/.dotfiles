@@ -70,7 +70,7 @@ opt.confirm = true
 opt.updatetime = 500
 opt.fileencodings:append({ "gbk", "cp936", "gb2312", "gb18030", "big5", "euc-jp", "euc-kr", "prc" })
 opt.termguicolors = true
-opt.completeopt:append { "menuone", "noinsert" }
+opt.completeopt = { "menuone", "noinsert" }
 opt.pumheight = 20
 opt.sessionoptions:append({ "winpos", "globals", "skiprtp" })
 opt.wildmode = "longest:full,full"
