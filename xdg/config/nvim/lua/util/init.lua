@@ -1,10 +1,12 @@
 local M = {}
 
-function M.setup_term_opt()
-  vim.opt_local.number = false
-  vim.opt_local.signcolumn = "no"
-  vim.opt_local.relativenumber = false
-  vim.opt_local.spell = false
+function M.setup_term_opt(event)
+  local bufnr = event.buf
+  vim.bo[bufnr].number = false
+  vim.bo[bufnr].signcolumn = "no"
+  vim.bo[bufnr].relativenumber = false
+  vim.bo[bufnr].spell = false
+  vim.b[bufnr].miniindentscope_disable = true
 end
 
 function M.delete_dap_terminals()
