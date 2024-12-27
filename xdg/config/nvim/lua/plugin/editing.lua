@@ -330,10 +330,7 @@ later(function()
   map("n", "<leader>cS", "<cmd>ScissorsEditSnippet<cr>", "Snippet edit")
   map({ "n", "x" }, "<leader>cs", "<cmd>ScissorsAddNewSnippet<cr>", "Snippet add")
 
-  add({
-    source = "echasnovski/neogen",
-    checkout = "mini-snippets",
-  })
+  add("danymat/neogen")
   require("neogen").setup({ snippet_engine = "mini" })
   map("n", "<leader>cA", "<cmd>Neogen<cr>", "Generate annotation")
 end)
