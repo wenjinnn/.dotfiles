@@ -148,6 +148,16 @@ later(function()
   require("mini.align").setup()
   require("mini.bracketed").setup()
   require("mini.pairs").setup()
+  require("mini.operators").setup({ exchange = { prefix = "gX" } })
+  require("mini.move").setup()
+  require("mini.comment").setup()
+  require("mini.trailspace").setup()
+  vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+    callback = function()
+      MiniTrailspace.trim()
+      MiniTrailspace.trim_last_lines()
+    end,
+  })
 end)
 
 -- we don't need below plugins in vscode
