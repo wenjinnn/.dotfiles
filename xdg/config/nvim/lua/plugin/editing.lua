@@ -274,6 +274,20 @@ later(function()
       info = { border = "solid" },
       signature = { border = "solid" },
     },
+    lsp_completion = {
+      process_items = function(item, base)
+        local detail_limit = vim.b.minicompletion_detail_limit or 25;
+        -- Limit item detail field width
+        local res = MiniCompletion.default_process_items(item, base)
+        for _, res_item in pairs(res) do
+          local detail = res_item.detail
+          if detail ~= nil and detail:len() > detail_limit then
+            res_item.detail = detail:sub(0, detail_limit) .. "…"
+          end
+        end
+        return res
+      end,
+    },
     set_vim_settings = false,
   })
 
