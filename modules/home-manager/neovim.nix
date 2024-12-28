@@ -38,7 +38,7 @@
       redis
       oracle-instantclient
     ])
-    ++ (with pkgs.python311Packages; [
+    ++ (with pkgs.python3Packages; [
       python-lsp-server
       pip
     ]);

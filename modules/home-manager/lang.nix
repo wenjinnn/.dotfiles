@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    (python311.withPackages (p: [
+    (python3.withPackages (p: [
       p.python-pam
       p.debugpy
       p.msal
