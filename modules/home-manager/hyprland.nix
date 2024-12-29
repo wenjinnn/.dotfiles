@@ -59,7 +59,8 @@ in {
     enable = true;
     settings = {
       ipc = "on";
-      splash = true;
+      # temporary disable splash since it cause hyprpaper not work
+      # splash = true;
     };
   };
 
