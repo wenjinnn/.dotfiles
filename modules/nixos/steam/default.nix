@@ -17,8 +17,6 @@
     };
   };
   hardware.xone.enable = true; # support for the xbox controller USB dongle
-  hardware.xpadneo.enable = true;
-
   services.getty.autologinUser = username;
   environment = {
     systemPackages = [pkgs.mangohud];
