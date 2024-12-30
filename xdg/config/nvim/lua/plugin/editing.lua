@@ -277,8 +277,9 @@ later(function()
     lsp_completion = {
       process_items = function(item, base)
         local detail_limit = vim.b.minicompletion_detail_limit or 25;
-        -- Limit item detail field width
-        local res = MiniCompletion.default_process_items(item, base)
+        -- fuzzy search and Limit item detail field width
+        -- TODO use builtin completeopt fuzzy option after 0.11 release
+        local res = require("mini.fuzzy").process_lsp_items(item, base)
         for _, res_item in pairs(res) do
           local detail = res_item.detail
           if detail ~= nil and detail:len() > detail_limit then
