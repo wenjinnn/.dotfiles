@@ -19,6 +19,7 @@
     fonts
     hyprland
     bluetooth
+    steam
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
@@ -42,9 +43,10 @@
 
   services.ollama.acceleration = "rocm";
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.kernelParams = ["amdgpu.pcie_gen_cap=0x40000"];
+  hardware.xone.enable = true;
+  hardware.xpadneo.enable = true;
 
   systemd.packages = with pkgs; [lact];
   systemd.services.lactd.wantedBy = ["multi-user.target"];

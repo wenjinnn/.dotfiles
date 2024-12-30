@@ -21,4 +21,5 @@
   mihomo = import ./mihomo.nix;
   sops = import ./sops.nix;
   mail = import ./mail.nix;
+  steam = import ./steam;
 }
