@@ -43,12 +43,12 @@
 
   services.ollama.acceleration = "rocm";
 
-
   boot.kernelParams = ["amdgpu.pcie_gen_cap=0x40000"];
-  hardware.xone.enable = true;
-  hardware.xpadneo.enable = true;
 
-  systemd.packages = with pkgs; [lact];
+  systemd.packages = with pkgs; [
+    nvtopPackages.full
+    lact
+  ];
   systemd.services.lactd.wantedBy = ["multi-user.target"];
   services = {
     printing.enable = true;
