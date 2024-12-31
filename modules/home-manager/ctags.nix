@@ -10,6 +10,8 @@
     universal-ctags
   ];
   home.file = {
-    ".config/ctags".source = ../../xdg/config/ctags;
+    ".config/ctags".source =
+      config.lib.file.mkOutOfStoreSymlink
+      "${config.home.sessionVariables.DOTFILES}/xdg/config/ctags";
   };
 }

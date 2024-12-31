@@ -7,11 +7,12 @@
   ...
 }: {
   home.file = {
-    ".config/fcitx5".source = ../../xdg/config/fcitx5;
-    ".local/share/fcitx5" = {
-      source = ../../xdg/data/fcitx5;
-      recursive = true;
-    };
+    ".config/fcitx5".source =
+      config.lib.file.mkOutOfStoreSymlink
+      "${config.home.sessionVariables.DOTFILES}/xdg/config/fcitx5";
+    ".local/share/fcitx5".source =
+      config.lib.file.mkOutOfStoreSymlink
+      "${config.home.sessionVariables.DOTFILES}/xdg/data/fcitx5";
   };
   # fcitx5
   i18n.inputMethod = {
