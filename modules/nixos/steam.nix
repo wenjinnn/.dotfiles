@@ -2,7 +2,35 @@
   pkgs,
   username,
   ...
-}: {
+}: let
+  gs = pkgs.writeShellScript "gs" ''
+    set -xeuo pipefail
+
+    gamescopeArgs=(
+        --adaptive-sync # VRR support
+        --hdr-enabled
+        --mangoapp # performance overlay
+        --rt
+        --steam
+    )
+    steamArgs=(
+        -pipewire-dmabuf
+        -tenfoot
+    )
+    mangoConfig=(
+        cpu_temp
+        gpu_temp
+        ram
+        vram
+    )
+    mangoVars=(
+        MANGOHUD=1
+        MANGOHUD_CONFIG="$(IFS=,; echo "''${mangoConfig[*]}")"
+    )
+    export "''${mangoVars[@]}"
+    exec gamescope "''${gamescopeArgs[@]}" -- steam "''${steamArgs[@]}"
+  '';
+in {
   programs = {
     gamescope = {
       enable = true;
@@ -17,11 +45,12 @@
     };
   };
   hardware.xone.enable = true; # support for the xbox controller USB dongle
+  hardware.xpadneo.enable = true;
   services.getty.autologinUser = username;
   environment = {
     systemPackages = [pkgs.mangohud];
     loginShellInit = ''
-      [[ "$(tty)" = "/dev/tty1" ]] && ./gs.sh
+      [[ "$(tty)" = "/dev/tty2" ]] && ${gs}
     '';
   };
 }
