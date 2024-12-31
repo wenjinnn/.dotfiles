@@ -16,15 +16,15 @@ Repo's structure base on [nix-starter-config#standard](https://github.com/Mister
 # Stuff here
 
 * Editor: a well [configured nvim](https://github.com/wenjinnn/config/tree/nixos/xdg/config/nvim) (tested startup time are less than 30ms) that follows the [KISS principle](https://en.wikipedia.org/wiki/KISS_principle), you can try it with my single nvim configuration repo [wenvim](https://github.com/wenjinnn/wenvim)
-* Compositor: [Hyprland](https://github.com/hyprwm/Hyprland)  
-* Shell: [ags](https://github.com/Aylur/ags)  
+* Compositor: [Hyprland](https://github.com/hyprwm/Hyprland)
+* Shell: [ags](https://github.com/Aylur/ags)
 * Terminal emulator: [foot](https://codeberg.org/dnkl/foot)
 * Wallpaper: [hyprpaper](https://github.com/hyprwm/hyprpaper) and some small script, [random choose a pic](https://github.com/wenjinnn/config/blob/4748ecfcd14b1f4c8e780789c4eb40ca1688629e/xdg/config/ags/service/wallpaper.ts#L79) to switch to it, and [fetchBing](https://github.com/wenjinnn/config/blob/4748ecfcd14b1f4c8e780789c4eb40ca1688629e/xdg/config/ags/service/wallpaper.ts#L49-L82) for download daliy bingwallpaper and switch to immediately.
 
 The [ags config](https://github.com/wenjinnn/config/tree/nixos/xdg/config/ags) base on [Aylur/dotfiles](https://github.com/Aylur/dotfiles), with these different:
 
-* Add hibernate button for powermenu, need to setup swap to make it work.  
-* Use [hyprlock](https://github.com/hyprwm/hyprlock) instead of lockscreen.js (more security, see this [issue](https://github.com/Aylur/dotfiles/issues/72))  
+* Add hibernate button for powermenu, need to setup swap to make it work.
+* Use [hyprlock](https://github.com/hyprwm/hyprlock) instead of lockscreen.js (more security, see this [issue](https://github.com/Aylur/dotfiles/issues/72))
 * Add a clipboard menu depends on [cliphist](https://github.com/sentriz/cliphist), to trigger it, type `:cp` when launcher active
 * Ocr for screenshot powered by [tesseract](https://github.com/tesseract-ocr/tesseract)
 * Some bug fix for chinese font and [more](https://github.com/Aylur/dotfiles/issues/122)
@@ -36,8 +36,8 @@ The [ags config](https://github.com/wenjinnn/config/tree/nixos/xdg/config/ags) b
 
 1. The clipboard menu item will be truncated if your cliphist item has new line character,
 this mean's that any item after this specific item will be disappear in clipboard menu,
-but don't worry, the data is not damaged, you can find that specific item via lookup the `cliphist list` output
-and find the specific item id then delete it via `echo "<specific item id>" | cliphist delete`, then restart ags.  
+but don't worry, the data still there, you can find that specific item via lookup the `cliphist list` output
+and find the specific item id then delete it via `echo "<specific item id>" | cliphist delete`, then restart ags.
 This is a known issue that related to ags, it will truncated program output if it encountered a new line character, but I'm not sure whether it's ags problem or GTK api problem currently. I'll fix it by commit some PR to upstream if I got some free time.
 2. At this point, the ags config is only compatible with ags v1, I'll move to ags v2 at future.
 
@@ -45,22 +45,22 @@ This is a known issue that related to ags, it will truncated program output if i
 
 Almost as same as [Aylur/dotfiles](https://github.com/Aylur/dotfiles) (except asusctl) with these additional pkg:
 
-* cliphist  
+* cliphist
 * tesseract
 * jq
 
 # Installation
 
 > [!NOTE]
-> You can not use this repo directly for I'm using [sops-nix](https://github.com/Mic92/sops-nix) to manage my secrets in some modules. 
+> You can not use this repo directly for I'm using [sops-nix](https://github.com/Mic92/sops-nix) to manage my secrets in some modules, you won't pass the compile.
 > Even you remove all the modules that using sops secrets,
-> the part of nixos configuration still has many custom settings that may not suitable for you machine,
+> the other parts still has many custom settings that may not suitable for you machine,
 > use it directly maybe damage your system.
 > Please always check the code before you use it.
 
 For NixOS users:
 
-Replace [hardware-configuration.nix](https://github.com/wenjinnn/config/blob/nixos/nixos/hosts/nixos/hardware-configuration.nix) with your own, and change the [username](https://github.com/wenjinnn/config/blob/1d08b37c56696a953e1c40c0ea9307acf0c1539d/flake.nix#L63) variable,  
+Replace [hardware-configuration.nix](https://github.com/wenjinnn/config/blob/nixos/nixos/hosts/nixos/hardware-configuration.nix) with your own, and change the [username](https://github.com/wenjinnn/config/blob/1d08b37c56696a953e1c40c0ea9307acf0c1539d/flake.nix#L63) variable,
 you may also need remove this [line](https://github.com/wenjinnn/config/blob/3c58b72f83b4a4e421ef0fc72a808e2ce31ca68b/flake.nix#L94) and other module that using sops secrets.
 from nixos hardware or replace it with your hardware model. Then execute in local repo path:
 ```
