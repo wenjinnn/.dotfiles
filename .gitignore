@@ -1,3 +1,6 @@
 **/result
 **/.direnv/
 **/tags
+xdg/config/fcitx5/conf/cached_layouts
+xdg/data/fcitx5/rime/build
+xdg/data/fcitx5/rime/luna_pinyin.userdb/
