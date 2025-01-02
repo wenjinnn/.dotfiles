@@ -14,6 +14,10 @@ export const uptime = Variable(0, {
     ],
 })
 
+export const tlpmode = Variable("AC", {
+    poll: [1000, "tlp-stat -m"],
+})
+
 export const distro = {
     id: GLib.get_os_info("ID"),
     logo: GLib.get_os_info("LOGO"),

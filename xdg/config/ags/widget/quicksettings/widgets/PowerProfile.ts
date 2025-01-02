@@ -1,23 +1,19 @@
 import icons from "lib/icons"
+import { bash } from "lib/utils"
 import { ArrowToggleButton, Menu } from "../ToggleButton"
+import { tlpmode } from "lib/variables"
 
 
-const pp = await Service.import("powerprofiles")
-const profile = pp.bind("active_profile")
-const profiles = pp.profiles.map(p => p.Profile)
-
-const pertty = (str: string) => str
-    .split("-")
-    .map(str => `${str.at(0)?.toUpperCase()}${str.slice(1)}`)
-    .join(" ")
+const profile = tlpmode.bind()
+const profiles = ["AC", "battery"]
 
 export const ProfileToggle = () => ArrowToggleButton({
     name: "power-profile",
     icon: profile.as(p => icons.powerprofile[p]),
-    label: profile.as(pertty),
-    connection: [pp, () => pp.active_profile !== profiles[0]],
-    activate: () => pp.active_profile = profiles[2],
-    deactivate: () => pp.active_profile = profiles[0],
+    label: profile,
+    connection: [tlpmode, () => tlpmode.value === profiles[0]],
+    activate: () => bash("pkexec tlp ac"),
+    deactivate: () => bash("pkexec tlp bat"),
     activateOnArrow: false,
 })
 
@@ -34,11 +30,11 @@ export const ProfileSelector = () => Menu({
                     vertical: true,
                     children: profiles.map(prof =>
                         Widget.Button({
-                            on_clicked: () => pp.active_profile = prof,
+                            on_clicked: () => bash(`pkexec tlp ${prof}`),
                             child: Widget.Box({
                                 children: [
                                     Widget.Icon(icons.powerprofile[prof]),
-                                    Widget.Label(pertty(prof)),
+                                    Widget.Label(prof),
                                 ],
                             }),
                         }),

@@ -69,7 +69,6 @@
     devmon.enable = true;
     upower.enable = true;
     udisks2.enable = true;
-    power-profiles-daemon.enable = true;
     accounts-daemon.enable = true;
     gnome = {
       glib-networking.enable = true;
