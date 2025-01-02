@@ -4,3 +4,5 @@
 xdg/config/fcitx5/conf/cached_layouts
 xdg/data/fcitx5/rime/build
 xdg/data/fcitx5/rime/luna_pinyin.userdb/
+xdg/data/fcitx5/rime/easy_en.userdb/
+xdg/data/fcitx5/rime/user.yaml
