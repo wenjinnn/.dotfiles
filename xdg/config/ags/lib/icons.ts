@@ -1,3 +1,5 @@
+import AccountsService10 from "gi://AccountsService?version=1.0"
+
 export const substitutes = {
     "transmission-gtk": "transmission",
     "blueberry.py": "blueberry",
@@ -75,8 +77,8 @@ export default {
     },
     powerprofile: {
         balanced: "power-profile-balanced-symbolic",
-        "power-saver": "power-profile-power-saver-symbolic",
-        performance: "power-profile-performance-symbolic",
+        battery: "power-profile-power-saver-symbolic",
+        AC: "power-profile-performance-symbolic",
     },
     battery: {
         charging: "battery-flash-symbolic",

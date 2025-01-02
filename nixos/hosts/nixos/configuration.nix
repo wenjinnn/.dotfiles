@@ -52,9 +52,20 @@
   services = {
     printing.enable = true;
     flatpak.enable = true;
-    tlp.settings = {
-      INTEL_GPU_MIN_FREQ_ON_AC = 300;
-      INTEL_GPU_MIN_FREQ_ON_BAT = 300;
+    tlp = {
+      enable = true;
+      settings = {
+        INTEL_GPU_MIN_FREQ_ON_AC = 300;
+        INTEL_GPU_MIN_FREQ_ON_BAT = 300;
+        PLATFORM_PROFILE_ON_AC = "performance";
+        PLATFORM_PROFILE_ON_BAT = "balanced";
+
+        CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+        CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_performance";
+
+        CPU_BOOST_ON_AC = 1;
+        CPU_BOOST_ON_BAT = 0;
+      };
     };
   };
 

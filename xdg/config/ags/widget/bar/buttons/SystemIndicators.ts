@@ -1,15 +1,15 @@
 import PanelButton from "../PanelButton"
 import icons from "lib/icons"
+import { tlpmode } from "lib/variables"
 
 const notifications = await Service.import("notifications")
 const bluetooth = await Service.import("bluetooth")
 const audio = await Service.import("audio")
 const network = await Service.import("network")
-const powerprofiles = await Service.import("powerprofiles")
 
 const ProfileIndicator = () => Widget.Icon()
-    .bind("visible", powerprofiles, "active_profile", p => p !== "Balanced")
-    .bind("icon", powerprofiles, "active_profile", p => icons.powerprofile[p])
+    .bind("visible", tlpmode, "value", p => p)
+    .bind("icon", tlpmode, "value", p => icons.powerprofile[p])
 
 const MicrophoneIndicator = () => Widget.Icon()
     .hook(audio, self => self.visible =
