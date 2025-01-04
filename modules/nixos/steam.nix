@@ -42,13 +42,19 @@ in {
       dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
       localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
       gamescopeSession.enable = true;
+      extest.enable = true;
+      extraCompatPackages = with pkgs; [proton-ge-bin];
+      extraPackages = with pkgs; [gamescope];
     };
   };
   hardware.xone.enable = true; # support for the xbox controller USB dongle
   hardware.xpadneo.enable = true;
   services.getty.autologinUser = username;
   environment = {
-    systemPackages = [pkgs.mangohud];
+    systemPackages = with pkgs; [
+      mangohud
+      gamemode
+    ];
     loginShellInit = ''
       [[ "$(tty)" = "/dev/tty2" ]] && ${gs}
     '';
