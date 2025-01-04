@@ -48,13 +48,13 @@
     JAVA_17_HOME = "${pkgs.jdk17}/lib/openjdk";
     JAVA_21_HOME = "${pkgs.jdk21}/lib/openjdk";
   };
-  home.file = {
-    ".config/nvim" = {
-      source =
-        config.lib.file.mkOutOfStoreSymlink
-        "${config.home.sessionVariables.DOTFILES}/xdg/config/nvim";
+  xdg.configFile = {
+    nvim = {
+      source = ../../xdg/config/nvim;
+      # config.lib.file.mkOutOfStoreSymlink
+      # "${config.home.sessionVariables.DOTFILES}/xdg/config/nvim";
     };
-    ".config/vale/.vale.ini".text = ''
+    "vale/.vale.ini".text = ''
       MinAlertLevel = suggestion
 
       [*]
