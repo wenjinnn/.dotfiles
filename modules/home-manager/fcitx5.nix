@@ -6,13 +6,14 @@
   pkgs,
   ...
 }: {
-  home.file = {
-    ".config/fcitx5".source =
-      config.lib.file.mkOutOfStoreSymlink
-      "${config.home.sessionVariables.DOTFILES}/xdg/config/fcitx5";
-    ".local/share/fcitx5".source =
-      config.lib.file.mkOutOfStoreSymlink
-      "${config.home.sessionVariables.DOTFILES}/xdg/data/fcitx5";
+  xdg.configFile = {
+    "fcitx5/profile" = {
+      source = ../../xdg/config/fcitx5/profile;
+      # every time fcitx5 switch input method, it will modify ~/.config/fcitx5/profile,
+      # so we need to force replace it in every rebuild to avoid file conflict.
+      force = true;
+    };
+    "fcitx5/conf/classicui.conf".source = ../../xdg/config/fcitx5/conf/classicui.conf;
   };
   # fcitx5
   i18n.inputMethod = {
