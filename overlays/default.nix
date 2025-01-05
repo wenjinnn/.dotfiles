@@ -32,37 +32,6 @@ in rec {
           gst-plugins-bad
         ]);
     });
-    # fix hyprland switch workspace event error patch
-    ags = prev.ags.overrideAttrs (old: {
-      src = prev.fetchFromGitHub {
-        owner = "wenjinnn";
-        repo = "ags";
-        rev = "08043a95130f674b621370260bc153769e167d2e";
-        hash = "sha256-8fhWCcixq0lR/AhZG/U8Kcw6UPOMxM571WiQ2demcoE=";
-        fetchSubmodules = true;
-      };
-      buildInputs =
-        old.buildInputs
-        ++ (with prev.pkgs; [
-          accountsservice
-          gtk3
-          libdbusmenu-gtk3
-          gvfs
-          libnotify
-          pam
-        ]);
-    });
-    # rename astal to ags greeter
-    ags-greeter = final.callPackage ./ags-greeter {};
-    # IM support patch
-    swappy = prev.swappy.overrideAttrs (old: {
-      src = prev.fetchFromGitHub {
-        owner = "jtheoof";
-        repo = "swappy";
-        rev = "fca4f6dcdb05c78ad63a0924412a4ef3345484a0";
-        hash = "sha256-gwlUklfr/NA7JIkB9YloS9f8+3h5y3rSs3ISeVXAPZk=";
-      };
-    });
     # rss2email from main branch that support lmtp feature
     rss2email = prev.rss2email.overrideAttrs (old: {
       src = prev.pkgs.fetchFromGitHub {
