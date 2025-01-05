@@ -23,4 +23,5 @@
   mail = import ./mail.nix;
   steam = import ./steam.nix;
   theme = import ./theme.nix;
+  fcitx5 = import ./fcitx5.nix;
 }
