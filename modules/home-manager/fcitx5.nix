@@ -13,7 +13,20 @@
       # so we need to force replace it in every rebuild to avoid file conflict.
       force = true;
     };
-    "fcitx5/conf/classicui.conf".source = ../../xdg/config/fcitx5/conf/classicui.conf;
+    "fcitx5/config".source = ./config;
+    "fcitx5/conf/classicui.conf".source = ./conf/classicui.conf;
+  };
+  # rime sync dir link to private repo
+  xdg.dataFile = {
+    "fcitx5/rime/sync" = {
+      source =
+        config.lib.file.mkOutOfStoreSymlink
+        "${config.home.sessionVariables.ARCHIVE}/rime/";
+    };
+  };
+  home.sessionVariables = {
+    # fix fcitx5 gtk module dark theme not work, can be remove after this PR merged: https://github.com/nix-community/home-manager/pull/5431
+    GTK_IM_MODULE = lib.mkForce "";
   };
   # fcitx5
   i18n.inputMethod = {
@@ -31,7 +44,6 @@
         ];
       })
       fcitx5-mozc
-      fcitx5-chinese-addons
       fcitx5-gtk
     ];
   };
