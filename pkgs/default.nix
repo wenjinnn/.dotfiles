@@ -3,7 +3,8 @@
 {pkgs, ...}: {
   # example = pkgs.callPackage ./example { };
   bingwallpaper-get = pkgs.callPackage ./bingwallpaper-get {};
-  swww-switch = pkgs.callPackage ./swww-switch {};
+  wallpaper-switch = pkgs.callPackage ./wallpaper-switch {};
   fhs = pkgs.callPackage ./fhs {};
   wemeet = pkgs.callPackage ./wemeet {};
+  rofi-network-manager = pkgs.callPackage ./rofi-network-manager {};
 }

@@ -5,7 +5,6 @@
     server.enable = true;
     settings = {
       main = {
-        font = "monospace:size=12";
         letter-spacing = 0;
         dpi-aware = "no";
         bold-text-in-bright = "no";

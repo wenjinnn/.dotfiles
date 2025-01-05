@@ -137,6 +137,7 @@
     trashy
     w3m
     nix-index
+    networkmanagerapplet
     # for nvim dict
     wordnet
     # nix related
