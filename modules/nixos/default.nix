@@ -22,4 +22,5 @@
   sops = import ./sops.nix;
   mail = import ./mail.nix;
   steam = import ./steam.nix;
+  theme = import ./theme.nix;
 }

@@ -32,4 +32,7 @@
   mail = import ./mail.nix;
   zellij = import ./zellij.nix;
   mpd = import ./mpd.nix;
+  rofi = import ./rofi.nix;
+  waybar = import ./waybar.nix;
+  wallpaper = import ./wallpaper.nix;
 }

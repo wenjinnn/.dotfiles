@@ -8,13 +8,31 @@
   ...
 }: let
   mainMonitor = "eDP-1";
+  screencasting = pkgs.writeShellScript "screencasting" ''
+    ext=mp4
+    params=
+    app=wf-recorder
+    if [ -n "$1" ]; then
+      params=$1
+    fi
+    if [ -n "$2" ]; then
+      ext=$2
+    fi
+    output=$HOME/Videos/Screencasting/recording-$(date +'%Y-%m-%d_%H-%M-%S').$ext
+    if pgrep $app >/dev/null; then
+      killall -TERM $app
+    else
+      $app -g "$(slurp)" $params -f "$output"
+    fi
+  '';
 in {
   imports = with outputs.homeManagerModules; [
-    ags
+    waybar
+    rofi
+    wallpaper
   ];
 
   home.packages = with pkgs; [
-    wayshot
     wf-recorder
     imagemagick
     slurp
@@ -31,36 +49,60 @@ in {
     wl-clipboard
     xdg-utils
     xorg.xrdb
-    wl-gammactl
-    hyprpaper
     xwaylandvideobridge
+    hyprpaper
     hyprcursor
     hyprpicker
     hyprsunset
+    grim
   ];
 
-  # custom desktop entries
-  xdg.desktopEntries."org.gnome.Settings" = {
-    name = "Settings";
-    comment = "Gnome Control Center";
-    icon = "org.gnome.Settings";
-    exec = "env XDG_CURRENT_DESKTOP=gnome ${pkgs.gnome-control-center}/bin/gnome-control-center";
-    categories = ["X-Preferences"];
-    terminal = false;
-  };
-
-  services.kdeconnect = {
-    package = pkgs.kdePackages.kdeconnect-kde;
-    enable = true;
-    indicator = true;
-  };
-
-  services.hyprpaper = {
-    enable = true;
-    settings = {
-      ipc = "on";
-      # temporary disable splash since it cause hyprpaper not work
-      # splash = true;
+  services = {
+    kdeconnect = {
+      package = pkgs.kdePackages.kdeconnect-kde;
+      enable = true;
+      indicator = true;
+    };
+    dunst = {
+      enable = true;
+      settings = {
+        global = {
+          mouse_left_click = "context, close_current";
+          # TODO maybe change rofi title
+          dmenu = "${pkgs.rofi-wayland}/bin/rofi -dmenu -p action";
+        };
+      };
+    };
+    hyprpaper = {
+      enable = true;
+      settings = {
+        ipc = "on";
+        # temporary disable splash since it cause hyprpaper not work
+        # splash = true;
+      };
+    };
+    cliphist.enable = true;
+    # hypridle configuration
+    hypridle = {
+      enable = true;
+      settings = {
+        general = {
+          lock_cmd = "pidof hyprlock || hyprlock";
+          before_sleep_cmd = "hyprctl dispatch dpms off";
+          after_sleep_cmd = "hyprctl dispatch dpms on && loginctl lock-session";
+        };
+        listener = [
+          {
+            timeout = 300;
+            on-timeout = "loginctl lock-session";
+          }
+          {
+            timeout = 360;
+            on-timeout = "hyprctl dispatch dpms off";
+            on-resume = "hyprctl dispatch dpms on";
+          }
+        ];
+      };
     };
   };
 
@@ -121,22 +163,6 @@ in {
           valign = "center";
         }
       ];
-      # Avatar
-      image = [
-        {
-          monitor = mainMonitor;
-          path = "/var/lib/AccountsService/icons/${username}";
-          border_size = 4.5;
-          border_color = "rgba(255, 255, 255, .65)";
-          size = 260;
-          rounding = -1;
-          rotate = 0;
-          reload_time = -1;
-          position = "0, 180";
-          halign = "center";
-          valign = "center";
-        }
-      ];
       label = [
         # Day-Month-Date
         {
@@ -186,31 +212,6 @@ in {
     };
   };
 
-  services.gnome-keyring.enable = true;
-
-  # hypridle configuration
-  services.hypridle = {
-    enable = true;
-    settings = {
-      general = {
-        lock_cmd = "pidof hyprlock || hyprlock";
-        before_sleep_cmd = "hyprctl dispatch dpms off";
-        after_sleep_cmd = "hyprctl dispatch dpms on && loginctl lock-session";
-      };
-      listener = [
-        {
-          timeout = 300;
-          on-timeout = "loginctl lock-session";
-        }
-        {
-          timeout = 360;
-          on-timeout = "hyprctl dispatch dpms off";
-          on-resume = "hyprctl dispatch dpms on";
-        }
-      ];
-    };
-  };
-
   # hyprland configuration
   wayland = {
     windowManager = {
@@ -230,17 +231,15 @@ in {
             "QT_AUTO_SCREEN_SCALE_FACTOR, 1"
             "CLUTTER_BACKEND, wayland"
             "ADW_DISABLE_PORTAL, 1"
-            # "GDK_SCALE,2"
+            "GDK_SCALE,2"
             "XCURSOR_SIZE, 24"
             "HYPRCURSOR_SIZE, 24"
           ];
           exec-once = [
             # xrdb dpi scale have batter effect in 4k screen
             "echo 'Xft.dpi: 192' | xrdb -merge"
-            "ags -b hypr"
             "hyprsunset"
-            "fcitx5 -d --replace"
-            "hyprctl dispatch exec [workspace 10 silent] foot btop"
+            "hyprctl dispatch exec [workspace special:monitor silent] foot btop"
           ];
           monitor = [
             ",preferred,auto,auto"
@@ -271,21 +270,22 @@ in {
             workspace_swipe_create_new = true;
           };
           general = {
+            gaps_out = 0;
+            gaps_in = 0;
             layout = "dwindle";
             no_focus_fallback = true;
             resize_on_border = true;
-            "col.active_border" = "rgba(51a4e7ff)";
+            # "col.active_border" = "rgba(51a4e7ff)";
           };
           dwindle = {
             preserve_split = true;
           };
           decoration = {
-            rounding = 10;
             shadow = {
               enabled = false;
               range = 8;
               render_power = 2;
-              color = "rgba(00000044)";
+              # color = "rgba(00000044)";
             };
             # "col.shadow" = "rgba(00000044)";
 
@@ -304,14 +304,6 @@ in {
           };
           animations = {
             enabled = true;
-            bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
-            animation = [
-              "windows, 1, 5, myBezier"
-              "windowsOut, 1, 7, default, popin 80%"
-              "border, 1, 10, default"
-              "fade, 1, 7, default"
-              "workspaces, 1, 6, default"
-            ];
           };
           xwayland = {
             force_zero_scaling = true;
@@ -360,23 +352,23 @@ in {
             # "ignorezero, gtk-layer-shell"
           ];
           bind = let
-            e = "exec, ags -b hypr";
+            rofi-cliphist = "rofi -modi clipboard:${pkgs.cliphist}/bin/cliphist-rofi-img -show clipboard -show-icons";
           in [
-            "ControlSuper, Q, killactive,"
+            "Super, Q, killactive,"
             "ControlSuper, Space, togglefloating, "
             "ControlSuperShift, Space, pin, "
             "ControlShiftSuper, Q, exec, hyprctl kill"
             "Super, Return, exec, footclient"
-            "SUPER, I, exec, XDG_CURRENT_DESKTOP=GNOME gnome-control-center"
             "ControlSuperShiftAlt, E, exit,"
-            ", XF86PowerOff, ${e} -t powermenu"
-            "Super, Tab,     ${e} -t overview"
+            # ", XF86PowerOff, rofi-power-menu"
             # Snapshot
             # "SuperShift, S, exec, grim -g \"$(slurp)\" - | wl-copy"
-            "Super,Print,  ${e} -r 'recorder.start()'"
-            "ControlSuper,Print,  ${e} -r 'recorder.start(\"gif\", \"-c gif\")'"
-            ",Print,         ${e} -r 'recorder.screenshot(true)'"
-            "Shift,Print,    ${e} -r 'recorder.screenshot()'"
+            # TODO extra to a script
+            "Super,Print, exec, ${screencasting}"
+            "ShiftSuper,Print, exec, ${screencasting} \"--audio\""
+            "ControlSuper,Print, exec, ${screencasting} \"-c gif\" gif"
+            ",Print, exec, grim - | wl-copy"
+            "Shift,Print,exec, grim -g \"$(slurp)\" - | wl-copy"
             "ControlShiftSuper, P, exec, playerctl play-pause"
             "ControlAltSuper, P, exec, playerctl pause"
             "ControlShiftSuper, S, exec, playerctl pause"
@@ -385,8 +377,19 @@ in {
             "ControlSuperShiftAlt, L, exec, hyprlock"
             "ControlSuperShiftAlt, D, exec, systemctl poweroff"
             # launcher
-            "Super, D, exec, ags -b hypr -t launcher"
-            "Super, N, exec, ags -b hypr -t datemenu"
+            "Super, D, exec, rofi -show drun"
+            "Super, U, exec, rofi-systemd"
+            "Super, B, exec, rofi-bluetooth"
+            "AltSuper, P, exec, hyprpicker | wl-copy"
+            "Super, P, exec, rofi-pass"
+            "Super, A, exec, dunstctl context"
+            "ControlSuper, A, exec, rofi-pulse-select sink"
+            "ShiftSuper, A, exec, rofi-pulse-select source"
+            "Super, E, exec, rofimoji"
+            "Super, M, togglespecialworkspace, monitor"
+            "Super, V, exec, ${rofi-cliphist}"
+            "Super, N, exec, rofi-network-manager"
+            "ControlShiftSuperAlt, P, exec, rofi -show power-menu -modi power-menu:rofi-power-menu"
             # Swap windows
             "SuperShift, H, movewindow, l"
             "SuperShift, L, movewindow, r"
@@ -408,8 +411,6 @@ in {
             "ControlSuper, down, workspace, +5"
             "Super, Page_Down, workspace, +1"
             "Super, Page_Up, workspace, -1"
-            "ControlSuper, Page_Down, workspace, +1"
-            "ControlSuper, Page_Up, workspace, -1"
             "SuperShift, Page_Down, movetoworkspace, +1"
             "SuperShift, Page_Up, movetoworkspace, -1"
             "ControlShiftSuper, L, movetoworkspace, +1"
@@ -433,11 +434,10 @@ in {
             "Super, 8, workspace, 8"
             "Super, 9, workspace, 9"
             "Super, 0, workspace, 10"
-            "Super, S, togglespecialworkspace"
+            "ShiftSuper, S, togglespecialworkspace"
             "Alt, Tab, cyclenext"
             "Super, T, bringactivetotop"
             # "Super, C, togglespecialworkspace, kdeconnect"
-            # "Super, Tab, exec, ags -b hypr -t overview"
             # Move window to workspace Control + Super + [0-9]
             "ControlSuper, 1, movetoworkspacesilent, 1"
             "ControlSuper, 2, movetoworkspacesilent, 2"
@@ -472,9 +472,6 @@ in {
             "SUPER, Equal, splitratio, 0.1"
             "SUPER, Semicolon, splitratio, -0.1"
             "SUPER, Apostrophe, splitratio, 0.1"
-          ];
-          bindr = [
-            "ControlSuperShiftAlt, R, exec, ags -b hypr quit; ags -b hypr;"
           ];
           bindl = [
             # ",Print,exec,grim - | wl-copy"

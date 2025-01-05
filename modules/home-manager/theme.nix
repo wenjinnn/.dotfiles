@@ -1,33 +1,43 @@
 {pkgs, ...}: {
-  services = {
-    xsettingsd = {
-      enable = true;
-      settings = {
-        "Gdk/UnscaledDPI" = 98304;
-        "Gdk/WindowScalingFactor" = 2;
-      };
-    };
-  };
-
   home.pointerCursor = {
     gtk.enable = true;
     x11.enable = true;
-    package = pkgs.bibata-cursors;
-    name = "Adwaita";
-    size = 24;
   };
   dconf.enable = true;
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
-      font-name = "Sans 11";
-      monospace-font-name = "Monospace 10";
-      document-font-name = "Sans 11";
-    };
-    "org/gnome/desktop/wm/preferences" = {
-      titlebar-font = "Sans Bold 11";
     };
   };
+
+  stylix = {
+    enable = true;
+    polarity = "dark";
+    image = pkgs.fetchurl {
+      url = "https://www.bing.com/th?id=OHR.ArdezSwitzerland_ROW0603494655_UHD.jpg&rf=LaDigue_UHD.jpg&pid=hp";
+      sha256 = "sha256-EMjJajEVkD4CB38cV6QbLc4N2o1n0KliktO9NX+CXjI=";
+    };
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/default-dark.yaml";
+    cursor = {
+      name = "Adwaita";
+      size = 24;
+    };
+    targets = {
+      hyprlock.enable = false;
+      neovim.enable = false;
+    };
+    fonts = {
+      sizes = {
+        popups = 13;
+        desktop = 11;
+      };
+      monospace = {
+        package = pkgs.nerd-fonts.caskaydia-cove;
+        name = "CaskaydiaCove Nerd Font";
+      };
+    };
+  };
+
   qt = {
     enable = true;
     style = {
@@ -38,10 +48,6 @@
 
   gtk = {
     enable = true;
-    theme = {
-      name = "adw-gtk3-dark";
-      package = pkgs.adw-gtk3;
-    };
 
     iconTheme = {
       package = pkgs.morewaita-icon-theme;

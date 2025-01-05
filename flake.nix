@@ -24,8 +24,14 @@
     # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
 
-    nixos-wsl.url = "github:/nix-community/NixOS-WSL";
-    nur.url = "github:nix-community/NUR";
+    nixos-wsl = {
+      url = "github:/nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Home manager
     home-manager = {
@@ -37,13 +43,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # TODO: Add any other flake you might need
     nixos-hardware.url = "github:nixos/nixos-hardware";
     sops-nix.url = "github:Mic92/sops-nix";
-
-    # Shameless plug: looking for a way to nixify your themes and make
-    # everything match nicely? Try nix-colors!
-    # nix-colors.url = "github:misterio77/nix-colors";
+    stylix.url = "github:danth/stylix";
   };
 
   outputs = {
@@ -54,6 +56,7 @@
     nixos-hardware,
     nur,
     sops-nix,
+    stylix,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -102,6 +105,7 @@
           {nixpkgs.overlays = [nur.overlays.default];}
           nur.modules.nixos.default
           sops-nix.nixosModules.sops
+          stylix.nixosModules.stylix
         ];
       };
       nixos-wsl = nixpkgs.lib.nixosSystem {
@@ -157,6 +161,7 @@
           ./home-manager/hosts/nixos.nix
           {nixpkgs.overlays = [nur.overlays.default];}
           nur.modules.homeManager.default
+          stylix.homeManagerModules.stylix
         ];
       };
       "wenjin@nixos-wsl" = home-manager.lib.homeManagerConfiguration {

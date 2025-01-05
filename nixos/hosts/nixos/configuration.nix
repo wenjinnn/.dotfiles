@@ -20,6 +20,7 @@
     hyprland
     bluetooth
     steam
+    theme
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd

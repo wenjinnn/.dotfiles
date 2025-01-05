@@ -50,9 +50,9 @@
   };
   xdg.configFile = {
     nvim = {
-      source = ../../xdg/config/nvim;
-      # config.lib.file.mkOutOfStoreSymlink
-      # "${config.home.sessionVariables.DOTFILES}/xdg/config/nvim";
+      source =
+        config.lib.file.mkOutOfStoreSymlink
+        "${config.home.sessionVariables.DOTFILES}/xdg/config/nvim";
     };
     "vale/.vale.ini".text = ''
       MinAlertLevel = suggestion
