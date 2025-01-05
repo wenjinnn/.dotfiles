@@ -58,6 +58,8 @@
     tlp = {
       enable = true;
       settings = {
+        INTEL_GPU_MIN_FREQ_ON_AC = 500;
+        INTEL_GPU_MIN_FREQ_ON_BAT = 500;
         PLATFORM_PROFILE_ON_AC = "performance";
         PLATFORM_PROFILE_ON_BAT = "balanced";
 
