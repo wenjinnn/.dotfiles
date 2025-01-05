@@ -12,7 +12,7 @@ datestr=$(date '+%Y%m%d')
 target_file="${bing_wallpaper_dir}${datestr}*${resolution}${file_type}"
 if [[ -f "${target_file}" ]]; then
     echo "Today wallpaper ${target_file} exist, abort"
-    exit 1
+    exit 0
 fi
 
 echo "starting query ${datestr} wallpaper"
@@ -33,7 +33,7 @@ if [[ $? -eq 0 ]]; then
 
     if [[ -f ${file_name} ]]; then
         echo "${file_name} wallpaper exist, abort"
-        exit 1
+        exit 0
     fi
 
     echo "Bing wallpaper prepare download from ${img_url} to ${file_name}"
@@ -43,5 +43,4 @@ if [[ $? -eq 0 ]]; then
     exit 0
 else
     echo "Request failed with status code: ${?}"
-    exit 1
 fi
