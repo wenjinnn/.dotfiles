@@ -6,9 +6,9 @@
   hyprland = import ./hyprland.nix;
   zsh = import ./zsh.nix;
   foot = import ./foot.nix;
-  neovim = import ./neovim.nix;
+  neovim = import ./neovim;
   git = import ./git.nix;
-  fcitx5 = import ./fcitx5.nix;
+  fcitx5 = import ./fcitx5;
   theme = import ./theme.nix;
   fuzzel = import ./fuzzel.nix;
   ctags = import ./ctags.nix;
@@ -18,7 +18,7 @@
   git-sync = import ./git-sync.nix;
   gnome-terminal = import ./gnome-terminal.nix;
   tmux = import ./tmux.nix;
-  wezterm = import ./wezterm.nix;
+  wezterm = import ./wezterm;
   lang = import ./lang.nix;
   btop = import ./btop.nix;
   vscode = import ./vscode.nix;

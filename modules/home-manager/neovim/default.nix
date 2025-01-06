@@ -5,7 +5,6 @@
 }: {
   home.packages =
     (with pkgs; [
-      hurl
       jdt-language-server
       lombok
       lua-language-server
@@ -52,7 +51,7 @@
     nvim = {
       source =
         config.lib.file.mkOutOfStoreSymlink
-        "${config.home.sessionVariables.DOTFILES}/xdg/config/nvim";
+        "${config.home.sessionVariables.DOTFILES}/modules/home-manager/neovim/nvim";
     };
     "vale/.vale.ini".text = ''
       MinAlertLevel = suggestion
