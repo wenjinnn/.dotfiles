@@ -92,6 +92,7 @@ later(function()
         vim.cmd("terminal")
       elseif #items == 1 then
         vim.cmd("buffer " .. items[1].bufnr)
+        vim.cmd("startinsert")
       else
         vim.cmd("Pick terminals")
       end
