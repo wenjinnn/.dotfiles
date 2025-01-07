@@ -67,9 +67,6 @@
     upower.enable = true;
     udisks2.enable = true;
     accounts-daemon.enable = true;
-    gnome = {
-      gnome-keyring.enable = true;
-    };
   };
 
   services.greetd = {
