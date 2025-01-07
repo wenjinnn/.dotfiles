@@ -82,6 +82,7 @@ in {
       };
     };
     cliphist.enable = true;
+    pass-secret-service.enable = true;
     # hypridle configuration
     hypridle = {
       enable = true;
