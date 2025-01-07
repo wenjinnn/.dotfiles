@@ -8,7 +8,10 @@
   pkgs,
   username,
   ...
-}: {
+}: let
+  dotfiles_path = "${config.home.homeDirectory}/.dotfiles";
+  archive_path = "${config.home.homeDirectory}/.archive";
+in {
   # You can import other home-manager modules here
   imports = with outputs.homeManagerModules; [
     # If you want to use modules your own flake exports (from modules/home-manager):
@@ -138,6 +141,7 @@
     w3m
     nix-index
     networkmanagerapplet
+    browserpass
     # for nvim dict
     wordnet
     # nix related
@@ -188,9 +192,9 @@
     "${config.home.homeDirectory}/.local/bin"
   ];
   home.sessionVariables = {
-    DOTFILES = "${config.home.homeDirectory}/.dotfiles";
-    ARCHIVE = "${config.home.homeDirectory}/.archive";
-    SOPS_SECRETS = "${config.home.sessionVariables.DOTFILES}/secrets.yaml";
+    DOTFILES = dotfiles_path;
+    ARCHIVE = archive_path;
+    SOPS_SECRETS = "${dotfiles_path}/secrets.yaml";
   };
 
   xdg = {
@@ -198,10 +202,30 @@
     userDirs.enable = true;
   };
 
-  programs.bash.enable = true;
 
   programs = {
+    # Enable home-manager
+    home-manager.enable = true;
+    gpg.enable = true;
+    bash.enable = true;
     imv.enable = true;
+    browserpass.enable = true;
+    password-store = {
+      enable = true;
+      package = pkgs.pass.withExtensions (exts: [
+        exts.pass-otp
+        exts.pass-tomb
+        exts.pass-file
+        exts.pass-audit
+        exts.pass-update
+        exts.pass-import
+        exts.pass-checkup
+        exts.pass-genphrase
+      ]);
+      settings = {
+        PASSWORD_STORE_DIR = "${archive_path}/password-store";
+      };
+    };
     zathura = {
       enable = true;
       options = {
@@ -210,9 +234,6 @@
     };
   };
 
-  # Enable home-manager
-  programs.home-manager.enable = true;
-  programs.gpg.enable = true;
   services.gpg-agent = {
     enable = true;
     maxCacheTtl = 60480000;
