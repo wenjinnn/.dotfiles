@@ -102,7 +102,6 @@
           ./nixos/configuration.nix
           ./nixos/hosts/nixos
           nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
-          {nixpkgs.overlays = [nur.overlays.default];}
           nur.modules.nixos.default
           sops-nix.nixosModules.sops
           stylix.nixosModules.stylix
@@ -159,7 +158,6 @@
           # > Our main home-manager configuration file <
           ./home-manager/home.nix
           ./home-manager/hosts/nixos.nix
-          {nixpkgs.overlays = [nur.overlays.default];}
           nur.modules.homeManager.default
           stylix.homeManagerModules.stylix
         ];
