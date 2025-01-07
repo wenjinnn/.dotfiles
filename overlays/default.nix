@@ -64,6 +64,9 @@ in rec {
     rofimoji = prev.rofimoji.override {
       rofi = prev.pkgs.rofi-wayland;
     };
+    pass = prev.pass.override {
+      waylandSupport = true;
+    };
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
