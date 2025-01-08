@@ -149,7 +149,6 @@ later(function()
   require("mini.bracketed").setup()
   require("mini.pairs").setup()
   require("mini.operators").setup({ exchange = { prefix = "gX" } })
-  require("mini.move").setup()
   require("mini.comment").setup()
   require("mini.trailspace").setup()
   vim.api.nvim_create_autocmd({ "BufWritePre" }, {
