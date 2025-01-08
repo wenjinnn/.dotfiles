@@ -33,7 +33,7 @@ end)
 
 later(function()
   require("mini.notify").setup()
-  map("n", "<leader>N", MiniNotify.show_history, "Notify history")
+  map("n", "<leader>N", MiniNotify.clear, "Notify clear")
 end)
 
 now(function()
