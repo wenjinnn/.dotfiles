@@ -12,10 +12,10 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "nvme"];
+  boot.initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "nvme" "uas" "sd_mod"];
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-intel"];
-  boot.extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
+  boot.extraModulePackages = [];
   boot.resumeDevice = "/dev/disk/by-uuid/63c28fde-17cc-44bb-aa1b-6658c4107d3f";
   # btrfs resume_offset calc
   # btrfs inspect-internal map-swapfile -r swap_file
@@ -29,6 +29,7 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/1CEE-62D7";
     fsType = "vfat";
+    options = ["fmask=0022" "dmask=0022"];
   };
 
   fileSystems."/swap" = {
@@ -40,6 +41,11 @@
   fileSystems."/windows" = {
     options = ["nofail" "uid=wenjin" "gid=users" "dmask=007" "fmask=117"];
     device = "/dev/disk/by-label/Windows";
+    fsType = "ntfs";
+  };
+  fileSystems."/game" = {
+    options = ["nofail" "uid=wenjin" "gid=users" "x-systemd.automount" "dmask=007" "fmask=117"];
+    device = "/dev/disk/by-uuid/881013FA1013EE46";
     fsType = "ntfs";
   };
 
