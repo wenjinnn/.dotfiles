@@ -44,7 +44,7 @@
     fsType = "ntfs";
   };
   fileSystems."/game" = {
-    options = ["nofail" "uid=wenjin" "gid=users" "x-systemd.automount" "dmask=007" "fmask=117"];
+    options = ["nofail" "noauto" "uid=wenjin" "gid=users" "dmask=007" "fmask=117"];
     device = "/dev/disk/by-uuid/881013FA1013EE46";
     fsType = "ntfs";
   };
