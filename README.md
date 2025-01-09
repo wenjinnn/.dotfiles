@@ -1,4 +1,8 @@
 # Personal NixOS config with Flake and Home Manager
+## BREAKING CHANGES ARE INCOMING
+### I'm about to remove ags as my shell for minimalism reason. I'll instead it with waybar, rofi, dunst, etc.
+### These things are easier to maintain, more functional, and easier to configure with nixos. By easier to configure I mainly mean easier to work with [stylix](https://github.com/danth/stylix)
+### The progress is [here](https://github.com/wenjinnn/.dotfiles/pull/5), more information will be added when this branch is merged.
 # Screenshots
 |  |  |
 | :-------------: | :--------------: |
