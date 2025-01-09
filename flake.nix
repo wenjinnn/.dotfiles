@@ -43,8 +43,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixos-hardware.url = "github:nixos/nixos-hardware";
-    sops-nix.url = "github:Mic92/sops-nix";
     stylix.url = "github:danth/stylix";
   };
 
@@ -57,6 +65,7 @@
     nur,
     sops-nix,
     stylix,
+    nix-index-database,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -105,6 +114,7 @@
           nur.modules.nixos.default
           sops-nix.nixosModules.sops
           stylix.nixosModules.stylix
+          nix-index-database.nixosModules.nix-index
         ];
       };
       nixos-wsl = nixpkgs.lib.nixosSystem {
@@ -115,6 +125,7 @@
           ./nixos/hosts/nixos-wsl
           nur.modules.nixos.default
           sops-nix.nixosModules.sops
+          nix-index-database.nixosModules.nix-index
         ];
       };
     };
@@ -160,6 +171,7 @@
           ./home-manager/hosts/nixos.nix
           nur.modules.homeManager.default
           stylix.homeManagerModules.stylix
+          nix-index-database.hmModules.nix-index
         ];
       };
       "wenjin@nixos-wsl" = home-manager.lib.homeManagerConfiguration {
@@ -168,6 +180,7 @@
         modules = [
           # > Our main home-manager configuration file <
           ./home-manager/home.nix
+          nix-index-database.hmModules.nix-index
         ];
       };
     };

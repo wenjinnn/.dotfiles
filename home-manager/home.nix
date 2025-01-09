@@ -139,7 +139,6 @@ in {
     xdg-utils
     trashy
     w3m
-    nix-index
     networkmanagerapplet
     browserpass
     # for nvim dict
@@ -204,6 +203,10 @@ in {
 
 
   programs = {
+    nix-index = {
+      enable = true;
+      enableZshIntegration = true;
+    };
     # Enable home-manager
     home-manager.enable = true;
     gpg.enable = true;
