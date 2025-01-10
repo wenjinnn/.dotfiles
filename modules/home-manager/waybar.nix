@@ -95,6 +95,7 @@
           window-rewrite-default = "";
           window-rewrite = {
             "title<.*youtube.*>" = "";
+            "class<firefox>" = "";
             "class<microsoft-edge>" = "󰇩";
             "foot" = "";
             "code" = "󰨞";

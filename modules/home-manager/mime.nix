@@ -1,5 +1,5 @@
 let
-  browser = "microsoft-edge.desktop";
+  browser = "firefox.desktop";
   file-manager = "org.gnome.Nautilus.desktop";
   image-viewer = "imv.desktop";
   pdf-viewer = "org.pwmt.zathura.desktop";
