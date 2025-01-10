@@ -16,6 +16,7 @@
     foot
     vscode
     aria2
+    browser
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
@@ -36,7 +37,6 @@
   ];
 
   home.packages = with pkgs; [
-    microsoft-edge
     gimp
     obs-studio
     scrcpy

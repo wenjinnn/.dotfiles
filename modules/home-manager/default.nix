@@ -34,4 +34,5 @@
   rofi = import ./rofi.nix;
   waybar = import ./waybar.nix;
   wallpaper = import ./wallpaper.nix;
+  browser = import ./browser.nix;
 }
