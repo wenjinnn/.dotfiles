@@ -156,6 +156,10 @@ later(function()
       abort = { n = "<localleader>Fb" },
       toggleShowCommand = { n = "<localleader>Ft" },
       swapEngine = { n = "<localleader>Fe" },
+      previewLocation = { n = "<localleader>Fi" },
+      swapReplacementInterpreter = { n = "<localleader>Fx" },
+      applyNext = { n = "<localleader>Fj" },
+      applyPrev = { n = "<localleader>Fk" },
     },
   })
   local function grug_cursor_word()
