@@ -17,7 +17,6 @@ in rec {
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
-    # temporary fix microsoft-edge dev tool crash
     microsoft-edge = prev.microsoft-edge.override {
       commandLineArgs = electron-flags;
     };
