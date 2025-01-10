@@ -49,7 +49,15 @@ in {
   };
   hardware.xone.enable = true; # support for the xbox controller USB dongle
   hardware.xpadneo.enable = true;
-  services.getty.autologinUser = username;
+
+  services = {
+    getty.autologinUser = username;
+    # enable scx for game, needs kernel version >= 6.12, see https://github.com/sched-ext/scx/blob/main/scheds/rust/scx_lavd/README.md
+    scx = {
+      enable = true;
+      scheduler = "scx_lavd";
+    };
+  };
   environment = {
     systemPackages = with pkgs; [
       mangohud
