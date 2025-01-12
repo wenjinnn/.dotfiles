@@ -43,7 +43,7 @@
     enable = true;
   };
 
-  services.ollama.acceleration = "rocm";
+  nixpkgs.config.rocmSupport = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
