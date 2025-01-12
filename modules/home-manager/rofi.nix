@@ -6,10 +6,10 @@
   home.packages = with pkgs; [
     rofi-power-menu
     rofi-bluetooth
-    rofi-screenshot
     rofi-pulse-select
     rofi-systemd
     rofi-network-manager
+    rofi-screenshot-wayland
     rofimoji
     cava
   ];
