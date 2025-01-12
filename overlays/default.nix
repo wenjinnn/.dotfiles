@@ -66,6 +66,15 @@ in rec {
     pass = prev.pass.override {
       waylandSupport = true;
     };
+    # IM support patch
+    swappy = prev.swappy.overrideAttrs (old: {
+      src = prev.fetchFromGitHub {
+        owner = "jtheoof";
+        repo = "swappy";
+        rev = "fca4f6dcdb05c78ad63a0924412a4ef3345484a0";
+        hash = "sha256-gwlUklfr/NA7JIkB9YloS9f8+3h5y3rSs3ISeVXAPZk=";
+      };
+    });
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
