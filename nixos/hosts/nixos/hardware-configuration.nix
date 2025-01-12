@@ -24,6 +24,13 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/63c28fde-17cc-44bb-aa1b-6658c4107d3f";
     fsType = "btrfs";
+    options = ["compress=zstd"];
+  };
+
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/6fffbeb9-2862-4a72-8726-ae3db395bbfb";
+    fsType = "btrfs";
+    options = ["compress=zstd"];
   };
 
   fileSystems."/boot" = {
