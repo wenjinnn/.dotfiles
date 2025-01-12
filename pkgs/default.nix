@@ -7,4 +7,5 @@
   fhs = pkgs.callPackage ./fhs {};
   wemeet = pkgs.callPackage ./wemeet {};
   rofi-network-manager = pkgs.callPackage ./rofi-network-manager {};
+  rofi-screenshot-wayland = pkgs.callPackage ./rofi-screenshot-wayland {};
 }

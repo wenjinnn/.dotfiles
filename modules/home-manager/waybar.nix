@@ -281,11 +281,11 @@
         };
         "custom/recorder" = let
           stop-screen-recorder = pkgs.writeShellScript "stop-screen-recorder" ''
-            pid=`pgrep wf-recorder`
+            pid=`pgrep wl-screenrec`
             signal=$?
 
             if [ $signal == 0 ]; then
-              pkill --signal SIGINT wf-recorder
+              pkill --signal SIGINT wl-screenrec
               dunstify "Stoped Screen recorder"
             fi;
           '';
