@@ -8,23 +8,6 @@
   ...
 }: let
   mainMonitor = "eDP-1";
-  screencasting = pkgs.writeShellScript "screencasting" ''
-    ext=mp4
-    params=
-    app=wf-recorder
-    if [ -n "$1" ]; then
-      params=$1
-    fi
-    if [ -n "$2" ]; then
-      ext=$2
-    fi
-    output=$HOME/Videos/Screencasting/recording-$(date +'%Y-%m-%d_%H-%M-%S').$ext
-    if pgrep $app >/dev/null; then
-      killall -TERM $app
-    else
-      $app -g "$(slurp)" $params -f "$output"
-    fi
-  '';
 in {
   imports = with outputs.homeManagerModules; [
     waybar
@@ -33,7 +16,7 @@ in {
   ];
 
   home.packages = with pkgs; [
-    wf-recorder
+    wl-screenrec
     imagemagick
     slurp
     tesseract
@@ -366,11 +349,8 @@ in {
             # Snapshot
             # "SuperShift, S, exec, grim -g \"$(slurp)\" - | wl-copy"
             # TODO extra to a script
-            "Super,Print, exec, ${screencasting}"
-            "ShiftSuper,Print, exec, ${screencasting} \"--audio\""
-            "ControlSuper,Print, exec, ${screencasting} \"-c gif\" gif"
-            ",Print, exec, grim - | wl-copy"
-            "Shift,Print,exec, grim -g \"$(slurp)\" - | wl-copy"
+            "Super,Print, exec, rofi-screenshot"
+            ",Print, exec, rofi-screenshot -i"
             "ControlShiftSuper, P, exec, playerctl play-pause"
             "ControlAltSuper, P, exec, playerctl pause"
             "ControlShiftSuper, S, exec, playerctl pause"
