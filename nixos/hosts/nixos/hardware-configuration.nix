@@ -25,6 +25,7 @@
     device = "/dev/disk/by-uuid/63c28fde-17cc-44bb-aa1b-6658c4107d3f";
     fsType = "btrfs";
     # zstd has better performance then btrfs default. related benchmark: https://www.phoronix.com/review/btrfs-zstd-compress
+    # see also compress exists dir https://discourse.nixos.org/t/how-to-deal-with-actions-on-fs-when-nix-store-is-readonly/22829
     options = ["compress=zstd"];
   };
 
