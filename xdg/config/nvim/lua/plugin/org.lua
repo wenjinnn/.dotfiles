@@ -6,19 +6,16 @@ later(function()
       "chipsenkbeil/org-roam.nvim",
     },
   })
-  local config = {
-    org_agenda_files = { "~/.archive/org/*" },
+  local archive_path = os.getenv("ARCHIVE")
+  local org_path = archive_path and archive_path .. "/org" or "~/.archive/org"
+  require("orgmode").setup({
+    org_agenda_files = { org_path .. "/*" },
+    org_default_notes_file = org_path .. "/refile.org",
     notifications = {
       enabled = true,
     },
-  }
-  local default_notes_file = "~/.archive/org/refile.org"
-  default_notes_file = vim.fn.expand(default_notes_file)
-  if vim.fn.filereadable(default_notes_file) == 1 then
-    config.org_default_notes_file = default_notes_file
-  end
-  require("orgmode").setup(config)
+  })
   require("org-roam").setup({
-    directory = "~/.archive/org/roam",
+    directory = org_path .. "/roam",
   })
 end)
