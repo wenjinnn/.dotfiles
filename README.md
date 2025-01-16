@@ -5,7 +5,7 @@
 
 The old Arch configuration at [Arch branch](https://github.com/wenjinnn/config/tree/arch).
 
-Recently I also replace my [ags](https://github.com/Aylur/ags) with some standalone package, But I think the old ags configurations still valuable
+Recently I also replace my [ags](https://github.com/Aylur/ags) configuration with some standalone package (you can see detail on below), But I think the old ags configuration still valuable
 So you can visit it in [ags-v1](https://github.com/wenjinnn/.dotfiles/tree/ags-v1).
 
 I don't want to spend too much time on writing about my desktop environment components,
@@ -20,7 +20,7 @@ but that's not enough, NixOS provided capability to manage system wide configura
 now this repo manage my laptop, WSL, and nix-on-droid configurations together (but nix-on-droid configurations are not work well now)
 
 Repo's structure base on [nix-starter-config#standard](https://github.com/Misterio77/nix-starter-configs/tree/main/standard),
-is a good point to start with NixOS, but you should be careful to using unstable and stable nixpkgs together,
+is a good start point for leaning NixOS, but you should be careful to using unstable and stable nixpkgs together,
 e.g. if you want to stay at stable nixpkgs branch but using unstable Hyprland, it will broken because of the mesa package version are not equal.
 
 # Stuff here
