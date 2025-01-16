@@ -1,9 +1,7 @@
 # Personal NixOS configuration with Flake and Home Manager
-# TODO Screenshots update
-|  |  |
-| :-------------: | :--------------: |
-| ![application menu](https://github.com/user-attachments/assets/18995b64-8804-499a-82f1-e504ba316254 "application menu")  | ![clipboard manage](https://github.com/user-attachments/assets/c0107d3e-113c-4d48-8bc7-80e1d2ee788d "clipboard manage") |
-| ![logout menu](https://github.com/user-attachments/assets/17183dc5-a355-4f3a-82f8-8fc509527e0c "logout menu") | ![OCR for screenshot](https://github.com/user-attachments/assets/cd305ebc-4a70-42fc-92d8-c078c752e77e "OCR for screenshot")
+# Screenshot
+
+![Image](https://github.com/user-attachments/assets/eca44dc4-a59d-4208-8131-ecc9b5673996)
 
 The old Arch configuration at [Arch branch](https://github.com/wenjinnn/config/tree/arch).
 
@@ -32,9 +30,10 @@ e.g. if you want to stay at stable nixpkgs branch but using unstable Hyprland, i
     you can try it and find more detail in my mono nvim configuration repo [wenvim](https://github.com/wenjinnn/wenvim), I'm using home-manager with `mkOutOfStoreSymlink` to symlink my nvim configurations directory, that's maybe not the nix way, but since I modify it very frequently and I store my custom snippets and spell file together with it, I don't want to compile it everytime I modified this, also I can easier to share my code with someone that not using NixOS.
 * Compositor: [Hyprland](https://github.com/hyprwm/Hyprland)
 * Topbar: [waybar](https://github.com/Alexays/Waybar)
-* notification daemon: [dunst](https://github.com/dunst-project/dunst)
+* Notification daemon: [dunst](https://github.com/dunst-project/dunst)
 * Launcher: [rofi (wayland-fork)](https://github.com/lbonn/rofi) with some script to let it provide the ability to manage various system functions, some of them maintained by myself:
     * [cliphist-rofi-img](https://github.com/sentriz/cliphist/blob/master/contrib/cliphist-rofi-img) for clipboard manage
+    * [rofi-screenshot-wayland](https://github.com/wenjinnn/rofi-screenshot-wayland) a fork of [rofi-screenshot](https://github.com/ceuk/rofi-screenshot)
     * [rofi-power-menu](https://github.com/jluttine/rofi-power-menu)
     * [rofi-systemd](https://github.com/colonelpanic8/rofi-systemd) for control systemd unit
     * [rofi-bluetooth](https://github.com/nickclyde/rofi-bluetooth) with scan ability fixed [PR](https://github.com/nickclyde/rofi-bluetooth/pull/33).
@@ -44,15 +43,19 @@ e.g. if you want to stay at stable nixpkgs branch but using unstable Hyprland, i
     * [rofi-network-manager](https://github.com/meowrch/rofi-network-manager)
 * Terminal emulator: [foot](https://codeberg.org/dnkl/foot)
 * Wallpaper: [hyprpaper](https://github.com/hyprwm/hyprpaper) and some small script, [wallpaper-switch](https://github.com/wenjinnn/.dotfiles/blob/none-ags/pkgs/wallpaper-switch/wallpaper-switch.sh) , and [bingwallpaper-get](https://github.com/wenjinnn/.dotfiles/blob/none-ags/pkgs/bingwallpaper-get/bingwallpaper-get.sh) for download daily bingwallpaper and switch to it immediately.
-* style manage: [stylix](https://github.com/danth/stylix) (this is awesome!)
+* Style manage: [stylix](https://github.com/danth/stylix) (that's awesome!)
+* Music player: [MPD](https://www.musicpd.org) and [ncmpcpp](https://github.com/ncmpcpp/ncmpcpp)
+* Mail client: [neomutt](https://neomutt.org/)
 
 # Installation
 
 > [!NOTE]
 > You can not use this repo directly for I'm using [sops-nix](https://github.com/Mic92/sops-nix) to manage my secrets in some modules, you won't pass the compile, but I still give a short guide to install this to remind you and myself.
+>
 > Even you remove all the modules that using sops secrets,
 > the other parts still has many custom settings that may not suitable for you machine,
 > use it directly maybe damage your system.
+>
 > Please always check the code before you use it.
 
 For NixOS users:
