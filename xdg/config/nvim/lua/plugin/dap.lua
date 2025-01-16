@@ -90,12 +90,12 @@ later(function()
       vim.cmd("startinsert")
     end
   end
+  local widgets = require("dap.ui.widgets")
   local function dap_hover()
     widgets.hover("<cexpr>", { title = "dap-hover" })
   end
 
   -- simple custom dap ui, cursor float window takes up the least screen space.
-  local widgets = require("dap.ui.widgets")
   local function dap_ui(widget, title)
     return function()
       widgets.cursor_float(widget, { title = title })
