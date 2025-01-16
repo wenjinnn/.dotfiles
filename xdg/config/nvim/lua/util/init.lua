@@ -41,10 +41,13 @@ function M.augroup(name, opts)
 end
 
 function M.map(mode, lhs, rhs, opts)
+  -- default options
   local final_opts = { noremap = true, silent = true }
   if type(opts) == "string" then
+    -- in most case we just want add some description
     final_opts.desc = opts
   elseif type(opts) == "table" then
+    -- other case, just take the opts
     final_opts = opts
   end
   vim.keymap.set(mode, lhs, rhs, final_opts)
