@@ -2,6 +2,8 @@ if vim.g.vscode then return end
 
 local map = require("util").map
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+
+-- run code block in neovim
 later(function()
   local build_sniprun = function(args)
     vim.system({ "sh", "./install.sh", "1" }, { cwd = args.path })
@@ -85,6 +87,7 @@ later(function()
   }
   map("n", "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", "Markdown preview toggle")
 end)
+
 -- neovim in browser
 now(function()
   local install_firenvim_bin = function() vim.fn["firenvim#install"](0) end

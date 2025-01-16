@@ -3,6 +3,8 @@ if vim.g.vscode then return end
 local map = require("util").map
 local now, later = MiniDeps.now, MiniDeps.later
 
+-- Load mini.files immediately for sometimes we are gonna open folder with nvim
+-- In this case mini.files can't be lazy load
 now(function()
   require("mini.files").setup({
     windows = {
@@ -10,6 +12,7 @@ now(function()
       width_preview = 40,
     },
   })
+  -- if current are readable in file system, open mini.files at the current buffer's location.
   local function minifiles_open_current()
     if vim.fn.filereadable(vim.fn.bufname("%")) > 0 then
       MiniFiles.open(vim.api.nvim_buf_get_name(0))
@@ -19,6 +22,7 @@ now(function()
   end
   map("n", "<leader>fe", MiniFiles.open, "MiniFiles open")
   map("n", "<leader>fE", minifiles_open_current, "MiniFiles open current")
+  -- send notification to lsp when mini.files rename actions triggered
   vim.api.nvim_create_autocmd("User", {
     pattern = "MiniFilesActionRename",
     callback = function(event)
@@ -27,12 +31,14 @@ now(function()
   })
 end)
 
+-- visit recent files and we could add labels for files, easy to group files
 later(function()
   require("mini.visits").setup()
   map("n", "<leader>v", MiniVisits.add_label, "MiniVisits add label")
   map("n", "<leader>V", MiniVisits.remove_label, "MiniVisits remove label")
 end)
 
+-- mini.pick with lot custom keymaps
 later(function()
   require("mini.pick").setup()
   vim.ui.select = MiniPick.ui_select

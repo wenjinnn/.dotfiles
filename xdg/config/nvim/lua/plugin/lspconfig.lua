@@ -3,6 +3,7 @@ if vim.g.vscode then return end
 local add, later = MiniDeps.add, MiniDeps.later
 local map = require("util").map
 
+-- Lspconfig related
 later(function()
   add({
     source = "neovim/nvim-lspconfig",
@@ -14,6 +15,12 @@ later(function()
   })
   local lsp = require("lsp")
   local util = require("util.lsp")
+  -- Cuz every LSP could have some custom settings, put those code in here could be very messy
+  -- So we define the configuration for each LSP separately and collect in here ../lsp/init.lua,
+  -- and follow a specific:
+  -- if there is a setup function in LSP custom config, it means that LSP
+  -- do all setup work on it self (e.g. jdtls), so we just call the setup function here
+  -- if not, modules should exports a table that will pass to nvim-lspconfig setup
   for server_name, config in pairs(lsp) do
     if config.setup ~= nil and type(config.setup) == "function" then
       config.setup()
@@ -22,6 +29,7 @@ later(function()
       require("lspconfig")[server_name].setup(final_config)
     end
   end
+  -- if didn't have this env, don't enable sonarlint LSP
   local sonarlint_path = os.getenv("SONARLINT_PATH")
   if sonarlint_path ~= nil then
     require("sonarlint").setup({
@@ -48,6 +56,7 @@ later(function()
       },
     })
   end
+  -- finally, some LSP related keymaps
   local function inlay_hint_toggle()
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
   end
