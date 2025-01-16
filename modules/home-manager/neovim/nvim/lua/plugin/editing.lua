@@ -145,12 +145,14 @@ later(function()
 end)
 
 later(function()
+  -- load some editing support mini modules at once
   require("mini.align").setup()
   require("mini.bracketed").setup()
   require("mini.pairs").setup()
   require("mini.operators").setup({ exchange = { prefix = "gX" } })
   require("mini.comment").setup()
   require("mini.trailspace").setup()
+  -- automatic trim trailspace on write a buffer
   vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     callback = function()
       MiniTrailspace.trim()
