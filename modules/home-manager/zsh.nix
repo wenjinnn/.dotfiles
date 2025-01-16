@@ -44,6 +44,7 @@
       y = "yazi";
       m = "neomutt";
       n = "ncmpcpp";
+      t = "trans";
     };
     initExtra = let
       proxyPort = "7890";
