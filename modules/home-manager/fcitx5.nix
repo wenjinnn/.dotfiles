@@ -13,8 +13,8 @@
       # so we need to force replace it in every rebuild to avoid file conflict.
       force = true;
     };
-    "fcitx5/config".source = ./config;
-    "fcitx5/conf/classicui.conf".source = ./conf/classicui.conf;
+    "fcitx5/config".source = ../../xdg/config/fcitx5/config;
+    "fcitx5/conf/classicui.conf".source = ../../xdg/config/fcitx5/conf/classicui.conf;
   };
   # rime sync dir link to private repo
   xdg.dataFile = {
