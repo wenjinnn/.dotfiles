@@ -15,6 +15,7 @@ later(function()
   local util = require("util")
   local map = util.map
 
+  -- Tabnew for new terminal suit me, cuz I open multiple dap terminal a lot
   dap.defaults.fallback.terminal_win_cmd = function()
     local cur_win = api.nvim_get_current_win()
     api.nvim_command("tabnew")
@@ -44,6 +45,7 @@ later(function()
     },
   }
 
+  -- enable dap builtin auto completion
   vim.api.nvim_create_autocmd({ "FileType" }, {
     pattern = "dap-repl",
     group = util.augroup("dap_repl"),
@@ -52,18 +54,13 @@ later(function()
     end,
   })
 
+  -- setup dap python and virtual text
   require("dap-python").setup("python")
   require("nvim-dap-virtual-text").setup({
     all_frames = true, virt_text_pos = "eol",
   })
 
-  local widgets = require("dap.ui.widgets")
-  local function dap_ui(widget, title)
-    return function()
-      widgets.cursor_float(widget, { title = title })
-    end
-  end
-
+  -- dap function wrapper for keymap
   local function breakpoints_quickfix()
     dap.list_breakpoints()
     vim.cmd("copen")
@@ -95,6 +92,14 @@ later(function()
   end
   local function dap_hover()
     widgets.hover("<cexpr>", { title = "dap-hover" })
+  end
+
+  -- simple custom dap ui, cursor float window takes up the least screen space.
+  local widgets = require("dap.ui.widgets")
+  local function dap_ui(widget, title)
+    return function()
+      widgets.cursor_float(widget, { title = title })
+    end
   end
 
   map("n", "<leader>db", dap.toggle_breakpoint, "Dap toggle breakpoint")

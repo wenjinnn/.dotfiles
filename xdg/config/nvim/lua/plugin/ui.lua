@@ -4,6 +4,7 @@ local now, later = MiniDeps.now, MiniDeps.later
 local map = require("util").map
 local feedkey = require("util").feedkey
 
+-- Starter should load immediately
 now(function()
   local starter = require("mini.starter")
   starter.setup({
@@ -26,16 +27,20 @@ now(function()
   })
 end)
 
+-- Icons
 now(function()
   require("mini.icons").setup()
   MiniIcons.mock_nvim_web_devicons()
 end)
 
+-- Just use mini.notify for LSP process, because it could have lot message in the sametime
+-- so command line is not enough
 later(function()
   require("mini.notify").setup()
   map("n", "<leader>N", MiniNotify.clear, "Notify clear")
 end)
 
+-- line and indentscope
 now(function()
   require("mini.statusline").setup()
   require("mini.tabline").setup()
@@ -46,6 +51,7 @@ now(function()
   })
 end)
 
+-- colors
 later(function()
   local hipatterns = require("mini.hipatterns")
   local hi_words = require("mini.extra").gen_highlighter.words
@@ -62,6 +68,7 @@ later(function()
   })
 end)
 
+-- clue with some custom postkeys, mostly for zl zh and dap
 later(function()
   local miniclue = require("mini.clue")
   local z_post_keys = { zl = "z", zh = "z", zL = "z", zH = "z" }

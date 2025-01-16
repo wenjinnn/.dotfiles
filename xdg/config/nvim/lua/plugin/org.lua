@@ -1,4 +1,6 @@
 local add, later = MiniDeps.add, MiniDeps.later
+
+-- orgmode are better note taking for me :)
 later(function()
   add({
     source = "nvim-orgmode/orgmode",

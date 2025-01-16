@@ -1,5 +1,6 @@
 local M = {}
 
+-- We don't want signcolumn, number, spell and indentscope for terminal
 function M.setup_term_opt(event)
   vim.opt_local.number = false
   vim.opt_local.signcolumn = "no"
@@ -8,6 +9,7 @@ function M.setup_term_opt(event)
   vim.b.miniindentscope_disable = true
 end
 
+-- Delete all dap terminals, useful when session restored, cuz in that timing sometimes we have some dead dap terminals.
 function M.delete_dap_terminals()
   local dap_terminals_output = vim.api.nvim_exec2("filter /\\[dap-terminal\\]/ buffers", { output = true })
   local dap_terminals = vim.split(dap_terminals_output.output, "\n")
@@ -24,6 +26,7 @@ function M.delete_dap_terminals()
   end
 end
 
+-- Wrapper for QoL
 function M.keycode(key)
   return vim.api.nvim_replace_termcodes(key, true, true, true)
 end

@@ -1,5 +1,6 @@
 local M = {}
 
+-- Setup 16 colors for terminal, otherwise some colors will looks strange.
 function M.setup_terminal_color(base_color)
   local palette = require("mini.hues").make_palette(base_color)
   vim.g.terminal_color_0 = palette.bg_mid2
@@ -20,12 +21,14 @@ function M.setup_terminal_color(base_color)
   vim.g.terminal_color_15 = palette.fg_mid
 end
 
+-- Make override highlight easier
 function M.override_hl(name, opts)
   local hl = vim.api.nvim_get_hl(0, { name = name })
   hl = vim.tbl_deep_extend("force", hl, opts)
   vim.api.nvim_set_hl(0, name, hl)
 end
 
+-- Some personal preferences for highlighting settings
 function M.setup_mini_hues_hl()
   vim.api.nvim_set_hl(0, "@lsp.type.interface", { link = "@interface" })
   vim.api.nvim_set_hl(0, "@interface", { link = "@constant" })
@@ -39,6 +42,7 @@ function M.setup_mini_hues_hl()
   M.override_hl("DiagnosticOk", { italic = true })
 end
 
+-- A wrapper for above functions
 function M.setup_wenvim_color(base_color)
   M.setup_terminal_color(base_color)
   M.setup_mini_hues_hl()
