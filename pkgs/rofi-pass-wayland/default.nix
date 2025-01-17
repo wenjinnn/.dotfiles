@@ -22,10 +22,10 @@ stdenv.mkDerivation {
   version = "2.1.3-unstable-2024-12-10";
 
   src = fetchFromGitHub {
-    owner = "Seme4eg";
+    owner = "wenjinnn";
     repo = "rofi-pass-wayland";
-    rev = "c26dde937839a54977a0253f1a678ec6ce036df9";
-    sha256 = "sha256-N1QuC7fZpDih/RTRFxm2eUy7JMCOMpGwur5orQ52610=";
+    rev = "7a096a690d03bfde626401e732e2c100c3e17a48";
+    sha256 = "sha256-8MA16bsAODnViz0enPQqJdRB9AmH+XEARdBdE3VqQmQ=";
   };
 
   nativeBuildInputs = [makeWrapper];
@@ -57,7 +57,7 @@ stdenv.mkDerivation {
 
   meta = {
     description = "Rofi frontend for ZX2C4 pass project (wayland only).";
-    homepage = "https://github.com/Seme4eg/rofi-pass-wayland";
+    homepage = "https://github.com/wenjinnn/rofi-pass-wayland";
     mainProgram = "rofi-pass";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [wenjinnn];
