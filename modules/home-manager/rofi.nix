@@ -50,6 +50,10 @@
         margin = mkLiteral "0px 0.3em 0em 0em";
         text-color = mkLiteral "@foreground-color";
       };
+      "#entry" = {
+        text-color = mkLiteral "inherit";
+        placeholder-color = mkLiteral "var(lightbg)";
+      };
       "#num-filtered-rows" = {
         expand = false;
         text-color = mkLiteral "inherit";
