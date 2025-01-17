@@ -6,6 +6,7 @@ function M.setup_term_opt(event)
   vim.opt_local.signcolumn = "no"
   vim.opt_local.relativenumber = false
   vim.opt_local.spell = false
+  vim.cmd.startinsert()
   vim.b.miniindentscope_disable = true
 end
 
