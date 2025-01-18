@@ -103,10 +103,10 @@
             "steam" = "";
             "dbeaver" = "";
             "mpv" = "";
-            "title<.*LibreOffice.*>" = "󰏆";
-            "title<.*微信.*>" = "";
-            "title<.*QQ.*>" = "";
-            "title<.*kdeconnect.*>" = "";
+            "libreoffice" = "󰏆";
+            "微信" = "";
+            "QQ" = "";
+            "kdeconnect" = "";
           };
           show-special = true;
         };
