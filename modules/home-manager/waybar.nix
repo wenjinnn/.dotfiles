@@ -99,6 +99,14 @@
             "class<microsoft-edge>" = "󰇩";
             "foot" = "";
             "code" = "󰨞";
+            "nautilus" = "󰪶";
+            "steam" = "";
+            "dbeaver" = "";
+            "mpv" = "";
+            "title<.*LibreOffice.*>" = "󰏆";
+            "title<.*微信.*>" = "";
+            "title<.*QQ.*>" = "";
+            "title<.*kdeconnect.*>" = "";
           };
           show-special = true;
         };
