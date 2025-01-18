@@ -180,7 +180,7 @@ end)
 later(function()
   add("olimorris/codecompanion.nvim")
   local adapter = os.getenv("NVIM_AI_ADAPTER") or "ollama"
-  local ollama_model = os.getenv("NVIM_OLLAMA_MODEL") or "llama3.2:latest"
+  local ollama_model = os.getenv("NVIM_OLLAMA_MODEL") or "llama3.2-vision:latest"
   require("codecompanion").setup({
     adapters = {
       anthropic = function()
