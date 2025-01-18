@@ -55,7 +55,11 @@
     rocmOverrideGfx = "11.0.1";
   };
 
-  environment.systemPackages = with pkgs; [lact];
+  environment.systemPackages = with pkgs; [
+    lact
+    nvtopPackages.amd
+    nvtopPackages.intel
+  ];
   systemd.packages = with pkgs; [lact];
   systemd.services.lactd.wantedBy = ["multi-user.target"];
   services = {
