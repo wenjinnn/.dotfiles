@@ -8,5 +8,4 @@
   wemeet = pkgs.callPackage ./wemeet {};
   rofi-network-manager = pkgs.callPackage ./rofi-network-manager {};
   rofi-screenshot-wayland = pkgs.callPackage ./rofi-screenshot-wayland {};
-  rofi-pass-wayland = pkgs.callPackage ./rofi-pass-wayland {};
 }

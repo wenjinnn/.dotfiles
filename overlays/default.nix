@@ -66,6 +66,14 @@ in rec {
     pass = prev.pass.override {
       waylandSupport = true;
     };
+    rofi-pass-wayland = prev.rofi-pass-wayland.overrideAttrs (old: {
+      src = prev.fetchFromGitHub {
+        owner = "wenjinnn";
+        repo = "rofi-pass";
+        rev = "3cf83dc03e0b3018ba1636cbbcbd6a194f4873e5";
+        hash = "sha256-Vt5aGhb79G7gLcVOJKaEodC4gnXiSzxc97imttdUcMU=";
+      };
+    });
     # IM support patch
     swappy = prev.swappy.overrideAttrs (old: {
       src = prev.fetchFromGitHub {

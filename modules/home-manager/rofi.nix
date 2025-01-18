@@ -20,7 +20,7 @@
       enable = true;
       package = pkgs.rofi-pass-wayland;
       extraConfig = ''
-        ROFI_PASS_TERMINAL=foot
+        edit_terminal_command=foot
       '';
     };
     terminal = "${pkgs.foot}/bin/foot";
