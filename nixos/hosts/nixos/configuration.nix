@@ -47,7 +47,13 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  boot.kernelParams = ["amdgpu.pcie_gen_cap=0x40000"];
+  services.ollama = {
+    environmentVariables = {
+      HCC_AMDGPU_TARGET = "gfx1101"; # used to be necessary, but doesn't seem to anymore
+      OLLAMA_KEEP_ALIVE = "30m";
+    };
+    rocmOverrideGfx = "11.0.1";
+  };
 
   environment.systemPackages = with pkgs; [lact];
   systemd.packages = with pkgs; [lact];
