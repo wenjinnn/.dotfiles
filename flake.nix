@@ -52,6 +52,10 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixos-hardware.url = "github:nixos/nixos-hardware";
     stylix.url = "github:danth/stylix";
   };
@@ -66,6 +70,7 @@
     sops-nix,
     stylix,
     nix-index-database,
+    disko,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -126,6 +131,21 @@
           nur.modules.nixos.default
           sops-nix.nixosModules.sops
           nix-index-database.nixosModules.nix-index
+        ];
+      };
+      aws = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {inherit inputs outputs username outlook gmail;};
+        modules = [
+          ./nixos/hosts/aws
+        ];
+      };
+      aliyun = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {inherit inputs outputs username outlook gmail;};
+        modules = [
+          disko.nixosModules.disko
+          ./nixos/hosts/aliyun
         ];
       };
     };

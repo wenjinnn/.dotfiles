@@ -151,6 +151,11 @@
       mesa-demos
       vulkan-tools
       home-manager
+      # to run nixos-anywhere store and kexec locally:
+      # nix build .#nixosConfigurations.my-server.config.system.build.toplevel -o result-nixos
+      # nix build .#nixosConfigurations.my-server.config.system.build.diskoScript -o result-disko
+      # nixos-anywhere --store-paths result-disko result-nixos --kexec ./nixos-kexec-installer-noninteractive-x86_64-linux.tar.gz --no-substitute-on-destination myserver.example.com
+      nixos-anywhere
       tree
     ];
   };
@@ -183,6 +188,11 @@
       # Remove if you want to SSH using passwords
       PasswordAuthentication = false;
     };
+  };
+
+  services.tailscale = {
+    enable = true;
+    openFirewall = true;
   };
 
   security.pam.loginLimits = [
