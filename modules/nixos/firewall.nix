@@ -1,9 +1,13 @@
-{
+{config, ...}: {
   networking.nftables.enable = true;
   networking.firewall = {
     enable = true;
     checkReversePath = "loose";
-    trustedInterfaces = ["tun*" "Meta"];
+    trustedInterfaces = ["tun*" "Meta" "tailscale*"];
+    allowedUDPPorts = [
+      config.services.tailscale.port
+    ];
+
     allowedTCPPorts = [80 443 4001 8080];
     allowedUDPPortRanges = [
       {
