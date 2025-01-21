@@ -6,9 +6,20 @@
     trustedInterfaces = ["tun*" "Meta" "tailscale*"];
     allowedUDPPorts = [
       config.services.tailscale.port
+      # snycthing
+      22000
+      21027
     ];
 
-    allowedTCPPorts = [80 443 4001 8080];
+    allowedTCPPorts = [
+      80
+      443
+      4001
+      8080
+      # syncthing
+      8384
+      22000
+    ];
     allowedUDPPortRanges = [
       {
         from = 4000;
