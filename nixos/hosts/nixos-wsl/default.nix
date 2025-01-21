@@ -2,7 +2,7 @@
 # Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
 {
   inputs,
-  username,
+  me,
   outputs,
   lib,
   config,
@@ -38,7 +38,7 @@
 
   wsl = {
     enable = true;
-    defaultUser = "${username}";
+    defaultUser = "${me.username}";
     startMenuLaunchers = true;
     useWindowsDriver = true;
   };

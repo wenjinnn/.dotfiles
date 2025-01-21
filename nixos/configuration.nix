@@ -6,7 +6,7 @@
   lib,
   config,
   pkgs,
-  username,
+  me,
   ...
 }: {
   # You can import other NixOS modules here
@@ -66,7 +66,7 @@
       nix-path = config.nix.nixPath;
       # Deduplicate and optimize nix store
       auto-optimise-store = true;
-      trusted-users = ["${username}"];
+      trusted-users = ["${me.username}"];
       # the system-level substituers & trusted-public-keys
       # given the users in this list the right to specify additional substituters via:
       #    1. `nixConfig.substituers` in `flake.nix`

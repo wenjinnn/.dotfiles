@@ -1,6 +1,6 @@
 {
   pkgs,
-  username,
+  me,
   ...
 }: {
   services = {
@@ -22,7 +22,7 @@
     };
     rss2email = {
       enable = true;
-      to = "${username}";
+      to = me.username;
       interval = "1h";
       config = {
         sendmail = "/run/wrappers/bin/sendmail";

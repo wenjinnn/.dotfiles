@@ -1,11 +1,12 @@
 {
   pkgs,
   config,
-  username,
-  outlook,
-  gmail,
+  me,
   ...
 }: let
+  username = me.username;
+  gmail = me.mail.gmail;
+  outlook = me.mail.outlook;
   # for the follow script will be used in systemd unit, so we don't use ${sops_secrets} here
   sops_secrets = config.home.sessionVariables.SOPS_SECRETS;
   mutt_oauth2 = "${pkgs.neomutt}/share/neomutt/oauth2/mutt_oauth2.py";

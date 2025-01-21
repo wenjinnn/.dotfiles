@@ -1,5 +1,5 @@
 {
-  username,
+  me,
   pkgs,
   ...
 }: {
@@ -7,8 +7,8 @@
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;
-    userName = "${username}";
-    userEmail = "hewenjin94@outlook.com";
+    userName = me.username;
+    userEmail = me.mail.outlook;
     extraConfig = {
       color.ui = true;
       credential.helper = "store";
