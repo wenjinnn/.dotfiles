@@ -85,9 +85,13 @@
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
     forAllSystems = nixpkgs.lib.genAttrs systems;
-    username = "wenjin";
-    outlook = "hewenjin94@outlook.com";
-    gmail = "hewenjin1112@gmail.com";
+    me = {
+      username = "wenjin";
+      mail = {
+        outlook = "hewenjin94@outlook.com";
+        gmail = "hewenjin1112@gmail.com";
+      };
+    };
   in {
     # Your custom packages
     # Accessible through 'nix build', 'nix shell', etc
@@ -110,7 +114,7 @@
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {inherit inputs outputs username outlook gmail;};
+        specialArgs = {inherit inputs outputs me;};
         modules = [
           # > Our main nixos configuration file <
           ./nixos/hosts/nixos
@@ -125,7 +129,7 @@
       };
       nixos-wsl = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {inherit inputs outputs username outlook gmail;};
+        specialArgs = {inherit inputs outputs me;};
         modules = [
           ./nixos/hosts/nixos-wsl
           nur.modules.nixos.default
@@ -135,14 +139,14 @@
       };
       aws = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {inherit inputs outputs username outlook gmail;};
+        specialArgs = {inherit inputs outputs me;};
         modules = [
           ./nixos/hosts/aws
         ];
       };
       aliyun = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {inherit inputs outputs username outlook gmail;};
+        specialArgs = {inherit inputs outputs me;};
         modules = [
           disko.nixosModules.disko
           ./nixos/hosts/aliyun
@@ -184,7 +188,7 @@
     homeConfigurations = {
       "wenjin@nixos" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = {inherit inputs outputs username outlook gmail;};
+        extraSpecialArgs = {inherit inputs outputs me;};
         modules = [
           # > Our main home-manager configuration file <
           ./home-manager/home.nix
@@ -196,7 +200,7 @@
       };
       "wenjin@nixos-wsl" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = {inherit inputs outputs username outlook gmail;};
+        extraSpecialArgs = {inherit inputs outputs me;};
         modules = [
           # > Our main home-manager configuration file <
           ./home-manager/home.nix

@@ -6,7 +6,7 @@
   lib,
   config,
   pkgs,
-  username,
+  me,
   ...
 }: let
   dotfiles_path = "${config.home.homeDirectory}/.dotfiles";
@@ -68,8 +68,8 @@ in {
 
   # TODO: Set your username
   home = {
-    username = "${username}";
-    homeDirectory = "/home/${username}";
+    username = "${me.username}";
+    homeDirectory = "/home/${me.username}";
   };
 
   # Add stuff for your user as you see fit:
