@@ -113,20 +113,20 @@
         specialArgs = {inherit inputs outputs username outlook gmail;};
         modules = [
           # > Our main nixos configuration file <
-          ./nixos/configuration.nix
           ./nixos/hosts/nixos
           nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
           nur.modules.nixos.default
           sops-nix.nixosModules.sops
           stylix.nixosModules.stylix
           nix-index-database.nixosModules.nix-index
+          # for eGPU
+          nixos-hardware.nixosModules.common-gpu-amd
         ];
       };
       nixos-wsl = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {inherit inputs outputs username outlook gmail;};
         modules = [
-          ./nixos/configuration.nix
           ./nixos/hosts/nixos-wsl
           nur.modules.nixos.default
           sops-nix.nixosModules.sops
