@@ -1,8 +1,8 @@
-{username, ...}: {
+{me, ...}: {
   programs.firefox = {
     enable = true;
     profiles.default = {
-      name = username;
+      name = me.username;
       isDefault = true;
       search = {
         default = "DuckDuckGo";

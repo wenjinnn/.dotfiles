@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  username,
+  me,
   inputs,
   ...
 }: {
@@ -74,7 +74,7 @@
     settings = {
       default_session = {
         command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
-        user = username;
+        user = me.username;
       };
     };
   };
