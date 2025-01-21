@@ -3,7 +3,7 @@
   config,
   lib,
   pkgs,
-  outlook,
+  me,
   ...
 }:
 {
@@ -88,7 +88,7 @@
   networking.firewall.allowedTCPPorts = [80 443];
 
   security.acme = {
-    defaults.email = outlook;
+    defaults.email = me.mail.outlook;
     acceptTerms = true;
   };
   environment.systemPackages = map lib.lowPrio [
