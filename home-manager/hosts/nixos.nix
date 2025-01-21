@@ -36,6 +36,8 @@
     "${homePath}/Videos"
   ];
 
+  services.remmina.enable = true;
+
   home.packages = with pkgs; [
     gimp
     obs-studio
