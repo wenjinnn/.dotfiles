@@ -20,10 +20,13 @@
   };
   services = {
     openssh.enable = true;
-    # rustdesk-server = {
-    #   enable = true;
-    #   openFirewall = true;
-    # };
+    rustdesk-server = {
+      enable = true;
+      relay.enable = true;
+      signal.enable = true;
+      openFirewall = true;
+      signal.relayHosts = ["hs.wenjin.me"];
+    };
     headscale = {
       enable = true;
       address = "0.0.0.0";
