@@ -5,8 +5,7 @@
   pkgs,
   me,
   ...
-}:
-{
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
@@ -25,7 +24,7 @@
       relay.enable = true;
       signal.enable = true;
       openFirewall = true;
-      signal.relayHosts = ["hs.wenjin.me"];
+      signal.relayHosts = ["hs.hewenjin.org"];
     };
     headscale = {
       enable = true;
@@ -33,12 +32,31 @@
       port = 8080;
 
       settings = {
-        server_url = "https://hs.wenjin.me";
+        server_url = "https://hs.hewenjin.org";
+        logtail = {
+          enabled = false;
+        };
+        ip_prefixes = [
+          "100.77.0.0/24"
+          "fd7a:115c:a1e0:77::/64"
+        ];
+        derp = {
+          server = {
+            enabled = true;
+            region_id = 999;
+            region_code = "headscale";
+            region_name = "Headscale Embedded DERP";
+            stun_listen_addr = "0.0.0.0:3478";
+            auto_update_enabled = true;
+            automatically_add_embedded_derp_region = true;
+          };
+          urls = [];
+        };
 
+        metrics_listen_addr = "127.0.0.1:8090";
         dns = {
           override_local_dns = true;
-          base_domain = "ts.wenjin.me";
-          metrics_listen_addr = "127.0.0.1:8090";
+          base_domain = "ts.hewenjin.org";
           magic_dns = true;
           nameservers.global = [
             "1.1.1.1"
@@ -46,18 +64,6 @@
             "2606:4700:4700::1111"
             "2606:4700:4700::1001"
           ];
-          logtail = {
-            enabled = false;
-          };
-          ip_prefixes = [
-            "100.77.0.0/24"
-            "fd7a:115c:a1e0:77::/64"
-          ];
-          derp.server = {
-            enabled = true;
-            region_id = 999;
-            stun_listen_addr = "0.0.0.0:3478";
-          };
         };
       };
     };
@@ -68,7 +74,7 @@
       recommendedGzipSettings = true;
       recommendedOptimisation = true;
       virtualHosts = {
-        "hs.wenjin.me" = {
+        "hs.hewenjin.org" = {
           forceSSL = true;
           enableACME = true;
           locations = {
@@ -77,14 +83,14 @@
               proxyWebsockets = true;
             };
             "/metrics" = {
-              proxyPass = "http://${config.services.headscale.settings.dns.metrics_listen_addr}/metrics";
+              proxyPass = "http://${config.services.headscale.settings.metrics_listen_addr}/metrics";
             };
           };
         };
       };
     };
   };
-  networking.firewall.allowedUDPPorts = [3478];
+  networking.firewall.allowedUDPPorts = [3478 41641];
   networking.firewall.allowedTCPPorts = [80 443];
 
   security.acme = {
