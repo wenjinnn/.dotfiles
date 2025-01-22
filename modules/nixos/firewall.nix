@@ -9,6 +9,9 @@
       # snycthing
       22000
       21027
+      # tailscale direct connection
+      3478
+      41641
     ];
 
     allowedTCPPorts = [
