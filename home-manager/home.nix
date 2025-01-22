@@ -208,6 +208,17 @@ in {
       enable = true;
       enableZshIntegration = true;
     };
+    mangohud = {
+      enable = true;
+      settings = {
+        cpu_temp = true;
+        gpu_temp = true;
+        ram = true;
+        vram = true;
+        font_scale = lib.mkForce 2.0;
+        background_alpha = lib.mkForce 0.5;
+      };
+    };
     # Enable home-manager
     home-manager.enable = true;
     gpg.enable = true;
