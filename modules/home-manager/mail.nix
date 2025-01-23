@@ -26,6 +26,7 @@
     --email ${outlook}
   '';
   outlook_oauth2_token = pkgs.writeShellScript "outlook_oauth2_token" ''
+    export PATH=$PATH:${pkgs.python3}/bin:${pkgs.gnupg}/bin
     export GPG_TTY=$(tty)
     ${mutt_oauth2} ${outlook_oauth2_token_path}
   '';
@@ -45,6 +46,7 @@
     --email ${gmail}
   '';
   gmail_oauth2_token = pkgs.writeShellScript "gmail_oauth2_token" ''
+    export PATH=$PATH:${pkgs.python3}/bin:${pkgs.gnupg}/bin
     export GPG_TTY=$(tty)
     ${mutt_oauth2} ${gmail_oauth2_token_path}
   '';
