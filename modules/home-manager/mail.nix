@@ -26,7 +26,6 @@
     --email ${outlook}
   '';
   outlook_oauth2_token = pkgs.writeShellScript "outlook_oauth2_token" ''
-    export PATH=$PATH:${pkgs.python3}/bin:${pkgs.gnupg}/bin
     export GPG_TTY=$(tty)
     ${mutt_oauth2} ${outlook_oauth2_token_path}
   '';
@@ -46,7 +45,6 @@
     --email ${gmail}
   '';
   gmail_oauth2_token = pkgs.writeShellScript "gmail_oauth2_token" ''
-    export PATH=$PATH:${pkgs.python3}/bin:${pkgs.gnupg}/bin
     export GPG_TTY=$(tty)
     ${mutt_oauth2} ${gmail_oauth2_token_path}
   '';
@@ -205,6 +203,8 @@ in {
       enable = true;
       vimKeys = true;
       extraConfig = ''
+        set query_command = "lbdbq '%s'"
+
         unauto_view "*"
 
         # Quote
@@ -255,7 +255,20 @@ in {
     };
   };
 
-  services.imapnotify.enable = true;
+  services.imapnotify = {
+    enable = true;
+    path = with pkgs; [
+      coreutils
+      python3
+      libnotify
+      offlineimap
+      gnupg
+      notmuch
+      sops
+    ];
+  };
+
+  home.packages = [pkgs.lbdb];
 
   home.file = {
     ".mailcap".text = ''
