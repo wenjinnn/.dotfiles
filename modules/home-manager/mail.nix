@@ -73,7 +73,7 @@ in {
       imapnotify = {
         enable = true;
         boxes = ["Inbox"];
-        onNotifyPost = ''${pkgs.libnotify}/bin/notify-send "New Mail in:" "${outlook}"'';
+        onNotifyPost = ''${pkgs.libnotify}/bin/notify-send "New mail in:" "${outlook}"'';
         onNotify = "${pkgs.offlineimap}/bin/offlineimap -a ${outlook} && ${notmuch_new}";
         extraConfig = {
           xoAuth2 = true;
@@ -126,7 +126,7 @@ in {
       imapnotify = {
         enable = true;
         boxes = ["Inbox"];
-        onNotifyPost = ''${pkgs.libnotify}/bin/notify-send "New Mail in:" "${gmail}"'';
+        onNotifyPost = ''${pkgs.libnotify}/bin/notify-send "New mail in:" "${gmail}"'';
         onNotify = "${pkgs.offlineimap}/bin/offlineimap -a ${gmail} && ${notmuch_new}";
         extraConfig = {
           xoAuth2 = true;
