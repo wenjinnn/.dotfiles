@@ -53,9 +53,9 @@
     fsType = "ntfs";
   };
   fileSystems."/game" = {
-    options = ["nofail" "noauto" "uid=wenjin" "gid=users" "dmask=007" "fmask=117"];
-    device = "/dev/disk/by-uuid/881013FA1013EE46";
-    fsType = "ntfs";
+    options = ["compress=zstd" "nofail" "noauto"];
+    device = "/dev/disk/by-uuid/6f35c79a-6aac-485c-ab6c-48df5d2be0e3";
+    fsType = "btrfs";
   };
 
   swapDevices = [{device = "/swap/swapfile";priority = 0;}];
