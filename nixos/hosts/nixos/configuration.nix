@@ -21,7 +21,6 @@
     bluetooth
     steam
     theme
-    fcitx5
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
