@@ -11,7 +11,6 @@
     (modulesPath + "/virtualisation/amazon-image.nix")
     headscale
   ];
-  ec2.efi = true;
 
   services.openssh.enable = true;
 
