@@ -14,10 +14,10 @@
     enable = true;
     polarity = "dark";
     image = pkgs.fetchurl {
-      url = "https://www.bing.com/th?id=OHR.ArdezSwitzerland_ROW0603494655_UHD.jpg&rf=LaDigue_UHD.jpg&pid=hp";
-      sha256 = "sha256-EMjJajEVkD4CB38cV6QbLc4N2o1n0KliktO9NX+CXjI=";
+      url = "https://www.bing.com/th?id=OHR.NapoliPizza_ROW8840504063_UHD.jpg";
+      sha256 = "sha256-1Andv0jmsakNgKv4n/q+McmL+eBYByxRiZ2A32rqo+I=";
     };
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/default-dark.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-hard.yaml";
     cursor = {
       name = "Adwaita";
       size = 24;
@@ -30,10 +30,6 @@
       sizes = {
         popups = 13;
         desktop = 11;
-      };
-      monospace = {
-        package = pkgs.nerd-fonts.caskaydia-cove;
-        name = "CaskaydiaCove Nerd Font";
       };
     };
   };
