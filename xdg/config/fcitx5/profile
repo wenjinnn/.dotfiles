@@ -4,7 +4,7 @@ Name=默认
 # Layout
 Default Layout=us
 # Default Input Method
-DefaultIM=rime
+DefaultIM=keyboard-us
 
 [Groups/0/Items/0]
 # Name
@@ -26,4 +26,3 @@ Layout=
 
 [GroupOrder]
 0=默认
-
