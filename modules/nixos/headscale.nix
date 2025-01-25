@@ -24,8 +24,8 @@
             auto_update_enabled = true;
             automatically_add_embedded_derp_region = true;
           };
-          urls = [];
         };
+        tls_letsencrypt_hostname = "hewenjin.org";
 
         metrics_listen_addr = "127.0.0.1:8090";
         dns = {
