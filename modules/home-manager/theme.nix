@@ -2,6 +2,7 @@
   home.pointerCursor = {
     gtk.enable = true;
     x11.enable = true;
+    hyprcursor.enable = true;
   };
   dconf.enable = true;
   dconf.settings = {
