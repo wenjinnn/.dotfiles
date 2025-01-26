@@ -9,7 +9,10 @@
 }: {
   imports = with outputs.nixosModules; [
     (modulesPath + "/virtualisation/amazon-image.nix")
-    headscale
+    (headscale {
+      inherit config me;
+      domain = "hewenjin.org";
+    })
   ];
 
   services.openssh.enable = true;
