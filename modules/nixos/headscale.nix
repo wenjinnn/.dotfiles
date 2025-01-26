@@ -1,4 +1,9 @@
-{config, me, ...}: {
+{
+  config,
+  me,
+  domain,
+  ...
+}: {
   services = {
     headscale = {
       enable = true;
@@ -6,7 +11,7 @@
       port = 8080;
 
       settings = {
-        server_url = "https://hs.hewenjin.org";
+        server_url = "https://hs.${domain}";
         logtail = {
           enabled = false;
         };
@@ -25,12 +30,11 @@
             automatically_add_embedded_derp_region = true;
           };
         };
-        tls_letsencrypt_hostname = "hewenjin.org";
 
         metrics_listen_addr = "127.0.0.1:8090";
         dns = {
           override_local_dns = true;
-          base_domain = "ts.hewenjin.org";
+          base_domain = "ts.${domain}";
           magic_dns = true;
           nameservers.global = [
             "1.1.1.1"
@@ -48,7 +52,7 @@
       recommendedGzipSettings = true;
       recommendedOptimisation = true;
       virtualHosts = {
-        "hs.hewenjin.org" = {
+        "hs.${domain}" = {
           forceSSL = true;
           enableACME = true;
           locations = {
