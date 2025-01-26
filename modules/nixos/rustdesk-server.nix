@@ -5,7 +5,7 @@
       relay.enable = true;
       signal.enable = true;
       openFirewall = true;
-      signal.relayHosts = ["hs.hewenjin.org"];
+      signal.relayHosts = ["wenjin.me"];
     };
   };
 }
