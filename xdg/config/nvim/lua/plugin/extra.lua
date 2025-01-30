@@ -200,9 +200,8 @@ later(function()
         })
       end,
       deepseek = function()
-        return require("codecompanion.adapters").extend("openai_compatible", {
+        return require("codecompanion.adapters").extend("deepseek", {
           env = {
-            url = "https://api.deepseek.com",
             api_key = "cmd:sops exec-env $SOPS_SECRETS 'echo -n $DEEPSEEK_API_KEY'",
           },
         })
