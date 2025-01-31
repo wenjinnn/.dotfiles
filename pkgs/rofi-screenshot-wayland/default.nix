@@ -20,8 +20,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "wenjinnn";
     repo = "rofi-screenshot-wayland";
-    rev = "2a10e816a12b6ce7d4c97823e0388f3cd49adc94";
-    sha256 = "sha256-FYtD/x5XqVoKZ3plzDRtjzTb+ouWWtihpBog8lgFWz4=";
+    rev = "f1c7b23afeb5003b81e11052edef2dd79913f521";
+    sha256 = "sha256-O99KmZX2MaQwPIZB3+vUfC8RmU/UJwzR+UAistkBfU0=";
   };
 
   nativeBuildInputs = [makeWrapper];

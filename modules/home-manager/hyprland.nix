@@ -350,7 +350,7 @@ in {
             # "SuperShift, S, exec, grim -g \"$(slurp)\" - | wl-copy"
             # TODO extra to a script
             "Super,Print, exec, rofi-screenshot"
-            ",Print, exec, rofi-screenshot -i"
+            ",Print, exec, rofi-screenshot -I"
             "ControlShiftSuper, P, exec, playerctl play-pause"
             "ControlAltSuper, P, exec, playerctl pause"
             "ControlShiftSuper, S, exec, playerctl pause"
