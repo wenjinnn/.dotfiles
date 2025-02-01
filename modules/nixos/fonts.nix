@@ -52,6 +52,15 @@
           "Sarasa fixed Slab SC"
         ];
       };
+      # SimSun alias for some office doc
+      localConf = ''
+        <alias>
+          <family>SimSun</family>
+          <prefer>
+            <family>Source Han Serif SC</family>
+          </prefer>
+        </alias>
+      '';
     };
   };
 }
