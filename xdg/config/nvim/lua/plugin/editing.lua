@@ -224,11 +224,7 @@ end)
 -- conform with some auto format setting
 later(function()
   add("stevearc/conform.nvim")
-  require("conform").setup({
-    formatters_by_ft = {
-      nix = { "alejandra" },
-    },
-  })
+  require("conform").setup()
   vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
   vim.g.conform_autoformat = true
   local diff_format = function()
