@@ -217,14 +217,18 @@ later(function()
             },
           },
         },
+        keymaps = {
+          completion = {
+            modes = {
+              i = "<C-n>",
+            },
+          },
+        },
       },
       inline = { adapter = adapter },
       agent = { adapter = adapter },
     },
     display = {
-      chat = {
-        show_settings = true,
-      },
       diff = {
         provider = "mini_diff",
       },
