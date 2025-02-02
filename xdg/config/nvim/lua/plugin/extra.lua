@@ -179,59 +179,49 @@ end)
 -- AI companion
 later(function()
   add("olimorris/codecompanion.nvim")
-  local adapter = os.getenv("NVIM_AI_ADAPTER") or "ollama"
-  local ollama_model = os.getenv("NVIM_OLLAMA_MODEL") or "llama3.2-vision:latest"
+  local default_adapter = os.getenv("NVIM_AI_ADAPTER") or "ollama"
+  local ollama_model = os.getenv("NVIM_OLLAMA_MODEL") or "deepseek-r1:14b"
+  local cc_adapters = require("codecompanion.adapters")
+  local api_key_cmd = "cmd:sops exec-env $SOPS_SECRETS 'echo -n $%s'";
+
+  local function get_api_key_cmd(key)
+    return {
+      env = {
+        api_key = api_key_cmd:format(key),
+      },
+    }
+  end
+
+  local function extend_adapter(adapter, key_or_set)
+    local extend_set = key_or_set
+    if type(key_or_set) == "string" then
+      extend_set = get_api_key_cmd(key_or_set);
+    end
+    return function()
+      return cc_adapters.extend(adapter, extend_set)
+    end
+  end
+
+  local ollama_setting = { schema = { model = { default = ollama_model } } }
+
   require("codecompanion").setup({
     adapters = {
-      anthropic = function()
-        return require("codecompanion.adapters").extend("anthropic", {
-          env = {
-            api_key = "cmd:sops exec-env $SOPS_SECRETS 'echo -n $ANTHROPIC_API_KEY'",
-          },
-        })
-      end,
-      ollama = function()
-        return require("codecompanion.adapters").extend("ollama", {
-          schema = {
-            model = {
-              default = ollama_model,
-            },
-          },
-        })
-      end,
-      deepseek = function()
-        return require("codecompanion.adapters").extend("deepseek", {
-          env = {
-            api_key = "cmd:sops exec-env $SOPS_SECRETS 'echo -n $DEEPSEEK_API_KEY'",
-          },
-        })
-      end,
+      ollama = extend_adapter("ollama", ollama_setting),
+      anthropic = extend_adapter("anthropic", "ANTHROPIC_API_KEY"),
+      deepseek = extend_adapter("deepseek", "DEEPSEEK_API_KEY"),
     },
     strategies = {
       chat = {
-        adapter = adapter,
-        slash_commands = {
-          help = {
-            opts = {
-              provider = "mini_pick",
-            },
-          },
-        },
-        keymaps = {
-          completion = {
-            modes = {
-              i = "<C-n>",
-            },
-          },
-        },
+        adapter = default_adapter,
+        slash_commands = { help = { opts = { provider = "mini_pick" } } },
+        keymaps = { completion = { modes = { i = "<C-n>" } } },
       },
-      inline = { adapter = adapter },
-      agent = { adapter = adapter },
+      inline = { adapter = default_adapter },
+      agent = { adapter = default_adapter },
     },
     display = {
-      diff = {
-        provider = "mini_diff",
-      },
+      chat = { show_settings = true },
+      diff = { provider = "mini_diff" },
     },
   })
   map({ "n", "v" }, "<leader>Ca", "<cmd>CodeCompanionActions<cr>", "Code companion actions")
