@@ -178,6 +178,7 @@ end)
 
 -- AI companion
 later(function()
+  add("github/copilot.vim")
   add("olimorris/codecompanion.nvim")
   local default_adapter = os.getenv("NVIM_AI_ADAPTER") or "ollama"
   local ollama_model = os.getenv("NVIM_OLLAMA_MODEL") or "deepseek-r1:14b"
