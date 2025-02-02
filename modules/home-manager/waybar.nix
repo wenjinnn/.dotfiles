@@ -97,8 +97,8 @@
             "title<.*youtube.*>" = "";
             "class<firefox>" = "";
             "class<microsoft-edge>" = "󰇩";
+            "class<code>" = "󰨞";
             "foot" = "";
-            "code" = "󰨞";
             "nautilus" = "󰪶";
             "steam" = "";
             "dbeaver" = "";
