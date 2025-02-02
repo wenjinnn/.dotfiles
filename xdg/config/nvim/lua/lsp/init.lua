@@ -19,4 +19,5 @@ return {
   taplo = {},
   rust_analyzer = {},
   gopls = {},
+  kulala_ls = require("lsp.kulala_ls"),
 }
