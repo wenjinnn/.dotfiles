@@ -182,24 +182,19 @@ later(function()
   add("olimorris/codecompanion.nvim")
   local default_adapter = os.getenv("NVIM_AI_ADAPTER") or "ollama"
   local ollama_model = os.getenv("NVIM_OLLAMA_MODEL") or "deepseek-r1:14b"
-  local cc_adapters = require("codecompanion.adapters")
   local api_key_cmd = "cmd:sops exec-env $SOPS_SECRETS 'echo -n $%s'";
-
-  local function get_api_key_cmd(key)
-    return {
-      env = {
-        api_key = api_key_cmd:format(key),
-      },
-    }
-  end
 
   local function extend_adapter(adapter, key_or_set)
     local extend_set = key_or_set
     if type(key_or_set) == "string" then
-      extend_set = get_api_key_cmd(key_or_set);
+      extend_set = {
+        env = {
+          api_key = api_key_cmd:format(key_or_set),
+        },
+      }
     end
     return function()
-      return cc_adapters.extend(adapter, extend_set)
+      return require("codecompanion.adapters").extend(adapter, extend_set)
     end
   end
 
