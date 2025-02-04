@@ -43,7 +43,7 @@
     obs-studio
     scrcpy
     rustdesk-flutter
-    libreoffice
+    wpsoffice-cn
     gnome-tweaks
     gnome-themes-extra
     dconf-editor

@@ -27,6 +27,7 @@
       material-symbols
       wqy_zenhei
       wqy_microhei
+      nur.repos.rewine.ttf-wps-fonts
       # microsoft fonts
       corefonts
       vistafonts-cht
