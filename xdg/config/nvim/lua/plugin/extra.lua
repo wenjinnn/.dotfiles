@@ -213,12 +213,9 @@ later(function()
         keymaps = { completion = { modes = { i = "<C-n>" } } },
       },
       inline = { adapter = default_adapter },
-      agent = { adapter = default_adapter },
+      cmd = { adapter = default_adapter },
     },
-    display = {
-      chat = { show_settings = true },
-      diff = { provider = "mini_diff" },
-    },
+    display = { chat = { show_settings = true } },
   })
   map({ "n", "v" }, "<leader>Ca", "<cmd>CodeCompanionActions<cr>", "Code companion actions")
   map({ "n", "v" }, "<leader>CC", "<cmd>CodeCompanionChat Toggle<cr>", "Code companion chat")
