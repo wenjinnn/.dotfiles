@@ -38,28 +38,30 @@ later(function()
 end)
 
 
-vim.filetype.add({ extension = { ["http"] = "http" } })
 -- http client
+vim.filetype.add({ extension = { ["http"] = "http" } })
 later(function()
   add("mistweaverco/kulala.nvim")
-  require("kulala").setup({
+  local kulala = require("kulala")
+  kulala.setup({
     display_mode = "float",
     winbar = true,
   })
-  map("n", "<leader>re", "<cmd>lua require('kulala').run()<cr>", "Execute request")
-  map("n", "<leader>ra", "<cmd>lua require('kulala').run_all()<cr>", "Execute all request")
-  map("n", "<leader>rr", "<cmd>lua require('kulala').replay()<cr>", "Replay last run request")
-  map("n", "<leader>rt", "<cmd>lua require('kulala').show_stats()<cr>", "Shows statistics of the last run request")
-  map("n", "<leader>rp", "<cmd>lua require('kulala').scratchpad()<cr>", "Opens scratchpad")
-  map("n", "<leader>ri", "<cmd>lua require('kulala').inspect()<cr>", "Inspect current request")
-  map("n", "<leader>rv", "<cmd>lua require('kulala').toggle_view()<cr>", "Toggle between body and headers")
-  map("n", "<leader>rc", "<cmd>lua require('kulala').copy()<cr>", "Copy current request as a curl command")
-  map("n", "<leader>rf", "<cmd>lua require('kulala').search()<cr>", "searches for http files")
-  map("n", "<leader>rE", "<cmd>lua require('kulala').set_selected_env()<cr>", "Sets selected environment")
-  map("n", "<leader>rp", "<cmd>lua require('kulala').from_curl()<cr>", "Paste curl from clipboard as http request")
-  map("n", "[r", "<cmd>lua require('kulala').jump_prev()<cr>", "Jump to previous request")
-  map("n", "]r", "<cmd>lua require('kulala').jump_next()<cr>", "Jump to next request")
+  map("n", "<leader>re", kulala.run, "Execute request")
+  map("n", "<leader>ra", kulala.run_all, "Execute all request")
+  map("n", "<leader>rr", kulala.replay, "Replay last run request")
+  map("n", "<leader>rt", kulala.show_stats, "Shows statistics of last request")
+  map("n", "<leader>rp", kulala.scratchpad, "Opens scratchpad")
+  map("n", "<leader>ri", kulala.inspect, "Inspect current request")
+  map("n", "<leader>rv", kulala.toggle_view, "Toggle between body and headers")
+  map("n", "<leader>rc", kulala.copy, "Copy current request as a curl command")
+  map("n", "<leader>rf", kulala.search, "searches for http files")
+  map("n", "<leader>rE", kulala.set_selected_env, "Sets selected environment")
+  map("n", "<leader>rp", kulala.from_curl, "Paste curl from clipboard as http request")
+  map("n", "[r", kulala.jump_prev, "Jump to previous request")
+  map("n", "]r", kulala.jump_next, "Jump to next request")
 end)
+
 -- markdown, html, asciidoc, svg preview in browser
 later(function()
   add("brianhuster/live-preview.nvim")
@@ -93,6 +95,7 @@ now(function()
     map("n", "<Esc><Esc>", "<Cmd>call firenvim#focus_page()<CR>", "Firenvim focus page")
   end
 end)
+
 -- db manage
 later(function()
   add({
