@@ -25,8 +25,8 @@ map("n", "<leader>p", '"+p', "Paste from system clipboard")
 
 --keywordprg
 map("n", "<leader>K", "<cmd>norm! K<cr>", "Keywordprg")
-map("n", "<leader>l", "<cmd>lopen<cr>", "Location list")
-map("n", "<leader>q", "<cmd>copen<cr>", "Quickfix list")
+map("n", "<leader>L", "<cmd>lopen<cr>", "Location list")
+map("n", "<leader>Q", "<cmd>copen<cr>", "Quickfix list")
 map("n", "<leader>]", "<cmd>!ctags<cr>", "Ctags")
 if vim.g.vscode then
   local action = function(action, opts)
