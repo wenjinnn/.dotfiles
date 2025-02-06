@@ -15,9 +15,9 @@ now(function()
   -- if current are readable in file system, open mini.files at the current buffer's location.
   local function minifiles_open_current()
     if vim.fn.filereadable(vim.fn.bufname("%")) > 0 then
-      MiniFiles.open(vim.api.nvim_buf_get_name(0))
+      MiniFiles.open(vim.api.nvim_buf_get_name(0), false)
     else
-      MiniFiles.open()
+      MiniFiles.open(MiniFiles.get_latest_path())
     end
   end
   map("n", "<leader>fe", MiniFiles.open, "MiniFiles open")
