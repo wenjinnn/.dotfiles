@@ -64,7 +64,7 @@ end)
 later(function()
   add("brianhuster/live-preview.nvim")
   map("n", "<leader>lp", "<cmd>LivePreview start<cr>", "Live preview start")
-  map("n", "<leader>lP", "<cmd>LivePreview start<cr>", "Live preview close")
+  map("n", "<leader>lP", "<cmd>LivePreview close<cr>", "Live preview close")
 end)
 
 -- neovim in browser
