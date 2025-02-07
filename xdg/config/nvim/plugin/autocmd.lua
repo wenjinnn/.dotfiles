@@ -131,3 +131,8 @@ au({ "FileType" }, {
     end)
   end,
 })
+local adjust_cwd = function()
+  local root = vim.fs.root(vim.fn.getcwd(), { ".git", "Makefile" })
+  if root ~= nil then vim.fn.chdir(root) end
+end
+vim.api.nvim_create_autocmd("VimEnter", { once = true, callback = adjust_cwd })
