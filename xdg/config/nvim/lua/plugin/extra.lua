@@ -206,7 +206,7 @@ later(function()
       cmd = { adapter = default_adapter },
     },
     display = {
-      chat = { window = { width = 0.33 } },
+      chat = { window = { layout = "float" } },
       diff = { provider = "mini_diff" },
     },
   })
