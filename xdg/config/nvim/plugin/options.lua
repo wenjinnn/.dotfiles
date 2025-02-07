@@ -72,7 +72,7 @@ opt.fileencodings:append({ "gbk", "cp936", "gb2312", "gb18030", "big5", "euc-jp"
 opt.termguicolors = true
 opt.completeopt = { "menuone", "noinsert" }
 opt.pumheight = 20
-opt.sessionoptions:append({ "winpos", "globals", "skiprtp" })
+opt.sessionoptions:remove({ "blank", "terminal" })
 opt.wildmode = "longest:full,full"
 opt.shortmess:append({ I = true })
 opt.winminwidth = 5
