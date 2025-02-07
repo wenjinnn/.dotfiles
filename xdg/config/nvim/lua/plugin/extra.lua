@@ -197,7 +197,10 @@ later(function()
           help = { opts = { provider = "mini_pick" } },
           symbols = { opts = { provider = "mini_pick" } },
         },
-        keymaps = { completion = { modes = { i = "<C-n>" } } },
+        keymaps = {
+          send = { modes = { n = { "<C-s>" } } },
+          completion = { modes = { i = "<C-n>" } }
+        },
       },
       inline = { adapter = default_adapter },
       cmd = { adapter = default_adapter },
