@@ -166,14 +166,24 @@ if vim.g.vscode then return end
 
 -- customize mini.sessions setup
 now(function()
+  local function pre_read()
+    -- When MiniMiscAutoRoot au is setup, and session window buffers has different root
+    -- restoring a session may cause a empty buffer.
+    vim.api.nvim_del_augroup_by_name("MiniMiscAutoRoot")
+  end
+  local function post_read()
+    MiniMisc.setup_auto_root()
+    require("util").delete_dap_terminals()
+  end
+
   require("mini.sessions").setup({
     -- Whether to force possibly harmful actions (meaning depends on function)
     force = { read = false, write = true, delete = true },
     hooks = {
       -- Before successful action
-      pre = { read = nil, write = nil, delete = nil },
+      pre = { read = pre_read, write = nil, delete = nil },
       -- After successful action
-      post = { read = require("util").delete_dap_terminals, write = nil, delete = nil },
+      post = { read = post_read, write = nil, delete = nil },
     },
   })
   local session_name = function()
