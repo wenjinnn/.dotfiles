@@ -3,7 +3,7 @@ now(function()
   add("nvim-lua/plenary.nvim")
 end)
 
-later(function()
+now(function()
   require("mini.misc").setup()
   MiniMisc.setup_auto_root()
   MiniMisc.setup_termbg_sync()
