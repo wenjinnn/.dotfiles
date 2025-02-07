@@ -1,17 +1,10 @@
 -- The keymaps here are independent of plugins
 -- all the keymap that related to plugin it self are declared after plugin
-local map = require("util").map
+local util = require("util")
+local map = util.map
 map("n", "<leader>S", "<cmd>windo set scrollbind!<CR>", "Scroll all buffer")
 map("n", "<leader>O", "<cmd>only<CR>", "Only")
-local function toggle_win_diff()
-  if vim.wo.diff then
-    vim.cmd("windo diffoff")
-  else
-    vim.cmd("windo diffthis")
-    vim.cmd("windo set wrap")
-  end
-end
-map("n", "<leader>X", toggle_win_diff, "Diffthis windowed buffers")
+map("n", "<leader>X", util.toggle_win_diff, "Diffthis windowed buffers")
 -- Add undo break-points
 map("i", ",", ",<c-g>u")
 map("i", ".", ".<c-g>u")
