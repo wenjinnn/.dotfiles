@@ -203,7 +203,7 @@ later(function()
       cmd = { adapter = default_adapter },
     },
     display = {
-      chat = { show_settings = true },
+      chat = { show_settings = true, window = { width = 0.33 } },
       diff = { provider = "mini_diff" },
     },
   })
