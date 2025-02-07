@@ -53,4 +53,14 @@ function M.map(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, final_opts)
 end
 
+
+function M.toggle_win_diff()
+    if vim.wo.diff then
+        vim.cmd("windo diffoff")
+    else
+        vim.cmd("windo diffthis")
+        vim.cmd("windo set wrap")
+    end
+end
+
 return M
