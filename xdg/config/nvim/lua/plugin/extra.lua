@@ -197,7 +197,10 @@ later(function()
       inline = { adapter = default_adapter },
       cmd = { adapter = default_adapter },
     },
-    display = { chat = { show_settings = true } },
+    display = {
+      chat = { show_settings = true },
+      diff = { provider = "mini_diff" },
+    },
   })
   map({ "n", "v" }, "<leader>Ca", "<cmd>CodeCompanionActions<cr>", "Code companion actions")
   map({ "n", "v" }, "<leader>CC", "<cmd>CodeCompanionChat Toggle<cr>", "Code companion chat")
