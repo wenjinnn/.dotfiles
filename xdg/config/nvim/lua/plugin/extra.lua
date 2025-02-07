@@ -191,7 +191,12 @@ later(function()
     strategies = {
       chat = {
         adapter = default_adapter,
-        slash_commands = { help = { opts = { provider = "mini_pick" } } },
+        slash_commands = {
+          buffer = { opts = { provider = "mini_pick" } },
+          file = { opts = { provider = "mini_pick" } },
+          help = { opts = { provider = "mini_pick" } },
+          symbols = { opts = { provider = "mini_pick" } },
+        },
         keymaps = { completion = { modes = { i = "<C-n>" } } },
       },
       inline = { adapter = default_adapter },
