@@ -52,7 +52,7 @@ function M.start()
     M.setup_jdtls_buf_keymap(bufnr)
     lsp.setup(client, bufnr)
   end
-  local root_dir = require("jdtls.setup").find_root({ "mvnw", "gradlew", ".git", ".svn" })
+  local root_dir = vim.fs.root(0, { "mvnw", "gradlew", ".git", ".svn" })
   local ws_name, _ = string.gsub(vim.fn.fnamemodify(root_dir, ":p"), "/", "_")
   local jdtls_data_path = vim.fn.stdpath("data") .. "/jdtls"
   local jdtls_debug_path = os.getenv("JAVA_DEBUG_PATH") or jdtls_data_path
@@ -67,6 +67,7 @@ function M.start()
   local config = {
     settings = require("lsp.jdtls.settings"),
     capabilities = lsp.make_capabilities(),
+    root_dir = root_dir,
     on_attach = on_attach,
     filetypes = { "java" },
     init_options = {
