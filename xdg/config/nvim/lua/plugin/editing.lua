@@ -169,12 +169,6 @@ now(function()
   require("mini.sessions").setup({
     -- Whether to force possibly harmful actions (meaning depends on function)
     force = { read = false, write = true, delete = true },
-    hooks = {
-      -- Before successful action
-      pre = { read = nil, write = nil, delete = nil },
-      -- After successful action
-      post = { read = require("util").delete_dap_terminals, write = nil, delete = nil },
-    },
   })
   local session_name = function()
     local cwd = vim.fn.getcwd()
@@ -258,7 +252,7 @@ later(function()
   end
   local function auto_format_toggle()
     vim.g.conform_autoformat = not vim.g.conform_autoformat
-      vim.notify("Autoformat: " .. (vim.g.conform_autoformat and "on" or "off"))
+    vim.notify("Autoformat: " .. (vim.g.conform_autoformat and "on" or "off"))
   end
   map({ "n", "v" }, "<leader>cm", code_format, "Format")
   map("n", "<leader>cM", auto_format_toggle, "Auto format toggle")
