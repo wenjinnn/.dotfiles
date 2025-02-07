@@ -9,6 +9,23 @@ function M.setup_term_opt(event)
   vim.b.miniindentscope_disable = true
 end
 
+-- Delete all dap terminals, useful when session restored, cuz in that timing sometimes we have some dead dap terminals.
+function M.delete_dap_terminals()
+  local dap_terminals_output = vim.api.nvim_exec2("filter /\\[dap-terminal\\]/ buffers", { output = true })
+  local dap_terminals = vim.split(dap_terminals_output.output, "\n")
+  local buffers_index = {}
+  for _, terminal in ipairs(dap_terminals) do
+    local buf_args = vim.split(vim.trim(terminal), " ")
+    local buf_index = tonumber(buf_args[1])
+    if buf_index ~= nil then
+      table.insert(buffers_index, buf_index)
+    end
+  end
+  if #buffers_index > 0 then
+    vim.cmd("bd! " .. vim.fn.join(buffers_index, " "))
+  end
+end
+
 -- Wrapper for QoL
 function M.keycode(key)
   return vim.api.nvim_replace_termcodes(key, true, true, true)
