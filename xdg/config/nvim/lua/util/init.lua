@@ -53,6 +53,12 @@ function M.map(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, final_opts)
 end
 
+function M.source_all()
+    local config_bundles = vim.split(vim.fn.glob(vim.fn.stdpath("config") .. "/**/*.lua"), "\n")
+    for _, config in pairs(config_bundles) do
+        vim.cmd.source(config)
+    end
+end
 
 function M.toggle_win_diff()
     if vim.wo.diff then
