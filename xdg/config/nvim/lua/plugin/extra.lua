@@ -162,7 +162,7 @@ end)
 later(function()
   add("github/copilot.vim")
   add("olimorris/codecompanion.nvim")
-  local default_adapter = os.getenv("NVIM_AI_ADAPTER") or "deepseek"
+  local default_adapter = os.getenv("NVIM_AI_ADAPTER") or "copilot"
   local ollama_model = os.getenv("NVIM_OLLAMA_MODEL") or "deepseek-r1:14b"
   local api_key_cmd = "cmd:sops exec-env $SOPS_SECRETS 'echo -n $%s'";
 
@@ -185,6 +185,9 @@ later(function()
   require("codecompanion").setup({
     adapters = {
       ollama = extend_adapter("ollama", ollama_setting),
+      githubmodels = extend_adapter("githubmodels", {
+        schema = { model = { default = "o3-mini" } }
+      }),
       anthropic = extend_adapter("anthropic", "ANTHROPIC_API_KEY"),
       deepseek = extend_adapter("deepseek", "DEEPSEEK_API_KEY"),
       siliconflow = extend_adapter("openai_compatible", {
