@@ -131,7 +131,6 @@ in {
     mermaid-cli
     mermaid-filter
     pandoc
-    gh
     yq
     quicktype
     openpomodoro-cli
@@ -204,6 +203,13 @@ in {
 
 
   programs = {
+    gh = {
+      enable = true;
+      extensions = with pkgs; [
+        gh-copilot
+        gh-models
+      ];
+    };
     nix-index = {
       enable = true;
       enableZshIntegration = true;
