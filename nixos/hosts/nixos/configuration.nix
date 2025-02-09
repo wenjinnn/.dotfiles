@@ -92,5 +92,9 @@
     };
   };
 
+  boot.binfmt.emulatedSystems = [
+    "aarch64-linux"
+  ];
+
   networking.hostName = "nixos";
 }
