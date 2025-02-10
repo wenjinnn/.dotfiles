@@ -30,9 +30,9 @@
 > you need to setup your own api key in [lua/plugin/extra.lua](lua/plugin/extra.lua#L198).
 > * To get all the custom keymap clue you need, just press `space`.
 
-## Install Instructions
+## Installation Instructions
 
- > Install requires Neovim 0.10+. Always review the code before installing a configuration.
+> Installation requires Neovim 0.10+. Always review the code before installing a configuration.
 
 Clone the repository and install the plugins:
 
@@ -45,6 +45,14 @@ Open Neovim with this config:
 ```sh
 NVIM_APPNAME=wenjinnn/wenvim nvim
 ```
+
+## Special notes
+
+Some behavior are not common in this configuration, but it's reasonable in my opinion:
+
+* `<CR>` in normal mode will trigger `MiniJump2d.query()`
+* `<C-CR>` in insert mode will trigger `MiniSnippets.default_match()`
+* if you login to Copilot, `<M-CR>` in insert mode will accept Copilot suggestion.
 
 ## Directory notes
 

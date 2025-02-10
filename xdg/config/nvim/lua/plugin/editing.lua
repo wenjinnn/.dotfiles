@@ -315,9 +315,9 @@ later(function()
       return require("mini.pairs").cr()
     end
   end
-
   map("i", "<CR>", cr_action, { expr = true })
 
+  -- snippet support and preset
   add("rafamadriz/friendly-snippets")
   local gen_loader = require("mini.snippets").gen_loader
   local snippets_path = vim.fn.stdpath("config") .. "/snippets"
@@ -342,6 +342,7 @@ later(function()
     },
   })
 
+  -- painless snippet editing and creation
   add("chrisgrieser/nvim-scissors")
   require("scissors").setup({
     snippetDir = snippets_path,
@@ -351,6 +352,7 @@ later(function()
   map("n", "<leader>cS", "<cmd>ScissorsEditSnippet<cr>", "Snippet edit")
   map({ "n", "x" }, "<leader>cs", "<cmd>ScissorsAddNewSnippet<cr>", "Snippet add")
 
+  -- annotation and comment generation
   add("danymat/neogen")
   require("neogen").setup({ snippet_engine = "mini" })
   map("n", "<leader>cA", "<cmd>Neogen<cr>", "Generate annotation")
