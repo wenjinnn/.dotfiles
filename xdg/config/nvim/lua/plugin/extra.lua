@@ -158,7 +158,7 @@ later(function()
   map("n", "<leader>Ff", grug_current_file, "Search on current file")
 end)
 
--- AI companion
+-- AI related
 later(function()
   -- official copilot plugin lua replacement
   add("wenjinnn/copilot.lua")
@@ -172,6 +172,7 @@ later(function()
     filetypes = { ["*"] = true },
   })
 
+  -- AI chat workflow
   add("olimorris/codecompanion.nvim")
   local default_adapter = os.getenv("NVIM_AI_ADAPTER") or "copilot"
   local ollama_model = os.getenv("NVIM_OLLAMA_MODEL") or "deepseek-r1:14b"
@@ -191,15 +192,70 @@ later(function()
     end
   end
 
-  --- modified from https://github.com/fredrikaverpil/dotfiles/blob/49a860e7ca7bc6eabe24d8eadf92764a03c5d59d/nvim-fredrik/lua/fredrik/plugins/codecompanion.lua
   local function save_path()
     local Path = require("plenary.path")
     local p = Path:new(vim.fn.stdpath("data") .. "/codecompanion-chats")
     p:mkdir({ parents = true })
     return p
   end
-  --- Load a saved codecompanion.nvim chat file into a new CodeCompanion chat buffer.
-  --- Usage: CodeCompanionLoad
+
+  require("codecompanion").setup({
+    adapters = {
+      ollama = extend_adapter("ollama", ollama_setting),
+      copilot = extend_adapter("copilot", {
+        schema = { model = { default = "o3-mini-2025-01-31" } },
+      }),
+      githubmodels = extend_adapter("githubmodels", {
+        schema = { model = { default = "o3-mini" } },
+      }),
+      anthropic = extend_adapter("anthropic", "ANTHROPIC_API_KEY"),
+      deepseek = extend_adapter("deepseek", "DEEPSEEK_API_KEY"),
+      siliconflow = extend_adapter("openai_compatible", {
+        env = {
+          url = "https://api.siliconflow.cn",
+          api_key = api_key_cmd:format("SILICONFLOW_API_KEY"),
+        },
+        schema = { model = { default = "deepseek-ai/DeepSeek-R1" } },
+      }),
+    },
+    strategies = {
+      chat = {
+        adapter = default_adapter,
+        slash_commands = {
+          buffer = { opts = { provider = "mini_pick" } },
+          file = { opts = { provider = "mini_pick" } },
+          help = { opts = { provider = "mini_pick" } },
+          symbols = { opts = { provider = "mini_pick" } },
+        },
+        keymaps = {
+          send = { modes = { n = { "<C-s>" } } },
+          completion = { modes = { i = "<C-n>" } },
+          save = {
+            modes = { n = "gS" },
+            index = 99,
+            callback = function()
+              -- Save the current codecompanion.nvim chat buffer to a file in the save_folder.
+              local save_name = os.date("%Y-%m-%d_%H:%M:%S") .. ".md"
+              local save_file = save_path():joinpath(save_name)
+              local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+              save_file:write(table.concat(lines, "\n"), "w")
+            end,
+            description = "Save Chat",
+          },
+        },
+      },
+      inline = { adapter = default_adapter },
+      cmd = { adapter = default_adapter },
+    },
+    display = {
+      chat = { window = { width = 0.33 } },
+      diff = { provider = "mini_diff" },
+    },
+  })
+
+  -- modified from https://github.com/fredrikaverpil/dotfiles/blob/49a860e7ca7bc6eabe24d8eadf92764a03c5d59d/nvim-fredrik/lua/fredrik/plugins/codecompanion.lua
+  -- Load a saved codecompanion.nvim chat file into a new CodeCompanion chat buffer.
+  -- Usage: CodeCompanionLoad
   vim.api.nvim_create_user_command("CodeCompanionLoad", function()
     local files = vim.fn.glob(save_path() .. "/*", false, true)
     local current_win
@@ -234,62 +290,8 @@ later(function()
       vim.api.nvim_set_current_win(current_win)
     end
   end, { desc = "Load saved CodeCompanion chat" })
-  --- Save the current codecompanion.nvim chat buffer to a file in the save_folder.
-  local function codecompanion_save()
-    local save_name = os.date("%Y-%m-%d_%H:%M:%S") .. ".md"
-    local save_file = save_path():joinpath(save_name)
-    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-    save_file:write(table.concat(lines, "\n"), "w")
-  end
-  require("codecompanion").setup({
-    adapters = {
-      ollama = extend_adapter("ollama", ollama_setting),
-      copilot = extend_adapter("copilot", {
-        schema = { model = { default = "o3-mini-2025-01-31" } },
-      }),
-      githubmodels = extend_adapter("githubmodels", {
-        schema = { model = { default = "o3-mini" } }
-      }),
-      anthropic = extend_adapter("anthropic", "ANTHROPIC_API_KEY"),
-      deepseek = extend_adapter("deepseek", "DEEPSEEK_API_KEY"),
-      siliconflow = extend_adapter("openai_compatible", {
-        env = {
-          url = "https://api.siliconflow.cn",
-          api_key = api_key_cmd:format("SILICONFLOW_API_KEY"),
-        },
-        schema = { model = { default = "deepseek-ai/DeepSeek-R1" } },
-      }),
-    },
-    strategies = {
-      chat = {
-        adapter = default_adapter,
-        slash_commands = {
-          buffer = { opts = { provider = "mini_pick" } },
-          file = { opts = { provider = "mini_pick" } },
-          help = { opts = { provider = "mini_pick" } },
-          symbols = { opts = { provider = "mini_pick" } },
-        },
-        keymaps = {
-          send = { modes = { n = { "<C-s>" } } },
-          completion = { modes = { i = "<C-n>" } },
-          save = {
-            modes = { n = "gS" },
-            index = 99,
-            callback = codecompanion_save,
-            description = "Save Chat",
-          },
-        },
-      },
-      inline = { adapter = default_adapter },
-      cmd = { adapter = default_adapter },
-    },
-    display = {
-      chat = { window = { width = 0.33 } },
-      diff = { provider = "mini_diff" },
-    },
-  })
+
   map("n", "<leader>Cl", "<cmd>CodeCompanionLoad<cr>", "Load a Code companion chat")
-  map("n", "<leader>Cs", "<cmd>CodeCompanionSave<cr>", "Save a Code companion chat")
   map({ "n", "v" }, "<leader>Ca", "<cmd>CodeCompanionActions<cr>", "Code companion actions")
   map({ "n", "v" }, "<leader>CC", "<cmd>CodeCompanionChat Toggle<cr>", "Code companion chat")
   map("v", "<leader>CA", "<cmd>CodeCompanionChat Add<cr>", "Code companion chat add")
