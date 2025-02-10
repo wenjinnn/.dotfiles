@@ -160,7 +160,15 @@ end)
 
 -- AI companion
 later(function()
-  add("github/copilot.vim")
+  -- official copilot plugin lua replacement
+  add("zbirenbaum/copilot.lua")
+  require("copilot").setup({
+    suggestion = {
+      auto_trigger = true,
+      hide_during_completion = false,
+    },
+  })
+
   add("olimorris/codecompanion.nvim")
   local default_adapter = os.getenv("NVIM_AI_ADAPTER") or "copilot"
   local ollama_model = os.getenv("NVIM_OLLAMA_MODEL") or "deepseek-r1:14b"
