@@ -161,20 +161,15 @@ end)
 -- AI companion
 later(function()
   -- official copilot plugin lua replacement
-  add("zbirenbaum/copilot.lua")
+  add("wenjinnn/copilot.lua")
   require("copilot").setup({
+    panel = { keymap = { open = "<M-j>" } },
     suggestion = {
       auto_trigger = true,
       hide_during_completion = false,
-      keymap = {
-        accept = "<M-j>",
-      },
+      keymap = { accept = "<M-CR>" },
     },
-    filetypes = {
-      yaml = true,
-      markdown = true,
-      ["."] = true,
-    },
+    filetypes = { ["*"] = true },
   })
 
   add("olimorris/codecompanion.nvim")
@@ -208,7 +203,7 @@ later(function()
   vim.api.nvim_create_user_command("CodeCompanionLoad", function()
     local files = vim.fn.glob(save_path() .. "/*", false, true)
     local current_win
-    local items = MiniPick.start({
+    MiniPick.start({
       source = {
         name = "Saved CodeCompanion Chats | <choose_marked>: remove",
         items = files,
