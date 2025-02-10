@@ -166,6 +166,14 @@ later(function()
     suggestion = {
       auto_trigger = true,
       hide_during_completion = false,
+      keymap = {
+        accept = "<M-j>",
+      },
+    },
+    filetypes = {
+      yaml = true,
+      markdown = true,
+      ["."] = true,
     },
   })
 
