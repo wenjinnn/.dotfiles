@@ -181,7 +181,7 @@ later(function()
   local default_adapter = os.getenv("NVIM_AI_ADAPTER") or "copilot"
   local ollama_model = os.getenv("NVIM_OLLAMA_MODEL") or "deepseek-r1:14b"
   local api_key_cmd = "cmd:sops exec-env $SOPS_SECRETS 'echo -n $%s'";
-
+  local ollama_setting = { schema = { model = { default = ollama_model } } }
   local function extend_adapter(adapter, key_or_set)
     local extend_set = key_or_set
     if type(key_or_set) == "string" then
@@ -196,8 +196,56 @@ later(function()
     end
   end
 
-  local ollama_setting = { schema = { model = { default = ollama_model } } }
-
+  --- modified from https://github.com/fredrikaverpil/dotfiles/blob/49a860e7ca7bc6eabe24d8eadf92764a03c5d59d/nvim-fredrik/lua/fredrik/plugins/codecompanion.lua
+  local function save_path()
+    local Path = require("plenary.path")
+    local p = Path:new(vim.fn.stdpath("data") .. "/codecompanion-chats")
+    p:mkdir({ parents = true })
+    return p
+  end
+  --- Load a saved codecompanion.nvim chat file into a new CodeCompanion chat buffer.
+  --- Usage: CodeCompanionLoad
+  vim.api.nvim_create_user_command("CodeCompanionLoad", function()
+    local files = vim.fn.glob(save_path() .. "/*", false, true)
+    local current_win
+    local items = MiniPick.start({
+      source = {
+        name = "Saved CodeCompanion Chats | <choose_marked>: remove",
+        items = files,
+        choose = function(item)
+          if not item then
+            return
+          end
+          print(vim.inspect(item))
+          -- Open new CodeCompanion chat with default adapter
+          vim.cmd("CodeCompanionChat")
+          -- Read contents of saved chat file
+          local lines = vim.fn.readfile(item)
+          -- Get the current buffer (which should be the new CodeCompanion chat)
+          local current_buf = vim.api.nvim_get_current_buf()
+          current_win = vim.api.nvim_get_current_win()
+          -- Paste contents into the new chat buffer
+          vim.api.nvim_buf_set_lines(current_buf, 0, -1, false, lines)
+          vim.api.nvim_set_current_win(current_win)
+        end,
+        choose_marked = function(items)
+          for _, file in ipairs(items) do
+            os.remove(file)
+          end
+        end,
+      },
+    })
+    if current_win then
+      vim.api.nvim_set_current_win(current_win)
+    end
+  end, { desc = "Load saved CodeCompanion chat" })
+  --- Save the current codecompanion.nvim chat buffer to a file in the save_folder.
+  local function codecompanion_save()
+    local save_name = os.date("%Y-%m-%d_%H:%M:%S") .. ".md"
+    local save_file = save_path():joinpath(save_name)
+    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+    save_file:write(table.concat(lines, "\n"), "w")
+  end
   require("codecompanion").setup({
     adapters = {
       ollama = extend_adapter("ollama", ollama_setting),
@@ -228,7 +276,13 @@ later(function()
         },
         keymaps = {
           send = { modes = { n = { "<C-s>" } } },
-          completion = { modes = { i = "<C-n>" } }
+          completion = { modes = { i = "<C-n>" } },
+          save = {
+            modes = { n = "gS" },
+            index = 99,
+            callback = codecompanion_save,
+            description = "Save Chat",
+          },
         },
       },
       inline = { adapter = default_adapter },
@@ -239,6 +293,8 @@ later(function()
       diff = { provider = "mini_diff" },
     },
   })
+  map("n", "<leader>Cl", "<cmd>CodeCompanionLoad<cr>", "Load a Code companion chat")
+  map("n", "<leader>Cs", "<cmd>CodeCompanionSave<cr>", "Save a Code companion chat")
   map({ "n", "v" }, "<leader>Ca", "<cmd>CodeCompanionActions<cr>", "Code companion actions")
   map({ "n", "v" }, "<leader>CC", "<cmd>CodeCompanionChat Toggle<cr>", "Code companion chat")
   map("v", "<leader>CA", "<cmd>CodeCompanionChat Add<cr>", "Code companion chat add")
