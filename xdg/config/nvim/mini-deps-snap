@@ -2,7 +2,7 @@ return {
   ["SchemaStore.nvim"] = "118e563101169e8c5096023bc45c460e4c4fb77c",
   ["codecompanion.nvim"] = "828d5e38cf227f20658de24913fa4e0a96ef8fe9",
   ["conform.nvim"] = "363243c03102a531a8203311d4f2ae704c620d9b",
-  ["copilot.lua"] = "8dd9ab0ae5ea014625ee5a5ece9dd630e54b0e4d",
+  ["copilot.lua"] = "962ce8a2bb694cf3f33ae24496fdd510728c4167",
   firenvim = "f8a5fa6f1ed42536490acf0840497c40331c184f",
   ["friendly-snippets"] = "efff286dd74c22f731cdec26a70b46e5b203c619",
   ["grug-far.nvim"] = "3a8690461afac34c0e5bacb0f7b4bc3066aab665",
