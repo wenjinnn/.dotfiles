@@ -6,7 +6,6 @@ map("n", "<leader>S", "<cmd>windo set scrollbind!<CR>", "Scroll all buffer")
 map("n", "<leader>O", "<cmd>only<CR>", "Only")
 map("n", "<leader>X", util.toggle_win_diff, "Diffthis windowed buffers")
 map("n", "<leader>R", util.source_all, "Resource all config")
-map("t", "<Esc><Esc>", "<C-\\><C-n>")
 
 -- copy/paste to system clipboard
 map({ "n", "v" }, "<leader>y", '"+y', "Yank to system clipboard")
