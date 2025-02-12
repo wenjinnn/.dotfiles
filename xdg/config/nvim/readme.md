@@ -51,7 +51,6 @@ NVIM_APPNAME=wenjinnn/wenvim nvim
 Some behavior are not common in this configuration, but it's reasonable in my opinion:
 
 * `<CR>` in normal mode will trigger `MiniJump2d.query()`
-* `<C-CR>` in insert mode will trigger `MiniSnippets.default_match()`
 * if you login to Copilot, `<M-CR>` in insert mode will accept Copilot suggestion.
 
 ## Directory notes
