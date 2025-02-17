@@ -43,7 +43,7 @@ function M.setup_jdtls_buf_keymap(bufnr)
   map("n", "<leader>cV", jdtls.extract_constant, "Jdt Extract Constant")
   map("v", "<leader>cv", function() jdtls.extract_variable(true) end, "Jdt Extract Variable")
   map("v", "<leader>cV", function() jdtls.extract_constant(true) end, "Jdt Extract Constant")
-  map("v", "<leader>cm", function() jdtls.extract_method(true) end, "Jdt Extract Method")
+  map("v", "<leader>ce", function() jdtls.extract_method(true) end, "Jdt Extract Method")
 end
 
 function M.start()
