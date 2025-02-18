@@ -255,8 +255,8 @@ in {
             workspace_swipe_create_new = true;
           };
           general = {
-            gaps_out = 0;
-            gaps_in = 0;
+            gaps_out = 10;
+            gaps_in = 5;
             layout = "dwindle";
             no_focus_fallback = true;
             resize_on_border = true;
