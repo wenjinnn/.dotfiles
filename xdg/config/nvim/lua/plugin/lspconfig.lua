@@ -46,14 +46,21 @@ later(function()
           sonarlint_path .. "/analyzers/sonarpython.jar",
           sonarlint_path .. "/analyzers/sonarcfamily.jar",
           sonarlint_path .. "/analyzers/sonarjava.jar",
+          sonarlint_path .. "/analyzers/sonarjs.jar",
+          sonarlint_path .. "/analyzers/sonarxml.jar",
+          sonarlint_path .. "/analyzers/sonarhtml.jar",
+          sonarlint_path .. "/analyzers/sonargo.jar",
         },
         settings = require("lsp.sonarlint-language-server").settings,
       },
       filetypes = {
-        -- Tested and working
         "python",
         "cpp",
         "java",
+        "javascript",
+        "typescript",
+        "xml",
+        "go",
       },
     })
   end
