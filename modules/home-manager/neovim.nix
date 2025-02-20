@@ -18,7 +18,6 @@
       rust-analyzer
       vale-ls
       rustfmt
-      lemminx
       alejandra
       nixfmt-rfc-style
       stylua
