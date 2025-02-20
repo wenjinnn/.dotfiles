@@ -91,6 +91,12 @@ rec {
       version = "4.16.0";
       sha256 = "sha256-dhRdLvnZlcNS8ruVIoBQhnJ1gL2yWzpEXFaGN8JRZUQ=";
     };
+    spring-boot-tools = prev.vscode-utils.extensionFromVscodeMarketplace {
+      name = "vscode-spring-boot";
+      publisher = "vmware";
+      version = "1.61.2025022000";
+      sha256 = "sha256-auv8CtLgLmzo9V72qF4AWno32+9cdiiQvctQz2d/Wlg=";
+    };
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will

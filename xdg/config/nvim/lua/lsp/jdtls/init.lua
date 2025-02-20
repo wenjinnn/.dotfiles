@@ -110,6 +110,7 @@ function M.setup()
       callback = M.start,
     }
   )
+  require("spring_boot").setup()
 end
 
 return M

@@ -7,6 +7,7 @@
     (with pkgs; [
       hurl
       jdt-language-server
+      spring-boot-tools
       lombok
       lua-language-server
       bash-language-server
