@@ -12,7 +12,7 @@
       bash-language-server
       vue-language-server
       vscode-langservers-extracted
-      lemminx
+      lemminx-maven
       clang-tools
       nixd
       rust-analyzer
