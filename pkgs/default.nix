@@ -9,4 +9,5 @@
   rofi-network-manager = pkgs.callPackage ./rofi-network-manager {};
   rofi-screenshot-wayland = pkgs.callPackage ./rofi-screenshot-wayland {};
   gh-models = pkgs.callPackage ./gh-models {};
+  lemminx-maven = pkgs.callPackage ./lemminx-maven {};
 }
