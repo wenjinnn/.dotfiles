@@ -1,14 +1,16 @@
 # This file defines overlays
-{inputs, ...}: let
+{ inputs, ... }:
+let
   electron-flags = [
     "--password-store=gnome-libsecret"
     "--enable-features=UseOzonePlatform"
     "--ozone-platform=wayland"
     "--enable-wayland-ime"
   ];
-in rec {
+in
+rec {
   # This one brings our custom packages from the 'pkgs' directory
-  additions = final: _prev: import ../pkgs {pkgs = final;};
+  additions = final: _prev: import ../pkgs { pkgs = final; };
 
   # This one contains whatever you want to overlay
   # You can change versions, add patches, set compilation flags, anything really.
@@ -83,6 +85,12 @@ in rec {
         hash = "sha256-gwlUklfr/NA7JIkB9YloS9f8+3h5y3rSs3ISeVXAPZk=";
       };
     });
+    sonarlint-vscode = prev.vscode-utils.extensionFromVscodeMarketplace {
+      name = "sonarlint-vscode";
+      publisher = "sonarsource";
+      version = "4.16.0";
+      sha256 = "sha256-dhRdLvnZlcNS8ruVIoBQhnJ1gL2yWzpEXFaGN8JRZUQ=";
+    };
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
