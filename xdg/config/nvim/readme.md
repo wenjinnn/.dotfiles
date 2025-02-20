@@ -101,6 +101,8 @@ just some filetype settings
 
 `SPRING_BOOT_TOOLS_PATH` path to [spring-boot-tools](https://marketplace.visualstudio.com/items?itemName=vmware.vscode-spring-boot) jars
 
+`JAVA_DEPENDENCY_PATH` path to [vscode-java-dependency](https://github.com/microsoft/vscode-java-dependency) jars
+
 `LOMBOK_PATH` path to [lombok](https://projectlombok.org/) java agent jar
 
 `JDTLS_XMX` jdtls xmx jvm arg value

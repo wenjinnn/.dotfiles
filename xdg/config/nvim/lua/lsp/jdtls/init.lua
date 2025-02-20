@@ -44,6 +44,7 @@ function M.setup_jdtls_buf_keymap(bufnr)
   map("v", "<leader>cv", function() jdtls.extract_variable(true) end, "Jdt Extract Variable")
   map("v", "<leader>cV", function() jdtls.extract_constant(true) end, "Jdt Extract Constant")
   map("v", "<leader>ce", function() jdtls.extract_method(true) end, "Jdt Extract Method")
+  map("n", "<leader>cp", require("java-deps").toggle_outline, "Java project dependency")
 end
 
 function M.start()
@@ -62,6 +63,9 @@ function M.start()
   vim.list_extend(bundles, test_bundles)
   local spring_boot_tools_bundles = vim.list_extend(bundles, require("spring_boot").java_extensions())
   vim.list_extend(bundles, spring_boot_tools_bundles)
+  local java_dependency_path = os.getenv("JAVA_DEPENDENCY_PATH") or jdtls_data_path
+  local java_dependency_bundle = vim.split(vim.fn.glob(java_dependency_path .. "/server/*.jar"), "\n")
+  vim.list_extend(bundles, java_dependency_bundle)
   local extendedClientCapabilities = jdtls.extendedClientCapabilities
   extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
   local jdtls_cache_path = vim.fn.stdpath("cache") .. "/jdtls"
