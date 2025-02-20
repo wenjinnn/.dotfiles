@@ -169,7 +169,10 @@ later(function()
       hide_during_completion = false,
       keymap = { accept = "<M-CR>" },
     },
-    filetypes = { ["*"] = true },
+    filetypes = {
+      ["dap-repl"] = false,
+      ["*"] = true,
+    },
   })
 
   -- AI chat workflow
