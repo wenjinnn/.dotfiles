@@ -10,6 +10,6 @@
     universal-ctags
   ];
   xdg.configFile = {
-    ".config/ctags".source = ../../xdg/config/ctags;
+    "ctags".source = ../../xdg/config/ctags;
   };
 }
