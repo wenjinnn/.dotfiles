@@ -11,6 +11,7 @@ later(function()
       "b0o/SchemaStore.nvim",
       "mfussenegger/nvim-jdtls",
       "https://gitlab.com/schrieveslaach/sonarlint.nvim",
+      "JavaHello/spring-boot.nvim",
     },
   })
   local lsp = require("lsp")
