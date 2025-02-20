@@ -19,6 +19,7 @@
     };
   };
   home.packages = with pkgs; [
+    # accessiable through ~/.nix-profile/share/ariang/index.html
     ariang
   ];
 }
