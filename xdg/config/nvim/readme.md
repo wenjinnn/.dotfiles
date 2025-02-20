@@ -99,11 +99,14 @@ just some filetype settings
 
 `JAVA_DEBUG_PATH` path to [vscode-java-debug](https://github.com/microsoft/vscode-java-debug) jars
 
+`SPRING_BOOT_TOOLS_PATH` path to [spring-boot-tools](https://marketplace.visualstudio.com/items?itemName=vmware.vscode-spring-boot) jars
+
 `LOMBOK_PATH` path to [lombok](https://projectlombok.org/) java agent jar
 
 `JDTLS_XMX` jdtls xmx jvm arg value
 
 `JDTLS_DAP_VMARGS` jdtls dap vm args
+
 
 ### Sonarlint
 `SONARLINT_PATH` path to sonarlint language server jars

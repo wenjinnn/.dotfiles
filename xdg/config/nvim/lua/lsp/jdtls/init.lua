@@ -60,6 +60,8 @@ function M.start()
   local bundles = { vim.fn.glob(jdtls_debug_path .. "/server/com.microsoft.java.debug.plugin-*.jar") }
   local test_bundles = vim.split(vim.fn.glob(jdtls_test_path .. "/server/*.jar", true), "\n")
   vim.list_extend(bundles, test_bundles)
+  local spring_boot_tools_bundles = vim.list_extend(bundles, require("spring_boot").java_extensions())
+  vim.list_extend(bundles, spring_boot_tools_bundles)
   local extendedClientCapabilities = jdtls.extendedClientCapabilities
   extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
   local jdtls_cache_path = vim.fn.stdpath("cache") .. "/jdtls"
@@ -110,7 +112,6 @@ function M.setup()
       callback = M.start,
     }
   )
-  require("spring_boot").setup()
 end
 
 return M
