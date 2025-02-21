@@ -61,8 +61,11 @@ function M.start()
   local bundles = { vim.fn.glob(jdtls_debug_path .. "/server/com.microsoft.java.debug.plugin-*.jar") }
   local test_bundles = vim.split(vim.fn.glob(jdtls_test_path .. "/server/*.jar", true), "\n")
   vim.list_extend(bundles, test_bundles)
-  local spring_boot_tools_bundles = vim.list_extend(bundles, require("spring_boot").java_extensions())
-  vim.list_extend(bundles, spring_boot_tools_bundles)
+  local st_path = os.getenv("SPRING_BOOT_TOOLS_PATH") or "./"
+  local st_bundles = vim.split(vim.fn.glob(st_path .. "/language-server/*.jar"), "\n")
+  local st_lib_bundles = vim.split(vim.fn.glob(st_path .. "/jars/*.jar"), "\n")
+  vim.list_extend(bundles, st_bundles)
+  vim.list_extend(bundles, st_lib_bundles)
   local java_dependency_path = os.getenv("JAVA_DEPENDENCY_PATH") or jdtls_data_path
   local java_dependency_bundle = vim.split(vim.fn.glob(java_dependency_path .. "/server/*.jar"), "\n")
   vim.list_extend(bundles, java_dependency_bundle)
