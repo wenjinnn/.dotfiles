@@ -97,7 +97,7 @@
       "--suffix"
       "SPRING_BOOT_TOOLS_PATH"
       ":"
-      "${pkgs.spring-boot-tools}/share/vscode/extensions/vmware.vscode-spring-boot/language-server"
+      "${pkgs.spring-boot-tools}/share/vscode/extensions/vmware.vscode-spring-boot"
       "--suffix"
       "JAVA_DEPENDENCY_PATH"
       ":"

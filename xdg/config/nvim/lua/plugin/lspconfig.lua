@@ -66,7 +66,7 @@ later(function()
     })
   end
   require("spring_boot").setup({
-    ls_path = os.getenv("SPRING_BOOT_TOOLS_PATH") or nil,
+    ls_path = (os.getenv("SPRING_BOOT_TOOLS_PATH") or "./") .. "/language-server",
   })
   require("java-deps").setup()
   -- finally, some LSP related keymaps
