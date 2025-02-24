@@ -36,8 +36,7 @@ later(function()
   if sonarlint_path ~= nil then
     require("sonarlint").setup({
       server = {
-        cmd = {
-          "java",
+        cmd = util.java_cmd_optimize("java", {
           "-jar",
           sonarlint_path .. "/server/sonarlint-ls.jar",
           -- Ensure that sonarlint-language-server uses stdio channel
@@ -51,7 +50,7 @@ later(function()
           sonarlint_path .. "/analyzers/sonarxml.jar",
           sonarlint_path .. "/analyzers/sonarhtml.jar",
           sonarlint_path .. "/analyzers/sonargo.jar",
-        },
+        }),
         settings = require("lsp.sonarlint-language-server").settings,
       },
       filetypes = {
@@ -65,16 +64,25 @@ later(function()
       },
     })
   end
+  local st_path = os.getenv("SPRING_BOOT_TOOLS_PATH") or "."
   require("spring_boot").setup({
-    ls_path = (os.getenv("SPRING_BOOT_TOOLS_PATH") or "./") .. "/language-server",
+    ls_path = st_path .. "/language-server",
+    server = {
+      cmd = util.java_cmd_optimize("java", {
+        "-Xmx1G",
+        "-Dsts.lsp.client=vscode",
+        "-jar",
+        vim.fn.glob(st_path .. "/language-server/*.jar"),
+      }),
+    },
   })
   require("java-deps").setup()
   -- finally, some LSP related keymaps
   local function inlay_hint_toggle()
-      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
+    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
   end
   local function list_workspace_folders()
-      vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end
   map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Lsp code action")
   map("n", "<leader>k", vim.lsp.buf.signature_help, "Lsp signature help")
