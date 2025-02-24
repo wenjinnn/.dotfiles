@@ -1,5 +1,5 @@
 local M = {}
-local lsp = require("util.lsp")
+local util = require("util.lsp")
 local jdtls = require("jdtls")
 function M.setup_dap()
   jdtls.setup_dap()
@@ -27,7 +27,7 @@ function M.setup_dap()
 end
 
 function M.setup_jdtls_buf_keymap(bufnr)
-  local map = lsp.buf_map(bufnr)
+  local map = util.buf_map(bufnr)
   local jdtls_tests = require("jdtls.tests")
   map("n", "<leader>cC", "<cmd>JdtCompile full<CR>", "Jdt compile full")
   map("n", "<leader>cc", "<cmd>JdtCompile incremental<CR>", "Jdt compile incremental")
@@ -51,7 +51,7 @@ function M.start()
   local on_attach = function(client, bufnr)
     M.setup_dap()
     M.setup_jdtls_buf_keymap(bufnr)
-    lsp.setup(client, bufnr)
+    util.setup(client, bufnr)
   end
   local root_dir = vim.fs.root(0, { "mvnw", "gradlew", ".git", ".svn" })
   local ws_name, _ = string.gsub(vim.fn.fnamemodify(root_dir, ":p"), "/", "_")
@@ -61,7 +61,7 @@ function M.start()
   local bundles = { vim.fn.glob(jdtls_debug_path .. "/server/com.microsoft.java.debug.plugin-*.jar") }
   local test_bundles = vim.split(vim.fn.glob(jdtls_test_path .. "/server/*.jar", true), "\n")
   vim.list_extend(bundles, test_bundles)
-  local st_path = os.getenv("SPRING_BOOT_TOOLS_PATH") or "./"
+  local st_path = os.getenv("SPRING_BOOT_TOOLS_PATH") or "."
   local st_bundles = vim.split(vim.fn.glob(st_path .. "/language-server/*.jar"), "\n")
   local st_lib_bundles = vim.split(vim.fn.glob(st_path .. "/jars/*.jar"), "\n")
   vim.list_extend(bundles, st_bundles)
@@ -75,7 +75,7 @@ function M.start()
   local lombok_path = os.getenv("LOMBOK_PATH")
   local config = {
     settings = require("lsp.jdtls.settings"),
-    capabilities = lsp.make_capabilities(),
+    capabilities = util.make_capabilities(),
     root_dir = root_dir,
     on_attach = on_attach,
     filetypes = { "java" },
@@ -83,27 +83,20 @@ function M.start()
       bundles = bundles,
       extendedClientCapabilities = extendedClientCapabilities,
     },
-    cmd = {
-      "jdtls",
-      "--jvm-arg=-Dlog.protocol=true",
-      "--jvm-arg=-Dlog.level=ALL",
-      "--jvm-arg=-Dfile.encoding=utf-8",
-      "--jvm-arg=-Djava.import.generatesMetadataFilesAtProjectRoot=false",
-      "--jvm-arg=-Xms256m",
-      "--jvm-arg=-Xmx" .. (os.getenv("JDTLS_XMX") or "1G"),
-      -- The following 6 lines is for optimize memory use, see https://github.com/redhat-developer/vscode-java/pull/1262#discussion_r386912240
-      "--jvm-arg=-XX:+UseParallelGC",
-      "--jvm-arg=-XX:MinHeapFreeRatio=5",
-      "--jvm-arg=-XX:MaxHeapFreeRatio=10",
-      "--jvm-arg=-XX:GCTimeRatio=4",
-      "--jvm-arg=-XX:AdaptiveSizePolicyWeight=90",
-      "--jvm-arg=-Dsun.zip.disableMemoryMapping=true",
-      lombok_path ~= nil and string.format("--jvm-arg=-javaagent:%s/lombok.jar", lombok_path) or "",
-      "-configuration",
-      jdtls_cache_path .. "/config",
-      "-data",
-      jdtls_cache_path .. "/workspace/" .. ws_name,
-    },
+    cmd = util.java_cmd_optimize("jdtls", {
+        "--jvm-arg=-Dlog.protocol=true",
+        "--jvm-arg=-Dlog.level=ALL",
+        "--jvm-arg=-Dfile.encoding=utf-8",
+        "--jvm-arg=-Djava.import.generatesMetadataFilesAtProjectRoot=false",
+        "--jvm-arg=-Xms256m",
+        "--jvm-arg=-Xmx" .. (os.getenv("JDTLS_XMX") or "1G"),
+        lombok_path ~= nil and string.format("--jvm-arg=-javaagent:%s/lombok.jar", lombok_path) or "",
+        "-configuration",
+        jdtls_cache_path .. "/config",
+        "-data",
+        jdtls_cache_path .. "/workspace/" .. ws_name,
+      },
+      "--jvm-arg="),
   }
 
   -- Server
@@ -112,7 +105,7 @@ end
 
 function M.setup()
   local jdtls_setup_group = require("util").augroup("jdtls_setup")
-  vim.api.nvim_create_autocmd( { "FileType" },
+  vim.api.nvim_create_autocmd({ "FileType" },
     {
       group = jdtls_setup_group,
       pattern = "java",

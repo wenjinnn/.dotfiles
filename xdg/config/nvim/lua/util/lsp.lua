@@ -76,7 +76,7 @@ function M.on_rename_file(from, to)
     files = { {
       oldUri = vim.uri_from_fname(from),
       newUri = vim.uri_from_fname(to),
-    } }
+    } },
   }
 
   local clients = vim.lsp.get_clients()
@@ -94,6 +94,23 @@ function M.on_rename_file(from, to)
       client.notify("workspace/didRenameFiles", changes)
     end
   end
+end
+
+function M.java_cmd_optimize(java_cmd, custom_cmd, prefix)
+  prefix = prefix or ""
+  local cmd = {
+    java_cmd or "java",
+    prefix .. "-XX:TieredStopAtLevel=1",
+    -- The following 6 lines is for optimize memory use, see https://github.com/redhat-developer/vscode-java/pull/1262#discussion_r386912240
+    prefix .. "-XX:+UseParallelGC",
+    prefix .. "-XX:MinHeapFreeRatio=5",
+    prefix .. "-XX:MaxHeapFreeRatio=10",
+    prefix .. "-XX:GCTimeRatio=4",
+    prefix .. "-XX:AdaptiveSizePolicyWeight=90",
+    prefix .. "-Dsun.zip.disableMemoryMapping=true",
+  }
+  vim.list_extend(cmd, custom_cmd)
+  return cmd
 end
 
 return M
