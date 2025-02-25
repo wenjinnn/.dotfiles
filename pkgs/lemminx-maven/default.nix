@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     sha256 = "YmvH6v3RrRMc3rcoTdJ287tWmNs8GzbpfrPGwlJp9SQ=";
   };
 
-  nativeBuildInputs = [unzip];
+  nativeBuildInputs = [ unzip ];
 
   buildInputs = [ makeWrapper ];
 
@@ -30,6 +30,13 @@ stdenv.mkDerivation rec {
     cp -r ./**.jar $out/share
 
     makeWrapper ${jre_headless}/bin/java $out/bin/lemminx \
+      --add-flags "-XX:TieredStopAtLevel=1" \
+      --add-flags "-XX:+UseParallelGC" \
+      --add-flags "-XX:MinHeapFreeRatio=5" \
+      --add-flags "-XX:MaxHeapFreeRatio=10" \
+      --add-flags "-XX:GCTimeRatio=4" \
+      --add-flags "-XX:AdaptiveSizePolicyWeight=90" \
+      --add-flags "-Dsun.zip.disableMemoryMapping=true" \
       --add-flags "-cp" \
       --add-flags "$(ls -d -1 $out/share/** | tr '\n' ':')" \
       --add-flags "org.eclipse.lemminx.XMLServerLauncher"
@@ -43,6 +50,6 @@ stdenv.mkDerivation rec {
     license = lib.licenses.epl20;
     mainProgram = "lemminx";
     maintainers = with lib.maintainers; [ wenjinnn ];
-    platforms = [ "x86_64-linux"];
+    platforms = [ "x86_64-linux" ];
   };
 }
