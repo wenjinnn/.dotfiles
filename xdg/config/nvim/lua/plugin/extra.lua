@@ -202,6 +202,8 @@ later(function()
     return p
   end
 
+  -- enable auto tool mode by default
+  vim.g.codecompanion_auto_tool_mode = true
   require("codecompanion").setup({
     adapters = {
       ollama = extend_adapter("ollama", ollama_setting),
