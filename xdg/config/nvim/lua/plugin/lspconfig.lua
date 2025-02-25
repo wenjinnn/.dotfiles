@@ -36,7 +36,8 @@ later(function()
   if sonarlint_path ~= nil then
     require("sonarlint").setup({
       server = {
-        cmd = util.java_cmd_optimize("java", {
+        cmd = {
+          "java",
           "-jar",
           sonarlint_path .. "/server/sonarlint-ls.jar",
           -- Ensure that sonarlint-language-server uses stdio channel
@@ -50,7 +51,7 @@ later(function()
           sonarlint_path .. "/analyzers/sonarxml.jar",
           sonarlint_path .. "/analyzers/sonarhtml.jar",
           sonarlint_path .. "/analyzers/sonargo.jar",
-        }),
+        },
         settings = require("lsp.sonarlint-language-server").settings,
         -- limit the interval of sonarlint receiving textDocument/didChange event, see https://gitlab.com/schrieveslaach/sonarlint.nvim/-/issues/23
         flags = {
