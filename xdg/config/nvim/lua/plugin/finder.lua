@@ -77,7 +77,7 @@ now(function()
       map_split(buf_id, "<C-s>", "belowright horizontal")
       map_split(buf_id, "<C-v>", "belowright vertical")
       vim.keymap.set("n", "g~", set_cwd, { buffer = buf_id, desc = "Set cwd" })
-      vim.keymap.set("n", "gX", ui_open, { buffer = buf_id, desc = "OS open" })
+      vim.keymap.set("n", "gx", ui_open, { buffer = buf_id, desc = "OS open" })
       vim.keymap.set("n", "gy", yank_path, { buffer = buf_id, desc = "Yank path" })
     end,
   })
