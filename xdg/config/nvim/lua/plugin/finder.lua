@@ -19,6 +19,7 @@ now(function()
     else
       MiniFiles.open(MiniFiles.get_latest_path())
     end
+    MiniFiles.reveal_cwd()
   end
   map("n", "<leader>fe", MiniFiles.open, "MiniFiles open")
   map("n", "<leader>fE", minifiles_open_current, "MiniFiles open current")
