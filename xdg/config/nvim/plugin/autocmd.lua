@@ -59,13 +59,13 @@ au({ "VimEnter" }, {
   end,
 })
 
--- fcitx5 rime auto switch to asciimode
+-- fcitx5 auto switch to default input method
 if vim.fn.has("fcitx5") then
   au({ "InsertLeave" }, {
-    group = augroup("fcitx5_rime"),
+    group = augroup("fcitx5"),
     pattern = "*",
     callback = function()
-      vim.cmd("silent call system('busctl call --user org.fcitx.Fcitx5 /rime org.fcitx.Fcitx.Rime1 SetAsciiMode b 1')")
+      vim.cmd("silent call system('fcitx5-remote -c')")
     end,
   })
 end
