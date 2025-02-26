@@ -22,11 +22,77 @@ now(function()
   end
   map("n", "<leader>fe", MiniFiles.open, "MiniFiles open")
   map("n", "<leader>fE", minifiles_open_current, "MiniFiles open current")
-  -- send notification to lsp when mini.files rename actions triggered
+  -- send notification to lsp when mini.files rename actions triggered, modified from snacks.nvim
   vim.api.nvim_create_autocmd("User", {
     pattern = "MiniFilesActionRename",
     callback = function(event)
       require("util.lsp").on_rename_file(event.data.from, event.data.to)
+    end,
+  })
+  -- Create mappings to modify target window via split
+  local map_split = function(buf_id, lhs, direction)
+    local rhs = function()
+      -- Make new window and set it as target
+      local cur_target = MiniFiles.get_explorer_state().target_window
+      local new_target = vim.api.nvim_win_call(cur_target, function()
+        vim.cmd(direction .. " split")
+        return vim.api.nvim_get_current_win()
+      end)
+
+      MiniFiles.set_target_window(new_target)
+
+      -- This intentionally doesn't act on file under cursor in favor of
+      -- explicit "go in" action (`l` / `L`). To immediately open file,
+      -- add appropriate `MiniFiles.go_in()` call instead of this comment.
+    end
+
+    -- Adding `desc` will result into `show_help` entries
+    local desc = "Split " .. direction
+    vim.keymap.set("n", lhs, rhs, { buffer = buf_id, desc = desc })
+  end
+
+  -- Create mappings which use data from entry under cursor
+  -- Set focused directory as current working directory
+  local set_cwd = function()
+    local path = (MiniFiles.get_fs_entry() or {}).path
+    if path == nil then return vim.notify("Cursor is not on valid entry") end
+    vim.fn.chdir(vim.fs.dirname(path))
+  end
+
+  -- Yank in register full path of entry under cursor
+  local yank_path = function()
+    local path = (MiniFiles.get_fs_entry() or {}).path
+    if path == nil then return vim.notify("Cursor is not on valid entry") end
+    vim.fn.setreg(vim.v.register, path)
+  end
+
+  -- Open path with system default handler (useful for non-text files)
+  local ui_open = function() vim.ui.open(MiniFiles.get_fs_entry().path) end
+
+  vim.api.nvim_create_autocmd("User", {
+    pattern = "MiniFilesBufferCreate",
+    callback = function(args)
+      local buf_id = args.data.buf_id
+      -- Tweak keys to your liking
+      map_split(buf_id, "<C-s>", "belowright horizontal")
+      map_split(buf_id, "<C-v>", "belowright vertical")
+      vim.keymap.set("n", "g~", set_cwd, { buffer = buf_id, desc = "Set cwd" })
+      vim.keymap.set("n", "gX", ui_open, { buffer = buf_id, desc = "OS open" })
+      vim.keymap.set("n", "gy", yank_path, { buffer = buf_id, desc = "Yank path" })
+    end,
+  })
+  -- Set custom bookmarks
+  local set_mark = function(id, path, desc)
+    MiniFiles.set_bookmark(id, path, { desc = desc })
+  end
+  vim.api.nvim_create_autocmd("User", {
+    pattern = "MiniFilesExplorerOpen",
+    callback = function()
+      local dotfiles_path = os.getenv("DOTFILES")
+      local config_path = dotfiles_path and dotfiles_path .. "/xdg/config/nvim" or vim.fn.stdpath("config")
+      set_mark("c", config_path, "Config") -- path
+      set_mark("w", vim.fn.getcwd, "Working directory") -- callable
+      set_mark("~", "~", "Home directory")
     end,
   })
 end)
