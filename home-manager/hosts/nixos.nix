@@ -57,6 +57,7 @@
     dbeaver-bin
     redisinsight
     wechat-uos
+    shotcut
     qq
     wemeet
     nur.repos.xddxdd.dingtalk
