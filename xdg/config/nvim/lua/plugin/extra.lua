@@ -213,13 +213,6 @@ later(function()
       }),
       anthropic = extend_adapter("anthropic", "ANTHROPIC_API_KEY"),
       deepseek = extend_adapter("deepseek", "DEEPSEEK_API_KEY"),
-      siliconflow = extend_adapter("openai_compatible", {
-        env = {
-          url = "https://api.siliconflow.cn",
-          api_key = api_key_cmd:format("SILICONFLOW_API_KEY"),
-        },
-        schema = { model = { default = "deepseek-ai/DeepSeek-R1" } },
-      }),
     },
     strategies = {
       chat = {
