@@ -44,8 +44,6 @@
     scrcpy
     rustdesk-flutter
     wpsoffice-cn
-    gnome-tweaks
-    gnome-themes-extra
     dconf-editor
     wireshark
     mitmproxy
