@@ -32,7 +32,7 @@ in {
     wl-clipboard
     xdg-utils
     xorg.xrdb
-    xwaylandvideobridge
+    kdePackages.xwaylandvideobridge
     hyprpaper
     hyprcursor
     hyprpicker
