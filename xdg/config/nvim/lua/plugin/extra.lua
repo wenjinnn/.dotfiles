@@ -263,7 +263,6 @@ later(function()
           if not item then
             return
           end
-          print(vim.inspect(item))
           -- Open new CodeCompanion chat with default adapter
           vim.cmd("CodeCompanionChat")
           -- Read contents of saved chat file
