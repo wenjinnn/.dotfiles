@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   pkgs,
   ...
@@ -63,6 +64,7 @@
   };
   programs.neovim = {
     enable = true;
+    package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
@@ -71,11 +73,6 @@
     withRuby = true;
     withNodeJs = true;
     withPython3 = true;
-
-    extraPython3Packages = pyPkgs:
-      with pyPkgs; [
-        pynvim
-      ];
 
     extraWrapperArgs = [
       "--suffix"
