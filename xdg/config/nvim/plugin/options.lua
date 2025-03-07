@@ -71,9 +71,6 @@ opt.updatetime = 500
 opt.fileencodings:append({ "gbk", "cp936", "gb2312", "gb18030", "big5", "euc-jp", "euc-kr", "prc" })
 opt.termguicolors = true
 opt.completeopt = { "menuone", "noinsert" }
-if vim.fn.has("nvim-0.11") == 1 then
-  opt.completeopt:append({ "fuzzy" })
-end
 opt.pumheight = 20
 opt.sessionoptions:remove({ "blank" })
 opt.wildmode = "longest:full,full"
@@ -86,4 +83,8 @@ opt.foldmethod = "expr"
 opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 if vim.g.vscode then
   vim.notify = require("vscode-neovim").notify
+end
+if vim.fn.has("nvim-0.11") == 1 then
+  opt.completeopt:append({ "fuzzy" })
+  vim.diagnostic.config({ virtual_text = true })
 end
