@@ -70,7 +70,6 @@ function M.start()
   local java_dependency_bundle = vim.split(vim.fn.glob(java_dependency_path .. "/server/*.jar"), "\n")
   vim.list_extend(bundles, java_dependency_bundle)
   local extendedClientCapabilities = jdtls.extendedClientCapabilities
-  extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
   local jdtls_cache_path = vim.fn.stdpath("cache") .. "/jdtls"
   local lombok_path = os.getenv("LOMBOK_PATH")
   local config = {
