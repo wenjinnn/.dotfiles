@@ -6,7 +6,7 @@ M.settings = {
       -- this plugin and its advanced options like `ignore`.
       enable = false,
     },
-    schemas = require("schemastore").yaml.schemas(),
+    schemas = require('schemastore').yaml.schemas(),
   },
 }
 return M
