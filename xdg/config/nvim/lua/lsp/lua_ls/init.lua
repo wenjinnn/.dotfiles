@@ -26,9 +26,6 @@ M.on_init = function(client)
     hint = {
       enable = true,
     },
-    codeLens = {
-      enable = true,
-    },
     format = {
       enable = true,
       defaultConfig = {
