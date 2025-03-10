@@ -11,6 +11,8 @@ M.on_init = function(client)
     },
     -- Make the server aware of Neovim runtime files
     workspace = {
+      maxPreload = 2000,
+      preloadFileSize = 1000,
       checkThirdParty = false,
       library = {
         vim.env.VIMRUNTIME,
