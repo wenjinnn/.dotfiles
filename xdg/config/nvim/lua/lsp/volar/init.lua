@@ -1,7 +1,7 @@
 local M = {}
 M.init_options = {
   typescript = {
-    tsdk = os.getenv("TYPESCRIPT_LIBRARY") or "node_modules/typescript/lib",
+    tsdk = os.getenv('TYPESCRIPT_LIBRARY') or 'node_modules/typescript/lib',
   },
 }
 
