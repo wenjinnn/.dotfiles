@@ -61,6 +61,7 @@ later(function()
       'windwp/nvim-ts-autotag',
       'hiphish/rainbow-delimiters.nvim',
       'nvim-treesitter/nvim-treesitter-context',
+      -- TODO remove nvim-ts-context-commentstring after nvim 0.11 released
       'JoosepAlviste/nvim-ts-context-commentstring',
     },
     hooks = {
@@ -69,13 +70,18 @@ later(function()
   })
   -- fix nvim-treesitter-textobjects occur an error when add it to nvim-treesitter depends
   later(function() add({ source = 'nvim-treesitter/nvim-treesitter-textobjects' }) end)
-  vim.g.skip_ts_context_commentstring_module = true
-  local get_option = vim.filetype.get_option
-  -- FIX native comment not work for jsx or vue template, relate issue: https://github.com/neovim/neovim/issues/28830
-  ---@diagnostic disable-next-line: duplicate-set-field
-  vim.filetype.get_option = function(filetype, option)
-    return option == 'commentstring' and require('ts_context_commentstring.internal').calculate_commentstring()
-      or get_option(filetype, option)
+  if vim.fn.has('nvim-0.11') == 0 then
+    vim.g.skip_ts_context_commentstring_module = true
+    local get_option = vim.filetype.get_option
+    -- FIX native comment not work for jsx or vue template, relate issue: https://github.com/neovim/neovim/issues/28830
+    ---@diagnostic disable-next-line: duplicate-set-field
+    vim.filetype.get_option = function(filetype, option)
+      return option == 'commentstring' and require('ts_context_commentstring.internal').calculate_commentstring()
+        or get_option(filetype, option)
+    end
+    require('ts_context_commentstring').setup({
+      enable_autocmd = false,
+    })
   end
   require('nvim-treesitter.configs').setup({
     ensure_installed = {
@@ -130,9 +136,6 @@ later(function()
         node_decremental = '<bs>',
       },
     },
-  })
-  require('ts_context_commentstring').setup({
-    enable_autocmd = false,
   })
   require('nvim-ts-autotag').setup()
   local function go_to_context() require('treesitter-context').go_to_context(vim.v.count1) end
