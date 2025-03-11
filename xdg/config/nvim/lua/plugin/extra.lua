@@ -160,6 +160,7 @@ later(function()
     },
     filetypes = {
       ['dap-repl'] = false,
+      ['grug-far'] = false,
       ['*'] = true,
     },
   })
