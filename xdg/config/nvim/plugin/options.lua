@@ -84,5 +84,6 @@ opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 if vim.g.vscode then vim.notify = require('vscode-neovim').notify end
 if vim.fn.has('nvim-0.11') == 1 then
   opt.completeopt:append({ 'fuzzy' })
+  opt.messagesopt = 'wait:5000,history:10000'
   vim.diagnostic.config({ virtual_text = true })
 end
