@@ -263,8 +263,8 @@ later(function()
     vim.g.conform_autoformat = not vim.g.conform_autoformat
     vim.notify('Autoformat: ' .. (vim.g.conform_autoformat and 'on' or 'off'))
   end
-  map({ 'n', 'v' }, '<leader>cm', code_format, 'Format')
-  map('n', '<leader>cM', auto_format_toggle, 'Auto format toggle')
+  map({ 'n', 'v' }, '<leader>cf', code_format, 'Format')
+  map('n', '<leader>cF', auto_format_toggle, 'Auto format toggle')
 end)
 
 -- completion and snippets
