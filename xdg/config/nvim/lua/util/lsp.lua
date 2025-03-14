@@ -30,10 +30,10 @@ function M.setup(client, bufnr)
       callback = vim.lsp.buf.clear_references,
     })
   end
-  -- inlay hint
-  if client.supports_method('textDocument/inlayHint', { bufnr = bufnr }) then
-    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-  end
+  -- inlay hint, temporary disabled for it throw too much error at editing
+  -- if client.supports_method('textDocument/inlayHint', { bufnr = bufnr }) then
+  --   vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  -- end
   -- code lens
   if client.supports_method('textDocument/codeLens', { bufnr = bufnr }) then
     vim.lsp.codelens.refresh({ bufnr = bufnr })
