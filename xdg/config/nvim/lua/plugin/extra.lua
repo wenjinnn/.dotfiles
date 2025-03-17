@@ -213,7 +213,7 @@ later(function()
         },
         keymaps = {
           send = { modes = { n = { '<C-s>' } } },
-          completion = { modes = { i = '<C-n>' } },
+          completion = { modes = { i = '<C-x><C-o>' } },
           save = {
             modes = { n = 'gS' },
             index = 99,
