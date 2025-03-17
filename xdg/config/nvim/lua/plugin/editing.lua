@@ -12,10 +12,6 @@ later(function()
       I = gen_ai_spec.indent(),
       L = gen_ai_spec.line(),
       N = gen_ai_spec.number(),
-      -- Tweak argument to be recognized only inside `()` between `;`
-      a = gen_spec.argument({ brackets = { '%b()' }, separator = ';' }),
-      -- Tweak function call to not detect dot in function name
-      f = gen_spec.function_call({ name_pattern = '[%w_]' }),
       -- Function definition (needs treesitter queries with these captures)
       -- This need nvim-treesitter-textobjects, see https://github.com/echasnovski/mini.nvim/issues/947#issuecomment-2154242659
       F = gen_spec.treesitter({ a = '@function.outer', i = '@function.inner' }),
