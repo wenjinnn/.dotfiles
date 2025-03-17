@@ -82,6 +82,16 @@ function M.start()
       bundles = bundles,
       extendedClientCapabilities = extendedClientCapabilities,
     },
+    handlers = {
+      -- filter noisy notifications
+      ['$/progress'] = function(err, result, ctx)
+        local msg = result.value.message
+        if msg and msg:sub(1, 18) == 'Validate documents' then return end
+        if msg and msg:sub(1, 19) == 'Publish Diagnostics' then return end
+        -- pass through to normal handler
+        vim.lsp.handlers['$/progress'](err, result, ctx)
+      end,
+    },
     cmd = util.java_cmd_optimize('jdtls', {
       '--jvm-arg=-Dlog.protocol=true',
       '--jvm-arg=-Dlog.level=ALL',
