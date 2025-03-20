@@ -15,16 +15,7 @@ later(function()
   local util = require('util')
   local map = util.map
 
-  -- Tabnew for new terminal suit me, cuz I open multiple dap terminal a lot
-  dap.defaults.fallback.terminal_win_cmd = function()
-    local cur_win = api.nvim_get_current_win()
-    api.nvim_command('tabnew')
-    local bufnr = api.nvim_get_current_buf()
-    util.setup_term_opt(bufnr)
-    local win = api.nvim_get_current_win()
-    api.nvim_set_current_win(cur_win)
-    return bufnr, win
-  end
+  dap.defaults.fallback.terminal_win_cmd = 'tabnew'
 
   dap.adapters.gdb = {
     type = 'executable',
