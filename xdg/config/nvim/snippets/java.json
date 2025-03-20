@@ -1,1 +1,6 @@
-{}
+{
+  "log": {
+    "body": "private static final Logger log = LoggerFactory.getLogger($1);",
+    "prefix": "log"
+  }
+}
