@@ -90,7 +90,7 @@ now(function()
       set_mark('c', config_path, 'Config') -- path
       set_mark('w', vim.fn.getcwd, 'Working directory') -- callable
       set_mark('~', '~', 'Home directory')
-      set_mark('.', function() return vim.fn.expand('#:p') end, 'Current directory')
+      set_mark('.', function() return vim.fn.expand('#:p:h') end, 'Current directory')
     end,
   })
 end)
