@@ -52,13 +52,6 @@ local M = {
     },
     contentProvider = { preferred = 'fernflower' },
     templates = {
-      fileHeader = {
-        '/**',
-        ' * @author: ${user}',
-        ' * @date: ${date}',
-        ' * @description: ',
-        ' */',
-      },
       typeComment = {
         '/**',
         ' * @author: ${user}',
