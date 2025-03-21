@@ -13,9 +13,6 @@ map('n', '<leader>Y', '"+Y', 'Yank line to system clipboard')
 map({ 'n', 'v' }, '<leader>0', '"0p', 'Paste from last yank')
 map('n', '<leader>p', '"+p', 'Paste from system clipboard')
 
--- search in visual selection
-map('x', 'g/', '<Esc>/\\%V')
-
 --keywordprg
 map('n', '<leader>K', '<cmd>norm! K<cr>', 'Keywordprg')
 map('n', '<leader>L', '<cmd>lopen<cr>', 'Location list')
