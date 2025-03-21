@@ -8,7 +8,6 @@
     (with pkgs; [
       hurl
       jdt-language-server
-      spring-boot-tools
       lombok
       lua-language-server
       bash-language-server
@@ -91,14 +90,6 @@
       "SONARLINT_PATH"
       ":"
       "${pkgs.sonarlint-vscode}/share/vscode/extensions/sonarsource.sonarlint-vscode/"
-      "--suffix"
-      "SPRING_BOOT_TOOLS_PATH"
-      ":"
-      "${pkgs.spring-boot-tools}/share/vscode/extensions/vmware.vscode-spring-boot"
-      "--suffix"
-      "JAVA_DEPENDENCY_PATH"
-      ":"
-      "${pkgs.vscode-extensions.vscjava.vscode-java-dependency}/share/vscode/extensions/vscjava.vscode-java-dependency"
       "--suffix"
       "VUE_LANGUAGE_SERVER_PATH"
       ":"

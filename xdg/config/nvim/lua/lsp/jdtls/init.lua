@@ -44,7 +44,6 @@ function M.setup_jdtls_buf_keymap(bufnr)
   map('v', '<leader>cv', function() jdtls.extract_variable(true) end, 'Jdt Extract Variable')
   map('v', '<leader>cV', function() jdtls.extract_constant(true) end, 'Jdt Extract Constant')
   map('v', '<leader>ce', function() jdtls.extract_method(true) end, 'Jdt Extract Method')
-  map('n', '<leader>cp', require('java-deps').toggle_outline, 'Java project dependency')
 end
 
 function M.start()
@@ -58,17 +57,11 @@ function M.start()
   local jdtls_data_path = vim.fn.stdpath('data') .. '/jdtls'
   local jdtls_debug_path = os.getenv('JAVA_DEBUG_PATH') or jdtls_data_path
   local jdtls_test_path = os.getenv('JAVA_TEST_PATH') or jdtls_data_path
+
   local bundles = { vim.fn.glob(jdtls_debug_path .. '/server/com.microsoft.java.debug.plugin-*.jar') }
   local test_bundles = vim.split(vim.fn.glob(jdtls_test_path .. '/server/*.jar', true), '\n')
   vim.list_extend(bundles, test_bundles)
-  local st_path = os.getenv('SPRING_BOOT_TOOLS_PATH') or '.'
-  local st_bundles = vim.split(vim.fn.glob(st_path .. '/language-server/*.jar'), '\n')
-  local st_lib_bundles = vim.split(vim.fn.glob(st_path .. '/jars/*.jar'), '\n')
-  vim.list_extend(bundles, st_bundles)
-  vim.list_extend(bundles, st_lib_bundles)
-  local java_dependency_path = os.getenv('JAVA_DEPENDENCY_PATH') or jdtls_data_path
-  local java_dependency_bundle = vim.split(vim.fn.glob(java_dependency_path .. '/server/*.jar'), '\n')
-  vim.list_extend(bundles, java_dependency_bundle)
+
   local extendedClientCapabilities = jdtls.extendedClientCapabilities
   local jdtls_cache_path = vim.fn.stdpath('cache') .. '/jdtls'
   local lombok_path = os.getenv('LOMBOK_PATH')

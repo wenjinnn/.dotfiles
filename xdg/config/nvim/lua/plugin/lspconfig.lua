@@ -11,8 +11,6 @@ later(function()
       'b0o/SchemaStore.nvim',
       'mfussenegger/nvim-jdtls',
       'https://gitlab.com/schrieveslaach/sonarlint.nvim',
-      'JavaHello/spring-boot.nvim',
-      'JavaHello/java-deps.nvim',
     },
   })
   local lsp = require('lsp')
@@ -69,19 +67,6 @@ later(function()
       },
     })
   end
-  local st_path = os.getenv('SPRING_BOOT_TOOLS_PATH') or '.'
-  require('spring_boot').setup({
-    ls_path = st_path .. '/language-server',
-    server = {
-      cmd = util.java_cmd_optimize('java', {
-        '-Xmx1G',
-        '-Dsts.lsp.client=vscode',
-        '-jar',
-        vim.fn.glob(st_path .. '/language-server/*.jar'),
-      }),
-    },
-  })
-  require('java-deps').setup()
   -- finally, some LSP related keymaps
   local function inlay_hint_toggle()
     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
