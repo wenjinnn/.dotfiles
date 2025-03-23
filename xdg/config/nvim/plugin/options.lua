@@ -85,5 +85,5 @@ if vim.g.vscode then vim.notify = require('vscode-neovim').notify end
 if vim.fn.has('nvim-0.11') == 1 then
   opt.completeopt:append({ 'fuzzy' })
   vim.diagnostic.config({ virtual_text = true })
-  opt.winborder = 'solid'
+  opt.winborder = 'single'
 end
