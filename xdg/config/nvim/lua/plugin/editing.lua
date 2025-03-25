@@ -266,10 +266,6 @@ end)
 -- completion and snippets
 later(function()
   require('mini.completion').setup({
-    window = {
-      info = { border = 'solid' },
-      signature = { border = 'solid' },
-    },
     set_vim_settings = false,
   })
 
