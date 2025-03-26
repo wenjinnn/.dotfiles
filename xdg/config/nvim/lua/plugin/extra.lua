@@ -150,7 +150,7 @@ end)
 -- AI related
 later(function()
   -- official copilot plugin lua replacement
-  add('wenjinnn/copilot.lua')
+  add('zbirenbaum/copilot.lua')
   require('copilot').setup({
     panel = { keymap = { open = '<M-j>' } },
     suggestion = {
