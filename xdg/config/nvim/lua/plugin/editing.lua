@@ -21,6 +21,7 @@ later(function()
         i = { '@conditional.inner', '@loop.inner' },
       }),
       c = gen_spec.treesitter({ a = '@class.outer', i = '@class.inner' }),
+      C = gen_spec.treesitter({ a = '@comment.outer', i = '@comment.inner' }),
       ['|'] = gen_spec.pair('|', '|', { type = 'non-balanced' }),
     },
     n_lines = 500,
