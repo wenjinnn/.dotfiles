@@ -92,7 +92,7 @@ function M.setup(client, bufnr)
         feedkeys "<C-n>"
       else
         if next(vim.lsp.get_clients { bufnr = 0 }) then
-          vim.lsp.completion.trigger()
+          vim.lsp.completion.get()
         end
       end
     end, "Trigger/select next completion", "i")
@@ -130,7 +130,6 @@ function M.setup(client, bufnr)
       if nil == completion_item then
         return
       end
-
       local resolved_item = vim.lsp.buf_request_sync(
         bufnr,
         vim.lsp.protocol.Methods.completionItem_resolve,
@@ -157,7 +156,7 @@ function M.setup(client, bufnr)
       vim.api.nvim_create_autocmd({ "TextChangedI" }, {
         buffer = bufnr,
         callback = function()
-          vim.lsp.completion.trigger()
+          vim.lsp.completion.get()
         end,
       })
     end,
