@@ -1,13 +1,9 @@
 local M = {}
 
--- We don't want signcolumn, number, spell and indentscope for terminal
-function M.setup_term_opt(event)
+-- We don't want spell, miniindentscope enable in terminal
+function M.setup_term_opt(_)
   vim.b.miniindentscope_disable = true
   vim.opt_local.spell = false
-  if vim.fn.has('nvim-0.11') == 1 then return end
-  vim.opt_local.number = false
-  vim.opt_local.signcolumn = 'no'
-  vim.opt_local.relativenumber = false
 end
 
 -- Delete all dap terminals, useful when session restored, cuz in that timing sometimes we have some dead dap terminals.

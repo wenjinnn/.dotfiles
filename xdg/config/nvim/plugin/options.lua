@@ -1,6 +1,5 @@
 local opt = vim.opt
 
-opt.errorbells = false
 opt.breakindent = true
 opt.grepprg = 'rg --vimgrep'
 opt.grepformat = '%f:%l:%c:%m'
@@ -70,20 +69,17 @@ opt.confirm = true
 opt.updatetime = 500
 opt.fileencodings:append({ 'gbk', 'cp936', 'gb2312', 'gb18030', 'big5', 'euc-jp', 'euc-kr', 'prc' })
 opt.termguicolors = true
-opt.completeopt = { 'menuone', 'noselect' }
+opt.completeopt = { 'menuone', 'noselect', 'fuzzy' }
 opt.pumheight = 20
 opt.sessionoptions:remove({ 'blank' })
 opt.wildmode = 'longest:full,full'
 opt.shortmess:append({ I = true })
 opt.winminwidth = 5
 opt.smoothscroll = true
+opt.winborder = 'single'
 
 opt.foldlevel = 99
 opt.foldmethod = 'expr'
 opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.diagnostic.config({ virtual_text = true })
 if vim.g.vscode then vim.notify = require('vscode-neovim').notify end
-if vim.fn.has('nvim-0.11') == 1 then
-  opt.completeopt:append({ 'fuzzy' })
-  vim.diagnostic.config({ virtual_text = true })
-  opt.winborder = 'single'
-end
