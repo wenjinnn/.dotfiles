@@ -120,7 +120,8 @@ end)
 -- search and replace tool
 later(function()
   add('MagicDuck/grug-far.nvim')
-  require('grug-far').setup({
+  local grug_far = require('grug-far')
+  grug_far.setup({
     keymaps = {
       replace = { n = '<localleader>Fr' },
       qflist = { n = '<localleader>Fq' },
@@ -139,10 +140,13 @@ later(function()
       applyNext = { n = '<localleader>Fj' },
       applyPrev = { n = '<localleader>Fk' },
     },
+    windowCreationCommand = 'tab split',
   })
-  local function grug_cursor_word() require('grug-far').grug_far({ prefills = { search = vim.fn.expand('<cword>') } }) end
-  local function grug_current_file() require('grug-far').grug_far({ prefills = { paths = vim.fn.expand('%') } }) end
-  map('n', '<leader>Fg', '<cmd>GrugFar<CR>', 'Toggle GrugFar')
+  local function grug_cursor_word() grug_far.grug_far({ prefills = { search = vim.fn.expand('<cword>') } }) end
+  local function grug_current_file() grug_far.grug_far({ prefills = { paths = vim.fn.expand('%') } }) end
+  local function grug_toggle() grug_far.toggle_instance({ instanceName = 'far', staticTitle = 'Find and Replace' }) end
+  map('n', '<leader>FF', grug_toggle, 'Toggle GrugFar')
+  map('n', '<leader>Fg', '<cmd>GrugFar<CR>', 'GrugFar')
   map({ 'n', 'v' }, '<leader>Fv', grug_cursor_word, 'GrugFar search current word')
   map('n', '<leader>Ff', grug_current_file, 'Search on current file')
 end)
