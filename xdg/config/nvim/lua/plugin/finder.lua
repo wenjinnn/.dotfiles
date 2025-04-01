@@ -12,17 +12,7 @@ now(function()
       width_preview = 40,
     },
   })
-  -- if current are readable in file system, open mini.files at the current buffer's location.
-  local function minifiles_open_current()
-    if vim.fn.filereadable(vim.fn.bufname('%')) > 0 then
-      MiniFiles.open(vim.api.nvim_buf_get_name(0))
-    else
-      MiniFiles.open(MiniFiles.get_latest_path())
-    end
-    MiniFiles.reveal_cwd()
-  end
   map('n', '<leader>fe', MiniFiles.open, 'MiniFiles open')
-  map('n', '<leader>fE', minifiles_open_current, 'MiniFiles open current')
   -- send notification to lsp when mini.files rename actions triggered, modified from snacks.nvim
   vim.api.nvim_create_autocmd('User', {
     pattern = 'MiniFilesActionRename',

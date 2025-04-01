@@ -11,7 +11,6 @@ later(function()
     },
   })
   local dap = require('dap')
-  local api = vim.api
   local util = require('util')
   local map = util.map
 
