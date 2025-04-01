@@ -156,7 +156,7 @@ later(function()
   -- official copilot plugin lua replacement
   add('zbirenbaum/copilot.lua')
   require('copilot').setup({
-    panel = { keymap = { open = '<M-j>' } },
+    panel = { enabled = false, keymap = { open = '<M-j>' } },
     suggestion = {
       auto_trigger = true,
       hide_during_completion = false,
