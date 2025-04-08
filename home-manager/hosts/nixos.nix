@@ -40,6 +40,7 @@
 
   home.packages = with pkgs; [
     gimp
+    darktable
     obs-studio
     scrcpy
     rustdesk-flutter
