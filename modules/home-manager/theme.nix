@@ -28,6 +28,7 @@
     targets = {
       hyprlock.enable = false;
       neovim.enable = false;
+      qt.enable = true;
       firefox.profileNames = [ me.username ];
     };
     fonts = {

@@ -12,5 +12,8 @@
       url = "https://www.bing.com/th?id=OHR.NapoliPizza_ROW8840504063_UHD.jpg";
       sha256 = "sha256-1Andv0jmsakNgKv4n/q+McmL+eBYByxRiZ2A32rqo+I=";
     };
+    targets = {
+      qt.enable = true;
+    };
   };
 }
