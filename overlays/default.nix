@@ -61,10 +61,6 @@ rec {
     rofi-systemd = prev.rofi-systemd.override {
       rofi = prev.pkgs.rofi-wayland;
     };
-    # use rofi wayland
-    rofimoji = prev.rofimoji.override {
-      rofi = prev.pkgs.rofi-wayland;
-    };
     pass = prev.pass.override {
       waylandSupport = true;
     };
