@@ -43,7 +43,6 @@
     darktable
     obs-studio
     scrcpy
-    rustdesk-flutter
     wpsoffice-cn
     dconf-editor
     wireshark

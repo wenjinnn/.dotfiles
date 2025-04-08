@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, me, ... }:
+{
   home.pointerCursor = {
     gtk.enable = true;
     x11.enable = true;
@@ -21,11 +22,13 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-hard.yaml";
     cursor = {
       name = "Adwaita";
+      package = pkgs.libadwaita;
       size = 24;
     };
     targets = {
       hyprlock.enable = false;
       neovim.enable = false;
+      firefox.profileNames = [ me.username ];
     };
     fonts = {
       sizes = {

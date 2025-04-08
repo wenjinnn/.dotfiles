@@ -308,7 +308,6 @@ in {
             "f[1], gapsout:0, gapsin:0"
           ];
           windowrule = [
-            "float, ^(steam)$"
             "tile,title:^(WPS)(.*)$"
             "tile,title:^(微信)(.*)$"
             "tile,title:^(钉钉)(.*)$"
@@ -319,8 +318,6 @@ in {
             "float,title:^(Library)(.*)$"
             "float,title:^(xdg-desktop-portal)(.*)$"
             "nofocus,title:^(.*)(mvi)$"
-          ];
-          windowrulev2 = [
             "opacity 0.0 override,class:^(xwaylandvideobridge)$"
             "noanim,class:^(xwaylandvideobridge)$"
             "nofocus,class:^(xwaylandvideobridge)$"
