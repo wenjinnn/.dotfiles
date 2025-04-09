@@ -249,9 +249,7 @@ end)
 
 -- completion and snippets
 later(function()
-  require('mini.completion').setup({
-    set_vim_settings = false,
-  })
+  require('mini.completion').setup()
 
   local keycode = vim.keycode or require('util').keycode
 
