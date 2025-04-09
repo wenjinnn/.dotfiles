@@ -283,7 +283,7 @@
           on-click = "rofi -show power-menu -modi power-menu:rofi-power-menu";
         };
         "custom/os" = {
-          format = "";
+          format = " ";
           on-click = "rofi -show drun";
           tooltip = false;
         };
