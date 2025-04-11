@@ -295,6 +295,7 @@ in {
           };
           misc = {
             vrr = 1;
+            enable_anr_dialog = false;
             focus_on_activate = true;
             animate_manual_resizes = false;
             animate_mouse_windowdragging = false;
