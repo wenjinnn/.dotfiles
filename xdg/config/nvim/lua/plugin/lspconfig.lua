@@ -51,10 +51,6 @@ later(function()
           sonarlint_path .. '/analyzers/sonargo.jar',
         },
         settings = require('lsp.sonarlint-language-server').settings,
-        -- limit the interval of sonarlint receiving textDocument/didChange event, see https://gitlab.com/schrieveslaach/sonarlint.nvim/-/issues/23
-        flags = {
-          debounce_text_changes = 1000,
-        },
       },
       filetypes = {
         'python',

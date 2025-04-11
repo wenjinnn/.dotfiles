@@ -89,7 +89,7 @@
       "--suffix"
       "SONARLINT_PATH"
       ":"
-      "${pkgs.sonarlint-vscode}/share/vscode/extensions/sonarsource.sonarlint-vscode/"
+      "${pkgs.vscode-extensions.sonarsource.sonarlint-vscode}/share/vscode/extensions/sonarsource.sonarlint-vscode/"
       "--suffix"
       "VUE_LANGUAGE_SERVER_PATH"
       ":"

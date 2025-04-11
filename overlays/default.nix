@@ -81,12 +81,6 @@ rec {
         hash = "sha256-gwlUklfr/NA7JIkB9YloS9f8+3h5y3rSs3ISeVXAPZk=";
       };
     });
-    sonarlint-vscode = prev.vscode-utils.extensionFromVscodeMarketplace {
-      name = "sonarlint-vscode";
-      publisher = "sonarsource";
-      version = "4.16.0";
-      sha256 = "sha256-dhRdLvnZlcNS8ruVIoBQhnJ1gL2yWzpEXFaGN8JRZUQ=";
-    };
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
