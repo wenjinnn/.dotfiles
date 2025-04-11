@@ -8,6 +8,7 @@ later(function()
     depends = {
       'theHamsta/nvim-dap-virtual-text',
       'mfussenegger/nvim-dap-python',
+      'jbyuki/one-small-step-for-vimkind',
     },
   })
   local dap = require('dap')
@@ -21,6 +22,18 @@ later(function()
     command = 'gdb',
     args = { '-i', 'dap' },
   }
+
+  dap.configurations.lua = {
+    {
+      type = 'nlua',
+      request = 'attach',
+      name = 'Attach to running Neovim instance',
+    },
+  }
+
+  dap.adapters.nlua = function(callback, config)
+    callback({ type = 'server', host = config.host or '127.0.0.1', port = config.port or 8086 })
+  end
 
   dap.configurations.rust = {
     {
@@ -75,6 +88,8 @@ later(function()
     return function() widgets.cursor_float(widget, { title = title }) end
   end
 
+  local function osv_launch() require('osv').launch({ port = 8086 }) end
+
   map('n', '<leader>db', dap.toggle_breakpoint, 'Dap toggle breakpoint')
   map('n', '<leader>dd', dap.clear_breakpoints, 'Dap clear breakpoint')
   map('n', '<leader>dr', dap.run_last, 'Dap run last')
@@ -93,6 +108,7 @@ later(function()
   map('n', '<leader>dc', dap_continue, 'Dap continue')
   map('n', '<leader>dB', dap_set_breakpoint, 'Dap condition breakpoint')
   map('n', '<leader>dl', dap_set_logpoint, 'Dap log breakpoint')
+  map('n', '<leader>dL', osv_launch, 'Dap osv launch')
   map('n', '<leader>dE', '<cmd>DapEval<CR>', 'Dap eval buffer')
   map('n', '<leader>dx', dap_set_exc_breakpoint, 'Dap exception breakpoint')
   map('n', '<leader>dR', dap_repl_toggle, 'Dap repl toggle')
