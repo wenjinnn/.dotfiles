@@ -57,10 +57,11 @@ Some behavior are not common in this configuration, but it's reasonable in my op
 
 [plugin](plugin) vim custom autocmd keymap option and more
 
+[lsp](./lsp)
+Custom LSP config and settings
+
 [lua/lsp](lua/lsp)
-LSP config and settings
-* define a key-value pair table at `<lspname>/init.lua`, attribute in table will autoload by particular lsp
-* on_attach function in `<lspname>/init.lua` will auto execute by particular lsp, with a [setup warpper](https://github.com/wenjinnn/config/blob/e6188ed4f337fac55bd42280ccf1f3b1dd726964/xdg/config/nvim/lua/util/lsp.lua#L14C12-L34)
+Some LSP that didn't depends on neovim built-in lsp-config like jdtls
 
 [lua/plugin](lua/plugin)
 plugins with particular settings and keymap

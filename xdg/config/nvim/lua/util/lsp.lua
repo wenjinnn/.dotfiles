@@ -81,10 +81,15 @@ function M.on_rename_file(from, to)
   end
 end
 
+function M.get_java_cmd()
+  local java_home = os.getenv('JDTLS_JAVA_HOME') or os.getenv('JAVA_21_HOME') or os.getenv('JAVA_HOME')
+  return java_home and java_home .. '/bin/java' or 'java'
+end
+
 function M.java_cmd_optimize(java_cmd, custom_cmd, prefix)
   prefix = prefix or ''
   local cmd = {
-    java_cmd or 'java',
+    java_cmd or M.get_java_cmd(),
     -- The following 6 lines is for optimize memory use, see https://github.com/redhat-developer/vscode-java/pull/1262#discussion_r386912240
     prefix .. '-XX:+UseParallelGC',
     prefix .. '-XX:MinHeapFreeRatio=5',
