@@ -13,29 +13,38 @@ later(function()
       'https://gitlab.com/schrieveslaach/sonarlint.nvim',
     },
   })
-  local lsp = require('lsp')
-  local util = require('util.lsp')
-  -- Cuz every LSP could have some custom settings, put those code in here could be very messy
-  -- So we define the configuration for each LSP separately and collect in here ../lsp/init.lua,
-  -- and follow a specific:
-  -- if there is a setup function in LSP custom config, it means that LSP
-  -- do all setup work on it self (e.g. jdtls), so we just call the setup function here
-  -- if not, modules should exports a table that will pass to nvim-lspconfig setup
-  for server_name, config in pairs(lsp) do
-    if config.setup ~= nil and type(config.setup) == 'function' then
-      config.setup()
-    else
-      local final_config = util.make_lspconfig(config)
-      require('lspconfig')[server_name].setup(final_config)
-    end
-  end
+  vim.lsp.enable({
+    'eslint',
+    'jsonls',
+    'lua_ls',
+    'volar',
+    'ts_ls',
+    'yamlls',
+    'nixd',
+    'pylsp',
+    'texlab',
+    'bashls',
+    'cssls',
+    'html',
+    'lemminx',
+    'vale_ls',
+    'vimls',
+    'clangd',
+    'taplo',
+    'rust_analyzer',
+    'gopls',
+    'kulala_ls',
+  })
+  -- custom jdtls setup
+  require('lsp.jdtls').setup()
   -- if didn't have this env, don't enable sonarlint LSP
+  local util = require('util.lsp')
   local sonarlint_path = os.getenv('SONARLINT_PATH')
   if sonarlint_path ~= nil then
     require('sonarlint').setup({
       server = {
         cmd = {
-          'java',
+          util.get_java_cmd(),
           '-jar',
           sonarlint_path .. '/server/sonarlint-ls.jar',
           -- Ensure that sonarlint-language-server uses stdio channel
@@ -50,7 +59,6 @@ later(function()
           sonarlint_path .. '/analyzers/sonarhtml.jar',
           sonarlint_path .. '/analyzers/sonargo.jar',
         },
-        settings = require('lsp.sonarlint-language-server').settings,
       },
       filetypes = {
         'python',
