@@ -285,7 +285,6 @@ later(function()
       -- Load project-local snippets with `gen_loader.from_file()`
       -- and relative path (file doesn't have to be present)
       gen_loader.from_file('.vscode/project.code-snippets'),
-
       -- Custom loader for language-specific project-local snippets
       function(context)
         local rel_path = '.vscode/' .. context.lang .. '.code-snippets'
