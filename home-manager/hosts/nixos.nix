@@ -39,7 +39,7 @@
   services.remmina.enable = true;
 
   home.packages = with pkgs; [
-    gimp
+    gimp3-with-plugins
     darktable
     obs-studio
     scrcpy
