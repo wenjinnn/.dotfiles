@@ -7,7 +7,10 @@
 }
 : {
   services = {
-    nextjs-ollama-llm-ui.enable = true;
+    open-webui = {
+      enable = true;
+      port = 10000;
+    };
     ollama = {
       enable = true;
       home = "/home/ollama";
