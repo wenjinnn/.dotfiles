@@ -141,6 +141,7 @@ in {
     w3m
     networkmanagerapplet
     browserpass
+    devenv
     # for nvim dict
     wordnet
     # nix related
