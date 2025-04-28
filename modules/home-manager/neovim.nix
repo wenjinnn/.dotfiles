@@ -33,6 +33,7 @@
       taplo
       gopls
       libxml2
+      kulala-fmt
       # for vim-dadbod
       mariadb
       redis
