@@ -18,7 +18,8 @@
     --verbose \
     --authorize \
     --provider microsoft \
-    --client-id $(sops exec-env ${sops_secrets} 'echo -e $OUTLOOK_CLIENT_ID') \
+    --encryption-pipe="gpg --encrypt --default-recipient-self" \
+    --client-id "$(sops exec-env ${sops_secrets} 'echo -e $OUTLOOK_CLIENT_ID')" \
     --client-secret "" \
     --authflow localhostauthcode \
     --email ${outlook}
@@ -35,7 +36,8 @@
     --verbose \
     --authorize \
     --provider google \
-    --client-id $(sops exec-env ${sops_secrets} 'echo -e $GMAIL_CLIENT_ID') \
+    --encryption-pipe="gpg --encrypt --default-recipient-self" \
+    --client-id "$(sops exec-env ${sops_secrets} 'echo -e $GMAIL_CLIENT_ID')" \
     --client-secret "$(sops exec-env ${sops_secrets} 'echo -e $GMAIL_CLIENT_SECRET')" \
     --authflow localhostauthcode \
     --email ${gmail}
