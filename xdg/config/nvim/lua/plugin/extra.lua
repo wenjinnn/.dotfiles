@@ -198,7 +198,7 @@ later(function()
     adapters = {
       ollama = extend_adapter('ollama', ollama_setting),
       copilot = extend_adapter('copilot', {
-        schema = { model = { default = 'claude-3.7-sonnet' } },
+        schema = { model = { default = 'gemini-2.5-pro' } },
       }),
       githubmodels = extend_adapter('githubmodels', {
         schema = { model = { default = 'o3-mini' } },
