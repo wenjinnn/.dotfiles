@@ -72,9 +72,9 @@ in {
       enable = true;
       settings = {
         general = {
-          lock_cmd = "pidof hyprlock || hyprlock";
-          before_sleep_cmd = "hyprctl dispatch dpms off";
-          after_sleep_cmd = "hyprctl dispatch dpms on && loginctl lock-session";
+          lock_cmd = "pidof hyprlock || hyprlock --immediate-render";
+          before_sleep_cmd = "loginctl lock-session && hyprctl dispatch dpms off";
+          after_sleep_cmd = "hyprctl dispatch dpms on";
         };
         listener = [
           {
@@ -107,11 +107,6 @@ in {
           vibrancy_darkness = 0.0;
         }
       ];
-      general = {
-        no_fade_in = false;
-        grace = 0;
-        disable_loading_bar = false;
-      };
       input-field = [
         {
           monitor = mainMonitor;
