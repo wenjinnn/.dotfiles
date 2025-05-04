@@ -72,7 +72,7 @@ in {
       enable = true;
       settings = {
         general = {
-          lock_cmd = "pidof hyprlock || hyprlock --immediate-render";
+          lock_cmd = "pidof hyprlock || hyprlock --immediate-render --no-fade-in";
           before_sleep_cmd = "loginctl lock-session && hyprctl dispatch dpms off";
           after_sleep_cmd = "hyprctl dispatch dpms on";
         };
