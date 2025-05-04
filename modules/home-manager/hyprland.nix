@@ -6,9 +6,11 @@
   pkgs,
   username,
   ...
-}: let
+}:
+let
   mainMonitor = "eDP-1";
-in {
+in
+{
   imports = with outputs.homeManagerModules; [
     waybar
     rofi
@@ -115,29 +117,35 @@ in {
     };
   };
 
-  systemd.user.timers = {
-    hyprsunset-sunrise-boot = {
-      Unit = {
-        Description = "Enable hyprsunset-sunrise transition at boot";
+  systemd.user = {
+    timers = {
+      hyprsunset-sunrise = {
+        Timer = {
+          OnBootSec = "1min";
+        };
       };
-      Timer = {
-        OnBootSec = "1min";
-        Unit = "hyprsunset-sunrise.service";
-      };
-      Install = {
-        WantedBy = [ "graphical-session.target" ];
+      hyprsunset-sunset = {
+        Timer = {
+          OnBootSec = "1min";
+        };
       };
     };
-    hyprsunset-sunset-boot = {
-      Unit = {
-        Description = "Enable hyprsunset-sunset transition at boot";
+    services = {
+      hyprsunset-sunrise = {
+        Install = {
+          WantedBy = [
+            "default.target"
+            "sleep.target"
+          ];
+        };
       };
-      Timer = {
-        OnBootSec = "1min";
-        Unit = "hyprsunset-sunset.service";
-      };
-      Install = {
-        WantedBy = [ "graphical-session.target" ];
+      hyprsunset-sunset = {
+        Install = {
+          WantedBy = [
+            "default.target"
+            "sleep.target"
+          ];
+        };
       };
     };
   };
@@ -379,111 +387,113 @@ in {
             # "blur, gtk-layer-shell"
             # "ignorezero, gtk-layer-shell"
           ];
-          bind = let
-            rofi-cliphist = "rofi -modi clipboard:${pkgs.cliphist}/bin/cliphist-rofi-img -show clipboard -show-icons";
-          in [
-            "Super, Q, killactive,"
-            "ControlSuper, Space, togglefloating, "
-            "ControlSuperShift, Space, pin, "
-            "ControlShiftSuper, Q, exec, hyprctl kill"
-            "Super, Return, exec, footclient"
-            "ControlSuperShiftAlt, E, exit,"
-            # ", XF86PowerOff, rofi-power-menu"
-            # Snapshot
-            # "SuperShift, S, exec, grim -g \"$(slurp)\" - | wl-copy"
-            # TODO extra to a script
-            "Super,Print, exec, rofi-screenshot"
-            ",Print, exec, rofi-screenshot -I"
-            "ControlShiftSuper, P, exec, playerctl play-pause"
-            "ControlAltSuper, P, exec, playerctl pause"
-            "ControlShiftSuper, S, exec, playerctl pause"
-            "ControlSuper, P, exec, playerctl previous"
-            "ControlSuper, N, exec, playerctl next"
-            "ControlSuperShiftAlt, L, exec, hyprlock"
-            "ControlSuperShiftAlt, D, exec, systemctl poweroff"
-            # launcher
-            "Super, D, exec, rofi -show drun"
-            "Super, U, exec, rofi-systemd"
-            "Super, B, exec, rofi-bluetooth"
-            "AltSuper, P, exec, hyprpicker | wl-copy"
-            "Super, P, exec, rofi-pass"
-            "Super, A, exec, dunstctl context"
-            "ControlSuper, A, exec, rofi-pulse-select sink"
-            "ShiftSuper, A, exec, rofi-pulse-select source"
-            "Super, E, exec, rofimoji"
-            "Super, M, togglespecialworkspace, monitor"
-            "Super, V, exec, ${rofi-cliphist}"
-            "Super, N, exec, rofi-network-manager"
-            "ControlShiftSuperAlt, P, exec, rofi -show power-menu -modi power-menu:rofi-power-menu"
-            # Swap windows
-            "SuperShift, H, movewindow, l"
-            "SuperShift, L, movewindow, r"
-            "SuperShift, K, movewindow, u"
-            "SuperShift, J, movewindow, d"
-            # Move focus
-            "Super, H, movefocus, l"
-            "Super, L, movefocus, r"
-            "Super, K, movefocus, u"
-            "Super, J, movefocus, d"
-            # Workspace, window, tab switch with keyboard
-            "ControlSuper, right, workspace, +1"
-            "ControlSuper, left, workspace, -1"
-            "ControlSuper, BracketLeft, workspace, -1"
-            "ControlSuper, BracketRight, workspace, +1"
-            "ControlSuper, L, workspace, +1"
-            "ControlSuper, H, workspace, -1"
-            "ControlSuper, up, workspace, -5"
-            "ControlSuper, down, workspace, +5"
-            "Super, Page_Down, workspace, +1"
-            "Super, Page_Up, workspace, -1"
-            "SuperShift, Page_Down, movetoworkspace, +1"
-            "SuperShift, Page_Up, movetoworkspace, -1"
-            "ControlShiftSuper, L, movetoworkspace, +1"
-            "ControlShiftSuper, H, movetoworkspace, -1"
-            "AltSuper, L, movecurrentworkspacetomonitor, +1"
-            "AltSuper, H, movecurrentworkspacetomonitor, -1"
-            "SuperShift, mouse_down, movetoworkspace, -1"
-            "SuperShift, mouse_up, movetoworkspace, +1"
-            # Fullscreen
-            "Super, F, fullscreen, 1"
-            "SuperShift, F, fullscreen, 0"
-            "ControlSuper, F, fullscreenstate, 3"
-            # Switching
-            "Super, 1, workspace, 1"
-            "Super, 2, workspace, 2"
-            "Super, 3, workspace, 3"
-            "Super, 4, workspace, 4"
-            "Super, 5, workspace, 5"
-            "Super, 6, workspace, 6"
-            "Super, 7, workspace, 7"
-            "Super, 8, workspace, 8"
-            "Super, 9, workspace, 9"
-            "Super, 0, workspace, 10"
-            "ShiftSuper, S, togglespecialworkspace"
-            "Alt, Tab, cyclenext"
-            "Super, T, bringactivetotop"
-            # "Super, C, togglespecialworkspace, kdeconnect"
-            # Move window to workspace Control + Super + [0-9]
-            "ControlSuper, 1, movetoworkspacesilent, 1"
-            "ControlSuper, 2, movetoworkspacesilent, 2"
-            "ControlSuper, 3, movetoworkspacesilent, 3"
-            "ControlSuper, 4, movetoworkspacesilent, 4"
-            "ControlSuper, 5, movetoworkspacesilent, 5"
-            "ControlSuper, 6, movetoworkspacesilent, 6"
-            "ControlSuper, 7, movetoworkspacesilent, 7"
-            "ControlSuper, 8, movetoworkspacesilent, 8"
-            "ControlSuper, 9, movetoworkspacesilent, 9"
-            "ControlSuper, 0, movetoworkspacesilent, 10"
-            "ControlShiftSuper, Up, movetoworkspacesilent, special"
-            "ControlSuper, S, movetoworkspacesilent, special"
-            # Scroll through existing workspaces with (Control) + Super + scroll
-            "Super, mouse_up, workspace, +1"
-            "Super, mouse_down, workspace, -1"
-            "ControlSuper, mouse_up, workspace, +1"
-            "ControlSuper, mouse_down, workspace, -1"
-            # Move/resize windows with Super + LMB/RMB and dragging
-            "ControlSuper, Backslash, resizeactive, exact 640 480"
-          ];
+          bind =
+            let
+              rofi-cliphist = "rofi -modi clipboard:${pkgs.cliphist}/bin/cliphist-rofi-img -show clipboard -show-icons";
+            in
+            [
+              "Super, Q, killactive,"
+              "ControlSuper, Space, togglefloating, "
+              "ControlSuperShift, Space, pin, "
+              "ControlShiftSuper, Q, exec, hyprctl kill"
+              "Super, Return, exec, footclient"
+              "ControlSuperShiftAlt, E, exit,"
+              # ", XF86PowerOff, rofi-power-menu"
+              # Snapshot
+              # "SuperShift, S, exec, grim -g \"$(slurp)\" - | wl-copy"
+              # TODO extra to a script
+              "Super,Print, exec, rofi-screenshot"
+              ",Print, exec, rofi-screenshot -I"
+              "ControlShiftSuper, P, exec, playerctl play-pause"
+              "ControlAltSuper, P, exec, playerctl pause"
+              "ControlShiftSuper, S, exec, playerctl pause"
+              "ControlSuper, P, exec, playerctl previous"
+              "ControlSuper, N, exec, playerctl next"
+              "ControlSuperShiftAlt, L, exec, hyprlock"
+              "ControlSuperShiftAlt, D, exec, systemctl poweroff"
+              # launcher
+              "Super, D, exec, rofi -show drun"
+              "Super, U, exec, rofi-systemd"
+              "Super, B, exec, rofi-bluetooth"
+              "AltSuper, P, exec, hyprpicker | wl-copy"
+              "Super, P, exec, rofi-pass"
+              "Super, A, exec, dunstctl context"
+              "ControlSuper, A, exec, rofi-pulse-select sink"
+              "ShiftSuper, A, exec, rofi-pulse-select source"
+              "Super, E, exec, rofimoji"
+              "Super, M, togglespecialworkspace, monitor"
+              "Super, V, exec, ${rofi-cliphist}"
+              "Super, N, exec, rofi-network-manager"
+              "ControlShiftSuperAlt, P, exec, rofi -show power-menu -modi power-menu:rofi-power-menu"
+              # Swap windows
+              "SuperShift, H, movewindow, l"
+              "SuperShift, L, movewindow, r"
+              "SuperShift, K, movewindow, u"
+              "SuperShift, J, movewindow, d"
+              # Move focus
+              "Super, H, movefocus, l"
+              "Super, L, movefocus, r"
+              "Super, K, movefocus, u"
+              "Super, J, movefocus, d"
+              # Workspace, window, tab switch with keyboard
+              "ControlSuper, right, workspace, +1"
+              "ControlSuper, left, workspace, -1"
+              "ControlSuper, BracketLeft, workspace, -1"
+              "ControlSuper, BracketRight, workspace, +1"
+              "ControlSuper, L, workspace, +1"
+              "ControlSuper, H, workspace, -1"
+              "ControlSuper, up, workspace, -5"
+              "ControlSuper, down, workspace, +5"
+              "Super, Page_Down, workspace, +1"
+              "Super, Page_Up, workspace, -1"
+              "SuperShift, Page_Down, movetoworkspace, +1"
+              "SuperShift, Page_Up, movetoworkspace, -1"
+              "ControlShiftSuper, L, movetoworkspace, +1"
+              "ControlShiftSuper, H, movetoworkspace, -1"
+              "AltSuper, L, movecurrentworkspacetomonitor, +1"
+              "AltSuper, H, movecurrentworkspacetomonitor, -1"
+              "SuperShift, mouse_down, movetoworkspace, -1"
+              "SuperShift, mouse_up, movetoworkspace, +1"
+              # Fullscreen
+              "Super, F, fullscreen, 1"
+              "SuperShift, F, fullscreen, 0"
+              "ControlSuper, F, fullscreenstate, 3"
+              # Switching
+              "Super, 1, workspace, 1"
+              "Super, 2, workspace, 2"
+              "Super, 3, workspace, 3"
+              "Super, 4, workspace, 4"
+              "Super, 5, workspace, 5"
+              "Super, 6, workspace, 6"
+              "Super, 7, workspace, 7"
+              "Super, 8, workspace, 8"
+              "Super, 9, workspace, 9"
+              "Super, 0, workspace, 10"
+              "ShiftSuper, S, togglespecialworkspace"
+              "Alt, Tab, cyclenext"
+              "Super, T, bringactivetotop"
+              # "Super, C, togglespecialworkspace, kdeconnect"
+              # Move window to workspace Control + Super + [0-9]
+              "ControlSuper, 1, movetoworkspacesilent, 1"
+              "ControlSuper, 2, movetoworkspacesilent, 2"
+              "ControlSuper, 3, movetoworkspacesilent, 3"
+              "ControlSuper, 4, movetoworkspacesilent, 4"
+              "ControlSuper, 5, movetoworkspacesilent, 5"
+              "ControlSuper, 6, movetoworkspacesilent, 6"
+              "ControlSuper, 7, movetoworkspacesilent, 7"
+              "ControlSuper, 8, movetoworkspacesilent, 8"
+              "ControlSuper, 9, movetoworkspacesilent, 9"
+              "ControlSuper, 0, movetoworkspacesilent, 10"
+              "ControlShiftSuper, Up, movetoworkspacesilent, special"
+              "ControlSuper, S, movetoworkspacesilent, special"
+              # Scroll through existing workspaces with (Control) + Super + scroll
+              "Super, mouse_up, workspace, +1"
+              "Super, mouse_down, workspace, -1"
+              "ControlSuper, mouse_up, workspace, +1"
+              "ControlSuper, mouse_down, workspace, -1"
+              # Move/resize windows with Super + LMB/RMB and dragging
+              "ControlSuper, Backslash, resizeactive, exact 640 480"
+            ];
           bindm = [
             # Move/resize windows with Super + LMB/RMB and dragging
             "Super, mouse:272, movewindow"
