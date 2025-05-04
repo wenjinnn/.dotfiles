@@ -157,8 +157,6 @@ later(function()
 
   map_multistep('i', '<Tab>', { 'pmenu_next', 'increase_indent' })
   map_multistep('i', '<S-Tab>', { 'pmenu_prev', 'decrease_indent' })
-
-  require('mini.keymap').map_combo('t', '<Esc><Esc>', '<BS><BS><C-\\><C-n>')
 end)
 
 -- we don't need below plugins in vscode
