@@ -67,6 +67,7 @@ in {
     cliphist.enable = true;
     pass-secret-service.enable = true;
     udiskie.enable = true;
+    hyprpolkitagent.enable = true;
     # hypridle configuration
     hypridle = {
       enable = true;
