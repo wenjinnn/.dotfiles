@@ -86,10 +86,7 @@
           };
         };
         addons = {
-          classicui.globalSection = {
-            Theme = "stylix";
-            UseDarkTheme = true;
-          };
+          classicui.globalSection.Theme = "stylix";
         };
       };
 
