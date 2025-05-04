@@ -83,3 +83,5 @@ opt.foldmethod = 'expr'
 opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.diagnostic.config({ virtual_text = true })
 if vim.g.vscode then vim.notify = require('vscode-neovim').notify end
+
+if vim.fn.has('nvim-0.12') then require('vim._extui').enable({}) end
