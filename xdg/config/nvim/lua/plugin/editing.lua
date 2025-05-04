@@ -141,7 +141,7 @@ later(function()
   local map_multistep = require('mini.keymap').map_multistep
 
   map_multistep('i', '<CR>', { 'pmenu_accept', 'minipairs_cr' })
-  map_multistep('i', '<BS>', { 'minipairs_bs', 'hungry_bs' })
+  map_multistep('i', '<BS>', { 'hungry_bs', 'minipairs_bs' })
   local forward_steps = {
     'minisnippets_next',
     'jump_after_tsnode',
