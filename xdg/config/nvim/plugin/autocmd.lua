@@ -56,7 +56,7 @@ au({ 'VimEnter' }, {
 })
 
 -- fcitx5 auto switch to default input method
-if vim.fn.has('fcitx5') then
+if vim.fn.has('fcitx5') == 1 then
   au({ 'InsertLeave' }, {
     group = augroup('fcitx5'),
     pattern = '*',
@@ -68,7 +68,7 @@ end
 au('VimEnter', {
   group = augroup('clipboard'),
   callback = function()
-    if vim.fn.has('wsl') ~= 0 then
+    if vim.fn.has('wsl') == 1 then
       vim.g.clipboard = {
         name = 'WslClipboard',
         copy = {
