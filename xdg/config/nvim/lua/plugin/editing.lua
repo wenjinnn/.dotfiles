@@ -137,6 +137,28 @@ later(function()
       MiniTrailspace.trim_last_lines()
     end,
   })
+
+  local map_multistep = require('mini.keymap').map_multistep
+
+  map_multistep('i', '<CR>', { 'pmenu_accept', 'minipairs_cr' })
+  map_multistep('i', '<BS>', { 'minipairs_bs', 'hungry_bs' })
+  local forward_steps = {
+    'minisnippets_next',
+    'jump_after_tsnode',
+    'jump_after_close',
+  }
+  map_multistep('i', '<C-l>', forward_steps)
+  local backward_steps = {
+    'minisnippets_prev',
+    'jump_before_tsnode',
+    'jump_before_open',
+  }
+  map_multistep('i', '<C-h>', backward_steps)
+
+  map_multistep('i', '<Tab>', { 'pmenu_next', 'increase_indent' })
+  map_multistep('i', '<S-Tab>', { 'pmenu_prev', 'decrease_indent' })
+
+  require('mini.keymap').map_combo('t', '<Esc><Esc>', '<BS><BS><C-\\><C-n>')
 end)
 
 -- we don't need below plugins in vscode
@@ -251,25 +273,6 @@ end)
 -- completion and snippets
 later(function()
   require('mini.completion').setup()
-
-  local keycode = vim.keycode or require('util').keycode
-
-  local keys = {
-    ['cr'] = keycode('<CR>'),
-    ['ctrl-y'] = keycode('<C-y>'),
-    ['ctrl-y_cr'] = keycode('<C-y><CR>'),
-  }
-
-  local function cr_action()
-    if vim.fn.pumvisible() ~= 0 then
-      -- If popup is visible, confirm selected item or add new line otherwise
-      local item_selected = vim.fn.complete_info()['selected'] ~= -1
-      return item_selected and keys['ctrl-y'] or keys['ctrl-y_cr']
-    else
-      return require('mini.pairs').cr()
-    end
-  end
-  map('i', '<CR>', cr_action, { expr = true })
 
   -- snippet support and preset
   add('rafamadriz/friendly-snippets')
