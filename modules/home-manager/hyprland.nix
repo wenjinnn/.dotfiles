@@ -68,6 +68,29 @@ in {
     pass-secret-service.enable = true;
     udiskie.enable = true;
     hyprpolkitagent.enable = true;
+    hyprsunset = {
+      enable = true;
+      transitions = {
+        sunrise = {
+          calendar = "*-*-* 07..19:00:00";
+          requests = [
+            [
+              "temperature"
+              "5500"
+            ]
+          ];
+        };
+        sunset = {
+          calendar = "*-*-* 19..23:00:00";
+          requests = [
+            [
+              "temperature"
+              "3000"
+            ]
+          ];
+        };
+      };
+    };
     # hypridle configuration
     hypridle = {
       enable = true;
@@ -88,6 +111,33 @@ in {
             on-resume = "hyprctl dispatch dpms on";
           }
         ];
+      };
+    };
+  };
+
+  systemd.user.timers = {
+    hyprsunset-sunrise-boot = {
+      Unit = {
+        Description = "Enable hyprsunset-sunrise transition at boot";
+      };
+      Timer = {
+        OnBootSec = "1min";
+        Unit = "hyprsunset-sunrise.service";
+      };
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
+    };
+    hyprsunset-sunset-boot = {
+      Unit = {
+        Description = "Enable hyprsunset-sunset transition at boot";
+      };
+      Timer = {
+        OnBootSec = "1min";
+        Unit = "hyprsunset-sunset.service";
+      };
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
       };
     };
   };
@@ -219,7 +269,6 @@ in {
           exec-once = [
             # xrdb dpi scale have batter effect in 4k screen
             "echo 'Xft.dpi: 192' | xrdb -merge"
-            "hyprsunset"
             "hyprctl dispatch exec [workspace special:monitor silent] foot btop"
           ];
           monitor = [
