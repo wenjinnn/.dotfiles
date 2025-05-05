@@ -69,7 +69,13 @@
             "0" = "Super+space";
           };
           "Hotkey/AltTriggerKeys" = {
-            "0" = "Shift+L";
+            "0" = "Shift_L";
+          };
+          "Hotkey/PrevCandidate" = {
+            "0" = "Shift+Tab";
+          };
+          "Hotkey/NextCandidate" = {
+            "0" = "Tab";
           };
           "Hotkey/EnumerateGroupForwardKeys" = {
             "0" = "Super+space";
@@ -80,7 +86,7 @@
           Behavior = {
             PreeditEnabledByDefault = true;
             ShowInputMethodInformation = true;
-            showInputMethodInformationWhenFocusIn = false;
+            ShowInputMethodInformationWhenFocusIn = false;
             CompactInputMethodInformation = true;
             ShowFirstInputMethodInformation = true;
           };
