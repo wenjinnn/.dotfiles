@@ -56,7 +56,7 @@ au({ 'VimEnter' }, {
 })
 
 -- fcitx5 auto switch to default input method
-if vim.fn.has('fcitx5') == 1 then
+if vim.fn.executable('fcitx5') == 1 then
   au({ 'InsertLeave' }, {
     group = augroup('fcitx5'),
     pattern = '*',
