@@ -13,6 +13,9 @@ later(function()
   require('orgmode').setup({
     org_agenda_files = { org_path .. '/*' },
     org_default_notes_file = org_path .. '/refile.org',
+    mappings = {
+      org_return_uses_meta_return = true,
+    },
     notifications = {
       enabled = true,
     },
