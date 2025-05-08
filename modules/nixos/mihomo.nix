@@ -448,6 +448,7 @@
       - GEOSITE,xai,AI
       - DOMAIN-SUFFIX,claude.ai,AI
       - DOMAIN-SUFFIX,claudeusercontent.com,AI
+      - DOMAIN-SUFFIX,reddit.com,hongkong
       - GEOSITE,apple,universal
       - GEOSITE,apple-cn,universal
       - GEOSITE,ehentai,universal
