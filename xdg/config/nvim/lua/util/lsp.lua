@@ -34,7 +34,9 @@ function M.setup(client, bufnr)
   if client.supports_method('textDocument/inlayHint', { bufnr = bufnr }) then
     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
   end
-  vim.lsp.document_color.enable(true, bufnr)
+  if vim.fn.has("nvim-0.12") == 1 then
+    vim.lsp.document_color.enable(true, bufnr)
+  end
   -- code lens
   if client.supports_method('textDocument/codeLens', { bufnr = bufnr }) then
     vim.lsp.codelens.refresh({ bufnr = bufnr })
