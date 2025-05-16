@@ -13,6 +13,11 @@ now(function()
       starter.sections.recent_files(5, true, true),
       starter.sections.recent_files(5, false, true),
       {
+        name = 'Search',
+        action = function() vim.cmd('Obsidian search') end,
+        section = 'Note',
+      },
+      {
         name = 'Dailies',
         action = function() vim.cmd('Obsidian dailies') end,
         section = 'Note',
