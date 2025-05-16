@@ -101,7 +101,7 @@ later(function()
       'scss',
       'yaml',
     }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-    ignore_install = { 'org' }, -- List of parsers to ignore installing
+    ignore_install = {}, -- List of parsers to ignore installing
     auto_install = true,
     highlight = {
       enable = not vim.g.vscode, -- false will disable the whole extension
