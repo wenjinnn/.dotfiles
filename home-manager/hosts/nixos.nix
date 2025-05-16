@@ -58,6 +58,8 @@
     shotcut
     qq
     wemeet
+    obsidian
+    obsidian-export
     nur.repos.xddxdd.dingtalk
   ];
 }
