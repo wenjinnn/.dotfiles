@@ -11,7 +11,9 @@
 }: let
   dotfiles_path = "${config.home.homeDirectory}/.dotfiles";
   archive_path = "${config.home.homeDirectory}/.archive";
-in {
+  note_path = "${config.home.homeDirectory}/.note";
+in
+{
   # You can import other home-manager modules here
   imports = with outputs.homeManagerModules; [
     # If you want to use modules your own flake exports (from modules/home-manager):
@@ -196,6 +198,7 @@ in {
   home.sessionVariables = {
     DOTFILES = dotfiles_path;
     ARCHIVE = archive_path;
+    NOTE = note_path;
     SOPS_SECRETS = "${dotfiles_path}/secrets.yaml";
   };
 
