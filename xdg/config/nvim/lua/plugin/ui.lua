@@ -2,7 +2,6 @@ if vim.g.vscode then return end
 
 local now, later = MiniDeps.now, MiniDeps.later
 local map = require('util').map
-local feedkey = require('util').feedkey
 
 -- Starter should load immediately
 now(function()
@@ -12,6 +11,11 @@ now(function()
       starter.sections.sessions(5, true),
       starter.sections.recent_files(5, true, true),
       starter.sections.recent_files(5, false, true),
+      {
+        name = 'Quick switch',
+        action = function() vim.cmd('Obsidian quick_switch') end,
+        section = 'Note',
+      },
       {
         name = 'Search',
         action = function() vim.cmd('Obsidian search') end,
