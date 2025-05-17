@@ -74,7 +74,7 @@ in
       enable = true;
       transitions = {
         sunrise = {
-          calendar = "*-*-* 07..19:00:00";
+          calendar = "*-*-* 07..18:00:00";
           requests = [
             [
               "temperature"
