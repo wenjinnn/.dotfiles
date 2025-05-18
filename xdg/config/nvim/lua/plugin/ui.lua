@@ -12,7 +12,7 @@ now(function()
       starter.sections.recent_files(5, true, true),
       starter.sections.recent_files(5, false, true),
       {
-        name = 'Quick switch',
+        name = 'Switch',
         action = function() vim.cmd('Obsidian quick_switch') end,
         section = 'Note',
       },
