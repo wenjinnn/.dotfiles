@@ -267,6 +267,9 @@ in
             "XDG_SESSION_TYPE"
           ];
         };
+        plugins = with pkgs.hyprlandPlugins; [
+          hyprexpo
+        ];
         settings = {
           env = [
             "XMODIFIERS, @im=fcitx"
@@ -365,6 +368,18 @@ in
             enable_swallow = true;
             key_press_enables_dpms = true;
             force_default_wallpaper = 0;
+          };
+          plugin = {
+            hyprexpo = {
+              columns = 2;
+              gap_size = 10;
+              workspace_method = "center first"; # [center/first] [workspace] e.g. first 1 or center m+1
+
+              enable_gesture = true; # laptop touchpad
+              gesture_fingers = 3; # 3 or 4
+              gesture_distance = 300; # how far is the "max"
+              gesture_positive = true; # positive = swipe down. Negative = swipe up.
+            };
           };
           workspace = [
             "w[tv1], gapsout:0, gapsin:0"
@@ -480,6 +495,7 @@ in
               "Super, 0, workspace, 10"
               "ShiftSuper, S, togglespecialworkspace"
               "Alt, Tab, cyclenext"
+              "Super, Tab, hyprexpo:expo, toggle"
               "Super, T, bringactivetotop"
               # "Super, C, togglespecialworkspace, kdeconnect"
               # Move window to workspace Control + Super + [0-9]
