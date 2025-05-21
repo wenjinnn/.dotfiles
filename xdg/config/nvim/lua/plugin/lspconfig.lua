@@ -17,7 +17,7 @@ later(function()
     'eslint',
     'jsonls',
     'lua_ls',
-    'volar',
+    'vue_ls',
     'ts_ls',
     'yamlls',
     'nixd',
