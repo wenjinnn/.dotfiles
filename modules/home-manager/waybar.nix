@@ -100,6 +100,8 @@
             "class<code>" = "󰨞";
             "class<xwaylandvideobridge>" = "󰍹";
             "foot" = "";
+            "class<imv>" = "";
+            "zathura" = "";
             "nautilus" = "󰪶";
             "steam" = "";
             "dbeaver" = "";
