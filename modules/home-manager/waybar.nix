@@ -98,6 +98,7 @@
             "class<firefox>" = "";
             "class<microsoft-edge>" = "󰇩";
             "class<code>" = "󰨞";
+            "class<xwaylandvideobridge>" = "󰍹";
             "foot" = "";
             "nautilus" = "󰪶";
             "steam" = "";
