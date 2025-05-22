@@ -1,8 +1,9 @@
 vim.lsp.config('eslint', {
-  on_attach = function(_, bufnr)
+  on_attach = function(client, bufnr)
+    vim.lsp.config.eslint.on_attach(client, bufnr)
     vim.api.nvim_create_autocmd('BufWritePre', {
       buffer = bufnr,
-      command = 'EslintFixAll',
+      command = 'LspEslintFixAll',
     })
   end,
   settings = {
