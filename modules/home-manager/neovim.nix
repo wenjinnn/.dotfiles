@@ -34,6 +34,7 @@
       gopls
       libxml2
       kulala-fmt
+      vectorcode
       # for vim-dadbod
       mariadb
       redis
