@@ -232,7 +232,7 @@ later(function()
     },
   })
 
-  map('n', '<leader>Cl', '<cmd>CodeCompanionLoad<cr>', 'Load a Code companion chat')
+  map('n', '<leader>Ch', '<cmd>CodeCompanionHistory<cr>', 'Code companion history')
   map({ 'n', 'v' }, '<leader>Ca', '<cmd>CodeCompanionActions<cr>', 'Code companion actions')
   map({ 'n', 'v' }, '<leader>CC', '<cmd>CodeCompanionChat Toggle<cr>', 'Code companion chat')
   map('v', '<leader>CA', '<cmd>CodeCompanionChat Add<cr>', 'Code companion chat add')
