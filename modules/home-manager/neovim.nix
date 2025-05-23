@@ -35,6 +35,7 @@
       libxml2
       kulala-fmt
       vectorcode
+      uv
       # for vim-dadbod
       mariadb
       redis
