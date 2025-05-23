@@ -245,6 +245,7 @@ later(function()
     },
   })
 
+  map('n', '<leader>M', '<cmd>MCPHub<cr>', 'MCPHub')
   map('n', '<leader>Ch', '<cmd>CodeCompanionHistory<cr>', 'Code companion history')
   map({ 'n', 'v' }, '<leader>Ca', '<cmd>CodeCompanionActions<cr>', 'Code companion actions')
   map({ 'n', 'v' }, '<leader>CC', '<cmd>CodeCompanionChat Toggle<cr>', 'Code companion chat')
