@@ -195,7 +195,7 @@
           ./home-manager/home.nix
           ./home-manager/hosts/nixos.nix
           nur.modules.homeManager.default
-          stylix.homeManagerModules.stylix
+          stylix.homeModules.stylix
           nix-index-database.hmModules.nix-index
         ];
       };
