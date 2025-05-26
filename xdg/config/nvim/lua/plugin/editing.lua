@@ -54,69 +54,67 @@ end)
 later(function()
   add({
     source = 'nvim-treesitter/nvim-treesitter',
+    -- TODO remove this line when it is stable
+    checkout = 'main',
     depends = {
       'windwp/nvim-ts-autotag',
       'hiphish/rainbow-delimiters.nvim',
       'nvim-treesitter/nvim-treesitter-context',
+      -- TODO also remove this line when it is stable
+      { source = 'nvim-treesitter/nvim-treesitter-textobjects', checkout = 'main' },
     },
     hooks = {
       post_checkout = function() vim.cmd('TSUpdate') end,
     },
   })
-  -- fix nvim-treesitter-textobjects occur an error when add it to nvim-treesitter depends
-  later(function() add('nvim-treesitter/nvim-treesitter-textobjects') end)
-  require('nvim-treesitter.configs').setup({
-    ensure_installed = {
-      -- basic
-      'vim',
-      'vimdoc',
-      'regex',
-      'markdown',
-      'lua',
-      'luadoc',
-      'luap',
-      'query',
-      'bash',
-      'diff',
-      'markdown_inline',
-      'make',
-      -- autotag dependencies
-      'astro',
-      'glimmer',
-      'html',
-      'javascript',
-      'markdown',
-      'php',
-      'svelte',
-      'tsx',
-      'typescript',
-      'vue',
-      'xml',
-      -- personal frequently used
-      'nix',
-      'java',
-      'rust',
-      'sql',
-      'css',
-      'scss',
-      'yaml',
-    }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-    ignore_install = {}, -- List of parsers to ignore installing
-    auto_install = true,
-    highlight = {
-      enable = not vim.g.vscode, -- false will disable the whole extension
-      additional_vim_regex_highlighting = false,
-    },
-    indent = { enable = true },
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = '<C-space>',
-        node_incremental = '<C-space>',
-        scope_incremental = false,
-        node_decremental = '<bs>',
-      },
-    },
+  local treesitter_languages = {
+    -- basic
+    'vim',
+    'vimdoc',
+    'regex',
+    'markdown',
+    'lua',
+    'luadoc',
+    'luap',
+    'query',
+    'bash',
+    'diff',
+    'markdown_inline',
+    'make',
+    -- autotag dependencies
+    'astro',
+    'glimmer',
+    'html',
+    'javascript',
+    'markdown',
+    'php',
+    'svelte',
+    'tsx',
+    'typescript',
+    'vue',
+    'xml',
+    -- personal frequently used
+    'nix',
+    'java',
+    'rust',
+    'python',
+    'sql',
+    'css',
+    'scss',
+    'yaml',
+  }
+  require('nvim-treesitter').install(treesitter_languages)
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = treesitter_languages,
+    callback = function()
+      -- syntax highlighting, provided by Neovim
+      vim.treesitter.start()
+      -- folds, provided by Neovim
+      vim.wo.foldmethod = 'expr'
+      vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+      -- indentation, provided by nvim-treesitter
+      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end,
   })
   require('nvim-ts-autotag').setup()
   local function go_to_context() require('treesitter-context').go_to_context(vim.v.count1) end
@@ -227,7 +225,7 @@ later(function()
     formatters_by_ft = {
       lua = { 'stylua' },
       nix = { 'nixfmt' },
-      http = { 'kulala-fmt' }
+      http = { 'kulala-fmt' },
     },
   })
   vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
