@@ -106,6 +106,7 @@ later(function()
   require('nvim-treesitter').install(treesitter_languages)
   local disable_filetypes = {
     'mininotify',
+    'minipick',
   }
   vim.api.nvim_create_autocmd('FileType', {
     pattern = '*',
