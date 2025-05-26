@@ -79,8 +79,6 @@ opt.smoothscroll = true
 opt.winborder = 'single'
 
 opt.foldlevel = 99
-opt.foldmethod = 'expr'
-opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.diagnostic.config({ virtual_text = true })
 if vim.g.vscode then vim.notify = require('vscode-neovim').notify end
 
