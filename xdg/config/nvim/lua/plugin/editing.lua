@@ -104,9 +104,14 @@ later(function()
     'yaml',
   }
   require('nvim-treesitter').install(treesitter_languages)
+  local disable_filetypes = {
+    'mininotify',
+  }
   vim.api.nvim_create_autocmd('FileType', {
-    pattern = treesitter_languages,
+    pattern = '*',
     callback = function()
+      if vim.tbl_contains(disable_filetypes, vim.bo.filetype) then return end
+
       -- syntax highlighting, provided by Neovim
       if not vim.g.vscode then vim.treesitter.start() end
       -- folds, provided by Neovim
