@@ -10,6 +10,7 @@ return {
   ["grug-far.nvim"] = "7df08fff7da6ee08006fe8eaccc3407b89da368b",
   ["kulala.nvim"] = "b384bf96f3f64f981b13f9f9a1067c48004b9c9a",
   ["live-preview.nvim"] = "598672eaf91b38946626677f8e80426e6e7ceccc",
+  ["mcphub.nvim"] = "dd569381e7d4428469b319a285c6e1d8c1ab404d",
   ["mini.nvim"] = "94cae4660a8b2d95dbbd56e1fbc6fcfa2716d152",
   neogen = "d7f9461727751fb07f82011051338a9aba07581d",
   ["nvim-dap"] = "f80de8ad944b1c464941cfcede597ab859060359",
