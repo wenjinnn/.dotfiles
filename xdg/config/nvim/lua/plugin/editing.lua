@@ -108,7 +108,7 @@ later(function()
     pattern = treesitter_languages,
     callback = function()
       -- syntax highlighting, provided by Neovim
-      vim.treesitter.start()
+      if not vim.g.vscode then vim.treesitter.start() end
       -- folds, provided by Neovim
       vim.wo.foldmethod = 'expr'
       vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
