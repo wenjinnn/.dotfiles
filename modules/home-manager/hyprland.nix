@@ -259,7 +259,6 @@ in
         xwayland.enable = true;
         systemd = {
           enable = true;
-          enableXdgAutostart = true;
           variables = [
             "--all"
           ];
