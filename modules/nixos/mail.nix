@@ -7,6 +7,7 @@
     offlineimap = {
       enable = true;
       install = true;
+      onCalendar = "*:0/30";
       path = with pkgs; [
         bash
         notmuch
