@@ -144,6 +144,9 @@ later(function()
     'cmdline',
     'msgprompt',
     'msgmore',
+    'text',
+    'dap-float',
+    'dap-repl',
   }
   vim.api.nvim_create_autocmd('FileType', {
     pattern = '*',
