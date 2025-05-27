@@ -136,6 +136,11 @@ later(function()
     'mininotify',
     'minipick',
     'minifiles',
+    'minideps-confirm',
+    'msgbox',
+    'cmdline',
+    'msgprompt',
+    'msgmore',
   }
   vim.api.nvim_create_autocmd('FileType', {
     pattern = '*',
