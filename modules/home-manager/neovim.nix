@@ -6,7 +6,7 @@
 }: {
   home.packages =
     (with pkgs; [
-      hurl
+      # lsp related
       jdt-language-server
       lombok
       lua-language-server
@@ -18,12 +18,7 @@
       nixd
       rust-analyzer
       vale-ls
-      rustfmt
-      alejandra
-      nixfmt-rfc-style
-      stylua
       luajitPackages.luarocks-nix
-      tree-sitter
       typescript
       typescript-language-server
       vue-language-server
@@ -32,10 +27,24 @@
       texlab
       taplo
       gopls
+      # formatter
+      stylua
       libxml2
+      alejandra
+      nixfmt-rfc-style
+      rustfmt
       kulala-fmt
+      # for nvim-treesitter
+      tree-sitter
+      # ai and mcp tools
       vectorcode
       uv
+      # another http tool
+      hurl
+      # for kulala.nvim
+      grpcurl
+      websocat
+      openssl
       # for vim-dadbod
       mariadb
       redis
