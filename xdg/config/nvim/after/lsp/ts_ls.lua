@@ -9,7 +9,7 @@ local inlay_hints_settings = {
   includeInlayVariableTypeHints = false,
   includeInlayVariableTypeHintsWhenTypeMatchesName = false,
 }
-vim.lsp.config('ts_ls', {
+return {
   init_options = {
     plugins = {
       {
@@ -44,4 +44,4 @@ vim.lsp.config('ts_ls', {
       referencesCodeLens = { enabled = true },
     },
   },
-})
+}

@@ -1,4 +1,4 @@
-vim.lsp.config('eslint', {
+return {
   on_attach = function(client, bufnr)
     vim.lsp.config.eslint.on_attach(client, bufnr)
     vim.api.nvim_create_autocmd('BufWritePre', {
@@ -17,4 +17,4 @@ vim.lsp.config('eslint', {
       enable = true,
     },
   },
-})
+}

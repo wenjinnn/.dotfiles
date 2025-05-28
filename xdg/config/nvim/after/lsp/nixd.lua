@@ -1,6 +1,6 @@
 local hostname = vim.fn.hostname()
 local username = os.getenv('USER')
-vim.lsp.config('nixd', {
+return {
   settings = {
     nixd = {
       formatting = {
@@ -23,4 +23,4 @@ vim.lsp.config('nixd', {
       },
     },
   },
-})
+}
