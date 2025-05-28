@@ -116,10 +116,10 @@ later(function()
     },
   })
   local enable_ts = function()
-    if vim.g.vscode then vim.treesitter.start() end
     vim.wo.foldmethod = 'expr'
     vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    if vim.g.vscode then vim.treesitter.start() end
   end
   -- In case of installation failure, we can try to install ts langs manually
   vim.api.nvim_create_user_command('TSInstallInitLangs', install_ts_langs, { desc = 'Install ts init langs' })
