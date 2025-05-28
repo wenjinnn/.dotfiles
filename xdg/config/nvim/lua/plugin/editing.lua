@@ -82,6 +82,7 @@ later(function()
     'nix',
     'java',
     'javadoc',
+    'typespec',
     'rust',
     'python',
     'sql',
@@ -110,25 +111,29 @@ later(function()
       { source = 'nvim-treesitter/nvim-treesitter-textobjects', checkout = 'main' },
     },
     hooks = {
-      post_install = function() later(install_ts_langs()) end,
+      post_install = function() later(install_ts_langs) end,
       post_checkout = function() vim.cmd('TSUpdate') end,
     },
   })
+  local enable_ts = function()
+    if vim.g.vscode then vim.treesitter.start() end
+    vim.wo.foldmethod = 'expr'
+    vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  end
   -- In case of installation failure, we can try to install ts langs manually
   vim.api.nvim_create_user_command('TSInstallInitLangs', install_ts_langs, { desc = 'Install ts init langs' })
   vim.api.nvim_create_autocmd('FileType', {
     pattern = '*',
     group = require('util').augroup('ts_filetype'),
     callback = function(event)
-      local lang = vim.treesitter.language.get_lang(event.match)
-      if not vim.tbl_contains(ts_init_langs, lang) then require('nvim-treesitter').install(lang):wait(10000) end
-      if vim.treesitter.language.add(lang) and not vim.g.vscode then vim.treesitter.start() end
-      -- syntax highlighting, provided by Neovim
-      -- folds, provided by Neovim
-      vim.wo.foldmethod = 'expr'
-      vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-      -- indentation, provided by nvim-treesitter
-      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      local filetype = event.match
+      local lang = vim.treesitter.language.get_lang(filetype)
+      if not vim.tbl_contains(ts_init_langs, lang) then
+        require('nvim-treesitter').install(lang):await(enable_ts)
+      else
+        enable_ts()
+      end
     end,
   })
   require('nvim-ts-autotag').setup()
