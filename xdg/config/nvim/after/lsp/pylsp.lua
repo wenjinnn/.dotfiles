@@ -1,5 +1,5 @@
 local lsp = require('util.lsp')
-vim.lsp.config('pylsp', {
+return {
   on_attach = function(client, bufnr)
     lsp.setup(client, bufnr)
     local map = lsp.buf_map(bufnr)
@@ -8,4 +8,4 @@ vim.lsp.config('pylsp', {
     map('n', '<leader>da', dap_python.test_class, 'Dap test class')
     map('v', '<leader>dv', dap_python.debug_selection, 'Dap debug selection')
   end,
-})
+}

@@ -1,4 +1,4 @@
-vim.lsp.config('lua_ls', {
+return {
   on_init = function(client)
     local path = client.workspace_folders[1].name
     if vim.loop.fs_stat(path .. '/.luarc.json') or vim.loop.fs_stat(path .. '/.luarc.jsonc') then return end
@@ -48,4 +48,4 @@ vim.lsp.config('lua_ls', {
   settings = {
     Lua = {},
   },
-})
+}

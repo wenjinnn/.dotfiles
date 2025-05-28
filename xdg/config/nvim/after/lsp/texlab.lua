@@ -1,4 +1,4 @@
-vim.lsp.config('texlab', {
+return {
   filetypes = {
     'bib',
     'gitcommit',
@@ -17,4 +17,4 @@ vim.lsp.config('texlab', {
     'mail',
     'text',
   },
-})
+}

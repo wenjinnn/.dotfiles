@@ -1,3 +1,3 @@
-vim.lsp.config('kulala_ls', {
+return {
   cmd = { 'npx', '--yes', '--', '@mistweaverco/kulala-ls', '--stdio' },
-})
+}

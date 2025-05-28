@@ -1,4 +1,4 @@
-vim.lsp.config('yamlls', {
+return {
   settings = {
     yaml = {
       schemaStore = {
@@ -9,4 +9,4 @@ vim.lsp.config('yamlls', {
       schemas = require('schemastore').yaml.schemas(),
     },
   },
-})
+}
