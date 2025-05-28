@@ -52,72 +52,51 @@ end)
 
 -- treesitter related
 later(function()
-  local install_ts_langs = function()
-    require('nvim-treesitter').install({
-      -- basic
-      'vim',
-      'vimdoc',
-      'regex',
-      'markdown',
-      'lua',
-      'luadoc',
-      'luap',
-      'query',
-      'bash',
-      'diff',
-      'markdown_inline',
-      'make',
-      -- autotag dependencies
-      'astro',
-      'glimmer',
-      'html',
-      'javascript',
-      'markdown',
-      'php',
-      'svelte',
-      'tsx',
-      'typescript',
-      'vue',
-      'xml',
-      -- personal frequently used
-      'nix',
-      'java',
-      'javadoc',
-      'rust',
-      'python',
-      'sql',
-      'css',
-      'scss',
-      'yaml',
-      'c',
-      'c_sharp',
-      'cmake',
-      'comment',
-      'cpp',
-      'csv',
-      'desktop',
-      'diff',
-      'editorconfig',
-      'dockerfile',
-      'ssh_config',
-      'http',
-      'git_config',
-      'git_rebase',
-      'git_rebase',
-      'gitattributes',
-      'gitcommit',
-      'gitignore',
-      'ini',
-      'jq',
-      'jsdoc',
-      'json',
-      'json5',
-      'jsonc',
-      'latex',
-      'mermaid',
-      'toml',
-    })
-  end
+  local ts_init_langs = {
+    -- basic
+    'vim',
+    'vimdoc',
+    'regex',
+    'markdown',
+    'lua',
+    'luadoc',
+    'luap',
+    'query',
+    'bash',
+    'diff',
+    'markdown_inline',
+    'make',
+    -- autotag dependencies
+    'astro',
+    'glimmer',
+    'html',
+    'javascript',
+    'markdown',
+    'php',
+    'svelte',
+    'tsx',
+    'typescript',
+    'vue',
+    'xml',
+    -- personal frequently used
+    'nix',
+    'java',
+    'javadoc',
+    'rust',
+    'python',
+    'sql',
+    'css',
+    'scss',
+    'cmake',
+    'comment',
+    'http',
+    'jsdoc',
+    'json',
+    'json5',
+    'jsonc',
+    'mermaid',
+  }
+  local install_ts_langs = function() require('nvim-treesitter').install(ts_init_langs) end
 
   add({
     source = 'nvim-treesitter/nvim-treesitter',
@@ -135,26 +114,16 @@ later(function()
       post_checkout = function() vim.cmd('TSUpdate') end,
     },
   })
-  local disable_filetypes = {
-    'mininotify',
-    'minipick',
-    'minifiles',
-    'minideps-confirm',
-    'msgbox',
-    'cmdline',
-    'msgprompt',
-    'msgmore',
-    'text',
-    'dap-float',
-    'dap-repl',
-  }
+  -- In case of installation failure, we can try to install ts langs manually
+  vim.api.nvim_create_user_command('TSInstallInitLangs', install_ts_langs, { desc = 'Install ts init langs' })
   vim.api.nvim_create_autocmd('FileType', {
     pattern = '*',
-    callback = function()
-      if vim.tbl_contains(disable_filetypes, vim.bo.filetype) then return end
-
+    group = require('util').augroup('ts_filetype'),
+    callback = function(event)
+      local lang = vim.treesitter.language.get_lang(event.match)
+      if not vim.tbl_contains(ts_init_langs, lang) then require('nvim-treesitter').install(lang):wait(10000) end
+      if vim.treesitter.language.add(lang) and not vim.g.vscode then vim.treesitter.start() end
       -- syntax highlighting, provided by Neovim
-      if not vim.g.vscode then vim.treesitter.start() end
       -- folds, provided by Neovim
       vim.wo.foldmethod = 'expr'
       vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
