@@ -14,7 +14,7 @@
     udevmonConfig = ''
       - JOB: "${pkgs.interception-tools}/bin/intercept -g $DEVNODE | ${pkgs.interception-tools-plugins.dual-function-keys}/bin/dual-function-keys -c /etc/interception/capslock2ctrlesc.yaml | ${pkgs.interception-tools}/bin/uinput -d $DEVNODE"
         DEVICE:
-          NAME: "AT Translated Set 2 keyboard"
+          LINK: /dev/input/by-path/platform-i8042-serio-0-event-kbd
     '';
   };
   environment.etc."interception/capslock2ctrlesc.yaml".text = ''
