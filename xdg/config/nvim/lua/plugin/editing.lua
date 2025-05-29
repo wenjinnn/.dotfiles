@@ -115,7 +115,8 @@ later(function()
       post_checkout = function() vim.cmd('TSUpdate') end,
     },
   })
-  local enable_ts = function()
+  local enable_ts = function(lang)
+    if not vim.tbl_contains(require('nvim-treesitter.config').get_available(), lang) then return end
     vim.wo.foldmethod = 'expr'
     vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
@@ -130,9 +131,9 @@ later(function()
       local filetype = event.match
       local lang = vim.treesitter.language.get_lang(filetype)
       if not vim.tbl_contains(ts_init_langs, lang) then
-        require('nvim-treesitter').install(lang):await(enable_ts)
+        require('nvim-treesitter').install(lang):await(function() enable_ts(lang) end)
       else
-        enable_ts()
+        enable_ts(lang)
       end
     end,
   })
