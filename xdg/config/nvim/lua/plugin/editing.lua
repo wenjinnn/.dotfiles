@@ -294,6 +294,14 @@ later(function()
   add('rafamadriz/friendly-snippets')
   local gen_loader = require('mini.snippets').gen_loader
   local snippets_path = vim.fn.stdpath('config') .. '/snippets'
+  -- trim selected text when inserting snippet, for we setup auto indent
+  local insert_with_trim = function(snippet)
+    local lookup = {
+      TM_SELECTED_TEXT = vim.trim(table.concat(vim.fn.getreg('"', true, true), '\n')),
+    }
+    return MiniSnippets.default_insert(snippet, { lookup = lookup })
+  end
+
   require('mini.snippets').setup({
     snippets = {
       -- Load custom file with global snippets first
@@ -312,6 +320,7 @@ later(function()
         return MiniSnippets.read_file(rel_path)
       end,
     },
+    expand = { insert = insert_with_trim },
   })
 
   -- painless snippet editing and creation
