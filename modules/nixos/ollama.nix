@@ -7,10 +7,6 @@
 }
 : {
   services = {
-    open-webui = {
-      enable = true;
-      port = 10000;
-    };
     ollama = {
       enable = true;
       home = "/home/ollama";
