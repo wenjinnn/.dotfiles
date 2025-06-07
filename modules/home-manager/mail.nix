@@ -47,7 +47,15 @@
     ${mutt_oauth2} ${gmail_oauth2_token_path}
   '';
   notmuch_new = "${pkgs.notmuch}/bin/notmuch new";
-in {
+  mail_notify = pkgs.writeShellScript "mail_notify" ''
+    account="$1"
+    new_count=$(${pkgs.notmuch}/bin/notmuch count tag:unread and folder:$account/Inbox)
+    if [ "$new_count" -gt 0 ]; then
+      ${pkgs.libnotify}/bin/notify-send "New mail ($new_count messages):" "$account"
+    fi
+  '';
+in
+{
   home.file = {
     ".local/bin/init_gmail_oauth2_token".source = init_gmail_oauth2_token;
     ".local/bin/init_outlook_oauth2_token".source = init_outlook_oauth2_token;
@@ -69,8 +77,7 @@ in {
       imapnotify = {
         enable = true;
         boxes = ["Inbox"];
-        onNotifyPost = ''${pkgs.libnotify}/bin/notify-send "New mail in:" "${outlook}"'';
-        onNotify = "${pkgs.offlineimap}/bin/offlineimap -a ${outlook} && ${notmuch_new}";
+        onNotify = "${pkgs.offlineimap}/bin/offlineimap -a ${outlook} && ${mail_notify} ${outlook}";
         extraConfig = {
           xoAuth2 = true;
         };
@@ -122,8 +129,7 @@ in {
       imapnotify = {
         enable = true;
         boxes = ["Inbox"];
-        onNotifyPost = ''${pkgs.libnotify}/bin/notify-send "New mail in:" "${gmail}"'';
-        onNotify = "${pkgs.offlineimap}/bin/offlineimap -a ${gmail} && ${notmuch_new}";
+        onNotify = "${pkgs.offlineimap}/bin/offlineimap -a ${gmail} && ${mail_notify} ${gmail}";
         extraConfig = {
           xoAuth2 = true;
         };
@@ -201,8 +207,15 @@ in {
       enable = true;
       vimKeys = true;
       extraConfig = ''
+        # set virtual-mailboxes (generate by home manager) as default mailbox
+        set spoolfile = "My INBOX"
+
+        # set Unread virtual-mailboxes
+        virtual-mailboxes "Unread" "notmuch://?query=tag:unread"
+
         set query_command = "lbdbq '%s'"
 
+        # disable auto-view
         unauto_view "*"
 
         # Quote
@@ -240,7 +253,15 @@ in {
         color body brightwhite default "(signed-off|co-authored)-by: .*"
       '';
     };
-    notmuch.enable = true;
+    notmuch = {
+      enable = true;
+      new = {
+        ignore = [
+          ''/.*[.](tmp|lock|bak)$/''
+          ''/Trash/''
+        ];
+      };
+    };
     msmtp.enable = true;
     offlineimap = {
       enable = true;
