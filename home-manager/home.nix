@@ -200,6 +200,7 @@ in
     ARCHIVE = archive_path;
     NOTE = note_path;
     SOPS_SECRETS = "${dotfiles_path}/secrets.yaml";
+    PLAYER = "ffplay -nodisp -autoexit -loglevel quiet";
   };
 
   xdg = {
