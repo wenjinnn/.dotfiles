@@ -46,9 +46,9 @@
     export GPG_TTY=$(tty)
     ${mutt_oauth2} ${gmail_oauth2_token_path}
   '';
-  notmuch_new = "${pkgs.notmuch}/bin/notmuch new";
   mail_notify = pkgs.writeShellScript "mail_notify" ''
     account="$1"
+    ${pkgs.notmuch}/bin/notmuch new
     new_count=$(${pkgs.notmuch}/bin/notmuch count tag:unread and folder:$account/Inbox)
     if [ "$new_count" -gt 0 ]; then
       ${pkgs.libnotify}/bin/notify-send "New mail ($new_count messages):" "$account"
@@ -77,7 +77,7 @@ in
       imapnotify = {
         enable = true;
         boxes = ["Inbox"];
-        onNotify = "${pkgs.offlineimap}/bin/offlineimap -a ${outlook} && ${mail_notify} ${outlook}";
+        onNotify = "${pkgs.offlineimap}/bin/offlineimap -a ${outlook}";
         extraConfig = {
           xoAuth2 = true;
         };
@@ -95,7 +95,7 @@ in
       };
       offlineimap = {
         enable = true;
-        postSyncHookCommand = notmuch_new;
+        postSyncHookCommand = "${mail_notify} ${outlook}";
         extraConfig = {
           remote = {
             remotepasseval = false;
@@ -129,7 +129,7 @@ in
       imapnotify = {
         enable = true;
         boxes = ["Inbox"];
-        onNotify = "${pkgs.offlineimap}/bin/offlineimap -a ${gmail} && ${mail_notify} ${gmail}";
+        onNotify = "${pkgs.offlineimap}/bin/offlineimap -a ${gmail}";
         extraConfig = {
           xoAuth2 = true;
         };
@@ -147,7 +147,7 @@ in
       };
       offlineimap = {
         enable = true;
-        postSyncHookCommand = notmuch_new;
+        postSyncHookCommand = "${mail_notify} ${gmail}";
         extraConfig = {
           account = {
             synclabels = "yes";
