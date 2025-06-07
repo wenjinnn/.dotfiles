@@ -61,6 +61,7 @@
   ];
   systemd.packages = with pkgs; [lact];
   systemd.services.lactd.wantedBy = ["multi-user.target"];
+  powerManagement.powertop.enable = true;
   services = {
     printing.enable = true;
     flatpak.enable = true;
