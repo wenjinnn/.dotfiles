@@ -44,7 +44,6 @@
     obs-studio
     scrcpy
     wpsoffice-cn
-    dconf-editor
     wireshark
     mitmproxy
     waydroid
