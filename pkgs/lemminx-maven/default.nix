@@ -8,11 +8,11 @@
 }:
 stdenv.mkDerivation rec {
   pname = "lemminx-maven";
-  version = "0.11.1";
+  version = "0.12.0";
 
   src = fetchurl {
     url = "https://repo.eclipse.org/content/repositories/lemminx-releases/org/eclipse/lemminx/${pname}/${version}/${pname}-${version}-vscode-uber-jars.zip";
-    sha256 = "YmvH6v3RrRMc3rcoTdJ287tWmNs8GzbpfrPGwlJp9SQ=";
+    sha256 = "XsMOqxShdi+etbnlQk3Jk3unJd2E8d2CkIM6JZZ/7xQ=";
   };
 
   nativeBuildInputs = [ unzip ];
