@@ -47,10 +47,8 @@
   };
   services = {
     gvfs.enable = true;
-    devmon.enable = true;
     upower.enable = true;
     udisks2.enable = true;
-    accounts-daemon.enable = true;
   };
 
   services.greetd = {
