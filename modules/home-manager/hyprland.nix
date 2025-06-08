@@ -72,8 +72,7 @@ in
       enable = true;
       settings = {
         ipc = "on";
-        # temporary disable splash since it cause hyprpaper not work
-        # splash = true;
+        splash = true;
       };
     };
     cliphist.enable = true;
