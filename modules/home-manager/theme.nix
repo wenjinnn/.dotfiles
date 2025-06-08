@@ -22,7 +22,7 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-hard.yaml";
     cursor = {
       name = "Adwaita";
-      package = pkgs.libadwaita;
+      package = pkgs.adwaita-icon-theme;
       size = 24;
     };
     targets = {

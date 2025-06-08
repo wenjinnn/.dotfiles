@@ -9,6 +9,9 @@
 }:
 let
   mainMonitor = "eDP-1";
+  pointer = config.home.pointerCursor;
+  cursorName = "Adwaita";
+  cursorPackage = pkgs.adwaita-icon-theme;
 in
 {
   imports = with outputs.homeManagerModules; [
@@ -16,6 +19,8 @@ in
     rofi
     wallpaper
   ];
+
+  xdg.dataFile."icons/${cursorName}".source = "${cursorPackage}/share/icons/${cursorName}";
 
   home.packages = with pkgs; [
     wl-screenrec
@@ -103,7 +108,7 @@ in
       enable = true;
       settings = {
         general = {
-          lock_cmd = "pidof hyprlock || hyprlock --immediate-render --no-fade-in";
+          lock_cmd = "pidof hyprlock || hyprlock";
           before_sleep_cmd = "loginctl lock-session && hyprctl dispatch dpms off";
           after_sleep_cmd = "hyprctl dispatch dpms on";
         };
@@ -284,13 +289,16 @@ in
             "CLUTTER_BACKEND, wayland"
             "ADW_DISABLE_PORTAL, 1"
             "GDK_SCALE,2"
-            "XCURSOR_SIZE, 24"
-            "HYPRCURSOR_SIZE, 24"
+            "XCURSOR_SIZE, ${toString pointer.size}"
+            "HYPRCURSOR_THEME, ${cursorName}"
+            "HYPRCURSOR_SIZE, ${toString pointer.size}"
           ];
           exec-once = [
             # xrdb dpi scale have batter effect in 4k screen
             "echo 'Xft.dpi: 192' | xrdb -merge"
             "hyprctl dispatch exec [workspace special:monitor silent] foot btop"
+            # set cursor
+            "hyprctl setcursor ${cursorName} ${toString pointer.size}"
           ];
           monitor = [
             ",preferred,auto,auto"
@@ -434,8 +442,7 @@ in
               "ControlShiftSuper, S, exec, playerctl pause"
               "ControlSuper, P, exec, playerctl previous"
               "ControlSuper, N, exec, playerctl next"
-              "ControlSuperShiftAlt, L, exec, hyprlock"
-              "ControlSuperShiftAlt, D, exec, systemctl poweroff"
+              "ControlSuperShiftAlt, L, exec, loginctl lock-session"
               # launcher
               "Super, D, exec, rofi -show drun"
               "Super, U, exec, rofi-systemd"
