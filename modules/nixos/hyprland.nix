@@ -10,6 +10,7 @@
   # can't work with custom gnome module from ./gnome.nix
   programs.hyprland = {
     enable = true;
+    withUWSM = true;
     xwayland.enable = true;
   };
   xdg.portal = {
