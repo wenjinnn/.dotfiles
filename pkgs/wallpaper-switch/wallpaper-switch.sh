@@ -10,3 +10,4 @@ echo "next wallpaper: $next"
 # sleep here is because hyprctl sometimes throws errors if the interval between the two commands we send is too short.
 hyprctl hyprpaper reload ,"$next"
 hyprctl hyprpaper unload unused
+ln -sf $next $HOME/.config/background

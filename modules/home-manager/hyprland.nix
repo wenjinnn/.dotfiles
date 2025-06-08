@@ -73,6 +73,9 @@ in
       settings = {
         ipc = "on";
         splash = true;
+        # .config/background is a symlink to the current wallpaper, setup by wallpaper-random script
+        preload = [ "${config.home.homeDirectory}/.config/background" ];
+        wallpaper = [ ", ${config.home.homeDirectory}/.config/background" ];
       };
     };
     cliphist.enable = true;
