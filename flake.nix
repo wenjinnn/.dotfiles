@@ -205,6 +205,7 @@
         modules = [
           # > Our main home-manager configuration file <
           ./home-manager/home.nix
+          nur.modules.homeManager.default
           nix-index-database.hmModules.nix-index
         ];
       };
