@@ -1,14 +1,6 @@
 # This file defines overlays
 { inputs, ... }:
-let
-  electron-flags = [
-    "--password-store=gnome-libsecret"
-    "--enable-features=UseOzonePlatform"
-    "--ozone-platform=wayland"
-    "--enable-wayland-ime"
-  ];
-in
-rec {
+{
   # This one brings our custom packages from the 'pkgs' directory
   additions = final: _prev: import ../pkgs { pkgs = final; };
 
@@ -19,12 +11,6 @@ rec {
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
-    microsoft-edge = prev.microsoft-edge.override {
-      commandLineArgs = electron-flags;
-    };
-    vscode = prev.vscode.override {
-      commandLineArgs = electron-flags;
-    };
     nautilus = prev.nautilus.overrideAttrs (nsuper: {
       buildInputs =
         nsuper.buildInputs
