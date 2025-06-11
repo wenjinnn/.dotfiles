@@ -19,7 +19,7 @@
           token = config.sops.secrets.RCLONE_TOKEN.path;
         };
         mounts = {
-          "" = {
+          "/" = {
             enable = true;
             mountPoint = "${config.home.homeDirectory}/Rclone/gd";
           };
