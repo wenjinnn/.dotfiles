@@ -466,15 +466,11 @@ in
               "Super, N, exec, rofi-network-manager"
               "ControlShiftSuperAlt, P, exec, rofi -show power-menu -modi power-menu:rofi-power-menu"
               # Swap windows
-              "SuperShift, H, movewindow, l"
-              "SuperShift, L, movewindow, r"
-              "SuperShift, K, movewindow, u"
-              "SuperShift, J, movewindow, d"
-              # Move focus
               "SuperShift, L, layoutmsg, movewindowto r"
               "SuperShift, H, layoutmsg, movewindowto l"
               "SuperShift, K, layoutmsg, movewindowto u"
               "SuperShift, J, layoutmsg, movewindowto d"
+              # Move focus
               "Super, L, layoutmsg, focus r"
               "Super, H, layoutmsg, focus l"
               "Super, K, layoutmsg, focus u"
