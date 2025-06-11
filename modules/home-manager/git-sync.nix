@@ -13,4 +13,7 @@
       };
     };
   };
+  home.file.".abook/addressbook" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.sessionVariables.ARCHIVE}/abook/addressbook";
+  };
 }
