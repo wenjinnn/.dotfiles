@@ -294,11 +294,7 @@ in
             };
             hyprscrolling = {
               fullscreen_on_one_column = true;
-              # enable = true;
-              # scroll_method = "2fg";
-              # scroll_factor = 0.7;
-              # scroll_fingers = 3;
-              # scroll_distance = 300;
+              focus_fit_method = 1;
             };
           };
           env = [
