@@ -213,7 +213,9 @@ in
         # set Unread virtual-mailboxes
         virtual-mailboxes "Unread" "notmuch://?query=tag:unread"
 
-        set query_command = "lbdbq '%s'"
+        # abook integration
+        set query_command = "abook --mutt-query '%s'"
+        macro index,pager B "<pipe-message> abook --add-email<enter>" "Add sender to ABook"
 
         # disable auto-view
         unauto_view "*"
@@ -262,6 +264,7 @@ in
         ];
       };
     };
+    abook.enable = true;
     msmtp.enable = true;
     offlineimap = {
       enable = true;
@@ -286,8 +289,6 @@ in
       sops
     ];
   };
-
-  home.packages = [pkgs.lbdb];
 
   home.file = {
     ".mailcap".text = ''
