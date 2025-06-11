@@ -36,4 +36,5 @@
   wallpaper = import ./wallpaper.nix;
   browser = import ./browser.nix;
   syncthing = import ./syncthing.nix;
+  rclone = import ./rclone.nix;
 }
