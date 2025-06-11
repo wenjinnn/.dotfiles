@@ -267,6 +267,7 @@ in
   wayland = {
     windowManager = {
       hyprland = {
+        package = inputs.hyprland.packages.${pkgs.system}.default;
         enable = true;
         xwayland.enable = true;
         systemd = {
@@ -275,10 +276,31 @@ in
             "--all"
           ];
         };
-        plugins = with pkgs.hyprlandPlugins; [
+        plugins = with inputs.hyprland-plugins.packages.${pkgs.system}; [
           hyprexpo
+          hyprscrolling
         ];
         settings = {
+          plugin = {
+            hyprexpo = {
+              columns = 2;
+              gap_size = 10;
+              workspace_method = "center first"; # [center/first] [workspace] e.g. first 1 or center m+1
+
+              enable_gesture = true; # laptop touchpad
+              gesture_fingers = 3; # 3 or 4
+              gesture_distance = 300; # how far is the "max"
+              gesture_positive = true; # positive = swipe down. Negative = swipe up.
+            };
+            hyprscrolling = {
+              fullscreen_on_one_column = true;
+              # enable = true;
+              # scroll_method = "2fg";
+              # scroll_factor = 0.7;
+              # scroll_fingers = 3;
+              # scroll_distance = 300;
+            };
+          };
           env = [
             "XMODIFIERS, @im=fcitx"
             "QT_IM_MODULE, fcitx"
@@ -333,7 +355,7 @@ in
           general = {
             gaps_out = 10;
             gaps_in = 5;
-            layout = "dwindle";
+            layout = "scrolling";
             no_focus_fallback = true;
             resize_on_border = true;
             # "col.active_border" = "rgba(51a4e7ff)";
@@ -379,18 +401,6 @@ in
             enable_swallow = true;
             key_press_enables_dpms = true;
             force_default_wallpaper = 0;
-          };
-          plugin = {
-            hyprexpo = {
-              columns = 2;
-              gap_size = 10;
-              workspace_method = "center first"; # [center/first] [workspace] e.g. first 1 or center m+1
-
-              enable_gesture = true; # laptop touchpad
-              gesture_fingers = 3; # 3 or 4
-              gesture_distance = 300; # how far is the "max"
-              gesture_positive = true; # positive = swipe down. Negative = swipe up.
-            };
           };
           workspace = [
             "w[tv1], gapsout:0, gapsin:0"
@@ -465,10 +475,14 @@ in
               "SuperShift, K, movewindow, u"
               "SuperShift, J, movewindow, d"
               # Move focus
-              "Super, H, movefocus, l"
-              "Super, L, movefocus, r"
-              "Super, K, movefocus, u"
-              "Super, J, movefocus, d"
+              "SuperShift, L, layoutmsg, movewindowto r"
+              "SuperShift, H, layoutmsg, movewindowto l"
+              "SuperShift, K, layoutmsg, movewindowto u"
+              "SuperShift, J, layoutmsg, movewindowto d"
+              "Super, L, layoutmsg, focus r"
+              "Super, H, layoutmsg, focus l"
+              "Super, K, layoutmsg, focus u"
+              "Super, J, layoutmsg, focus d"
               # Workspace, window, tab switch with keyboard
               "ControlSuper, right, workspace, +1"
               "ControlSuper, left, workspace, -1"
@@ -480,14 +494,16 @@ in
               "ControlSuper, down, workspace, +5"
               "Super, Page_Down, workspace, +1"
               "Super, Page_Up, workspace, -1"
-              "SuperShift, Page_Down, movetoworkspace, +1"
-              "SuperShift, Page_Up, movetoworkspace, -1"
+              "SuperShift, Page_Down, layoutmsg, move +col"
+              "SuperShift, Page_Up, layoutmsg, move -col"
               "ControlShiftSuper, L, movetoworkspace, +1"
               "ControlShiftSuper, H, movetoworkspace, -1"
+              "ShiftSuper, P, layoutmsg, promote"
               "AltSuper, L, movecurrentworkspacetomonitor, +1"
               "AltSuper, H, movecurrentworkspacetomonitor, -1"
               "SuperShift, mouse_down, movetoworkspace, -1"
               "SuperShift, mouse_up, movetoworkspace, +1"
+              "ControlShiftSuper, F, layoutmsg, fit active"
               # Fullscreen
               "Super, F, fullscreen, 1"
               "SuperShift, F, fullscreen, 0"
@@ -538,10 +554,12 @@ in
           ];
           binde = [
             # Window split ratio
-            "SUPER, Minus, splitratio, -0.1"
-            "SUPER, Equal, splitratio, 0.1"
-            "SUPER, Semicolon, splitratio, -0.1"
-            "SUPER, Apostrophe, splitratio, 0.1"
+            "Super, Minus, layoutmsg, colresize -0.1"
+            "Super, Equal, layoutmsg, colresize 0.1"
+            "Super, Semicolon, layoutmsg, colresize -conf"
+            "Super, Apostrophe, layoutmsg, colresize +conf"
+            "ControlSuper, Semicolon, layoutmsg, colresize all -0.1"
+            "ControlSuper, Apostrophe, layoutmsg, colresize all 0.1"
           ];
           bindl = [
             # ",Print,exec,grim - | wl-copy"
