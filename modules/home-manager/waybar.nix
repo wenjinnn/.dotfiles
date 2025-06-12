@@ -158,8 +158,8 @@
         };
         "network#speed" = {
           interval = 2;
-          format-wifi = "{bandwidthUpBytes}⇑  {bandwidthDownBytes}⇓";
-          format-ethernet = "{bandwidthUpBytes}⇑  {bandwidthDownBytes}⇓";
+          format-wifi = "{bandwidthUpBytes}⇑ {bandwidthDownBytes}⇓";
+          format-ethernet = "{bandwidthUpBytes}⇑ {bandwidthDownBytes}⇓";
           tooltip-format = "Total: {bandwidthTotalBytes}: {bandwidthUpBytes}/{bandwidthDownBytes}";
           format-linked = "{bandwidthUpBytes}⇑  {bandwidthDownBytes}⇓";
           format-disconnected = "No speed ⚠";
