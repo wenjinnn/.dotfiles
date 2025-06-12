@@ -323,7 +323,7 @@ in
           monitor = [
             ",preferred,auto,auto"
             "${mainMonitor}, addreserved, 0, 0, 0, 0"
-            "${mainMonitor}, highres,auto,2"
+            "${mainMonitor}, highres,auto,2.5"
           ];
           input = {
             force_no_accel = false;
