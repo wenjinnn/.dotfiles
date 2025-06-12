@@ -195,6 +195,8 @@
     openFirewall = true;
   };
 
+  programs.niri.enable = true;
+
   security.pam.loginLimits = [
     {
       domain = "*";
