@@ -6,6 +6,13 @@ later(function()
   local gen_ai_spec = require('mini.extra').gen_ai_spec
   local gen_spec = require('mini.ai').gen_spec
   require('mini.ai').setup({
+    mappings = {
+      -- Next/last textobjects, setup with uppercase letters so that they don't conflict with default an in mappings
+      around_next = 'aN',
+      inside_next = 'iN',
+      around_last = 'aL',
+      inside_last = 'iL',
+    },
     custom_textobjects = {
       B = gen_ai_spec.buffer(),
       D = gen_ai_spec.diagnostic(),
@@ -16,7 +23,7 @@ later(function()
       -- This need nvim-treesitter-textobjects, see https://github.com/echasnovski/mini.nvim/issues/947#issuecomment-2154242659
       F = gen_spec.treesitter({ a = '@function.outer', i = '@function.inner' }),
       -- Make `|` select both edges in non-balanced way
-      o = gen_spec.treesitter({
+      O = gen_spec.treesitter({
         a = { '@conditional.outer', '@loop.outer' },
         i = { '@conditional.inner', '@loop.inner' },
       }),
