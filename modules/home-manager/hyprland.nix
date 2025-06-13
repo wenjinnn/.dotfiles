@@ -383,6 +383,9 @@ in
           };
           animations = {
             enabled = true;
+            animation = [
+              "workspaces, 1, 6, default, slidevert"
+            ];
           };
           xwayland = {
             force_zero_scaling = true;
