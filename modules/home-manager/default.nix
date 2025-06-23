@@ -38,6 +38,7 @@
   browser = import ./browser.nix;
   syncthing = import ./syncthing.nix;
   rclone = import ./rclone.nix;
+  niri = import ./niri.nix;
   cliphist = import ./cliphist.nix;
   dunst = import ./dunst.nix;
   kdeconnect = import ./kdeconnect.nix;

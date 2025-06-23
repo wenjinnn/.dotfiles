@@ -60,6 +60,11 @@
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nixos-hardware.url = "github:nixos/nixos-hardware";
