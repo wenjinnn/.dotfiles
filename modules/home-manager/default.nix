@@ -33,9 +33,14 @@
   mpd = import ./mpd.nix;
   rofi = import ./rofi.nix;
   waybar = import ./waybar.nix;
+  waybar-vertical = import ./waybar-vertical.nix;
   wallpaper = import ./wallpaper.nix;
   browser = import ./browser.nix;
   syncthing = import ./syncthing.nix;
   rclone = import ./rclone.nix;
+  cliphist = import ./cliphist.nix;
+  dunst = import ./dunst.nix;
+  kdeconnect = import ./kdeconnect.nix;
+  udiskie = import ./udiskie.nix;
   base = import ./base.nix;
 }
