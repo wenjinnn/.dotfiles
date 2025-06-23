@@ -1,5 +1,6 @@
-{pkgs, config, ...}: {
-   # custom wallpaper services
+{ pkgs, config, ... }:
+{
+  # custom wallpaper services
   systemd.user = {
     services = {
       bingwallpaper-get = {
@@ -13,21 +14,21 @@
           ExecStartPost = "${pkgs.wallpaper-switch}/bin/wallpaper-switch";
         };
         Install = {
-          WantedBy = ["default.target"];
+          WantedBy = [ "default.target" ];
         };
       };
       wallpaper-random = {
         Unit = {
-          Description = "switch random wallpaper powered by hyprpaper";
-          After = "bingwallpaper-get.service";
+          Description = "switch random wallpaper powered by swaybg";
+          After = "graphical-session.target";
+          PartOf = "graphical-session.target";
         };
         Service = {
-          Type = "oneshot";
           Environment = "HOME=${config.home.homeDirectory}";
           ExecStart = "${pkgs.wallpaper-switch}/bin/wallpaper-switch random";
         };
         Install = {
-          WantedBy = ["default.target"];
+          WantedBy = [ "graphical-session.target" ];
         };
       };
     };
@@ -39,18 +40,22 @@
         Timer = {
           OnCalendar = "hourly";
         };
-        Install = {WantedBy = ["timers.target"];};
+        Install = {
+          WantedBy = [ "timers.target" ];
+        };
       };
       wallpaper-random = {
         Unit = {
-          Description = "switch random wallpaper powered by hyprpaper timer";
+          Description = "switch random wallpaper powered by swaybg timer";
         };
         Timer = {
           OnUnitActiveSec = "60min";
           OnBootSec = "60min";
         };
-        Install = {WantedBy = ["timers.target"];};
+        Install = {
+          WantedBy = [ "timers.target" ];
+        };
       };
-  };
+    };
   };
 }
