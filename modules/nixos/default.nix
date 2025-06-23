@@ -25,4 +25,5 @@
   theme = import ./theme.nix;
   headscale = import ./headscale.nix;
   rustdesk-server = import ./rustdesk-server.nix;
+  base = import ./base.nix;
 }
