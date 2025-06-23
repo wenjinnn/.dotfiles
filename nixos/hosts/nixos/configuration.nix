@@ -17,10 +17,10 @@
     systemd-boot
     waydroid
     fonts
-    hyprland
     bluetooth
     steam
     theme
+    niri
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
@@ -59,8 +59,8 @@
     nvtopPackages.amd
     nvtopPackages.intel
   ];
-  systemd.packages = with pkgs; [lact];
-  systemd.services.lactd.wantedBy = ["multi-user.target"];
+  systemd.packages = with pkgs; [ lact ];
+  systemd.services.lactd.wantedBy = [ "multi-user.target" ];
   powerManagement.powertop.enable = true;
   services = {
     printing.enable = true;

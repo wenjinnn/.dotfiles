@@ -9,7 +9,8 @@
   imports = with outputs.homeManagerModules; [
     # If you want to use modules your own flake exports (from modules/home-manager):
     # outputs.homeManagerModules.example
-    hyprland
+    # hyprland
+    niri
     fcitx5
     theme
     mpv
