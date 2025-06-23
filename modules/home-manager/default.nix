@@ -37,4 +37,5 @@
   browser = import ./browser.nix;
   syncthing = import ./syncthing.nix;
   rclone = import ./rclone.nix;
+  base = import ./base.nix;
 }
