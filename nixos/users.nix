@@ -29,10 +29,5 @@
         "libvirtd"
       ];
     };
-    ollama = {
-      home = "/home/ollama";
-      isSystemUser = true;
-      createHome = true;
-    };
   };
 }
