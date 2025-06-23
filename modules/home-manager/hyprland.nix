@@ -18,33 +18,22 @@ in
     waybar
     rofi
     wallpaper
+    dunst
+    udiskie
+    cliphist
+    kdeconnect
   ];
 
   xdg.dataFile."icons/${cursorName}".source = "${cursorPackage}/share/icons/${cursorName}";
 
   home.packages = with pkgs; [
-    wl-screenrec
-    imagemagick
-    slurp
-    tesseract
-    pavucontrol
-    swappy
-    brightnessctl
-    playerctl
-    pulseaudio
-    gnupg
-    blueberry
-    cliphist
-    glib
-    wl-clipboard
     xdg-utils
-    xorg.xrdb
     kdePackages.xwaylandvideobridge
+    xorg.xrdb
     hyprpaper
     hyprcursor
     hyprpicker
     hyprsunset
-    grim
   ];
 
   services = {
