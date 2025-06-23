@@ -26,9 +26,14 @@
         Service = {
           Environment = "HOME=${config.home.homeDirectory}";
           ExecStart = "${pkgs.wallpaper-switch}/bin/wallpaper-switch random";
+          ExecReload = "${pkgs.wallpaper-switch}/bin/wallpaper-switch random";
+          KillMode = "process";
         };
         Install = {
-          WantedBy = [ "graphical-session.target" ];
+          WantedBy = [
+            "default.target"
+            "graphical-session.target"
+          ];
         };
       };
     };
