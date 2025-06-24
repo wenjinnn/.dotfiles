@@ -105,7 +105,7 @@
           };
           focus-ring = {
             active.gradient = {
-              from = colors.base0C;
+              from = colors.base0D;
               to = colors.base08;
               angle = 45;
             };
