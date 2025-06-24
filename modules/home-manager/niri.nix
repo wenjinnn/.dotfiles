@@ -227,8 +227,8 @@
 
             "Mod+Page_Down".action = focus-workspace-down;
             "Mod+Page_Up".action = focus-workspace-up;
-            "Mod+U".action = focus-workspace-down;
-            "Mod+I".action = focus-workspace-up;
+            "Mod+U".action = focus-workspace-up;
+            "Mod+I".action = focus-workspace-down;
             "Mod+Ctrl+Page_Down".action = move-column-to-workspace-down;
             "Mod+Ctrl+Page_Up".action = move-column-to-workspace-up;
             "Mod+Ctrl+U".action = move-column-to-workspace-down;
