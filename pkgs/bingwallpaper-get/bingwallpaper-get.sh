@@ -39,7 +39,13 @@ if [[ $? -eq 0 ]]; then
     echo "Bing wallpaper prepare download from ${img_url} to ${file_name}"
     mkdir -p "${bing_wallpaper_dir}"
     wget -O "${file_name}" "${img_url}" -q --read-timeout=10
-    echo 'Download success'
+    if [ $? -ne 0 ]; then
+        echo "Download error with status code: ${?}"
+        rm -f "${file_name}"
+    else
+        echo 'Download success'
+        wallpaper-switch
+    fi
     exit 0
 else
     echo "Request failed with status code: ${?}"

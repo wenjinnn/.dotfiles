@@ -6,12 +6,13 @@
       bingwallpaper-get = {
         Unit = {
           Description = "Download bing wallpaper to target path";
+          Conflicts = "wallpaper-random.service";
         };
         Service = {
           Type = "oneshot";
           Environment = "HOME=${config.home.homeDirectory}";
           ExecStart = "${pkgs.bingwallpaper-get}/bin/bingwallpaper-get";
-          ExecStartPost = "${pkgs.wallpaper-switch}/bin/wallpaper-switch";
+          KillMode = "process";
         };
         Install = {
           WantedBy = [ "default.target" ];
@@ -22,11 +23,11 @@
           Description = "switch random wallpaper powered by swaybg";
           After = "graphical-session.target";
           PartOf = "graphical-session.target";
+          Conflicts = "bingwallpaper-get.service";
         };
         Service = {
           Environment = "HOME=${config.home.homeDirectory}";
           ExecStart = "${pkgs.wallpaper-switch}/bin/wallpaper-switch random";
-          ExecReload = "${pkgs.wallpaper-switch}/bin/wallpaper-switch random";
           KillMode = "process";
         };
         Install = {
@@ -43,7 +44,8 @@
           Description = "Download bing wallpaper timer";
         };
         Timer = {
-          OnCalendar = "hourly";
+          OnUnitActiveSec = "30min";
+          OnBootSec = "30min";
         };
         Install = {
           WantedBy = [ "timers.target" ];
