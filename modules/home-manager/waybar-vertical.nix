@@ -23,18 +23,18 @@
           "hyprland/submap"
         ];
         modules-center = [
-          "custom/recorder"
+          "privacy"
           "mpris"
           "clock"
           "idle_inhibitor"
-          "privacy"
+          "custom/recorder"
         ];
         modules-right = [
           "tray"
-          "disk"
-          "memory"
           "cpu"
+          "memory"
           "temperature"
+          "disk"
           "network#speed"
           "network"
           "bluetooth"
@@ -224,9 +224,10 @@
           ];
         };
         privacy = {
-          icon-spacing = 4;
-          icon-size = 18;
+          icon-spacing = 0;
+          icon-size = 14;
           transition-duration = 250;
+          expand = true;
           modules = [
             {
               type = "screenshare";
@@ -278,7 +279,7 @@
           "format-bluetooth-muted" = "\n{icon}\n{format_source}";
           "format-muted" = "\n{format_source}";
           "format-source" = "";
-          "format-source-muted" = "";
+          "format-source-muted" = "󰍭";
           "format-icons" = {
             headphone = "";
             "hands-free" = "";
