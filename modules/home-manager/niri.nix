@@ -361,6 +361,19 @@
             ];
             block-out-from = "screencast";
           }
+          {
+            matches = [
+              {
+                app-id = "steam";
+                title = ''r#"^notificationtoasts_\d+_desktop$"#'';
+              }
+            ];
+            default-floating-position = {
+              x = 10;
+              y = 10;
+              relative-to = "bottom-right";
+            };
+          }
         ];
 
       };
