@@ -46,6 +46,9 @@
       in
       {
         enable = true;
+        extraArgs = [
+          "-w"
+        ];
         events = [
           {
             event = "lock";
@@ -302,11 +305,11 @@
 
             "Mod+Ctrl+C".action = center-visible-columns;
 
-            "Mod+Minus".action = set-column-width "-10%";
-            "Mod+Equal".action = set-column-width "+10%";
+            "Mod+Minus".action = set-column-width "-5%";
+            "Mod+Equal".action = set-column-width "+5%";
 
-            "Mod+Shift+Minus".action = set-window-height "-10%";
-            "Mod+Shift+Equal".action = set-window-height "+10%";
+            "Mod+Shift+Minus".action = set-window-height "-5%";
+            "Mod+Shift+Equal".action = set-window-height "+5%";
 
             "Mod+Ctrl+Space".action = toggle-window-floating;
             "Mod+Shift+Space".action = switch-focus-between-floating-and-tiling;
@@ -340,6 +343,9 @@
             "Mod+Tab".action = focus-window-down-or-column-right;
             "Mod+Shift+Tab".action = focus-window-up-or-column-left;
           };
+        debug = {
+          dbus-interfaces-in-non-session-instances = [ ];
+        };
         window-rules = [
           {
             draw-border-with-background = false;
