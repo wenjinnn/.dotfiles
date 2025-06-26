@@ -145,7 +145,8 @@ in
     w3m
     networkmanagerapplet
     browserpass
-    devenv
+    # temprorary disable this package for compilation error
+    # devenv
     # for nvim dict
     wordnet
     # nix related
