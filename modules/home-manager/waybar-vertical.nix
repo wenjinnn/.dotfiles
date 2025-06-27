@@ -169,7 +169,7 @@
           format-ethernet = "{ipaddr}/{cidr} ";
           tooltip-format = "{ifname} via {gwaddr} \n{essid} ({signalStrength}%) ";
           format-linked = "{ifname} (No IP) ";
-          format-disconnected = "Disconnected ⚠";
+          format-disconnected = "⚠";
           format-alt = "{ifname}: {ipaddr}/{cidr}";
         };
         "network#speed" = {
