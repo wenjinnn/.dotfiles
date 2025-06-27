@@ -170,12 +170,19 @@ later(function()
   })
 
   -- AI chat workflow
+  -- since vectorcode installation is take a while, we should manually install it via `uv tool install vectorcode`
+  local update_vectorcode = function(args) vim.system({ 'uv', 'tool', 'upgrade', 'vectorcode' }) end
   add({
     source = 'olimorris/codecompanion.nvim',
     depends = {
       'ravitemer/mcphub.nvim',
       'ravitemer/codecompanion-history.nvim',
-      'Davidyz/VectorCode',
+      {
+        source = 'Davidyz/VectorCode',
+        hooks = {
+          post_checkout = update_vectorcode,
+        },
+      },
     },
   })
   require('mcphub').setup({
