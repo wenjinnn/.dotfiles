@@ -36,8 +36,7 @@
       kulala-fmt
       # for nvim-treesitter
       tree-sitter
-      # ai and mcp tools
-      vectorcode
+      # uv pkg manager, used by ai and mcp tools
       uv
       # another http tool
       hurl
