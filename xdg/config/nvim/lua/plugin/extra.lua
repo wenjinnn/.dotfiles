@@ -170,8 +170,7 @@ later(function()
   })
 
   -- AI chat workflow
-  -- since vectorcode installation is take a while, we should manually install it via `uv tool install vectorcode`
-  local update_vectorcode = function(args) vim.system({ 'uv', 'tool', 'upgrade', 'vectorcode' }) end
+  local update_vectorcode = function() vim.system({ 'uv', 'tool', 'install', '--upgrade', 'vectorcode' }) end
   add({
     source = 'olimorris/codecompanion.nvim',
     depends = {
@@ -180,6 +179,7 @@ later(function()
       {
         source = 'Davidyz/VectorCode',
         hooks = {
+          post_install = function() later(update_vectorcode) end,
           post_checkout = update_vectorcode,
         },
       },
@@ -245,8 +245,22 @@ later(function()
         },
       },
       vectorcode = {
+        ---@type VectorCode.CodeCompanion.ExtensionOpts
         opts = {
-          add_tool = true,
+          tool_group = {
+            enabled = true,
+            collapse = true,
+            -- tools in this array will be included to the `vectorcode_toolbox` tool group
+            extras = {},
+          },
+          tool_opts = {
+            ---@type VectorCode.CodeCompanion.LsToolOpts
+            ls = {},
+            ---@type VectorCode.CodeCompanion.QueryToolOpts
+            query = {},
+            ---@type VectorCode.CodeCompanion.VectoriseToolOpts
+            vectorise = {},
+          },
         },
       },
     },
