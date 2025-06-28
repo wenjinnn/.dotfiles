@@ -3,7 +3,8 @@
   lib,
   makeWrapper,
   swaybg,
-  killall,
+  hyprland,
+  hyprpaper,
   gawk,
   bash,
   coreutils-full,
@@ -24,7 +25,8 @@ runCommandNoCC "wallpaper-switch"
         --prefix PATH : ${
           lib.makeBinPath [
             swaybg
-            killall
+            hyprland
+            hyprpaper
             gawk
             findutils
             coreutils-full
