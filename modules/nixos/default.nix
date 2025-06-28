@@ -26,5 +26,5 @@
   headscale = import ./headscale.nix;
   rustdesk-server = import ./rustdesk-server.nix;
   niri = import ./niri.nix;
-  base = import ./base.nix;
+  de-basic = import ./de-basic.nix;
 }

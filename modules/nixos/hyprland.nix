@@ -9,7 +9,7 @@
 }:
 {
   imports = with outputs.nixosModules; [
-    base
+    de-basic
   ];
   # can't work with custom gnome module from ./gnome.nix
   programs.hyprland = {

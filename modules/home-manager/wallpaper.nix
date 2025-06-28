@@ -6,11 +6,13 @@
       bingwallpaper-get = {
         Unit = {
           Description = "Download bing wallpaper to target path";
+          After = "graphical-session.target";
           Conflicts = "wallpaper-random.service";
         };
         Service = {
           Type = "oneshot";
           Environment = "HOME=${config.home.homeDirectory}";
+          ExecStartPre = "${pkgs.bash}/bin/bash -c 'systemctl --user import-environment XDG_CURRENT_DESKTOP'";
           ExecStart = "${pkgs.bingwallpaper-get}/bin/bingwallpaper-get";
           KillMode = "process";
         };
@@ -20,13 +22,14 @@
       };
       wallpaper-random = {
         Unit = {
-          Description = "switch random wallpaper powered by swaybg";
+          Description = "switch random wallpaper";
           After = "graphical-session.target";
           PartOf = "graphical-session.target";
           Conflicts = "bingwallpaper-get.service";
         };
         Service = {
           Environment = "HOME=${config.home.homeDirectory}";
+          ExecStartPre = "${pkgs.bash}/bin/bash -c 'systemctl --user import-environment XDG_CURRENT_DESKTOP'";
           ExecStart = "${pkgs.wallpaper-switch}/bin/wallpaper-switch random";
           KillMode = "process";
         };
@@ -53,7 +56,7 @@
       };
       wallpaper-random = {
         Unit = {
-          Description = "switch random wallpaper powered by swaybg timer";
+          Description = "switch random wallpaper powered";
         };
         Timer = {
           OnUnitActiveSec = "60min";

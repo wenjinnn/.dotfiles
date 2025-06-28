@@ -5,9 +5,6 @@
   ...
 }:
 {
-  imports = with outputs.nixosModules; [
-    base
-  ];
   programs.niri = {
     enable = true;
     package = pkgs.niri-unstable;
