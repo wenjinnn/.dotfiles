@@ -216,16 +216,6 @@ in
           halign = "center";
           valign = "center";
         }
-        # CURRENT SONG
-        {
-          monitor = mainMonitor;
-          text = "cmd[update:1000] echo \"$(playerctl metadata --format '♫ {{title}} {{artist}}')\"";
-          color = "rgba(255, 255, 255, 0.6)";
-          font_size = 36;
-          position = "0, 50";
-          halign = "center";
-          valign = "bottom";
-        }
       ];
     };
   };
@@ -289,8 +279,6 @@ in
           ];
           monitor = [
             ",preferred,auto,auto"
-            "${mainMonitor}, addreserved, 0, 0, 0, 0"
-            "${mainMonitor}, highres,auto,2"
           ];
           input = {
             force_no_accel = false;
@@ -316,6 +304,7 @@ in
             workspace_swipe_create_new = true;
           };
           general = {
+            border_size = 2;
             gaps_out = 10;
             gaps_in = 5;
             layout = "scrolling";
