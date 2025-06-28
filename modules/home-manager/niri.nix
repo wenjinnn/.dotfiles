@@ -10,7 +10,7 @@
 
   imports = with outputs.homeManagerModules; [
     inputs.niri.homeModules.niri
-    base
+    de-basic
     waybar-vertical
     rofi
     dunst
@@ -346,6 +346,7 @@
         debug = {
           dbus-interfaces-in-non-session-instances = [ ];
         };
+        gestures.hot-corners.enable = false;
         window-rules = [
           {
             draw-border-with-background = false;
@@ -379,6 +380,21 @@
               y = 10;
               relative-to = "bottom-right";
             };
+          }
+          {
+            matches = [ { app-id = "^xwaylandvideobridge$"; } ];
+            open-floating = true;
+            focus-ring.enable = false;
+            opacity = 0.0;
+            default-floating-position = {
+              x = 0;
+              y = 0;
+              relative-to = "bottom-right";
+            };
+            min-width = 1;
+            max-width = 1;
+            min-height = 1;
+            max-height = 1;
           }
         ];
 

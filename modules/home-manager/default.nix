@@ -43,5 +43,5 @@
   dunst = import ./dunst.nix;
   kdeconnect = import ./kdeconnect.nix;
   udiskie = import ./udiskie.nix;
-  base = import ./base.nix;
+  de-basic = import ./de-basic.nix;
 }
