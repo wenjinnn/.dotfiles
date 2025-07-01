@@ -166,7 +166,7 @@
           on-click-middle = "rofi-network-manager";
           on-click-right = "nm-connection-editor";
           format-wifi = "󰖩";
-          format-ethernet = "{ipaddr}/{cidr} ";
+          format-ethernet = "";
           tooltip-format = "{ifname} via {gwaddr} \n{essid} ({signalStrength}%) ";
           format-linked = "{ifname} (No IP) ";
           format-disconnected = "⚠";
