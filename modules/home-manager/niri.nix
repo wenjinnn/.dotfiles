@@ -171,19 +171,60 @@
               action = toggle-overview;
             };
 
-            "Mod+Ctrl+P".action = sh "playerctl play-pause";
-            "Mod+Shift+P".action = sh "playerctl previous";
-            "Mod+Shift+N".action = sh "playerctl next";
-            "Mod+S".action = sh "rofi-systemd";
-            "Mod+B".action = sh "rofi-bluetooth";
-            "Mod+Alt+P".action = sh "niri msg pick-color | grep -o '#[0-9a-fA-F]\{6\}' | wl-copy";
-            "Mod+P".action = sh "rofi-pass";
-            "Mod+A".action = sh "dunstctl context";
-            "Mod+Ctrl+A".action = sh "rofi-pulse-select sink";
-            "Mod+Shift+A".action = sh "rofi-pulse-select source";
-            "Mod+E".action = sh "rofimoji";
-            "Mod+N".action = sh "rofi-network-manager";
-            "Mod+Shift+Ctrl+P".action = sh "rofi -show power-menu -modi power-menu:rofi-power-menu";
+            "Mod+Ctrl+P" = {
+              hotkey-overlay.title = "Pause player: playerctl play-pause";
+              action = sh "playerctl play-pause";
+            };
+            "Mod+Shift+P" = {
+              hotkey-overlay.title = "Previous player: playerctl previous";
+              action = sh "playerctl previous";
+            };
+            "Mod+Shift+N" = {
+              hotkey-overlay.title = "Next player: playerctl next";
+              action = sh "playerctl next";
+            };
+            "Mod+S" = {
+              hotkey-overlay.title = "Systemd unit menu: rofi-systemd";
+              action = sh "rofi-systemd";
+            };
+            "Mod+B" = {
+              hotkey-overlay.title = "Bluetooth menu: rofi-bluetooth";
+              action = sh "rofi-bluetooth";
+            };
+            "Mod+Alt+P" = {
+              hotkey-overlay.title = "Pick color to clipboard: niri msg pick-color";
+              action = sh "niri msg pick-color | grep -o '#[0-9a-fA-F]\{6\}' | wl-copy";
+            };
+            "Mod+P" = {
+              hotkey-overlay.title = "Pass menu: rofi-pass";
+              action = sh "rofi-pass";
+            };
+            "Mod+A" = {
+              hotkey-overlay = {
+                title = "Trigger notification actions: dunstctl context";
+              };
+              action = sh "dunstctl context";
+            };
+            "Mod+Ctrl+A" = {
+              hotkey-overlay.title = "Pulseaudio sink menu: rofi-pulse-select sink";
+              action = sh "rofi-pulse-select sink";
+            };
+            "Mod+Shift+A" = {
+              hotkey-overlay.title = "Pulseaudio source menu: rofi-pulse-select source";
+              action = sh "rofi-pulse-select source";
+            };
+            "Mod+E" = {
+              hotkey-overlay.title = "Emoji menu: rofimoji";
+              action = sh "rofimoji";
+            };
+            "Mod+N" = {
+              hotkey-overlay.title = "Network menu: rofi-network-manager";
+              action = sh "rofi-network-manager";
+            };
+            "Mod+Ctrl+Shift+P" = {
+              hotkey-overlay.title = "Power menu: rofi-power-menu";
+              action = sh "rofi -show power-menu -modi power-menu:rofi-power-menu";
+            };
 
             "Mod+Q".action = close-window;
 
@@ -317,7 +358,10 @@
             "Mod+W".action = toggle-column-tabbed-display;
 
             "Print".action = screenshot;
-            "Mod+Print".action = sh "rofi-screenshot";
+            "Mod+Print" = {
+              hotkey-overlay.title = "Extra screenshot/screencast script: rofi-screenshot";
+              action = sh "rofi-screenshot";
+            };
             "Alt+Print".action = screenshot-window;
 
             "Mod+Insert".action = set-dynamic-cast-window;
