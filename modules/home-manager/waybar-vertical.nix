@@ -55,7 +55,7 @@
           show-passive-items = true;
         };
         clock = {
-          format = "{:%m\n%e\n\n<b>%H\n%M\n%S</b>}";
+          format = "{:%m\n%d\n\n<b>%H\n%M\n%S</b>}";
           interval = 1;
           format-alt = "{:%A, %B %d, %Y (%R)}  ";
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
@@ -275,15 +275,16 @@
         };
         pulseaudio = {
           format = "{icon}\n{format_source}";
-          "format-bluetooth" = "{volume}% {icon} {format_source}";
-          "format-bluetooth-muted" = "\n{icon}\n{format_source}";
-          "format-muted" = "\n{format_source}";
-          "format-source" = "";
+          tooltip-format = "{volume}\n{desc}";
+          "format-bluetooth" = "{icon}";
+          "format-bluetooth-muted" = "󰝟\n{icon}";
+          "format-muted" = "\n{format_source}";
+          "format-source" = "󰍬";
           "format-source-muted" = "󰍭";
           "format-icons" = {
             headphone = "";
-            "hands-free" = "";
-            headset = "";
+            "hands-free" = "󰋏";
+            headset = "󰋎";
             phone = "";
             portable = "";
             car = "";
