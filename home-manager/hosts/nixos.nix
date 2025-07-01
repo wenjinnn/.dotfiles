@@ -10,8 +10,8 @@
     # If you want to use modules your own flake exports (from modules/home-manager):
     # outputs.homeManagerModules.example
     de-basic
-    hyprland
-    # niri
+    # hyprland
+    niri
     fcitx5
     theme
     mpv
