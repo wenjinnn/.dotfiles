@@ -64,6 +64,8 @@
     };
     niri = {
       url = "github:sodiboo/niri-flake";
+      # a PR with SHM support, waiting for it to be merged https://github.com/YaLTeR/niri/pull/1791
+      inputs.niri-unstable.url = "github:wenjinnn/niri/customize";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
