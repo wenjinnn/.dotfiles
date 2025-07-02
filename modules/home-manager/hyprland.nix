@@ -29,7 +29,6 @@ in
   home.packages = with pkgs; [
     xdg-utils
     kdePackages.xwaylandvideobridge
-    xorg.xrdb
     hyprpaper
     hyprcursor
     hyprpicker

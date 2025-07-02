@@ -1,4 +1,5 @@
-{pkgs, ...}:{
+{ pkgs, ... }:
+{
 
   home.packages = with pkgs; [
     wl-screenrec
@@ -15,5 +16,6 @@
     cliphist
     wl-clipboard
     grim
+    xorg.xrdb
   ];
 }
