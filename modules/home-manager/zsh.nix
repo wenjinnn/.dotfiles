@@ -45,6 +45,7 @@
       m = "neomutt";
       n = "ncmpcpp";
       t = "trans";
+      gemini = "npx https://github.com/google-gemini/gemini-cli";
     };
     initContent =
       let
