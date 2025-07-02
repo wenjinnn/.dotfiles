@@ -118,7 +118,14 @@
         };
         screenshot-path = "~/Pictures/Screenshots/Screenshot-%Y-%m-%d %H-%M-%S.png";
         spawn-at-startup = [
-          { command = [ "btop" ]; }
+          {
+            command = [
+              # xrdb dpi scale for xwayland-satellite in 4k screen
+              "bash"
+              "-c"
+              "echo 'Xft.dpi: 192' | xrdb -merge"
+            ];
+          }
         ];
         binds =
           with config.lib.niri.actions;
