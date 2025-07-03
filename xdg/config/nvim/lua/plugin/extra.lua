@@ -59,11 +59,32 @@ later(function()
   map('n', ']r', kulala.jump_next, 'Jump to next request')
 end)
 
--- markdown, html, asciidoc, svg preview in browser
+-- markdown preview in browser
 later(function()
-  add('brianhuster/live-preview.nvim')
-  map('n', '<leader>lp', '<cmd>LivePreview start<cr>', 'Live preview start')
-  map('n', '<leader>lP', '<cmd>LivePreview close<cr>', 'Live preview close')
+  local install_markdown_preview_bin = function() vim.fn['mkdp#util#install']() end
+  add({
+    source = 'iamcco/markdown-preview.nvim',
+    hooks = {
+      post_install = function() later(install_markdown_preview_bin) end,
+      post_checkout = install_markdown_preview_bin,
+    },
+  })
+  vim.g.mkdp_filetypes = { 'markdown' }
+  vim.g.mkdp_preview_options = {
+    mkit = {},
+    katex = {},
+    uml = {},
+    maid = { theme = 'dark' },
+    disable_sync_scroll = 0,
+    sync_scroll_type = 'middle',
+    hide_yaml_meta = 1,
+    sequence_diagrams = {},
+    flowchart_diagrams = {},
+    content_editable = false,
+    disable_filename = 0,
+    toc = {},
+  }
+  map('n', '<leader>mp', '<cmd>MarkdownPreviewToggle<cr>', 'Markdown preview toggle')
 end)
 
 -- neovim in browser
