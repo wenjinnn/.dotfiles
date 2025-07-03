@@ -222,7 +222,7 @@
           format-full = "{icon}";
           format-charging = "";
           format-plugged = "";
-          tooltip-format = "{time}\n{timeTo}\nCapacity: {capacity}%\nPower draw: {power}w\nCycles: {cycles}\nHealth: {health}";
+          tooltip-format = "{timeTo}\nCapacity: {capacity}%\nPower draw: {power}w\nCycles: {cycles}\nHealth: {health}";
           format-icons = [
             ""
             ""
@@ -318,7 +318,7 @@
           format = "{player_icon}";
           format-paused = "{status_icon}";
           tooltip-format = "{player_icon} {dynamic}";
-          tooltip-format-paused = "{status_icon} <i>{dynamic}</i>";
+          tooltip-format-paused = "{status_icon} {dynamic}";
           player-icons = {
             default = "▶";
             mpv = "🎵";
