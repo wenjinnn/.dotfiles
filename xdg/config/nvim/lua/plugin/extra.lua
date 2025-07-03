@@ -172,14 +172,7 @@ later(function()
   -- AI chat workflow
   add({
     source = 'olimorris/codecompanion.nvim',
-    depends = {
-      'ravitemer/mcphub.nvim',
-      'ravitemer/codecompanion-history.nvim',
-    },
-  })
-  require('mcphub').setup({
-    cmd = 'npx',
-    cmdArgs = { '--yes', '--', 'mcp-hub@latest' },
+    depends = { 'ravitemer/codecompanion-history.nvim' },
   })
   local default_adapter = os.getenv('NVIM_AI_ADAPTER') or 'copilot'
   local ollama_model = os.getenv('NVIM_OLLAMA_MODEL') or 'deepseek-r1:14b'
@@ -225,17 +218,7 @@ later(function()
       diff = { provider = 'mini_diff' },
     },
     extensions = {
-      history = {
-        enabled = true,
-      },
-      mcphub = {
-        callback = 'mcphub.extensions.codecompanion',
-        opts = {
-          show_result_in_chat = true, -- Show mcp tool results in chat
-          make_vars = true, -- Convert resources to #variables
-          make_slash_commands = true, -- Add prompts as /slash commands
-        },
-      },
+      history = { enabled = true },
     },
   })
 
