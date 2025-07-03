@@ -35,7 +35,6 @@
           "memory"
           "temperature"
           "disk"
-          "network#speed"
           "network"
           "bluetooth"
           "pulseaudio"
@@ -176,22 +175,22 @@
           on-click-right = "nm-connection-editor";
           format-wifi = "󰖩";
           format-ethernet = "";
-          tooltip-format = "{ifname} via {gwaddr} \n{essid} ({signalStrength}%) ";
+          tooltip-format = "{ifname} via {gwaddr} \nIpaddr: {ipaddr} cidr: {cidr} cidr6: {cidr6}\nNetmask: {netmask} netmask6:{netmask6}\nEssid: {essid} ({signalStrength}%)\nTotal speed: {bandwidthTotalBytes}: {bandwidthUpBytes}/{bandwidthDownBytes} ";
           format-linked = "{ifname} (No IP) ";
           format-disconnected = "⚠";
-          format-alt = "{ifname}: {ipaddr}/{cidr}";
         };
         "network#speed" = {
           interval = 2;
           format-wifi = "󰡍";
           format-ethernet = "󰡍";
-          tooltip-format = "Total: {bandwidthTotalBytes}: {bandwidthUpBytes}/{bandwidthDownBytes}";
+          tooltip-format = "";
           format-linked = "󰡍";
           format-disconnected = "⚠";
           format-alt = "Total: {bandwidthTotalBytes}: {bandwidthUpBytes}/{bandwidthDownBytes}";
         };
         backlight = {
           format = "{icon}";
+          tooltip-format = "{icon} {percent}%";
           format-icons = [
             ""
             ""
@@ -223,7 +222,7 @@
           format-full = "{icon}";
           format-charging = "";
           format-plugged = "";
-          format-alt = "{time} {icon}";
+          tooltip-format = "{time}\n{timeTo}\nCapacity: {capacity}%\nPower draw: {power}w\nCycles: {cycles}\nHealth: {health}";
           format-icons = [
             ""
             ""
@@ -266,10 +265,10 @@
           format-no-controller = "󰥊";
           format-connected-battery = "󰥉";
           # format-device-preference = [ "device1", "device2" ];  # preference list deciding the displayed device
-          tooltip-format = "{controller_alias}\t{controller_address}\n\n{num_connections} connected";
-          tooltip-format-connected = "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}";
+          tooltip-format = "{controller_alias}\t{controller_address}\n{num_connections} connected";
+          tooltip-format-connected = "{controller_alias}\t{controller_address}\n{num_connections} connected\n{device_enumerate}";
           tooltip-format-enumerate-connected = "{device_alias}\t{device_address}";
-          tooltip-format-enumerate-connected-battery = "{device_alias}\t{device_address}\t{device_battery_percentage}%";
+          tooltip-format-enumerate-connected-battery = "{device_alias}\t{device_address}\tbat: {device_battery_percentage}%";
         };
         power-profiles-daemon = {
           format = "{icon}";
@@ -284,7 +283,7 @@
         };
         pulseaudio = {
           format = "{icon}\n{format_source}";
-          tooltip-format = "{volume}\n{desc}";
+          tooltip-format = "Volume: {volume}%\n{desc}";
           "format-bluetooth" = "{icon}";
           "format-bluetooth-muted" = "󰝟\n{icon}";
           "format-muted" = "\n{format_source}";
@@ -330,7 +329,6 @@
         };
         gamemode = {
           format = "{glyph}";
-          format-alt = "{glyph} {count}";
           glyph = "";
           hide-not-running = true;
           use-icon = true;
