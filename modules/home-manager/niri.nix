@@ -118,8 +118,8 @@ in
           };
           shadow.enable = true;
           struts = {
-            top = 6;
-            bottom = 6;
+            top = -3;
+            bottom = -3;
             left = 6;
             right = 6;
           };
