@@ -6,6 +6,12 @@
   lib,
   ...
 }:
+let
+  gtklock-powerbar = "${pkgs.gtklock-powerbar-module}/lib/gtklock/powerbar-module.so";
+  gtklock-userinfo = "${pkgs.gtklock-userinfo-module}/lib/gtklock/userinfo-module.so";
+  gtklock-playerctl = "${pkgs.gtklock-playerctl-module}/lib/gtklock/playerctl-module.so";
+  gtklock = "${lib.getExe pkgs.gtklock} -m ${gtklock-powerbar} -m ${gtklock-userinfo} -m ${gtklock-playerctl}";
+in
 {
 
   imports = with outputs.homeManagerModules; [
@@ -18,9 +24,6 @@
     cliphist
     kdeconnect
     wallpaper
-  ];
-  home.packages = with pkgs; [
-    wl-color-picker
   ];
   xdg.configFile."autostart/nm-applet.desktop".text = ''
     [Desktop Entry]
@@ -41,7 +44,6 @@
     };
     swayidle =
       let
-        gtklock = lib.getExe pkgs.gtklock;
         niri = lib.getExe pkgs.niri-unstable;
       in
       {
@@ -96,7 +98,7 @@
           path = lib.getExe pkgs.xwayland-satellite-unstable;
         };
         layout = {
-          gaps = 16;
+          gaps = 12;
           center-focused-column = "never";
           preset-column-widths = [
             { proportion = 0.33333; }
@@ -157,7 +159,7 @@
               hotkey-overlay = {
                 title = "Lock the Screen: gtklock";
               };
-              action = spawn "gtklock";
+              action = sh "${gtklock}";
             };
 
             "XF86AudioRaiseVolume" = {
