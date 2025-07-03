@@ -170,19 +170,11 @@ later(function()
   })
 
   -- AI chat workflow
-  local update_vectorcode = function() vim.system({ 'uv', 'tool', 'install', '--upgrade', 'vectorcode' }) end
   add({
     source = 'olimorris/codecompanion.nvim',
     depends = {
       'ravitemer/mcphub.nvim',
       'ravitemer/codecompanion-history.nvim',
-      {
-        source = 'Davidyz/VectorCode',
-        hooks = {
-          post_install = function() later(update_vectorcode) end,
-          post_checkout = update_vectorcode,
-        },
-      },
     },
   })
   require('mcphub').setup({
@@ -242,25 +234,6 @@ later(function()
           show_result_in_chat = true, -- Show mcp tool results in chat
           make_vars = true, -- Convert resources to #variables
           make_slash_commands = true, -- Add prompts as /slash commands
-        },
-      },
-      vectorcode = {
-        ---@type VectorCode.CodeCompanion.ExtensionOpts
-        opts = {
-          tool_group = {
-            enabled = true,
-            collapse = true,
-            -- tools in this array will be included to the `vectorcode_toolbox` tool group
-            extras = {},
-          },
-          tool_opts = {
-            ---@type VectorCode.CodeCompanion.LsToolOpts
-            ls = {},
-            ---@type VectorCode.CodeCompanion.QueryToolOpts
-            query = {},
-            ---@type VectorCode.CodeCompanion.VectoriseToolOpts
-            vectorise = {},
-          },
         },
       },
     },
