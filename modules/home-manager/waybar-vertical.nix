@@ -57,8 +57,15 @@
         clock = {
           format = "{:%m\n%d\n\n<b>%H\n%M\n%S</b>}";
           interval = 1;
-          format-alt = "{:%A, %B %d, %Y (%R)}  ";
-          tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+          tooltip-format = "<big>{:%Z, %A, %B %d, %Y (%H:%M:%S)}</big>\n<tt><span size='8pt'>{calendar}</span></tt>";
+          timezones = [
+            "Asia/Shanghai"
+            "Asia/Tokyo"
+            "America/New_York"
+            "America/Montevideo"
+            "America/Los_Angeles"
+            "Etc/UTC"
+          ];
           calendar = {
             mode = "year";
             mode-mon-col = 3;
@@ -74,8 +81,10 @@
           };
           actions = {
             "on-click-right" = "mode";
-            "on-scroll-up" = "shift_up";
-            "on-scroll-down" = "shift_down";
+            "on-scroll-up" = "tz_up";
+            "on-scroll-down" = "tz_down";
+            "on-click-forward" = "shift_up";
+            "on-click-backward" = "shift_down";
           };
         };
         "hyprland/window" = {
