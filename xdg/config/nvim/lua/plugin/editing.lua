@@ -147,7 +147,7 @@ later(function()
     end,
   })
   require('nvim-ts-autotag').setup()
-  require('treesitter-context').setup()
+  require('treesitter-context').setup({ multiwindow = true })
   local function go_to_context() require('treesitter-context').go_to_context(vim.v.count1) end
   map('n', '[e', go_to_context, 'treesitter context upward')
 end)
