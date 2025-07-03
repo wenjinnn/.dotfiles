@@ -117,6 +117,12 @@ in
             width = 2;
           };
           shadow.enable = true;
+          struts = {
+            top = 6;
+            bottom = 6;
+            left = 6;
+            right = 6;
+          };
         };
         screenshot-path = "~/Pictures/Screenshots/Screenshot-%Y-%m-%d %H-%M-%S.png";
         spawn-at-startup = [
