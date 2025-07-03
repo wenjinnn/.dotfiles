@@ -33,6 +33,7 @@
     upower.enable = true;
     udisks2.enable = true;
     geoclue2.enable = true;
+    accounts-daemon.enable = true;
   };
   # tell Electron/Chromium to run on Wayland
   environment.variables.NIXOS_OZONE_WL = "1";
