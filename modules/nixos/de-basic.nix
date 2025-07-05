@@ -5,26 +5,6 @@
     terminal = "footclient";
   };
 
-  environment.systemPackages = with pkgs; [
-    loupe
-    adwaita-icon-theme
-    file-roller
-    baobab
-    nautilus
-    nautilus-python
-    gnome-calendar
-    gnome-system-monitor
-    gnome-weather
-    gnome-calculator
-    gnome-clocks
-    gnome-software # for flatpak
-    wl-gammactl
-    wl-clipboard
-    wayshot
-    pavucontrol
-    brightnessctl
-  ];
-
   security = {
     polkit.enable = true;
   };

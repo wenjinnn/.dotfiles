@@ -196,7 +196,7 @@ in
   #  /etc/profiles/per-user/wenjin/etc/profile.d/hm-session-vars.sh
   #
   home.sessionPath = [
-    # add oauth2 script
+    # add customize script
     "${config.home.homeDirectory}/.local/bin"
   ];
   home.sessionVariables = {

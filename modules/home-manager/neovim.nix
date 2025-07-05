@@ -37,8 +37,6 @@
       prettier
       # for nvim-treesitter
       tree-sitter
-      # uv pkg manager, used by ai and mcp tools
-      uv
       # another http tool
       hurl
       # for kulala.nvim
