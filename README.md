@@ -1,7 +1,7 @@
 # Personal NixOS configuration with Flake and Home Manager
 # Screenshot
 
-![Image](https://github.com/user-attachments/assets/eca44dc4-a59d-4208-8131-ecc9b5673996)
+![Niri screenshot](https://github.com/user-attachments/assets/929da895-6548-42ea-abd4-5bc424f58b89)
 
 The old Arch configuration at [Arch branch](https://github.com/wenjinnn/config/tree/arch).
 
@@ -28,7 +28,7 @@ e.g. if you want to stay at stable nixpkgs branch but using unstable Hyprland, i
 * Editor: a well [configured nvim](https://github.com/wenjinnn/config/tree/nixos/xdg/config/nvim) (tested startup time are less than 30ms) that follows the [KISS principle](https://en.wikipedia.org/wiki/KISS_principle)
 
     you can try it and find more detail in my mono nvim configuration repo [wenvim](https://github.com/wenjinnn/wenvim), I'm using home-manager with `mkOutOfStoreSymlink` to symlink my nvim configurations directory, that's maybe not the nix way, but since I modify it very frequently and I store my custom snippets and spell file together with it, I don't want to compile it everytime I modified this, also I can easier to share my code with someone that not using NixOS.
-* Compositor: [Hyprland](https://github.com/hyprwm/Hyprland)
+* Compositor: [niri](https://github.com/YaLTeR/niri)
 * Topbar: [waybar](https://github.com/Alexays/Waybar)
 * Notification daemon: [dunst](https://github.com/dunst-project/dunst)
 * Launcher: [rofi (wayland-fork)](https://github.com/lbonn/rofi) with some script to let it provide the ability to manage various system functions, some of them maintained by myself:
@@ -42,7 +42,7 @@ e.g. if you want to stay at stable nixpkgs branch but using unstable Hyprland, i
     * [rofimoji](https://github.com/fdw/rofimoji) for emoji and unicode selection
     * [rofi-network-manager](https://github.com/meowrch/rofi-network-manager)
 * Terminal emulator: [foot](https://codeberg.org/dnkl/foot)
-* Wallpaper: [hyprpaper](https://github.com/hyprwm/hyprpaper) and some small script, [wallpaper-switch](https://github.com/wenjinnn/.dotfiles/blob/none-ags/pkgs/wallpaper-switch/wallpaper-switch.sh) , and [bingwallpaper-get](https://github.com/wenjinnn/.dotfiles/blob/none-ags/pkgs/bingwallpaper-get/bingwallpaper-get.sh) for download daily bingwallpaper and switch to it immediately.
+* Wallpaper: [swaybg](https://github.com/swaywm/swaybg) and some small script, [wallpaper-switch](https://github.com/wenjinnn/.dotfiles/blob/none-ags/pkgs/wallpaper-switch/wallpaper-switch.sh) , and [bingwallpaper-get](https://github.com/wenjinnn/.dotfiles/blob/none-ags/pkgs/bingwallpaper-get/bingwallpaper-get.sh) for download daily bingwallpaper and switch to it immediately.
 * Style manage: [stylix](https://github.com/danth/stylix) (that's awesome!)
 * Music player: [MPD](https://www.musicpd.org) and [ncmpcpp](https://github.com/ncmpcpp/ncmpcpp)
 * Mail client: [neomutt](https://neomutt.org/)
