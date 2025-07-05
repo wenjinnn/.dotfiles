@@ -149,7 +149,6 @@
       parted
       fbida
       pciutils
-      mesa-demos
       vulkan-tools
       home-manager
       cachix
