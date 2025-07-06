@@ -284,8 +284,8 @@
         pulseaudio = {
           format = "{icon}\n{format_source}";
           tooltip-format = "Volume: {volume}%\n{desc}";
-          "format-bluetooth" = "{icon}";
-          "format-bluetooth-muted" = "󰝟\n{icon}";
+          "format-bluetooth" = "{icon}\n{format_source}";
+          "format-bluetooth-muted" = "󰝟{icon}\n{format_source}";
           "format-muted" = "\n{format_source}";
           "format-source" = "󰍬";
           "format-source-muted" = "󰍭";
