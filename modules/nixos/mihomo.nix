@@ -435,6 +435,7 @@
     rules:
       - GEOSITE,private,DIRECT,no-resolve
       - GEOIP,private,DIRECT,no-resolve
+      - IP-CIDR,172.1.1.0/24,DIRECT,no-resolve
       # 若需禁用 QUIC 请取消注释 QUIC 两条规则
       # 防止 YouTube 等使用 QUIC 导致速度不佳, 禁用 443 端口 UDP 流量（不包括国内）
     # - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,cn))),REJECT # quic
