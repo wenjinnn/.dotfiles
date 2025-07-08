@@ -138,6 +138,7 @@ in
           let
             sh = spawn "sh" "-c";
             rofi-cliphist = "rofi -modi clipboard:${pkgs.cliphist}/bin/cliphist-rofi-img -show clipboard -show-icons";
+            wl-kbptr = "${lib.getExe pkgs.wl-kbptr} -o modes=floating,click -o mode_floating.source=detect";
           in
           {
             "Mod+Return" = {
@@ -211,6 +212,12 @@ in
             "Mod+P" = {
               hotkey-overlay.title = "Pass menu: rofi-pass";
               action = sh "rofi-pass";
+            };
+            "Mod+T" = {
+              hotkey-overlay = {
+                title = "Trigger keyboard pointer: wl-kbptr";
+              };
+              action = sh "${wl-kbptr}";
             };
             "Mod+A" = {
               hotkey-overlay = {
