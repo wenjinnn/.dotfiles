@@ -176,7 +176,7 @@
           format-wifi = "󰖩";
           format-ethernet = "";
           tooltip-format = "{ifname} via {gwaddr} \nIpaddr: {ipaddr} cidr: {cidr} cidr6: {cidr6}\nNetmask: {netmask} netmask6:{netmask6}\nEssid: {essid} ({signalStrength}%)\nTotal speed: {bandwidthTotalBytes}: {bandwidthUpBytes}/{bandwidthDownBytes} ";
-          format-linked = "{ifname} (No IP) ";
+          format-linked = "󰌷";
           format-disconnected = "⚠";
         };
         "network#speed" = {
