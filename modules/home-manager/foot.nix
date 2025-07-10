@@ -1,14 +1,10 @@
-{pkgs, ...}: {
+{ lib, ... }:
+{
   # foot
   programs.foot = {
     enable = true;
     server.enable = true;
     settings = {
-      main = {
-        letter-spacing = 0;
-        dpi-aware = "no";
-        bold-text-in-bright = "no";
-      };
       scrollback = {
         lines = 10000;
       };

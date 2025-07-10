@@ -98,7 +98,7 @@ in
           path = lib.getExe pkgs.xwayland-satellite-unstable;
         };
         layout = {
-          gaps = 9;
+          gaps = 13;
           center-focused-column = "never";
           preset-column-widths = [
             { proportion = 0.33333; }

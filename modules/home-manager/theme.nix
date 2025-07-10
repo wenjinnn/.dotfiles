@@ -30,8 +30,7 @@
     };
     fonts = {
       sizes = {
-        popups = 13;
-        desktop = 11;
+        applications = 11;
       };
     };
   };
