@@ -50,6 +50,7 @@
     ])
     ++ (with pkgs.python3Packages; [
       python-lsp-server
+      flake8
       pip
     ]);
 
