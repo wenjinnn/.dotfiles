@@ -84,6 +84,11 @@
     };
   };
 
+  boot.extraModprobeConfig = ''
+    options snd-hda-intel enable=1,0  # only enable the first audio card
+    blacklist snd_hda_codec_hdmi  # disable HDMI audio output
+  '';
+
   xdg.terminal-exec = {
     enable = true;
     settings = {
