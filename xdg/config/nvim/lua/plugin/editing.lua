@@ -243,7 +243,7 @@ later(function()
   lint.linters_by_ft = {
     python = {'flake8'}
   }
-  vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
+  vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave', 'TextChanged' }, {
     callback = function()
       lint.try_lint()
       lint.try_lint('compiler')
