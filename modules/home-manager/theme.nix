@@ -31,6 +31,7 @@
     fonts = {
       sizes = {
         terminal = 11;
+        desktop = 11;
       };
     };
   };
