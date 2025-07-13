@@ -146,6 +146,8 @@ in
     w3m
     networkmanagerapplet
     browserpass
+    opencode
+    gemini-cli
     # temprorary disable this package for compilation error
     # devenv
     # for nvim dict
