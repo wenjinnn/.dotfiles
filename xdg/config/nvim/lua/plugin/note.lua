@@ -11,6 +11,10 @@ later(function()
         { name = 'life', path = note_path .. '/life' },
         { name = 'work', path = note_path .. '/work' },
       },
+      legacy_commands = false,
+      statusline = {
+        enabled = false,
+      },
     })
   end
 end)
