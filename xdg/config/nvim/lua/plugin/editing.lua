@@ -123,12 +123,12 @@ later(function()
       post_checkout = function() vim.cmd('TSUpdate') end,
     },
   })
-  local enable_ts = function(lang)
+  local enable_ts = function(buf, lang)
     if not vim.tbl_contains(require('nvim-treesitter.config').get_available(), lang) then return end
     vim.wo.foldmethod = 'expr'
     vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-    if not vim.g.vscode then vim.treesitter.start() end
+    if not vim.g.vscode then vim.treesitter.start(buf, lang) end
   end
   -- In case of installation failure, we can try to install ts langs manually
   vim.api.nvim_create_user_command('TSInstallInitLangs', install_ts_langs, { desc = 'Install ts init langs' })
@@ -139,9 +139,9 @@ later(function()
       local filetype = event.match
       local lang = vim.treesitter.language.get_lang(filetype)
       if not vim.tbl_contains(ts_init_langs, lang) then
-        require('nvim-treesitter').install(lang):await(function() enable_ts(lang) end)
+        require('nvim-treesitter').install(lang):await(function() enable_ts(event.buf, lang) end)
       else
-        enable_ts(lang)
+        enable_ts(event.buf, lang)
       end
     end,
   })
@@ -240,7 +240,7 @@ later(function()
   -- just use the default lint
   -- TODO maybe add more linter in future
   lint.linters_by_ft = {
-    python = {'flake8'}
+    python = { 'flake8' },
   }
   vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave', 'TextChanged' }, {
     callback = function()
