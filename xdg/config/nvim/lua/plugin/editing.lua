@@ -138,7 +138,7 @@ later(function()
     callback = function(event)
       local filetype = event.match
       local lang = vim.treesitter.language.get_lang(filetype)
-      if not vim.tbl_contains(ts_init_langs, lang) then
+      if not vim.tbl_contains(require('nvim-treesitter.config').get_installed("parsers"), lang) then
         require('nvim-treesitter').install(lang):await(function() enable_ts(event.buf, lang) end)
       else
         enable_ts(event.buf, lang)
