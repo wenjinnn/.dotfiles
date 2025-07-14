@@ -180,7 +180,7 @@ in
               action = sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
             };
 
-            "Mod+O" = {
+            "Mod+Tab" = {
               repeat = false;
               action = toggle-overview;
             };
@@ -292,16 +292,16 @@ in
             "Mod+Page_Down".action = focus-workspace-down;
             "Mod+Page_Up".action = focus-workspace-up;
             "Mod+I".action = focus-workspace-up;
-            "Mod+U".action = focus-workspace-down;
+            "Mod+O".action = focus-workspace-down;
             "Mod+Ctrl+Page_Down".action = move-column-to-workspace-down;
             "Mod+Ctrl+Page_Up".action = move-column-to-workspace-up;
-            "Mod+Ctrl+U".action = move-column-to-workspace-down;
             "Mod+Ctrl+I".action = move-column-to-workspace-up;
+            "Mod+Ctrl+O".action = move-column-to-workspace-down;
 
             "Mod+Shift+Page_Down".action = move-workspace-down;
             "Mod+Shift+Page_Up".action = move-workspace-up;
-            "Mod+Shift+U".action = move-workspace-down;
             "Mod+Shift+I".action = move-workspace-up;
+            "Mod+Shift+O".action = move-workspace-down;
 
             "Mod+WheelScrollDown" = {
               cooldown-ms = 150;
@@ -404,8 +404,6 @@ in
             "Mod+Shift+E".action = quit;
             "Ctrl+Alt+Delete".action = quit;
 
-            "Mod+Tab".action = focus-window-down-or-column-right;
-            "Mod+Shift+Tab".action = focus-window-up-or-column-left;
           };
         debug = {
           dbus-interfaces-in-non-session-instances = [ ];
