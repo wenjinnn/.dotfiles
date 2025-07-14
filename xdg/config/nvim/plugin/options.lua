@@ -82,8 +82,6 @@ opt.foldlevel = 99
 vim.diagnostic.config({ virtual_text = true })
 if vim.g.vscode then vim.notify = require('vscode-neovim').notify end
 
-if vim.fn.has('nvim-0.12') == 1 then require('vim._extui').enable({}) end
-
 -- Copy/Paste when using wsl
 if vim.fn.has('wsl') == 1 then
   vim.g.clipboard = {
