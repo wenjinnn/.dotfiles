@@ -16,11 +16,8 @@
         position = "left";
         modules-left = [
           "custom/os"
-          "gamemode"
+          # "gamemode"
           "niri/workspaces"
-          "hyprland/window"
-          # "niri/window"
-          "hyprland/submap"
         ];
         modules-center = [
           "privacy"
@@ -329,12 +326,12 @@
         };
         gamemode = {
           format = "{glyph}";
-          glyph = "";
+          glyph = "󰺵";
           hide-not-running = true;
           use-icon = true;
           icon-name = "input-gaming-symbolic";
-          icon-spacing = 4;
-          icon-size = 20;
+          icon-spacing = 0;
+          icon-size = 14;
           tooltip = true;
           tooltip-format = "Games running: {count}";
         };
