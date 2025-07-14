@@ -99,7 +99,6 @@ later(function()
     'scss',
     'cmake',
     'comment',
-    'http',
     'jsdoc',
     'json',
     'json5',

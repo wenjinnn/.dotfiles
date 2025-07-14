@@ -33,7 +33,6 @@ later(function()
     'taplo',
     'rust_analyzer',
     'gopls',
-    'kulala_ls',
   })
   -- custom jdtls setup
   require('lsp.jdtls').setup()
