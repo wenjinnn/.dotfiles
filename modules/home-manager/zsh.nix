@@ -31,7 +31,6 @@
         "extract"
         "systemd"
         "fzf"
-        "tmux"
       ];
       extraConfig = ''
         COMPLETION_WAITING_DOTS=true
