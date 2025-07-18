@@ -24,12 +24,33 @@
       src = prev.pkgs.fetchFromGitHub {
         owner = "rss2email";
         repo = "rss2email";
-        rev = "0efe6c299b4e9f2545455d6bc6b6c2753cff1440";
-        hash = "sha256-QuNRXtKDEx20On4dyCgJ6yGSI0WSxdwr/IuzD35JzVQ=";
+        rev = "9e985706bb13616d0333cd71eae5b03dc7388af6";
+        hash = "sha256-DrTV+RRhhf6bzKSwZMbg1bm6U3SpqDS7lK6yIKOkaZo=";
       };
       patches = null;
       installCheckPhase = null;
+      doCheck = false;
+      dontUseUnittestCheck = true;
+
     });
+    python3Packages = prev.python3Packages.override {
+      overrides = self: super: {
+        feedparser = super.feedparser.overrideAttrs (oldAttrs: {
+          src = prev.pkgs.fetchFromGitHub {
+            owner = "kurtmckee";
+            repo = "feedparser";
+            rev = "74a0bf49bf640c1e09a7f71a17720a0635f12f53";
+            hash = "sha256-3hwZOAh/fb5mzRlwcoVk6bzdnnkOCcwEct1cMLlAX1A=";
+          };
+          propagatedBuildInputs = (oldAttrs.propagatedBuildInputs or [ ]) ++ [
+            super.poetry-core
+            super.requests
+          ];
+          installCheckPhase = null;
+        });
+      };
+    };
+
     # fix scan not work
     rofi-bluetooth = prev.rofi-bluetooth.overrideAttrs (old: {
       src = prev.fetchFromGitHub {
