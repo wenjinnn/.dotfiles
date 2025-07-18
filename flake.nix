@@ -208,7 +208,7 @@
           ./home-manager/hosts/nixos.nix
           nur.modules.homeManager.default
           stylix.homeModules.stylix
-          nix-index-database.hmModules.nix-index
+          nix-index-database.homeModules.nix-index
         ];
       };
       "wenjin@nixos-wsl" = home-manager.lib.homeManagerConfiguration {
@@ -218,7 +218,7 @@
           # > Our main home-manager configuration file <
           ./home-manager/home.nix
           nur.modules.homeManager.default
-          nix-index-database.hmModules.nix-index
+          nix-index-database.homeModules.nix-index
         ];
       };
     };
