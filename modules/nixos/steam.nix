@@ -1,6 +1,6 @@
 {
   pkgs,
-  username,
+  me,
   ...
 }: let
   gs = pkgs.writeShellScript "gs" ''
@@ -57,11 +57,21 @@ in {
       scheduler = "scx_lavd";
     };
   };
+  security.sudo.extraConfig = ''
+    ${me.username} ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/tee /sys/devices/system/cpu/intel_pstate/no_turbo
+  '';
+
   environment = {
     systemPackages = with pkgs; [
       mangohud
       gamemode
     ];
+    # disable intel cpu turbo while gaming
+    etc."gamemode.ini".text = ''
+      [custom]
+      start=echo "1" | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
+      end=echo "0" | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
+    '';
     loginShellInit = ''
       [[ "$(tty)" = "/dev/tty2" ]] && ${gs}
     '';
