@@ -31,7 +31,6 @@ in
     direnv
     translate-shell
     ripgrep
-    tmux
     sops
     mail
     mpd
