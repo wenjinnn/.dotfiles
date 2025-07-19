@@ -42,7 +42,7 @@ e.g. if you want to stay at stable nixpkgs branch but using unstable Hyprland, i
     * [rofimoji](https://github.com/fdw/rofimoji) for emoji and unicode selection
     * [rofi-network-manager](https://github.com/meowrch/rofi-network-manager)
 * Terminal emulator: [foot](https://codeberg.org/dnkl/foot)
-* Wallpaper: [swaybg](https://github.com/swaywm/swaybg) and some small script, [wallpaper-switch](https://github.com/wenjinnn/.dotfiles/blob/none-ags/pkgs/wallpaper-switch/wallpaper-switch.sh) , and [bingwallpaper-get](https://github.com/wenjinnn/.dotfiles/blob/none-ags/pkgs/bingwallpaper-get/bingwallpaper-get.sh) for download daily bingwallpaper and switch to it immediately.
+* Wallpaper: [swaybg](https://github.com/swaywm/swaybg) and some small script, [wallpaper-switch](https://github.com/wenjinnn/.dotfiles/blob/main/pkgs/wallpaper-switch/wallpaper-switch.sh) , and [bingwallpaper-get](https://github.com/wenjinnn/.dotfiles/blob/none-ags/pkgs/wallpaper-switch/wallpaper-switch.sh) for download daily bingwallpaper and switch to it immediately.
 * Style manage: [stylix](https://github.com/danth/stylix) (that's awesome!)
 * Music player: [MPD](https://www.musicpd.org) and [ncmpcpp](https://github.com/ncmpcpp/ncmpcpp)
 * Mail client: [neomutt](https://neomutt.org/)
