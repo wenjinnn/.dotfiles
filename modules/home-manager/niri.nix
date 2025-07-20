@@ -408,6 +408,7 @@ in
         debug = {
           dbus-interfaces-in-non-session-instances = [ ];
         };
+        hotkey-overlay.skip-at-startup = true;
         gestures.hot-corners.enable = false;
         window-rules = [
           {
