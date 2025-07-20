@@ -197,7 +197,7 @@ in
               hotkey-overlay.title = "Next player: playerctl next";
               action = sh "playerctl next";
             };
-            "Mod+S" = {
+            "Mod+U" = {
               hotkey-overlay.title = "Systemd unit menu: rofi-systemd";
               action = sh "rofi-systemd";
             };
@@ -372,8 +372,8 @@ in
             "Mod+Shift+Minus".action = set-window-height "-5%";
             "Mod+Shift+Equal".action = set-window-height "+5%";
 
-            "Mod+Ctrl+Space".action = toggle-window-floating;
-            "Mod+Shift+Space".action = switch-focus-between-floating-and-tiling;
+            "Mod+S".action = toggle-window-floating;
+            "Mod+Shift+S".action = switch-focus-between-floating-and-tiling;
 
             "Mod+W".action = toggle-column-tabbed-display;
 
