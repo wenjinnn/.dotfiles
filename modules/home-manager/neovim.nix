@@ -47,6 +47,7 @@
       mariadb
       redis
       oracle-instantclient
+      basedpyright
     ])
     ++ (with pkgs.python3Packages; [
       python-lsp-server

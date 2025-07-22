@@ -21,7 +21,7 @@ later(function()
     'ts_ls',
     'yamlls',
     'nixd',
-    'pylsp',
+    'basedpyright',
     'texlab',
     'bashls',
     'cssls',
