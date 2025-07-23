@@ -206,6 +206,7 @@ in
     NOTE = note_path;
     SOPS_SECRETS = "${dotfiles_path}/secrets.yaml";
     PLAYER = "ffplay -nodisp -autoexit -loglevel quiet";
+    GOOGLE_CLOUD_PROJECT = "$(sops exec-env ${dotfiles_path}/secrets.yaml 'echo -e $GMAIL_CLIENT_ID')";
   };
 
   xdg = {
