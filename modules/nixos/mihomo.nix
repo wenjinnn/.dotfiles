@@ -444,12 +444,13 @@
     # - GEOSITE,bilibili,video
 
       - GEOSITE,openai,AI
+      - GEOSITE,google,AI
       - GEOSITE,anthropic,AI
       - GEOSITE,x,AI
       - GEOSITE,xai,AI
       - DOMAIN-SUFFIX,claude.ai,AI
       - DOMAIN-SUFFIX,claudeusercontent.com,AI
-      - DOMAIN-SUFFIX,reddit.com,hongkong
+      - GEOSITE,reddit,hongkong
       - GEOSITE,apple,universal
       - GEOSITE,apple-cn,universal
       - GEOSITE,ehentai,universal
