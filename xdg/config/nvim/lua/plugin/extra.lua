@@ -195,6 +195,7 @@ later(function()
       }),
       anthropic = extend_adapter('anthropic', 'ANTHROPIC_API_KEY'),
       deepseek = extend_adapter('deepseek', 'DEEPSEEK_API_KEY'),
+      gemini = extend_adapter('gemini', 'GEMINI_API_KEY'),
     },
     strategies = {
       chat = {
