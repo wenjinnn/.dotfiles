@@ -98,7 +98,7 @@ in
           path = lib.getExe pkgs.xwayland-satellite-unstable;
         };
         layout = {
-          gaps = 13;
+          gaps = 4;
           center-focused-column = "never";
           preset-column-widths = [
             { proportion = 0.33333; }
@@ -117,9 +117,10 @@ in
             width = 2;
           };
           shadow.enable = true;
+          always-center-single-column = true;
           struts = {
-            left = 3;
-            right = 3;
+            left = 10;
+            right = 10;
           };
         };
         screenshot-path = "~/Pictures/Screenshots/Screenshot-%Y-%m-%d %H-%M-%S.png";
