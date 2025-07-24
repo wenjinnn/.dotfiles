@@ -42,8 +42,7 @@
 
   home.packages = with pkgs; [
     gimp3-with-plugins
-    # temporary disable darktable for compile error issue
-    # darktable
+    darktable
     obs-studio
     scrcpy
     wpsoffice-cn
