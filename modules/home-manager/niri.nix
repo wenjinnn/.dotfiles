@@ -119,8 +119,8 @@ in
           shadow.enable = true;
           always-center-single-column = true;
           struts = {
-            left = 12;
-            right = 12;
+            left = 4;
+            right = 4;
           };
         };
         screenshot-path = "~/Pictures/Screenshots/Screenshot-%Y-%m-%d %H-%M-%S.png";
@@ -361,6 +361,7 @@ in
             "Mod+Ctrl+R".action = reset-window-height;
             "Mod+F".action = maximize-column;
             "Mod+Shift+F".action = fullscreen-window;
+            "Mod+Ctrl+Shift+F".action = toggle-windowed-fullscreen;
 
             "Mod+Ctrl+F".action = expand-column-to-available-width;
             "Mod+C".action = center-column;
