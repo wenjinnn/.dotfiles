@@ -119,8 +119,8 @@ in
           shadow.enable = true;
           always-center-single-column = true;
           struts = {
-            left = 10;
-            right = 10;
+            left = 12;
+            right = 12;
           };
         };
         screenshot-path = "~/Pictures/Screenshots/Screenshot-%Y-%m-%d %H-%M-%S.png";
