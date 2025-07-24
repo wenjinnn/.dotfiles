@@ -147,8 +147,7 @@ in
     browserpass
     opencode
     gemini-cli
-    # temprorary disable this package for compilation error
-    # devenv
+    devenv
     # for nvim dict
     wordnet
     # nix related
