@@ -118,7 +118,6 @@ in
             width = 2;
           };
           shadow.enable = true;
-          always-center-single-column = true;
           struts = {
             top = 3;
             left = 9;
