@@ -45,7 +45,6 @@
     darktable
     obs-studio
     scrcpy
-    wpsoffice-cn
     wireshark
     mitmproxy
     waydroid
@@ -62,5 +61,6 @@
     obsidian
     obsidian-export
     nur.repos.xddxdd.dingtalk
+    nur.repos.novel2430.wpsoffice-365
   ];
 }
