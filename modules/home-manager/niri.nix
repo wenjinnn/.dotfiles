@@ -32,6 +32,8 @@ in
     Exec=nm-applet
     Hidden=true
   '';
+  xdg.dataFile."nautilus-python/extensions/image_tools_extension.py".source =
+    ../../xdg/data/nautilus-python/extensions/image_tools_extension.py;
 
   services = {
     network-manager-applet.enable = false;
