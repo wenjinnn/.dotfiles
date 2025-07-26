@@ -8,9 +8,9 @@
     rofi-bluetooth
     rofi-pulse-select
     rofi-systemd
-    rofi-network-manager
     rofi-screenshot-wayland
     rofimoji
+    networkmanager_dmenu
     cava
   ];
   programs.rofi = {

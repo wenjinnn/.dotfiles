@@ -244,7 +244,7 @@ in
             };
             "Mod+N" = {
               hotkey-overlay.title = "Network menu: rofi-network-manager";
-              action = sh "rofi-network-manager";
+              action = sh "networkmanager_dmenu";
             };
             "Mod+Ctrl+Shift+P" = {
               hotkey-overlay.title = "Power menu: rofi-power-menu";
