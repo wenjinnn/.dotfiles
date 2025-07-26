@@ -3,26 +3,6 @@ if vim.g.vscode then return end
 local map = require('util').map
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
--- run code block in neovim
-later(function()
-  local build_sniprun = function(args) vim.system({ 'sh', './install.sh', '1' }, { cwd = args.path }) end
-  add({
-    source = 'michaelb/sniprun',
-    hooks = {
-      post_install = function(args) later(build_sniprun(args)) end,
-      post_checkout = build_sniprun,
-    },
-  })
-
-  require('sniprun').setup({
-    repl_enable = { 'Lua_nvim' },
-    selected_interpreters = { 'Lua_nvim' },
-    live_mode_toggle = 'enable',
-  })
-  map({ 'n', 'v' }, '<leader>rs', '<Plug>SnipRun', 'Run snip')
-  map('n', '<leader>rS', '<Plug>SnipRunOperator', 'Run snip operator')
-end)
-
 later(function()
   -- ascii draw in neovim
   add('jbyuki/venn.nvim')
