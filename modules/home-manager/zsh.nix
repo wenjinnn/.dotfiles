@@ -45,6 +45,7 @@
       n = "ncmpcpp";
       t = "trans";
       j = "zellij";
+      gemini = "env GEMINI_API_KEY=$(sops exec-env $SOPS_SECRETS 'echo -n $GEMINI_API_KEY') gemini";
     };
     initContent =
       let
