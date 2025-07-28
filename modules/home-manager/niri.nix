@@ -35,6 +35,10 @@ in
   xdg.dataFile."nautilus-python/extensions/image_tools_extension.py".source =
     ../../xdg/data/nautilus-python/extensions/image_tools_extension.py;
 
+  home.packages = [
+    pkgs.nur.repos."999eagle".swayaudioidleinhibit
+  ];
+
   services = {
     network-manager-applet.enable = false;
     gammastep = {
@@ -136,6 +140,9 @@ in
               "-c"
               "echo 'Xft.dpi: 192' | xrdb -merge"
             ];
+          }
+          {
+            command = [ "sway-audio-idle-inhibit" ];
           }
         ];
         binds =
