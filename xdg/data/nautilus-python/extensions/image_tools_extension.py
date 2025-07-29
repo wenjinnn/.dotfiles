@@ -32,6 +32,10 @@ class ImageToolsExtension(GObject.GObject, Nautilus.MenuProvider):
         p.communicate(input=text)
         subprocess.Popen(["notify-send", "Tesseract OCR", "Text has been send to clipboard"])
 
+    def setup_wallpaper(self, menu, file):
+        path = file.get_location().get_path()
+        subprocess.run(["wallpaper-switch", "-f", path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
     def get_file_items(self, files: list[Nautilus.FileInfo],):
         print(f"Debug: Received {len(files)} files")
         if len(files) != 1 or not is_image_file(files[0]):
@@ -51,4 +55,11 @@ class ImageToolsExtension(GObject.GObject, Nautilus.MenuProvider):
         )
         item_ocr.connect('activate', self.run_tesseract, files[0])
 
-        return [item_swappy, item_ocr]
+        item_setup_wallpaper = Nautilus.MenuItem(
+            name="ImageToolsExtension::SetupWallpaper",
+            label="Setup wallpaper via swaybg",
+            tip="Setup wallpaper via swaybg"
+        )
+        item_setup_wallpaper.connect('activate', self.setup_wallpaper, files[0])
+
+        return [item_swappy, item_ocr, item_setup_wallpaper]

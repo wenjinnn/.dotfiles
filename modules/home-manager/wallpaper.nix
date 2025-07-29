@@ -1,5 +1,8 @@
 { pkgs, config, ... }:
 {
+  home.packages = [
+    pkgs.wallpaper-switch
+  ];
   # custom wallpaper services
   systemd.user = {
     services = {
