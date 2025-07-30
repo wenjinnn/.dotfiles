@@ -17,7 +17,6 @@
       clang-tools
       nixd
       rust-analyzer
-      vale-ls
       luajitPackages.luarocks-nix
       typescript
       typescript-language-server
@@ -27,6 +26,9 @@
       texlab
       taplo
       gopls
+      # linter
+      vale
+      eslint
       # formatter
       stylua
       libxml2
