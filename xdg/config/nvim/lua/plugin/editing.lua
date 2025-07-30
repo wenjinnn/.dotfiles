@@ -237,6 +237,12 @@ end)
 later(function()
   add('mfussenegger/nvim-lint')
   local lint = require('lint')
+  lint.linters_by_ft = {
+    markdown = { 'vale' },
+    javascript = { 'eslint' },
+    typescript = { 'eslint' },
+    vue = { 'eslint' },
+  }
   -- just use the default lint
   -- TODO maybe add more linter in future
   vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave', 'TextChanged' }, {

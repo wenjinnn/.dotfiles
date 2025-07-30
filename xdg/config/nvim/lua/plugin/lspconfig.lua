@@ -14,7 +14,6 @@ later(function()
     },
   })
   vim.lsp.enable({
-    'eslint',
     'jsonls',
     'lua_ls',
     'vue_ls',
@@ -27,7 +26,6 @@ later(function()
     'cssls',
     'html',
     'lemminx',
-    'vale_ls',
     'vimls',
     'clangd',
     'taplo',
