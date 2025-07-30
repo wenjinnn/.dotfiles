@@ -21,12 +21,11 @@
 * Avoid sidebar, focus on editing. personally, I prefer to use float window, sidebar buffer just distract me a lot.
 * Avoid extra UI plugins. In common scenarios, [mini.notify](https://github.com/echasnovski/mini.notify) and [mini.pick](https://github.com/echasnovski/mini.pick) with `vim.ui.select()` wrapper already done well enough for notify and float window.
 * Provide out-of-box experience for web development.
-* AI powered.
+* AI powered by Github copilot, for AI agentic, I'm using [opencode](https://github.com/sst/opencode).
 
 > [!NOTE]
 > * This configuration only guaranteed to be compatible with the latest stable version.
 > * I'm not using mason.nvim now, The LSP package should managed by you own system.
-> * To make [olimorris/codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim) work,
 > you need to setup your own api key in [lua/plugin/extra.lua](lua/plugin/extra.lua#L198).
 > * To get all the custom keymap clue you need, just press `space`.
 
@@ -114,11 +113,6 @@ just some filetype settings
 
 `VUE_LANGUAGE_SERVER_PATH` path to vue language server
 
-### AI
-
-`NVIM_AI_ADAPTER` ai adapter for codecompanion.nvim, default to `ollama`
-`NVIM_OLLAMA_MODEL` ollama model to use for codecompanion.nvim, default to `llama3.2`
-
 ### Note taking
 `NOTE` note directory path for obsidian
 
@@ -133,7 +127,6 @@ just some filetype settings
 ## Plugins
 
 ### ai
-+ [olimorris/codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim)
 + [zbirenbaum/copilot.lua](https://github.com/zbirenbaum/copilot.lua)
 
 ### comment
