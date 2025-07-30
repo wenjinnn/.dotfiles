@@ -26,7 +26,7 @@
 > [!NOTE]
 > * This configuration only guaranteed to be compatible with the latest stable version.
 > * I'm not using mason.nvim now, The LSP package should managed by you own system.
-> * To make [olimorris/codecompanion.nvim](https://dotfyle.com/plugins/olimorris/codecompanion.nvim) work,
+> * To make [olimorris/codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim) work,
 > you need to setup your own api key in [lua/plugin/extra.lua](lua/plugin/extra.lua#L198).
 > * To get all the custom keymap clue you need, just press `space`.
 
@@ -124,68 +124,82 @@ just some filetype settings
 
 ### Must have
 1. [ripgrep](https://github.com/BurntSushi/ripgrep) depend by many plugin.
-2. All the LSP package that configured in [lua/lsp/init.lua](lua/lsp/init.lua), if you're going to use.
+2. All the LSP package that configured in [lua/plugin/lspconfig.lua](lua/plugin/lspconfig.lua), if you're going to use these.
 
 ### Recommend
 1. [tmux](https://github.com/tmux/tmux) for terminal multiplexing, I'm almost using it only in WSL.
 2. [lazygit](https://github.com/jesseduffield/lazygit) smooth git operation.
 
-## Main Plugins
+## Plugins
 
 ### ai
++ [olimorris/codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim)
++ [zbirenbaum/copilot.lua](https://github.com/zbirenbaum/copilot.lua)
 
-+ [olimorris/codecompanion.nvim](https://dotfyle.com/plugins/olimorris/codecompanion.nvim)
-### code-runner
-
-+ [michaelb/sniprun](https://dotfyle.com/plugins/michaelb/sniprun)
 ### comment
 
-+ [danymat/neogen](https://dotfyle.com/plugins/danymat/neogen)
-+ [JoosepAlviste/nvim-ts-context-commentstring](https://dotfyle.com/plugins/JoosepAlviste/nvim-ts-context-commentstring)
++ [danymat/neogen](https://github.com/danymat/neogen)
+
+### extra
+
++ [glacambre/firenvim](https://github.com/glacambre/firenvim)
+
+### database
++ [kristijanhusak/vim-dadbod-ui](https://github.com/kristijanhusak/vim-dadbod-ui)
++ [kristijanhusak/vim-dadbod-completion](https://github.com/kristijanhusak/vim-dadbod-completion)
++ [tpope/vim-dadbod](https://github.com/tpope/vim-dadbod)
+
 ### debugging
 
-+ [mfussenegger/nvim-dap](https://dotfyle.com/plugins/mfussenegger/nvim-dap)
-+ [theHamsta/nvim-dap-virtual-text](https://dotfyle.com/plugins/theHamsta/nvim-dap-virtual-text)
++ [mfussenegger/nvim-dap](https://github.com/mfussenegger/nvim-dap)
++ [mfussenegger/nvim-dap-python](https://github.com/mfussenegger/nvim-dap-python)
++ [theHamsta/nvim-dap-virtual-text](https://github.com/theHamsta/nvim-dap-virtual-text)
++ [jbyuki/one-small-step-for-vimkind](https://github.com/jbyuki/one-small-step-for-vimkind)
+
 ### editing-support
 
-+ [nvim-treesitter/nvim-treesitter-context](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-context)
-+ [windwp/nvim-ts-autotag](https://dotfyle.com/plugins/windwp/nvim-ts-autotag)
++ [nvim-treesitter/nvim-treesitter-context](https://github.com/nvim-treesitter/nvim-treesitter-context)
++ [windwp/nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag)
 ### formatting
 
-+ [stevearc/conform.nvim](https://dotfyle.com/plugins/stevearc/conform.nvim)
++ [stevearc/conform.nvim](https://github.com/stevearc/conform.nvim)
 ### lsp
 
-+ [b0o/SchemaStore.nvim](https://dotfyle.com/plugins/b0o/SchemaStore.nvim)
-+ [mfussenegger/nvim-lint](https://dotfyle.com/plugins/mfussenegger/nvim-lint)
-+ [mfussenegger/nvim-jdtls](https://dotfyle.com/plugins/mfussenegger/nvim-jdtls)
-+ [neovim/nvim-lspconfig](https://dotfyle.com/plugins/neovim/nvim-lspconfig)
++ [b0o/SchemaStore.nvim](https://github.com/b0o/SchemaStore.nvim)
++ [mfussenegger/nvim-lint](https://github.com/mfussenegger/nvim-lint)
++ [mfussenegger/nvim-jdtls](https://github.com/mfussenegger/nvim-jdtls)
++ [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
++ [schrieveslaach/sonarlint.nvim](https://gitlab.com/schrieveslaach/sonarlint.nvim)
 ### markdown-and-latex
 
-+ [iamcco/markdown-preview.nvim](https://dotfyle.com/plugins/iamcco/markdown-preview.nvim)
++ [brianhuster/live-preview.nvim](https://github.com/brianhuster/live-preview.nvim)
 ### note-taking
 
-+ [nvim-orgmode/orgmode](https://dotfyle.com/plugins/nvim-orgmode/orgmode)
-+ [chipsenkbeil/org-roam.nvim](https://dotfyle.com/plugins/chipsenkbeil/org-roam.nvim)
-+ [jbyuki/venn.nvim](https://dotfyle.com/plugins/jbyuki/venn.nvim)
++ [obsidian-nvim/obsidian.nvim](github.com/obsidian-nvim/obsidian.nvim)
++ [jbyuki/venn.nvim](https://github.com/jbyuki/venn.nvim)
 ### nvim-dev
 
-+ [nvim-lua/plenary.nvim](https://dotfyle.com/plugins/nvim-lua/plenary.nvim)
++ [nvim-lua/plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
 ### search
 
-+ [MagicDuck/grug-far.nvim](https://dotfyle.com/plugins/MagicDuck/grug-far.nvim)
++ [MagicDuck/grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim)
 ### snippet
 
-+ [rafamadriz/friendly-snippets](https://dotfyle.com/plugins/rafamadriz/friendly-snippets)
-+ [chrisgrieser/nvim-scissors](https://dotfyle.com/plugins/chrisgrieser/nvim-scissors)
++ [rafamadriz/friendly-snippets](https://github.com/rafamadriz/friendly-snippets)
++ [chrisgrieser/nvim-scissors](https://github.com/chrisgrieser/nvim-scissors)
 ### syntax
 
-+ [nvim-treesitter/nvim-treesitter-textobjects](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-textobjects)
-+ [nvim-treesitter/nvim-treesitter](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter)
++ [hiphish/rainbow-delimiters.nvim](https://github.com/hiphish/rainbow-delimiters.nvim)
+
++ [nvim-treesitter/nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects)
++ [nvim-treesitter/nvim-treesitter-context](https://https://github.com/nvim-treesitter/nvim-treesitter-context)
++ [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
++ [windwp/nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag)
 ### utility
 
-+ [echasnovski/mini.nvim](https://dotfyle.com/plugins/echasnovski/mini.nvim)
++ [echasnovski/mini.nvim](https://github.com/echasnovski/mini.nvim)
 ### web-development
 
-+ [mistweaverco/kulala.nvim](https://dotfyle.com/plugins/mistweaverco/kulala.nvim)
++ [mistweaverco/kulala.nvim](https://github.com/mistweaverco/kulala.nvim)
 
  Part of this readme was generated by [Dotfyle](https://dotfyle.com)
