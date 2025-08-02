@@ -423,10 +423,10 @@ in
         };
         hotkey-overlay.skip-at-startup = true;
         gestures.hot-corners.enable = false;
+        outputs."eDP-1" = {
+          variable-refresh-rate = true;
+        };
         window-rules = [
-          {
-            draw-border-with-background = false;
-          }
           {
             matches = [
               {
