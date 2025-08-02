@@ -23,6 +23,8 @@
 
   nixpkgs.config.permittedInsecurePackages = [
     "openssl-1.1.1w"
+    # temporary fix for libsoup
+    "libsoup-2.74.3"
   ];
 
   gtk.gtk3.bookmarks = let
@@ -60,7 +62,7 @@
     wemeet
     obsidian
     obsidian-export
+    wpsoffice-cn
     nur.repos.xddxdd.dingtalk
-    nur.repos.novel2430.wpsoffice-365
   ];
 }
