@@ -40,6 +40,8 @@ in
   ];
 
   services = {
+    gnome-keyring.enable = lib.mkForce false;
+    polkit-gnome.enable = true;
     network-manager-applet.enable = false;
     gammastep = {
       enable = true;

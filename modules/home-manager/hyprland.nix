@@ -46,7 +46,6 @@ in
         wallpaper = [ ", ${config.home.homeDirectory}/.config/background" ];
       };
     };
-    pass-secret-service.enable = true;
     hyprpolkitagent.enable = true;
     hyprsunset = {
       enable = true;
