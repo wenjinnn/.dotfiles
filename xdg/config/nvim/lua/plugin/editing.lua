@@ -167,6 +167,9 @@ later(function()
   })
 
   local map_multistep = require('mini.keymap').map_multistep
+  -- escape to normal mode from terminal mode
+  -- NOTE but if current terminal buffer is exited, this will make the terminal buffer deleted immediately
+  require('mini.keymap').map_combo('t', '<Esc><Esc>', '<C-\\><C-n>')
 
   map_multistep('i', '<CR>', { 'pmenu_accept', 'minipairs_cr' })
   local forward_steps = {
