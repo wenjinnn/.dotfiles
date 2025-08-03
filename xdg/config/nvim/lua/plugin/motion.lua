@@ -8,7 +8,6 @@ later(function()
       dim = true,
       n_steps_ahead = 2,
     },
-    labels = 'asdfghjkl;';
     mappings = {
       start_jumping = 'sj',
     },
