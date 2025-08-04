@@ -54,7 +54,18 @@ later(function()
   })
 
   -- setup dap python and virtual text
-  require('dap-python').setup('python')
+  local dap_python = require('dap-python')
+  dap_python.setup('python')
+  vim.api.nvim_create_autocmd({ 'FileType' }, {
+    pattern = 'python',
+    group = util.augroup('dap_python'),
+    callback = function(ev)
+      local buf_map = require('util').buf_map(ev.buf)
+      buf_map('n', '<leader>dm', dap_python.test_method, 'Dap test method')
+      buf_map('n', '<leader>da', dap_python.test_class, 'Dap test class')
+      buf_map('v', '<leader>dv', dap_python.debug_selection, 'Dap debug selection')
+    end,
+  })
   require('nvim-dap-virtual-text').setup({
     all_frames = true,
     virt_text_pos = 'eol',

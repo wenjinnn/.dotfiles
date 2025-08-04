@@ -1,18 +1,13 @@
 local M = {}
 
-function M.buf_map(bufnr)
-  return function(mode, lhs, rhs, desc)
-    local opts = M.make_opts({ desc = desc, buffer = bufnr })
-    vim.keymap.set(mode, lhs, rhs, opts)
-  end
-end
-
 M.opts = { noremap = true, silent = true }
 
 function M.make_opts(opts) return vim.tbl_extend('keep', opts, M.opts) end
 
-function M.setup(client, bufnr)
+function M.setup(client_id, bufnr)
   local augroup = require('util').augroup
+  local client = vim.lsp.get_client_by_id(client_id)
+  if not client then return end
   if client.server_capabilities.documentHighlightProvider then
     local lsp_document_highlight = augroup('lsp_document_highlight', { clear = false })
     vim.api.nvim_clear_autocmds({
@@ -31,6 +26,7 @@ function M.setup(client, bufnr)
     })
   end
   -- inlay hint
+  -- TODO change to client:supports_method after nvim 0.12 released
   if client.supports_method('textDocument/inlayHint', { bufnr = bufnr }) then
     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
   end
@@ -46,20 +42,6 @@ function M.setup(client, bufnr)
       callback = function() vim.lsp.codelens.refresh({ bufnr = bufnr }) end,
     })
   end
-end
-
-function M.make_capabilities()
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  return capabilities
-end
-
-function M.make_lspconfig(opts)
-  local config = {
-    capabilities = M.make_capabilities(),
-    on_attach = function(client, bufnr) M.setup(client, bufnr) end,
-  }
-  if type(opts) == 'table' then config = vim.tbl_deep_extend('force', config, opts) end
-  return config
 end
 
 -- notice lsp when filename changed, modified from folke snacks.nvim

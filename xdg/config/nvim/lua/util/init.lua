@@ -42,6 +42,13 @@ function M.map(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, final_opts)
 end
 
+function M.buf_map(bufnr)
+  return function(mode, lhs, rhs, desc)
+    local opts = M.make_opts({ desc = desc, buffer = bufnr })
+    vim.keymap.set(mode, lhs, rhs, opts)
+  end
+end
+
 function M.source_all()
   local config_bundles = vim.split(vim.fn.glob(vim.fn.stdpath('config') .. '/**/*.lua'), '\n')
   for _, config in pairs(config_bundles) do
