@@ -2,7 +2,7 @@ if vim.g.vscode then return end
 
 local add, later = MiniDeps.add, MiniDeps.later
 local map = require('util').map
-local util = require('util.lsp')
+local util_lsp = require('util.lsp')
 
 -- Lspconfig related
 later(function()
@@ -33,18 +33,18 @@ later(function()
     'rust_analyzer',
     'gopls',
   })
+  vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(ev) util_lsp.setup(ev.data.client_id, ev.buf) end,
+  })
   -- custom jdtls setup
   require('lsp.jdtls').setup()
-  vim.api.nvim_create_autocmd('LspAttach', {
-    callback = function(ev) util.setup(ev.data.client_id, ev.buf) end,
-  })
   -- if didn't have this env, don't enable sonarlint LSP
   local sonarlint_path = os.getenv('SONARLINT_PATH')
   if sonarlint_path ~= nil then
     require('sonarlint').setup({
       server = {
         cmd = {
-          util.get_java_cmd(),
+          util_lsp.get_java_cmd(),
           '-jar',
           sonarlint_path .. '/server/sonarlint-ls.jar',
           -- Ensure that sonarlint-language-server uses stdio channel

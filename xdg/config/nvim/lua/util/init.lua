@@ -1,4 +1,7 @@
 local M = {}
+M.opts = { noremap = true, silent = true }
+
+function M.make_opts(opts) return vim.tbl_extend('keep', opts, M.opts) end
 
 -- We don't want spell, miniindentscope enable in terminal
 function M.setup_term_opt(_)

@@ -1,5 +1,6 @@
 local M = {}
 local util = require('util')
+local util_lsp = require('util.lsp')
 local jdtls = require('jdtls')
 function M.setup_dap()
   jdtls.setup_dap()
@@ -50,7 +51,7 @@ function M.start()
   local on_attach = function(client, bufnr)
     M.setup_dap()
     M.setup_jdtls_buf_keymap(bufnr)
-    util.setup(client, bufnr)
+    util_lsp.setup(client, bufnr)
   end
   local root_dir = vim.fs.root(0, { 'mvnw', 'gradlew', '.git', '.svn' })
   local ws_name, _ = string.gsub(vim.fn.fnamemodify(root_dir, ':p'), '/', '_')
@@ -85,7 +86,7 @@ function M.start()
         vim.lsp.handlers['$/progress'](err, result, ctx)
       end,
     },
-    cmd = util.java_cmd_optimize('jdtls', {
+    cmd = util_lsp.java_cmd_optimize('jdtls', {
       '--jvm-arg=-Dlog.protocol=true',
       '--jvm-arg=-Dlog.level=ALL',
       '--jvm-arg=-Dfile.encoding=utf-8',
@@ -105,7 +106,7 @@ function M.start()
 end
 
 function M.setup()
-  local jdtls_setup_group = require('util').augroup('jdtls_setup')
+  local jdtls_setup_group = util.augroup('jdtls_setup')
   vim.api.nvim_create_autocmd({ 'FileType' }, {
     group = jdtls_setup_group,
     pattern = 'java',
