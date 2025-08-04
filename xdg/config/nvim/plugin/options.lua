@@ -79,6 +79,7 @@ opt.smoothscroll = true
 opt.winborder = 'single'
 
 opt.foldlevel = 99
+opt.exrc = true
 vim.diagnostic.config({ virtual_text = true })
 if vim.g.vscode then vim.notify = require('vscode-neovim').notify end
 
