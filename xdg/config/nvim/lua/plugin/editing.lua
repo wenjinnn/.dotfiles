@@ -154,6 +154,7 @@ end)
 later(function()
   -- load some editing support mini modules at once
   require('mini.align').setup()
+  require('mini.comment').setup()
   require('mini.bracketed').setup()
   require('mini.pairs').setup()
   require('mini.operators').setup({ exchange = { prefix = 'gX' } })
