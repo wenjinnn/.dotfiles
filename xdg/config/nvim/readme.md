@@ -49,7 +49,9 @@ NVIM_APPNAME=wenjinnn/wenvim nvim
 
 Some behavior are not common in this configuration, but it's reasonable in my opinion:
 
-* `sj>` in normal mode will trigger `MiniJump2d.single_character()`
+* `sj` in normal mode will trigger mini.jump2d motion `MiniJump2d.builtin_opts.default`
+* `ss` in normal mode will trigger mini.jump2d motion `MiniJump2d.builtin_opts.single_character`
+* `sq` in normal mode will trigger mini.jump2d motion `MiniJump2d.builtin_opts.query`
 * if you login to Copilot, `<M-CR>` in insert mode will accept Copilot suggestion.
 
 ## Directory notes

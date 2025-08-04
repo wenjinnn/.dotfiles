@@ -14,7 +14,8 @@ later(function()
   })
   map({ 'n', 'x', 'o' }, ';', function() MiniJump.jump(nil, false) end, 'Jump forward')
   map({ 'n', 'x', 'o' }, ',', function() MiniJump.jump(nil, true) end, 'Jump backward')
-  -- make mini.jump2d default behavior to single character
   local function jump2d_single_chatacter() MiniJump2d.start(MiniJump2d.builtin_opts.single_character) end
-  map({ 'n', 'x', 'o' }, 'sj', jump2d_single_chatacter, 'Jump2d single chatacter')
+  map({ 'n', 'x', 'o' }, 'ss', jump2d_single_chatacter, 'Jump2d single chatacter')
+  local function jump2d_query() MiniJump2d.start(MiniJump2d.builtin_opts.query) end
+  map({ 'n', 'x', 'o' }, 'sq', jump2d_query, 'Jump2d query')
 end)
