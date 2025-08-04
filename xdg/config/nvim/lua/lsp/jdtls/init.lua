@@ -1,5 +1,5 @@
 local M = {}
-local util = require('util.lsp')
+local util = require('util')
 local jdtls = require('jdtls')
 function M.setup_dap()
   jdtls.setup_dap()
@@ -67,7 +67,7 @@ function M.start()
   local lombok_path = os.getenv('LOMBOK_PATH')
   local config = {
     settings = require('lsp.jdtls.settings'),
-    capabilities = util.make_capabilities(),
+    capabilities = vim.lsp.protocol.make_client_capabilities(),
     root_dir = root_dir,
     on_attach = on_attach,
     filetypes = { 'java' },

@@ -32,7 +32,6 @@ return {
     'vue',
   },
   settings = {
-    format = { enable = false },
     typescript = {
       inlayHints = inlay_hints_settings,
       implementationsCodeLens = { enabled = true },
