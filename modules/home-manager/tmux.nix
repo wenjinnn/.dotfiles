@@ -18,6 +18,7 @@
       logging
       sessionist
       pain-control
+      tmux-floax
       {
         plugin = resurrect;
         extraConfig = ''
