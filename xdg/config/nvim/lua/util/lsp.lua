@@ -1,9 +1,5 @@
 local M = {}
 
-M.opts = { noremap = true, silent = true }
-
-function M.make_opts(opts) return vim.tbl_extend('keep', opts, M.opts) end
-
 function M.setup(client_id, bufnr)
   local augroup = require('util').augroup
   local client = vim.lsp.get_client_by_id(client_id)
