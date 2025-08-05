@@ -168,7 +168,7 @@
           };
         };
         network = {
-          on-click-middle = "rofi-network-manager";
+          on-click-middle = "networkmanager_dmenu";
           on-click-right = "nm-connection-editor";
           format-wifi = "󰖩";
           format-ethernet = "";
@@ -252,7 +252,7 @@
           ];
         };
         bluetooth = {
-          on-click = "rofi-bluetooth";
+          on-click = "bzmenu -l rofi";
           on-click-right = "blueberry";
           format = "";
           format-disabled = "󰥊";

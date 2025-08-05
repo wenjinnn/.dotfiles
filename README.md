@@ -33,14 +33,13 @@ e.g. if you want to stay at stable nixpkgs branch but using unstable Hyprland, i
 * Notification daemon: [dunst](https://github.com/dunst-project/dunst)
 * Launcher: [rofi (wayland-fork)](https://github.com/lbonn/rofi) with some script to let it provide the ability to manage various system functions, some of them maintained by myself:
     * [cliphist-rofi-img](https://github.com/sentriz/cliphist/blob/master/contrib/cliphist-rofi-img) for clipboard manage
-    * [rofi-screenshot-wayland](https://github.com/wenjinnn/rofi-screenshot-wayland) a fork of [rofi-screenshot](https://github.com/ceuk/rofi-screenshot)
     * [rofi-power-menu](https://github.com/jluttine/rofi-power-menu)
     * [rofi-systemd](https://github.com/colonelpanic8/rofi-systemd) for control systemd unit
-    * [rofi-bluetooth](https://github.com/nickclyde/rofi-bluetooth) with scan ability fixed [PR](https://github.com/nickclyde/rofi-bluetooth/pull/33).
+    * [bzmenu](https://github.com/e-tho/bzmenu)
     * [rofi-pass-wayland](https://github.com/Seme4eg/rofi-pass-wayland) as [pass](https://www.passwordstore.org/) frontend.
     * [rofi-pulse-select](https://gitlab.com/DamienCassou/rofi-pulse-select)
     * [rofimoji](https://github.com/fdw/rofimoji) for emoji and unicode selection
-    * [rofi-network-manager](https://github.com/meowrch/rofi-network-manager)
+    * [networkmanager-dmenu](https://github.com/firecat53/networkmanager-dmenu)
 * Terminal emulator: [foot](https://codeberg.org/dnkl/foot)
 * Wallpaper: [swaybg](https://github.com/swaywm/swaybg) and some small script, [wallpaper-switch](https://github.com/wenjinnn/.dotfiles/blob/main/pkgs/wallpaper-switch/wallpaper-switch.sh) , and [bingwallpaper-get](https://github.com/wenjinnn/.dotfiles/blob/none-ags/pkgs/wallpaper-switch/wallpaper-switch.sh) for download daily bingwallpaper and switch to it immediately.
 * Style manage: [stylix](https://github.com/danth/stylix) (that's awesome!)
