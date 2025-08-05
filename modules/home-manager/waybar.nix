@@ -147,7 +147,7 @@
           };
         };
         network = {
-          on-click-middle = "rofi-network-manager";
+          on-click-middle = "networkmanager_dmenu";
           on-click-right = "nm-connection-editor";
           format-wifi = "{essid} ({signalStrength}%)  ";
           format-ethernet = "{ipaddr}/{cidr} ";
@@ -210,7 +210,7 @@
           ];
         };
         bluetooth = {
-          on-click = "rofi-bluetooth";
+          on-click = "bzmenu -l rofi";
           on-click-right = "blueberry";
           format = "{status} ";
           format-connected = "{device_alias} ";

@@ -216,8 +216,8 @@ in
               action = sh "rofi-systemd";
             };
             "Mod+B" = {
-              hotkey-overlay.title = "Bluetooth menu: rofi-bluetooth";
-              action = sh "rofi-bluetooth";
+              hotkey-overlay.title = "Bluetooth menu: bzmenu";
+              action = sh "bzmenu -l rofi";
             };
             "Mod+Alt+P" = {
               hotkey-overlay.title = "Pick color to clipboard: niri msg pick-color";
@@ -252,7 +252,7 @@ in
               action = sh "rofimoji";
             };
             "Mod+N" = {
-              hotkey-overlay.title = "Network menu: rofi-network-manager";
+              hotkey-overlay.title = "Network menu: networkmanager-dmenu";
               action = sh "networkmanager_dmenu";
             };
             "Mod+Ctrl+Shift+P" = {
@@ -393,11 +393,7 @@ in
             "Mod+W".action = toggle-column-tabbed-display;
 
             "Print".action = screenshot;
-            "Mod+Print" = {
-              hotkey-overlay.title = "Extra screenshot/screencast script: rofi-screenshot";
-              action = sh "rofi-screenshot";
-            };
-            "Alt+Print".action = screenshot-window;
+            "Mod+Print".action = screenshot-window;
 
             "Mod+Insert".action = set-dynamic-cast-window;
             "Mod+Shift+Insert".action = set-dynamic-cast-monitor;

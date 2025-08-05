@@ -5,14 +5,15 @@
 }: {
   home.packages = with pkgs; [
     rofi-power-menu
-    rofi-bluetooth
     rofi-pulse-select
     rofi-systemd
-    rofi-screenshot-wayland
     rofimoji
+    bzmenu
     networkmanager_dmenu
     cava
   ];
+  xdg.configFile."networkmanager-dmenu/config.ini".source =
+    ../../xdg/config/networkmanager-dmenu/config.ini;
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;

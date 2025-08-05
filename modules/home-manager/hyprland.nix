@@ -416,7 +416,7 @@ in
               # launcher
               "Super, D, exec, rofi -show drun"
               "Super, U, exec, rofi-systemd"
-              "Super, B, exec, rofi-bluetooth"
+              "Super, B, exec, bzmenu -l rofi"
               "AltSuper, P, exec, hyprpicker | wl-copy"
               "Super, P, exec, rofi-pass"
               "Super, A, exec, dunstctl context"
@@ -425,7 +425,7 @@ in
               "Super, E, exec, rofimoji"
               "Super, M, togglespecialworkspace, monitor"
               "Super, V, exec, ${rofi-cliphist}"
-              "Super, N, exec, rofi-network-manager"
+              "Super, N, exec, networkmanager_dmenu"
               "ControlShiftSuperAlt, P, exec, rofi -show power-menu -modi power-menu:rofi-power-menu"
               # Swap windows
               "SuperShift, L, layoutmsg, movewindowto r"
