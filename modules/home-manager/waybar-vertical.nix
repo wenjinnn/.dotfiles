@@ -168,7 +168,7 @@
           };
         };
         network = {
-          on-click-middle = "networkmanager_dmenu";
+          on-click = "networkmanager_dmenu";
           on-click-right = "nm-connection-editor";
           format-wifi = "󰖩";
           format-ethernet = "";
