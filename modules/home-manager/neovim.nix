@@ -20,6 +20,7 @@
       luajitPackages.luarocks-nix
       typescript
       typescript-language-server
+      vtsls
       vue-language-server
       yaml-language-server
       vim-language-server
@@ -107,7 +108,7 @@
       "--suffix"
       "VUE_LANGUAGE_SERVER_PATH"
       ":"
-      "${pkgs.vue-language-server}/lib/node_modules/@vue/language-server"
+      "${pkgs.vue-language-server}/lib/language-tools/packages/language-server"
       "--suffix"
       "TYPESCRIPT_LIBRARY"
       ":"
