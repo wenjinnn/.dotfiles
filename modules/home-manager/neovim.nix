@@ -36,7 +36,6 @@
       alejandra
       nixfmt-rfc-style
       rustfmt
-      kulala-fmt
       prettier
       # for nvim-treesitter
       tree-sitter

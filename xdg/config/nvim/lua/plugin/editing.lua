@@ -264,7 +264,6 @@ later(function()
     formatters_by_ft = {
       lua = { 'stylua' },
       nix = { 'nixfmt' },
-      http = { 'kulala-fmt' },
     },
   })
   vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
