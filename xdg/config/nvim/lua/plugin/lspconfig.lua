@@ -34,7 +34,10 @@ later(function()
     'gopls',
   })
   vim.api.nvim_create_autocmd('LspAttach', {
-    callback = function(ev) util_lsp.setup(ev.data.client_id, ev.buf) end,
+    callback = function(ev) util_lsp.on_attach(ev.data.client_id, ev.buf) end,
+  })
+  vim.api.nvim_create_autocmd('LspDetach', {
+    callback = function(ev) util_lsp.on_detach(ev.data.client_id, ev.buf) end,
   })
   -- custom jdtls setup
   require('lsp.jdtls').setup()
