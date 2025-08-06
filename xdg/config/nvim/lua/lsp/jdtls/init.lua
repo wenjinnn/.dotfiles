@@ -51,7 +51,7 @@ function M.start()
   local on_attach = function(client, bufnr)
     M.setup_dap()
     M.setup_jdtls_buf_keymap(bufnr)
-    util_lsp.setup(client, bufnr)
+    util_lsp.on_attach(client, bufnr)
   end
   local root_dir = vim.fs.root(0, { 'mvnw', 'gradlew', '.git', '.svn' })
   local ws_name, _ = string.gsub(vim.fn.fnamemodify(root_dir, ':p'), '/', '_')

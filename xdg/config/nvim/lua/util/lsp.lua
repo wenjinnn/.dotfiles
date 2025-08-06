@@ -1,6 +1,22 @@
 local M = {}
 
-function M.setup(client_id, bufnr)
+function M.on_detach(client_id, bufnr)
+  local augroup = require('util').augroup
+  local detach_client = vim.lsp.get_client_by_id(client_id)
+  if not detach_client then return end
+  local clients = vim.lsp.get_clients({ bufnr = bufnr })
+  for _, client in ipairs(clients) do
+    if client.id ~= detach_client.id and client.server_capabilities.documentHighlightProvider then return end
+  end
+  vim.lsp.buf.clear_references()
+  local lsp_document_highlight = augroup('lsp_document_highlight', { clear = false })
+  vim.api.nvim_clear_autocmds({
+    buffer = bufnr,
+    group = lsp_document_highlight,
+  })
+end
+
+function M.on_attach(client_id, bufnr)
   local augroup = require('util').augroup
   local client = vim.lsp.get_client_by_id(client_id)
   if not client then return end
@@ -26,9 +42,7 @@ function M.setup(client_id, bufnr)
   if client.supports_method('textDocument/inlayHint', { bufnr = bufnr }) then
     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
   end
-  if vim.fn.has("nvim-0.12") == 1 then
-    vim.lsp.document_color.enable(true, bufnr)
-  end
+  if vim.fn.has('nvim-0.12') == 1 then vim.lsp.document_color.enable(true, bufnr) end
   -- code lens
   if client.supports_method('textDocument/codeLens', { bufnr = bufnr }) then
     vim.lsp.codelens.refresh({ bufnr = bufnr })
