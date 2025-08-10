@@ -16,13 +16,6 @@ local M = {
       includeSourceMethodDeclarations = true,
     },
     selectionRange = { enabled = true },
-    recommendations = {
-      dependency = {
-        analytics = {
-          show = true,
-        },
-      },
-    },
     format = {
       enabled = true,
       comments = {
@@ -35,9 +28,6 @@ local M = {
     maxConcurrentBuilds = 5,
     saveActions = {
       organizeImports = false,
-    },
-    trace = {
-      server = 'verbose',
     },
     referencesCodeLens = { enabled = true },
     implementationsCodeLens = { enabled = true },
@@ -60,12 +50,8 @@ local M = {
         ' */',
       },
     },
-    typeHierarchy = {
-      lazyLoad = true,
-    },
     import = {
       gradle = { enabled = true },
-      generatesMetadataFilesAtProjectRoot = false,
       maven = { enabled = true },
       exclusions = {
         '**/node_modules/**',
@@ -89,17 +75,6 @@ local M = {
         'jdk.*',
         'sun.*',
       },
-      project = {
-        resourceFilters = {
-          'build',
-          'node_modules',
-          '\\.git',
-          '\\.idea',
-          '\\.cache',
-          '\\.vscode',
-          '\\.settings',
-        },
-      },
       overwrite = false,
       guessMethodArguments = true,
       favoriteStaticMembers = {
@@ -110,6 +85,17 @@ local M = {
         'java.util.Objects.requireNonNull',
         'java.util.Objects.requireNonNullElse',
         'org.mockito.Mockito.*',
+      },
+    },
+    project = {
+      resourceFilters = {
+        'build',
+        'node_modules',
+        '\\.git',
+        '\\.idea',
+        '\\.cache',
+        '\\.vscode',
+        '\\.settings',
       },
     },
     sources = {
