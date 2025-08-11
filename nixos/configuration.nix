@@ -164,6 +164,7 @@
       vulkan-tools
       home-manager
       cachix
+      nixos-generators
       # to run nixos-anywhere store and kexec locally:
       # nix build .#nixosConfigurations.my-server.config.system.build.toplevel -o result-nixos
       # nix build .#nixosConfigurations.my-server.config.system.build.diskoScript -o result-disko

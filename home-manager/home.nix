@@ -132,6 +132,7 @@ in
     kubernetes
     kubectl
     autossh
+    sshfs
     mermaid-cli
     mermaid-filter
     pandoc
