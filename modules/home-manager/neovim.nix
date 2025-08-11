@@ -9,7 +9,7 @@
       # lsp related
       jdt-language-server
       lombok
-      emmylua-ls
+      lua-language-server
       bash-language-server
       vue-language-server
       vscode-langservers-extracted
