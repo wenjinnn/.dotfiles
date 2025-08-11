@@ -1,9 +1,8 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [
     (python3.withPackages (p: [
-      p.python-pam
       p.debugpy
-      p.msal
     ]))
     gnumake
     cmake
@@ -14,7 +13,14 @@
     maven
     rustc
     cargo
+    typescript
   ];
+
+  home.sessionVariables = {
+    JAVA8_HOME = "${pkgs.jdk8}/lib/openjdk";
+    JAVA17_HOME = "${pkgs.jdk17}/lib/openjdk";
+    JAVA21_HOME = "${pkgs.jdk21}/lib/openjdk";
+  };
 
   home.file = {
     ".local/lib/openjdk8".source = "${pkgs.jdk8}/lib/openjdk";

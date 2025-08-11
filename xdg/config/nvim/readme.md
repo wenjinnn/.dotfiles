@@ -87,11 +87,11 @@ just some filetype settings
 
 `JAVA_HOME` fallback java home
 
-`JAVA_8_HOME` java 8 home
+`JAVA8_HOME` java 8 home
 
-`JAVA_17_HOME` java 17 home
+`JAVA17_HOME` java 17 home
 
-`JAVA_21_HOME` java 21 home
+`JAVA21_HOME` java 21 home
 
 `JDTLS_MAVEN_SETTINGS`  jdtls maven user settings.xml path
 
