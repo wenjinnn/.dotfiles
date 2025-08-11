@@ -7,24 +7,8 @@ function M.setup_dap()
   require('jdtls.dap').setup_dap_main_class_configs({
     config_overrides = { vmArgs = os.getenv('JDTLS_DAP_VMARGS') or '-Xms128m -Xmx512m' },
   })
-  local dap = require('dap')
   -- for all launch.json options see https://github.com/microsoft/vscode-java-debug#options
   require('dap.ext.vscode').load_launchjs()
-  local project_name = os.getenv('DAP_PROJECT_NAME')
-  local host_name = os.getenv('DAP_HOST')
-  local host_port = os.getenv('DAP_HOST_PORT') or 5005
-  if host_name ~= nil then
-    dap.configurations.java = {
-      {
-        type = 'java',
-        request = 'attach',
-        projectName = project_name or '',
-        name = string.format('Java attach: %s:%s %s', host_name, host_port, project_name or ''),
-        hostName = host_name,
-        port = host_port,
-      },
-    }
-  end
 end
 
 function M.setup_jdtls_buf_keymap(bufnr)

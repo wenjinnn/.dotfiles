@@ -3,9 +3,12 @@
   config,
   pkgs,
   ...
-}: {
-  home.packages =
-    (with pkgs; [
+}:
+{
+  home.packages = (
+    with pkgs;
+    [
+      neovim-remote
       # lsp related
       jdt-language-server
       lombok
@@ -17,8 +20,6 @@
       clang-tools
       nixd
       rust-analyzer
-      luajitPackages.luarocks-nix
-      typescript
       typescript-language-server
       vtsls
       vue-language-server
@@ -50,23 +51,11 @@
       redis
       oracle-instantclient
       basedpyright
-    ])
-    ++ (with pkgs.python3Packages; [
-      python-lsp-server
-      flake8
-      pip
-    ]);
-
-  home.sessionVariables = {
-    JAVA_8_HOME = "${pkgs.jdk8}/lib/openjdk";
-    JAVA_17_HOME = "${pkgs.jdk17}/lib/openjdk";
-    JAVA_21_HOME = "${pkgs.jdk21}/lib/openjdk";
-  };
+    ]
+  );
   xdg.configFile = {
     nvim = {
-      source =
-        config.lib.file.mkOutOfStoreSymlink
-        "${config.home.sessionVariables.DOTFILES}/xdg/config/nvim";
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.sessionVariables.DOTFILES}/xdg/config/nvim";
     };
     "vale/.vale.ini".text = ''
       MinAlertLevel = suggestion
@@ -108,10 +97,6 @@
       "VUE_LANGUAGE_SERVER_PATH"
       ":"
       "${pkgs.vue-language-server}/lib/language-tools/packages/language-server"
-      "--suffix"
-      "TYPESCRIPT_LIBRARY"
-      ":"
-      "${pkgs.typescript}/lib/node_modules/typescript/lib"
     ];
   };
 }
