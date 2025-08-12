@@ -1,5 +1,4 @@
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
-now(function() add('nvim-lua/plenary.nvim') end)
 
 now(function()
   require('mini.misc').setup()
