@@ -175,19 +175,6 @@ later(function()
 
   map_multistep('i', '<CR>', { 'pmenu_accept', 'minipairs_cr' })
 
-  local forward_steps = {
-    'minisnippets_next',
-    'jump_after_tsnode',
-    'jump_after_close',
-  }
-  map_multistep('i', '<C-l>', forward_steps)
-  local backward_steps = {
-    'minisnippets_prev',
-    'jump_before_tsnode',
-    'jump_before_open',
-  }
-  map_multistep('i', '<C-h>', backward_steps)
-
   map_multistep('i', '<Tab>', { 'pmenu_next', 'increase_indent' })
   map_multistep('i', '<S-Tab>', { 'pmenu_prev', 'decrease_indent' })
 end)
