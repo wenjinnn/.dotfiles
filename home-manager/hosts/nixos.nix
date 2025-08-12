@@ -16,7 +16,6 @@
     theme
     mpv
     foot
-    vscode
     aria2
     browser
   ];
