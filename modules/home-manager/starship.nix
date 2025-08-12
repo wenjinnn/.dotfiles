@@ -6,7 +6,6 @@
   programs.starship = {
     enable = true;
     enableBashIntegration = true;
-    enableZshIntegration = true;
     settings = {
       direnv.disabled = false;
       directory = {

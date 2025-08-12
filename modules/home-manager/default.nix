@@ -44,4 +44,5 @@
   kdeconnect = import ./kdeconnect.nix;
   udiskie = import ./udiskie.nix;
   de-basic = import ./de-basic.nix;
+  bash = import ./bash.nix;
 }

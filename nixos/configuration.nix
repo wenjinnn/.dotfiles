@@ -182,7 +182,11 @@
       enable = true;
       enableSSHSupport = true;
     };
-    zsh.enable = true;
+    bash = {
+      blesh.enable = true;
+      vteIntegration = true;
+      undistractMe.enable = true;
+    };
     nix-ld.enable = true;
   };
 
