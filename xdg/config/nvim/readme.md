@@ -75,14 +75,6 @@ just some filetype settings
 
 ## Defined environment variables cheatsheets:
 
-### Dap
-
-`DAP_PROJECT_NAME` nvim-dap config for dap configuration `projectName`
-
-`DAP_HOST` nvim-dap config for setting host, most used at remote debug situations.
-
-`DAP_HOST_PORT` like above, but for host port
-
 ### Java
 
 `JAVA_HOME` fallback java home
@@ -106,7 +98,6 @@ just some filetype settings
 `JDTLS_XMX` jdtls xmx jvm arg value
 
 `JDTLS_DAP_VMARGS` jdtls dap vm args
-
 
 ### Sonarlint
 `SONARLINT_PATH` path to sonarlint language server jars
