@@ -123,7 +123,6 @@ local M = {
         {
           name = 'JavaSE-17',
           path = java17_home or '/usr/lib/jvm/java-17-openjdk/',
-          default = true,
         },
         {
           name = 'JavaSE-21',
