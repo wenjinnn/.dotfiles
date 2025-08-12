@@ -18,7 +18,12 @@
       logging
       sessionist
       pain-control
-      tmux-floax
+      {
+        plugin = tmux-floax;
+        extraConfig = ''
+          set -g @floax-change-path 'false'
+        '';
+      }
       {
         plugin = resurrect;
         extraConfig = ''
