@@ -147,7 +147,11 @@ later(function()
     suggestion = {
       auto_trigger = true,
       hide_during_completion = false,
-      keymap = { accept = '<M-CR>' },
+      keymap = {
+        accept = '<M-CR>',
+        accept_word = '<M-w>',
+        accept_line = '<M-l>',
+      },
     },
     filetypes = {
       ['dap-repl'] = false,
