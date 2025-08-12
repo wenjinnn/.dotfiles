@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   programs.yazi = {
     enable = true;
-    enableZshIntegration = true;
+    enableBashIntegration = true;
     settings = {
       preview = {
         max_width = 1500;

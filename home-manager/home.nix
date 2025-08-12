@@ -8,7 +8,8 @@
   pkgs,
   me,
   ...
-}: let
+}:
+let
   dotfiles_path = "${config.home.homeDirectory}/.dotfiles";
   archive_path = "${config.home.homeDirectory}/.archive";
   note_path = "${config.home.homeDirectory}/.note";
@@ -18,7 +19,7 @@ in
   imports = with outputs.homeManagerModules; [
     # If you want to use modules your own flake exports (from modules/home-manager):
     # outputs.homeManagerModules.example
-    zsh
+    bash
     starship
     neovim
     git
@@ -37,6 +38,7 @@ in
     syncthing
     rclone
     tmux
+    opencode
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
 
@@ -101,11 +103,9 @@ in
     bat
     fd
     ripgrep
-    fzf
     socat
     lazygit
     jq
-    lsd
     duf
     cowsay
     file
@@ -146,7 +146,6 @@ in
     w3m
     networkmanagerapplet
     browserpass
-    opencode
     gemini-cli
     devenv
     # for nvim dict
@@ -214,7 +213,6 @@ in
     userDirs.enable = true;
   };
 
-
   programs = {
     gh = {
       enable = true;
@@ -225,7 +223,7 @@ in
     };
     nix-index = {
       enable = true;
-      enableZshIntegration = true;
+      enableBashIntegration = true;
     };
     mangohud = {
       enable = true;
@@ -240,6 +238,20 @@ in
     };
     # Enable home-manager
     home-manager.enable = true;
+    fzf = {
+      enable = true;
+      enableBashIntegration = true;
+      tmux.enableShellIntegration = true;
+    };
+    zoxide = {
+      enable = true;
+      enableBashIntegration = true;
+      options = [ "--cmd z" ];
+    };
+    lsd = {
+      enable = true;
+      enableBashIntegration = true;
+    };
     gpg.enable = true;
     bash.enable = true;
     imv.enable = true;

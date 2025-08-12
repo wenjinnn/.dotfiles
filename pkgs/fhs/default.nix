@@ -21,6 +21,5 @@ in
         ])
       );
       profile = "export FHS=1";
-      runScript = "zsh";
       extraOutputsToInstall = ["dev"];
     })
