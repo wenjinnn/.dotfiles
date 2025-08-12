@@ -251,6 +251,9 @@ in
     lsd = {
       enable = true;
       enableBashIntegration = true;
+      settings = {
+        display = "all";
+      };
     };
     gpg.enable = true;
     bash.enable = true;
