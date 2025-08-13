@@ -27,15 +27,11 @@ in
     yazi
     mime
     git-sync
-    btop
     lang
-    direnv
     translate-shell
-    ripgrep
     sops
     mail
     mpd
-    syncthing
     rclone
     tmux
     opencode
@@ -97,15 +93,8 @@ in
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')/
-    fastfetch
     ffmpeg
-    distrobox
-    bat
-    fd
-    ripgrep
     socat
-    lazygit
-    jq
     duf
     cowsay
     file
@@ -148,8 +137,6 @@ in
     browserpass
     gemini-cli
     devenv
-    # for nvim dict
-    wordnet
     # nix related
     #
     # it provides the command `nom` works just like `nix`
@@ -205,7 +192,6 @@ in
     NOTE = note_path;
     SOPS_SECRETS = "${dotfiles_path}/secrets.yaml";
     PLAYER = "ffplay -nodisp -autoexit -loglevel quiet";
-    GOOGLE_CLOUD_PROJECT = "$(sops exec-env ${dotfiles_path}/secrets.yaml 'echo -e $GMAIL_CLIENT_ID')";
   };
 
   xdg = {
@@ -214,6 +200,14 @@ in
   };
 
   programs = {
+    direnv = {
+      enable = true;
+      enableBashIntegration = true;
+      nix-direnv.enable = true;
+      config = {
+        load_dotenv = true;
+      };
+    };
     gh = {
       enable = true;
       extensions = with pkgs; [
@@ -238,6 +232,32 @@ in
     };
     # Enable home-manager
     home-manager.enable = true;
+    fastfetch.enable = true;
+    distrobox.enable = true;
+    bat.enable = true;
+    fd.enable = true;
+    ripgrep = {
+      enable = true;
+      arguments = [
+        "--glob=!.git/*"
+        "--glob=!**/target"
+        "--glob=!**/node_modules"
+        "--glob=!**/tags"
+        "--glob=!**/rime/*.dict.yaml"
+        "--glob=!**/.direnv"
+        "--smart-case"
+        "--hidden"
+        "--no-ignore-vcs"
+      ];
+    };
+    btop = {
+      enable = true;
+      settings = {
+        vim_keys = true;
+      };
+    };
+    lazygit.enable = true;
+    jq.enable = true;
     fzf = {
       enable = true;
       enableBashIntegration = true;
@@ -256,7 +276,6 @@ in
     };
     gpg.enable = true;
     bash.enable = true;
-    imv.enable = true;
     browserpass.enable = true;
     password-store = {
       enable = true;
@@ -274,18 +293,15 @@ in
         PASSWORD_STORE_DIR = "${archive_path}/password-store";
       };
     };
-    zathura = {
-      enable = true;
-      options = {
-        recolor = true;
-      };
-    };
   };
 
-  services.gpg-agent = {
-    enable = true;
-    maxCacheTtl = 60480000;
-    defaultCacheTtl = 60480000;
+  services = {
+    syncthing.enable = true;
+    gpg-agent = {
+      enable = true;
+      maxCacheTtl = 60480000;
+      defaultCacheTtl = 60480000;
+    };
   };
 
   # Nicely reload system units when changing configs

@@ -20,13 +20,10 @@
   tmux = import ./tmux.nix;
   wezterm = import ./wezterm.nix;
   lang = import ./lang.nix;
-  btop = import ./btop.nix;
   vscode = import ./vscode.nix;
-  direnv = import ./direnv.nix;
   translate-shell = import ./translate-shell.nix;
   aria2 = import ./aria2.nix;
   starship = import ./starship.nix;
-  ripgrep = import ./ripgrep.nix;
   sops = import ./sops.nix;
   mail = import ./mail.nix;
   zellij = import ./zellij.nix;
@@ -35,12 +32,8 @@
   waybar = import ./waybar.nix;
   waybar-vertical = import ./waybar-vertical.nix;
   wallpaper = import ./wallpaper.nix;
-  browser = import ./browser.nix;
-  syncthing = import ./syncthing.nix;
   rclone = import ./rclone.nix;
   niri = import ./niri.nix;
-  cliphist = import ./cliphist.nix;
-  dunst = import ./dunst.nix;
   kdeconnect = import ./kdeconnect.nix;
   udiskie = import ./udiskie.nix;
   de-basic = import ./de-basic.nix;
