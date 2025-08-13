@@ -1,1 +1,2 @@
+org.eclipse.jdt.core.compiler.problem.forbiddenReference=warning
 org.eclipse.jdt.core.compiler.problem.missingSerialVersion=warning
