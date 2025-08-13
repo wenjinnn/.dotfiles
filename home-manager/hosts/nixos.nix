@@ -17,7 +17,6 @@
     mpv
     foot
     aria2
-    browser
   ];
 
   nixpkgs.config.permittedInsecurePackages = [

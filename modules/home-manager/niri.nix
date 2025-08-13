@@ -19,9 +19,6 @@ in
     de-basic
     waybar-vertical
     rofi
-    dunst
-    udiskie
-    cliphist
     kdeconnect
     wallpaper
   ];

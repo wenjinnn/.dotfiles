@@ -18,9 +18,6 @@ in
     waybar
     rofi
     wallpaper
-    dunst
-    udiskie
-    cliphist
     kdeconnect
   ];
 
