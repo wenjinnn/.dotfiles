@@ -241,7 +241,6 @@ in
     fzf = {
       enable = true;
       enableBashIntegration = true;
-      tmux.enableShellIntegration = true;
     };
     zoxide = {
       enable = true;
