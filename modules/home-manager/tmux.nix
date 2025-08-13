@@ -22,6 +22,8 @@
         plugin = tmux-floax;
         extraConfig = ''
           set -g @floax-change-path 'false'
+          set -g @floax-border-color 'green'
+          set -g @floax-text-color 'white'
         '';
       }
       {
