@@ -37,5 +37,4 @@
   udiskie = import ./udiskie.nix;
   de-basic = import ./de-basic.nix;
   opencode = import ./opencode.nix;
-  bash = import ./bash.nix;
 }

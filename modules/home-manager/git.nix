@@ -15,8 +15,6 @@
       github.user = "wenjinnn";
       push.autoSetupRemote = true;
       mergetool.keepBackup = false;
-      merge.tool = "vimdiff";
-      diff.tool = "vimdiff";
       core.autocrlf = "input";
     };
   };

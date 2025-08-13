@@ -19,7 +19,6 @@ in
   imports = with outputs.homeManagerModules; [
     # If you want to use modules your own flake exports (from modules/home-manager):
     # outputs.homeManagerModules.example
-    bash
     starship
     neovim
     git
@@ -200,6 +199,15 @@ in
   };
 
   programs = {
+    # Enable home-manager
+    home-manager.enable = true;
+    gh = {
+      enable = true;
+      extensions = with pkgs; [
+        gh-copilot
+        gh-models
+      ];
+    };
     direnv = {
       enable = true;
       enableBashIntegration = true;
@@ -207,13 +215,6 @@ in
       config = {
         load_dotenv = true;
       };
-    };
-    gh = {
-      enable = true;
-      extensions = with pkgs; [
-        gh-copilot
-        gh-models
-      ];
     };
     nix-index = {
       enable = true;
@@ -230,8 +231,6 @@ in
         background_alpha = lib.mkForce 0.5;
       };
     };
-    # Enable home-manager
-    home-manager.enable = true;
     fastfetch.enable = true;
     distrobox.enable = true;
     bat.enable = true;
@@ -274,8 +273,18 @@ in
         display = "all";
       };
     };
+    bash = {
+      enable = true;
+      enableVteIntegration = true;
+      historyControl = [
+        "erasedups"
+        "ignoreboth"
+      ];
+      shellAliases = {
+        gemini = "env GEMINI_API_KEY=$(sops exec-env $SOPS_SECRETS 'echo -n $GEMINI_API_KEY') gemini ";
+      };
+    };
     gpg.enable = true;
-    bash.enable = true;
     browserpass.enable = true;
     password-store = {
       enable = true;
