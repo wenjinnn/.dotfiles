@@ -185,7 +185,6 @@
     bash = {
       blesh.enable = true;
       vteIntegration = true;
-      undistractMe.enable = true;
     };
     nix-ld.enable = true;
   };
