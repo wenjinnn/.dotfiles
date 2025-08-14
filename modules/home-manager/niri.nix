@@ -429,6 +429,9 @@ in
         };
         window-rules = [
           {
+            draw-border-with-background = false;
+          }
+          {
             matches = [
               {
                 app-id = "^firefox$";
