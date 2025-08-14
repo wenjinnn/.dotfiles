@@ -124,8 +124,8 @@ in
           };
           focus-ring = {
             active.gradient = {
-              from = colors.base0D;
-              to = colors.base08;
+              from = colors.base0C;
+              to = colors.base0A;
               angle = 45;
               in' = "oklch longer hue";
             };
