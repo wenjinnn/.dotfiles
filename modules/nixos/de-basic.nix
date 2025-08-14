@@ -1,8 +1,23 @@
-{pkgs, me, ...}: {
+{
+  pkgs,
+  me,
+  ...
+}:
+{
 
-  programs.nautilus-open-any-terminal = {
-    enable = true;
-    terminal = "footclient";
+  programs = {
+    nautilus-open-any-terminal = {
+      enable = true;
+      terminal = "foot";
+    };
+    gtklock = {
+      enable = true;
+      modules = with pkgs; [
+        gtklock-playerctl-module
+        gtklock-powerbar-module
+        gtklock-userinfo-module
+      ];
+    };
   };
 
   security = {
