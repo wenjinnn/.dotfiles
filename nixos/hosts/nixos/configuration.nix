@@ -21,7 +21,6 @@
     bluetooth
     steam
     theme
-    de-basic
     niri
 
     # Or modules from other flakes (such as nixos-hardware):

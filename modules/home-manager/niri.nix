@@ -6,12 +6,6 @@
   lib,
   ...
 }:
-let
-  gtklock-powerbar = "${pkgs.gtklock-powerbar-module}/lib/gtklock/powerbar-module.so";
-  gtklock-userinfo = "${pkgs.gtklock-userinfo-module}/lib/gtklock/userinfo-module.so";
-  gtklock-playerctl = "${pkgs.gtklock-playerctl-module}/lib/gtklock/playerctl-module.so";
-  gtklock = "${lib.getExe pkgs.gtklock} -m ${gtklock-powerbar} -m ${gtklock-userinfo} -m ${gtklock-playerctl}";
-in
 {
 
   imports = with outputs.homeManagerModules; [
@@ -22,74 +16,32 @@ in
     kdeconnect
     wallpaper
   ];
-  xdg.configFile."autostart/nm-applet.desktop".text = ''
-    [Desktop Entry]
-    Type=Application
-    Name=Network Manager Applet
-    Exec=nm-applet
-    Hidden=true
-  '';
-  xdg.dataFile."nautilus-python/extensions/image_tools_extension.py".source =
-    ../../xdg/data/nautilus-python/extensions/image_tools_extension.py;
 
   services = {
     gnome-keyring.enable = lib.mkForce false;
-    polkit-gnome.enable = true;
-    gammastep = {
-      enable = true;
-      dawnTime = "6:00-7:45";
-      duskTime = "18:35-20:15";
-      provider = "geoclue2";
-      tray = true;
-    };
     swayidle =
       let
         niri = lib.getExe pkgs.niri-unstable;
       in
       {
-        enable = true;
-        extraArgs = [
-          "-w"
-        ];
         events = [
           {
-            event = "lock";
-            command = "${gtklock} -d";
-          }
-          {
             event = "before-sleep";
-            command = "${gtklock} -d && sleep 1 && ${niri} msg action power-off-monitors";
+            command = "${niri} msg action power-off-monitors";
           }
           {
             event = "after-resume";
             command = "${niri} msg action power-on-monitors";
           }
+
         ];
         timeouts = [
-          {
-            timeout = 300;
-            command = "${gtklock} -d";
-          }
           {
             timeout = 360;
             command = "${niri} msg action power-off-monitors";
           }
         ];
       };
-  };
-  systemd.user.services.sway-audio-idle-inhibit = {
-    Unit = {
-      Description = "Inhibit swayidle when audio is playing";
-      After = [ "swayidle.service" ];
-      PartOf = [ "swayidle.service" ];
-    };
-    Service = {
-      ExecStart = "${lib.getExe pkgs.sway-audio-idle-inhibit}";
-      Restart = "always";
-    };
-    Install = {
-      WantedBy = [ "default.target" ];
-    };
   };
   programs.niri = {
     enable = true;
@@ -181,7 +133,7 @@ in
               hotkey-overlay = {
                 title = "Lock the Screen: gtklock";
               };
-              action = sh "${gtklock}";
+              action = sh "${lib.getExe pkgs.gtklock}";
             };
 
             "XF86AudioRaiseVolume" = {
