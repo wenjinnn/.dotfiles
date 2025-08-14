@@ -32,10 +32,6 @@ in
   xdg.dataFile."nautilus-python/extensions/image_tools_extension.py".source =
     ../../xdg/data/nautilus-python/extensions/image_tools_extension.py;
 
-  home.packages = [
-    pkgs.nur.repos."999eagle".swayaudioidleinhibit
-  ];
-
   services = {
     gnome-keyring.enable = lib.mkForce false;
     polkit-gnome.enable = true;
@@ -80,6 +76,20 @@ in
           }
         ];
       };
+  };
+  systemd.user.services.sway-audio-idle-inhibit = {
+    Unit = {
+      Description = "Inhibit swayidle when audio is playing";
+      After = [ "swayidle.service" ];
+      PartOf = [ "swayidle.service" ];
+    };
+    Service = {
+      ExecStart = "${lib.getExe pkgs.sway-audio-idle-inhibit}";
+      Restart = "always";
+    };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
   };
   programs.niri = {
     enable = true;
@@ -138,9 +148,6 @@ in
               "-c"
               "echo 'Xft.dpi: 192' | xrdb -merge"
             ];
-          }
-          {
-            command = [ "sway-audio-idle-inhibit" ];
           }
         ];
         binds =
