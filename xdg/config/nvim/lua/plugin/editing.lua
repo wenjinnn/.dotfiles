@@ -138,7 +138,7 @@ later(function()
     callback = function(event)
       local filetype = event.match
       local lang = vim.treesitter.language.get_lang(filetype)
-      if not vim.tbl_contains(require('nvim-treesitter.config').get_installed("parsers"), lang) then
+      if not vim.tbl_contains(require('nvim-treesitter.config').get_installed('parsers'), lang) then
         require('nvim-treesitter').install(lang):await(function() enable_ts(event.buf, lang) end)
       else
         enable_ts(event.buf, lang)
@@ -266,11 +266,11 @@ later(function()
     local ranges = {}
     for _, hunk in pairs(data.hunks) do
       if hunk.type ~= 'delete' then
+        local last = hunk.buf_start + hunk.buf_count - 1
+        local last_hunk_line = vim.api.nvim_buf_get_lines(0, last - 1, last, true)[1]
+        local range = { start = { hunk.buf_start, 0 }, ['end'] = { last, last_hunk_line:len() } }
         -- always insert to index 1 so format below could start from last hunk, which this sort didn't mess up range
-        table.insert(ranges, 1, {
-          start = { hunk.buf_start, 0 },
-          ['end'] = { hunk.buf_start + hunk.buf_count, 0 },
-        })
+        table.insert(ranges, 1, range)
       end
     end
     for _, range in pairs(ranges) do
