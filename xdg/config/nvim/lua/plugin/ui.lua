@@ -98,7 +98,9 @@ later(function()
       { mode = 'n', keys = 'g' },
       { mode = 'x', keys = 'g' },
       -- Marks
+      { mode = 'n', keys = "'" },
       { mode = 'n', keys = '`' },
+      { mode = 'x', keys = "'" },
       { mode = 'x', keys = '`' },
       -- Registers
       { mode = 'n', keys = '"' },
