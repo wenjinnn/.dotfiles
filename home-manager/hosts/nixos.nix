@@ -12,7 +12,6 @@
     de-basic
     niri
     fcitx5
-    theme
     mpv
     foot
     aria2

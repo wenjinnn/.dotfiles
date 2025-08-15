@@ -141,6 +141,7 @@
           ./nixos/hosts/nixos-wsl
           nur.modules.nixos.default
           sops-nix.nixosModules.sops
+          stylix.nixosModules.stylix
           nix-index-database.nixosModules.nix-index
         ];
       };
@@ -212,6 +213,7 @@
           # > Our main home-manager configuration file <
           ./home-manager/home.nix
           nur.modules.homeManager.default
+          stylix.homeModules.stylix
           nix-index-database.homeModules.nix-index
         ];
       };
