@@ -38,6 +38,7 @@
       nixfmt-rfc-style
       rustfmt
       prettier
+      black
       # for nvim-treesitter
       tree-sitter
       # another http tool
