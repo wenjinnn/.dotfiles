@@ -20,7 +20,6 @@
     fonts
     bluetooth
     steam
-    theme
     niri
 
     # Or modules from other flakes (such as nixos-hardware):
