@@ -78,6 +78,8 @@ opt.winminwidth = 5
 opt.smoothscroll = true
 opt.winborder = 'single'
 
+opt.diffopt:append({ 'algorithm:histogram', 'indent-heuristic' })
+
 opt.foldlevel = 99
 opt.exrc = true
 vim.diagnostic.config({ virtual_text = true })
