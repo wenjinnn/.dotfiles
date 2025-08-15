@@ -2,6 +2,7 @@
   programs.opencode = {
     enable = true;
     settings = {
+      theme = "gruvbox";
       mcp = {
         context7 = {
           type = "local";
