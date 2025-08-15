@@ -83,9 +83,8 @@ later(function()
   local z_post_keys = { zl = 'z', zh = 'z', zL = 'z', zH = 'z' }
   local clue_z_keys = miniclue.gen_clues.z()
   for _, v in ipairs(clue_z_keys) do
-    for key, postkeys in pairs(z_post_keys) do
-      if v.keys == key then v.postkeys = postkeys end
-    end
+    local postkey = z_post_keys[v.keys]
+    if postkey then v.postkeys = postkey end
   end
   require('mini.clue').setup({
     triggers = {
