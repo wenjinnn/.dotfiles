@@ -15,6 +15,7 @@
       github.user = "wenjinnn";
       push.autoSetupRemote = true;
       mergetool.keepBackup = false;
+      mergetool.nvimdiff.layout = "LOCAL,BASE,REMOTE / MERGED + BASE,LOCAL + BASE,REMOTE + (LOCAL/BASE/REMOTE),MERGED";
       merge.tool = "nvimdiff";
       diff.tool = "nvimdiff";
       core.autocrlf = "input";
