@@ -10,21 +10,13 @@ else
 fi
 echo "next wallpaper: $next"
 echo "current desktop environment: $XDG_CURRENT_DESKTOP"
-if [ "Hyprland" == "$XDG_CURRENT_DESKTOP" ]; then
-    hyprctl hyprpaper reload ,"$next"
-    hyprctl hyprpaper unload unused
-    # Create symlink for hyprpaper current wallpaper
-    ln -sf $next $HOME/.config/background
-else
-    PIDS=($(pgrep swaybg)) ; nohup swaybg -i "$next" -m fill > /dev/null 2>&1 &
-    echo "new swaybg process started with PID: $!"
-    echo "old swaybg processes: $PIDS"
-    (
-        sleep 1
-        for pid in "${PIDS[@]}"; do
-            kill $pid
-            echo "killed old swaybg process: $pid"
-        done
-    ) &
-
-fi
+PIDS=($(pgrep swaybg)) ; nohup swaybg -i "$next" -m fill > /dev/null 2>&1 &
+echo "new swaybg process started with PID: $!"
+echo "old swaybg processes: $PIDS"
+(
+    sleep 1
+    for pid in "${PIDS[@]}"; do
+        kill $pid
+        echo "killed old swaybg process: $pid"
+    done
+) &
