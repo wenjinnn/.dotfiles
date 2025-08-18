@@ -52,6 +52,7 @@
       redis
       oracle-instantclient
       basedpyright
+      ruff
     ]
   );
   xdg.configFile = {

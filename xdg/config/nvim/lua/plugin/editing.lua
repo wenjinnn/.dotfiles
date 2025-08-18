@@ -232,6 +232,7 @@ later(function()
   local lint = require('lint')
   lint.linters_by_ft = {
     markdown = { 'vale' },
+    python = { 'ruff' },
     javascript = { 'eslint' },
     typescript = { 'eslint' },
     vue = { 'eslint' },
@@ -253,7 +254,7 @@ later(function()
     formatters_by_ft = {
       lua = { 'stylua' },
       nix = { 'nixfmt' },
-      python = { 'black' },
+      python = { 'ruff_format', 'ruff_fix', 'ruff_organize_imports' },
     },
   })
   vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
