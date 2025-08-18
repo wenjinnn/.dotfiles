@@ -19,33 +19,6 @@ au({ 'VimResized' }, {
   end,
 })
 
--- close some filetypes with <q>
-au('FileType', {
-  group = augroup('close_with_q'),
-  pattern = {
-    'PlenaryTestPopup',
-    'help',
-    'lspinfo',
-    'dap-float',
-    'dap-repl',
-    'man',
-    'notify',
-    'qf',
-    'query',
-    'git',
-    'spectre_panel',
-    'startuptime',
-    'tsplayground',
-    'checkhealth',
-    'httpResult',
-    'dbout',
-  },
-  callback = function(event)
-    vim.bo[event.buf].buflisted = false
-    vim.keymap.set('n', 'q', '<cmd>close<cr>', { buffer = event.buf, silent = true })
-  end,
-})
-
 -- wrap vim diff buffer
 au({ 'VimEnter' }, {
   group = augroup('vim_enter'),
