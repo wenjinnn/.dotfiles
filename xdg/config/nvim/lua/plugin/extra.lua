@@ -82,26 +82,11 @@ end)
 
 -- db manage
 later(function()
-  add({
-    source = 'tpope/vim-dadbod',
-    depends = {
-      'kristijanhusak/vim-dadbod-completion',
-      'kristijanhusak/vim-dadbod-ui',
-    },
-  })
-  vim.g.db_ui_use_nerd_fonts = 1
-  vim.g.db_ui_save_location = vim.fn.stdpath('data') .. '/db_ui_queries'
-  vim.g.vim_dadbod_completion_mark = ''
-  -- set filetype to sql to make snip completion work
-  vim.api.nvim_create_autocmd('FileType', {
-    pattern = 'mysql,plsql',
-    callback = function() vim.bo.filetype = 'sql' end,
-  })
+  add('tpope/vim-dadbod')
   vim.api.nvim_create_autocmd('FileType', {
     pattern = 'sql',
     callback = function() map('x', '<leader>rq', 'db#op_exec()', { expr = true, desc = 'DB exec current query' }) end,
   })
-  map('n', '<leader>D', '<cmd>DBUIToggle<cr>', 'DBUI toggle')
 end)
 
 -- search and replace tool
