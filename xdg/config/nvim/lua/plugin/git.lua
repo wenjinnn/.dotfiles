@@ -3,10 +3,10 @@ local map = require('util').map
 
 -- git
 later(function()
-  add('tpope/vim-fugitive')
-end)
-
-later(function()
+  add({
+    source = 'tpope/vim-fugitive',
+    depends = { 'rbong/vim-flog' },
+  })
   require('mini.diff').setup()
   map('n', '<leader>go', MiniDiff.toggle_overlay, 'Git toggle overlay')
 end)
