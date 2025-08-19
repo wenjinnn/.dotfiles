@@ -13,19 +13,6 @@ opt.signcolumn = 'yes'
 opt.relativenumber = true
 opt.cursorline = true
 opt.virtualedit = { 'block', 'onemore' }
--- ignore filetype when file search
-opt.wildignore:append({
-  '*/tmp/*',
-  '*.so',
-  '*.swp',
-  '*.png',
-  '*.jpg',
-  '*.jpeg',
-  '*.gif',
-  '*.class',
-  '*.pyc',
-  '*.pyd',
-})
 -- code indent
 opt.cindent = true
 opt.cinoptions = { 'g0', ':0', 'N-s', '(0' }
@@ -73,14 +60,9 @@ opt.completeopt = { 'menuone', 'noselect', 'fuzzy' }
 opt.pumheight = 20
 opt.sessionoptions:remove({ 'blank' })
 opt.wildmode = 'longest:full,full'
-opt.shortmess:append({ I = true })
-opt.winminwidth = 5
 opt.smoothscroll = true
 opt.winborder = 'single'
-
 opt.diffopt:append({ 'algorithm:histogram', 'indent-heuristic' })
-
-opt.foldlevel = 99
 opt.exrc = true
 vim.diagnostic.config({ virtual_text = true })
 if vim.g.vscode then vim.notify = require('vscode-neovim').notify end
