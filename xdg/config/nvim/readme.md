@@ -131,8 +131,6 @@ just some filetype settings
 + [glacambre/firenvim](https://github.com/glacambre/firenvim)
 
 ### database
-+ [kristijanhusak/vim-dadbod-ui](https://github.com/kristijanhusak/vim-dadbod-ui)
-+ [kristijanhusak/vim-dadbod-completion](https://github.com/kristijanhusak/vim-dadbod-completion)
 + [tpope/vim-dadbod](https://github.com/tpope/vim-dadbod)
 
 ### debugging
@@ -142,9 +140,12 @@ just some filetype settings
 + [theHamsta/nvim-dap-virtual-text](https://github.com/theHamsta/nvim-dap-virtual-text)
 + [jbyuki/one-small-step-for-vimkind](https://github.com/jbyuki/one-small-step-for-vimkind)
 
-### editing-support
+### VCS
 
-+ [nvim-treesitter/nvim-treesitter-context](https://github.com/nvim-treesitter/nvim-treesitter-context)
++ [vim-fugitive](https://github.com/tpope/vim-fugitive)
++ [vim-flog](https://github.com/rbong/vim-flog)
+
+### editing-support
 + [windwp/nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag)
 ### formatting
 
@@ -163,9 +164,7 @@ just some filetype settings
 
 + [obsidian-nvim/obsidian.nvim](github.com/obsidian-nvim/obsidian.nvim)
 + [jbyuki/venn.nvim](https://github.com/jbyuki/venn.nvim)
-### nvim-dev
 
-+ [nvim-lua/plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
 ### search
 
 + [MagicDuck/grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim)
@@ -180,7 +179,7 @@ just some filetype settings
 + [nvim-treesitter/nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects)
 + [nvim-treesitter/nvim-treesitter-context](https://https://github.com/nvim-treesitter/nvim-treesitter-context)
 + [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
-+ [windwp/nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag)
+
 ### utility
 
 + [echasnovski/mini.nvim](https://github.com/echasnovski/mini.nvim)
