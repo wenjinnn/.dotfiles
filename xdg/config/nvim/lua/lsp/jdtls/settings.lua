@@ -6,36 +6,22 @@ local java21_home = os.getenv('JAVA21_HOME')
 local config_path = vim.fn.stdpath('config')
 local M = {
   java = {
-    settings = {
-      url = config_path .. '/lua/lsp/jdtls/settings.prefs',
-    },
-    eclipse = {
-      downloadSources = true,
-    },
-    symbols = {
-      includeSourceMethodDeclarations = true,
-    },
+    settings = { url = config_path .. '/lua/lsp/jdtls/settings.prefs', },
+    eclipse = { downloadSources = true, },
+    symbols = { includeSourceMethodDeclarations = true, },
     selectionRange = { enabled = true },
     format = {
       enabled = true,
-      comments = {
-        enabled = false,
-      },
-      onType = {
-        enabled = false,
-      },
+      comments = { enabled = false, },
+      onType = { enabled = false, },
     },
     maxConcurrentBuilds = 5,
-    saveActions = {
-      organizeImports = false,
-    },
+    saveActions = { organizeImports = false, },
     referencesCodeLens = { enabled = true },
     implementationsCodeLens = { enabled = true },
     signatureHelp = {
       enabled = true,
-      description = {
-        enabled = true,
-      },
+      description = { enabled = true, },
     },
     inlayHints = {
       parameterNames = { enabled = 'all' },
