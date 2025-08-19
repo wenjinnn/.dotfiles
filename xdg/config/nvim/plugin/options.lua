@@ -63,6 +63,7 @@ opt.wildmode = 'longest:full,full'
 opt.smoothscroll = true
 opt.winborder = 'single'
 opt.diffopt:append({ 'algorithm:histogram', 'indent-heuristic' })
+opt.foldlevel = 99
 opt.exrc = true
 vim.diagnostic.config({ virtual_text = true })
 if vim.g.vscode then vim.notify = require('vscode-neovim').notify end
