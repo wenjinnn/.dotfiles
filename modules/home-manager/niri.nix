@@ -414,6 +414,16 @@
             };
           }
           {
+            matches = [
+              {
+                app-id = "wps";
+                title = "wps";
+              }
+            ];
+            # open wps child windows in floating mode
+            open-floating = true;
+          }
+          {
             matches = [ { app-id = "^xwaylandvideobridge$"; } ];
             open-floating = true;
             focus-ring.enable = false;
