@@ -137,6 +137,7 @@ in
     browserpass
     gemini-cli
     devenv
+    nix-init
     # nix related
     #
     # it provides the command `nom` works just like `nix`
