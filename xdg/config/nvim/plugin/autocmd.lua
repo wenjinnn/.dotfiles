@@ -19,15 +19,6 @@ au({ 'VimResized' }, {
   end,
 })
 
--- wrap vim diff buffer
-au({ 'VimEnter' }, {
-  group = augroup('vim_enter'),
-  pattern = '*',
-  callback = function(event)
-    if vim.o.diff then vim.wo.wrap = true end
-  end,
-})
-
 -- fcitx5 auto switch to default input method
 if vim.fn.executable('fcitx5') == 1 then
   au({ 'InsertLeave' }, {
@@ -36,42 +27,3 @@ if vim.fn.executable('fcitx5') == 1 then
     callback = function() vim.cmd("silent call system('fcitx5-remote -c')") end,
   })
 end
-
--- terminal buffer specific options
-au({ 'TermEnter', 'TermOpen' }, {
-  group = augroup('terminal_buffer'),
-  pattern = '*',
-  callback = require('util').setup_term_opt,
-})
-
--- work with bigfile that bigger then 5MB
--- modified from folke snacks.nvim
-local bigfile_size = 5 * 1024 * 1024
-vim.filetype.add({
-  pattern = {
-    ['.*'] = {
-      function(path, buf)
-        return vim.bo[buf]
-            and vim.bo[buf].filetype ~= 'bigfile'
-            and path
-            and vim.fn.getfsize(path) > bigfile_size
-            and 'bigfile'
-          or nil
-      end,
-    },
-  },
-})
-
-au({ 'FileType' }, {
-  group = augroup('bigfile', { clear = true }),
-  pattern = 'bigfile',
-  callback = function(event)
-    local buf = event.buf
-    local path = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ':p:~:.')
-    local ft = vim.filetype.match({ buf = buf }) or ''
-    vim.notify(string.format('Big file detected `%s`.', path), vim.log.levels.WARN)
-    vim.api.nvim_buf_call(buf, function()
-      vim.schedule(function() vim.bo[buf].syntax = ft end)
-    end)
-  end,
-})

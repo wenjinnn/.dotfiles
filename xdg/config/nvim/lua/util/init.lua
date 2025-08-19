@@ -3,12 +3,6 @@ M.opts = { noremap = true, silent = true }
 
 function M.make_opts(opts) return vim.tbl_extend('keep', opts, M.opts) end
 
--- We don't want spell, miniindentscope enable in terminal
-function M.setup_term_opt(_)
-  vim.b.miniindentscope_disable = true
-  vim.opt_local.spell = false
-end
-
 -- Delete all dap terminals, useful when session restored, cuz in that timing sometimes we have some dead dap terminals.
 function M.delete_dap_terminals()
   local dap_terminals_output = vim.api.nvim_exec2('filter /\\[dap-terminal\\]/ buffers', { output = true })
@@ -21,11 +15,6 @@ function M.delete_dap_terminals()
   end
   if #buffers_index > 0 then vim.cmd('bd! ' .. vim.fn.join(buffers_index, ' ')) end
 end
-
--- Wrapper for QoL
-function M.keycode(key) return vim.api.nvim_replace_termcodes(key, true, true, true) end
-
-function M.feedkey(key, mode) vim.api.nvim_feedkeys(M.keycode(key), mode, true) end
 
 function M.augroup(name, opts)
   local final_opts = opts or { clear = true }
