@@ -20,10 +20,7 @@ vim.filetype.add({ extension = { ['http'] = 'http' } })
 later(function()
   add('mistweaverco/kulala.nvim')
   local kulala = require('kulala')
-  kulala.setup({
-    display_mode = 'float',
-    winbar = true,
-  })
+  kulala.setup({ display_mode = 'float' })
   map({ 'n', 'v' }, '<leader>re', kulala.run, 'Execute request')
   map({ 'n', 'v' }, '<leader>ra', kulala.run_all, 'Execute all request')
   map('n', '<leader>rA', require('kulala.ui.auth_manager').open_auth_config, 'Open auth config')
