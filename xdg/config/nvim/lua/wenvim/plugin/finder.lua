@@ -154,7 +154,7 @@ later(function()
   vim.api.nvim_create_user_command('PickOrNewTerminal', function()
     local items = get_terminal_items()
     if #items == 0 then
-      vim.cmd('terminal')
+      vim.cmd('Tnew')
     elseif #items == 1 then
       vim.cmd('buffer ' .. items[1].bufnr)
       vim.cmd('startinsert')
