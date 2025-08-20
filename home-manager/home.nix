@@ -124,7 +124,6 @@ in
     sshfs
     mermaid-cli
     mermaid-filter
-    pandoc
     yq
     quicktype
     openpomodoro-cli
@@ -288,6 +287,7 @@ in
     };
     gpg.enable = true;
     browserpass.enable = true;
+    pandoc.enable = true;
     password-store = {
       enable = true;
       package = pkgs.pass.withExtensions (exts: [
