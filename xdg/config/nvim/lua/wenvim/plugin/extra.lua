@@ -50,6 +50,14 @@ later(function()
   map('n', '<leader>lp', '<cmd>LivePreview pick<cr>', 'Live preview pick')
 end)
 
+-- pandoc integration
+later(function()
+  add({
+    source = 'vim-pandoc/vim-pandoc',
+    depends = { 'vim-pandoc/vim-pandoc-syntax' },
+  })
+end)
+
 -- neovim in browser
 now(function()
   local install_firenvim_bin = function() vim.fn['firenvim#install'](0) end
