@@ -1,6 +1,6 @@
 -- my nvim config write in lua
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.maplocalleader = '\\'
 
 -- Put this at the top of 'init.lua'
 local path_package = vim.fn.stdpath('data') .. '/site'
