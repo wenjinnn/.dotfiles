@@ -1,7 +1,7 @@
 local M = {}
 
 function M.on_detach(client_id, bufnr)
-  local augroup = require('util').augroup
+  local augroup = require('wenvim.util').augroup
   local detach_client = vim.lsp.get_client_by_id(client_id)
   if not detach_client then return end
   local clients = vim.lsp.get_clients({ bufnr = bufnr })
@@ -17,7 +17,7 @@ function M.on_detach(client_id, bufnr)
 end
 
 function M.on_attach(client_id, bufnr)
-  local augroup = require('util').augroup
+  local augroup = require('wenvim.util').augroup
   local client = vim.lsp.get_client_by_id(client_id)
   if not client then return end
   if client.server_capabilities.documentHighlightProvider then

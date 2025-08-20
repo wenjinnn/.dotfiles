@@ -1,8 +1,8 @@
 if vim.g.vscode then return end
 
 local add, later = MiniDeps.add, MiniDeps.later
-local map = require('util').map
-local util_lsp = require('util.lsp')
+local map = require('wenvim.util').map
+local util_lsp = require('wenvim.util.lsp')
 
 -- Lspconfig related
 later(function()
@@ -40,7 +40,7 @@ later(function()
     callback = function(ev) util_lsp.on_detach(ev.data.client_id, ev.buf) end,
   })
   -- custom jdtls setup
-  require('lsp.jdtls').setup()
+  require('wenvim.lsp.jdtls').setup()
   -- if didn't have this env, don't enable sonarlint LSP
   local sonarlint_path = os.getenv('SONARLINT_PATH')
   if sonarlint_path ~= nil then

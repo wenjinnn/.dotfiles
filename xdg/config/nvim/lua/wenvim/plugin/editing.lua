@@ -1,5 +1,5 @@
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
-local map = require('util').map
+local map = require('wenvim.util').map
 
 -- textobject enhancement
 later(function()
@@ -134,7 +134,7 @@ later(function()
   vim.api.nvim_create_user_command('TSInstallInitLangs', install_ts_langs, { desc = 'Install ts init langs' })
   vim.api.nvim_create_autocmd('FileType', {
     pattern = '*',
-    group = require('util').augroup('ts_filetype'),
+    group = require('wenvim.util').augroup('ts_filetype'),
     callback = function(event)
       local filetype = event.match
       local lang = vim.treesitter.language.get_lang(filetype)
@@ -191,7 +191,7 @@ now(function()
   end
   local function post_read()
     MiniMisc.setup_auto_root()
-    require('util').delete_dap_terminals()
+    require('wenvim.util').delete_dap_terminals()
   end
 
   require('mini.sessions').setup({
