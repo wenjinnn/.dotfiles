@@ -9,6 +9,13 @@ au({ 'FocusGained', 'TermClose', 'TermLeave' }, {
   end,
 })
 
+-- terminal buffer specific options
+au({ 'TermEnter', 'TermOpen' }, {
+  group = augroup('terminal_buffer'),
+  pattern = '*',
+  callback = function() vim.b.miniindentscope_disable = true end,
+})
+
 -- resize splits if window got resized
 au({ 'VimResized' }, {
   group = augroup('resize_splits'),
