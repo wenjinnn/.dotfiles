@@ -1,4 +1,4 @@
-local augroup = require('util').augroup
+local augroup = require('wenvim.util').augroup
 local au = vim.api.nvim_create_autocmd
 
 -- Check if we need to reload the file when it changed

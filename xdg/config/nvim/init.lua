@@ -26,4 +26,4 @@ require('mini.deps').setup({
     snapshot = path_snapshot,
   },
 })
-require('plugin').setup()
+require('wenvim.plugin').setup()

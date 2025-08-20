@@ -1,6 +1,6 @@
 if vim.g.vscode then return end
 
-local map = require('util').map
+local map = require('wenvim.util').map
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
 later(function()
@@ -121,5 +121,4 @@ later(function()
       ['*'] = true,
     },
   })
-
 end)

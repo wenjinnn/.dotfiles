@@ -1,7 +1,7 @@
 local later = MiniDeps.later
 
 later(function()
-  local map = require('util').map
+  local map = require('wenvim.util').map
   require('mini.jump').setup()
   require('mini.jump2d').setup({
     view = {

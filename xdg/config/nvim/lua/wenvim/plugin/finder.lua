@@ -1,6 +1,6 @@
 if vim.g.vscode then return end
 
-local map = require('util').map
+local map = require('wenvim.util').map
 local now, later = MiniDeps.now, MiniDeps.later
 
 -- Load mini.files immediately for sometimes we are gonna open folder with nvim
@@ -16,7 +16,7 @@ now(function()
   -- send notification to lsp when mini.files rename actions triggered, modified from snacks.nvim
   vim.api.nvim_create_autocmd('User', {
     pattern = 'MiniFilesActionRename',
-    callback = function(event) require('util.lsp').on_rename_file(event.data.from, event.data.to) end,
+    callback = function(event) require('wenvim.util.lsp').on_rename_file(event.data.from, event.data.to) end,
   })
   -- Create mappings to modify target window via split
   local map_split = function(buf_id, lhs, direction)

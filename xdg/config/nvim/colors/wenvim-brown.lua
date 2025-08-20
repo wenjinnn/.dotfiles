@@ -4,4 +4,4 @@ local base_color = {
   foreground = '#bdae93',
 }
 require('mini.hues').setup(base_color)
-require('util.color').setup_wenvim_color(base_color)
+require('wenvim.util.color').setup_wenvim_color(base_color)

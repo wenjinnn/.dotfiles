@@ -1,5 +1,5 @@
 local add, later = MiniDeps.add, MiniDeps.later
-local map = require('util').map
+local map = require('wenvim.util').map
 
 -- git
 later(function()

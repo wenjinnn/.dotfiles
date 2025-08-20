@@ -1,6 +1,6 @@
 -- The keymaps here are independent of plugins
 -- all the keymap that related to plugin it self are declared after plugin
-local util = require('util')
+local util = require('wenvim.util')
 local map = util.map
 map('n', '<leader>S', '<cmd>windo set scrollbind!<CR>', 'Scroll all buffer')
 map('n', '<leader>O', '<cmd>only<CR>', 'Only')

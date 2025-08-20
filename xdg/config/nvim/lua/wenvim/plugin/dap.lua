@@ -12,7 +12,7 @@ later(function()
     },
   })
   local dap = require('dap')
-  local util = require('util')
+  local util = require('wenvim.util')
   local map = util.map
 
   dap.defaults.fallback.terminal_win_cmd = 'tabnew'
@@ -60,7 +60,7 @@ later(function()
     pattern = 'python',
     group = util.augroup('dap_python'),
     callback = function(ev)
-      local buf_map = require('util').buf_map(ev.buf)
+      local buf_map = util.buf_map(ev.buf)
       buf_map('n', '<leader>dm', dap_python.test_method, 'Dap test method')
       buf_map('n', '<leader>da', dap_python.test_class, 'Dap test class')
       buf_map('v', '<leader>dv', dap_python.debug_selection, 'Dap debug selection')
