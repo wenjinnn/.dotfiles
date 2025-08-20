@@ -90,27 +90,7 @@ end)
 later(function()
   add('MagicDuck/grug-far.nvim')
   local grug_far = require('grug-far')
-  grug_far.setup({
-    keymaps = {
-      replace = { n = '<localleader>Fr' },
-      qflist = { n = '<localleader>Fq' },
-      syncLocations = { n = '<localleader>Fs' },
-      syncLine = { n = '<localleader>FS' },
-      close = { n = '<localleader>Fc' },
-      historyOpen = { n = '<localleader>Fh' },
-      historyAdd = { n = '<localleader>FH' },
-      refresh = { n = '<localleader>FR' },
-      openLocation = { n = '<localleader>Fo' },
-      abort = { n = '<localleader>Fb' },
-      toggleShowCommand = { n = '<localleader>Ft' },
-      swapEngine = { n = '<localleader>Fe' },
-      previewLocation = { n = '<localleader>Fi' },
-      swapReplacementInterpreter = { n = '<localleader>Fx' },
-      applyNext = { n = '<localleader>Fj' },
-      applyPrev = { n = '<localleader>Fk' },
-    },
-    windowCreationCommand = 'tab split',
-  })
+  grug_far.setup({ windowCreationCommand = 'tab split' })
   local function grug_cursor_word() grug_far.grug_far({ prefills = { search = vim.fn.expand('<cword>') } }) end
   local function grug_current_file() grug_far.grug_far({ prefills = { paths = vim.fn.expand('%') } }) end
   local function grug_toggle() grug_far.toggle_instance({ instanceName = 'far', staticTitle = 'Find and Replace' }) end
