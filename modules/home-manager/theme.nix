@@ -21,10 +21,7 @@
       size = 24;
     };
     targets = {
-      hyprlock.enable = false;
       neovim.enable = false;
-      zellij.enable = false;
-      qt.enable = true;
       firefox.profileNames = [ me.username ];
     };
     fonts = {
@@ -35,16 +32,6 @@
     };
   };
 
-  qt = {
-    enable = true;
-  };
-
-  gtk = {
-    enable = true;
-
-    iconTheme = {
-      package = pkgs.morewaita-icon-theme;
-      name = "MoreWaita";
-    };
-  };
+  qt.enable = true;
+  gtk.enable = true;
 }
