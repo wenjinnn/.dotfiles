@@ -192,6 +192,7 @@ in
     NOTE = note_path;
     SOPS_SECRETS = "${dotfiles_path}/secrets.yaml";
     PLAYER = "ffplay -nodisp -autoexit -loglevel quiet";
+    SUDO_ASKPASS = "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
   };
 
   xdg = {
