@@ -73,45 +73,6 @@ end)
 
 -- treesitter related
 later(function()
-  local ts_init_langs = {
-    -- basic
-    'vim',
-    'vimdoc',
-    'regex',
-    'markdown',
-    'markdown_inline',
-    'lua',
-    'luadoc',
-    'luap',
-    'query',
-    'bash',
-    'diff',
-    'make',
-    -- personal frequently used
-    'html',
-    'javascript',
-    'typescript',
-    'tsx',
-    'vue',
-    'xml',
-    'nix',
-    'java',
-    'javadoc',
-    'rust',
-    'python',
-    'sql',
-    'css',
-    'scss',
-    'cmake',
-    'comment',
-    'jsdoc',
-    'json',
-    'json5',
-    'jsonc',
-    'mermaid',
-  }
-  local install_ts_langs = function() require('nvim-treesitter').install(ts_init_langs) end
-
   add({
     source = 'nvim-treesitter/nvim-treesitter',
     -- TODO remove this line when it is stable
@@ -123,10 +84,10 @@ later(function()
       { source = 'nvim-treesitter/nvim-treesitter-textobjects', checkout = 'main' },
     },
     hooks = {
-      post_install = function() later(install_ts_langs) end,
       post_checkout = function() vim.cmd('TSUpdate') end,
     },
   })
+  -- always check current buffer's filetype and async install related parsers
   local enable_ts = function(buf, lang)
     if not vim.tbl_contains(require('nvim-treesitter.config').get_available(), lang) then return end
     vim.wo.foldmethod = 'expr'
@@ -134,8 +95,6 @@ later(function()
     vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
     if not vim.g.vscode then vim.treesitter.start(buf, lang) end
   end
-  -- In case of installation failure, we can try to install ts langs manually
-  vim.api.nvim_create_user_command('TSInstallInitLangs', install_ts_langs, { desc = 'Install ts init langs' })
   vim.api.nvim_create_autocmd('FileType', {
     pattern = '*',
     group = require('wenvim.util').augroup('ts_filetype'),
