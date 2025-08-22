@@ -31,7 +31,7 @@
 
 ## Installation Instructions
 
-> Installation requires Neovim 0.10+. Always review the code before installing a configuration.
+> Installation requires Neovim 0.11+. Always review the code before installing a configuration.
 
 Clone the repository and install the plugins:
 
@@ -58,20 +58,17 @@ Some behavior are not common in this configuration, but it's reasonable in my op
 
 [plugin](plugin) vim custom autocmd keymap option and more
 
-[lsp](./lsp)
-Custom LSP config and settings
-
-[lua/lsp](lua/lsp)
+[lua/wenvim/lsp](lua/wenvim/lsp)
 Some LSP that didn't depends on neovim built-in lsp-config like jdtls
 
-[lua/plugin](lua/plugin)
+[lua/plugin](lua/wenvim/plugin)
 plugins with particular settings and keymap
 
-[lua/util](lua/util)
+[lua/util](lua/wenvim/util)
 common utils
 
 [after](after)
-just some filetype settings
+just some filetype and lsp related settings
 
 ## Defined environment variables cheatsheets:
 
@@ -112,6 +109,7 @@ just some filetype settings
 ### Must have
 1. [ripgrep](https://github.com/BurntSushi/ripgrep) depend by many plugin.
 2. All the LSP package that configured in [lua/plugin/lspconfig.lua](lua/plugin/lspconfig.lua), if you're going to use these.
+3. Linters and formatters that you want to use for conform.nvim and nvim-lint, you may also need to configure them in [lua/plugin/editing.lua](lua/plugin/editing.lua)
 
 ### Recommend
 1. [tmux](https://github.com/tmux/tmux) for terminal multiplexing, I'm almost using it only in WSL.
@@ -143,7 +141,6 @@ just some filetype settings
 ### VCS
 
 + [vim-fugitive](https://github.com/tpope/vim-fugitive)
-+ [vim-flog](https://github.com/rbong/vim-flog)
 
 ### editing-support
 + [windwp/nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag)
@@ -160,10 +157,18 @@ just some filetype settings
 ### markdown-and-latex
 
 + [brianhuster/live-preview.nvim](https://github.com/brianhuster/live-preview.nvim)
++ [vim-pandoc/vim-pandoc](https://github.com/vim-pandoc/vim-pandoc)
+
 ### note-taking
 
 + [obsidian-nvim/obsidian.nvim](github.com/obsidian-nvim/obsidian.nvim)
 + [jbyuki/venn.nvim](https://github.com/jbyuki/venn.nvim)
+
+### runner
+
++ [kassio/neoterm](https://github.com/kassio/neoterm)
++ [tpope/vim-dispatch](https://github.com/tpope/vim-dispatch)
++ [vim-test/vim-test](https://github.com/vim-test/vim-test)
 
 ### search
 
@@ -175,7 +180,6 @@ just some filetype settings
 ### syntax
 
 + [hiphish/rainbow-delimiters.nvim](https://github.com/hiphish/rainbow-delimiters.nvim)
-
 + [nvim-treesitter/nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects)
 + [nvim-treesitter/nvim-treesitter-context](https://https://github.com/nvim-treesitter/nvim-treesitter-context)
 + [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
