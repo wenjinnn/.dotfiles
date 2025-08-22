@@ -51,9 +51,7 @@ later(function()
 end)
 
 -- pandoc integration
-later(function()
-  add('vim-pandoc/vim-pandoc')
-end)
+later(function() add('vim-pandoc/vim-pandoc') end)
 
 -- neovim in browser
 now(function()
@@ -84,10 +82,13 @@ end)
 
 -- db manage
 later(function()
-  add('tpope/vim-dadbod')
+  add({ source = 'tpope/vim-dadbod', depends = { 'kristijanhusak/vim-dadbod-completion' } })
   vim.api.nvim_create_autocmd('FileType', {
     pattern = 'sql',
-    callback = function() map('x', '<leader>rq', 'db#op_exec()', { expr = true, desc = 'DB exec current query' }) end,
+    callback = function(ev)
+      vim.bo[ev.buf].omnifunc = 'vim_dadbod_completion#omni'
+      map('x', '<leader>rq', 'db#op_exec()', { expr = true, desc = 'DB exec current query' })
+    end,
   })
 end)
 
@@ -120,6 +121,6 @@ later(function()
         accept_line = '<M-l>',
       },
     },
-    filetypes = { ['*'] = true, },
+    filetypes = { ['*'] = true },
   })
 end)
