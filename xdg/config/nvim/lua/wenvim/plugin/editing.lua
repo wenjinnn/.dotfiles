@@ -151,6 +151,53 @@ later(function()
   map('n', '[e', go_to_context, 'treesitter context upward')
 end)
 
+-- conform with some auto format setting
+later(function()
+  add('stevearc/conform.nvim')
+  require('conform').setup({
+    formatters_by_ft = {
+      lua = { 'stylua' },
+      nix = { 'nixfmt' },
+      python = { 'ruff_format', 'ruff_fix', 'ruff_organize_imports' },
+    },
+  })
+  vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+  vim.g.conform_autoformat = true
+  local diff_format = function()
+    local data = MiniDiff.get_buf_data()
+    if not data or not data.hunks or not vim.g.conform_autoformat then
+      vim.notify('No hunks in this buffer or auto format is currently disabled')
+      return
+    end
+    local ranges = {}
+    for _, hunk in pairs(data.hunks) do
+      if hunk.type ~= 'delete' then
+        local last = hunk.buf_start + hunk.buf_count - 1
+        local last_hunk_line = vim.api.nvim_buf_get_lines(0, last - 1, last, true)[1]
+        local range = { start = { hunk.buf_start, 0 }, ['end'] = { last, last_hunk_line:len() } }
+        -- always insert to index 1 so format below could start from last hunk, which this sort didn't mess up range
+        table.insert(ranges, 1, range)
+      end
+    end
+    for _, range in pairs(ranges) do
+      require('conform').format({ lsp_fallback = true, timeout_ms = 500, range = range })
+    end
+  end
+  vim.api.nvim_create_user_command('DiffFormat', diff_format, { desc = 'Format changed lines' })
+  vim.api.nvim_create_autocmd('BufWritePre', {
+    pattern = '*',
+    callback = diff_format,
+    desc = 'Auto format changed lines',
+  })
+  local function code_format() require('conform').format({ async = true, lsp_fallback = true }) end
+  local function auto_format_toggle()
+    vim.g.conform_autoformat = not vim.g.conform_autoformat
+    vim.notify('Autoformat: ' .. (vim.g.conform_autoformat and 'on' or 'off'))
+  end
+  map({ 'n', 'v' }, '<leader>cf', code_format, 'Format')
+  map('n', '<leader>cF', auto_format_toggle, 'Auto format toggle')
+end)
+
 later(function()
   -- load some editing support mini modules at once
   require('mini.align').setup()
@@ -159,7 +206,8 @@ later(function()
   require('mini.pairs').setup()
   require('mini.operators').setup({ exchange = { prefix = 'gX' } })
   require('mini.trailspace').setup()
-  -- automatic trim trailspace on write a buffer
+  -- automatic trim trailspace on write a buffer, this should be defined after conform.nvim setup
+  -- for if trim trailspace done before conform diff_format autocmd, it will mess up lines index
   vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
     callback = function()
       MiniTrailspace.trim()
@@ -245,53 +293,6 @@ later(function()
       lint.try_lint('compiler')
     end,
   })
-end)
-
--- conform with some auto format setting
-later(function()
-  add('stevearc/conform.nvim')
-  require('conform').setup({
-    formatters_by_ft = {
-      lua = { 'stylua' },
-      nix = { 'nixfmt' },
-      python = { 'ruff_format', 'ruff_fix', 'ruff_organize_imports' },
-    },
-  })
-  vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
-  vim.g.conform_autoformat = true
-  local diff_format = function()
-    local data = MiniDiff.get_buf_data()
-    if not data or not data.hunks or not vim.g.conform_autoformat then
-      vim.notify('No hunks in this buffer or auto format is currently disabled')
-      return
-    end
-    local ranges = {}
-    for _, hunk in pairs(data.hunks) do
-      if hunk.type ~= 'delete' then
-        local last = hunk.buf_start + hunk.buf_count - 1
-        local last_hunk_line = vim.api.nvim_buf_get_lines(0, last - 1, last, true)[1]
-        local range = { start = { hunk.buf_start, 0 }, ['end'] = { last, last_hunk_line:len() } }
-        -- always insert to index 1 so format below could start from last hunk, which this sort didn't mess up range
-        table.insert(ranges, 1, range)
-      end
-    end
-    for _, range in pairs(ranges) do
-      require('conform').format({ lsp_fallback = true, timeout_ms = 500, range = range })
-    end
-  end
-  vim.api.nvim_create_user_command('DiffFormat', diff_format, { desc = 'Format changed lines' })
-  vim.api.nvim_create_autocmd('BufWritePre', {
-    pattern = '*',
-    callback = diff_format,
-    desc = 'Auto format changed lines',
-  })
-  local function code_format() require('conform').format({ async = true, lsp_fallback = true }) end
-  local function auto_format_toggle()
-    vim.g.conform_autoformat = not vim.g.conform_autoformat
-    vim.notify('Autoformat: ' .. (vim.g.conform_autoformat and 'on' or 'off'))
-  end
-  map({ 'n', 'v' }, '<leader>cf', code_format, 'Format')
-  map('n', '<leader>cF', auto_format_toggle, 'Auto format toggle')
 end)
 
 -- completion and snippets
