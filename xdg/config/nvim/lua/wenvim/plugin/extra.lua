@@ -52,10 +52,7 @@ end)
 
 -- pandoc integration
 later(function()
-  add({
-    source = 'vim-pandoc/vim-pandoc',
-    depends = { 'vim-pandoc/vim-pandoc-syntax' },
-  })
+  add('vim-pandoc/vim-pandoc')
 end)
 
 -- neovim in browser
