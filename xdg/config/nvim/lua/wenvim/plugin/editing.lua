@@ -55,7 +55,19 @@ end)
 
 -- setup mini.surround and disable original `s` functionality to reduce key wait time
 later(function()
-  require('mini.surround').setup()
+  require('mini.surround').setup({
+    custom_surroundings = {
+      -- workaround for html tag with attributes surrounding, see https://github.com/echasnovski/mini.nvim/issues/1293#issuecomment-2423827325
+      t = {
+        input = { '<(%w+)[^<>]->.-</%1>', '^<()%w+().*</()%w+()>$' },
+        output = function()
+          local tag_name = MiniSurround.user_input('Tag')
+          if tag_name == nil then return nil end
+          return { left = tag_name, right = tag_name }
+        end,
+      },
+    },
+  })
   vim.keymap.set({ 'n', 'x' }, 's', '<Nop>')
 end)
 
