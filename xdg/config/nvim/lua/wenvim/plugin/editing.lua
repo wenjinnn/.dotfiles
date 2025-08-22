@@ -58,10 +58,10 @@ later(function()
   require('mini.surround').setup({
     custom_surroundings = {
       -- workaround for html tag with attributes surrounding, see https://github.com/echasnovski/mini.nvim/issues/1293#issuecomment-2423827325
-      t = {
-        input = { '<(%w+)[^<>]->.-</%1>', '^<()%w+().*</()%w+()>$' },
+      T = {
+        input = { '<([%w_-]-)%f[^<%w_-][^<>]->.-</%1>', '^<()[%w_-]+().*</()[%w_-]+()>$' },
         output = function()
-          local tag_name = MiniSurround.user_input('Tag')
+          local tag_name = MiniSurround.user_input('Tag name')
           if tag_name == nil then return nil end
           return { left = tag_name, right = tag_name }
         end,
@@ -79,31 +79,24 @@ later(function()
     'vimdoc',
     'regex',
     'markdown',
+    'markdown_inline',
     'lua',
     'luadoc',
     'luap',
     'query',
     'bash',
     'diff',
-    'markdown_inline',
     'make',
-    -- autotag dependencies
-    'astro',
-    'glimmer',
+    -- personal frequently used
     'html',
     'javascript',
-    'markdown',
-    'php',
-    'svelte',
-    'tsx',
     'typescript',
+    'tsx',
     'vue',
     'xml',
-    -- personal frequently used
     'nix',
     'java',
     'javadoc',
-    'typespec',
     'rust',
     'python',
     'sql',
@@ -124,7 +117,6 @@ later(function()
     -- TODO remove this line when it is stable
     checkout = 'main',
     depends = {
-      'windwp/nvim-ts-autotag',
       'hiphish/rainbow-delimiters.nvim',
       'nvim-treesitter/nvim-treesitter-context',
       -- TODO also remove this line when it is stable
@@ -157,7 +149,6 @@ later(function()
       end
     end,
   })
-  require('nvim-ts-autotag').setup()
   require('treesitter-context').setup({ multiwindow = true })
   local function go_to_context() require('treesitter-context').go_to_context(vim.v.count1) end
   map('n', '[e', go_to_context, 'treesitter context upward')
