@@ -120,10 +120,6 @@ later(function()
         accept_line = '<M-l>',
       },
     },
-    filetypes = {
-      ['dap-repl'] = false,
-      ['grug-far'] = false,
-      ['*'] = true,
-    },
+    filetypes = { ['*'] = true, },
   })
 end)
