@@ -67,6 +67,7 @@ later(function()
         end,
       },
     },
+    n_lines = 100,
   })
   vim.keymap.set({ 'n', 'x' }, 's', '<Nop>')
 end)
