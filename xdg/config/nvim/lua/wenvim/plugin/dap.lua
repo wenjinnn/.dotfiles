@@ -6,7 +6,6 @@ later(function()
   add({
     source = 'mfussenegger/nvim-dap',
     depends = {
-      'theHamsta/nvim-dap-virtual-text',
       'mfussenegger/nvim-dap-python',
       'jbyuki/one-small-step-for-vimkind',
     },
@@ -65,10 +64,6 @@ later(function()
       buf_map('n', '<leader>da', dap_python.test_class, 'Dap test class')
       buf_map('v', '<leader>dv', dap_python.debug_selection, 'Dap debug selection')
     end,
-  })
-  require('nvim-dap-virtual-text').setup({
-    all_frames = true,
-    virt_text_pos = 'eol',
   })
 
   -- dap function wrapper for keymap
