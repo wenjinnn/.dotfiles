@@ -43,6 +43,8 @@ end
 
 function M.source_all()
   local config_bundles = vim.split(vim.fn.glob(vim.fn.stdpath('config') .. '/**/*.lua'), '\n')
+  local vim_config_bundles = vim.split(vim.fn.glob(vim.fn.stdpath('config') .. '/**/*.vim'), '\n')
+  vim.list_extend(config_bundles, vim_config_bundles)
   for _, config in pairs(config_bundles) do
     vim.cmd.source(config)
   end
