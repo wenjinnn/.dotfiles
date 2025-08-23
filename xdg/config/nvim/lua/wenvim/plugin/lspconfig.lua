@@ -16,6 +16,7 @@ later(function()
   })
   vim.lsp.enable({
     'jsonls',
+    'jdtls',
     'lua_ls',
     'vtsls',
     'vue_ls',
@@ -39,8 +40,6 @@ later(function()
   vim.api.nvim_create_autocmd('LspDetach', {
     callback = function(ev) util_lsp.on_detach(ev.data.client_id, ev.buf) end,
   })
-  -- custom jdtls setup
-  require('wenvim.lsp.jdtls').setup()
   -- if didn't have this env, don't enable sonarlint LSP
   local sonarlint_path = os.getenv('SONARLINT_PATH')
   if sonarlint_path ~= nil then
