@@ -1,8 +1,9 @@
 local M = {}
+local augroup = require('wenvim.util').augroup
 
-function M.on_detach(client_id, bufnr)
-  local augroup = require('wenvim.util').augroup
-  local detach_client = vim.lsp.get_client_by_id(client_id)
+function M.on_detach(ev)
+  local bufnr = ev.buf
+  local detach_client = vim.lsp.get_client_by_id(ev.data.client_id)
   if not detach_client then return end
   local clients = vim.lsp.get_clients({ bufnr = bufnr })
   for _, client in ipairs(clients) do
@@ -16,9 +17,9 @@ function M.on_detach(client_id, bufnr)
   })
 end
 
-function M.on_attach(client_id, bufnr)
-  local augroup = require('wenvim.util').augroup
-  local client = vim.lsp.get_client_by_id(client_id)
+function M.on_attach(ev)
+  local bufnr = ev.buf
+  local client = vim.lsp.get_client_by_id(ev.data.client_id)
   if not client then return end
   if client.server_capabilities.documentHighlightProvider then
     local lsp_document_highlight = augroup('lsp_document_highlight', { clear = false })
@@ -77,24 +78,8 @@ function M.on_rename_file(from, to)
 end
 
 function M.get_java_cmd()
-  local java_home = os.getenv('JDTLS_JAVA_HOME') or os.getenv('JAVA21_HOME') or os.getenv('JAVA_HOME')
+  local java_home = os.getenv('JAVA21_HOME') or os.getenv('JAVA_HOME')
   return java_home and java_home .. '/bin/java' or 'java'
-end
-
-function M.java_cmd_optimize(java_cmd, custom_cmd, prefix)
-  prefix = prefix or ''
-  local cmd = {
-    java_cmd or M.get_java_cmd(),
-    -- The following 6 lines is for optimize memory use, see https://github.com/redhat-developer/vscode-java/pull/1262#discussion_r386912240
-    prefix .. '-XX:+UseParallelGC',
-    prefix .. '-XX:MinHeapFreeRatio=5',
-    prefix .. '-XX:MaxHeapFreeRatio=10',
-    prefix .. '-XX:GCTimeRatio=4',
-    prefix .. '-XX:AdaptiveSizePolicyWeight=90',
-    prefix .. '-Dsun.zip.disableMemoryMapping=true',
-  }
-  vim.list_extend(cmd, custom_cmd)
-  return cmd
 end
 
 return M

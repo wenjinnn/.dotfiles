@@ -84,6 +84,7 @@ end)
 later(function()
   add({ source = 'tpope/vim-dadbod', depends = { 'kristijanhusak/vim-dadbod-completion' } })
   vim.api.nvim_create_autocmd('FileType', {
+    group = require('wenvim.util').augroup('dadbod'),
     pattern = 'sql',
     callback = function(ev)
       vim.bo[ev.buf].omnifunc = 'vim_dadbod_completion#omni'
