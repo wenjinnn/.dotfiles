@@ -1,7 +1,13 @@
 local M = {}
 M.opts = { noremap = true, silent = true }
 
-function M.make_opts(opts) return vim.tbl_extend('keep', opts, M.opts) end
+function M.make_opts(opts)
+  if type(opts) == 'string' then
+    -- in most case we just want add some description
+    opts = { desc = opts }
+  end
+  return vim.tbl_extend('keep', opts, M.opts)
+end
 
 -- Delete all dap terminals, useful when session restored, cuz in that timing sometimes we have some dead dap terminals.
 function M.delete_dap_terminals()
@@ -22,16 +28,7 @@ function M.augroup(name, opts)
 end
 
 function M.map(mode, lhs, rhs, opts)
-  -- default options
-  local final_opts = { noremap = true, silent = true }
-  if type(opts) == 'string' then
-    -- in most case we just want add some description
-    final_opts.desc = opts
-  elseif type(opts) == 'table' then
-    -- other case, just take the opts
-    final_opts = opts
-  end
-  vim.keymap.set(mode, lhs, rhs, final_opts)
+  vim.keymap.set(mode, lhs, rhs, M.make_opts(opts))
 end
 
 function M.buf_map(bufnr)

@@ -2,6 +2,7 @@ if vim.g.vscode then return end
 
 local add, later = MiniDeps.add, MiniDeps.later
 local map = require('wenvim.util').map
+local augroup = require('wenvim.util').augroup
 local util_lsp = require('wenvim.util.lsp')
 
 -- Lspconfig related
@@ -35,10 +36,12 @@ later(function()
     'gopls',
   })
   vim.api.nvim_create_autocmd('LspAttach', {
-    callback = function(ev) util_lsp.on_attach(ev.data.client_id, ev.buf) end,
+    group = augroup('lsp_attach'),
+    callback = util_lsp.on_attach,
   })
   vim.api.nvim_create_autocmd('LspDetach', {
-    callback = function(ev) util_lsp.on_detach(ev.data.client_id, ev.buf) end,
+    group = augroup('lsp_detach'),
+    callback = util_lsp.on_detach,
   })
   -- if didn't have this env, don't enable sonarlint LSP
   local sonarlint_path = os.getenv('SONARLINT_PATH')

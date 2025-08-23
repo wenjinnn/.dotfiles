@@ -84,8 +84,6 @@ just some filetype and lsp related settings
 
 `JDTLS_MAVEN_SETTINGS`  jdtls maven user settings.xml path
 
-`JDTLS_JAVA_HOME` jdtls java home, if not set, fallback to `JAVA_21_HOME`
-
 `JAVA_TEST_PATH` path to [vscode-java-test](https://github.com/microsoft/vscode-java-test) jars
 
 `JAVA_DEBUG_PATH` path to [vscode-java-debug](https://github.com/microsoft/vscode-java-debug) jars

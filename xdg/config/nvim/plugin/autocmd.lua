@@ -27,7 +27,8 @@ au({ 'VimResized' }, {
 })
 
 -- close floating windows with 'q'
-vim.api.nvim_create_autocmd('BufWinEnter', {
+au('BufWinEnter', {
+  group = augroup('close_float_win_with_q'),
   callback = function()
     local win = vim.api.nvim_get_current_win()
     local config = vim.api.nvim_win_get_config(win)

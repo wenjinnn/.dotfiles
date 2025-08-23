@@ -1,5 +1,6 @@
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 local map = require('wenvim.util').map
+local augroup = require('wenvim.util').augroup
 
 -- textobject enhancement
 later(function()
@@ -98,7 +99,7 @@ later(function()
   end
   vim.api.nvim_create_autocmd('FileType', {
     pattern = '*',
-    group = require('wenvim.util').augroup('ts_filetype'),
+    group = augroup('ts_parser_auto_installtion'),
     callback = function(event)
       local filetype = event.match
       local lang = vim.treesitter.language.get_lang(filetype)
@@ -148,6 +149,7 @@ later(function()
   end
   vim.api.nvim_create_user_command('DiffFormat', diff_format, { desc = 'Format changed lines' })
   vim.api.nvim_create_autocmd('BufWritePre', {
+    group = augroup('conform_diffformat'),
     pattern = '*',
     callback = diff_format,
     desc = 'Auto format changed lines',
@@ -172,6 +174,7 @@ later(function()
   -- automatic trim trailspace on write a buffer, this should be defined after conform.nvim setup
   -- for if trim trailspace done before conform diff_format autocmd, it will mess up lines index
   vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
+    group = augroup('mini_trim_trailspace'),
     callback = function()
       MiniTrailspace.trim()
       MiniTrailspace.trim_last_lines()
@@ -251,6 +254,7 @@ later(function()
   -- just use the default lint
   -- TODO maybe add more linter in future
   vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave', 'TextChanged' }, {
+    group = augroup('lint'),
     callback = function()
       lint.try_lint()
       lint.try_lint('compiler')

@@ -2,6 +2,7 @@ if vim.g.vscode then return end
 
 local map = require('wenvim.util').map
 local now, later = MiniDeps.now, MiniDeps.later
+local augroup = require('wenvim.util').augroup
 
 -- Load mini.files immediately for sometimes we are gonna open folder with nvim
 -- In this case mini.files can't be lazy load
@@ -15,6 +16,7 @@ now(function()
   map('n', '<leader>fe', MiniFiles.open, 'MiniFiles open')
   -- send notification to lsp when mini.files rename actions triggered, modified from snacks.nvim
   vim.api.nvim_create_autocmd('User', {
+    group = augroup('mini_files_lsp_rename'),
     pattern = 'MiniFilesActionRename',
     callback = function(event) require('wenvim.util.lsp').on_rename_file(event.data.from, event.data.to) end,
   })
@@ -59,6 +61,7 @@ now(function()
   local ui_open = function() vim.ui.open(MiniFiles.get_fs_entry().path) end
 
   vim.api.nvim_create_autocmd('User', {
+    group = augroup('mini_files_buf_mappings'),
     pattern = 'MiniFilesBufferCreate',
     callback = function(args)
       local buf_id = args.data.buf_id
@@ -73,6 +76,7 @@ now(function()
   -- Set custom bookmarks
   local set_mark = function(id, path, desc) MiniFiles.set_bookmark(id, path, { desc = desc }) end
   vim.api.nvim_create_autocmd('User', {
+    group = augroup('mini_files_marks'),
     pattern = 'MiniFilesExplorerOpen',
     callback = function()
       local dotfiles_path = os.getenv('DOTFILES')
