@@ -16,12 +16,10 @@
   #   "fcitx5/config".source = ../../xdg/config/fcitx5/config;
   #   "fcitx5/conf/classicui.conf".source = ../../xdg/config/fcitx5/conf/classicui.conf;
   # };
-  # rime sync dir link to private repo
+  # rime sync dir link to rclone dir
   xdg.dataFile = {
     "fcitx5/rime/sync" = {
-      source =
-        config.lib.file.mkOutOfStoreSymlink
-        "${config.home.sessionVariables.ARCHIVE}/rime/";
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Rclone/gd/rime/";
     };
   };
   # fcitx5
