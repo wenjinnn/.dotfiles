@@ -32,8 +32,8 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
     local win = vim.api.nvim_get_current_win()
     local config = vim.api.nvim_win_get_config(win)
     local rhs = function() vim.api.nvim_win_close(win, true) end
-    local opts = { buffer = true, nowait = true }
-    if config.relative ~= '' then vim.keymap.set('n', 'q', rhs, opts) end
+    local opts = { buffer = true, nowait = true, unique = true }
+    if config.relative ~= '' then pcall(vim.keymap.set, 'n', 'q', rhs, opts) end
   end,
 })
 
