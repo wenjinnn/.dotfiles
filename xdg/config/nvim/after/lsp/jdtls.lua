@@ -42,7 +42,6 @@ local bundles = { vim.fn.glob(jdtls_debug_path .. '/server/com.microsoft.java.de
 local test_bundles = vim.split(vim.fn.glob(jdtls_test_path .. '/server/*.jar', true), '\n')
 vim.list_extend(bundles, test_bundles)
 
-local extendedClientCapabilities = jdtls.extendedClientCapabilities
 local jdtls_cache_path = vim.fn.stdpath('cache') .. '/jdtls'
 local lombok_path = os.getenv('LOMBOK_PATH')
 local home = os.getenv('HOME')
@@ -166,13 +165,10 @@ return {
       },
     },
   },
-  capabilities = vim.lsp.protocol.make_client_capabilities(),
   root_dir = root_dir,
   on_attach = on_attach,
-  filetypes = { 'java' },
   init_options = {
     bundles = bundles,
-    extendedClientCapabilities = extendedClientCapabilities,
   },
   handlers = {
     -- filter noisy notifications
@@ -193,7 +189,6 @@ return {
     '--jvm-arg=-XX:GCTimeRatio=4',
     '--jvm-arg=-XX:AdaptiveSizePolicyWeight=90',
     '--jvm-arg=-Dsun.zip.disableMemoryMapping=true',
-
     '--jvm-arg=-Dlog.protocol=true',
     '--jvm-arg=-Dlog.level=ALL',
     '--jvm-arg=-Dfile.encoding=utf-8',
