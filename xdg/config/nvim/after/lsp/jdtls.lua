@@ -66,7 +66,7 @@ return {
       maxConcurrentBuilds = 5,
       saveActions = { organizeImports = false },
       referencesCodeLens = { enabled = true },
-      implementationsCodeLens = { enabled = true },
+      implementationCodeLens = 'all',
       signatureHelp = {
         enabled = true,
         description = { enabled = true },
