@@ -130,20 +130,18 @@ just some filetype and lsp related settings
 
 ### database
 + [tpope/vim-dadbod](https://github.com/tpope/vim-dadbod)
++ [kristijanhusak/vim-dadbod-completion](https://github.com/kristijanhusak/vim-dadbod-completion)
 
 ### debugging
 
 + [mfussenegger/nvim-dap](https://github.com/mfussenegger/nvim-dap)
 + [mfussenegger/nvim-dap-python](https://github.com/mfussenegger/nvim-dap-python)
-+ [theHamsta/nvim-dap-virtual-text](https://github.com/theHamsta/nvim-dap-virtual-text)
 + [jbyuki/one-small-step-for-vimkind](https://github.com/jbyuki/one-small-step-for-vimkind)
 
 ### VCS
 
 + [vim-fugitive](https://github.com/tpope/vim-fugitive)
 
-### editing-support
-+ [windwp/nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag)
 ### formatting
 
 + [stevearc/conform.nvim](https://github.com/stevearc/conform.nvim)
