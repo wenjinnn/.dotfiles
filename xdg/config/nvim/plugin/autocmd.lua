@@ -26,6 +26,17 @@ au({ 'VimResized' }, {
   end,
 })
 
+-- close floating windows with 'q'
+vim.api.nvim_create_autocmd('BufWinEnter', {
+  callback = function()
+    local win = vim.api.nvim_get_current_win()
+    local config = vim.api.nvim_win_get_config(win)
+    local rhs = function() vim.api.nvim_win_close(win, true) end
+    local opts = { buffer = true, nowait = true }
+    if config.relative ~= '' then vim.keymap.set('n', 'q', rhs, opts) end
+  end,
+})
+
 -- fcitx5 auto switch to default input method
 if vim.fn.executable('fcitx5') == 1 then
   au({ 'InsertLeave' }, {
