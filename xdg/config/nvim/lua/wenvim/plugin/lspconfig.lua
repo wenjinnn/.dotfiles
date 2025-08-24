@@ -34,6 +34,7 @@ later(function()
     'taplo',
     'rust_analyzer',
     'gopls',
+    'tinymist',
   })
   vim.api.nvim_create_autocmd('LspAttach', {
     group = augroup('lsp_attach'),
