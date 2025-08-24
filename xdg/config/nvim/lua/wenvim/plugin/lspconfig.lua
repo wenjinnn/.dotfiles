@@ -57,23 +57,18 @@ later(function()
           '-stdio',
           '-analyzers',
           -- paths to the analyzers you need, using those for python and java in this example
-          sonarlint_path .. '/analyzers/sonarpython.jar',
+          sonarlint_path .. '/analyzers/sonarcsharp.jar',
           sonarlint_path .. '/analyzers/sonarcfamily.jar',
           sonarlint_path .. '/analyzers/sonarjava.jar',
-          sonarlint_path .. '/analyzers/sonarjs.jar',
-          sonarlint_path .. '/analyzers/sonarxml.jar',
-          sonarlint_path .. '/analyzers/sonarhtml.jar',
-          sonarlint_path .. '/analyzers/sonargo.jar',
+          sonarlint_path .. '/analyzers/sonarpython.jar',
         },
       },
       filetypes = {
+        'cs',
+        'dockerfile',
         'python',
         'cpp',
         'java',
-        'javascript',
-        'typescript',
-        'xml',
-        'go',
       },
     })
   end
