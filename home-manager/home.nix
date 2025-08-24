@@ -137,6 +137,7 @@ in
     gemini-cli
     devenv
     nix-init
+    typst
     # nix related
     #
     # it provides the command `nom` works just like `nix`

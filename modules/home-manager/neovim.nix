@@ -28,6 +28,7 @@
       texlab
       taplo
       gopls
+      tinymist
       # linter
       vale
       eslint

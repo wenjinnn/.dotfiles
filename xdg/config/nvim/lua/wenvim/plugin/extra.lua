@@ -42,12 +42,14 @@ later(function()
   map('n', ']r', kulala.jump_next, 'Jump to next request')
 end)
 
--- markdown, html, asciidoc, svg preview in browser
+-- markdown, html, asciidoc, svg, typst preview in browser
 later(function()
   add('brianhuster/live-preview.nvim')
+  add('chomosuke/typst-preview.nvim')
   map('n', '<leader>ls', '<cmd>LivePreview start<cr>', 'Live preview start')
   map('n', '<leader>lc', '<cmd>LivePreview close<cr>', 'Live preview close')
   map('n', '<leader>lp', '<cmd>LivePreview pick<cr>', 'Live preview pick')
+  map('n', '<leader>lt', '<cmd>TypstPreviewToggle<cr>', 'Typst preview toggle')
 end)
 
 -- pandoc integration
