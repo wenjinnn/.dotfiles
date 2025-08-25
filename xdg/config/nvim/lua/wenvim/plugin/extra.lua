@@ -53,33 +53,6 @@ end)
 -- pandoc integration
 later(function() add('vim-pandoc/vim-pandoc') end)
 
--- neovim in browser
-now(function()
-  local install_firenvim_bin = function() vim.fn['firenvim#install'](0) end
-  add({
-    source = 'glacambre/firenvim',
-    hooks = {
-      post_install = function() later(install_firenvim_bin) end,
-      post_checkout = install_firenvim_bin,
-    },
-  })
-  vim.g.firenvim_config = {
-    globalSettings = { alt = 'all' },
-    localSettings = {
-      ['.*'] = {
-        cmdline = 'firenvim',
-        content = 'text',
-        priority = 0,
-        selector = 'textarea:not([readonly], [aria-readonly])',
-        takeover = 'never',
-      },
-    },
-  }
-  if vim.g.started_by_firenvim then
-    map('n', '<Esc><Esc>', '<Cmd>call firenvim#focus_page()<CR>', 'Firenvim focus page')
-  end
-end)
-
 -- db manage
 later(function()
   add({ source = 'tpope/vim-dadbod', depends = { 'kristijanhusak/vim-dadbod-completion' } })
