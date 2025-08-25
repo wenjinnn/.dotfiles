@@ -35,6 +35,7 @@ later(function()
     'rust_analyzer',
     'gopls',
     'tinymist',
+    'copilot',
   })
   vim.api.nvim_create_autocmd('LspAttach', {
     group = augroup('lsp_attach'),

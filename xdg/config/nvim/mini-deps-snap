@@ -1,7 +1,6 @@
 return {
   ["SchemaStore.nvim"] = "433a310de5cbab41f1eb3424332a583e21e39f5c",
   ["conform.nvim"] = "a0ab60ed666c56b37fd7ed1847d2ac52f2482ce0",
-  ["copilot.lua"] = "f0c0d981de2737abc50bd7b5bb034ae440826827",
   ["friendly-snippets"] = "572f5660cf05f8cd8834e096d7b4c921ba18e175",
   ["grug-far.nvim"] = "385d1949dc21d0c39e7a74b4f4a25da18817bc86",
   ["kulala.nvim"] = "1695bdfc87e2af737bec034cd4cd2d11098a22fd",

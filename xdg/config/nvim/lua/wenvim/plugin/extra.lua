@@ -79,22 +79,3 @@ later(function()
   map({ 'n', 'v' }, '<leader>Fv', grug_cursor_word, 'GrugFar search current word')
   map('n', '<leader>Ff', grug_current_file, 'Search on current file')
 end)
-
--- AI related
-later(function()
-  -- official copilot plugin lua replacement
-  add('zbirenbaum/copilot.lua')
-  require('copilot').setup({
-    panel = { enabled = false, keymap = { open = '<M-j>' } },
-    suggestion = {
-      auto_trigger = true,
-      hide_during_completion = false,
-      keymap = {
-        accept = '<M-CR>',
-        accept_word = '<M-w>',
-        accept_line = '<M-l>',
-      },
-    },
-    filetypes = { ['*'] = true },
-  })
-end)

@@ -29,6 +29,7 @@
       taplo
       gopls
       tinymist
+      copilot-language-server
       # linter
       vale
       eslint
