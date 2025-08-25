@@ -60,12 +60,15 @@ later(function()
     custom_surroundings = {
       -- workaround for html tag with attributes surrounding, see https://github.com/echasnovski/mini.nvim/issues/1293#issuecomment-2423827325
       T = {
-        input = { '<([%w_%-%.]-)%f[^<%w_%-%.][^<>]->.-</%1>', '^<()[%w_%-%.]+().*</()[%w_%-%.]+()>$' },
+        input = { '<([%w_-%.]-)%f[^<%w_-%.][^<>]->.-</%1>', '^<()[%w_-%.]+().*</()[%w_-%.]+()>$' },
         output = function()
           local tag_name = MiniSurround.user_input('Tag name')
           if tag_name == nil then return nil end
           return { left = tag_name, right = tag_name }
         end,
+      },
+      t = {
+        input = { '<([%w_-%.]-)%f[^<%w_-%.][^<>]->.-</%1>', '^<.->().*()</[^/]->$' },
       },
     },
     n_lines = 100,
