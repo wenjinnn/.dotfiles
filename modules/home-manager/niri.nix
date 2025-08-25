@@ -439,7 +439,13 @@
             max-height = 1;
           }
         ];
+        layer-rules = [
+          {
+            matches = [ { namespace = "^notification$"; } ];
 
+            block-out-from = "screencast";
+          }
+        ];
       };
   };
 }
