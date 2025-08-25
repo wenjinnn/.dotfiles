@@ -50,9 +50,6 @@ later(function()
   map('n', '<leader>lp', '<cmd>LivePreview pick<cr>', 'Live preview pick')
 end)
 
--- pandoc integration
-later(function() add('vim-pandoc/vim-pandoc') end)
-
 -- db manage
 later(function()
   add({ source = 'tpope/vim-dadbod', depends = { 'kristijanhusak/vim-dadbod-completion' } })
