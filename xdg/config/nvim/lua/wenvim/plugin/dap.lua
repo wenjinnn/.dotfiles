@@ -71,11 +71,6 @@ later(function()
     dap.list_breakpoints()
     vim.cmd('copen')
   end
-  local function dap_continue()
-    -- fix java dap setup failed sometime
-    if vim.bo.filetype == 'java' and require('dap').configurations.java == nil then require('lsp.jdtls').setup_dap() end
-    dap.continue()
-  end
 
   local function dap_set_breakpoint() dap.set_breakpoint(vim.fn.input('Breakpoint condition: ')) end
   local function dap_set_logpoint() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end
@@ -112,7 +107,7 @@ later(function()
   map('n', '<leader>dt', dap_ui(widgets.threads, 'dap-threads'), 'Dap threads')
   map('n', '<leader>dS', dap_ui(widgets.sessions, 'dap-sessions'), 'Dap sessions')
   map('n', '<leader>dq', breakpoints_quickfix, 'Dap list breakpoints')
-  map('n', '<leader>dc', dap_continue, 'Dap continue')
+  map('n', '<leader>dc', dap.continue, 'Dap continue')
   map('n', '<leader>dB', dap_set_breakpoint, 'Dap condition breakpoint')
   map('n', '<leader>dl', dap_set_logpoint, 'Dap log breakpoint')
   map('n', '<leader>dN', osv_launch, 'Dap osv launch')
