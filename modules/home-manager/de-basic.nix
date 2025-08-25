@@ -81,7 +81,17 @@
         recolor = true;
       };
     };
-    firefox.enable = true;
+    firefox = {
+      enable = true;
+      package = pkgs.firefox.override {
+        # See nixpkgs' firefox/wrapper.nix to check which options you can use
+        nativeMessagingHosts = with pkgs; [
+          # Tridactyl native connector
+          tridactyl-native
+          browserpass
+        ];
+      };
+    };
   };
 
   home.packages = with pkgs; [
