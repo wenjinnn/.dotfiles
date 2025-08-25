@@ -21,10 +21,6 @@
             "-y"
             "mcp-neovim-server"
           ];
-          environment = {
-            ALLOW_SHELL_COMMANDS = "true";
-            NVIM_SOCKET_PATH = "/tmp/nvim";
-          };
         };
       };
     };
