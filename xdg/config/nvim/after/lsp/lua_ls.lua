@@ -27,23 +27,6 @@ return {
       hint = {
         enable = true,
       },
-      format = {
-        enable = true,
-        defaultConfig = {
-          indent_size = '2',
-          quote_style = 'double',
-          trailing_table_separator = 'smart',
-          align_call_args = 'false',
-          align_function_params = 'false',
-          align_continuous_assign_statement = 'false',
-          align_continuous_rect_table_field = 'false',
-          align_if_branch = 'false',
-          align_array_table = 'false',
-          align_continuous_similar_call_args = 'false',
-          align_continuous_inline_comment = 'false',
-          align_chain_expr = 'none',
-        },
-      },
     })
   end,
   settings = {

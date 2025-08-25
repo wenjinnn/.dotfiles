@@ -27,9 +27,7 @@ function M.augroup(name, opts)
   return vim.api.nvim_create_augroup('wenvim_' .. name, final_opts)
 end
 
-function M.map(mode, lhs, rhs, opts)
-  vim.keymap.set(mode, lhs, rhs, M.make_opts(opts))
-end
+function M.map(mode, lhs, rhs, opts) vim.keymap.set(mode, lhs, rhs, M.make_opts(opts)) end
 
 function M.buf_map(bufnr)
   return function(mode, lhs, rhs, desc)
