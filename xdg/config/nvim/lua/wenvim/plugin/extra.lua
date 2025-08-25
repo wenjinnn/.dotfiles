@@ -16,7 +16,6 @@ later(function()
 end)
 
 -- http client
-vim.filetype.add({ extension = { ['http'] = 'http' } })
 later(function()
   add('mistweaverco/kulala.nvim')
   local kulala = require('kulala')
