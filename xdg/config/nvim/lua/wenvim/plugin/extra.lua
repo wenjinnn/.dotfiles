@@ -53,9 +53,6 @@ end)
 -- pandoc integration
 later(function() add('vim-pandoc/vim-pandoc') end)
 
--- typst integration
-later(function() add('kaarmu/typst.vim') end)
-
 -- neovim in browser
 now(function()
   local install_firenvim_bin = function() vim.fn['firenvim#install'](0) end

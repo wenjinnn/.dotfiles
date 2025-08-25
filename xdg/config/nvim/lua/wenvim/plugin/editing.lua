@@ -102,7 +102,7 @@ later(function()
   end
   vim.api.nvim_create_autocmd('FileType', {
     pattern = '*',
-    group = augroup('ts_parser_auto_installtion'),
+    group = augroup('ts_parser_auto_installation'),
     callback = function(event)
       local filetype = event.match
       local lang = vim.treesitter.language.get_lang(filetype)
