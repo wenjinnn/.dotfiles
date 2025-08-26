@@ -12,7 +12,6 @@ later(function()
     depends = {
       'b0o/SchemaStore.nvim',
       'mfussenegger/nvim-jdtls',
-      'https://gitlab.com/schrieveslaach/sonarlint.nvim',
     },
   })
   vim.lsp.enable({
@@ -45,34 +44,6 @@ later(function()
     group = augroup('lsp_detach'),
     callback = util_lsp.on_detach,
   })
-  -- if didn't have this env, don't enable sonarlint LSP
-  local sonarlint_path = os.getenv('SONARLINT_PATH')
-  if sonarlint_path ~= nil then
-    require('sonarlint').setup({
-      server = {
-        cmd = {
-          util_lsp.get_java_cmd(),
-          '-jar',
-          sonarlint_path .. '/server/sonarlint-ls.jar',
-          -- Ensure that sonarlint-language-server uses stdio channel
-          '-stdio',
-          '-analyzers',
-          -- paths to the analyzers you need, using those for python and java in this example
-          sonarlint_path .. '/analyzers/sonarcsharp.jar',
-          sonarlint_path .. '/analyzers/sonarcfamily.jar',
-          sonarlint_path .. '/analyzers/sonarjava.jar',
-          sonarlint_path .. '/analyzers/sonarpython.jar',
-        },
-      },
-      filetypes = {
-        'cs',
-        'dockerfile',
-        'python',
-        'cpp',
-        'java',
-      },
-    })
-  end
   -- finally, some LSP related keymaps
   local function inlay_hint_toggle()
     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })

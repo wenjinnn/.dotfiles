@@ -94,9 +94,6 @@ just some filetype and lsp related settings
 
 `JDTLS_DAP_VMARGS` jdtls dap vm args
 
-### Sonarlint
-`SONARLINT_PATH` path to sonarlint language server jars
-
 ### Vue
 
 `VUE_LANGUAGE_SERVER_PATH` path to vue language server
@@ -142,7 +139,6 @@ just some filetype and lsp related settings
 + [mfussenegger/nvim-lint](https://github.com/mfussenegger/nvim-lint)
 + [mfussenegger/nvim-jdtls](https://github.com/mfussenegger/nvim-jdtls)
 + [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
-+ [schrieveslaach/sonarlint.nvim](https://gitlab.com/schrieveslaach/sonarlint.nvim)
 ### markdown-and-latex
 
 + [brianhuster/live-preview.nvim](https://github.com/brianhuster/live-preview.nvim)
