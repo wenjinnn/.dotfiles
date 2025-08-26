@@ -115,16 +115,9 @@ just some filetype and lsp related settings
 
 ## Plugins
 
-### ai
-+ [zbirenbaum/copilot.lua](https://github.com/zbirenbaum/copilot.lua)
-
 ### comment
 
 + [danymat/neogen](https://github.com/danymat/neogen)
-
-### extra
-
-+ [glacambre/firenvim](https://github.com/glacambre/firenvim)
 
 ### database
 + [tpope/vim-dadbod](https://github.com/tpope/vim-dadbod)
@@ -153,7 +146,6 @@ just some filetype and lsp related settings
 ### markdown-and-latex
 
 + [brianhuster/live-preview.nvim](https://github.com/brianhuster/live-preview.nvim)
-+ [vim-pandoc/vim-pandoc](https://github.com/vim-pandoc/vim-pandoc)
 
 ### note-taking
 
