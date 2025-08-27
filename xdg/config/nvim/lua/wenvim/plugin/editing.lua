@@ -170,7 +170,10 @@ later(function()
   -- load some editing support mini modules at once
   require('mini.align').setup()
   require('mini.comment').setup()
-  require('mini.bracketed').setup()
+  require('mini.bracketed').setup({
+    -- adjust comment mapping for conflict with vim-fugitive
+    comment = { suffix = 'e' },
+  })
   require('mini.pairs').setup()
   require('mini.operators').setup({ exchange = { prefix = 'gX' } })
   require('mini.trailspace').setup()
