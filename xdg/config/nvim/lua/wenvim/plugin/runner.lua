@@ -5,7 +5,7 @@ later(function()
   add('kassio/neoterm')
   add('tpope/vim-dispatch')
   add('vim-test/vim-test')
-  vim.g['test#strategy'] = 'neoterm'
+  vim.g['test#strategy'] = 'dispatch'
   map('n', '<leader>tn', '<cmd>TestNearest<CR>', 'Run nearest test')
   map('n', '<leader>tf', '<cmd>TestFile<CR>', 'Run file tests')
   map('n', '<leader>ts', '<cmd>TestSuite<CR>', 'Run test suite')
