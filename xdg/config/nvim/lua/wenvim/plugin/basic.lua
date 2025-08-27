@@ -15,11 +15,4 @@ end)
 
 later(function() require('mini.extra').setup() end)
 
-later(function()
-  require('mini.basics').setup({
-    extra_ui = true,
-    mappings = { windows = false },
-  })
-  -- disable mini.basics C-s mapping
-  vim.keymap.del({ 'n', 'i', 'x' }, '<C-s>')
-end)
+later(function() require('mini.basics').setup() end)
