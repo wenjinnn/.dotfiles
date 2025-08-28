@@ -16,3 +16,4 @@ map('n', '<leader>p', '"+p', 'Paste from system clipboard')
 --keywordprg
 map('n', '<leader>K', '<cmd>norm! K<cr>', 'Keywordprg')
 map('n', '<leader>]', '<cmd>!ctags<cr>', 'Ctags')
+map('n', '<leader>M', '<cmd>redir @+><cr>', 'Redir to clipboard')
