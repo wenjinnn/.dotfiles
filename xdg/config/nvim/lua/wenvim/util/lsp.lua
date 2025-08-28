@@ -87,9 +87,4 @@ function M.on_rename_file(from, to)
   end
 end
 
-function M.get_java_cmd()
-  local java_home = os.getenv('JAVA21_HOME') or os.getenv('JAVA_HOME')
-  return java_home and java_home .. '/bin/java' or 'java'
-end
-
 return M

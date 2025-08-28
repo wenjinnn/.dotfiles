@@ -79,7 +79,7 @@ now(function()
     group = augroup('mini_files_marks'),
     pattern = 'MiniFilesExplorerOpen',
     callback = function()
-      local dotfiles_path = os.getenv('DOTFILES')
+      local dotfiles_path = vim.env.DOTFILES
       local config_path = dotfiles_path and dotfiles_path .. '/xdg/config/nvim' or vim.fn.stdpath('config')
       set_mark('c', config_path, 'Config') -- path
       set_mark('w', vim.fn.getcwd, 'Working directory') -- callable

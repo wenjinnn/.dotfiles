@@ -1,5 +1,5 @@
 local hostname = vim.fn.hostname()
-local username = os.getenv('USER')
+local username = vim.env.USER
 return {
   settings = {
     nixd = {
