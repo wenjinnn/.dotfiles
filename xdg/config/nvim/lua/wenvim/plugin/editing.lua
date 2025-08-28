@@ -124,6 +124,7 @@ later(function()
     formatters_by_ft = {
       lua = { 'stylua' },
       nix = { 'nixfmt' },
+      sql = { 'sqlfluff' },
       python = { 'ruff_format', 'ruff_fix', 'ruff_organize_imports' },
     },
   })
@@ -251,6 +252,7 @@ later(function()
   local lint = require('lint')
   lint.linters_by_ft = {
     markdown = { 'vale' },
+    sql = { 'sqlfluff' },
     python = { 'ruff' },
     javascript = { 'eslint' },
     typescript = { 'eslint' },

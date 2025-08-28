@@ -33,6 +33,7 @@
       # linter
       vale
       eslint
+      sqlfluff
       # formatter
       stylua
       libxml2
