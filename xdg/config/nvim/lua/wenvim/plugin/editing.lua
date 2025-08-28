@@ -113,9 +113,8 @@ now(function()
       end
     end,
   })
-  require('treesitter-context').setup()
   local function go_to_context() require('treesitter-context').go_to_context(vim.v.count1) end
-  map('n', '[e', go_to_context, 'treesitter context upward')
+  map('n', '[C', go_to_context, 'treesitter context upward')
 end)
 
 -- conform with some auto format setting
