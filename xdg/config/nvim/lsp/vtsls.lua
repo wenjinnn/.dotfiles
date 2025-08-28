@@ -1,4 +1,4 @@
-local vue_language_server_path = os.getenv('VUE_LANGUAGE_SERVER_PATH')
+local vue_language_server_path = vim.env.VUE_LANGUAGE_SERVER_PATH
 local vue_plugin = {
   name = '@vue/typescript-plugin',
   location = vue_language_server_path
