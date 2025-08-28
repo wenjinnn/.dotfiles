@@ -77,7 +77,7 @@ later(function()
 end)
 
 -- treesitter related
-later(function()
+now(function()
   add({
     source = 'nvim-treesitter/nvim-treesitter',
     -- TODO remove this line when it is stable

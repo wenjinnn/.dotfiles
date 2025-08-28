@@ -13,6 +13,6 @@ now(function()
   require('wenvim.util').map('n', '<leader>z', '<cmd>lua MiniMisc.zoom()<cr>', 'Zoom current window')
 end)
 
-later(function() require('mini.extra').setup() end)
-
 later(function() require('mini.basics').setup() end)
+
+later(function() require('mini.extra').setup() end)

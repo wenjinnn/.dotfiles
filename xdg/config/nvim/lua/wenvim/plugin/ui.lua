@@ -3,6 +3,18 @@ if vim.g.vscode then return end
 local now, later = MiniDeps.now, MiniDeps.later
 local map = require('wenvim.util').map
 
+-- Icons
+now(function()
+  require('mini.icons').setup()
+  MiniIcons.mock_nvim_web_devicons()
+end)
+
+-- line
+now(function()
+  require('mini.statusline').setup()
+  require('mini.tabline').setup()
+end)
+
 -- Starter should load immediately
 now(function()
   local starter = require('mini.starter')
@@ -36,10 +48,12 @@ now(function()
   })
 end)
 
--- Icons
-now(function()
-  require('mini.icons').setup()
-  MiniIcons.mock_nvim_web_devicons()
+later(function ()
+  require('mini.indentscope').setup({
+    draw = {
+      animation = require('mini.indentscope').gen_animation.none(),
+    },
+  })
 end)
 
 -- Just use mini.notify for LSP process, because it could have lot message in the sametime
@@ -47,17 +61,6 @@ end)
 later(function()
   require('mini.notify').setup()
   map('n', '<leader>N', MiniNotify.clear, 'Notify clear')
-end)
-
--- line and indentscope
-now(function()
-  require('mini.statusline').setup()
-  require('mini.tabline').setup()
-  require('mini.indentscope').setup({
-    draw = {
-      animation = require('mini.indentscope').gen_animation.none(),
-    },
-  })
 end)
 
 -- colors
