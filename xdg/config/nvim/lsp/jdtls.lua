@@ -6,7 +6,14 @@ local jdtls_test_path = vim.env.JAVA_TEST_PATH or jdtls_data_path
 
 local bundles = { vim.fn.glob(jdtls_debug_path .. '/server/com.microsoft.java.debug.plugin-*.jar') }
 local test_bundles = vim.split(vim.fn.glob(jdtls_test_path .. '/server/*.jar', true), '\n')
-vim.list_extend(bundles, test_bundles)
+local excluded = {
+  'com.microsoft.java.test.runner-jar-with-dependencies.jar',
+  'jacocoagent.jar',
+}
+for _, java_test_jar in ipairs(test_bundles) do
+  local fname = vim.fn.fnamemodify(java_test_jar, ':t')
+  if not vim.tbl_contains(excluded, fname) then table.insert(bundles, java_test_jar) end
+end
 
 local jdtls_cache_path = vim.fn.stdpath('cache') .. '/jdtls'
 local lombok_path = vim.env.LOMBOK_PATH
