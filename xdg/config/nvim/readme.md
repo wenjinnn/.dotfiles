@@ -1,6 +1,6 @@
 
 # wenvim
-### wenjinnn's neovim configuration
+### wenjinnn's neovim configuration, basically a distribution of [mini.nvim](https://github.com/nvim-mini/mini.nvim)
 
 <a href="https://dotfyle.com/wenjinnn/dotfiles-xdg-config-nvim"><img src="https://dotfyle.com/wenjinnn/dotfiles-xdg-config-nvim/badges/plugins?style=flat" /></a>
 <a href="https://dotfyle.com/wenjinnn/dotfiles-xdg-config-nvim"><img src="https://dotfyle.com/wenjinnn/dotfiles-xdg-config-nvim/badges/leaderkey?style=flat" /></a>
