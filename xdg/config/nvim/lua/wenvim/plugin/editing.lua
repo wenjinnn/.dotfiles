@@ -127,6 +127,15 @@ later(function()
       sql = { 'sqlfluff' },
       python = { 'ruff_format', 'ruff_fix', 'ruff_organize_imports' },
     },
+    formatters = {
+      -- override default sqlfluff config to let it work without extra config file
+      sqlfluff = {
+        args = { "fix", "--dialect", "ansi", "-q", "-" },
+        cwd = nil,
+        require_cwd = false,
+        exit_codes = { 0, 1 }
+      },
+    },
   })
   vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
   vim.g.conform_autoformat = true
