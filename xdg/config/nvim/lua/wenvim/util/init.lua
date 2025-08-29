@@ -54,4 +54,20 @@ function M.toggle_win_diff()
   end
 end
 
+function M.filter_buffers(pattern, cmd_opts)
+  cmd_opts = cmd_opts or {}
+  local items = {}
+  local buffers_output =
+    vim.api.nvim_exec2('filter' .. (cmd_opts.revert and '! ' or ' ') .. pattern .. ' ls', { output = true })
+  if buffers_output.output ~= '' then
+    for _, l in ipairs(vim.split(buffers_output.output, '\n')) do
+      local buf_str, name = l:match('^%s*%d+'), l:match('"(.*)"')
+      local buf_id = tonumber(buf_str)
+      local item = { text = name, bufnr = buf_id }
+      table.insert(items, item)
+    end
+  end
+  return items
+end
+
 return M

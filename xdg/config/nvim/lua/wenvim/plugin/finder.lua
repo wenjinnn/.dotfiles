@@ -1,8 +1,9 @@
 if vim.g.vscode then return end
 
-local map = require('wenvim.util').map
+local util = require('wenvim.util')
+local map = util.map
 local now, later = MiniDeps.now, MiniDeps.later
-local augroup = require('wenvim.util').augroup
+local augroup = util.augroup
 
 -- Load mini.files immediately for sometimes we are gonna open folder with nvim
 -- In this case mini.files can't be lazy load
@@ -123,29 +124,11 @@ later(function()
       { source = { name = string.format('Grep (rg %s)', args), show = show_with_icons } }
     )
   end
-  local function filter_buffers(pattern, cmd_opts)
-    cmd_opts = cmd_opts or {}
-    local items = {}
-    local buffers_output =
-      vim.api.nvim_exec2('filter' .. (cmd_opts.revert and '! ' or ' ') .. pattern .. ' ls', { output = true })
-    if buffers_output.output ~= '' then
-      for _, l in ipairs(vim.split(buffers_output.output, '\n')) do
-        local buf_str, name = l:match('^%s*%d+'), l:match('"(.*)"')
-        local buf_id = tonumber(buf_str)
-        local item = { text = name, bufnr = buf_id }
-        table.insert(items, item)
-      end
-    end
-    return items
-  end
-  local function get_terminal_items(local_opts)
-    local dap_terms = filter_buffers('/^\\[dap-terminal\\]/')
-    local terms = filter_buffers('/^term:\\/\\//')
-    return vim.list_extend(terms, dap_terms)
-  end
   -- select terminals
-  MiniPick.registry.terminals = function(local_opts)
-    local items = get_terminal_items(local_opts)
+  MiniPick.registry.terminals = function()
+    local dap_terms = util.filter_buffers('/^\\[dap-terminal\\]/')
+    local terms = util.filter_buffers('/^term:\\/\\//')
+    local items = vim.list_extend(terms, dap_terms)
     local terminal_opts = { source = { name = 'Terminal buffers', show = show_with_icons, items = items } }
     return MiniPick.start(terminal_opts)
   end
