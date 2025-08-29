@@ -155,25 +155,14 @@ later(function()
     local cmd_tbl = vim.split(input_cmd, '%s+')
     return MiniPick.builtin.cli({ command = cmd_tbl })
   end
-  vim.api.nvim_create_user_command('PickOrNewTerminal', function()
-    local items = get_terminal_items()
-    if #items == 0 then
-      vim.cmd('Tnew')
-    elseif #items == 1 then
-      vim.cmd('buffer ' .. items[1].bufnr)
-      vim.cmd('startinsert')
-    else
-      vim.cmd('Pick terminals')
-    end
-  end, { desc = 'Pick terminals or new one' })
-  map('n', '<leader>ft', '<cmd>PickOrNewTerminal<cr>', 'Pick terminals or new one')
+  map('n', '<leader>ft', '<cmd>Pick terminals<cr>', 'Pick terminals')
   map('n', '<leader>fG', '<cmd>Pick grep_args<cr>', 'Pick grep with rg args')
   map('n', '<leader>ff', '<cmd>Pick files<cr>', 'Pick files')
   map('n', '<leader>fg', '<cmd>Pick grep_live<cr>', 'Pick grep live')
   map('n', '<leader>fH', '<cmd>Pick help<cr>', 'Pick help')
   map('n', '<leader>fb', '<cmd>Pick buffers<cr>', 'Pick buffers')
   map('n', '<leader>fC', '<cmd>Pick colorschemes<cr>', 'Pick colorschemes')
-  map('n', '<leader>fi', '<cmd>Pick input_cli<cr>', 'Pick cli output from input')
+  map('n', '<leader>fi', '<cmd>Pick input_cli<cr>', 'Pick cli output from cmd')
   map('n', '<leader>fR', '<cmd>Pick resume<cr>', 'Pick resume')
   map('n', '<leader>fd', "<cmd>Pick diagnostic scope='current'<cr>", 'Pick current diagnostic')
   map('n', '<leader>fD', "<cmd>Pick diagnostic scope='all'<cr>", 'Pick all diagnostic')
