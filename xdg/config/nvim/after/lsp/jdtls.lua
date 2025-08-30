@@ -17,71 +17,6 @@ end
 
 local jdtls_cache_path = vim.fn.stdpath('cache') .. '/jdtls'
 local lombok_path = vim.env.LOMBOK_PATH
--- overwrite default jdtls config
-vim.lsp.config('jdtls', {
-  root_dir = root_dir,
-  on_attach = function(client, bufnr)
-    -- setup keymaps
-    local jdtls = require('jdtls')
-    local map = require('wenvim.util').buf_map(bufnr)
-    local jdtls_tests = require('jdtls.tests')
-    map('n', '<leader>cC', '<cmd>JdtCompile full<CR>', 'Jdt compile full')
-    map('n', '<leader>cc', '<cmd>JdtCompile incremental<CR>', 'Jdt compile incremental')
-    map('n', '<leader>cu', '<cmd>JdtUpdateHotcode<CR>', 'Jdt update hotcode')
-    map('n', '<leader>cg', jdtls_tests.generate, 'Jdt test generate')
-    map('n', '<leader>co', jdtls.organize_imports, 'Jdt Organize Imports')
-    map('n', '<leader>cv', jdtls.extract_variable, 'Jdt Extract Variable')
-    map('n', '<leader>cT', jdtls_tests.goto_subjects, 'Jdt Test Goto Subjects')
-    -- If using nvim-dap
-    -- This requires java-debug and vscode-java-test bundles, see install steps in this README further below.
-    map('n', '<leader>da', jdtls.test_class, 'Jdt Test Class')
-    map('n', '<leader>dm', jdtls.test_nearest_method, 'Jdt Test Method')
-    map('n', '<leader>cV', jdtls.extract_constant, 'Jdt Extract Constant')
-    map('v', '<leader>cv', function() jdtls.extract_variable(true) end, 'Jdt Extract Variable')
-    map('v', '<leader>cV', function() jdtls.extract_constant(true) end, 'Jdt Extract Constant')
-    map('v', '<leader>ce', function() jdtls.extract_method(true) end, 'Jdt Extract Method')
-    -- setup dap
-    require('jdtls.dap').setup_dap_main_class_configs({
-      config_overrides = { vmArgs = vim.env.JDTLS_DAP_VMARGS or '-Xms128m -Xmx512m' },
-    })
-    -- for all launch.json options see https://github.com/microsoft/vscode-java-debug#options
-    require('dap.ext.vscode').load_launchjs()
-  end,
-  init_options = {
-    bundles = bundles,
-  },
-  handlers = {
-    -- filter noisy notifications
-    ['$/progress'] = function(err, result, ctx)
-      local msg = result.value.message
-      if msg and msg:sub(1, 18) == 'Validate documents' then return end
-      if msg and msg:sub(1, 19) == 'Publish Diagnostics' then return end
-      -- pass through to normal handler
-      vim.lsp.handlers['$/progress'](err, result, ctx)
-    end,
-  },
-  cmd = {
-    'jdtls',
-    -- The following 6 lines is for optimize memory use, see https://github.com/redhat-developer/vscode-java/pull/1262#discussion_r386912240
-    '--jvm-arg=-XX:+UseParallelGC',
-    '--jvm-arg=-XX:MinHeapFreeRatio=5',
-    '--jvm-arg=-XX:MaxHeapFreeRatio=10',
-    '--jvm-arg=-XX:GCTimeRatio=4',
-    '--jvm-arg=-XX:AdaptiveSizePolicyWeight=90',
-    '--jvm-arg=-Dsun.zip.disableMemoryMapping=true',
-    '--jvm-arg=-Dlog.protocol=true',
-    '--jvm-arg=-Dlog.level=ALL',
-    '--jvm-arg=-Dfile.encoding=utf-8',
-    '--jvm-arg=-Djava.import.generatesMetadataFilesAtProjectRoot=false',
-    '--jvm-arg=-Xms256m',
-    '--jvm-arg=-Xmx' .. (vim.env.JDTLS_XMX or '1G'),
-    lombok_path ~= nil and string.format('--jvm-arg=-javaagent:%s/lombok.jar', lombok_path) or '',
-    '-configuration',
-    jdtls_cache_path .. '/config',
-    '-data',
-    jdtls_cache_path .. '/workspace/' .. ws_name,
-  },
-})
 return {
   settings = {
     java = {
@@ -196,5 +131,67 @@ return {
         },
       },
     },
+  },
+  root_dir = root_dir,
+  on_attach = function(client, bufnr)
+    -- setup keymaps
+    local jdtls = require('jdtls')
+    local map = require('wenvim.util').buf_map(bufnr)
+    local jdtls_tests = require('jdtls.tests')
+    map('n', '<leader>cC', '<cmd>JdtCompile full<CR>', 'Jdt compile full')
+    map('n', '<leader>cc', '<cmd>JdtCompile incremental<CR>', 'Jdt compile incremental')
+    map('n', '<leader>cu', '<cmd>JdtUpdateHotcode<CR>', 'Jdt update hotcode')
+    map('n', '<leader>cg', jdtls_tests.generate, 'Jdt test generate')
+    map('n', '<leader>co', jdtls.organize_imports, 'Jdt Organize Imports')
+    map('n', '<leader>cv', jdtls.extract_variable, 'Jdt Extract Variable')
+    map('n', '<leader>cT', jdtls_tests.goto_subjects, 'Jdt Test Goto Subjects')
+    -- If using nvim-dap
+    -- This requires java-debug and vscode-java-test bundles, see install steps in this README further below.
+    map('n', '<leader>da', jdtls.test_class, 'Jdt Test Class')
+    map('n', '<leader>dm', jdtls.test_nearest_method, 'Jdt Test Method')
+    map('n', '<leader>cV', jdtls.extract_constant, 'Jdt Extract Constant')
+    map('v', '<leader>cv', function() jdtls.extract_variable(true) end, 'Jdt Extract Variable')
+    map('v', '<leader>cV', function() jdtls.extract_constant(true) end, 'Jdt Extract Constant')
+    map('v', '<leader>ce', function() jdtls.extract_method(true) end, 'Jdt Extract Method')
+    -- setup dap
+    require('jdtls.dap').setup_dap_main_class_configs({
+      config_overrides = { vmArgs = vim.env.JDTLS_DAP_VMARGS or '-Xms128m -Xmx512m' },
+    })
+    -- for all launch.json options see https://github.com/microsoft/vscode-java-debug#options
+    require('dap.ext.vscode').load_launchjs()
+  end,
+  init_options = {
+    bundles = bundles,
+  },
+  handlers = {
+    -- filter noisy notifications
+    ['$/progress'] = function(err, result, ctx)
+      local msg = result.value.message
+      if msg and msg:sub(1, 18) == 'Validate documents' then return end
+      if msg and msg:sub(1, 19) == 'Publish Diagnostics' then return end
+      -- pass through to normal handler
+      vim.lsp.handlers['$/progress'](err, result, ctx)
+    end,
+  },
+  cmd = {
+    'jdtls',
+    -- The following 6 lines is for optimize memory use, see https://github.com/redhat-developer/vscode-java/pull/1262#discussion_r386912240
+    '--jvm-arg=-XX:+UseParallelGC',
+    '--jvm-arg=-XX:MinHeapFreeRatio=5',
+    '--jvm-arg=-XX:MaxHeapFreeRatio=10',
+    '--jvm-arg=-XX:GCTimeRatio=4',
+    '--jvm-arg=-XX:AdaptiveSizePolicyWeight=90',
+    '--jvm-arg=-Dsun.zip.disableMemoryMapping=true',
+    '--jvm-arg=-Dlog.protocol=true',
+    '--jvm-arg=-Dlog.level=ALL',
+    '--jvm-arg=-Dfile.encoding=utf-8',
+    '--jvm-arg=-Djava.import.generatesMetadataFilesAtProjectRoot=false',
+    '--jvm-arg=-Xms256m',
+    '--jvm-arg=-Xmx' .. (vim.env.JDTLS_XMX or '1G'),
+    lombok_path ~= nil and string.format('--jvm-arg=-javaagent:%s/lombok.jar', lombok_path) or '',
+    '-configuration',
+    jdtls_cache_path .. '/config',
+    '-data',
+    jdtls_cache_path .. '/workspace/' .. ws_name,
   },
 }
