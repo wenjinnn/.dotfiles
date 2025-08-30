@@ -17,7 +17,7 @@ local lombok_path = vim.env.LOMBOK_PATH
 return {
   settings = {
     java = {
-      settings = { url = vim.fn.stdpath('config') .. '/lsp/jdtls.settings.prefs' },
+      settings = { url = vim.fn.stdpath('config') .. '/after/lsp/jdtls.settings.prefs' },
       eclipse = { downloadSources = true },
       symbols = { includeSourceMethodDeclarations = true },
       selectionRange = { enabled = true },
