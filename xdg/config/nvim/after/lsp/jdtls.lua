@@ -1,11 +1,8 @@
 local root_dir = vim.fs.root(0, { 'mvnw', 'gradlew', '.git', '.svn' })
 local ws_name, _ = string.gsub(vim.fn.fnamemodify(root_dir, ':p'), '/', '_')
-local jdtls_data_path = vim.fn.stdpath('data') .. '/jdtls'
-local jdtls_debug_path = vim.env.JAVA_DEBUG_PATH or jdtls_data_path
-local jdtls_test_path = vim.env.JAVA_TEST_PATH or jdtls_data_path
 
-local bundles = { vim.fn.glob(jdtls_debug_path .. '/server/com.microsoft.java.debug.plugin-*.jar') }
-local test_bundles = vim.split(vim.fn.glob(jdtls_test_path .. '/server/*.jar', true), '\n')
+local bundles = { vim.fn.glob(vim.env.JAVA_DEBUG_PATH .. '/server/com.microsoft.java.debug.plugin-*.jar') }
+local test_bundles = vim.split(vim.fn.glob(vim.env.JAVA_TEST_PATH .. '/server/*.jar', true), '\n')
 local excluded = {
   'com.microsoft.java.test.runner-jar-with-dependencies.jar',
   'jacocoagent.jar',
