@@ -82,7 +82,6 @@ vim.lsp.config('jdtls', {
     jdtls_cache_path .. '/workspace/' .. ws_name,
   },
 })
--- only settings work with this way, don't know why yet
 return {
   settings = {
     java = {
