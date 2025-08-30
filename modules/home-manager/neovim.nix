@@ -34,6 +34,7 @@
       vale
       eslint
       sqlfluff
+      ruff
       # formatter
       stylua
       libxml2
@@ -41,11 +42,8 @@
       nixfmt-rfc-style
       rustfmt
       prettier
-      black
       # for nvim-treesitter
       tree-sitter
-      # another http tool
-      hurl
       # for kulala.nvim
       grpcurl
       websocat
@@ -55,7 +53,6 @@
       redis
       oracle-instantclient
       basedpyright
-      ruff
     ]
   );
   xdg.configFile = {
