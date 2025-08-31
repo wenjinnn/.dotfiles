@@ -16,5 +16,6 @@ later(function()
         enabled = false,
       },
     })
+    require('wenvim.util').map('n', '<leader>o', '<cmd>Obsidian<cr>', 'Obsidian subcommand')
   end
 end)
