@@ -36,5 +36,5 @@
   kdeconnect = import ./kdeconnect.nix;
   udiskie = import ./udiskie.nix;
   de-basic = import ./de-basic.nix;
-  opencode = import ./opencode.nix;
+  llm = import ./llm.nix;
 }
