@@ -27,3 +27,4 @@ require('mini.deps').setup({
   },
 })
 require('wenvim.plugin').setup()
+vim.cmd.colorscheme('wenvim-brown')

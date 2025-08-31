@@ -1,12 +1,12 @@
 if vim.g.vscode then return end
 
-local add, now = MiniDeps.add, MiniDeps.now
+local add, later = MiniDeps.add, MiniDeps.later
 local map = require('wenvim.util').map
 local augroup = require('wenvim.util').augroup
 local util_lsp = require('wenvim.util.lsp')
 
 -- Lspconfig related
-now(function()
+later(function()
   add({
     source = 'neovim/nvim-lspconfig',
     depends = {
