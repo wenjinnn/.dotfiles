@@ -8,6 +8,8 @@ local augroup = util.augroup
 -- Load mini.files immediately for sometimes we are gonna open folder with nvim
 -- In this case mini.files can't be lazy load
 now(function()
+  vim.g.loaded_netrw = 1
+  vim.g.loaded_netrwPlugin = 1
   require('mini.files').setup({
     windows = {
       preview = true,

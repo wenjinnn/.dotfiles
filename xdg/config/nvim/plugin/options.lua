@@ -1,13 +1,7 @@
 local opt = vim.opt
 
 opt.breakindent = true
-opt.grepprg = 'rg --vimgrep'
-opt.grepformat = '%f:%l:%c:%m'
-opt.formatoptions = 'jcroqlnt'
 opt.linebreak = true
-opt.clipboard = vim.env.SSH_TTY and '' or 'unnamedplus'
-opt.inccommand = 'nosplit'
-opt.showcmd = true
 opt.number = true
 opt.signcolumn = 'yes'
 opt.relativenumber = true
@@ -15,7 +9,6 @@ opt.cursorline = true
 opt.virtualedit = { 'block', 'onemore' }
 -- code indent
 opt.cindent = true
-opt.cinoptions = { 'g0', ':0', 'N-s', '(0' }
 opt.smartindent = true
 -- tab & space
 opt.expandtab = true
@@ -65,21 +58,24 @@ opt.winborder = 'single'
 opt.diffopt:append({ 'algorithm:histogram', 'indent-heuristic' })
 opt.foldlevel = 99
 opt.exrc = true
-vim.diagnostic.config({ virtual_text = true })
-if vim.g.vscode then vim.notify = require('vscode-neovim').notify end
 
--- Copy/Paste when using wsl
-if vim.fn.has('wsl') == 1 then
-  vim.g.clipboard = {
-    name = 'WslClipboard',
-    copy = {
-      ['+'] = 'clip.exe',
-      ['*'] = 'clip.exe',
-    },
-    paste = {
-      ['+'] = 'powershell.exe -NoLogo -NoProfile -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-      ['*'] = 'powershell.exe -NoLogo -NoProfile -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-    },
-    cache_enabled = 0,
-  }
-end
+vim.schedule(function()
+  vim.diagnostic.config({ virtual_text = true })
+  if vim.g.vscode then vim.notify = require('vscode-neovim').notify end
+  opt.clipboard = vim.env.SSH_TTY and '' or 'unnamedplus'
+  -- Copy/Paste when using wsl
+  if vim.fn.has('wsl') == 1 then
+    vim.g.clipboard = {
+      name = 'WslClipboard',
+      copy = {
+        ['+'] = 'clip.exe',
+        ['*'] = 'clip.exe',
+      },
+      paste = {
+        ['+'] = 'powershell.exe -NoLogo -NoProfile -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+        ['*'] = 'powershell.exe -NoLogo -NoProfile -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+      },
+      cache_enabled = 0,
+    }
+  end
+end)
