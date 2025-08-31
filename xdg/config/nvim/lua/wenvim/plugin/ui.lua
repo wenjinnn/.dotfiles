@@ -15,19 +15,6 @@ now(function()
   require('mini.tabline').setup()
 end)
 
--- Starter should load immediately
-now(function()
-  local starter = require('mini.starter')
-  starter.setup({
-    items = {
-      starter.sections.sessions(5, true),
-      starter.sections.recent_files(5, true, true),
-      starter.sections.recent_files(5, false, true),
-      starter.sections.builtin_actions(),
-    },
-  })
-end)
-
 later(function ()
   require('mini.indentscope').setup({
     draw = {
