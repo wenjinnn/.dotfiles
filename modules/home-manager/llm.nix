@@ -15,6 +15,11 @@
         gemini = ''
           env GEMINI_API_KEY=$(sops exec-env $SOPS_SECRETS 'echo -n $GEMINI_API_KEY') \
           GOOGLE_CLOUD_PROJECT=$(sops exec-env $SOPS_SECRETS 'echo -n $GOOGLE_CLOUD_PROJECT') \
+          NVIM_SOCKET_PATH=$( \
+                  find "''${XDG_RUNTIME_DIR:-''${TMPDIR}nvim.''${USER}}/" -type s -name 'nvim.*.0' -printf '%T@ %p\n' 2>/dev/null \
+                  | sort -nr \
+                  | head -n 1 \
+                  | awk '{print $2}') \
           gemini
         '';
       };
