@@ -25,7 +25,7 @@ e.g. if you want to stay at stable nixpkgs branch but using unstable Hyprland, i
 
 # Stuff here
 
-* Editor: a well [configured nvim](https://github.com/wenjinnn/config/tree/nixos/xdg/config/nvim) (tested startup time are less than 50ms) that follows the [KISS principle](https://en.wikipedia.org/wiki/KISS_principle)
+* Editor: a well [configured nvim](https://github.com/wenjinnn/config/tree/nixos/xdg/config/nvim) (tested startup time are less than 30ms) that follows the [KISS principle](https://en.wikipedia.org/wiki/KISS_principle)
 
     you can try it and find more detail in my mono nvim configuration repo [wenvim](https://github.com/wenjinnn/wenvim), I'm using home-manager with `mkOutOfStoreSymlink` to symlink my nvim configurations directory, that's maybe not the nix way, but since I modify it very frequently and I store my custom snippets and spell file together with it, I don't want to compile it everytime I modified this, also I can easier to share my code with someone that not using NixOS.
 * Compositor: [niri](https://github.com/YaLTeR/niri)
