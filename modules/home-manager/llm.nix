@@ -37,12 +37,9 @@
       };
 
       settings = {
-        general = {
-          disableAutoUpdate = true;
-          disableUpdateNag = true;
-          vimMode = true;
-          preferredEditor = "nvim";
-        };
+        selectedAuthType = "oauth-personal";
+        vimMode = true;
+        preferredEditor = "nvim";
         mcpServers = {
           neovim = {
             command = "npx";
