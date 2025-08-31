@@ -37,8 +37,12 @@
       };
 
       settings = {
-        vimMode = true;
-        preferredEditor = "nvim";
+        general = {
+          disableAutoUpdate = true;
+          disableUpdateNag = true;
+          vimMode = true;
+          preferredEditor = "nvim";
+        };
         mcpServers = {
           neovim = {
             command = "npx";
