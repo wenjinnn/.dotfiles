@@ -38,8 +38,7 @@
 
       settings = {
         selectedAuthType = "oauth-personal";
-        vimMode = true;
-        preferredEditor = "nvim";
+        preferredEditor = "neovim";
         mcpServers = {
           neovim = {
             command = "npx";
