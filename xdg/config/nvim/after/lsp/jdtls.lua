@@ -24,7 +24,7 @@ return {
       format = {
         enabled = true,
         comments = { enabled = false },
-        onType = { enabled = false },
+        onType = { enabled = true },
       },
       maxConcurrentBuilds = 5,
       saveActions = { organizeImports = false },

@@ -63,6 +63,10 @@ function M.on_attach(ev)
       desc = 'Get the current inline completion',
     })
   end
+  if client.supports_method('textDocument/onTypeFormatting', opts) and vim.lsp.on_type_formatting then
+    vim.print(client)
+    vim.lsp.on_type_formatting.enable(true, { client_id = client.id })
+  end
 end
 
 -- notice lsp when filename changed, modified from folke snacks.nvim
