@@ -9,12 +9,12 @@
         selection-target = "both";
       };
       key-bindings = {
-        scrollback-up-page = "Control+Shift+f";
-        scrollback-down-page = "Control+Shift+b";
+        scrollback-up-page = "Control+Shift+b";
+        scrollback-down-page = "Control+Shift+f";
       };
       search-bindings = {
-        scrollback-up-page = "Control+Shift+f";
-        scrollback-down-page = "Control+Shift+b";
+        scrollback-up-page = "Control+Shift+b";
+        scrollback-down-page = "Control+Shift+f";
       };
       scrollback = {
         lines = 10000;
