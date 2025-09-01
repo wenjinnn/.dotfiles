@@ -64,7 +64,6 @@ function M.on_attach(ev)
     })
   end
   if client.supports_method('textDocument/onTypeFormatting', opts) and vim.lsp.on_type_formatting then
-    vim.print(client)
     vim.lsp.on_type_formatting.enable(true, { client_id = client.id })
   end
 end
