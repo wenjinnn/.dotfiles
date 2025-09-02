@@ -1,3 +1,4 @@
+local local_vue_ls_path = 'node_modules/@vue/language-server'
 return {
   settings = {
     vtsls = {
@@ -5,8 +6,7 @@ return {
         globalPlugins = {
           {
             name = '@vue/typescript-plugin',
-            location = vim.env.VUE_LANGUAGE_SERVER_PATH
-              or 'node_modules/@vue/language-server',
+            location = vim.fn.isdirectory(local_vue_ls_path) and local_vue_ls_path or vim.env.VUE_LANGUAGE_SERVER_PATH,
             languages = { 'vue' },
             configNamespace = 'typescript',
           },
