@@ -38,22 +38,26 @@ function M.on_attach(ev)
       callback = vim.lsp.buf.clear_references,
     })
   end
-  local opts = { bufnr = bufnr }
-  -- inlay hint
   -- TODO change to client:supports_method after nvim 0.12 released
-  if client.supports_method('textDocument/inlayHint', opts) then vim.lsp.inlay_hint.enable(true, opts) end
-  if vim.fn.has('nvim-0.12') == 1 then vim.lsp.document_color.enable(true, bufnr) end
+  local function supports_method(client, method, bufnr)
+    if vim.fn.has('nvim-0.12') == 1 then return client:supports_method(method, bufnr) end
+    return client.supports_method(method, { bufnr = bufnr })
+  end
+  -- inlay hint
+  if supports_method(client, 'textDocument/inlayHint', bufnr) then
+    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  end
   -- code lens
-  if client.supports_method('textDocument/codeLens', opts) then
-    vim.lsp.codelens.refresh(opts)
+  if supports_method(client, 'textDocument/codeLens', bufnr) then
+    vim.lsp.codelens.refresh({ bufnr = bufnr })
     vim.api.nvim_create_autocmd({ 'BufEnter', 'InsertLeave' }, {
       group = augroup('lsp_codelens'),
       buffer = bufnr,
-      callback = function() vim.lsp.codelens.refresh(opts) end,
+      callback = function() vim.lsp.codelens.refresh({ bufnr = bufnr }) end,
     })
   end
   -- inline completion, only work after neovim commit 58060c2340a52377a0e1d2b782ce1deef13b2b9b
-  if client.supports_method('textDocument/inlineCompletion', opts) and vim.lsp.inline_completion then
+  if supports_method(client, 'textDocument/inlineCompletion', bufnr) and vim.lsp.inline_completion then
     vim.lsp.inline_completion.enable(true)
     vim.keymap.set('i', '<M-CR>', function()
       if not vim.lsp.inline_completion.get() then return '<M-CR>' end
@@ -63,7 +67,7 @@ function M.on_attach(ev)
       desc = 'Get the current inline completion',
     })
   end
-  if client.supports_method('textDocument/onTypeFormatting', opts) and vim.lsp.on_type_formatting then
+  if supports_method(client, 'textDocument/onTypeFormatting', bufnr) and vim.lsp.on_type_formatting then
     vim.lsp.on_type_formatting.enable(true, { client_id = client.id })
   end
 end
