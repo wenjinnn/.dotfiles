@@ -1,5 +1,4 @@
 {
-
   programs = {
     bash = {
       shellAliases = {
@@ -54,6 +53,14 @@
               "@upstash/context7-mcp"
             ];
           };
+          nixos = {
+            command = "nix";
+            args = [
+              "run"
+              "github:utensils/mcp-nixos"
+              "--"
+            ];
+          };
         };
       };
     };
@@ -78,6 +85,16 @@
               "npx"
               "-y"
               "mcp-neovim-server"
+            ];
+          };
+          nixos = {
+            enabled = true;
+            type = "local";
+            command = [
+              "nix"
+              "run"
+              "github:utensils/mcp-nixos"
+              "--"
             ];
           };
         };
