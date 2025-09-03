@@ -1,4 +1,9 @@
+{ pkgs, ... }:
 {
+
+  home.packages = with pkgs; [
+    mcp-nixos
+  ];
   programs = {
     bash = {
       shellAliases = {
@@ -54,12 +59,8 @@
             ];
           };
           nixos = {
-            command = "nix";
-            args = [
-              "run"
-              "github:utensils/mcp-nixos"
-              "--"
-            ];
+            command = "mcp-nixos";
+            args = [ "--" ];
           };
         };
       };
@@ -91,9 +92,7 @@
             enabled = true;
             type = "local";
             command = [
-              "nix"
-              "run"
-              "github:utensils/mcp-nixos"
+              "mcp-nixos"
               "--"
             ];
           };
