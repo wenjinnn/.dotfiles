@@ -1,3 +1,4 @@
+# This module provides basic home manager desktop environment services and applications
 {
   pkgs,
   lib,
@@ -6,8 +7,11 @@
 {
 
   services = {
+    # use pass as secret service, replaced gnome-keyring
     pass-secret-service.enable = true;
+    # polkit gnome agent for privilege escalation in GUI apps
     polkit-gnome.enable = true;
+    # auto adjust gamma to reduce eye strain base on timezone
     gammastep = {
       enable = true;
       dawnTime = "6:00-7:45";
@@ -15,8 +19,11 @@
       provider = "geoclue2";
       tray = true;
     };
+    # clipboard manager
     cliphist.enable = true;
+    # udisks2 GUI front end
     udiskie.enable = true;
+    # notification daemon
     dunst = {
       enable = true;
       settings = {
@@ -32,6 +39,7 @@
         };
       };
     };
+    # idle daemon
     swayidle =
       let
         gtklock = lib.getExe pkgs.gtklock;
@@ -59,6 +67,7 @@
         ];
       };
   };
+  # additional swayidle inhibit service to pause idle when audio is playing
   systemd.user.services.sway-audio-idle-inhibit = {
     Unit = {
       Description = "Inhibit swayidle when audio is playing";
@@ -74,18 +83,22 @@
     };
   };
   programs = {
+    # vim like image viewer
     imv.enable = true;
+    # vim like pdf viewer
     zathura = {
       enable = true;
       options = {
         recolor = true;
       };
     };
+    # firefox with some native host messaging apps
     firefox = {
       enable = true;
       nativeMessagingHosts = with pkgs; [
         # Tridactyl native connector
         tridactyl-native
+        # Browserpass for pass integration
         browserpass
       ];
     };
@@ -119,6 +132,7 @@
     gnome-software # for flatpak
   ];
   xdg = {
+    # disable nm-applet autostart
     configFile."autostart/nm-applet.desktop".text = ''
       [Desktop Entry]
       Type=Application
@@ -126,6 +140,7 @@
       Exec=nm-applet
       Hidden=true
     '';
+    # customize nautilus right click menu
     dataFile."nautilus-python/extensions/image_tools_extension.py".source =
       ../../xdg/data/nautilus-python/extensions/image_tools_extension.py;
   };
