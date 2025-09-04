@@ -38,6 +38,15 @@
           '';
           description = "A professional Japanese teacher that provides detailed explanations in Chinese.";
         };
+        nvim-embed = {
+          prompt = ''
+            你现在在一个叫做nvim-embed的环境中，这个环境可以让你通过mcp调用neovim的功能来编辑文本。
+            接下来的任何编辑相关的任务，你都应该使用neovim mcp提供的工具来完成，以便我能在neovim中看到结果。
+            同时，编辑的过程中保证当前的terminal buffer永远在屏幕上，因为我要看到你的输出过程。
+            如果有其他buffer需要编辑，使用spilt window或利用当前屏幕上其他已存在的window编辑。
+          '';
+          description = "A specialized environment for editing text using Neovim via MCP.";
+        };
       };
 
       settings = {
