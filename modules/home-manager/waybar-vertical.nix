@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, mainMonitor, ... }:
 {
   home.packages = with pkgs; [
     cava
@@ -13,6 +13,7 @@
       mainBar = {
         spacing = 0;
         layer = "top";
+        output = mainMonitor;
         position = "left";
         modules-left = [
           "custom/os"

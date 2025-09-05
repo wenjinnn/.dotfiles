@@ -4,6 +4,7 @@
   pkgs,
   config,
   lib,
+  mainMonitor,
   ...
 }:
 {
@@ -376,7 +377,7 @@
         };
         hotkey-overlay.skip-at-startup = true;
         gestures.hot-corners.enable = false;
-        outputs."eDP-1" = {
+        outputs."${mainMonitor}" = {
           variable-refresh-rate = true;
         };
         window-rules = [
