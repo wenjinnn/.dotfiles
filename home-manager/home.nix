@@ -183,23 +183,28 @@ in
   #  /etc/profiles/per-user/wenjin/etc/profile.d/hm-session-vars.sh
   #
   home.sessionPath = [
-    # add customize script
+    # add customize script path
     "${config.home.homeDirectory}/.local/bin"
   ];
   home.sessionVariables = {
+    # where this repo should be placed
     DOTFILES = dotfiles_path;
+    # private stuff
     ARCHIVE = archive_path;
     NOTE = note_path;
+    # sops secrets file location
     SOPS_SECRETS = "${dotfiles_path}/secrets.yaml";
+    # setup terminal sounds player
     PLAYER = "ffplay -nodisp -autoexit -loglevel quiet";
+    # sudo askpass program
     SUDO_ASKPASS = "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
   };
-
+  # XDG base directory settings
   xdg = {
     enable = true;
     userDirs.enable = true;
   };
-
+  # Nix garbage collection settings
   nix = {
     gc = {
       automatic = true;
@@ -211,6 +216,17 @@ in
   programs = {
     # Enable home-manager
     home-manager.enable = true;
+    # A well configured bash is batter then other amazing shells?
+    # After all you can't avoid bash completely
+    bash = {
+      enable = true;
+      enableVteIntegration = true;
+      historyControl = [
+        "erasedups"
+        "ignoreboth"
+      ];
+    };
+    # github cli
     gh = {
       enable = true;
       extensions = with pkgs; [
@@ -265,31 +281,24 @@ in
         vim_keys = true;
       };
     };
-    lazygit.enable = true;
     jq.enable = true;
     fzf = {
       enable = true;
       enableBashIntegration = true;
     };
+    # batter z
     zoxide = {
       enable = true;
       enableBashIntegration = true;
       options = [ "--cmd z" ];
     };
+    # batter ls
     lsd = {
       enable = true;
       enableBashIntegration = true;
       settings = {
         display = "all";
       };
-    };
-    bash = {
-      enable = true;
-      enableVteIntegration = true;
-      historyControl = [
-        "erasedups"
-        "ignoreboth"
-      ];
     };
     gpg.enable = true;
     browserpass.enable = true;
