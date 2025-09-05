@@ -65,156 +65,164 @@
     stylix.url = "github:danth/stylix";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    nix-on-droid,
-    nixos-hardware,
-    nur,
-    sops-nix,
-    stylix,
-    nix-index-database,
-    disko,
-    ...
-  } @ inputs: let
-    inherit (self) outputs;
-    # Supported systems for your flake packages, shell, etc.
-    systems = [
-      #"aarch64-linux"
-      #"i686-linux"
-      "x86_64-linux"
-      #"aarch64-darwin"
-      #"x86_64-darwin"
-    ];
-    # This is a function that generates an attribute by calling a function you
-    # pass to it, with each system as an argument
-    forAllSystems = nixpkgs.lib.genAttrs systems;
-    me = {
-      username = "wenjin";
-      mail = {
-        outlook = "hewenjin94@outlook.com";
-        gmail = "hewenjin1112@gmail.com";
-      };
-    };
-  in {
-    # Your custom packages
-    # Accessible through 'nix build', 'nix shell', etc
-    packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
-    # Formatter for your nix files, available through 'nix fmt'
-    # Other options beside 'alejandra' include 'nixpkgs-fmt'
-    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
-
-    # Your custom packages and modifications, exported as overlays
-    overlays = import ./overlays {inherit inputs;};
-    # Reusable nixos modules you might want to export
-    # These are usually stuff you would upstream into nixpkgs
-    nixosModules = import ./modules/nixos;
-    # Reusable home-manager modules you might want to export
-    # These are usually stuff you would upstream into home-manager
-    homeManagerModules = import ./modules/home-manager;
-
-    # NixOS configuration entrypoint
-    # Available through 'nixos-rebuild --flake .#your-hostname'
-    nixosConfigurations = {
-      nixos = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {inherit inputs outputs me;};
-        modules = [
-          # > Our main nixos configuration file <
-          ./nixos/hosts/nixos
-          nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
-          nur.modules.nixos.default
-          sops-nix.nixosModules.sops
-          stylix.nixosModules.stylix
-          nix-index-database.nixosModules.nix-index
-          # for eGPU
-          nixos-hardware.nixosModules.common-gpu-amd
-        ];
-      };
-      nixos-wsl = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {inherit inputs outputs me;};
-        modules = [
-          ./nixos/hosts/nixos-wsl
-          nur.modules.nixos.default
-          sops-nix.nixosModules.sops
-          stylix.nixosModules.stylix
-          nix-index-database.nixosModules.nix-index
-        ];
-      };
-      aws = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {inherit inputs outputs me;};
-        modules = [
-          ./nixos/hosts/aws
-        ];
-      };
-      aliyun = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {inherit inputs outputs me;};
-        modules = [
-          disko.nixosModules.disko
-          ./nixos/hosts/aliyun
-        ];
-      };
-    };
-
-    # Available through 'nix-on-droid switch --flake path/to/flake#device'
-    nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
-      modules = [
-        ./nixos/hosts/nix-on-droid
-
-        # list of extra modules for Nix-on-Droid system
-        # { nix.registry.nixpkgs.flake = nixpkgs; }
-        # ./path/to/module.nix
-
-        # or import source out-of-tree modules like:
-        # flake.nixOnDroidModules.module
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      nix-on-droid,
+      nixos-hardware,
+      nur,
+      sops-nix,
+      stylix,
+      nix-index-database,
+      disko,
+      ...
+    }@inputs:
+    let
+      inherit (self) outputs;
+      # Supported systems for your flake packages, shell, etc.
+      systems = [
+        #"aarch64-linux"
+        #"i686-linux"
+        "x86_64-linux"
+        #"aarch64-darwin"
+        #"x86_64-darwin"
       ];
-
-      # list of extra special args for Nix-on-Droid modules
-      extraSpecialArgs = {username = "nix-on-droid";};
-
-      # set nixpkgs instance, it is recommended to apply `nix-on-droid.overlays.default`
-      pkgs = import nixpkgs {
-        system = "aarch64-linux";
-
-        overlays = [
-          nix-on-droid.overlays.default
-          # add other overlays
-        ];
+      # This is a function that generates an attribute by calling a function you
+      # pass to it, with each system as an argument
+      forAllSystems = nixpkgs.lib.genAttrs systems;
+      me = {
+        username = "wenjin";
+        mail = {
+          outlook = "hewenjin94@outlook.com";
+          gmail = "hewenjin1112@gmail.com";
+        };
       };
-      # set path to home-manager flake
-      home-manager-path = home-manager.outPath;
-    };
+    in
+    {
+      # Your custom packages
+      # Accessible through 'nix build', 'nix shell', etc
+      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+      # Formatter for your nix files, available through 'nix fmt'
+      # Other options beside 'alejandra' include 'nixpkgs-fmt'
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
 
-    # Standalone home-manager configuration entrypoint
-    # Available through 'home-manager --flake .#your-username@your-hostname'
-    homeConfigurations = {
-      "wenjin@nixos" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = {inherit inputs outputs me;};
+      # Your custom packages and modifications, exported as overlays
+      overlays = import ./overlays { inherit inputs; };
+      # Reusable nixos modules you might want to export
+      # These are usually stuff you would upstream into nixpkgs
+      nixosModules = import ./modules/nixos;
+      # Reusable home-manager modules you might want to export
+      # These are usually stuff you would upstream into home-manager
+      homeManagerModules = import ./modules/home-manager;
+
+      # NixOS configuration entrypoint
+      # Available through 'nixos-rebuild --flake .#your-hostname'
+      nixosConfigurations = {
+        nixos = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs outputs me; };
+          modules = [
+            # > Our main nixos configuration file <
+            ./nixos/hosts/nixos
+            nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
+            nur.modules.nixos.default
+            sops-nix.nixosModules.sops
+            stylix.nixosModules.stylix
+            nix-index-database.nixosModules.nix-index
+            # for eGPU
+            nixos-hardware.nixosModules.common-gpu-amd
+          ];
+        };
+        nixos-wsl = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs outputs me; };
+          modules = [
+            ./nixos/hosts/nixos-wsl
+            nur.modules.nixos.default
+            sops-nix.nixosModules.sops
+            stylix.nixosModules.stylix
+            nix-index-database.nixosModules.nix-index
+          ];
+        };
+        aws = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs outputs me; };
+          modules = [
+            ./nixos/hosts/aws
+          ];
+        };
+        aliyun = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs outputs me; };
+          modules = [
+            disko.nixosModules.disko
+            ./nixos/hosts/aliyun
+          ];
+        };
+      };
+
+      # Available through 'nix-on-droid switch --flake path/to/flake#device'
+      nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
         modules = [
-          # > Our main home-manager configuration file <
-          ./home-manager/home.nix
-          ./home-manager/hosts/nixos.nix
-          nur.modules.homeManager.default
-          stylix.homeModules.stylix
-          nix-index-database.homeModules.nix-index
+          ./nixos/hosts/nix-on-droid
+
+          # list of extra modules for Nix-on-Droid system
+          # { nix.registry.nixpkgs.flake = nixpkgs; }
+          # ./path/to/module.nix
+
+          # or import source out-of-tree modules like:
+          # flake.nixOnDroidModules.module
         ];
+
+        # list of extra special args for Nix-on-Droid modules
+        extraSpecialArgs = {
+          username = "nix-on-droid";
+        };
+
+        # set nixpkgs instance, it is recommended to apply `nix-on-droid.overlays.default`
+        pkgs = import nixpkgs {
+          system = "aarch64-linux";
+
+          overlays = [
+            nix-on-droid.overlays.default
+            # add other overlays
+          ];
+        };
+        # set path to home-manager flake
+        home-manager-path = home-manager.outPath;
       };
-      "wenjin@nixos-wsl" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = {inherit inputs outputs me;};
-        modules = [
-          # > Our main home-manager configuration file <
-          ./home-manager/home.nix
-          nur.modules.homeManager.default
-          stylix.homeModules.stylix
-          nix-index-database.homeModules.nix-index
-        ];
+
+      # Standalone home-manager configuration entrypoint
+      # Available through 'home-manager --flake .#your-username@your-hostname'
+      homeConfigurations = {
+        "wenjin@nixos" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+          extraSpecialArgs = {
+            inherit inputs outputs me;
+            mainMonitor = "eDP-1";
+          };
+          modules = [
+            # > Our main home-manager configuration file <
+            ./home-manager/home.nix
+            ./home-manager/hosts/nixos.nix
+            nur.modules.homeManager.default
+            stylix.homeModules.stylix
+            nix-index-database.homeModules.nix-index
+          ];
+        };
+        "wenjin@nixos-wsl" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+          extraSpecialArgs = { inherit inputs outputs me; };
+          modules = [
+            # > Our main home-manager configuration file <
+            ./home-manager/home.nix
+            nur.modules.homeManager.default
+            stylix.homeModules.stylix
+            nix-index-database.homeModules.nix-index
+          ];
+        };
       };
     };
-  };
 }

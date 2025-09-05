@@ -2,6 +2,7 @@
 {
   pkgs,
   lib,
+  mainMonitor,
   ...
 }:
 {
@@ -28,6 +29,7 @@
       enable = true;
       settings = {
         global = {
+          monitor = mainMonitor;
           mouse_left_click = "context, close_current";
           # TODO maybe change rofi title
           dmenu = "${pkgs.rofi-wayland}/bin/rofi -dmenu -p action";
