@@ -200,6 +200,14 @@ in
     userDirs.enable = true;
   };
 
+  nix = {
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 1w";
+    };
+  };
+
   programs = {
     # Enable home-manager
     home-manager.enable = true;
