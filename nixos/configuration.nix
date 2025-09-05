@@ -8,7 +8,8 @@
   pkgs,
   me,
   ...
-}: {
+}:
+{
   # You can import other NixOS modules here
   imports = with outputs.nixosModules; [
     # If you want to use modules your own flake exports (from modules/nixos):
@@ -56,41 +57,49 @@
     };
   };
 
-  nix = let
-    flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
-  in {
-    settings = {
-      # Enable flakes and new 'nix' command
-      experimental-features = "nix-command flakes";
-      # Opinionated: disable global registry
-      # flake-registry = "";
-      # Workaround for https://github.com/NixOS/nix/issues/9574
-      nix-path = config.nix.nixPath;
-      # Deduplicate and optimize nix store
-      auto-optimise-store = true;
-      trusted-users = ["${me.username}"];
-      # the system-level substituers & trusted-public-keys
-      # given the users in this list the right to specify additional substituters via:
-      #    1. `nixConfig.substituers` in `flake.nix`
-      substituters = [
-        # cache mirror located in China
-        # status: https://mirror.sjtu.edu.cn/
-        # "https://mirror.sjtu.edu.cn/nix-channels/store"
-        # status: https://mirrors.ustc.edu.cn/status/
-        "https://mirrors.ustc.edu.cn/nix-channels/store"
-        "https://cache.nixos.org"
-      ];
-      trusted-public-keys = [
-        # the default public key of cache.nixos.org, it's built-in, no need to add it here
-        # "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      ];
+  nix =
+    let
+      flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+    in
+    {
+      settings = {
+        # Enable flakes and new 'nix' command
+        experimental-features = "nix-command flakes";
+        # Opinionated: disable global registry
+        # flake-registry = "";
+        # Workaround for https://github.com/NixOS/nix/issues/9574
+        nix-path = config.nix.nixPath;
+        # Deduplicate and optimize nix store
+        auto-optimise-store = true;
+        trusted-users = [ "${me.username}" ];
+        # the system-level substituers & trusted-public-keys
+        # given the users in this list the right to specify additional substituters via:
+        #    1. `nixConfig.substituers` in `flake.nix`
+        substituters = [
+          # cache mirror located in China
+          # status: https://mirror.sjtu.edu.cn/
+          # "https://mirror.sjtu.edu.cn/nix-channels/store"
+          # status: https://mirrors.ustc.edu.cn/status/
+          "https://mirrors.ustc.edu.cn/nix-channels/store"
+          "https://cache.nixos.org"
+        ];
+        trusted-public-keys = [
+          # the default public key of cache.nixos.org, it's built-in, no need to add it here
+          # "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        ];
+      };
+      # do garbage collection weekly to keep disk usage low
+      gc = {
+        automatic = true;
+        dates = "weekly";
+        options = "--delete-older-than 1w";
+      };
+      # Opinionated: make flake registry and nix path match flake inputs
+      registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
+      nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
+      # Opinionated: disable channels
+      channel.enable = false;
     };
-    # Opinionated: make flake registry and nix path match flake inputs
-    registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
-    nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
-    # Opinionated: disable channels
-    channel.enable = false;
-  };
 
   time.timeZone = "Asia/Shanghai";
 
