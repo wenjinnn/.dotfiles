@@ -139,6 +139,7 @@ later(function()
   })
   vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
   vim.g.conform_autoformat = true
+  -- NOTE diff_format is not work well with some formatter, in this case, use code_format manually
   local diff_format = function()
     local data = MiniDiff.get_buf_data()
     if not data or not data.hunks or not vim.g.conform_autoformat then
