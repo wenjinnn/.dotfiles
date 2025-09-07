@@ -40,7 +40,7 @@
             rime-data
           ];
         })
-        fcitx5-mozc
+        fcitx5-mozc-ut
         fcitx5-gtk
       ];
       settings = {
