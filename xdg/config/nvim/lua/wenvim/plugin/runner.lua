@@ -2,6 +2,7 @@ local add, later = MiniDeps.add, MiniDeps.later
 
 later(function()
   local map = require('wenvim.util').map
+  vim.g.neoterm_automap_keys = '<leader>tt'
   add('kassio/neoterm')
   add('tpope/vim-dispatch')
   add('vim-test/vim-test')
