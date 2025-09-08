@@ -14,7 +14,7 @@
                   | sort -nr \
                   | head -n 1 \
                   | awk '{print $2}')} \
-                  ) opencode
+          opencode
         '';
         gemini = ''
           env GEMINI_API_KEY=$(sops exec-env $SOPS_SECRETS 'echo -n $GEMINI_API_KEY') \
