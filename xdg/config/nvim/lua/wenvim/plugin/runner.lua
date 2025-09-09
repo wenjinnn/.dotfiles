@@ -8,6 +8,7 @@ later(function()
   add('vim-test/vim-test')
   vim.g['test#strategy'] = 'dispatch'
   vim.g.dispatch_no_tmux_make = 1
+  map('n', '<leader>tt', '<cmd>call neoterm#map_do()<CR>', 'Neoterm tmap do')
   map('n', '<leader>tn', '<cmd>TestNearest<CR>', 'Run nearest test')
   map('n', '<leader>tf', '<cmd>TestFile<CR>', 'Run file tests')
   map('n', '<leader>ts', '<cmd>TestSuite<CR>', 'Run test suite')
