@@ -125,7 +125,7 @@ later(function()
       lua = { 'stylua' },
       nix = { 'nixfmt' },
       sql = { 'sqlfluff' },
-      python = { 'ruff_format', 'ruff_fix', 'ruff_organize_imports' },
+      python = { 'ruff_format' },
     },
     formatters = {
       -- override default sqlfluff config to let it work without extra config file
