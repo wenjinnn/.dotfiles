@@ -28,6 +28,7 @@ end)
 later(function()
   require('mini.notify').setup()
   map('n', '<leader>N', MiniNotify.clear, 'Notify clear')
+  map('n', '<leader>n', MiniNotify.show_history, 'Notify show history')
 end)
 
 -- colors
