@@ -62,9 +62,8 @@ later(function()
   })
 end)
 
--- search and replace tool
+-- batter quickfix
 later(function()
-  -- kevinhwang91/nvim-bqf
   add('stevearc/quicker.nvim')
   local quicker = require('quicker')
   local function quicker_expand() quicker.expand({ before = 2, after = 2, add_to_existing = true }) end
