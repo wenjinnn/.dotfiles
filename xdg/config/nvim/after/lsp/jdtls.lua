@@ -1,5 +1,5 @@
-local root_dir = vim.fs.root(0, { 'mvnw', 'gradlew', '.git', '.svn' })
-local ws_name, _ = string.gsub(vim.fn.fnamemodify(root_dir, ':p'), '/', '_')
+local root_markers = { 'mvnw', 'gradlew', '.git', 'build.gradle', 'build.xml', 'pom.xml', 'settings.gradle' }
+local ws_name, _ = string.gsub(vim.fn.fnamemodify(vim.fs.root(0, root_markers), ':p'), '/', '_')
 
 local bundles = { vim.fn.glob(vim.env.JAVA_DEBUG_PATH .. '/server/com.microsoft.java.debug.plugin-*.jar') }
 local test_bundles = vim.split(vim.fn.glob(vim.env.JAVA_TEST_PATH .. '/server/*.jar', true), '\n')
@@ -129,7 +129,6 @@ return {
       },
     },
   },
-  root_dir = root_dir,
   on_attach = function(client, bufnr)
     -- setup keymaps
     local jdtls = require('jdtls')
@@ -160,6 +159,7 @@ return {
   init_options = {
     bundles = bundles,
   },
+  root_markers = root_markers,
   handlers = {
     -- filter noisy notifications
     ['$/progress'] = function(err, result, ctx)
