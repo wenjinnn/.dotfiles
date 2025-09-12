@@ -64,14 +64,16 @@ end)
 
 -- search and replace tool
 later(function()
-  add('MagicDuck/grug-far.nvim')
-  local grug_far = require('grug-far')
-  grug_far.setup({ windowCreationCommand = 'tab split' })
-  local function grug_cursor_word() grug_far.grug_far({ prefills = { search = vim.fn.expand('<cword>') } }) end
-  local function grug_current_file() grug_far.grug_far({ prefills = { paths = vim.fn.expand('%') } }) end
-  local function grug_toggle() grug_far.toggle_instance({ instanceName = 'far', staticTitle = 'Find and Replace' }) end
-  map('n', '<leader>FF', grug_toggle, 'Toggle GrugFar')
-  map('n', '<leader>Fg', '<cmd>GrugFar<CR>', 'GrugFar')
-  map({ 'n', 'v' }, '<leader>Fv', grug_cursor_word, 'GrugFar search current word')
-  map('n', '<leader>Ff', grug_current_file, 'Search on current file')
+  -- kevinhwang91/nvim-bqf
+  add('stevearc/quicker.nvim')
+  local quicker = require('quicker')
+  local function quicker_expand() quicker.expand({ before = 2, after = 2, add_to_existing = true }) end
+  quicker.setup({
+    keys = {
+      { '>', quicker_expand, desc = 'Expand quickfix context' },
+      { '<', quicker.collapse, desc = 'Collapse quickfix context' },
+    },
+  })
+  map('n', '<leader>q', quicker.toggle, 'Toggle quicker')
+  map('n', '<leader>l', function() quicker.toggle({ loclist = true }) end, 'Toggle loclist')
 end)
