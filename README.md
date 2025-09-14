@@ -31,7 +31,7 @@ e.g. if you want to stay at stable nixpkgs branch but using unstable Hyprland, i
 * Compositor: [niri](https://github.com/YaLTeR/niri)
 * Topbar: [waybar](https://github.com/Alexays/Waybar)
 * Notification daemon: [dunst](https://github.com/dunst-project/dunst)
-* Launcher: [rofi (wayland-fork)](https://github.com/lbonn/rofi) with some script to let it provide the ability to manage various system functions, some of them maintained by myself:
+* Launcher: [rofi](https://github.com/davatorium/rofi) with some script to let it provide the ability to manage various system functions, some of them maintained by myself:
     * [cliphist-rofi-img](https://github.com/sentriz/cliphist/blob/master/contrib/cliphist-rofi-img) for clipboard manage
     * [rofi-power-menu](https://github.com/jluttine/rofi-power-menu)
     * [rofi-systemd](https://github.com/colonelpanic8/rofi-systemd) for control systemd unit

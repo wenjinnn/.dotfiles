@@ -16,10 +16,8 @@
     ../../xdg/config/networkmanager-dmenu/config.ini;
   programs.rofi = {
     enable = true;
-    package = pkgs.rofi-wayland;
     pass = {
       enable = true;
-      package = pkgs.rofi-pass-wayland;
       extraConfig = ''
         edit_terminal_command=foot
       '';

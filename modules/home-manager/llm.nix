@@ -30,6 +30,7 @@
     };
     gemini-cli = {
       enable = true;
+      package = pkgs.gemini-cli-bin;
       commands = {
         japteacher = {
           prompt = ''

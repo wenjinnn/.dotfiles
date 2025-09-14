@@ -32,7 +32,7 @@
           monitor = mainMonitor;
           mouse_left_click = "context, close_current";
           # TODO maybe change rofi title
-          dmenu = "${pkgs.rofi-wayland}/bin/rofi -dmenu -p action";
+          dmenu = "${pkgs.rofi}/bin/rofi -dmenu -p action";
         };
         ignore_kde_connect = {
           appname = "KDE Connect";
