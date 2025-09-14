@@ -7,7 +7,7 @@ in
     pkgs.mpc
   ];
   services = {
-    mpd-mpris.enable = true;
+    mpdris2.enable = true;
     mpd = {
       enable = true;
       extraConfig = ''

@@ -3,7 +3,7 @@
   stdenv,
   fetchFromGitHub,
   makeWrapper,
-  rofi-wayland,
+  rofi,
   slurp,
   grim,
   ffmpeg,
@@ -33,18 +33,18 @@ stdenv.mkDerivation {
 
     wrapProgram $out/bin/rofi-screenshot \
       --prefix PATH ":" ${
-      lib.makeBinPath [
-        rofi-wayland
-        slurp
-        grim
-        ffmpeg
-        wl-screenrec
-        coreutils
-        libnotify
-        hyprland
-        jq
-      ]
-    }
+        lib.makeBinPath [
+          rofi
+          slurp
+          grim
+          ffmpeg
+          wl-screenrec
+          coreutils
+          libnotify
+          hyprland
+          jq
+        ]
+      }
 
     runHook postInstall
   '';
