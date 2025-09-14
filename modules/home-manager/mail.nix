@@ -304,6 +304,7 @@ in
       application/x-tar-gz; xdg-open %s
 
       text/html; xdg-open %s ; nametemplate=%s.html
+      text/plain; $EDITOR %s ; needsterminal
     '';
   };
 
