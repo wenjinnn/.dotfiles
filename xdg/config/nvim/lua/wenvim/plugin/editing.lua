@@ -234,7 +234,7 @@ now(function()
     local parent_path = vim.fn.fnamemodify(cwd, ':h')
     local current_tail_path = vim.fn.fnamemodify(cwd, ':t')
     local git_data = MiniGit.get_buf_data(0)
-    local git_branch = git_data and git_data.head_name or ''
+    local git_branch = git_data and git_data.head_name .. '@' or ''
     return string.format('%s@%s%s', current_tail_path, git_branch, parent_path:gsub('/', '_'))
   end
   local function session_write() require('mini.sessions').write(session_name()) end
