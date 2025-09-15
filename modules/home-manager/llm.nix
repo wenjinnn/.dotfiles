@@ -51,8 +51,15 @@
       };
 
       settings = {
-        selectedAuthType = "oauth-personal";
-        preferredEditor = "neovim";
+        general = {
+          preferredEditor = "neovim";
+          disableAutoUpdate = true;
+          disableUpdateNag = true;
+          checkpointing.enabled = true;
+        };
+        security = {
+          auth.selectedType = "oauth-personal";
+        };
         mcpServers = {
           neovim = {
             command = "npx";
