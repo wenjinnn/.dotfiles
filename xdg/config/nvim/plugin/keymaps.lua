@@ -5,6 +5,8 @@ vim.schedule(function()
   local map = util.map
   map('n', '<leader>S', '<cmd>windo set scrollbind!<CR>', 'Scroll all buffer')
   map('n', '<leader>O', '<cmd>only<CR>', 'Only')
+  map('n', '<leader>Q', util.toggle_qf, 'Toggle quickfix list')
+  map('n', '<leader>L', util.toggle_loc, 'Toggle location list')
   map('n', '<leader>X', util.toggle_win_diff, 'Diffthis windowed buffers')
   map('n', '<leader>R', util.source_all, 'Resource all config')
 

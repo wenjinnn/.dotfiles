@@ -54,6 +54,26 @@ function M.toggle_win_diff()
   end
 end
 
+function M.toggle_qf()
+  for _, win in ipairs(vim.fn.getwininfo()) do
+    if win.quickfix == 1 then
+      vim.cmd('cclose')
+      return
+    end
+  end
+  vim.cmd('copen')
+end
+
+function M.toggle_loc()
+  for _, win in ipairs(vim.fn.getwininfo()) do
+    if win.loclist == 1 then
+      vim.cmd('lclose')
+      return
+    end
+  end
+  vim.cmd('lopen')
+end
+
 function M.filter_buffers(pattern, cmd_opts)
   cmd_opts = cmd_opts or {}
   local items = {}
