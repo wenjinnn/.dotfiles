@@ -6,7 +6,7 @@ vim.schedule(function()
   au({ 'FocusGained', 'TermClose', 'TermLeave' }, {
     group = augroup('checktime'),
     callback = function()
-    if vim.o.buftype ~= 'nofile' then vim.cmd('checktime') end
+      if vim.o.buftype ~= 'nofile' then vim.cmd('checktime') end
     end,
   })
 
@@ -30,12 +30,14 @@ vim.schedule(function()
   -- close floating windows with 'q'
   au('BufWinEnter', {
     group = augroup('close_float_win_with_q'),
-    callback = function()
+    callback = function(ev)
+      local buf = ev.buf
+      local win_buf = vim.api.nvim_win_get_buf(0)
       local win = vim.api.nvim_get_current_win()
       local config = vim.api.nvim_win_get_config(win)
       local rhs = function() vim.api.nvim_win_close(win, true) end
       local opts = { buffer = true, nowait = true, unique = true }
-      if config.relative ~= '' then pcall(vim.keymap.set, 'n', 'q', rhs, opts) end
+      if buf == win_buf and config.relative ~= '' then pcall(vim.keymap.set, 'n', 'q', rhs, opts) end
     end,
   })
 
