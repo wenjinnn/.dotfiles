@@ -17,4 +17,8 @@ vim.schedule(function()
   --keywordprg
   map('n', '<leader>K', '<cmd>norm! K<cr>', 'Keywordprg')
   map('n', '<leader>]', '<cmd>!ctags<cr>', 'Ctags')
+  map('n', '[g', '<cmd>colder<cr>', 'Go to older quickfix list')
+  map('n', ']g', '<cmd>cnewer<cr>', 'Go to newer quickfix list')
+  map('n', '[n', '<cmd>lolder<cr>', 'Go to older location list')
+  map('n', ']n', '<cmd>lnewer<cr>', 'Go to newer location list')
 end)

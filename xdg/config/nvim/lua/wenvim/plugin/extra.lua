@@ -61,18 +61,3 @@ later(function()
     end,
   })
 end)
-
--- batter quickfix
-later(function()
-  add('stevearc/quicker.nvim')
-  local quicker = require('quicker')
-  local function quicker_expand() quicker.expand({ before = 2, after = 2, add_to_existing = true }) end
-  quicker.setup({
-    keys = {
-      { '>', quicker_expand, desc = 'Expand quickfix context' },
-      { '<', quicker.collapse, desc = 'Collapse quickfix context' },
-    },
-  })
-  map('n', '<leader>q', quicker.toggle, 'Toggle quicker')
-  map('n', '<leader>l', function() quicker.toggle({ loclist = true }) end, 'Toggle loclist')
-end)
