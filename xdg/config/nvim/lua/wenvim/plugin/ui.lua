@@ -15,13 +15,49 @@ now(function()
   require('mini.tabline').setup()
 end)
 
-later(function ()
+-- Starter should load immediately
+now(function()
+  local starter = require('mini.starter')
+  starter.setup({
+    items = {
+      starter.sections.sessions(5, true),
+      starter.sections.recent_files(5, true, true),
+      starter.sections.recent_files(5, false, true),
+      starter.sections.builtin_actions(),
+      {
+        name = 'Switch',
+        action = function() vim.cmd('Obsidian quick_switch') end,
+        section = 'Note',
+      },
+      {
+        name = 'Search',
+        action = function() vim.cmd('Obsidian search') end,
+        section = 'Note',
+      },
+      {
+        name = 'Dailies',
+        action = function() vim.cmd('Obsidian dailies') end,
+        section = 'Note',
+      },
+      {
+        name = 'New',
+        action = function() vim.cmd('Obsidian new') end,
+        section = 'Note',
+      },
+    },
+  })
+end)
+
+
+later(
+  function()
   require('mini.indentscope').setup({
     draw = {
       animation = require('mini.indentscope').gen_animation.none(),
     },
   })
-end)
+  end
+)
 
 -- Just use mini.notify for LSP process, because it could have lot message in the sametime
 -- so command line is not enough
