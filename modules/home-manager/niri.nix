@@ -92,7 +92,7 @@
             bottom = 3;
           };
         };
-        screenshot-path = "~/Pictures/Screenshots/Screenshot-%Y-%m-%d %H-%M-%S.png";
+        screenshot-path = "~/Pictures/Screenshots/Screenshot-%Y-%m-%d_%H-%M-%S.png";
         spawn-at-startup = [
           {
             command = [
