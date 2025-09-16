@@ -154,9 +154,6 @@ just some filetype and lsp related settings
 + [tpope/vim-dispatch](https://github.com/tpope/vim-dispatch)
 + [vim-test/vim-test](https://github.com/vim-test/vim-test)
 
-### search
-
-+ [MagicDuck/grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim)
 ### snippet
 
 + [rafamadriz/friendly-snippets](https://github.com/rafamadriz/friendly-snippets)
