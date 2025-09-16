@@ -48,16 +48,13 @@ now(function()
   })
 end)
 
-
-later(
-  function()
+later(function()
   require('mini.indentscope').setup({
     draw = {
       animation = require('mini.indentscope').gen_animation.none(),
     },
   })
-  end
-)
+end)
 
 -- Just use mini.notify for LSP process, because it could have lot message in the sametime
 -- so command line is not enough
