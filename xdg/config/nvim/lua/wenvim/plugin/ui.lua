@@ -24,26 +24,10 @@ now(function()
       starter.sections.recent_files(5, true, true),
       starter.sections.recent_files(5, false, true),
       starter.sections.builtin_actions(),
-      {
-        name = 'Switch',
-        action = function() vim.cmd('Obsidian quick_switch') end,
-        section = 'Note',
-      },
-      {
-        name = 'Search',
-        action = function() vim.cmd('Obsidian search') end,
-        section = 'Note',
-      },
-      {
-        name = 'Dailies',
-        action = function() vim.cmd('Obsidian dailies') end,
-        section = 'Note',
-      },
-      {
-        name = 'New',
-        action = function() vim.cmd('Obsidian new') end,
-        section = 'Note',
-      },
+      { name = 'Switch', action = function() vim.cmd('Obsidian quick_switch') end, section = 'Note' },
+      { name = 'Search', action = function() vim.cmd('Obsidian search') end, section = 'Note' },
+      { name = 'Dailies', action = function() vim.cmd('Obsidian dailies') end, section = 'Note' },
+      { name = 'New', action = function() vim.cmd('Obsidian new') end, section = 'Note' },
     },
   })
 end)
