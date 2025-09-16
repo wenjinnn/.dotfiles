@@ -92,7 +92,7 @@
       gc = {
         automatic = true;
         dates = "weekly";
-        options = "-d --delete-older-than 14d";
+        options = "--delete-older-than 7d";
       };
       # Opinionated: make flake registry and nix path match flake inputs
       registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
