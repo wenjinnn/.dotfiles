@@ -102,7 +102,6 @@ end)
 -- mini.pick with lot custom keymaps
 later(function()
   require('mini.pick').setup()
-  vim.ui.select = MiniPick.ui_select
   local show_with_icons = function(buf_id, items, query)
     return MiniPick.default_show(buf_id, items, query, { show_icons = true })
   end
