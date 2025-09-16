@@ -30,6 +30,7 @@
       gopls
       tinymist
       copilot-language-server
+      basedpyright
       # linter
       vale
       eslint
@@ -52,7 +53,6 @@
       mariadb
       redis
       oracle-instantclient
-      basedpyright
     ]
   );
   xdg.configFile = {
