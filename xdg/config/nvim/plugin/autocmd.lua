@@ -49,4 +49,14 @@ vim.schedule(function()
       callback = function() vim.cmd("silent call system('fcitx5-remote -c')") end,
     })
   end
+
+  -- auto switch to default input method when in wsl
+  -- and having 1033 (USA keyboard) and https://github.com/daipeihust/im-select at C:\
+  if vim.fn.has('wsl') == 1 and vim.fn.executable('/mnt/c/im-select.exe') == 1 then
+    au({ 'InsertLeave' }, {
+      group = augroup('wsl_im'),
+      pattern = '*',
+      callback = function() vim.cmd("silent call system('/mnt/c/im-select.exe 1033')") end,
+    })
+  end
 end)
