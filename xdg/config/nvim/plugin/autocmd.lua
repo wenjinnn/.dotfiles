@@ -50,8 +50,8 @@ vim.schedule(function()
     })
   end
 
-  -- auto switch to default input method when in wsl
-  -- and having 1033 (USA keyboard) and https://github.com/daipeihust/im-select at C:\
+  -- auto switch to default input method when in wsl, to make this work
+  -- ensure you're having 1033 (USA keyboard) and https://github.com/daipeihust/im-select at C:\
   if vim.fn.has('wsl') == 1 and vim.fn.executable('/mnt/c/im-select.exe') == 1 then
     au({ 'InsertLeave' }, {
       group = augroup('wsl_im'),
