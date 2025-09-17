@@ -54,17 +54,17 @@
         events = [
           {
             event = "lock";
-            command = "${gtklock} -d";
+            command = "${gtklock} -d -M ${mainMonitor}";
           }
           {
             event = "before-sleep";
-            command = "${gtklock} -d";
+            command = "${gtklock} -d -M ${mainMonitor}";
           }
         ];
         timeouts = [
           {
             timeout = 300;
-            command = "${gtklock} -d";
+            command = "${gtklock} -d -M ${mainMonitor}";
           }
         ];
       };
