@@ -19,8 +19,6 @@
 
   nixpkgs.config.permittedInsecurePackages = [
     "openssl-1.1.1w"
-    # temporary fix for libsoup
-    "libsoup-2.74.3"
   ];
 
   gtk.gtk3.bookmarks = let
