@@ -134,7 +134,7 @@
               hotkey-overlay = {
                 title = "Lock the Screen: gtklock";
               };
-              action = sh "${lib.getExe pkgs.gtklock}";
+              action = sh "${lib.getExe pkgs.gtklock} -M ${mainMonitor}";
             };
 
             "XF86AudioRaiseVolume" = {
