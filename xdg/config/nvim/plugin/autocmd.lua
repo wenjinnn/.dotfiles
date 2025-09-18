@@ -41,18 +41,17 @@ vim.schedule(function()
     end,
   })
 
-  -- fcitx5 auto switch to default input method
+  -- auto switch input method depending on system
   if vim.fn.executable('fcitx5') == 1 then
+    -- fcitx5 auto switch to default input method
     au({ 'InsertLeave' }, {
       group = augroup('fcitx5'),
       pattern = '*',
       callback = function() vim.cmd("silent call system('fcitx5-remote -c')") end,
     })
-  end
-
-  -- auto switch to default input method when in wsl, to make this work
-  -- ensure you're having 1033 (USA keyboard) and https://github.com/daipeihust/im-select at C:\
-  if vim.fn.has('wsl') == 1 and vim.fn.executable('/mnt/c/im-select.exe') == 1 then
+  elseif vim.fn.has('wsl') == 1 and vim.fn.executable('/mnt/c/im-select.exe') == 1 then
+    -- auto switch to default keyboard when in wsl, to make this work
+    -- ensure you're having 1033 (USA keyboard) and https://github.com/daipeihust/im-select at C:\
     au({ 'InsertLeave' }, {
       group = augroup('wsl_im'),
       pattern = '*',
