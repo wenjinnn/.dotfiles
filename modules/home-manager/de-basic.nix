@@ -3,6 +3,7 @@
   pkgs,
   lib,
   mainMonitor,
+  me,
   ...
 }:
 {
@@ -97,6 +98,11 @@
     # firefox with some native host messaging apps
     firefox = {
       enable = true;
+      profiles = {
+        "${me.username}" = {
+          id = 0;
+        };
+      };
       nativeMessagingHosts = with pkgs; [
         # Tridactyl native connector
         tridactyl-native
