@@ -101,6 +101,7 @@
       profiles = {
         "${me.username}" = {
           id = 0;
+          extensions.force = true;
         };
       };
       nativeMessagingHosts = with pkgs; [
