@@ -23,7 +23,10 @@
     targets = {
       neovim.enable = false;
       qt.enable = true;
-      firefox.profileNames = [ me.username ];
+      firefox = {
+        firefoxGnomeTheme.enable = true;
+        profileNames = [ me.username ];
+      };
     };
     fonts = {
       sizes = {
