@@ -24,6 +24,7 @@
       neovim.enable = false;
       qt.enable = true;
       firefox = {
+        colorTheme.enable = true;
         firefoxGnomeTheme.enable = true;
         profileNames = [ me.username ];
       };
