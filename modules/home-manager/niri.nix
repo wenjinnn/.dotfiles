@@ -134,6 +134,7 @@
               hotkey-overlay = {
                 title = "Lock the Screen: gtklock";
               };
+              allow-when-locked = true;
               action = sh "${lib.getExe pkgs.gtklock} -f -M ${mainMonitor}";
             };
 
@@ -376,7 +377,6 @@
           dbus-interfaces-in-non-session-instances = [ ];
         };
         hotkey-overlay.skip-at-startup = true;
-        gestures.hot-corners.enable = false;
         outputs."${mainMonitor}" = {
           variable-refresh-rate = true;
         };
