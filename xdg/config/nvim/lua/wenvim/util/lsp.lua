@@ -17,6 +17,13 @@ function M.on_detach(ev)
   })
 end
 
+-- TODO change to client:supports_method after nvim 0.12 released
+local function supports_method(client, method, bufnr)
+  if not bufnr then bufnr = 0 end
+  if vim.fn.has('nvim-0.12') == 1 then return client:supports_method(method, bufnr) end
+  return client.supports_method(method, { bufnr = bufnr })
+end
+
 function M.on_attach(ev)
   local bufnr = ev.buf
   local client = vim.lsp.get_client_by_id(ev.data.client_id)
@@ -37,11 +44,6 @@ function M.on_attach(ev)
       buffer = bufnr,
       callback = vim.lsp.buf.clear_references,
     })
-  end
-  -- TODO change to client:supports_method after nvim 0.12 released
-  local function supports_method(client, method, bufnr)
-    if vim.fn.has('nvim-0.12') == 1 then return client:supports_method(method, bufnr) end
-    return client.supports_method(method, { bufnr = bufnr })
   end
   -- inlay hint
   if supports_method(client, 'textDocument/inlayHint', bufnr) then
@@ -83,14 +85,14 @@ function M.on_rename_file(from, to)
 
   local clients = vim.lsp.get_clients()
   for _, client in ipairs(clients) do
-    if client.supports_method('workspace/willRenameFiles') then
+    if supports_method(client, 'workspace/willRenameFiles') then
       local resp = client.request_sync('workspace/willRenameFiles', changes, 1000, 0)
       if resp and resp.result ~= nil then vim.lsp.util.apply_workspace_edit(resp.result, client.offset_encoding) end
     end
   end
 
   for _, client in ipairs(clients) do
-    if client.supports_method('workspace/didRenameFiles') then client.notify('workspace/didRenameFiles', changes) end
+    if supports_method(client, 'workspace/didRenameFiles') then client.notify('workspace/didRenameFiles', changes) end
   end
 end
 
