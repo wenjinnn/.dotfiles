@@ -1,4 +1,5 @@
-local root_dir = vim.fs.root(0, { 'mvnw', 'gradlew', '.git', '.svn' })
+local root_dir =
+  vim.fs.root(0, { 'mvnw', 'gradlew', '.git', '.svn', 'build.gradle', 'build.xml', 'pom.xml', 'settings.gradle' })
 local ws_name, _ = string.gsub(vim.fn.fnamemodify(root_dir, ':p'), '/', '_')
 
 local bundles = { vim.fn.glob(vim.env.JAVA_DEBUG_PATH .. '/server/com.microsoft.java.debug.plugin-*.jar') }
