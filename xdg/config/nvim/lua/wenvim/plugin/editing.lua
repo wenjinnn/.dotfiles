@@ -54,7 +54,7 @@ later(function()
   })
 end)
 
--- setup mini.surround and disable original `s` functionality to reduce key wait time
+-- setup mini.surround
 later(function()
   require('mini.surround').setup({
     custom_surroundings = {
@@ -73,7 +73,6 @@ later(function()
     },
     n_lines = 100,
   })
-  vim.keymap.set({ 'n', 'x' }, 's', '<Nop>')
 end)
 
 -- treesitter related
