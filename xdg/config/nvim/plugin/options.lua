@@ -55,6 +55,7 @@ opt.sessionoptions:remove({ 'blank' })
 opt.wildmode = 'longest:full,full'
 opt.smoothscroll = true
 opt.winborder = 'single'
+opt.pummaxwidth = 80
 opt.diffopt:append({ 'algorithm:histogram', 'indent-heuristic' })
 opt.foldlevel = 99
 opt.exrc = true
