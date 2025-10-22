@@ -50,7 +50,7 @@
     showmethekey
     dbeaver-bin
     redisinsight
-    wechat-uos
+    wechat
     shotcut
     qq
     wemeet
