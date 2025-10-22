@@ -7,9 +7,11 @@
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;
-    userName = me.username;
-    userEmail = me.mail.outlook;
-    extraConfig = {
+    settings = {
+      user = {
+        name = me.username;
+        email = me.mail.outlook;
+      };
       color.ui = true;
       credential.helper = "store";
       github.user = "wenjinnn";

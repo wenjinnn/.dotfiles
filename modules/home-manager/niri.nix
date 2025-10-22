@@ -349,8 +349,9 @@
 
             "Mod+W".action = toggle-column-tabbed-display;
 
-            "Print".action = screenshot;
-            "Mod+Print".action = screenshot-window;
+            "Print".action.screenshot = [ ];
+            "Mod+Print".action.screenshot-window = [ ];
+            # "Print".action.screentshot-screen = [ ];
 
             "Mod+Insert".action = set-dynamic-cast-window;
             "Mod+Shift+Insert".action = set-dynamic-cast-monitor;
