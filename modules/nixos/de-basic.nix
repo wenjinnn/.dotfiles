@@ -7,6 +7,8 @@
 {
 
   programs = {
+    # for camera support in file managers
+    gphoto2.enable = true;
     # nautilus right-click "open in terminal"
     nautilus-open-any-terminal = {
       enable = true;
