@@ -55,7 +55,6 @@ opt.sessionoptions:remove({ 'blank' })
 opt.wildmode = 'longest:full,full'
 opt.smoothscroll = true
 opt.winborder = 'single'
-opt.pummaxwidth = 80
 opt.diffopt:append({ 'algorithm:histogram', 'indent-heuristic' })
 opt.foldlevel = 99
 opt.exrc = true
@@ -63,7 +62,10 @@ opt.exrc = true
 vim.schedule(function()
   vim.diagnostic.config({ virtual_text = true })
   if vim.g.vscode then vim.notify = require('vscode-neovim').notify end
-  if vim.fn.has('nvim-0.12') == 1 then vim.cmd('packadd nvim.undotree') end
+  if vim.fn.has('nvim-0.12') == 1 then
+    vim.cmd('packadd nvim.undotree')
+    opt.pumborder = 'single'
+  end
 
   opt.clipboard = vim.env.SSH_TTY and '' or 'unnamedplus'
   -- Copy/Paste when using wsl
