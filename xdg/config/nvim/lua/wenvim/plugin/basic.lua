@@ -13,6 +13,11 @@ now(function()
   require('wenvim.util').map('n', '<leader>z', '<cmd>lua MiniMisc.zoom()<cr>', 'Zoom current window')
 end)
 
-later(function() require('mini.basics').setup() end)
+later(function()
+  require('mini.basics').setup()
+  -- disable mini.basics C-s mapping
+  vim.keymap.del({ 'n', 'i', 'x' }, '<C-S>')
+  vim.keymap.set('i', '<C-S>', vim.lsp.buf.signature_help, { desc = 'Show signature help' })
+end)
 
 later(function() require('mini.extra').setup() end)
