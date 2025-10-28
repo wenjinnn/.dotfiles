@@ -49,7 +49,7 @@ opt.confirm = true
 opt.updatetime = 500
 opt.fileencodings:append({ 'gbk', 'cp936', 'gb2312', 'gb18030', 'big5', 'euc-jp', 'euc-kr', 'prc' })
 opt.termguicolors = true
-opt.completeopt = { 'menuone', 'noselect', 'fuzzy' }
+opt.completeopt = { 'menuone', 'noselect', 'fuzzy', 'popup' }
 opt.pumheight = 20
 opt.sessionoptions:remove({ 'blank' })
 opt.wildmode = 'longest:full,full'
@@ -65,6 +65,7 @@ vim.schedule(function()
   if vim.fn.has('nvim-0.12') == 1 then
     vim.cmd('packadd nvim.undotree')
     opt.pumborder = 'single'
+    opt.autocomplete = true
     opt.completefuzzycollect = { 'keyword', 'whole_line', 'files' }
     opt.completeopt:append({ 'nearest' })
   end
