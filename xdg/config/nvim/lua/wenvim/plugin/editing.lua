@@ -130,10 +130,10 @@ later(function()
     formatters = {
       -- override default sqlfluff config to let it work without extra config file
       sqlfluff = {
-        args = { "fix", "--dialect", "ansi", "-q", "-" },
+        args = { 'fix', '--dialect', 'ansi', '-q', '-' },
         cwd = nil,
         require_cwd = false,
-        exit_codes = { 0, 1 }
+        exit_codes = { 0, 1 },
       },
     },
   })
@@ -269,9 +269,11 @@ later(function()
   -- TODO maybe add more linter in future
   vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave', 'TextChanged' }, {
     group = augroup('lint'),
-    callback = function()
+    callback = function(ev)
+      if not require('wenvim.util').is_floating_win(ev.buf) then
       lint.try_lint()
       lint.try_lint('compiler')
+      end
     end,
   })
 end)

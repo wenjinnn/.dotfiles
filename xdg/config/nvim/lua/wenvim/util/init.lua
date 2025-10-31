@@ -90,4 +90,11 @@ function M.filter_buffers(pattern, cmd_opts)
   return items
 end
 
+function M.is_floating_win(bufnr)
+  local win_buf = vim.api.nvim_win_get_buf(0)
+  local win = vim.api.nvim_get_current_win()
+  local config = vim.api.nvim_win_get_config(win)
+  return bufnr == win_buf and config.relative ~= ''
+end
+
 return M
