@@ -1,5 +1,5 @@
 {
-  runCommandNoCC,
+  runCommand,
   lib,
   makeWrapper,
   swaybg,
@@ -8,7 +8,7 @@
   coreutils-full,
   findutils,
 }:
-runCommandNoCC "wallpaper-switch"
+runCommand "wallpaper-switch"
   {
     nativeBuildInputs = [ makeWrapper ];
   }

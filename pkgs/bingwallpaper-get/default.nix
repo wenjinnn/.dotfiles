@@ -1,5 +1,5 @@
 {
-  runCommandNoCC,
+  runCommand,
   lib,
   makeWrapper,
   wallpaper-switch,
@@ -8,7 +8,7 @@
   coreutils-full,
   gnused,
 }:
-runCommandNoCC "bingwallpaper-get"
+runCommand "bingwallpaper-get"
   {
     nativeBuildInputs = [ makeWrapper ];
   }

@@ -8,7 +8,7 @@
 }: {
   fonts = {
     packages = with pkgs; [
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       sarasa-gothic
       nerd-fonts.fira-code
       nerd-fonts.ubuntu
@@ -30,9 +30,9 @@
       nur.repos.rewine.ttf-wps-fonts
       # microsoft fonts
       corefonts
-      vistafonts-cht
-      vistafonts-chs
-      vistafonts
+      vista-fonts-cht
+      vista-fonts-chs
+      vista-fonts
     ];
     fontDir.enable = true;
     enableDefaultPackages = true;
