@@ -106,7 +106,7 @@ in
     gawk
     zstd
     gnupg
-    du-dust
+    dust
     inotify-tools
     libnotify
     lsof

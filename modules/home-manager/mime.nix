@@ -5,6 +5,7 @@ let
   pdf-viewer = "org.pwmt.zathura.desktop";
   nvim = "nvim.desktop";
 in {
+  xdg.configFile."mimeapps.list".force = true;
   xdg.mimeApps = rec {
     enable = true;
     associations.added = defaultApplications;
