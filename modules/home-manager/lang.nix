@@ -20,6 +20,7 @@
     JAVA8_HOME = "${pkgs.jdk8}/lib/openjdk";
     JAVA17_HOME = "${pkgs.jdk17}/lib/openjdk";
     JAVA21_HOME = "${pkgs.jdk21}/lib/openjdk";
+    JAVA25_HOME = "${pkgs.jdk25}/lib/openjdk";
   };
 
   home.file = {
