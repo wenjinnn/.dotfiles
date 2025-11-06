@@ -126,6 +126,10 @@ return {
             name = 'JavaSE-21',
             path = vim.env.JAVA21_HOME or '/usr/lib/jvm/java-21-openjdk/',
           },
+          {
+            name = 'JavaSE-25',
+            path = vim.env.JAVA25_HOME or '/usr/lib/jvm/java-25-openjdk/',
+          },
         },
       },
     },
