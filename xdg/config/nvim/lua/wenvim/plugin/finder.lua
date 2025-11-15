@@ -178,10 +178,5 @@ later(function()
   map('n', '<leader>ci', "<cmd>Pick lsp scope='implementation'<CR>", 'Pick lsp implementation')
   map('n', '<leader>ct', "<cmd>Pick lsp scope='type_definition'<cr>", 'Pick lsp type definition')
   map('n', '<leader>fs', "<cmd>Pick lsp scope='document_symbol'<cr>", 'Pick lsp document symbol')
-  map(
-    'n',
-    '<leader>fS',
-    "<cmd>Pick lsp scope='workspace_symbol' symbol_query=vim.fn.input('Symbol:\\ ')<cr>",
-    'Pick lsp workspace symbol'
-  )
+  map('n', '<leader>fS', "<cmd>Pick lsp scope='workspace_symbol_live'<cr>", 'Pick lsp workspace symbol')
 end)
