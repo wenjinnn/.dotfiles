@@ -73,11 +73,6 @@ function M.on_attach(ev)
   if supports_method(client, 'textDocument/onTypeFormatting', bufnr) and vim.lsp.on_type_formatting then
     vim.lsp.on_type_formatting.enable(true, { client_id = client.id })
   end
-  -- enable folding
-  if supports_method(client, 'textDocument/foldingRange', bufnr) then
-    local win = vim.fn.bufwinid(bufnr)
-    vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
-  end
 end
 
 -- notice lsp when filename changed, modified from folke snacks.nvim
