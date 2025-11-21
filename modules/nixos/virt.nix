@@ -6,7 +6,6 @@
   pkgs,
   ...
 }: {
-  # temporary disabled for compile error at this time
   environment.systemPackages = with pkgs; [
     quickemu
   ];
