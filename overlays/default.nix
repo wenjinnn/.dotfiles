@@ -61,6 +61,18 @@
         hash = "sha256-Vt5aGhb79G7gLcVOJKaEodC4gnXiSzxc97imttdUcMU=";
       };
     });
+    vscode-java-debug = prev.vscode-utils.extensionFromVscodeMarketplace {
+      name = "vscode-java-debug";
+      publisher = "vscjava";
+      version = "0.58.3";
+      sha256 = "sha256-8ZsB6i2VRuhXEDhHExjjqRIpfKePQLSNQTIrBcw/hvg=";
+    };
+    vscode-java-test = prev.vscode-utils.extensionFromVscodeMarketplace {
+      name = "vscode-java-test";
+      publisher = "vscjava";
+      version = "0.43.2";
+      sha256 = "sha256-FUu8FOKLvwuaggquvH8IsnfHGBtXZvWRL0x2uYvV8nI=";
+    };
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
