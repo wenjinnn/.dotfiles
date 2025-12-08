@@ -280,6 +280,7 @@ end)
 
 -- completion and snippets
 later(function()
+  require('mini.cmdline').setup()
   require('mini.completion').setup()
 
   -- snippet support and preset
