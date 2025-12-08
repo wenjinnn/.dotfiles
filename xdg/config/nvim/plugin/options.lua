@@ -52,7 +52,6 @@ opt.termguicolors = true
 opt.completeopt = { 'menuone', 'noselect', 'fuzzy', 'popup' }
 opt.pumheight = 20
 opt.sessionoptions:remove({ 'blank' })
-opt.wildmode = 'longest:full,full'
 opt.smoothscroll = true
 opt.winborder = 'single'
 opt.diffopt:append({ 'algorithm:histogram', 'indent-heuristic' })
