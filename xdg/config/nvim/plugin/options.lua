@@ -64,7 +64,6 @@ vim.schedule(function()
   if vim.fn.has('nvim-0.12') == 1 then
     vim.cmd('packadd nvim.undotree')
     opt.pumborder = 'single'
-    opt.completefuzzycollect = { 'keyword', 'whole_line', 'files' }
     opt.completeopt:append({ 'nearest' })
   end
 
