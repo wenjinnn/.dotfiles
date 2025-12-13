@@ -52,16 +52,9 @@
         extraArgs = [
           "-w"
         ];
-        events = [
-          {
-            event = "lock";
-            command = "${gtklock} -d -f -M ${mainMonitor}";
-          }
-          {
-            event = "before-sleep";
-            command = "${gtklock} -d -f -M ${mainMonitor}";
-          }
-        ];
+        events = {
+          "lock" = "${gtklock} -d -f -M ${mainMonitor}";
+        };
         timeouts = [
           {
             timeout = 300;
