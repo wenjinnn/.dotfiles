@@ -23,19 +23,13 @@
     swayidle =
       let
         niri = lib.getExe pkgs.niri-unstable;
+        gtklock = lib.getExe pkgs.gtklock;
       in
       {
-        events = [
-          {
-            event = "before-sleep";
-            command = "${niri} msg action power-off-monitors";
-          }
-          {
-            event = "after-resume";
-            command = "${niri} msg action power-on-monitors";
-          }
-
-        ];
+        events = {
+          "before-sleep" = "${gtklock} -d -f -M ${mainMonitor} && ${niri} msg action power-off-monitors";
+          "after-resume" = "${niri} msg action power-on-monitors";
+        };
         timeouts = [
           {
             timeout = 360;

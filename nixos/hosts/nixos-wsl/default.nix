@@ -29,7 +29,7 @@
     ];
   };
 
-  services.ollama.acceleration = "cuda";
+  services.ollama.package = pkgs.ollama-rocm;
 
   networking = {
     firewall.enable = false;
