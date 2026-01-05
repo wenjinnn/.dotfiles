@@ -7,7 +7,7 @@
     enable = true;
     # TODO get bt-tracker from https://github.com/ngosang/trackerslist, maybe write a script later.
     extraConfig = ''
-      bt-tracker=udp://93.158.213.92:1337/announce,udp://23.134.89.9:1337/announce,udp://186.10.181.37:1337/announce,udp://185.243.218.213:80/announce,udp://208.83.20.20:6969/announce,udp://15.204.56.171:6969/announce,udp://45.9.60.30:6969/announce,udp://104.244.77.87:6969/announce,udp://23.153.248.83:6969/announce,udp://83.102.180.21:80/announce,udp://37.235.176.37:2710/announce,udp://34.89.51.235:6969/announce,udp://5.181.156.41:6969/announce,udp://198.12.89.149:6969/announce,udp://37.27.4.53:6969/announce,udp://185.216.179.62:25/announce
+      bt-tracker=udp://tracker.opentrackr.org:1337/announce,udp://open.demonoid.ch:6969/announce,udp://open.demonii.com:1337/announce,udp://open.stealth.si:80/announce,udp://tracker.torrent.eu.org:451/announce,udp://explodie.org:6969/announce,udp://tracker1.myporn.club:9337/announce,udp://tracker.theoks.net:6969/announce,udp://tracker.qu.ax:6969/announce,udp://tracker.filemail.com:6969/announce,udp://tracker.dler.org:6969/announce,udp://tracker.bittor.pw:1337/announce,udp://tracker.0x7c0.com:6969/announce,udp://tracker-udp.gbitt.info:80/announce,udp://run.publictracker.xyz:6969/announce,udp://retracker01-msk-virt.corbina.net:80/announce,udp://p4p.arenabg.com:1337/announce,udp://opentracker.io:6969/announce,udp://open.tracker.cl:1337/announce,udp://leet-tracker.moe:1337/announce,
     '';
     settings = {
       listen-port = 4001;
