@@ -73,6 +73,10 @@ function M.on_attach(ev)
   if supports_method(client, 'textDocument/onTypeFormatting', bufnr) and vim.lsp.on_type_formatting then
     vim.lsp.on_type_formatting.enable(true, { client_id = client.id })
   end
+  -- enable linked editing range
+  if supports_method(client, 'textDocument/linkedEditingRange', bufnr) and vim.lsp.linked_editing_range then
+    vim.lsp.linked_editing_range.enable(true, { client_id = client.id })
+  end
 end
 
 -- notice lsp when filename changed, modified from folke snacks.nvim
