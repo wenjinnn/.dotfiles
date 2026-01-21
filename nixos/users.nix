@@ -26,6 +26,7 @@
         "audio"
         "video"
         "libvirtd"
+        "kvm"
       ];
     };
   };
