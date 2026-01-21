@@ -57,6 +57,8 @@
     obsidian
     obsidian-export
     wpsoffice-cn
+    inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps
+    inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps-launcher
     nur.repos.xddxdd.dingtalk
   ];
 }
