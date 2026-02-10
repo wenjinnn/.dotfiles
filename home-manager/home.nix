@@ -144,6 +144,7 @@ in
     nix-output-monitor
     nixpkgs-review
     treefmt
+    posting
   ];
 
   # xresources.properties = {
