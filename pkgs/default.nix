@@ -6,5 +6,4 @@
   wallpaper-switch = pkgs.callPackage ./wallpaper-switch {};
   fhs = pkgs.callPackage ./fhs {};
   rofi-screenshot-wayland = pkgs.callPackage ./rofi-screenshot-wayland {};
-  gh-models = pkgs.callPackage ./gh-models {};
 }

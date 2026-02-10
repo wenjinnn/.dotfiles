@@ -230,8 +230,7 @@ in
     gh = {
       enable = true;
       extensions = with pkgs; [
-        gh-copilot
-        gh-models
+        github-copilot-cli
       ];
     };
     direnv = {
