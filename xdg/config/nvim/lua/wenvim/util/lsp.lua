@@ -51,11 +51,11 @@ function M.on_attach(ev)
   end
   -- code lens
   if supports_method(client, 'textDocument/codeLens', bufnr) then
-    vim.lsp.codelens.refresh({ bufnr = bufnr })
+    M.enable_codelens(bufnr)
     vim.api.nvim_create_autocmd({ 'BufEnter', 'InsertLeave' }, {
       group = augroup('lsp_codelens'),
       buffer = bufnr,
-      callback = function() vim.lsp.codelens.refresh({ bufnr = bufnr }) end,
+      callback = function()       M.enable_codelens(bufnr) end,
     })
   end
   -- inline completion, only work after neovim commit 58060c2340a52377a0e1d2b782ce1deef13b2b9b
@@ -79,6 +79,14 @@ function M.on_attach(ev)
   end
 end
 
+function M.enable_codelens(bufnr)
+  if not bufnr then bufnr = 0 end
+  if vim.fn.has('nvim-0.12') == 1 then
+    vim.lsp.codelens.enable(true, { bufnr = bufnr })
+  else
+    vim.lsp.codelens.refresh({ bufnr = bufnr })
+  end
+end
 -- notice lsp when filename changed, modified from folke snacks.nvim
 function M.on_rename_file(from, to)
   local changes = {
