@@ -121,7 +121,7 @@
     cliphist
     wl-clipboard
     grim
-    xorg.xrdb
+    xrdb
     file-roller
     baobab
     nautilus
@@ -132,7 +132,7 @@
     gnome-calculator
     gnome-clocks
     gnome-software # for flatpak
-    vdhcoapp # for videodownloadhelper, the browser extension. for first time setup, run `vdhcoapp install`
+    # vdhcoapp # for videodownloadhelper, the browser extension. for first time setup, run `vdhcoapp install`
   ];
   xdg = {
     # disable nm-applet autostart

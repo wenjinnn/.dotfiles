@@ -40,7 +40,7 @@
       stylua
       libxml2
       alejandra
-      nixfmt-rfc-style
+      nixfmt
       rustfmt
       prettier
       # for nvim-treesitter
