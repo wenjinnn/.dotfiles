@@ -50,6 +50,7 @@ opt.updatetime = 500
 opt.fileencodings:append({ 'gbk', 'cp936', 'gb2312', 'gb18030', 'big5', 'euc-jp', 'euc-kr', 'prc' })
 opt.termguicolors = true
 opt.completeopt = { 'menuone', 'noselect', 'fuzzy', 'popup', 'nearest' }
+opt.autocomplete = true
 opt.pumheight = 20
 opt.pumborder = 'single'
 opt.sessionoptions:remove({ 'blank' })
@@ -63,6 +64,7 @@ vim.schedule(function()
   vim.diagnostic.config({ virtual_text = true })
   if vim.g.vscode then vim.notify = require('vscode-neovim').notify end
   vim.cmd('packadd nvim.undotree')
+  vim.cmd('packadd nvim.difftool')
 
   opt.clipboard = vim.env.SSH_TTY and '' or 'unnamedplus'
   -- Copy/Paste when using wsl
