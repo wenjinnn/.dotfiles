@@ -1,6 +1,8 @@
 local M = {}
 M.opts = { noremap = true, silent = true }
 
+function M.gh(x) return 'https://github.com/' .. x end
+function M.cb(x) return 'https://codeberg.org/' .. x end
 function M.make_opts(opts)
   if type(opts) == 'string' then
     -- in most case we just want add some description

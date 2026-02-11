@@ -1,23 +1,25 @@
-local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+local util = require('wenvim.util')
+local map = util.map
+local gh = util.gh
 
-now(function()
-  require('mini.misc').setup()
-  MiniMisc.setup_auto_root()
-  MiniMisc.setup_termbg_sync()
-  MiniMisc.setup_restore_cursor()
-  local use_nested_comments = function() MiniMisc.use_nested_comments() end
-  vim.api.nvim_create_autocmd('BufEnter', {
-    group = require('wenvim.util').augroup('nested_comments'),
-    callback = use_nested_comments,
-  })
-  require('wenvim.util').map('n', '<leader>z', '<cmd>lua MiniMisc.zoom()<cr>', 'Zoom current window')
-end)
+vim.pack.add({
+  gh('nvim-mini/mini.nvim'),
+  gh('nvim-lua/plenary.nvim'),
+})
+require('mini.misc').setup()
+MiniMisc.setup_auto_root()
+MiniMisc.setup_termbg_sync()
+MiniMisc.setup_restore_cursor()
+local use_nested_comments = function() MiniMisc.use_nested_comments() end
+vim.api.nvim_create_autocmd('BufEnter', {
+  group = util.augroup('nested_comments'),
+  callback = use_nested_comments,
+})
+map('n', '<leader>z', '<cmd>lua MiniMisc.zoom()<cr>', 'Zoom current window')
 
-later(function()
-  require('mini.basics').setup()
-  -- disable mini.basics C-s mapping
-  vim.keymap.del({ 'n', 'i', 'x' }, '<C-S>')
-  vim.keymap.set('i', '<C-S>', vim.lsp.buf.signature_help, { desc = 'Show signature help' })
-end)
+require('mini.basics').setup()
+-- disable mini.basics C-s mapping
+vim.keymap.del({ 'n', 'i', 'x' }, '<C-S>')
+map('i', '<C-S>', vim.lsp.buf.signature_help, 'Show signature help')
 
-later(function() require('mini.extra').setup() end)
+require('mini.extra').setup()
