@@ -6,6 +6,12 @@ opt.number = true
 opt.signcolumn = 'yes'
 opt.relativenumber = true
 opt.cursorline = true
+opt.cursorlineopt = { 'screenline', 'number' }
+opt.showmode = false
+opt.shortmess:remove({ 'S' })
+opt.colorcolumn = '+1'
+opt.ruler = false
+opt.infercase = true
 opt.virtualedit = { 'block', 'onemore' }
 -- code indent
 opt.cindent = true
@@ -23,6 +29,8 @@ opt.scrolloff = 5
 opt.spell = true
 opt.spelllang = { 'en', 'cjk' }
 opt.spelloptions:append({ 'camel', 'noplainbuffer' })
+opt.formatoptions:append({ 'n' })
+opt.iskeyword:append({ '-' })
 
 opt.list = true
 opt.listchars = {
@@ -43,12 +51,14 @@ opt.mouse = 'a'
 -- search
 opt.ignorecase = true
 
+opt.switchbuf = 'usetab'
 opt.autowrite = true
 opt.autowriteall = true
 opt.confirm = true
 opt.updatetime = 500
 opt.fileencodings:append({ 'gbk', 'cp936', 'gb2312', 'gb18030', 'big5', 'euc-jp', 'euc-kr', 'prc' })
 opt.termguicolors = true
+opt.complete:append({ 'kspell' })
 opt.completeopt = { 'menuone', 'noselect', 'fuzzy', 'popup', 'nearest' }
 opt.autocomplete = true
 opt.pumheight = 20
