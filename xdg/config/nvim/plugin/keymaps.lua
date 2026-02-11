@@ -9,6 +9,7 @@ vim.schedule(function()
   map('n', '<leader>L', util.toggle_loc, 'Toggle location list')
   map('n', '<leader>X', util.toggle_win_diff, 'Diffthis windowed buffers')
   map('n', '<leader>R', util.source_all, 'Resource all config')
+  map('n', '<leader>U', vim.pack.update, 'Update plugins')
 
   -- copy/paste to system clipboard
   map({ 'n', 'v' }, '<leader>y', '"+y', 'Yank to system clipboard')
