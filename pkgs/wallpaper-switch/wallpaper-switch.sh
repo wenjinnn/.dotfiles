@@ -11,6 +11,7 @@ fi
 echo "next wallpaper: $next"
 echo "current desktop environment: $XDG_CURRENT_DESKTOP"
 PIDS=($(pgrep swaybg)) ; nohup swaybg -i "$next" -m fill > /dev/null 2>&1 &
+ln -sf "$next" "${XDG_DATA_HOME:-$HOME/.local/share}/.wallpaper"
 echo "new swaybg process started with PID: $!"
 echo "old swaybg processes: $PIDS"
 (

@@ -23,11 +23,12 @@
     swayidle =
       let
         niri = lib.getExe pkgs.niri-unstable;
-        gtklock = lib.getExe pkgs.gtklock;
+        swaylock = lib.getExe pkgs.swaylock;
       in
       {
         events = {
-          "before-sleep" = "${gtklock} -d -f -M ${mainMonitor} && ${niri} msg action power-off-monitors";
+          "before-sleep" =
+            "${swaylock} -f -i ${config.home.homeDirectory}/.local/share/.wallpaper && ${niri} msg action power-off-monitors";
           "after-resume" = "${niri} msg action power-on-monitors";
         };
         timeouts = [
@@ -38,6 +39,7 @@
         ];
       };
   };
+  programs.swaylock.enable = true;
   programs.niri = {
     enable = true;
     package = pkgs.niri-unstable;
@@ -126,10 +128,10 @@
             };
             "Super+Alt+L" = {
               hotkey-overlay = {
-                title = "Lock the Screen: gtklock";
+                title = "Lock the Screen: swaylock";
               };
               allow-when-locked = true;
-              action = sh "${lib.getExe pkgs.gtklock} -f -M ${mainMonitor}";
+              action = sh "swaylock -i ${config.home.homeDirectory}/.local/share/.wallpaper";
             };
 
             "XF86AudioRaiseVolume" = {

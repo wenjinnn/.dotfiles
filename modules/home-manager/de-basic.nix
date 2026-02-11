@@ -3,6 +3,7 @@
   pkgs,
   lib,
   mainMonitor,
+  config,
   me,
   ...
 }:
@@ -45,7 +46,7 @@
     # idle daemon
     swayidle =
       let
-        gtklock = lib.getExe pkgs.gtklock;
+        lock = "${lib.getExe pkgs.swaylock} -f -i ${config.home.homeDirectory}/.local/share/.wallpaper";
       in
       {
         enable = true;
@@ -53,12 +54,12 @@
           "-w"
         ];
         events = {
-          "lock" = "${gtklock} -d -f -M ${mainMonitor}";
+          "lock" = lock;
         };
         timeouts = [
           {
             timeout = 300;
-            command = "${gtklock} -d -f -M ${mainMonitor}";
+            command = lock;
           }
         ];
       };
