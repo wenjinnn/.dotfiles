@@ -55,7 +55,7 @@ function M.on_attach(ev)
     vim.api.nvim_create_autocmd({ 'BufEnter', 'InsertLeave' }, {
       group = augroup('lsp_codelens'),
       buffer = bufnr,
-      callback = function()       M.enable_codelens(bufnr) end,
+      callback = function() M.enable_codelens(bufnr) end,
     })
   end
   -- inline completion, only work after neovim commit 58060c2340a52377a0e1d2b782ce1deef13b2b9b
