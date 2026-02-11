@@ -14,15 +14,6 @@
       enable = true;
       terminal = "foot";
     };
-    # gtklock with modules
-    gtklock = {
-      enable = true;
-      modules = with pkgs; [
-        gtklock-playerctl-module
-        gtklock-powerbar-module
-        gtklock-userinfo-module
-      ];
-    };
   };
 
   security = {
