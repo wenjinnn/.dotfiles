@@ -49,8 +49,9 @@ opt.confirm = true
 opt.updatetime = 500
 opt.fileencodings:append({ 'gbk', 'cp936', 'gb2312', 'gb18030', 'big5', 'euc-jp', 'euc-kr', 'prc' })
 opt.termguicolors = true
-opt.completeopt = { 'menuone', 'noselect', 'fuzzy', 'popup' }
+opt.completeopt = { 'menuone', 'noselect', 'fuzzy', 'popup', 'nearest' }
 opt.pumheight = 20
+opt.pumborder = 'single'
 opt.sessionoptions:remove({ 'blank' })
 opt.smoothscroll = true
 opt.winborder = 'single'
@@ -61,11 +62,7 @@ opt.exrc = true
 vim.schedule(function()
   vim.diagnostic.config({ virtual_text = true })
   if vim.g.vscode then vim.notify = require('vscode-neovim').notify end
-  if vim.fn.has('nvim-0.12') == 1 then
-    vim.cmd('packadd nvim.undotree')
-    opt.pumborder = 'single'
-    opt.completeopt:append({ 'nearest' })
-  end
+  vim.cmd('packadd nvim.undotree')
 
   opt.clipboard = vim.env.SSH_TTY and '' or 'unnamedplus'
   -- Copy/Paste when using wsl
