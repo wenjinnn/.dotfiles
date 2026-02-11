@@ -15,6 +15,19 @@ later(function()
   map('v', '<leader>vf', ':VFill<cr>', 'Draw fill a area with a solid color')
 end)
 
+-- curl client in neovim
+now(function()
+  add({ source = 'oysandvik94/curl.nvim', depends = { 'nvim-lua/plenary.nvim' } })
+  local curl = require('curl')
+  curl.setup()
+  map('n', '<leader>Cc', curl.open_curl_tab, 'Open a curl tab scoped to current CWD')
+  map('n', '<leader>Co', curl.open_global_tab, 'Open a curl tab with global scope')
+  map('n', '<leader>Ca', curl.create_scoped_collection, 'Create or open a collection scoped to current CWD')
+  map('n', '<leader>CA', curl.create_global_collection, 'Create or open a collection with global scope')
+  map('n', '<leader>CC', curl.pick_scoped_collection, 'Pick a scoped collection')
+  map('n', '<leader>CO', curl.pick_global_collection, 'Pick a global collection')
+end)
+
 -- markdown, html, asciidoc, svg preview in browser
 later(function()
   add('brianhuster/live-preview.nvim')
