@@ -7,12 +7,14 @@
     extra-substituters = [
       # nix community's cache server
       "https://nix-community.cachix.org"
+      "https://nixos-raspberrypi.cachix.org"
     ];
 
     # will be appended to the system-level trusted-public-keys
     extra-trusted-public-keys = [
       # nix community's cache server public key
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
     ];
   };
 
@@ -43,10 +45,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-on-droid = {
-      url = "github:nix-community/nix-on-droid/release-23.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
@@ -74,6 +72,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:nixos/nixos-hardware";
+    nix-on-droid.url = "github:nix-community/nix-on-droid/release-23.11";
+    # follow `main` branch of this repository, considered being stable
+    nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
+
   };
 
   outputs =
@@ -87,6 +89,7 @@
       sops-nix,
       stylix,
       nix-index-database,
+      nixos-raspberrypi,
       disko,
       ...
     }@inputs:
@@ -170,6 +173,26 @@
           modules = [
             disko.nixosModules.disko
             ./nixos/hosts/aliyun
+          ];
+        };
+        rpi5 = nixos-raspberrypi.lib.nixosSystem {
+          system = "aarch64-linux";
+          specialArgs = inputs // {
+            inherit outputs me;
+          };
+          modules = [
+            {
+              imports = with nixos-raspberrypi.nixosModules; [
+                raspberry-pi-5.base
+                raspberry-pi-5.page-size-16k
+                raspberry-pi-5.display-vc4
+                raspberry-pi-5.bluetooth
+                usb-gadget-ethernet
+                trusted-nix-caches
+                disko.nixosModules.disko
+                ./nixos/hosts/rpi5/pi5-configtxt.nix
+              ];
+            }
           ];
         };
       };

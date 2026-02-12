@@ -145,6 +145,7 @@ in
     nixpkgs-review
     treefmt
     posting
+    rpi-imager
   ];
 
   # xresources.properties = {
