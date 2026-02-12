@@ -25,7 +25,7 @@
       "src": "https://github.com/brianhuster/live-preview.nvim"
     },
     "mini.nvim": {
-      "rev": "e5a9a3830f9c37211df4c82cac45bf728b95739d",
+      "rev": "4e61631464a12138bc0c82ea216b1d0d3cc2b315",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "neogen": {
@@ -37,7 +37,7 @@
       "src": "https://github.com/kassio/neoterm"
     },
     "nvim-dap": {
-      "rev": "e47878dcf1ccc30136b30d19ab19fe76946d61cd",
+      "rev": "db321947bb289a2d4d76a32e76e4d2bd6103d7df",
       "src": "https://codeberg.org/mfussenegger/nvim-dap"
     },
     "nvim-dap-python": {
@@ -53,7 +53,7 @@
       "src": "https://codeberg.org/mfussenegger/nvim-lint"
     },
     "nvim-lspconfig": {
-      "rev": "66fd02ad1c7ea31616d3ca678fa04e6d0b360824",
+      "rev": "f4e9d367d4e067d7a5fabc9fd3f1349b291eb718",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-scissors": {
@@ -61,7 +61,7 @@
       "src": "https://github.com/chrisgrieser/nvim-scissors"
     },
     "nvim-treesitter": {
-      "rev": "45a07f869b0cffba342276f2c77ba7c116d35db8",
+      "rev": "9f2dad22ef8bb14fd1e0a3aa8859cdc88170668b",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
@@ -73,7 +73,7 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
     },
     "obsidian.nvim": {
-      "rev": "69ee90aa912f84f4aaa043c69bed48b3f6b0ecce",
+      "rev": "be9370b72c39fe10b2218e9c0aa06dcbe47f7296",
       "src": "https://github.com/obsidian-nvim/obsidian.nvim"
     },
     "one-small-step-for-vimkind": {
