@@ -177,8 +177,13 @@
         };
         rpi5 = nixos-raspberrypi.lib.nixosSystem {
           system = "aarch64-linux";
-          specialArgs = inputs // {
-            inherit outputs me;
+          specialArgs = {
+            inherit
+              inputs
+              outputs
+              me
+              nixos-raspberrypi
+              ;
           };
           modules = [
             {
@@ -190,7 +195,8 @@
                 usb-gadget-ethernet
                 trusted-nix-caches
                 disko.nixosModules.disko
-                ./nixos/hosts/rpi5/pi5-configtxt.nix
+                sops-nix.nixosModules.sops
+                ./nixos/hosts/rpi5/configuration.nix
               ];
             }
           ];

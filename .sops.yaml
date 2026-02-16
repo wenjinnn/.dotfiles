@@ -2,11 +2,18 @@
 # without having to repeat yourself.
 # Also see https://github.com/Mic92/dotfiles/blob/master/nixos/.sops.yaml
 # for a more complex example.
+#
+# NOTE step to add a new key:
+# 1. get the public key from `age-keygen -o age.key.txt` or /etc/ssh/ssh_host_ed25519_key.pub
+# 2. add the key to the `keys` section below
+# 3. add the key to the `creation_rules` section below
+# 4. exec `sops updatekeys secrets.yaml`
 keys:
   - &nixos-wenjin age1swanwyhp3k6nycu2q3pyurgugzj4wlxg84gaj272rky0xu8j7ynq2eek7w
   - &nixos age1r9aqhunddlxpjnw2lezhq3zn7edgqqju2mfjyxra58kg95f2mg6s0qz6v5
   - &nixos-wsl-wenjin age1u7g2z73c3fq28purtn9kvkpsxlq4srkkn4944u5krfwqjkeqeshq9zgs3m
   - &nixos-wsl age10ff9heqlh8qjunnt9060a97aqxa7vqj4nclmzm0gwe54fe95mdlqc7k6r4
+  - &nixos-rpi5 age1d4uqfckxlpv4lyduskytjuk2ahltssvynyv3332g2l5pyqq0feqqxp0rmc
 creation_rules:
   - path_regex: ^secrets.yaml$
     key_groups:
@@ -15,3 +22,4 @@ creation_rules:
       - *nixos
       - *nixos-wsl-wenjin
       - *nixos-wsl
+      - *nixos-rpi5
