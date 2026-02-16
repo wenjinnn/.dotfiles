@@ -29,6 +29,12 @@
           close = "";
         };
       };
+      indicator = {
+        padding = {
+          open = " ";
+          close = " ";
+        };
+      };
     };
   };
 }
