@@ -19,6 +19,7 @@
     secrets.GMAIL_CLIENT_ID = { };
     secrets.GMAIL_CLIENT_SECRET = { };
     secrets.RCLONE_TOKEN = { };
+    secrets.RPI5_SMB_PASS = { };
   };
 
   home.packages = with pkgs; [
