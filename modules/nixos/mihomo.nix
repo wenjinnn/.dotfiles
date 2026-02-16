@@ -78,9 +78,9 @@
     geodata-mode: true
 
     geox-url:
-      geoip: "https://hub.gitmirror.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
-      geosite: "https://hub.gitmirror.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
-      mmdb: "https://hub.gitmirror.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
+      geoip: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
+      geosite: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+      mmdb: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
 
     # default: strict
     find-process-mode: strict
@@ -133,6 +133,7 @@
     dns:
       enable: true
       ipv6: true
+      listen: 0.0.0.0:1053
       respect-rules: true
       enhanced-mode: fake-ip
       fake-ip-filter:
@@ -143,6 +144,9 @@
         - "+.hewenjin.org"
         - "+.wenjin.me"
       nameserver:
+        - https://doh.pub/dns-query
+        - https://dns.alidns.com/dns-query
+      fallback:
         - 'tls://8.8.4.4#dns'
         - 'tls://1.0.0.1#dns'
         - 'tls://[2001:4860:4860::8844]#dns'
@@ -433,6 +437,8 @@
 
 
     rules:
+      - PROCESS-NAME-REGEX,.*amule.*,DIRECT
+      - PROCESS-NAME-REGEX,.*aria2c.*,DIRECT
       - GEOSITE,private,DIRECT,no-resolve
       - GEOIP,private,DIRECT,no-resolve
       - IP-CIDR,172.1.1.0/24,DIRECT,no-resolve
