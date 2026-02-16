@@ -1,6 +1,7 @@
 {
   config,
   outputs,
+  me,
   ...
 }:
 {
@@ -22,6 +23,22 @@
           "/" = {
             enable = true;
             mountPoint = "${config.home.homeDirectory}/Rclone/gd";
+          };
+        };
+      };
+      rpi5 = {
+        config = {
+          type = "smb";
+          host = "rpi5";
+          user = me.username;
+        };
+        secrets = {
+          pass = config.sops.secrets.RPI5_SMB_PASS.path;
+        };
+        mounts = {
+          "/" = {
+            enable = true;
+            mountPoint = "${config.home.homeDirectory}/Rclone/rpi5";
           };
         };
       };
