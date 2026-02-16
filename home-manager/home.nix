@@ -146,6 +146,7 @@ in
     treefmt
     posting
     rpi-imager
+    nmap
   ];
 
   # xresources.properties = {
