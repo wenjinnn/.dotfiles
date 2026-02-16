@@ -109,6 +109,7 @@
   boot.binfmt.emulatedSystems = [
     "aarch64-linux"
   ];
+  systemd.user.services.foot.stopIfChanged = false;
 
   networking.hostName = "nixos";
 }
