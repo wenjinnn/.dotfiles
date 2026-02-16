@@ -19,6 +19,7 @@
     mihomo
     mail
     theme
+    tailscale
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
@@ -214,11 +215,6 @@
       # Remove if you want to SSH using passwords
       PasswordAuthentication = false;
     };
-  };
-
-  services.tailscale = {
-    enable = true;
-    openFirewall = true;
   };
 
   security.pam.loginLimits = [
