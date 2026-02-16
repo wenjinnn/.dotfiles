@@ -28,6 +28,9 @@
         "video"
         "libvirtd"
         "kvm"
+        "samba"
+        "sambashare"
+        "aria2"
       ];
     };
   };
