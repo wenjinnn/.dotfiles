@@ -37,8 +37,25 @@
   environment.systemPackages = with pkgs; [
     amule
     amule-web
+    amule-daemon
   ];
   services = {
+    nginx = {
+      enable = true;
+      recommendedOptimisation = true;
+      recommendedProxySettings = true;
+      recommendedTlsSettings = true;
+      virtualHosts."/ariang" = {
+        locations."/" = {
+          root = "${pkgs.ariang}/share";
+          index = "index.html";
+        };
+        locations."/jsonrpc" = {
+          proxyPass = "http://127.0.0.1:6800/jsonrpc";
+          proxyWebsockets = true;
+        };
+      };
+    };
     tailscale = {
       authKeyFile = config.sops.secrets.RPI5_TAILSCALE_AUTHKEY.path;
       useRoutingFeatures = "client";
@@ -198,10 +215,13 @@
       67
     ];
     allowedTCPPorts = [
+      80
       5353
       1053
       53
       67
+      4711 # aMuleWeb HTTP port
+      4712 # aMule External Connections (EC) port
     ];
     trustedInterfaces = [ "wlan0" ];
 
@@ -244,6 +264,24 @@
     aria2.serviceConfig = {
       User = lib.mkForce me.username;
       Group = lib.mkForce "users";
+    };
+    # Configure the amuleweb systemd service
+    amuleweb = {
+      enable = true;
+      description = "aMule Web Interface";
+      after = [
+        "network.target"
+        "amuled.service"
+      ]; # Ensure amule daemon is running
+      wantedBy = [ "multi-user.target" ];
+
+      serviceConfig = {
+        User = "wenjin";
+        Group = "users";
+        ExecStart = "${pkgs.amule-web}/bin/amuleweb --amule-config-file=${config.services.amule.dataDir}/.aMule/amule.conf";
+        Restart = "always";
+        WorkingDirectory = "/mnt/data/video/amule/.aMule"; # Set working directory for amuleweb
+      };
     };
     # systemd-networkd.stopIfChanged = false;
     # Services that are only restarted might be not able to resolve when resolved is stopped before
