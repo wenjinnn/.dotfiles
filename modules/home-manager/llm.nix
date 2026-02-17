@@ -17,8 +17,8 @@
           opencode
         '';
         gemini = ''
-          env GEMINI_API_KEY=$(sops exec-env $SOPS_SECRETS 'echo -n $GEMINI_API_KEY') \
-          GOOGLE_CLOUD_PROJECT=$(sops exec-env $SOPS_SECRETS 'echo -n $GOOGLE_CLOUD_PROJECT') \
+          env GEMINI_API_KEY="$(sops exec-env $SOPS_SECRETS 'echo -n $GEMINI_API_KEY')" \
+          GOOGLE_CLOUD_PROJECT="$(sops exec-env $SOPS_SECRETS 'echo -n $GOOGLE_CLOUD_PROJECT')" \
           NVIM_SOCKET_PATH=''${NVIM:-$( \
                   find "''${XDG_RUNTIME_DIR:-''${TMPDIR}nvim.''${USER}}/" -type s -name 'nvim.*.0' -printf '%T@ %p\n' 2>/dev/null \
                   | sort -nr \
@@ -51,13 +51,12 @@
 
       settings = {
         general = {
-          preferredEditor = "neovim";
+          preferredEditor = "nvim";
           disableAutoUpdate = true;
-          disableUpdateNag = true;
-          checkpointing.enabled = true;
+          enablePromptCompletion = true;
         };
         security = {
-          auth.selectedType = "oauth-personal";
+          auth.selectedType = "gemini-api-key";
         };
         mcpServers = {
           neovim = {
