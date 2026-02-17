@@ -24,7 +24,7 @@
 * AI powered by Github copilot, for AI agentic, I'm using [opencode](https://github.com/sst/opencode).
 
 > [!NOTE]
-> * This configuration only guaranteed to be compatible with the latest stable version.
+> * This configuration only guaranteed to be compatible with the nightly version.
 > * I'm not using mason.nvim now, The LSP package should managed by you own system.
 > you need to setup your own api key in [lua/plugin/extra.lua](lua/plugin/extra.lua#L198).
 > * To get all the custom keymap clue you need, just press `space`.
