@@ -10,6 +10,8 @@
   ];
   programs.rclone = {
     enable = true;
+    # must start after sops-nix.service to ensure secrets are available
+    requiresUnit = "sops-nix.service";
     remotes = {
       gd = {
         config = {
