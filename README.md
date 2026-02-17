@@ -17,7 +17,7 @@ so I want to keep my compositor desktop minimalist.
 For a lone time I'm seeking for a solution to manage my OS configurations,
 The Arch branch is a way that I manage my home configurations,
 but that's not enough, NixOS provided capability to manage system wide configurations, or even more,
-now this repo manage my laptop, WSL, and nix-on-droid configurations together (but nix-on-droid configurations are not work well now)
+now this repo manage my laptop, WSL, aws, aliyun, raspberry pi and nix-on-droid configurations all together (but nix-on-droid configurations are not work well now)
 
 Repo's structure base on [nix-starter-config#standard](https://github.com/Misterio77/nix-starter-configs/tree/main/standard),
 is a good start point for leaning NixOS, but you should be careful to using unstable and stable nixpkgs together,
