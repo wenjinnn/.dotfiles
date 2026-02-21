@@ -44,25 +44,7 @@
       };
     };
     # idle daemon
-    swayidle =
-      let
-        lock = "${lib.getExe pkgs.swaylock} -i ${config.home.homeDirectory}/.local/share/.wallpaper";
-      in
-      {
-        enable = true;
-        extraArgs = [
-          "-w"
-        ];
-        events = {
-          "lock" = lock;
-        };
-        timeouts = [
-          {
-            timeout = 300;
-            command = lock;
-          }
-        ];
-      };
+    swayidle.enable = true;
   };
   # additional swayidle inhibit service to pause idle when audio is playing
   # systemd.user.services.sway-audio-idle-inhibit = {
@@ -80,6 +62,7 @@
   #   };
   # };
   programs = {
+    swaylock.enable = true;
     # vim like image viewer
     imv.enable = true;
     # vim like pdf viewer
