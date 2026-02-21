@@ -130,16 +130,16 @@ in {
                 mountpoint = "/var/log";
                 mountOptions = [ "noatime" ];
               };
-              "/swap" = {
-                mountpoint = "/.swapvol";
-                swap."swapfile" = {
-                  size = "4G";
-                  priority = 3; # (higher number -> higher priority)
-                  # to be used after zswap (set zramSwap.priority > this priority),
-                  # but before "hibernation" swap
-                  # https://github.com/nix-community/disko/issues/651
-                };
-              };
+              # "/swap" = {
+              #   mountpoint = "/.swapvol";
+              #   swap."swapfile" = {
+              #     size = "8G";
+              #     priority = 3; # (higher number -> higher priority)
+              #     # to be used after zswap (set zramSwap.priority > this priority),
+              #     # but before "hibernation" swap
+              #     # https://github.com/nix-community/disko/issues/651
+              #   };
+              # };
             };
           };
         };  # system
@@ -147,7 +147,7 @@ in {
         swap = {
           type = "8200";  # Linux swap
 
-          size = "5G"; # RAM + 1GB
+          size = "9G"; # RAM + 1GB
           content = {
             type = "swap";
             resumeDevice = true;  # "hibernation" swap
