@@ -25,6 +25,7 @@
     sops
     firewall
     tailscale
+    podman
     ../../users.nix
     ./disko-usb-btrfs.nix
     ./pi5-configtxt.nix
@@ -32,6 +33,21 @@
     # Import your generated (nixos-generate-config) hardware configuration
     #./hardware-configuration.nix
   ];
+  nixpkgs = {
+    # You can add overlays here
+    overlays = [
+      (final: prev: {
+        redis = prev.redis.overrideAttrs (old: {
+          doCheck = false;
+        });
+      })
+    ];
+    # Configure your nixpkgs instance
+    config = {
+      # Disable if you don't want unfree packages
+      allowUnfree = true;
+    };
+  };
   time.timeZone = "Asia/Shanghai";
 
   environment.systemPackages = with pkgs; [
@@ -45,16 +61,90 @@
       recommendedOptimisation = true;
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
-      virtualHosts."/ariang" = {
-        locations."/" = {
-          root = "${pkgs.ariang}/share";
-          index = "index.html";
+      virtualHosts = {
+        "matrix.ts.wenjin.me" = {
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:6167";
+            proxyWebsockets = true;
+          };
         };
-        locations."/jsonrpc" = {
-          proxyPass = "http://127.0.0.1:6800/jsonrpc";
-          proxyWebsockets = true;
+        "homeassistant.ts.wenjin.me" = {
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:8123";
+            proxyWebsockets = true;
+          };
+        };
+        "amule.ts.wenjin.me" = {
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:4711";
+            proxyWebsockets = true;
+          };
+        };
+        "ariang.ts.wenjin.me" = {
+          locations."/" = {
+            root = "${pkgs.ariang}/share/ariang";
+            index = "index.html";
+          };
+          locations."/jsonrpc" = {
+            proxyPass = "http://127.0.0.1:6800/jsonrpc";
+            proxyWebsockets = true;
+          };
+        };
+        "atuin.ts.wenjin.me" = {
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:8888";
+          };
         };
       };
+    };
+    nextcloud = {
+      enable = true;
+      hostName = "nextcloud.ts.wenjin.me";
+      database.createLocally = true;
+      config = {
+        dbtype = "pgsql";
+        adminpassFile = config.sops.secrets.NEXTCLOUD_ADMIN_PASS.path;
+      };
+    };
+    matrix-tuwunel = {
+      enable = true;
+      settings = {
+        global = {
+          server_name = "matrix.ts.wenjin.me";
+          allow_registration = true;
+          registration_token_file = config.sops.secrets.MATRIX_REGISTRATION_TOKEN.path;
+        };
+      };
+    };
+    home-assistant = {
+      enable = true;
+      openFirewall = true;
+      customComponents = with pkgs.home-assistant-custom-components; [
+        xiaomi_home
+        xiaomi_gateway3
+        xiaomi_miot
+      ];
+      extraPackages =
+        python3Packages: with python3Packages; [
+          gtts
+        ];
+      config = {
+        http = {
+          use_x_forwarded_for = true;
+          trusted_proxies = [
+            "127.0.0.1"
+          ];
+        };
+        homeassistant = {
+          name = "Home";
+        };
+      };
+    };
+    atuin = {
+      enable = true;
+      openFirewall = true;
+      openRegistration = true;
+      maxHistoryLength = 100000;
     };
     tailscale = {
       authKeyFile = config.sops.secrets.RPI5_TAILSCALE_AUTHKEY.path;
@@ -155,7 +245,7 @@
         substituters = [
           # cache mirror located in China
           # status: https://mirror.sjtu.edu.cn/
-          # "https://mirror.sjtu.edu.cn/nix-channels/store"
+          "https://mirror.sjtu.edu.cn/nix-channels/store"
           # status: https://mirrors.ustc.edu.cn/status/
           "https://mirrors.ustc.edu.cn/nix-channels/store"
           "https://cache.nixos.org"

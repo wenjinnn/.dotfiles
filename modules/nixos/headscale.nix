@@ -32,17 +32,53 @@
         };
 
         metrics_listen_addr = "127.0.0.1:8090";
-        dns = {
-          override_local_dns = true;
-          base_domain = "ts.${domain}";
-          magic_dns = true;
-          nameservers.global = [
-            "1.1.1.1"
-            "1.0.0.1"
-            "2606:4700:4700::1111"
-            "2606:4700:4700::1001"
-          ];
-        };
+        dns =
+          let
+            base_domain = "ts.${domain}";
+          in
+          {
+            override_local_dns = true;
+            base_domain = base_domain;
+            magic_dns = true;
+            extra_records = [
+              {
+                name = "nextcloud.${base_domain}";
+                type = "A";
+                value = "100.64.0.1";
+              }
+              {
+                name = "homeassistant.${base_domain}";
+                type = "A";
+                value = "100.64.0.1";
+              }
+              {
+                name = "atuin.${base_domain}";
+                type = "A";
+                value = "100.64.0.1";
+              }
+              {
+                name = "ariang.${base_domain}";
+                type = "A";
+                value = "100.64.0.1";
+              }
+              {
+                name = "amule.${base_domain}";
+                type = "A";
+                value = "100.64.0.1";
+              }
+              {
+                name = "matrix.${base_domain}";
+                type = "A";
+                value = "100.64.0.1";
+              }
+            ];
+            nameservers.global = [
+              "1.1.1.1"
+              "1.0.0.1"
+              "2606:4700:4700::1111"
+              "2606:4700:4700::1001"
+            ];
+          };
       };
     };
     nginx = {
