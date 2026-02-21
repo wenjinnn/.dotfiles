@@ -65,20 +65,20 @@
       };
   };
   # additional swayidle inhibit service to pause idle when audio is playing
-  systemd.user.services.sway-audio-idle-inhibit = {
-    Unit = {
-      Description = "Inhibit swayidle when audio is playing";
-      After = [ "swayidle.service" ];
-      PartOf = [ "swayidle.service" ];
-    };
-    Service = {
-      ExecStart = "${lib.getExe pkgs.sway-audio-idle-inhibit}";
-      Restart = "always";
-    };
-    Install = {
-      WantedBy = [ "default.target" ];
-    };
-  };
+  # systemd.user.services.sway-audio-idle-inhibit = {
+  #   Unit = {
+  #     Description = "Inhibit swayidle when audio is playing";
+  #     After = [ "swayidle.service" ];
+  #     PartOf = [ "swayidle.service" ];
+  #   };
+  #   Service = {
+  #     ExecStart = "${lib.getExe pkgs.sway-audio-idle-inhibit}";
+  #     Restart = "always";
+  #   };
+  #   Install = {
+  #     WantedBy = [ "default.target" ];
+  #   };
+  # };
   programs = {
     # vim like image viewer
     imv.enable = true;
