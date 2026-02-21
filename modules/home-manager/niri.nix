@@ -23,15 +23,18 @@
     swayidle =
       let
         niri = lib.getExe pkgs.niri-unstable;
-        swaylock = "${lib.getExe pkgs.swaylock} -i ${config.home.homeDirectory}/.local/share/.wallpaper";
+        swaylock = "${lib.getExe pkgs.swaylock} -f -i ${config.home.homeDirectory}/.local/share/.wallpaper";
       in
       {
         events = {
-          "lock" = swaylock;
           "before-sleep" = "${swaylock} && ${niri} msg action power-off-monitors";
           "after-resume" = "${niri} msg action power-on-monitors";
         };
         timeouts = [
+          {
+            timeout = 300;
+            command = swaylock;
+          }
           {
             timeout = 360;
             command = "${niri} msg action power-off-monitors";
