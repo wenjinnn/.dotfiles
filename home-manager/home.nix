@@ -147,6 +147,7 @@ in
     posting
     rpi-imager
     nmap
+    john
   ];
 
   # xresources.properties = {
@@ -228,6 +229,15 @@ in
         "erasedups"
         "ignoreboth"
       ];
+    };
+    atuin = {
+      enable = true;
+      enableBashIntegration = true;
+      settings = {
+        auto_sync = true;
+        sync_frequency = "10m";
+        sync_address = "http://atuin.ts.wenjin.me";
+      };
     };
     # github cli
     gh = {
