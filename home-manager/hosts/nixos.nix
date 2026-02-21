@@ -15,6 +15,7 @@
     mpv
     foot
     aria2
+    ghostty
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
