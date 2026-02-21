@@ -8,6 +8,7 @@
       # nix community's cache server
       "https://nix-community.cachix.org"
       "https://nixos-raspberrypi.cachix.org"
+      "https://wenjinnn.cachix.org"
     ];
 
     # will be appended to the system-level trusted-public-keys
@@ -15,6 +16,7 @@
       # nix community's cache server public key
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
+      "wenjinnn.cachix.org-1:g4YUsgvT21EYKUP4n9p677m5SwJ85gX3NSi+P5wyFKg="
     ];
   };
 
@@ -194,6 +196,7 @@
                 raspberry-pi-5.bluetooth
                 usb-gadget-ethernet
                 trusted-nix-caches
+                nixpkgs-rpi
                 disko.nixosModules.disko
                 sops-nix.nixosModules.sops
                 ./nixos/hosts/rpi5/configuration.nix
