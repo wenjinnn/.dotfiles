@@ -46,7 +46,7 @@
     # idle daemon
     swayidle =
       let
-        lock = "${lib.getExe pkgs.swaylock} -f -i ${config.home.homeDirectory}/.local/share/.wallpaper";
+        lock = "${lib.getExe pkgs.swaylock} -i ${config.home.homeDirectory}/.local/share/.wallpaper";
       in
       {
         enable = true;

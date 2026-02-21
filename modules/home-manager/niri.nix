@@ -28,7 +28,7 @@
       {
         events = {
           "before-sleep" =
-            "${swaylock} -f -i ${config.home.homeDirectory}/.local/share/.wallpaper && ${niri} msg action power-off-monitors";
+            "${swaylock} -i ${config.home.homeDirectory}/.local/share/.wallpaper && ${niri} msg action power-off-monitors";
           "after-resume" = "${niri} msg action power-on-monitors";
         };
         timeouts = [
