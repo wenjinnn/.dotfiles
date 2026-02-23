@@ -148,6 +148,7 @@ in
     rpi-imager
     nmap
     john
+    dig
   ];
 
   # xresources.properties = {
