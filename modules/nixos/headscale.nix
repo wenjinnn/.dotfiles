@@ -42,6 +42,16 @@
             magic_dns = true;
             extra_records = [
               {
+                name = "samba.${base_domain}";
+                type = "A";
+                value = "100.64.0.1";
+              }
+              {
+                name = "qbittorrent.${base_domain}";
+                type = "A";
+                value = "100.64.0.1";
+              }
+              {
                 name = "nextcloud.${base_domain}";
                 type = "A";
                 value = "100.64.0.1";
