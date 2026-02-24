@@ -17,8 +17,5 @@
     secrets.RPI5_ARIA2_SECRET = { };
     secrets.NEXTCLOUD_ADMIN_PASS = { };
     secrets.NEXTCLOUD_DB_PASS = { };
-    secrets.MATRIX_REGISTRATION_TOKEN = { };
-    secrets.MATRIX_REGISTRATION_TOKEN.owner = config.services.matrix-tuwunel.user;
-    secrets.MATRIX_REGISTRATION_TOKEN.group = config.services.matrix-tuwunel.group;
   };
 }

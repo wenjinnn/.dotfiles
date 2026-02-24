@@ -55,6 +55,9 @@
     amule-web
     amule-daemon
   ];
+  secrets.MATRIX_REGISTRATION_TOKEN = { };
+  secrets.MATRIX_REGISTRATION_TOKEN.owner = config.services.matrix-tuwunel.user;
+  secrets.MATRIX_REGISTRATION_TOKEN.group = config.services.matrix-tuwunel.group;
   services = {
     nginx = {
       enable = true;
