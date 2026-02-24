@@ -238,6 +238,7 @@ in
         auto_sync = true;
         sync_frequency = "10m";
         sync_address = "http://atuin.ts.wenjin.me";
+        key_path = config.sops.secrets.ATUIN_KEY.path;
       };
     };
     # github cli
