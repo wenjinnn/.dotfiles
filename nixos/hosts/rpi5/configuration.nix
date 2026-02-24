@@ -55,9 +55,9 @@
     amule-web
     amule-daemon
   ];
-  secrets.MATRIX_REGISTRATION_TOKEN = { };
-  secrets.MATRIX_REGISTRATION_TOKEN.owner = config.services.matrix-tuwunel.user;
-  secrets.MATRIX_REGISTRATION_TOKEN.group = config.services.matrix-tuwunel.group;
+  sops.secrets.MATRIX_REGISTRATION_TOKEN = { };
+  sops.secrets.MATRIX_REGISTRATION_TOKEN.owner = config.services.matrix-tuwunel.user;
+  sops.secrets.MATRIX_REGISTRATION_TOKEN.group = config.services.matrix-tuwunel.group;
   services = {
     nginx = {
       enable = true;
@@ -189,12 +189,12 @@
         rpc-listen-all = true;
         rpc-allow-origin-all = true;
       };
-      qbittorrent = {
-        enable = true;
-        openFirewall = true;
-        user = "wenjin";
-        group = "users";
-      };
+    };
+    qbittorrent = {
+      enable = true;
+      openFirewall = true;
+      user = "wenjin";
+      group = "users";
     };
     samba = {
       enable = true;
