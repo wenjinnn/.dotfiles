@@ -65,6 +65,18 @@
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
       virtualHosts = {
+        "samba.ts.wenjin.me" = {
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:445";
+            proxyWebsockets = true;
+          };
+        };
+        "qbittorrent.ts.wenjin.me" = {
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:8080";
+            proxyWebsockets = true;
+          };
+        };
         "matrix.ts.wenjin.me" = {
           locations."/" = {
             proxyPass = "http://127.0.0.1:6167";
@@ -176,6 +188,12 @@
         enable-rpc = true;
         rpc-listen-all = true;
         rpc-allow-origin-all = true;
+      };
+      qbittorrent = {
+        enable = true;
+        openFirewall = true;
+        user = "wenjin";
+        group = "users";
       };
     };
     samba = {
