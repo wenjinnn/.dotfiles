@@ -51,7 +51,7 @@ opt.mouse = 'a'
 -- search
 opt.ignorecase = true
 
-opt.switchbuf = 'usetab'
+opt.switchbuf = { 'usetab', 'uselast' }
 opt.autowrite = true
 opt.autowriteall = true
 opt.confirm = true
