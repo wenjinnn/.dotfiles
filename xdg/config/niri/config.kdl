@@ -20,6 +20,11 @@ output "eDP-1" {
     transform "normal"
     variable-refresh-rate on-demand=false
 }
+gestures {
+    hot-corners {
+        off
+    }
+}
 screenshot-path "~/Pictures/Screenshots/Screenshot-%Y-%m-%d_%H-%M-%S.png"
 prefer-no-csd
 layout {
