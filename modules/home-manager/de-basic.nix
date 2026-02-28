@@ -116,6 +116,7 @@
     gnome-calculator
     gnome-clocks
     gnome-software # for flatpak
+    xwayland-satellite
     # vdhcoapp # for videodownloadhelper, the browser extension. for first time setup, run `vdhcoapp install`
   ];
   xdg = {
