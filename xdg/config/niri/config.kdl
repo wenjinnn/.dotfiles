@@ -1,0 +1,227 @@
+input {
+    keyboard {
+        xkb {
+            layout ""
+            model ""
+            rules ""
+            variant ""
+        }
+        repeat-delay 600
+        repeat-rate 25
+        track-layout "global"
+        numlock
+    }
+    touchpad {
+        tap
+        natural-scroll
+    }
+}
+output "eDP-1" {
+    transform "normal"
+    variable-refresh-rate on-demand=false
+}
+screenshot-path "~/Pictures/Screenshots/Screenshot-%Y-%m-%d_%H-%M-%S.png"
+prefer-no-csd
+layout {
+    gaps 9
+    struts {
+        left 9
+        right 9
+        top 3
+        bottom 3
+    }
+    focus-ring {
+        width 2
+        active-gradient angle=45 from="#89b482" in="oklch longer hue" relative-to="window" to="#d8a657"
+    }
+    border { off; }
+    shadow {
+        on
+        offset x=0.000000 y=5.000000
+        softness 30.000000
+        spread 5.000000
+        draw-behind-window false
+        color "#00000070"
+    }
+    default-column-width { proportion 0.500000; }
+    preset-column-widths {
+        proportion 0.333330
+        proportion 0.500000
+        proportion 0.666670
+    }
+    center-focused-column "never"
+}
+cursor {
+    xcursor-theme "default"
+    xcursor-size 24
+}
+hotkey-overlay { skip-at-startup; }
+binds {
+    Ctrl+Alt+Delete { quit; }
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+A hotkey-overlay-title="Trigger notification actions: dunstctl context" { spawn "sh" "-c" "dunstctl context"; }
+    Mod+Alt+P hotkey-overlay-title="Pick color to clipboard: niri msg pick-color" { spawn "sh" "-c" "niri msg pick-color | grep -o '#[0-9a-fA-F]{6}' | wl-copy"; }
+    Mod+B hotkey-overlay-title="Bluetooth menu: bzmenu" { spawn "sh" "-c" "bzmenu -l rofi"; }
+    Mod+BracketLeft { consume-or-expel-window-left; }
+    Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+C { center-column; }
+    Mod+Comma { consume-window-into-column; }
+    Mod+Ctrl+1 { move-column-to-workspace 1; }
+    Mod+Ctrl+2 { move-column-to-workspace 2; }
+    Mod+Ctrl+3 { move-column-to-workspace 3; }
+    Mod+Ctrl+4 { move-column-to-workspace 4; }
+    Mod+Ctrl+5 { move-column-to-workspace 5; }
+    Mod+Ctrl+6 { move-column-to-workspace 6; }
+    Mod+Ctrl+7 { move-column-to-workspace 7; }
+    Mod+Ctrl+8 { move-column-to-workspace 8; }
+    Mod+Ctrl+9 { move-column-to-workspace 9; }
+    Mod+Ctrl+A hotkey-overlay-title="Pulseaudio sink menu: rofi-pulse-select sink" { spawn "sh" "-c" "rofi-pulse-select sink"; }
+    Mod+Ctrl+C { center-visible-columns; }
+    Mod+Ctrl+Down { move-window-down; }
+    Mod+Ctrl+End { move-column-to-last; }
+    Mod+Ctrl+F { expand-column-to-available-width; }
+    Mod+Ctrl+H { move-column-left; }
+    Mod+Ctrl+Home { move-column-to-first; }
+    Mod+Ctrl+I { move-column-to-workspace-up; }
+    Mod+Ctrl+J { move-window-down; }
+    Mod+Ctrl+K { move-window-up; }
+    Mod+Ctrl+L { move-column-right; }
+    Mod+Ctrl+Left { move-column-left; }
+    Mod+Ctrl+O { move-column-to-workspace-down; }
+    Mod+Ctrl+P hotkey-overlay-title="Pause player: playerctl play-pause" { spawn "sh" "-c" "playerctl play-pause"; }
+    "Mod+Ctrl+Page_Down" { move-column-to-workspace-down; }
+    "Mod+Ctrl+Page_Up" { move-column-to-workspace-up; }
+    Mod+Ctrl+R { reset-window-height; }
+    Mod+Ctrl+Right { move-column-right; }
+    Mod+Ctrl+Shift+F { toggle-windowed-fullscreen; }
+    Mod+Ctrl+Shift+P hotkey-overlay-title="Power menu: rofi-power-menu" { spawn "sh" "-c" "rofi -show power-menu -modi power-menu:rofi-power-menu"; }
+    Mod+Ctrl+Shift+WheelScrollLeft { move-column-left; }
+    Mod+Ctrl+Shift+WheelScrollRight { move-column-right; }
+    Mod+Ctrl+Up { move-window-up; }
+    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Ctrl+WheelScrollLeft { move-column-left; }
+    Mod+Ctrl+WheelScrollRight { move-column-right; }
+    Mod+Ctrl+WheelScrollUp cooldown-ms=150 { move-column-to-workspace-up; }
+    Mod+D hotkey-overlay-title="Run an Application: rofi" { spawn "sh" "-c" "rofi -show drun"; }
+    Mod+Delete { clear-dynamic-cast-target; }
+    Mod+Down { focus-window-down; }
+    Mod+E hotkey-overlay-title="Emoji menu: rofimoji" { spawn "sh" "-c" "rofimoji"; }
+    Mod+End { focus-column-last; }
+    Mod+Equal { set-column-width "+5%"; }
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+    Mod+F { maximize-column; }
+    Mod+H { focus-column-left; }
+    Mod+Home { focus-column-first; }
+    Mod+I { focus-workspace-up; }
+    Mod+Insert { set-dynamic-cast-window; }
+    Mod+J { focus-window-down; }
+    Mod+K { focus-window-up; }
+    Mod+L { focus-column-right; }
+    Mod+Left { focus-column-left; }
+    Mod+Minus { set-column-width "-5%"; }
+    Mod+N hotkey-overlay-title="Network menu: networkmanager-dmenu" { spawn "sh" "-c" "networkmanager_dmenu"; }
+    Mod+O { focus-workspace-down; }
+    Mod+P hotkey-overlay-title="Pass menu: rofi-pass" { spawn "sh" "-c" "rofi-pass"; }
+    "Mod+Page_Down" { focus-workspace-down; }
+    "Mod+Page_Up" { focus-workspace-up; }
+    Mod+Period { expel-window-from-column; }
+    Mod+Print { screenshot-window; }
+    Mod+Q { close-window; }
+    Mod+R { switch-preset-column-width; }
+    Mod+Return hotkey-overlay-title="Open a Terminal: foot (client)" { spawn "footclient"; }
+    Mod+Right { focus-column-right; }
+    Mod+S { toggle-window-floating; }
+    Mod+Shift+A hotkey-overlay-title="Pulseaudio source menu: rofi-pulse-select source" { spawn "sh" "-c" "rofi-pulse-select source"; }
+    Mod+Shift+Ctrl+Down { move-column-to-monitor-down; }
+    Mod+Shift+Ctrl+H { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+J { move-column-to-monitor-down; }
+    Mod+Shift+Ctrl+K { move-column-to-monitor-up; }
+    Mod+Shift+Ctrl+L { move-column-to-monitor-right; }
+    Mod+Shift+Ctrl+Left { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
+    Mod+Shift+Ctrl+Up { move-column-to-monitor-up; }
+    Mod+Shift+Down { focus-monitor-down; }
+    Mod+Shift+E { quit; }
+    Mod+Shift+Equal { set-window-height "+5%"; }
+    Mod+Shift+F { fullscreen-window; }
+    Mod+Shift+H { focus-monitor-left; }
+    Mod+Shift+I { move-workspace-up; }
+    Mod+Shift+Insert { set-dynamic-cast-monitor; }
+    Mod+Shift+J { focus-monitor-down; }
+    Mod+Shift+K { focus-monitor-up; }
+    Mod+Shift+L { focus-monitor-right; }
+    Mod+Shift+Left { focus-monitor-left; }
+    Mod+Shift+Minus { set-window-height "-5%"; }
+    Mod+Shift+N hotkey-overlay-title="Next player: playerctl next" { spawn "sh" "-c" "playerctl next"; }
+    Mod+Shift+O { move-workspace-down; }
+    Mod+Shift+P hotkey-overlay-title="Previous player: playerctl previous" { spawn "sh" "-c" "playerctl previous"; }
+    "Mod+Shift+Page_Down" { move-workspace-down; }
+    "Mod+Shift+Page_Up" { move-workspace-up; }
+    Mod+Shift+R { switch-preset-window-height; }
+    Mod+Shift+Right { focus-monitor-right; }
+    Mod+Shift+S { switch-focus-between-floating-and-tiling; }
+    Mod+Shift+Slash { show-hotkey-overlay; }
+    Mod+Shift+Up { focus-monitor-up; }
+    Mod+Shift+WheelScrollLeft { focus-column-left; }
+    Mod+Shift+WheelScrollRight { focus-column-right; }
+    Mod+T hotkey-overlay-title="Trigger keyboard pointer: wl-kbptr" { spawn "sh" "-c" "wl-kbptr -o modes=floating,click -o mode_floating.source=detect"; }
+    Mod+Tab repeat=false { toggle-overview; }
+    Mod+U hotkey-overlay-title="Systemd unit menu: rofi-systemd" { spawn "sh" "-c" "rofi-systemd"; }
+    Mod+Up { focus-window-up; }
+    Mod+V hotkey-overlay-title="List clipboard history: rofi-cliphist" { spawn "sh" "-c" "rofi -modi clipboard:cliphist-rofi-img -show clipboard -show-icons"; }
+    Mod+W { toggle-column-tabbed-display; }
+    Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollLeft { focus-column-left; }
+    Mod+WheelScrollRight { focus-column-right; }
+    Mod+WheelScrollUp cooldown-ms=150 { focus-workspace-up; }
+    Print { screenshot; }
+    Super+Alt+L allow-when-locked=true hotkey-overlay-title="Lock the Screen: swaylock" { spawn "sh" "-c" "swaylock -i /home/wenjin/.local/share/.wallpaper"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "sh" "-c" "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-"; }
+    XF86AudioMicMute allow-when-locked=true { spawn "sh" "-c" "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    XF86AudioMute allow-when-locked=true { spawn "sh" "-c" "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "sh" "-c" "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+"; }
+    XF86MonBrightnessDown { spawn "sh" "-c" "brightnessctl set 5%-"; }
+    XF86MonBrightnessUp { spawn "sh" "-c" "brightnessctl set 5%+"; }
+}
+spawn-at-startup "bash" "-c" "echo 'Xft.dpi: 192' | xrdb -merge"
+window-rule { draw-border-with-background false; }
+window-rule {
+    match app-id="^firefox$" title="Private Browsing"
+    border { active-color "#d3869b"; }
+}
+window-rule {
+    match app-id="^signal$"
+    block-out-from "screencast"
+}
+window-rule {
+    match app-id="steam" title="r#\"^notificationtoasts_\\d+_desktop$\"#"
+    default-floating-position relative-to="bottom-right" x=10 y=10
+}
+window-rule {
+    match app-id="wps" title="wps"
+    open-floating true
+}
+window-rule {
+    match app-id="^xwaylandvideobridge$"
+    open-floating true
+    focus-ring { off; }
+    opacity 0.000000
+    min-width 1
+    max-width 1
+    min-height 1
+    max-height 1
+    default-floating-position relative-to="bottom-right" x=0 y=0
+}
+layer-rule {
+    match namespace="^notification$"
+    block-out-from "screencast"
+}
+debug { dbus-interfaces-in-non-session-instances; }
