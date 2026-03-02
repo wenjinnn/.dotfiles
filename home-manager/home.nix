@@ -314,22 +314,26 @@ in
       };
     };
     gpg.enable = true;
-    browserpass.enable = true;
     pandoc.enable = true;
-    password-store = {
+    keepassxc = {
+      autostart = true;
       enable = true;
-      package = pkgs.pass.withExtensions (exts: [
-        exts.pass-otp
-        exts.pass-tomb
-        exts.pass-file
-        exts.pass-audit
-        exts.pass-update
-        exts.pass-import
-        exts.pass-checkup
-        exts.pass-genphrase
-      ]);
       settings = {
-        PASSWORD_STORE_DIR = "${archive_path}/password-store";
+        # For available settings, see https://github.com/keepassxreboot/keepassxc/blob/develop/src/core/Config.cpp
+        FdoSecrets.Enabled = true; # Enable Secret Service Integration
+        Browser.Enabled = true;
+        Browser.UnlockDatabase = true;
+        GUI = {
+          AdvancedSettings = true;
+          ApplicationTheme = "dark";
+          CompactMode = true;
+          HidePasswords = true;
+          MinimizeOnClose = true;
+          MinimizeOnStartup = true;
+          MinimizeToTray = true;
+          ShowTrayIcon = true;
+        };
+        SSHAgent.Enabled = true;
       };
     };
   };

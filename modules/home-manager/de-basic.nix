@@ -10,9 +10,6 @@
 {
 
   services = {
-    # use pass as secret service, replaced gnome-keyring
-    pass-secret-service.enable = true;
-    # polkit gnome agent for privilege escalation in GUI apps
     polkit-gnome.enable = true;
     # auto adjust gamma to reduce eye strain base on timezone
     gammastep = {
@@ -84,8 +81,6 @@
       nativeMessagingHosts = with pkgs; [
         # Tridactyl native connector
         tridactyl-native
-        # Browserpass for pass integration
-        browserpass
       ];
     };
   };
@@ -120,6 +115,7 @@
     # vdhcoapp # for videodownloadhelper, the browser extension. for first time setup, run `vdhcoapp install`
   ];
   xdg = {
+    autostart.enable = true;
     # disable nm-applet autostart
     configFile."autostart/nm-applet.desktop".text = ''
       [Desktop Entry]

@@ -52,6 +52,11 @@
                 value = "100.64.0.1";
               }
               {
+                name = "syncthing.${base_domain}";
+                type = "A";
+                value = "100.64.0.1";
+              }
+              {
                 name = "nextcloud.${base_domain}";
                 type = "A";
                 value = "100.64.0.1";

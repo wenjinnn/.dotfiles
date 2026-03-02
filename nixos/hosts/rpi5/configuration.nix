@@ -62,6 +62,12 @@
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
       virtualHosts = {
+        "syncthing.ts.wenjin.me" = {
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:8384";
+            proxyWebsockets = true;
+          };
+        };
         "samba.ts.wenjin.me" = {
           locations."/" = {
             proxyPass = "http://127.0.0.1:445";
@@ -113,6 +119,7 @@
       enable = true;
       hostName = "nextcloud.ts.wenjin.me";
       database.createLocally = true;
+      configureRedis = false;
       config = {
         dbtype = "pgsql";
         adminpassFile = config.sops.secrets.NEXTCLOUD_ADMIN_PASS.path;
@@ -165,6 +172,8 @@
     };
     syncthing = {
       enable = true;
+      openDefaultPorts = true;
+      guiAddress = "http://0.0.0.0:8384";
     };
     amule = {
       user = me.username;
