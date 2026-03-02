@@ -13,7 +13,7 @@
         email = me.mail.outlook;
       };
       color.ui = true;
-      credential.helper = "store";
+      # credential.helper = "store";
       github.user = "wenjinnn";
       push.autoSetupRemote = true;
       mergetool.keepBackup = false;

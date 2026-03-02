@@ -315,6 +315,15 @@ in
     };
     gpg.enable = true;
     pandoc.enable = true;
+    # on a new machine it needs to be initialized with
+    # # enable browser integration in KeePassXC settings, then
+    # $ git-credential-keepassxc caller me  # only required if compiled with strict-caller, see Limiting callers
+    # $ git-credential-keepassxc configure
+    # $ git config --global --replace-all credential.helper 'keepassxc --git-groups'
+    git-credential-keepassxc = {
+      enable = true;
+      groups = [ "Git" ];
+    };
     keepassxc = {
       autostart = true;
       enable = true;
