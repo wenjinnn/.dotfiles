@@ -132,7 +132,6 @@ in
     trashy
     w3m
     networkmanagerapplet
-    browserpass
     devenv
     nix-init
     typst
