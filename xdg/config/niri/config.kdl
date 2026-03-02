@@ -215,6 +215,14 @@ window-rule {
     open-floating true
 }
 window-rule {
+    match app-id="org.keepassxc.KeePassXC" title="Unlock Database - KeePassXC"
+    open-floating true
+}
+window-rule {
+    match app-id="org.keepassxc.KeePassXC" title="KeePassXC - Browser Access Request"
+    open-floating true
+}
+window-rule {
     match app-id="^xwaylandvideobridge$"
     open-floating true
     focus-ring { off; }
