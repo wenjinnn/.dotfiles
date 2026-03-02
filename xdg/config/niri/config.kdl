@@ -134,7 +134,6 @@ binds {
     Mod+Minus { set-column-width "-5%"; }
     Mod+N hotkey-overlay-title="Network menu: networkmanager-dmenu" { spawn "sh" "-c" "networkmanager_dmenu"; }
     Mod+O { focus-workspace-down; }
-    Mod+P hotkey-overlay-title="Pass menu: rofi-pass" { spawn "sh" "-c" "rofi-pass"; }
     "Mod+Page_Down" { focus-workspace-down; }
     "Mod+Page_Up" { focus-workspace-up; }
     Mod+Period { expel-window-from-column; }
