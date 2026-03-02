@@ -11,7 +11,8 @@
       visualizer
       vr-reversal
       quality-menu
-      mpv-cheatsheet
+      # temporary disabled for compile error
+      # mpv-cheatsheet
       webtorrent-mpv-hook
     ];
     config = {
