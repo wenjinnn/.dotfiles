@@ -1,7 +1,7 @@
 {
   "plugins": {
     "SchemaStore.nvim": {
-      "rev": "7e88652d0291bfd4c988737c176fa59e187904f2",
+      "rev": "2c2f2d3fb568bbff1a5e1344e87a979b7edf50a8",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "conform.nvim": {
@@ -25,7 +25,7 @@
       "src": "https://github.com/brianhuster/live-preview.nvim"
     },
     "mini.nvim": {
-      "rev": "a95dc67ecff78de138543a20c20f29f47111b122",
+      "rev": "0098de999048af0539183d625c52d733318a441b",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "neogen": {
