@@ -115,7 +115,6 @@
     # vdhcoapp # for videodownloadhelper, the browser extension. for first time setup, run `vdhcoapp install`
   ];
   xdg = {
-    autostart.enable = true;
     # disable nm-applet autostart
     configFile."autostart/nm-applet.desktop".text = ''
       [Desktop Entry]

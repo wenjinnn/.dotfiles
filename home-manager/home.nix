@@ -205,6 +205,7 @@ in
   # XDG base directory settings
   xdg = {
     enable = true;
+    autostart.enable = true;
     userDirs.enable = true;
   };
   # Nix garbage collection settings
