@@ -44,7 +44,7 @@
 
   nixpkgs.config.rocmSupport = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
 
   services.ollama = {
     environmentVariables = {
