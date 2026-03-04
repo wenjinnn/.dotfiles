@@ -60,7 +60,6 @@ opt.fileencodings:append({ 'gbk', 'cp936', 'gb2312', 'gb18030', 'big5', 'euc-jp'
 opt.termguicolors = true
 opt.complete:append({ 'kspell' })
 opt.completeopt = { 'menuone', 'noselect', 'fuzzy', 'popup', 'nearest' }
-opt.autocomplete = true
 opt.pumheight = 20
 opt.pumborder = 'single'
 opt.sessionoptions:remove({ 'blank' })
