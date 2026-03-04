@@ -11,8 +11,8 @@
 }:
 let
   dotfiles_path = "${config.home.homeDirectory}/.dotfiles";
-  archive_path = "${config.home.homeDirectory}/.archive";
-  note_path = "${config.home.homeDirectory}/.note";
+  archive_path = "${config.home.homeDirectory}/Sync/archive";
+  note_path = "${config.home.homeDirectory}/Sync/note";
 in
 {
   # You can import other home-manager modules here
@@ -25,7 +25,6 @@ in
     ctags
     yazi
     mime
-    git-sync
     lang
     translate-shell
     sops
@@ -201,6 +200,9 @@ in
     PLAYER = "ffplay -nodisp -autoexit -loglevel quiet";
     # sudo askpass program
     SUDO_ASKPASS = "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
+  };
+  home.file.".abook/addressbook" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${archive_path}/abook/addressbook";
   };
   # XDG base directory settings
   xdg = {
