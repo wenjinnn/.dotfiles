@@ -53,7 +53,6 @@
         general = {
           preferredEditor = "nvim";
           disableAutoUpdate = true;
-          enablePromptCompletion = true;
           previewFeatures = true;
         };
         security = {
