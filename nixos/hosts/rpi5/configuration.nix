@@ -121,6 +121,7 @@
       hostName = "nextcloud.ts.wenjin.me";
       database.createLocally = true;
       configureRedis = false;
+      phpExtraExtensions = all: [ all.smbclient ];
       # autoUpdateApps.enable = true;
       # extraApps = {
       #   inherit (config.services.nextcloud.package.packages.apps)
@@ -214,6 +215,44 @@
       user = "wenjin";
       group = "users";
     };
+    samba = {
+      enable = true;
+      openFirewall = true;
+      nmbd.extraArgs = [ "--option=interfaces= lo wlan0 end0" ];
+      settings = {
+        global = {
+          "invalid users" = [
+            "root"
+          ];
+          # "passwd program" = "/run/wrappers/bin/passwd %u";
+          security = "user";
+        };
+        music = {
+          browseable = "yes";
+          comment = "Public samba share.";
+          "read only" = "no";
+          "write list" = "root, @sambashare, aria2, @aria2";
+          path = "/mnt/data/music";
+          "admin users" = "@sambashare";
+        };
+        video = {
+          browseable = "yes";
+          comment = "Public samba share.";
+          "read only" = "no";
+          "write list" = "root, @sambashare, aria2, @aria2";
+          path = "/mnt/data/video";
+          "admin users" = "@sambashare";
+        };
+        pictures = {
+          browseable = "yes";
+          comment = "Public samba share.";
+          "read only" = "no";
+          "write list" = "root, @sambashare, aria2, @aria2";
+          path = "/mnt/data/pictures";
+          "admin users" = "@sambashare";
+        };
+      };
+    };
   };
   users.users = {
     nextcloud = {
@@ -221,6 +260,8 @@
         "aria2"
         "users"
         "amule"
+        "samba"
+        "sambashare"
       ];
     };
   };
