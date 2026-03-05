@@ -95,7 +95,7 @@
     # 缓存
     profile:
       store-selected: true
-      store-fake-ip: true
+      # store-fake-ip: true
 
     # 自动同步时间以防止时间不准导致无法正常联网
     # ntp:
@@ -135,7 +135,7 @@
       ipv6: true
       listen: 0.0.0.0:1053
       respect-rules: true
-      enhanced-mode: fake-ip
+      # enhanced-mode: fake-ip
       fake-ip-filter:
         - "*"
         - "+.lan"
