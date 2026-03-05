@@ -28,19 +28,20 @@
           };
         };
       };
-      rpi5 = {
+      nextcloud = {
         config = {
-          type = "smb";
-          host = "rpi5";
+          type = "webdav";
+          url = "http://nextcloud.ts.wenjin.me/remote.php/dav/files/wenjin";
+          vendor = "nextcloud";
           user = me.username;
         };
         secrets = {
-          pass = config.sops.secrets.RPI5_SMB_PASS.path;
+          pass = config.sops.secrets.NEXTCLOUD_WEBDAV_PASS.path;
         };
         mounts = {
           "/" = {
             enable = true;
-            mountPoint = "${config.home.homeDirectory}/Rclone/rpi5";
+            mountPoint = "${config.home.homeDirectory}/Rclone/nextcloud";
           };
         };
       };

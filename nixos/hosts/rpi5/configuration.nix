@@ -48,6 +48,7 @@
   time.timeZone = "Asia/Shanghai";
 
   environment.systemPackages = with pkgs; [
+    neovim
     amule
     amule-web
     amule-daemon
@@ -120,6 +121,16 @@
       hostName = "nextcloud.ts.wenjin.me";
       database.createLocally = true;
       configureRedis = false;
+      # autoUpdateApps.enable = true;
+      # extraApps = {
+      #   inherit (config.services.nextcloud.package.packages.apps)
+      #     contacts
+      #     calendar
+      #     tasks
+      #     ;
+      # };
+      # extraAppsEnable = true;
+      appstoreEnable = true;
       config = {
         dbtype = "pgsql";
         adminpassFile = config.sops.secrets.NEXTCLOUD_ADMIN_PASS.path;
@@ -185,7 +196,7 @@
       openPorts = true;
       serviceUMask = "0000";
       rpcSecretFile = config.sops.secrets.RPI5_ARIA2_SECRET.path;
-      downloadDirPermission = "2777";
+      downloadDirPermission = "2755";
       settings = {
         config-path = "/mnt/data/video/aria2/aria2.conf";
         input-file = "/mnt/data/video/aria2/aria2.session";
@@ -203,38 +214,14 @@
       user = "wenjin";
       group = "users";
     };
-    samba = {
-      enable = true;
-      openFirewall = true;
-      nmbd.extraArgs = [ "--option=interfaces= lo wlan0 end0" ];
-      settings = {
-        global = {
-          "invalid users" = [
-            "root"
-          ];
-          # "passwd program" = "/run/wrappers/bin/passwd %u";
-          security = "user";
-        };
-        public = {
-          browseable = "yes";
-          comment = "Public samba share.";
-          "read only" = "no";
-          "write list" = "root, @sambashare, aria2, @aria2";
-          path = "/mnt/data";
-          # "admin users" = "@sambashare";
-        };
-      };
-      # shares = {
-      #   nas = {
-      #     path = "/mnt/nas/public";
-      #     writeable = true;
-      #     browseable = true;
-      #     createMode = "0777";
-      #     directoryMode = "0777";
-      #     forceUser = "root";
-      #     forceGroup = "root";
-      #   };
-      # };
+  };
+  users.users = {
+    nextcloud = {
+      extraGroups = [
+        "aria2"
+        "users"
+        "amule"
+      ];
     };
   };
   fileSystems."/mnt/data" = {
