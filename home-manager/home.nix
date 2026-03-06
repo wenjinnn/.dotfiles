@@ -31,6 +31,7 @@ in
     mail
     mpd
     rclone
+    git-sync
     tmux
     llm
     theme
