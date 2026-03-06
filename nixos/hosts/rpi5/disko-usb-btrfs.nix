@@ -17,6 +17,8 @@ let
       # mountpoint = "/boot/firmware";
       mountOptions = [
         "noatime"
+        # commented out options are for "automounting" the partition, but it doesn't work well.
+        # related https://github.com/nvmd/nixos-raspberrypi/issues/120
         # "noauto"
         # "x-systemd.automount"
         # "x-systemd.idle-timeout=1min"
@@ -39,9 +41,9 @@ let
       # mountpoint = "/boot";
       mountOptions = [
         "noatime"
-        "noauto"
-        "x-systemd.automount"
-        "x-systemd.idle-timeout=1min"
+        # "noauto"
+        # "x-systemd.automount"
+        # "x-systemd.idle-timeout=1min"
         "umask=0077"
       ];
     };
