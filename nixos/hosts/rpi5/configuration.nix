@@ -179,7 +179,7 @@
     };
     tailscale = {
       authKeyFile = config.sops.secrets.RPI5_TAILSCALE_AUTHKEY.path;
-      useRoutingFeatures = "client";
+      useRoutingFeatures = "both";
       extraSetFlags = [ "--advertise-exit-node" ];
     };
     syncthing = {
@@ -374,7 +374,9 @@
   services.dnsmasq = {
     enable = true;
     settings = {
-      interface = "wlan0";
+      interface = [
+        "wlan0"
+      ];
       dhcp-range = "192.168.222.2,192.168.222.254,24h";
       dhcp-option = [
         "option:router,192.168.222.1"
@@ -382,7 +384,9 @@
       ];
       no-resolv = true;
       cache-size = 1000;
-      server = [ "127.0.0.1#1053" ];
+      server = [
+        "127.0.0.1#1053"
+      ];
     };
   };
 

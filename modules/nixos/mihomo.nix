@@ -95,7 +95,7 @@
     # 缓存
     profile:
       store-selected: true
-      # store-fake-ip: true
+      store-fake-ip: true
 
     # 自动同步时间以防止时间不准导致无法正常联网
     # ntp:
@@ -127,6 +127,11 @@
       auto-redirect: true
       auto-detect-interface: true
       strict-route: true
+      exclude-interface:
+        - "tailscale*"
+      route-exclude-address:
+        - "100.64.0.0/10"
+        - "fd7a:115c:a1e0::/48"
 
     # dns 设置
     # 已配置 ipv6
@@ -135,7 +140,7 @@
       ipv6: true
       listen: 0.0.0.0:1053
       respect-rules: true
-      # enhanced-mode: fake-ip
+      enhanced-mode: fake-ip
       fake-ip-filter:
         - "*"
         - "+.lan"
@@ -438,6 +443,7 @@
     rules:
       - PROCESS-NAME-REGEX,.*amule.*,DIRECT
       - PROCESS-NAME-REGEX,.*aria2c.*,DIRECT
+      - PROCESS-NAME-REGEX,.*tailscale*,DIRECT
       - GEOSITE,private,DIRECT,no-resolve
       - GEOIP,private,DIRECT,no-resolve
       - IP-CIDR,172.1.1.0/24,DIRECT,no-resolve
