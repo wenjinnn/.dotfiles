@@ -12,7 +12,7 @@
 let
   dotfiles_path = "${config.home.homeDirectory}/.dotfiles";
   archive_path = "${config.home.homeDirectory}/Sync/archive";
-  note_path = "${config.home.homeDirectory}/Sync/note";
+  note_path = "${config.home.homeDirectory}/.note";
 in
 {
   # You can import other home-manager modules here
