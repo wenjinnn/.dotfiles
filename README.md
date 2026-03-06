@@ -36,7 +36,6 @@ e.g. if you want to stay at stable nixpkgs branch but using unstable Hyprland, i
     * [rofi-power-menu](https://github.com/jluttine/rofi-power-menu)
     * [rofi-systemd](https://github.com/colonelpanic8/rofi-systemd) for control systemd unit
     * [bzmenu](https://github.com/e-tho/bzmenu)
-    * [rofi-pass-wayland](https://github.com/Seme4eg/rofi-pass-wayland) as [pass](https://www.passwordstore.org/) frontend.
     * [rofi-pulse-select](https://gitlab.com/DamienCassou/rofi-pulse-select)
     * [rofimoji](https://github.com/fdw/rofimoji) for emoji and unicode selection
     * [networkmanager-dmenu](https://github.com/firecat53/networkmanager-dmenu)
