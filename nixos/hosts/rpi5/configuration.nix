@@ -227,28 +227,12 @@
           # "passwd program" = "/run/wrappers/bin/passwd %u";
           security = "user";
         };
-        music = {
+        media = {
           browseable = "yes";
           comment = "Public samba share.";
           "read only" = "no";
           "write list" = "root, @sambashare, aria2, @aria2";
-          path = "/mnt/data/music";
-          "admin users" = "@sambashare";
-        };
-        video = {
-          browseable = "yes";
-          comment = "Public samba share.";
-          "read only" = "no";
-          "write list" = "root, @sambashare, aria2, @aria2";
-          path = "/mnt/data/video";
-          "admin users" = "@sambashare";
-        };
-        pictures = {
-          browseable = "yes";
-          comment = "Public samba share.";
-          "read only" = "no";
-          "write list" = "root, @sambashare, aria2, @aria2";
-          path = "/mnt/data/pictures";
+          path = "/mnt/data/media";
           "admin users" = "@sambashare";
         };
       };
