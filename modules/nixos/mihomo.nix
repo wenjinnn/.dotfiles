@@ -127,8 +127,8 @@
       auto-redirect: true
       auto-detect-interface: true
       strict-route: true
-      exclude-interface:
-        - "tailscale*"
+      # exclude-interface:
+      #   - "tailscale*"
       route-exclude-address:
         - "100.64.0.0/10"
         - "fd7a:115c:a1e0::/48"
@@ -443,7 +443,7 @@
     rules:
       - PROCESS-NAME-REGEX,.*amule.*,DIRECT
       - PROCESS-NAME-REGEX,.*aria2c.*,DIRECT
-      - PROCESS-NAME-REGEX,.*tailscale*,DIRECT
+      # - PROCESS-NAME-REGEX,.*tailscale*,DIRECT
       - GEOSITE,private,DIRECT,no-resolve
       - GEOIP,private,DIRECT,no-resolve
       - IP-CIDR,172.1.1.0/24,DIRECT,no-resolve
