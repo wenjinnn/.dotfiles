@@ -1,4 +1,5 @@
 {
+  lib,
   me,
   pkgs,
   ...
@@ -13,7 +14,7 @@
         email = me.mail.outlook;
       };
       color.ui = true;
-      # credential.helper = "store";
+      credential.helper = lib.mkForce "${lib.getExe pkgs.git-credential-keepassxc} --group Git --unlock 3";
       github.user = "wenjinnn";
       push.autoSetupRemote = true;
       mergetool.keepBackup = false;
