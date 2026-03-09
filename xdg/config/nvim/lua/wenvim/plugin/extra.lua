@@ -25,10 +25,13 @@ map('n', '<leader>CC', curl.pick_scoped_collection, 'Pick a scoped collection')
 map('n', '<leader>CO', curl.pick_global_collection, 'Pick a global collection')
 
 -- markdown, html, asciidoc, svg preview in browser
-vim.pack.add({ gh('brianhuster/live-preview.nvim') })
-map('n', '<leader>ls', '<cmd>LivePreview start<cr>', 'Live preview start')
-map('n', '<leader>lc', '<cmd>LivePreview close<cr>', 'Live preview close')
-map('n', '<leader>lp', '<cmd>LivePreview pick<cr>', 'Live preview pick')
+vim.pack.add({ gh('barrettruth/preview.nvim') })
+vim.g.preview = {
+  typst = true,
+  latex = true,
+  github = true,
+  markdown = { extra_args = { '-F', 'mermaid-filter' } },
+}
 
 -- db manage
 vim.pack.add({ gh('tpope/vim-dadbod'), gh('kristijanhusak/vim-dadbod-completion') })
