@@ -40,6 +40,6 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = 'sql',
   callback = function(ev)
     vim.bo[ev.buf].omnifunc = 'vim_dadbod_completion#omni'
-    map('x', '<leader>rq', 'db#op_exec()', { expr = true, desc = 'DB exec current query' })
+  map({ 'n', 'x' }, '<CR>', 'db#op_exec()', { expr = true, desc = 'DB exec current query' })
   end,
 })
