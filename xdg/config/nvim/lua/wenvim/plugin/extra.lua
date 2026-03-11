@@ -27,9 +27,6 @@ map('n', '<leader>CO', curl.pick_global_collection, 'Pick a global collection')
 -- markdown, html, asciidoc, svg preview in browser
 vim.pack.add({ gh('barrettruth/preview.nvim') })
 vim.g.preview = {
-  typst = true,
-  latex = true,
-  github = true,
   markdown = { extra_args = { '-F', 'mermaid-filter' } },
 }
 
