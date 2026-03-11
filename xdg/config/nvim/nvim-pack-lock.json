@@ -1,11 +1,11 @@
 {
   "plugins": {
     "SchemaStore.nvim": {
-      "rev": "e75f2362624698864957a694d80ca0c116bd24d3",
+      "rev": "47b1e85c020c9c359a2e6438405dd7b382b014af",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "conform.nvim": {
-      "rev": "40dcec5555f960b0a04340d76eabdf4efe78599d",
+      "rev": "086a40dc7ed8242c03be9f47fbcee68699cc2395",
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "curl.nvim": {
@@ -20,12 +20,8 @@
       "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
-    "live-preview.nvim": {
-      "rev": "c1fcf75c5f9c9c01dd392852de44204b60f1b5b1",
-      "src": "https://github.com/brianhuster/live-preview.nvim"
-    },
     "mini.nvim": {
-      "rev": "cad365c212fb1e332cb93fa8f72697125799d00a",
+      "rev": "9d359222b3643f1fccbd8f3180445842e1cae00b",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "neogen": {
@@ -53,7 +49,7 @@
       "src": "https://codeberg.org/mfussenegger/nvim-lint"
     },
     "nvim-lspconfig": {
-      "rev": "2163c54bb6cfec53e3e555665ada945b8c8331b9",
+      "rev": "d8bf4c47385340ab2029402201d4d7c9f99f437a",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-scissors": {
@@ -73,7 +69,7 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
     },
     "obsidian.nvim": {
-      "rev": "9b1caf2bed78bdaafd1107cd6cfe38d9382dea93",
+      "rev": "d0bbbbd23f331b8556fffe862c8ed71b425acc08",
       "src": "https://github.com/obsidian-nvim/obsidian.nvim"
     },
     "one-small-step-for-vimkind": {
@@ -113,7 +109,7 @@
       "src": "https://github.com/tpope/vim-fugitive"
     },
     "vim-test": {
-      "rev": "9b063a510635c052af087c470039d80843ab9929",
+      "rev": "e4d4fa7f5ce354e7df473550080d9e78207ef4a0",
       "src": "https://github.com/vim-test/vim-test"
     }
   }
