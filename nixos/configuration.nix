@@ -20,6 +20,7 @@
     mail
     theme
     tailscale
+    fonts
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd

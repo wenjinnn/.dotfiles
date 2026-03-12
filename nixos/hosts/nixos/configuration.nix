@@ -17,7 +17,6 @@
     virt
     systemd-boot
     waydroid
-    fonts
     bluetooth
     steam
     niri
