@@ -27,7 +27,10 @@ map('n', '<leader>CO', curl.pick_global_collection, 'Pick a global collection')
 -- markdown, html, asciidoc, svg preview in browser
 vim.pack.add({ gh('barrettruth/preview.nvim') })
 vim.g.preview = {
-  markdown = { extra_args = { '-F', 'mermaid-filter' } },
+  markdown = {
+    extra_args = { '-F', 'mermaid-filter' },
+    output = function(ctx) return '/tmp/' .. vim.fn.fnamemodify(ctx.file, ':t:r') .. '.html' end,
+  },
 }
 
 -- db manage
@@ -37,6 +40,6 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = 'sql',
   callback = function(ev)
     vim.bo[ev.buf].omnifunc = 'vim_dadbod_completion#omni'
-  map({ 'n', 'x' }, '<CR>', 'db#op_exec()', { expr = true, desc = 'DB exec current query' })
+    map({ 'n', 'x' }, '<CR>', 'db#op_exec()', { expr = true, desc = 'DB exec current query' })
   end,
 })
