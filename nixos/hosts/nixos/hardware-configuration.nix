@@ -7,58 +7,91 @@
   pkgs,
   modulesPath,
   ...
-}: {
+}:
+{
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "nvme" "uas" "sd_mod"];
-  boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-intel"];
-  boot.extraModulePackages = [];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "thunderbolt"
+    "nvme"
+    "uas"
+    "sd_mod"
+  ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [
+    "kvm-intel"
+    "acpi_call"
+  ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    acpi_call
+  ];
   boot.resumeDevice = "/dev/disk/by-uuid/63c28fde-17cc-44bb-aa1b-6658c4107d3f";
   # btrfs resume_offset calc
   # btrfs inspect-internal map-swapfile -r swap_file
-  boot.kernelParams = ["resume_offset=13194284"];
+  boot.kernelParams = [ "resume_offset=13194284" ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/63c28fde-17cc-44bb-aa1b-6658c4107d3f";
     fsType = "btrfs";
     # zstd has better performance then btrfs default. related benchmark: https://www.phoronix.com/review/btrfs-zstd-compress
     # see also compress exists dir https://discourse.nixos.org/t/how-to-deal-with-actions-on-fs-when-nix-store-is-readonly/22829
-    options = ["compress=zstd"];
+    options = [ "compress=zstd" ];
   };
 
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/6fffbeb9-2862-4a72-8726-ae3db395bbfb";
     fsType = "btrfs";
-    options = ["compress=zstd"];
+    options = [ "compress=zstd" ];
   };
 
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/1CEE-62D7";
     fsType = "vfat";
-    options = ["fmask=0022" "dmask=0022"];
+    options = [
+      "fmask=0022"
+      "dmask=0022"
+    ];
   };
 
   fileSystems."/swap" = {
     device = "/dev/disk/by-uuid/63c28fde-17cc-44bb-aa1b-6658c4107d3f";
     fsType = "btrfs";
-    options = ["subvol=swap" "noatime"];
+    options = [
+      "subvol=swap"
+      "noatime"
+    ];
   };
 
   fileSystems."/windows" = {
-    options = ["nofail" "uid=wenjin" "gid=users" "dmask=007" "fmask=117"];
+    options = [
+      "nofail"
+      "uid=wenjin"
+      "gid=users"
+      "dmask=007"
+      "fmask=117"
+    ];
     device = "/dev/disk/by-label/Windows";
     fsType = "ntfs";
   };
   fileSystems."/game" = {
-    options = ["compress=zstd" "nofail" "noauto"];
+    options = [
+      "compress=zstd"
+      "nofail"
+      "noauto"
+    ];
     device = "/dev/disk/by-uuid/6f35c79a-6aac-485c-ab6c-48df5d2be0e3";
     fsType = "btrfs";
   };
 
-  swapDevices = [{device = "/swap/swapfile";priority = 0;}];
+  swapDevices = [
+    {
+      device = "/swap/swapfile";
+      priority = 0;
+    }
+  ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

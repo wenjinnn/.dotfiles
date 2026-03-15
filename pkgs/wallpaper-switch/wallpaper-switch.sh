@@ -10,14 +10,5 @@ else
 fi
 echo "next wallpaper: $next"
 echo "current desktop environment: $XDG_CURRENT_DESKTOP"
-PIDS=($(pgrep swaybg)) ; nohup swaybg -i "$next" -m fill > /dev/null 2>&1 &
+dms ipc call wallpaper set "$next"
 ln -sf "$next" "${XDG_DATA_HOME:-$HOME/.local/share}/.wallpaper"
-echo "new swaybg process started with PID: $!"
-echo "old swaybg processes: $PIDS"
-(
-    sleep 1
-    for pid in "${PIDS[@]}"; do
-        kill $pid
-        echo "killed old swaybg process: $pid"
-    done
-) &
