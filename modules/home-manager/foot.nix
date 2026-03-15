@@ -1,11 +1,12 @@
-{ lib, ... }:
+{ lib, config, ... }:
 {
   # foot
   programs.foot = {
     enable = true;
-    server.enable = true;
     settings = {
       main = {
+        include = "${config.home.homeDirectory}/.config/foot/dank-colors.ini";
+        font = "monospace:size=11";
         selection-target = "both";
       };
       key-bindings = {

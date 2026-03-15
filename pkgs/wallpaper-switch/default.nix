@@ -2,7 +2,7 @@
   runCommand,
   lib,
   makeWrapper,
-  swaybg,
+  dms-shell,
   gawk,
   bash,
   coreutils-full,
@@ -22,7 +22,7 @@ runCommand "wallpaper-switch"
       wrapProgram $dest \
         --prefix PATH : ${
           lib.makeBinPath [
-            swaybg
+            dms-shell
             gawk
             findutils
             coreutils-full

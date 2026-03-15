@@ -61,6 +61,57 @@ in
     ".local/bin/init_outlook_oauth2_token".source = init_outlook_oauth2_token;
   };
 
+  accounts.calendar = {
+    basePath = "Calendars";
+    accounts = {
+      personal = {
+        primary = true;
+        primaryCollection = "Personal";
+        khal = {
+          enable = true;
+          addresses = [ outlook ];
+          type = "discover";
+        };
+        remote = {
+          type = "caldav";
+          url = "http://nextcloud.ts.wenjin.me";
+          userName = me.username;
+          passwordCommand = [
+            "sops"
+            "exec-env"
+            "${sops_secrets}"
+            "echo $NEXTCLOUD_USER_PASS"
+          ];
+        };
+        vdirsyncer = {
+          enable = true;
+          # tokenFile = outlook_oauth2_token_path;
+          # clientIdCommand = [
+          #   "sops"
+          #   "exec-env"
+          #   "${sops_secrets}"
+          #   "'echo -e $OUTLOOK_CLIENT_ID'"
+          # ];
+          collections = [
+            "from remote"
+            "from local"
+          ];
+          conflictResolution = "local wins";
+          metadata = [
+            "color"
+            "displayname"
+          ];
+        };
+      };
+    };
+  };
+  programs.khal.enable = true;
+  programs.vdirsyncer.enable = true;
+  services.vdirsyncer = {
+    enable = true;
+    # configFile =
+  };
+
   accounts.email.accounts = {
     ${outlook} = {
       realName = "${username}";

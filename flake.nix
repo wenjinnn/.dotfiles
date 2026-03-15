@@ -27,7 +27,6 @@
     # at the same time. Here's an working example:
     # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
-
     nixos-wsl = {
       url = "github:/nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -36,23 +35,19 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     winapps = {
       url = "github:winapps-org/winapps";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     # Home manager
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -69,8 +64,12 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    stylix = {
-      url = "github:nix-community/stylix";
+    dms = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    dms-plugin-registry = {
+      url = "github:AvengeMedia/dms-plugin-registry";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:nixos/nixos-hardware";
@@ -89,7 +88,6 @@
       nixos-hardware,
       nur,
       sops-nix,
-      stylix,
       nix-index-database,
       nixos-raspberrypi,
       disko,
@@ -145,7 +143,6 @@
             nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
             nur.modules.nixos.default
             sops-nix.nixosModules.sops
-            stylix.nixosModules.stylix
             nix-index-database.nixosModules.nix-index
             # for eGPU
             nixos-hardware.nixosModules.common-gpu-amd
@@ -158,7 +155,6 @@
             ./nixos/hosts/nixos-wsl
             nur.modules.nixos.default
             sops-nix.nixosModules.sops
-            stylix.nixosModules.stylix
             nix-index-database.nixosModules.nix-index
           ];
         };
@@ -251,7 +247,6 @@
             ./home-manager/home.nix
             ./home-manager/hosts/nixos.nix
             nur.modules.homeManager.default
-            stylix.homeModules.stylix
             nix-index-database.homeModules.nix-index
           ];
         };
@@ -262,7 +257,6 @@
             # > Our main home-manager configuration file <
             ./home-manager/home.nix
             nur.modules.homeManager.default
-            stylix.homeModules.stylix
             nix-index-database.homeModules.nix-index
           ];
         };
