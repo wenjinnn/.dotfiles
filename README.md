@@ -1,16 +1,15 @@
 # Personal NixOS configuration with Flake and Home Manager
 # Screenshot
 
-![Niri screenshot](https://github.com/user-attachments/assets/929da895-6548-42ea-abd4-5bc424f58b89)
+![Niri screenshot](https://github.com/user-attachments/assets/5813c5e1-784f-4299-8f45-c60013412b7b)
 
 The old Arch configuration at [Arch branch](https://github.com/wenjinnn/config/tree/arch).
 
-Recently I also replace my [ags](https://github.com/Aylur/ags) configuration with some standalone package (you can see detail on below), But I think the old ags configuration still valuable
-So you can visit it in [ags-v1](https://github.com/wenjinnn/.dotfiles/tree/ags-v1).
-
-I don't want to spend too much time on writing about my desktop environment components,
+~~I don't want to spend too much time on writing about my desktop environment components,
 I do most of my work in the command line and prioritize practicality,
-so I want to keep my compositor desktop minimalist.
+so I want to keep my compositor desktop minimalist.~~
+
+Forget about it. It's just because there's no a friendly and awesome shell before. Now we have dms noctalia-shell etc.
 
 # Why NixOS?
 
@@ -29,19 +28,9 @@ e.g. if you want to stay at stable nixpkgs branch but using unstable Hyprland, i
 
     you can try it and find more detail in my mono nvim configuration repo [wenvim](https://github.com/wenjinnn/wenvim), I'm using home-manager with `mkOutOfStoreSymlink` to symlink my nvim configurations directory, that's maybe not the nix way, but since I modify it very frequently and I store my custom snippets and spell file together with it, I don't want to compile it everytime I modified this, also I can easier to share my code with someone that not using NixOS.
 * Compositor: [niri](https://github.com/YaLTeR/niri)
-* Topbar: [waybar](https://github.com/Alexays/Waybar)
-* Notification daemon: [dunst](https://github.com/dunst-project/dunst)
-* Launcher: [rofi](https://github.com/davatorium/rofi) with some script to let it provide the ability to manage various system functions, some of them maintained by myself:
-    * [cliphist-rofi-img](https://github.com/sentriz/cliphist/blob/master/contrib/cliphist-rofi-img) for clipboard manage
-    * [rofi-power-menu](https://github.com/jluttine/rofi-power-menu)
-    * [rofi-systemd](https://github.com/colonelpanic8/rofi-systemd) for control systemd unit
-    * [bzmenu](https://github.com/e-tho/bzmenu)
-    * [rofi-pulse-select](https://gitlab.com/DamienCassou/rofi-pulse-select)
-    * [rofimoji](https://github.com/fdw/rofimoji) for emoji and unicode selection
-    * [networkmanager-dmenu](https://github.com/firecat53/networkmanager-dmenu)
+* Shell: [DankMaterialShell](https://github.com/AvengeMedia/DankMaterialShell), all using plugins can be found in [here](https://github.com/wenjinnn/.dotfiles/blob/main/modules/home-manager/de-basic.nix#L62-L86)
 * Terminal emulator: [foot](https://codeberg.org/dnkl/foot)
-* Wallpaper: [swaybg](https://github.com/swaywm/swaybg) and some small script, [wallpaper-switch](https://github.com/wenjinnn/.dotfiles/blob/main/pkgs/wallpaper-switch/wallpaper-switch.sh) , and [bingwallpaper-get](https://github.com/wenjinnn/.dotfiles/blob/none-ags/pkgs/wallpaper-switch/wallpaper-switch.sh) for download daily bingwallpaper and switch to it immediately.
-* Style manage: [stylix](https://github.com/danth/stylix) (that's awesome!)
+* Wallpaper: [DankPluginBingWallpaper](https://github.com/max72bra/DankPluginBingWallpaper)
 * Music player: [MPD](https://www.musicpd.org) and [ncmpcpp](https://github.com/ncmpcpp/ncmpcpp)
 * Mail client: [neomutt](https://neomutt.org/)
 
