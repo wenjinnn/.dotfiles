@@ -145,7 +145,7 @@
             hotkey-overlay.title = "Inhibit toggle: dms inhibit toggle";
             action = sh "dms ipc call inhibit toggle";
           };
-          "Mod+Ctrl+W" = {
+          "Mod+Shift+W" = {
             hotkey-overlay.title = "Browser wallpaper";
             action = sh "dms ipc call dankdash wallpaper";
           };
