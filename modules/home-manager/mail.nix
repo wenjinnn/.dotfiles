@@ -72,6 +72,10 @@ in
             enable = true;
             addresses = [ outlook ];
           };
+          khard = {
+            enable = true;
+            type = "discover";
+          };
           remote = {
             type = "carddav";
             url = "http://nextcloud.ts.wenjin.me/remote.php/dav/";
@@ -318,9 +322,9 @@ in
         # set Unread virtual-mailboxes
         virtual-mailboxes "Unread" "notmuch://?query=tag:unread"
 
-        # abook integration
-        set query_command = "abook --mutt-query '%s'"
-        macro index,pager B "<pipe-message> abook --add-email<enter>" "Add sender to ABook"
+        # khard integration
+        set query_command = "echo %s | xargs khard email --parsable --"
+        macro index,pager A "<pipe-message> khard add-email<enter>" "Add sender to Khard"
 
         # disable auto-view
         unauto_view "*"
@@ -369,7 +373,7 @@ in
         ];
       };
     };
-    abook.enable = true;
+    khard.enable = true;
     msmtp.enable = true;
     offlineimap = {
       enable = true;
