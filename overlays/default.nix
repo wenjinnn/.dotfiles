@@ -33,23 +33,6 @@
       dontUseUnittestCheck = true;
 
     });
-    python3Packages = prev.python3Packages.override {
-      overrides = self: super: {
-        feedparser = super.feedparser.overrideAttrs (oldAttrs: {
-          src = prev.pkgs.fetchFromGitHub {
-            owner = "kurtmckee";
-            repo = "feedparser";
-            rev = "74a0bf49bf640c1e09a7f71a17720a0635f12f53";
-            hash = "sha256-3hwZOAh/fb5mzRlwcoVk6bzdnnkOCcwEct1cMLlAX1A=";
-          };
-          propagatedBuildInputs = (oldAttrs.propagatedBuildInputs or [ ]) ++ [
-            super.poetry-core
-            super.requests
-          ];
-          installCheckPhase = null;
-        });
-      };
-    };
     pass = prev.pass.override {
       waylandSupport = true;
     };
