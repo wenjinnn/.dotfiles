@@ -31,7 +31,6 @@
         "samba"
         "sambashare"
         "aria2"
-        "i2c"
       ];
     };
   };
