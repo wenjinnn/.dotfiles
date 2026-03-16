@@ -1,5 +1,6 @@
 # NixOS module for basic nixos desktop environment services and programs
 {
+  inputs,
   pkgs,
   me,
   ...
@@ -41,7 +42,10 @@
   ];
   environment.pathsToLink = [ "share/thumbnailers" ];
 
-  programs.dsearch.enable = true;
+  programs.dms-shell = {
+    enable = true;
+    package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  };
   # tell Electron/Chromium to run on Wayland
   environment.variables.NIXOS_OZONE_WL = "1";
   # simple display manager daemon with tui
