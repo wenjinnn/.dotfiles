@@ -215,7 +215,7 @@
   "appPickerViewMode": "grid",
   "filePickerUsageHistory": {},
   "sortAppsAlphabetically": false,
-  "appLauncherGridColumns": 4,
+  "appLauncherGridColumns": 5,
   "spotlightCloseNiriOverview": true,
   "spotlightSectionViewModes": {},
   "appDrawerSectionViewModes": {},
@@ -465,10 +465,6 @@
         },
         {
           "enabled": true,
-          "id": "displayManager"
-        },
-        {
-          "enabled": true,
           "id": "idleInhibitor"
         },
         {
@@ -523,46 +519,51 @@
       "removeWidgetPadding": true,
       "rightWidgets": [
         {
-          "enabled": true,
-          "id": "colorPicker"
+          "id": "colorPicker",
+          "enabled": true
         },
         {
-          "enabled": true,
-          "id": "clipboard"
+          "id": "clipboard",
+          "enabled": true
         },
         {
+          "id": "cpuTemp",
           "enabled": true,
-          "id": "cpuUsage",
           "minimumWidth": true
         },
         {
+          "id": "cpuUsage",
           "enabled": true,
+          "minimumWidth": true
+        },
+        {
           "id": "memUsage",
-          "showInGb": false,
-          "showSwap": false
+          "enabled": true,
+          "showSwap": false,
+          "showInGb": false
         },
         {
-          "enabled": true,
-          "id": "network_speed_monitor"
+          "id": "network_speed_monitor",
+          "enabled": true
         },
         {
-          "enabled": true,
-          "id": "notificationButton"
+          "id": "notificationButton",
+          "enabled": true
         },
         {
-          "enabled": true,
-          "id": "battery"
+          "id": "battery",
+          "enabled": true
         },
         {
-          "enabled": true,
           "id": "controlCenterButton",
+          "enabled": true,
           "showAudioPercent": false,
-          "showBatteryIcon": false,
+          "showVpnIcon": true,
           "showBrightnessIcon": false,
           "showBrightnessPercent": false,
           "showMicIcon": false,
           "showMicPercent": true,
-          "showVpnIcon": true
+          "showBatteryIcon": false
         }
       ],
       "screenPreferences": [

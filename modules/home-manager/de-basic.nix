@@ -65,7 +65,6 @@
         dankPomodoroTimer.enable = true;
         dankLauncherKeys.enable = true;
         musicLyrics.enable = true;
-        displayManager.enable = true;
         dankAudioVisualizer.enable = true;
         dankClight.enable = true;
         dankActions.enable = true;
@@ -112,11 +111,9 @@
 
   home.packages = with pkgs; [
     kdePackages.qt6ct
-    ddcutil
     imagemagick
     slurp
     tesseract
-    dsearch
     pavucontrol
     swappy
     brightnessctl
