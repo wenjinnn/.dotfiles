@@ -1,9 +1,11 @@
 {
+  lib,
   pkgs,
   config,
   me,
   ...
-}: let
+}:
+let
   username = me.username;
   gmail = me.mail.gmail;
   outlook = me.mail.outlook;
@@ -61,199 +63,251 @@ in
     ".local/bin/init_outlook_oauth2_token".source = init_outlook_oauth2_token;
   };
 
-  accounts.calendar = {
-    basePath = "Calendars";
-    accounts = {
-      personal = {
-        primary = true;
-        primaryCollection = "Personal";
-        khal = {
-          enable = true;
-          addresses = [ outlook ];
-          type = "discover";
-        };
-        remote = {
-          type = "caldav";
-          url = "http://nextcloud.ts.wenjin.me";
-          userName = me.username;
-          passwordCommand = [
-            "sops"
-            "exec-env"
-            "${sops_secrets}"
-            "echo $NEXTCLOUD_USER_PASS"
-          ];
-        };
-        vdirsyncer = {
-          enable = true;
-          # tokenFile = outlook_oauth2_token_path;
-          # clientIdCommand = [
-          #   "sops"
-          #   "exec-env"
-          #   "${sops_secrets}"
-          #   "'echo -e $OUTLOOK_CLIENT_ID'"
-          # ];
-          collections = [
-            "from remote"
-            "from local"
-          ];
-          conflictResolution = "local wins";
-          metadata = [
-            "color"
-            "displayname"
-          ];
+  accounts = {
+    contact = {
+      basePath = "Contacts";
+      accounts = {
+        personal = {
+          khal = {
+            enable = true;
+            addresses = [ outlook ];
+          };
+          remote = {
+            type = "carddav";
+            url = "http://nextcloud.ts.wenjin.me/remote.php/dav/";
+            userName = me.username;
+            passwordCommand = [
+              "${lib.getExe pkgs.sops}"
+              "exec-env"
+              "${sops_secrets}"
+              "echo $NEXTCLOUD_USER_PASS"
+            ];
+          };
+          vdirsyncer = {
+            enable = true;
+            collections = [
+              "contacts"
+              "z-app-generated--contactsinteraction--recent"
+              "z-server-generated--system"
+            ];
+          };
         };
       };
     };
-  };
-  programs.khal.enable = true;
-  programs.vdirsyncer.enable = true;
-  services.vdirsyncer = {
-    enable = true;
-    # configFile =
-  };
+    calendar = {
+      basePath = "Calendars";
+      accounts = {
+        personal = {
+          primary = true;
+          primaryCollection = "Personal";
+          khal = {
+            enable = true;
+            addresses = [ outlook ];
+            type = "discover";
+          };
+          remote = {
+            type = "caldav";
+            url = "http://nextcloud.ts.wenjin.me/remote.php/dav/";
+            userName = me.username;
+            passwordCommand = [
+              "${lib.getExe pkgs.sops}"
+              "exec-env"
+              "${sops_secrets}"
+              "echo $NEXTCLOUD_USER_PASS"
+            ];
+          };
+          vdirsyncer = {
+            enable = true;
+            collections = [
+              "personal"
+              "contact_birthdays"
+            ];
+            # conflictResolution = "local wins";
+            metadata = [
+              "color"
+              "displayname"
+            ];
+          };
+        };
+        chinaholidays = {
+          khal = {
+            enable = true;
+            readOnly = true;
+          };
+          remote = {
+            type = "http";
+            url = "https://yangh9.github.io/ChinaCalendar/calendar.ics";
+          };
+          vdirsyncer = {
+            enable = true;
+            # collections = [
+            #   "personal"
+            #   "contact_birthdays"
+            # ];
+            # conflictResolution = "local wins";
+          };
+        };
+        lunar = {
+          khal = {
+            enable = true;
+            readOnly = true;
+          };
+          remote = {
+            type = "http";
+            url = "https://yangh9.github.io/ChinaCalendar/cal_lunar.ics";
+          };
+          vdirsyncer = {
+            enable = true;
+          };
+        };
+      };
+    };
 
-  accounts.email.accounts = {
-    ${outlook} = {
-      realName = "${username}";
-      userName = "${outlook}";
-      address = "${outlook}";
-      primary = true;
-      maildir.path = "${outlook}";
-      neomutt = {
-        enable = true;
-        mailboxName = "${outlook}";
-      };
-      notmuch.enable = true;
-      passwordCommand = "${outlook_oauth2_token}";
-      imapnotify = {
-        enable = true;
-        boxes = ["Inbox"];
-        onNotify = "${pkgs.offlineimap}/bin/offlineimap -a ${outlook}";
-        extraConfig = {
-          xoAuth2 = true;
+    email.accounts = {
+      ${outlook} = {
+        realName = "${username}";
+        userName = "${outlook}";
+        address = "${outlook}";
+        primary = true;
+        maildir.path = "${outlook}";
+        neomutt = {
+          enable = true;
+          mailboxName = "${outlook}";
         };
-      };
-      imap = {
-        host = "outlook.office365.com";
-        tls.enable = true;
-        port = 993;
-      };
-      smtp = {
-        host = "smtp-mail.outlook.com";
-        port = 587;
-        tls.enable = true;
-        tls.useStartTls = true;
-      };
-      offlineimap = {
-        enable = true;
-        postSyncHookCommand = "${mail_notify} ${outlook}";
-        extraConfig = {
-          remote = {
-            remotepasseval = false;
-            auth_mechanisms = "XOAUTH2";
-            oauth2_request_url = "https://login.microsoftonline.com/common/oauth2/v2.0/token";
-            oauth2_client_id_eval = ''get_output("sops exec-env ${sops_secrets} 'echo -e $OUTLOOK_CLIENT_ID'")'';
-            oauth2_client_secret = "";
-            oauth2_access_token_eval = ''get_output("${outlook_oauth2_token}")'';
+        notmuch.enable = true;
+        passwordCommand = "${outlook_oauth2_token}";
+        imapnotify = {
+          enable = true;
+          boxes = [ "Inbox" ];
+          onNotify = "${pkgs.offlineimap}/bin/offlineimap -a ${outlook}";
+          extraConfig = {
+            xoAuth2 = true;
+          };
+        };
+        imap = {
+          host = "outlook.office365.com";
+          tls.enable = true;
+          port = 993;
+        };
+        smtp = {
+          host = "smtp-mail.outlook.com";
+          port = 587;
+          tls.enable = true;
+          tls.useStartTls = true;
+        };
+        offlineimap = {
+          enable = true;
+          postSyncHookCommand = "${mail_notify} ${outlook}";
+          extraConfig = {
+            remote = {
+              remotepasseval = false;
+              auth_mechanisms = "XOAUTH2";
+              oauth2_request_url = "https://login.microsoftonline.com/common/oauth2/v2.0/token";
+              oauth2_client_id_eval = ''get_output("sops exec-env ${sops_secrets} 'echo -e $OUTLOOK_CLIENT_ID'")'';
+              oauth2_client_secret = "";
+              oauth2_access_token_eval = ''get_output("${outlook_oauth2_token}")'';
+            };
+          };
+        };
+        msmtp = {
+          enable = true;
+          extraConfig = {
+            auth = "xoauth2";
+            passwordeval = "${outlook_oauth2_token}";
           };
         };
       };
-      msmtp = {
-        enable = true;
-        extraConfig = {
-          auth = "xoauth2";
-          passwordeval = "${outlook_oauth2_token}";
+      ${gmail} = {
+        realName = "${username}";
+        userName = "${gmail}";
+        address = "${gmail}";
+        maildir.path = "${gmail}";
+        neomutt = {
+          enable = true;
+          mailboxName = "${gmail}";
         };
-      };
-    };
-    ${gmail} = {
-      realName = "${username}";
-      userName = "${gmail}";
-      address = "${gmail}";
-      maildir.path = "${gmail}";
-      neomutt = {
-        enable = true;
-        mailboxName = "${gmail}";
-      };
-      notmuch.enable = true;
-      passwordCommand = "${gmail_oauth2_token}";
-      imapnotify = {
-        enable = true;
-        boxes = ["Inbox"];
-        onNotify = "${pkgs.offlineimap}/bin/offlineimap -a ${gmail}";
-        extraConfig = {
-          xoAuth2 = true;
-        };
-      };
-      imap = {
-        host = "imap.gmail.com";
-        tls.enable = true;
-        port = 993;
-      };
-      smtp = {
-        host = "smtp.gmail.com";
-        port = 587;
-        tls.enable = true;
-        tls.useStartTls = true;
-      };
-      offlineimap = {
-        enable = true;
-        postSyncHookCommand = "${mail_notify} ${gmail}";
-        extraConfig = {
-          account = {
-            synclabels = "yes";
-          };
-          local = {
-            type = "GmailMaildir";
-            nametrans = ''
-              lambda foldername: re.sub ('Inbox', 'INBOX', foldername)
-            '';
-          };
-          remote = {
-            type = "Gmail";
-            remotepasseval = false;
-            auth_mechanisms = "XOAUTH2";
-            oauth2_request_url = "https://oauth2.googleapis.com/token";
-            oauth2_client_id_eval = ''get_output("sops exec-env ${sops_secrets} 'echo -e $GMAIL_CLIENT_ID'")'';
-            oauth2_client_secret_eval = ''get_output("sops exec-env ${sops_secrets} 'echo -e $GMAIL_CLIENT_SECRET'")'';
-            oauth2_access_token_eval = ''get_output("${gmail_oauth2_token}")'';
-            nametrans = ''
-              lambda foldername: re.sub ('INBOX', 'Inbox', foldername)
-            '';
-            folderfilter = ''lambda foldername: foldername not in ['[Gmail]/All Mail']'';
+        notmuch.enable = true;
+        passwordCommand = "${gmail_oauth2_token}";
+        imapnotify = {
+          enable = true;
+          boxes = [ "Inbox" ];
+          onNotify = "${pkgs.offlineimap}/bin/offlineimap -a ${gmail}";
+          extraConfig = {
+            xoAuth2 = true;
           };
         };
-      };
-      msmtp = {
-        enable = true;
-        extraConfig = {
-          auth = "xoauth2";
-          passwordeval = "${gmail_oauth2_token}";
+        imap = {
+          host = "imap.gmail.com";
+          tls.enable = true;
+          port = 993;
+        };
+        smtp = {
+          host = "smtp.gmail.com";
+          port = 587;
+          tls.enable = true;
+          tls.useStartTls = true;
+        };
+        offlineimap = {
+          enable = true;
+          postSyncHookCommand = "${mail_notify} ${gmail}";
+          extraConfig = {
+            account = {
+              synclabels = "yes";
+            };
+            local = {
+              type = "GmailMaildir";
+              nametrans = ''
+                lambda foldername: re.sub ('Inbox', 'INBOX', foldername)
+              '';
+            };
+            remote = {
+              type = "Gmail";
+              remotepasseval = false;
+              auth_mechanisms = "XOAUTH2";
+              oauth2_request_url = "https://oauth2.googleapis.com/token";
+              oauth2_client_id_eval = ''get_output("sops exec-env ${sops_secrets} 'echo -e $GMAIL_CLIENT_ID'")'';
+              oauth2_client_secret_eval = ''get_output("sops exec-env ${sops_secrets} 'echo -e $GMAIL_CLIENT_SECRET'")'';
+              oauth2_access_token_eval = ''get_output("${gmail_oauth2_token}")'';
+              nametrans = ''
+                lambda foldername: re.sub ('INBOX', 'Inbox', foldername)
+              '';
+              folderfilter = "lambda foldername: foldername not in ['[Gmail]/All Mail']";
+            };
+          };
+        };
+        msmtp = {
+          enable = true;
+          extraConfig = {
+            auth = "xoauth2";
+            passwordeval = "${gmail_oauth2_token}";
+          };
         };
       };
-    };
-    # local mail box for read rss source
-    ${username} = {
-      realName = "${username}";
-      userName = "${username}";
-      address = "${username}@nixos.com";
-      maildir.path = "${username}";
-      neomutt = {
-        enable = true;
-        mailboxName = "${username}";
-      };
-      notmuch.enable = true;
-      passwordCommand = "";
-      imap = {
-        host = "localhost";
-      };
-      smtp = {
-        host = "localhost";
+      # local mail box for read rss source
+      ${username} = {
+        realName = "${username}";
+        userName = "${username}";
+        address = "${username}@nixos.com";
+        maildir.path = "${username}";
+        neomutt = {
+          enable = true;
+          mailboxName = "${username}";
+        };
+        notmuch.enable = true;
+        passwordCommand = "";
+        imap = {
+          host = "localhost";
+        };
+        smtp = {
+          host = "localhost";
+        };
       };
     };
   };
 
   programs = {
+    khal.enable = true;
+    vdirsyncer.enable = true;
     neomutt = {
       enable = true;
       vimKeys = true;
@@ -310,8 +364,8 @@ in
       enable = true;
       new = {
         ignore = [
-          ''/.*[.](tmp|lock|bak)$/''
-          ''/Trash/''
+          "/.*[.](tmp|lock|bak)$/"
+          "/Trash/"
         ];
       };
     };
@@ -328,19 +382,21 @@ in
     };
   };
 
-  services.imapnotify = {
-    enable = true;
-    path = with pkgs; [
-      coreutils
-      python3
-      libnotify
-      offlineimap
-      gnupg
-      notmuch
-      sops
-    ];
+  services = {
+    vdirsyncer.enable = true;
+    imapnotify = {
+      enable = true;
+      path = with pkgs; [
+        coreutils
+        python3
+        libnotify
+        offlineimap
+        gnupg
+        notmuch
+        sops
+      ];
+    };
   };
-
   home.file = {
     ".mailcap".text = ''
       audio/*; xdg-open %s
