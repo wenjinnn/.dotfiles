@@ -103,7 +103,7 @@ in
       accounts = {
         personal = {
           primary = true;
-          primaryCollection = "Personal";
+          primaryCollection = "personal";
           khal = {
             enable = true;
             addresses = [ outlook ];
