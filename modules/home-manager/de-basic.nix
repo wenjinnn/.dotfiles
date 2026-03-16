@@ -73,6 +73,12 @@
         emojiLauncher.enable = true;
         audioInhibit.enable = true;
         easyEffects.enable = true;
+        webSearch = {
+          enable = true;
+          settings = {
+            defaultEngine = "duckduckgo";
+          };
+        };
         wallpaperBing = {
           enable = true;
           settings = {
