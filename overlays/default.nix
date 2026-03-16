@@ -31,18 +31,6 @@
       installCheckPhase = null;
       doCheck = false;
       dontUseUnittestCheck = true;
-
-    });
-    pass = prev.pass.override {
-      waylandSupport = true;
-    };
-    rofi-pass-wayland = prev.rofi-pass-wayland.overrideAttrs (old: {
-      src = prev.fetchFromGitHub {
-        owner = "wenjinnn";
-        repo = "rofi-pass";
-        rev = "3cf83dc03e0b3018ba1636cbbcbd6a194f4873e5";
-        hash = "sha256-Vt5aGhb79G7gLcVOJKaEodC4gnXiSzxc97imttdUcMU=";
-      };
     });
     vscode-java-debug = prev.vscode-utils.extensionFromVscodeMarketplace {
       name = "vscode-java-debug";
