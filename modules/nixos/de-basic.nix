@@ -35,10 +35,12 @@
     displayManager.dms-greeter.enable = true;
   };
   location.provider = "geoclue2";
-  environment.systemPackages = [
-    pkgs.nautilus
-    pkgs.libheif
-    pkgs.libheif.out
+  environment.systemPackages = with pkgs; [
+    nautilus
+    libheif
+    libheif.out
+    ddcutil
+    i2c-tools
   ];
   environment.pathsToLink = [ "share/thumbnailers" ];
 
