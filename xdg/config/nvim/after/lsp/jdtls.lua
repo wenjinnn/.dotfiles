@@ -156,11 +156,10 @@ return {
     map('v', '<leader>cV', function() jdtls.extract_constant(true) end, 'Jdt Extract Constant')
     map('v', '<leader>ce', function() jdtls.extract_method(true) end, 'Jdt Extract Method')
     -- setup dap
+    -- for all launch.json options see https://github.com/microsoft/vscode-java-debug#options
     require('jdtls.dap').setup_dap_main_class_configs({
       config_overrides = { vmArgs = vim.env.JDTLS_DAP_VMARGS or '-Xms128m -Xmx512m' },
     })
-    -- for all launch.json options see https://github.com/microsoft/vscode-java-debug#options
-    require('dap.ext.vscode').load_launchjs()
   end,
   init_options = {
     bundles = bundles,
