@@ -1,21 +1,24 @@
 local util = require('wenvim.util')
 local map = util.map
 local gh = util.gh
+local later = util.later
 
--- obsidian.nvim for note-taking
-vim.pack.add({ gh('obsidian-nvim/obsidian.nvim') })
--- setup obsidian.nvim only when NOTE env exists
-local note_path = vim.env.NOTE
-if note_path ~= nil then
-  require('obsidian').setup({
-    workspaces = {
-      { name = 'life', path = note_path .. '/life' },
-      { name = 'work', path = note_path .. '/work' },
-    },
-    legacy_commands = false,
-    statusline = {
-      enabled = false,
-    },
-  })
-  map('n', '<leader>o', '<cmd>Obsidian<cr>', 'Obsidian subcommand')
-end
+later(function()
+  -- obsidian.nvim for note-taking
+  vim.pack.add({ gh('obsidian-nvim/obsidian.nvim') })
+  -- setup obsidian.nvim only when NOTE env exists
+  local note_path = vim.env.NOTE
+  if note_path ~= nil then
+    require('obsidian').setup({
+      workspaces = {
+        { name = 'life', path = note_path .. '/life' },
+        { name = 'work', path = note_path .. '/work' },
+      },
+      legacy_commands = false,
+      statusline = {
+        enabled = false,
+      },
+    })
+    map('n', '<leader>o', '<cmd>Obsidian<cr>', 'Obsidian subcommand')
+  end
+end)

@@ -39,13 +39,9 @@ function M.on_attach(ev)
     })
   end
   -- inlay hint
-  if client:supports_method('textDocument/inlayHint', bufnr) then
-    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-  end
+  if client:supports_method('textDocument/inlayHint', bufnr) then vim.lsp.inlay_hint.enable(true, { bufnr = bufnr }) end
   -- code lens
-  if client:supports_method('textDocument/codeLens', bufnr) then
-    vim.lsp.codelens.enable(true, { bufnr = bufnr })
-  end
+  if client:supports_method('textDocument/codeLens', bufnr) then vim.lsp.codelens.enable(true, { bufnr = bufnr }) end
   -- inline completion, only work after neovim commit 58060c2340a52377a0e1d2b782ce1deef13b2b9b
   if client:supports_method('textDocument/inlineCompletion', bufnr) then
     vim.lsp.inline_completion.enable(true)
@@ -66,7 +62,6 @@ function M.on_attach(ev)
     vim.lsp.linked_editing_range.enable(true, { client_id = client.id })
   end
 end
-
 
 -- notice lsp when filename changed, modified from folke snacks.nvim
 function M.on_rename_file(from, to)
