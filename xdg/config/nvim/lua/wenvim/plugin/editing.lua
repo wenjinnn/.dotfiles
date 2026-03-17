@@ -268,11 +268,37 @@ later(function()
       end
     end,
   })
+  -- completion
+  require('mini.cmdline').setup()
+  require('mini.completion').setup()
 
+  local snippet_path = vim.fn.stdpath('config') .. '/snippets'
+  -- snippet support and preset
+  vim.pack.add({ gh('rafamadriz/friendly-snippets') })
+  local gen_loader = require('mini.snippets').gen_loader
+  require('mini.snippets').setup({
+    snippets = {
+      -- Load custom file with global snippets first
+      -- For variables in snippets json, see https://code.visualstudio.com/docs/editor/userdefinedsnippets
+      gen_loader.from_file(snippet_path .. '/global.json'),
+      -- Load snippets based on current language by reading files from
+      -- "snippets/" subdirectories from 'runtimepath' directories.
+      gen_loader.from_lang(),
+      -- Load project-local snippets with `gen_loader.from_file()`
+      -- and relative path (file doesn't have to be present)
+      gen_loader.from_file('.vscode/project.code-snippets'),
+      -- Custom loader for language-specific project-local snippets
+      function(context)
+        local rel_path = '.vscode/' .. context.lang .. '.code-snippets'
+        if vim.fn.filereadable(rel_path) == 0 then return end
+        return MiniSnippets.read_file(rel_path)
+      end,
+    },
+  })
   -- painless snippet editing and creation
   vim.pack.add({ gh('chrisgrieser/nvim-scissors') })
   require('scissors').setup({
-    snippetDir = snippets_path,
+    snippetDir = snippet_path,
     jsonFormatter = 'jq',
     backdrop = { enabled = false },
   })
@@ -289,34 +315,4 @@ later(function()
   map({ 'n', 'x' }, 'g<C-a>', function() require('dial.map').manipulate('increment', 'gnormal') end, 'Dial increment')
   map({ 'n', 'x' }, '<C-x>', function() require('dial.map').manipulate('decrement', 'normal') end, 'Dial decrement')
   map({ 'n', 'x' }, 'g<C-x>', function() require('dial.map').manipulate('decrement', 'gnormal') end, 'Dial decrement')
-end)
-
-on_event('InsertEnter', function()
-  -- completion and snippets
-  require('mini.cmdline').setup()
-  require('mini.completion').setup()
-
-  -- snippet support and preset
-  vim.pack.add({ gh('rafamadriz/friendly-snippets') })
-  local gen_loader = require('mini.snippets').gen_loader
-  local snippets_path = vim.fn.stdpath('config') .. '/snippets'
-  require('mini.snippets').setup({
-    snippets = {
-      -- Load custom file with global snippets first
-      -- For variables in snippets json, see https://code.visualstudio.com/docs/editor/userdefinedsnippets
-      gen_loader.from_file(snippets_path .. '/global.json'),
-      -- Load snippets based on current language by reading files from
-      -- "snippets/" subdirectories from 'runtimepath' directories.
-      gen_loader.from_lang(),
-      -- Load project-local snippets with `gen_loader.from_file()`
-      -- and relative path (file doesn't have to be present)
-      gen_loader.from_file('.vscode/project.code-snippets'),
-      -- Custom loader for language-specific project-local snippets
-      function(context)
-        local rel_path = '.vscode/' .. context.lang .. '.code-snippets'
-        if vim.fn.filereadable(rel_path) == 0 then return end
-        return MiniSnippets.read_file(rel_path)
-      end,
-    },
-  })
 end)
