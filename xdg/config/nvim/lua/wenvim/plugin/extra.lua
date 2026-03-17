@@ -3,43 +3,46 @@ if vim.g.vscode then return end
 local util = require('wenvim.util')
 local map = util.map
 local gh = util.gh
--- ascii draw in neovim
-vim.pack.add({ gh('jbyuki/venn.nvim') })
-map('v', '<leader>vv', ':VBox<cr>', 'Draw a single line box or arrow')
-map('v', '<leader>vd', ':VBoxD<cr>', 'Draw a double line box or arrow')
-map('v', '<leader>vh', ':VBoxH<cr>', 'Draw a heavy line box or arrow')
-map('v', '<leader>vo', ':VBoxO<cr>', 'Draw over a existing box or arrow')
-map('v', '<leader>vO', ':VBoxDO<cr>', 'Draw over a doulbe line on a existing box or arrow')
-map('v', '<leader>vH', ':VBoxHO<cr>', 'Draw over a heavy line on a existing box or arrow')
-map('v', '<leader>vf', ':VFill<cr>', 'Draw fill a area with a solid color')
+local later = util.later
+later(function()
+  -- ascii draw in neovim
+  vim.pack.add({ gh('jbyuki/venn.nvim') })
+  map('v', '<leader>vv', ':VBox<cr>', 'Draw a single line box or arrow')
+  map('v', '<leader>vd', ':VBoxD<cr>', 'Draw a double line box or arrow')
+  map('v', '<leader>vh', ':VBoxH<cr>', 'Draw a heavy line box or arrow')
+  map('v', '<leader>vo', ':VBoxO<cr>', 'Draw over a existing box or arrow')
+  map('v', '<leader>vO', ':VBoxDO<cr>', 'Draw over a doulbe line on a existing box or arrow')
+  map('v', '<leader>vH', ':VBoxHO<cr>', 'Draw over a heavy line on a existing box or arrow')
+  map('v', '<leader>vf', ':VFill<cr>', 'Draw fill a area with a solid color')
 
--- curl client in neovim
-vim.pack.add({ gh('oysandvik94/curl.nvim') })
-local curl = require('curl')
-curl.setup()
-map('n', '<leader>Cc', curl.open_curl_tab, 'Open a curl tab scoped to current CWD')
-map('n', '<leader>Co', curl.open_global_tab, 'Open a curl tab with global scope')
-map('n', '<leader>Ca', curl.create_scoped_collection, 'Create or open a collection scoped to current CWD')
-map('n', '<leader>CA', curl.create_global_collection, 'Create or open a collection with global scope')
-map('n', '<leader>CC', curl.pick_scoped_collection, 'Pick a scoped collection')
-map('n', '<leader>CO', curl.pick_global_collection, 'Pick a global collection')
+  -- curl client in neovim
+  vim.pack.add({ gh('oysandvik94/curl.nvim') })
+  local curl = require('curl')
+  curl.setup()
+  map('n', '<leader>Cc', curl.open_curl_tab, 'Open a curl tab scoped to current CWD')
+  map('n', '<leader>Co', curl.open_global_tab, 'Open a curl tab with global scope')
+  map('n', '<leader>Ca', curl.create_scoped_collection, 'Create or open a collection scoped to current CWD')
+  map('n', '<leader>CA', curl.create_global_collection, 'Create or open a collection with global scope')
+  map('n', '<leader>CC', curl.pick_scoped_collection, 'Pick a scoped collection')
+  map('n', '<leader>CO', curl.pick_global_collection, 'Pick a global collection')
 
--- markdown, html, asciidoc, svg preview in browser
-vim.pack.add({ gh('barrettruth/preview.nvim') })
-vim.g.preview = {
-  markdown = {
-    extra_args = { '-F', 'mermaid-filter' },
-    output = function(ctx) return '/tmp/' .. vim.fn.fnamemodify(ctx.file, ':t:r') .. '.html' end,
-  },
-}
+  -- markdown, html, asciidoc, svg preview in browser
+  vim.pack.add({ gh('barrettruth/preview.nvim') })
+  vim.g.preview = {
+    markdown = {
+      extra_args = { '-F', 'mermaid-filter' },
+      output = function(ctx) return '/tmp/' .. vim.fn.fnamemodify(ctx.file, ':t:r') .. '.html' end,
+    },
+  }
 
--- db manage
-vim.pack.add({ gh('tpope/vim-dadbod'), gh('kristijanhusak/vim-dadbod-completion') })
-vim.api.nvim_create_autocmd('FileType', {
-  group = require('wenvim.util').augroup('dadbod'),
-  pattern = 'sql',
-  callback = function(ev)
-    vim.bo[ev.buf].omnifunc = 'vim_dadbod_completion#omni'
-    map({ 'n', 'x' }, '<CR>', 'db#op_exec()', { expr = true, desc = 'DB exec current query' })
-  end,
-})
+  -- db manage
+  vim.pack.add({ gh('tpope/vim-dadbod'), gh('kristijanhusak/vim-dadbod-completion') })
+  vim.api.nvim_create_autocmd('FileType', {
+    group = require('wenvim.util').augroup('dadbod'),
+    pattern = 'sql',
+    callback = function(ev)
+      vim.bo[ev.buf].omnifunc = 'vim_dadbod_completion#omni'
+      map({ 'n', 'x' }, '<CR>', 'db#op_exec()', { expr = true, desc = 'DB exec current query' })
+    end,
+  })
+end)

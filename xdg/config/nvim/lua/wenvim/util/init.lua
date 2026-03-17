@@ -3,6 +3,9 @@ M.opts = { noremap = true, silent = true }
 
 function M.gh(x) return 'https://github.com/' .. x end
 function M.cb(x) return 'https://codeberg.org/' .. x end
+
+function M.later(f) require('mini.misc').safely('later', f) end
+function M.on_event(ev, f) require('mini.misc').safely('event:' .. ev, f) end
 function M.make_opts(opts)
   if type(opts) == 'string' then
     -- in most case we just want add some description
