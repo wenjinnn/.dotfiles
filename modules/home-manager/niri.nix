@@ -82,9 +82,9 @@
         {
           "Mod+Return" = {
             hotkey-overlay = {
-              title = "Open a Terminal: foot";
+              title = "Open a Terminal: ghostty";
             };
-            action = spawn "foot";
+            action = spawn "ghostty";
           };
           "Mod+Shift+Slash".action = show-hotkey-overlay;
           "Mod+D" = {

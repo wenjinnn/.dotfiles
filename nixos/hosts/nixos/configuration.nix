@@ -19,7 +19,7 @@
     waydroid
     bluetooth
     steam
-    niri
+    de
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
@@ -74,7 +74,7 @@
     enable = true;
     settings = {
       default = [
-        "org.codeberg.dnkl.footclient.desktop"
+        "com.mitchellh.ghostty.desktop"
       ];
     };
   };
@@ -84,7 +84,6 @@
   boot.binfmt.emulatedSystems = [
     "aarch64-linux"
   ];
-  systemd.user.services.foot.stopIfChanged = false;
 
   networking.hostName = "nixos";
 }

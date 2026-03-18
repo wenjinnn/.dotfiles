@@ -18,7 +18,7 @@
     # nautilus right-click "open in terminal"
     nautilus-open-any-terminal = {
       enable = true;
-      terminal = "foot";
+      terminal = "ghostty";
     };
   };
 
@@ -37,6 +37,7 @@
     geoclue2.enable = true;
     # accounts-daemon for those programs who base on login user account info, e.g. gtklock
     accounts-daemon.enable = true;
+    clight.enable = true;
     displayManager.dms-greeter = {
       enable = true;
       configHome = config.users.users.${me.username}.home;

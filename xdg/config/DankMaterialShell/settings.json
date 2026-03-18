@@ -503,8 +503,8 @@
           "id": "easyEffects"
         },
         {
-          "id": "dankPomodoroTimer",
-          "enabled": true
+          "enabled": true,
+          "id": "dankPomodoroTimer"
         }
       ],
       "maximizeDetection": true,
@@ -620,8 +620,13 @@
       "removeWidgetPadding": false,
       "rightWidgets": [
         {
+          "id": "musicLyrics",
+          "enabled": true
+        },
+        {
+          "id": "spacer",
           "enabled": true,
-          "id": "musicLyrics"
+          "size": 10
         }
       ],
       "screenPreferences": [
@@ -723,7 +728,8 @@
   "desktopWidgetPositions": {},
   "desktopWidgetGridSettings": {
     "HDMI-A-1": {
-      "enabled": true
+      "enabled": true,
+      "size": 30
     },
     "eDP-1": {
       "enabled": true,
@@ -806,10 +812,10 @@
       "name": "Dank Audio Visualizer",
       "positions": {
         "HDMI-A-1": {
-          "height": 1000,
-          "width": 1800,
-          "x": 80,
-          "y": 40
+          "height": 1020,
+          "width": 1770,
+          "x": 60,
+          "y": 30
         },
         "eDP-1": {
           "height": 870,
