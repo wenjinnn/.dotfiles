@@ -28,7 +28,7 @@ e.g. if you want to stay at stable nixpkgs branch but using unstable Hyprland, i
 
     you can try it and find more detail in my mono nvim configuration repo [wenvim](https://github.com/wenjinnn/wenvim), I'm using home-manager with `mkOutOfStoreSymlink` to symlink my nvim configurations directory, that's maybe not the nix way, but since I modify it very frequently and I store my custom snippets and spell file together with it, I don't want to compile it everytime I modified this, also I can easier to share my code with someone that not using NixOS.
 * Compositor: [niri](https://github.com/YaLTeR/niri)
-* Shell: [DankMaterialShell](https://github.com/AvengeMedia/DankMaterialShell), all using plugins can be found in [here](https://github.com/wenjinnn/.dotfiles/blob/main/modules/home-manager/de-basic.nix#L62-L86)
+* Shell: [DankMaterialShell](https://github.com/AvengeMedia/DankMaterialShell), all using plugins can be found in [here](https://github.com/wenjinnn/.dotfiles/blob/main/modules/home-manager/de.nix#L62-L86)
 * Terminal emulator: [foot](https://codeberg.org/dnkl/foot)
 * Wallpaper: [DankPluginBingWallpaper](https://github.com/max72bra/DankPluginBingWallpaper)
 * Music player: [MPD](https://www.musicpd.org) and [ncmpcpp](https://github.com/ncmpcpp/ncmpcpp)

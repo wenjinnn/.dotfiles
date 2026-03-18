@@ -1,12 +1,17 @@
 # NixOS module for basic nixos desktop environment services and programs
 {
   inputs,
+  outputs,
+  config,
   pkgs,
   me,
   ...
 }:
 {
 
+  imports = with outputs.nixosModules; [
+    niri
+  ];
   programs = {
     # for camera support in file managers
     gphoto2.enable = true;
@@ -32,7 +37,10 @@
     geoclue2.enable = true;
     # accounts-daemon for those programs who base on login user account info, e.g. gtklock
     accounts-daemon.enable = true;
-    displayManager.dms-greeter.enable = true;
+    displayManager.dms-greeter = {
+      enable = true;
+      configHome = config.users.users.${me.username}.home;
+    };
   };
   location.provider = "geoclue2";
   environment.systemPackages = with pkgs; [

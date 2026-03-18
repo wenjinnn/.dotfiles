@@ -1,6 +1,7 @@
 # This module provides basic home manager desktop environment services and applications
 {
   inputs,
+  outputs,
   pkgs,
   lib,
   mainMonitor,
@@ -13,6 +14,8 @@
     inputs.dms.homeModules.niri
     inputs.dms.homeModules.dank-material-shell
     inputs.dms-plugin-registry.modules.default
+    inputs.danksearch.homeModules.default
+    outputs.homeManagerModules.niri
   ];
 
   services = {
@@ -34,7 +37,7 @@
         filesToInclude = [
           # Files under `$XDG_CONFIG_HOME/niri/dms` to be included into the new config
           "alttab" # Please note that niri will throw an error if any of these files are missing.
-          "binds"
+          # "binds"
           "colors"
           "layout"
           "outputs"
@@ -87,6 +90,39 @@
             deleteOld = false;
           };
         };
+      };
+    };
+    dsearch = {
+      enable = true;
+
+      # Custom configuration (TOML format)
+      config = {
+        # Server configuration
+        listen_addr = ":43654";
+
+        # Index settings
+        index_path = "${config.home.homeDirectory}/.cache/danksearch/index";
+        max_file_bytes = 2097152; # 2MB
+        worker_count = 4;
+        index_all_files = true;
+
+        # Auto-reindex settings
+        auto_reindex = false;
+        reindex_interval_hours = 24;
+
+        # Index paths configuration
+        index_paths = [
+          {
+            path = "${config.home.homeDirectory}";
+            max_depth = 0;
+            exclude_hidden = true;
+          }
+          {
+            path = "${config.home.homeDirectory}/Rclone";
+            max_depth = 5;
+            watch = false;
+          }
+        ];
       };
     };
     # vim like image viewer

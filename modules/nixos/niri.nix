@@ -8,7 +8,6 @@
 {
   imports = [
     inputs.niri.nixosModules.niri
-    outputs.nixosModules.de-basic
   ];
   programs.niri.enable = true;
 
