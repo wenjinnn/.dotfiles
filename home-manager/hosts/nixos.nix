@@ -12,7 +12,7 @@
     de
     fcitx5
     mpv
-    foot
+    ghostty
     aria2
     theme
   ];

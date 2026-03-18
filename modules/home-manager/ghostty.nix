@@ -1,12 +1,12 @@
 {
   programs.ghostty = {
     enable = true;
+    systemd.enable = true;
+    enableBashIntegration = true;
     settings = {
-      fontSize = 14;
-      fontFamily = "JetBrains Mono";
-      cursorShape = "Beam";
-      cursorBlink = true;
-      scrollbackLines = 10000;
+      theme = "dankcolors";
+      font-size = 11;
+      font-family = "monospace";
     };
   };
 }
