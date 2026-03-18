@@ -200,6 +200,7 @@ in
     SOPS_SECRETS = "${dotfiles_path}/secrets.yaml";
     # setup terminal sounds player
     PLAYER = "ffplay -nodisp -autoexit -loglevel quiet";
+    TERMINAL = lib.getExe pkgs.foot;
     # sudo askpass program
     SUDO_ASKPASS = "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
   };

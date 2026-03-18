@@ -444,10 +444,6 @@
         },
         {
           "enabled": true,
-          "id": "dankPomodoroTimer"
-        },
-        {
-          "enabled": true,
           "id": "music"
         },
         {
@@ -505,6 +501,10 @@
         {
           "enabled": true,
           "id": "easyEffects"
+        },
+        {
+          "id": "dankPomodoroTimer",
+          "enabled": true
         }
       ],
       "maximizeDetection": true,
@@ -519,51 +519,51 @@
       "removeWidgetPadding": true,
       "rightWidgets": [
         {
-          "id": "colorPicker",
-          "enabled": true
+          "enabled": true,
+          "id": "colorPicker"
         },
         {
-          "id": "clipboard",
-          "enabled": true
+          "enabled": true,
+          "id": "clipboard"
         },
         {
+          "enabled": true,
           "id": "cpuTemp",
-          "enabled": true,
           "minimumWidth": true
         },
         {
+          "enabled": true,
           "id": "cpuUsage",
-          "enabled": true,
           "minimumWidth": true
         },
         {
+          "enabled": true,
           "id": "memUsage",
+          "showInGb": false,
+          "showSwap": false
+        },
+        {
           "enabled": true,
-          "showSwap": false,
-          "showInGb": false
+          "id": "network_speed_monitor"
         },
         {
-          "id": "network_speed_monitor",
-          "enabled": true
+          "enabled": true,
+          "id": "notificationButton"
         },
         {
-          "id": "notificationButton",
-          "enabled": true
+          "enabled": true,
+          "id": "battery"
         },
         {
-          "id": "battery",
-          "enabled": true
-        },
-        {
+          "enabled": true,
           "id": "controlCenterButton",
-          "enabled": true,
           "showAudioPercent": false,
-          "showVpnIcon": true,
+          "showBatteryIcon": false,
           "showBrightnessIcon": false,
           "showBrightnessPercent": false,
           "showMicIcon": false,
           "showMicPercent": true,
-          "showBatteryIcon": false
+          "showVpnIcon": true
         }
       ],
       "screenPreferences": [
@@ -646,11 +646,11 @@
       "transparency": 0,
       "visible": true,
       "widgetOutlineColor": "surfaceText",
-      "widgetOutlineEnabled": true,
+      "widgetOutlineEnabled": false,
       "widgetOutlineOpacity": 1,
       "widgetOutlineThickness": 1,
       "widgetPadding": 8,
-      "widgetTransparency": 1
+      "widgetTransparency": 0.5
     }
   ],
   "desktopClockEnabled": false,

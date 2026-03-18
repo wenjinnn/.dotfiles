@@ -9,8 +9,7 @@
   imports = with outputs.homeManagerModules; [
     # If you want to use modules your own flake exports (from modules/home-manager):
     # outputs.homeManagerModules.example
-    de-basic
-    niri
+    de
     fcitx5
     mpv
     foot

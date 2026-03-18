@@ -35,7 +35,7 @@
   niri = import ./niri.nix;
   kdeconnect = import ./kdeconnect.nix;
   udiskie = import ./udiskie.nix;
-  de-basic = import ./de-basic.nix;
+  de = import ./de.nix;
   llm = import ./llm.nix;
   ghostty = import ./ghostty.nix;
 }
