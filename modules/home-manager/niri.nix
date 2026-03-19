@@ -86,7 +86,7 @@
             };
             action = spawn "ghostty";
           };
-          "Mod+Ctrl+Slash" = {
+          "Mod+Slash" = {
             hotkey-overlay = {
               title = "Open keybind cheatsheets";
             };
