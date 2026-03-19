@@ -37,7 +37,7 @@
         filesToInclude = [
           # Files under `$XDG_CONFIG_HOME/niri/dms` to be included into the new config
           "alttab" # Please note that niri will throw an error if any of these files are missing.
-          # "binds"
+          "binds"
           "colors"
           "layout"
           "outputs"
@@ -68,7 +68,6 @@
         dankPomodoroTimer.enable = true;
         dankLauncherKeys.enable = true;
         musicLyrics.enable = true;
-        dankAudioVisualizer.enable = true;
         dankClight.enable = true;
         dankActions.enable = true;
         dankHooks.enable = true;
@@ -110,13 +109,22 @@
         auto_reindex = false;
         reindex_interval_hours = 24;
 
+        index = {
+          paths = [
+            "${config.home.homeDirectory}/Desktop"
+            "${config.home.homeDirectory}/Documents"
+            "${config.home.homeDirectory}/Downloads"
+            "${config.home.homeDirectory}/Music"
+            "${config.home.homeDirectory}/Pictures"
+            "${config.home.homeDirectory}/Public"
+            "${config.home.homeDirectory}/Videos"
+            "${config.home.homeDirectory}/Templates"
+          ];
+          max_depth = 5;
+          exclude_hidden = true;
+        };
         # Index paths configuration
         index_paths = [
-          {
-            path = "${config.home.homeDirectory}";
-            max_depth = 0;
-            exclude_hidden = true;
-          }
           {
             path = "${config.home.homeDirectory}/Rclone";
             max_depth = 5;
