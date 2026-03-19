@@ -24,27 +24,10 @@
       titlebar-font = "Sans Bold 11";
     };
   };
-  qt =
-    let
-      qtctSettings = {
-        Appearance = {
-          color_scheme_path = "${config.home.homeDirectory}/.config/qt5ct/colors/matugen.conf";
-          style = "Fusion";
-          icon_theme = "MoreWaita";
-          standard_dialogs = "xdgdesktopportal";
-        };
-        Fonts = {
-          fixed = "\"Sans,12\"";
-          general = "\"Sans,12\"";
-        };
-      };
-    in
-    {
-      enable = true;
-      qt5ctSettings = qtctSettings;
-      qt6ctSettings = qtctSettings;
-      platformTheme.name = "gtk3";
-    };
+  qt = {
+    enable = true;
+    platformTheme.name = "qt6ct";
+  };
   home.packages = with pkgs; [
     adwaita-icon-theme
     hicolor-icon-theme

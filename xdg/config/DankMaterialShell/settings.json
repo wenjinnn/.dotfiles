@@ -620,12 +620,12 @@
       "removeWidgetPadding": false,
       "rightWidgets": [
         {
-          "id": "musicLyrics",
-          "enabled": true
+          "enabled": true,
+          "id": "musicLyrics"
         },
         {
-          "id": "spacer",
           "enabled": true,
+          "id": "spacer",
           "size": 10
         }
       ],
@@ -800,31 +800,6 @@
         }
       },
       "widgetType": "desktopClock"
-    },
-    {
-      "config": {
-        "displayPreferences": [
-          "all"
-        ]
-      },
-      "enabled": true,
-      "id": "dw_1773581107856_bh4jzh1ud",
-      "name": "Dank Audio Visualizer",
-      "positions": {
-        "HDMI-A-1": {
-          "height": 1020,
-          "width": 1770,
-          "x": 60,
-          "y": 30
-        },
-        "eDP-1": {
-          "height": 870,
-          "width": 1410,
-          "x": 60,
-          "y": 30
-        }
-      },
-      "widgetType": "dankAudioVisualizer"
     }
   ],
   "desktopWidgetGroups": [],
