@@ -407,6 +407,15 @@
           open-floating = true;
         }
         {
+          matches = [
+            {
+              app-id = "Unlock Database - KeePassXC";
+              title = "org.keepassxc.KeePassXC";
+            }
+          ];
+          open-floating = true;
+        }
+        {
           matches = [ { app-id = "^xwaylandvideobridge$"; } ];
           open-floating = true;
           focus-ring.enable = false;
