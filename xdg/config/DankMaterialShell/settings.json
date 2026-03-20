@@ -439,33 +439,37 @@
       "bottomGap": 0,
       "centerWidgets": [
         {
-          "enabled": true,
-          "id": "privacyIndicator"
+          "id": "dankPomodoroTimer",
+          "enabled": true
         },
         {
-          "enabled": true,
-          "id": "music"
+          "id": "privacyIndicator",
+          "enabled": true
         },
         {
-          "clockCompactMode": false,
-          "enabled": true,
-          "id": "clock"
+          "id": "music",
+          "enabled": true
         },
         {
+          "id": "clock",
           "enabled": true,
-          "id": "weather"
+          "clockCompactMode": false
         },
         {
-          "enabled": true,
-          "id": "dankClight"
+          "id": "weather",
+          "enabled": true
         },
         {
-          "enabled": true,
-          "id": "idleInhibitor"
+          "id": "dankClight",
+          "enabled": true
         },
         {
-          "enabled": true,
-          "id": "wallpaperBing"
+          "id": "idleInhibitor",
+          "enabled": true
+        },
+        {
+          "id": "wallpaperBing",
+          "enabled": true
         }
       ],
       "clickThrough": false,
@@ -501,10 +505,6 @@
         {
           "enabled": true,
           "id": "easyEffects"
-        },
-        {
-          "enabled": true,
-          "id": "dankPomodoroTimer"
         }
       ],
       "maximizeDetection": true,
