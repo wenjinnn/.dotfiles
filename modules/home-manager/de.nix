@@ -152,6 +152,7 @@
         };
       };
       nativeMessagingHosts = with pkgs; [
+        ff2mpv
         pywalfox-native
         # Tridactyl native connector
         tridactyl-native
@@ -160,6 +161,8 @@
   };
 
   home.packages = with pkgs; [
+    ff2mpv
+    yt-dlp
     kdePackages.qt6ct
     libsForQt5.qt5ct
     imagemagick
