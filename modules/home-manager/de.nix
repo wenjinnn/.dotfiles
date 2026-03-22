@@ -175,6 +175,7 @@
     file-roller
     baobab
     nautilus
+    spotify
     nautilus-python
     gnome-calculator
     gnome-clocks
