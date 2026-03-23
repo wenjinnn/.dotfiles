@@ -203,46 +203,45 @@ end)
 -- we don't need below plugins in vscode
 if vim.g.vscode then return end
 
--- customize mini.sessions setup
-local function pre_read()
-  -- When MiniMiscAutoRoot au is setup, and session window buffers has different root
-  -- restoring a session may cause a empty buffer.
-  vim.api.nvim_del_augroup_by_name('MiniMiscAutoRoot')
-end
-local function post_read()
-  MiniMisc.setup_auto_root()
-  require('wenvim.util').delete_dap_terminals()
-end
-
-require('mini.sessions').setup({
-  -- Whether to force possibly harmful actions (meaning depends on function)
-  force = { read = false, write = true, delete = true },
-  hooks = {
-    -- Before successful action
-    pre = { read = pre_read, write = nil, delete = nil },
-    -- After successful action
-    post = { read = post_read, write = nil, delete = nil },
-  },
-})
-local session_name = function()
-  local cwd = vim.fn.getcwd()
-  local parent_path = vim.fn.fnamemodify(cwd, ':h')
-  local current_tail_path = vim.fn.fnamemodify(cwd, ':t')
-  local git_data = MiniGit.get_buf_data(0)
-  local git_branch = git_data and git_data.head_name .. '@' or ''
-  return string.format('%s@%s%s', current_tail_path, git_branch, parent_path:gsub('/', '_'))
-end
-local function session_write() require('mini.sessions').write(session_name()) end
-local function session_write_custom() MiniSessions.write(vim.fn.input('Session name: ')) end
-local function session_delete() require('mini.sessions').delete(session_name()) end
-local function session_delete_custom() MiniSessions.delete(vim.fn.input('Session name: ')) end
-map('n', '<leader>sw', session_write, 'Session write')
-map('n', '<leader>sW', session_write_custom, 'Session write custom')
-map('n', '<leader>sd', session_delete, 'Session delete')
-map('n', '<leader>sD', session_delete_custom, 'Session delete custom')
-map('n', '<leader>ss', MiniSessions.select, 'Session select')
-
 later(function()
+  -- customize mini.sessions setup
+  local function pre_read()
+    -- When MiniMiscAutoRoot au is setup, and session window buffers has different root
+    -- restoring a session may cause a empty buffer.
+    vim.api.nvim_del_augroup_by_name('MiniMiscAutoRoot')
+  end
+  local function post_read()
+    MiniMisc.setup_auto_root()
+    require('wenvim.util').delete_dap_terminals()
+  end
+
+  require('mini.sessions').setup({
+    -- Whether to force possibly harmful actions (meaning depends on function)
+    force = { read = false, write = true, delete = true },
+    hooks = {
+      -- Before successful action
+      pre = { read = pre_read, write = nil, delete = nil },
+      -- After successful action
+      post = { read = post_read, write = nil, delete = nil },
+    },
+  })
+  local session_name = function()
+    local cwd = vim.fn.getcwd()
+    local parent_path = vim.fn.fnamemodify(cwd, ':h')
+    local current_tail_path = vim.fn.fnamemodify(cwd, ':t')
+    local git_data = MiniGit.get_buf_data(0)
+    local git_branch = git_data and git_data.head_name .. '@' or ''
+    return string.format('%s@%s%s', current_tail_path, git_branch, parent_path:gsub('/', '_'))
+  end
+  local function session_write() require('mini.sessions').write(session_name()) end
+  local function session_write_custom() MiniSessions.write(vim.fn.input('Session name: ')) end
+  local function session_delete() require('mini.sessions').delete(session_name()) end
+  local function session_delete_custom() MiniSessions.delete(vim.fn.input('Session name: ')) end
+  map('n', '<leader>sw', session_write, 'Session write')
+  map('n', '<leader>sW', session_write_custom, 'Session write custom')
+  map('n', '<leader>sd', session_delete, 'Session delete')
+  map('n', '<leader>sD', session_delete_custom, 'Session delete custom')
+  map('n', '<leader>ss', MiniSessions.select, 'Session select')
   require('mini.bufremove').setup()
   map('n', '<leader>x', '<cmd>lua MiniBufremove.delete()<CR>', 'Buf delete')
 
