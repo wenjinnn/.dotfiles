@@ -73,7 +73,6 @@
         dankHooks.enable = true;
         dankStickerSearch.enable = true;
         emojiLauncher.enable = true;
-        audioInhibit.enable = true;
         easyEffects.enable = true;
         webSearch = {
           enable = true;
