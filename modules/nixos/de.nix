@@ -40,21 +40,25 @@
     clight = {
       enable = true;
       settings = {
-        inhibit_pm = false;
-        inhibit_bl = true;
-        ac_regression_points = [
-          0.0
-          0.20
-          0.34
-          0.50
-          0.66
-          0.79
-          0.86
-          0.93
-          0.95
-          0.97
-          1.0
-        ];
+        inhibit = {
+          # clight inhibit didn't work well will firefox when playing fullscreen video
+          disabled = true;
+        };
+        sensor = {
+          ac_regression_points = [
+            0.0
+            0.20
+            0.34
+            0.50
+            0.66
+            0.79
+            0.86
+            0.93
+            0.95
+            0.97
+            1.0
+          ];
+        };
       };
     };
     displayManager.dms-greeter = {
@@ -79,6 +83,5 @@
   # tell Electron/Chromium to run on Wayland
   environment.variables.NIXOS_OZONE_WL = "1";
   # simple display manager daemon with tui
-
 
 }
