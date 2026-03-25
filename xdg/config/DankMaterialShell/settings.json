@@ -495,28 +495,36 @@
       "innerPadding": 4,
       "leftWidgets": [
         {
-          "enabled": true,
-          "id": "launcherButton"
+          "id": "launcherButton",
+          "enabled": true
         },
         {
-          "enabled": true,
-          "id": "workspaceSwitcher"
+          "id": "workspaceSwitcher",
+          "enabled": true
         },
         {
-          "enabled": true,
-          "id": "focusedWindow"
+          "id": "focusedWindow",
+          "enabled": true
         },
         {
           "id": "systemTray",
           "enabled": true
         },
         {
-          "enabled": true,
-          "id": "dankKDEConnect"
+          "id": "dankKDEConnect",
+          "enabled": true
         },
         {
-          "enabled": true,
-          "id": "easyEffects"
+          "id": "clipboard",
+          "enabled": true
+        },
+        {
+          "id": "colorPicker",
+          "enabled": true
+        },
+        {
+          "id": "easyEffects",
+          "enabled": true
         }
       ],
       "maximizeDetection": true,
@@ -530,14 +538,6 @@
       "position": 2,
       "removeWidgetPadding": true,
       "rightWidgets": [
-        {
-          "enabled": true,
-          "id": "colorPicker"
-        },
-        {
-          "enabled": true,
-          "id": "clipboard"
-        },
         {
           "enabled": true,
           "id": "cpuTemp",
