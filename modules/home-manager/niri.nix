@@ -115,16 +115,17 @@
 
           "XF86AudioRaiseVolume" = {
             allow-when-locked = true;
-            action = sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+";
+            action = sh "dms ipc call audio increment 5";
           };
           "XF86AudioLowerVolume" = {
             allow-when-locked = true;
-            action = sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-";
+            action = sh "dms ipc call audio decrement 5";
           };
           "XF86AudioMute" = {
             allow-when-locked = true;
-            action = sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+            action = sh "dms ipc call audio mute";
           };
+          "Mod+A".action = sh "dms ipc call audio cycleoutput";
 
           "Mod+Tab" = {
             repeat = false;
@@ -132,16 +133,16 @@
           };
 
           "Mod+Ctrl+P" = {
-            hotkey-overlay.title = "Pause player: playerctl play-pause";
-            action = sh "playerctl play-pause";
+            hotkey-overlay.title = "Pause player: dms mpris playPause";
+            action = sh "dms ipc call mpris playPause";
           };
           "Mod+Shift+P" = {
-            hotkey-overlay.title = "Previous player: playerctl previous";
-            action = sh "playerctl previous";
+            hotkey-overlay.title = "Previous player: dms mpris previous";
+            action = sh "dms ipc call mpris previous";
           };
           "Mod+Shift+N" = {
-            hotkey-overlay.title = "Next player: playerctl next";
-            action = sh "playerctl next";
+            hotkey-overlay.title = "Next player: dms mpris next";
+            action = sh "dms ipc call mpris next";
           };
           "Mod+Shift+C" = {
             hotkey-overlay.title = "Pick color to clipboard: dms color pick";
@@ -169,7 +170,7 @@
             };
             action = sh "${wl-kbptr}";
           };
-          "Mod+A" = {
+          "Mod+E" = {
             hotkey-overlay = {
               title = "Controll: dms control center";
             };
@@ -343,8 +344,8 @@
             action = sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
           };
 
-          "XF86MonBrightnessUp".action = sh "brightnessctl set 5%+";
-          "XF86MonBrightnessDown".action = sh "brightnessctl set 5%-";
+          "XF86MonBrightnessUp".action = sh "dms ipc call brightness increment 5 \"\"";
+          "XF86MonBrightnessDown".action = sh "dms ipc call brightness decrement 5 \"\"";
 
           "Mod+Escape" = {
             allow-inhibiting = false;
