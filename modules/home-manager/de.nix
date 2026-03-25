@@ -74,6 +74,14 @@
         emojiLauncher.enable = true;
         easyEffects.enable = true;
         calculator.enable = true;
+        sshConnections.enable = true;
+        dankGifSearch.enable = true;
+        commandRunner = {
+          enable = true;
+          settings = {
+            terminal = "ghostty";
+          };
+        };
         webSearch = {
           enable = true;
           settings = {
