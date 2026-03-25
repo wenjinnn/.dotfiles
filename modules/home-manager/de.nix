@@ -74,6 +74,7 @@
         dankStickerSearch.enable = true;
         emojiLauncher.enable = true;
         easyEffects.enable = true;
+        calculator.enable = true;
         webSearch = {
           enable = true;
           settings = {
