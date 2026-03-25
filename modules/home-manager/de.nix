@@ -68,7 +68,6 @@
         dankPomodoroTimer.enable = true;
         dankLauncherKeys.enable = true;
         musicLyrics.enable = true;
-        dankClight.enable = true;
         dankActions.enable = true;
         dankHooks.enable = true;
         dankStickerSearch.enable = true;
