@@ -477,10 +477,6 @@
         },
         {
           "enabled": true,
-          "id": "dankClight"
-        },
-        {
-          "enabled": true,
           "id": "idleInhibitor"
         },
         {
@@ -511,8 +507,8 @@
           "id": "focusedWindow"
         },
         {
-          "enabled": true,
-          "id": "systemTray"
+          "id": "systemTray",
+          "enabled": true
         },
         {
           "enabled": true,

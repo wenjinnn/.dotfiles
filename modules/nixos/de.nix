@@ -37,30 +37,6 @@
     geoclue2.enable = true;
     # accounts-daemon for those programs who base on login user account info, e.g. gtklock
     accounts-daemon.enable = true;
-    clight = {
-      enable = true;
-      settings = {
-        inhibit = {
-          # clight inhibit didn't work well will firefox when playing fullscreen video
-          disabled = true;
-        };
-        sensor = {
-          ac_regression_points = [
-            0.0
-            0.20
-            0.34
-            0.50
-            0.66
-            0.79
-            0.86
-            0.93
-            0.95
-            0.97
-            1.0
-          ];
-        };
-      };
-    };
     displayManager.dms-greeter = {
       enable = true;
       configHome = config.users.users.${me.username}.home;
