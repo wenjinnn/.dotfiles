@@ -4,6 +4,7 @@
   "customThemeFile": "",
   "registryThemeVariants": {},
   "matugenScheme": "scheme-tonal-spot",
+  "matugenContrast": 0,
   "runUserMatugenTemplates": true,
   "matugenTargetMonitor": "",
   "popupTransparency": 1,
@@ -23,6 +24,7 @@
   "mangoLayoutRadiusOverride": -1,
   "mangoLayoutBorderSize": -1,
   "firstDayOfWeek": -1,
+  "showWeekNumber": false,
   "use24HourClock": true,
   "showSeconds": false,
   "padHours12Hour": false,
@@ -295,6 +297,10 @@
   "qtThemingEnabled": false,
   "syncModeWithPortal": true,
   "terminalsAlwaysDark": true,
+  "muxType": "tmux",
+  "muxUseCustomCommand": false,
+  "muxCustomCommand": "",
+  "muxSessionFilter": "",
   "runDmsMatugenTemplates": true,
   "matugenTemplateGtk": true,
   "matugenTemplateNiri": true,
@@ -318,6 +324,16 @@
   "matugenTemplateVscode": true,
   "matugenTemplateEmacs": true,
   "matugenTemplateZed": true,
+  "matugenTemplateNeovimSettings": {
+    "dark": {
+      "baseTheme": "github_dark",
+      "harmony": 0.5
+    },
+    "light": {
+      "baseTheme": "github_light",
+      "harmony": 0.5
+    }
+  },
   "showDock": true,
   "dockAutoHide": false,
   "dockSmartAutoHide": true,
@@ -439,37 +455,37 @@
       "bottomGap": 0,
       "centerWidgets": [
         {
-          "id": "dankPomodoroTimer",
-          "enabled": true
-        },
-        {
-          "id": "privacyIndicator",
-          "enabled": true
-        },
-        {
-          "id": "music",
-          "enabled": true
-        },
-        {
-          "id": "clock",
           "enabled": true,
-          "clockCompactMode": false
+          "id": "dankPomodoroTimer"
         },
         {
-          "id": "weather",
-          "enabled": true
+          "enabled": true,
+          "id": "privacyIndicator"
         },
         {
-          "id": "dankClight",
-          "enabled": true
+          "enabled": true,
+          "id": "music"
         },
         {
-          "id": "idleInhibitor",
-          "enabled": true
+          "clockCompactMode": false,
+          "enabled": true,
+          "id": "clock"
         },
         {
-          "id": "wallpaperBing",
-          "enabled": true
+          "enabled": true,
+          "id": "weather"
+        },
+        {
+          "enabled": true,
+          "id": "dankClight"
+        },
+        {
+          "enabled": true,
+          "id": "idleInhibitor"
+        },
+        {
+          "enabled": true,
+          "id": "wallpaperBing"
         }
       ],
       "clickThrough": false,
@@ -811,5 +827,5 @@
   "clipboardEnterToPaste": false,
   "launcherPluginVisibility": {},
   "launcherPluginOrder": [],
-  "configVersion": 6
+  "configVersion": 5
 }
