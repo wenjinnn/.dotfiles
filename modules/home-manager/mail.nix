@@ -59,8 +59,8 @@ let
 in
 {
   home.file = {
-    ".local/bin/init_gmail_oauth2_token".source = init_gmail_oauth2_token;
-    ".local/bin/init_outlook_oauth2_token".source = init_outlook_oauth2_token;
+    ".local/bin/igot".source = init_gmail_oauth2_token;
+    ".local/bin/ioot".source = init_outlook_oauth2_token;
   };
 
   accounts = {
