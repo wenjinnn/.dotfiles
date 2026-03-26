@@ -24,4 +24,12 @@
       core.autocrlf = "input";
     };
   };
+  xdg.configFile."pass-git-helper/git-pass-mapping.ini".text = ''
+    [DEFAULT]
+    username_extractor=regex_search
+    regex_username=^login: (.*)$
+
+    [*]
+    target=git/''${host}
+  '';
 }
