@@ -335,6 +335,9 @@ in
         exts.pass-checkup
         exts.pass-genphrase
       ]);
+      settings = {
+        PASSWORD_STORE_DIR = "${config.home.homeDirectory}/.password-store";
+      };
     };
   };
 
