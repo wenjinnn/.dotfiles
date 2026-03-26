@@ -19,6 +19,7 @@
   ];
 
   services = {
+    pass-secret-service.enable = true;
     easyeffects.enable = true;
     # udisks2 GUI front end
     udiskie.enable = true;
