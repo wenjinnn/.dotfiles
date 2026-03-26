@@ -6,21 +6,14 @@
   pkgs,
   ...
 }: {
-  # xdg.configFile = {
-  #   "fcitx5/profile" = {
-  #     source = ../../xdg/config/fcitx5/profile;
-  #     # every time fcitx5 switch input method, it will modify ~/.config/fcitx5/profile,
-  #     # so we need to force replace it in every rebuild to avoid file conflict.
-  #     force = true;
-  #   };
-  #   "fcitx5/config".source = ../../xdg/config/fcitx5/config;
-  #   "fcitx5/conf/classicui.conf".source = ../../xdg/config/fcitx5/conf/classicui.conf;
-  # };
   # rime sync dir link to rclone dir
   xdg.dataFile = {
     "fcitx5/rime/sync" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Sync/rime/";
     };
+  };
+  home.sessionVariables = {
+    QT_IM_MODULE = "fcitx5";
   };
   # fcitx5
   i18n.inputMethod = {
