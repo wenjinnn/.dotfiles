@@ -345,8 +345,11 @@ in
     syncthing.enable = true;
     gpg-agent = {
       enable = true;
-      maxCacheTtl = 60480000;
-      defaultCacheTtl = 60480000;
+      enableSshSupport = true;
+      enableBashIntegration = true;
+      enableExtraSocket = true;
+      maxCacheTtl = 86400;
+      defaultCacheTtl = 86400;
     };
   };
 
