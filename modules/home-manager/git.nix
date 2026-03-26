@@ -14,7 +14,7 @@
         email = me.mail.outlook;
       };
       color.ui = true;
-      credential.helper = lib.mkForce "${lib.getExe pkgs.git-credential-keepassxc} --group Git --unlock 3";
+      credential.helper = "${lib.getExe pkgs.pass-git-helper} $@";
       github.user = "wenjinnn";
       push.autoSetupRemote = true;
       mergetool.keepBackup = false;

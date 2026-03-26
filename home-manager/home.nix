@@ -148,6 +148,7 @@ in
     nmap
     john
     dig
+    browserpass
   ];
 
   # xresources.properties = {
@@ -321,35 +322,19 @@ in
     };
     gpg.enable = true;
     pandoc.enable = true;
-    # on a new machine it needs to be initialized with
-    # # enable browser integration in KeePassXC settings, then
-    # $ git-credential-keepassxc caller me  # only required if compiled with strict-caller, see Limiting callers
-    # $ git-credential-keepassxc configure
-    # $ git config --global --replace-all credential.helper 'keepassxc --git-groups'
-    git-credential-keepassxc = {
+    browserpass.enable = true;
+    password-store = {
       enable = true;
-      groups = [ "Git" ];
-    };
-    keepassxc = {
-      autostart = true;
-      enable = true;
-      settings = {
-        # For available settings, see https://github.com/keepassxreboot/keepassxc/blob/develop/src/core/Config.cpp
-        FdoSecrets.Enabled = true; # Enable Secret Service Integration
-        Browser.Enabled = true;
-        Browser.UnlockDatabase = true;
-        GUI = {
-          AdvancedSettings = true;
-          ApplicationTheme = "dark";
-          CompactMode = true;
-          HidePasswords = true;
-          MinimizeOnClose = true;
-          MinimizeOnStartup = true;
-          MinimizeToTray = true;
-          ShowTrayIcon = true;
-        };
-        SSHAgent.Enabled = true;
-      };
+      package = pkgs.pass.withExtensions (exts: [
+        exts.pass-otp
+        exts.pass-tomb
+        exts.pass-file
+        exts.pass-audit
+        exts.pass-update
+        exts.pass-import
+        exts.pass-checkup
+        exts.pass-genphrase
+      ]);
     };
   };
 
