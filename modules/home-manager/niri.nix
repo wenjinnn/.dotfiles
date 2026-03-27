@@ -161,8 +161,12 @@
             action = sh "dms ipc call settings toggle";
           };
           "Mod+P" = {
-            hotkey-overlay.title = "Process list: dms processlist";
-            action = sh "dms ipc call processlist toggle";
+            hotkey-overlay.title = "Toggle DMS pomodoroTimer";
+            action = sh "dms ipc call pomodoroTimer toggleTimer";
+          };
+          "Mod+M" = {
+            hotkey-overlay.title = "Toggle DMS system monitor";
+            action = sh "dms ipc call processlist focusOrToggle";
           };
           "Mod+T" = {
             hotkey-overlay = {

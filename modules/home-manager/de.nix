@@ -78,6 +78,7 @@
         sshConnections.enable = true;
         dankGifSearch.enable = true;
         dmsPass.enable = true;
+        niriWindows.enable = true;
         commandRunner = {
           enable = true;
           settings = {
