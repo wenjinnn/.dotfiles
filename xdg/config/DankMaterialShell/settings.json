@@ -334,6 +334,7 @@
       "harmony": 0.5
     }
   },
+  "matugenTemplateNeovimSetBackground": true,
   "showDock": true,
   "dockAutoHide": false,
   "dockSmartAutoHide": true,
@@ -455,33 +456,30 @@
       "bottomGap": 0,
       "centerWidgets": [
         {
-          "enabled": true,
-          "id": "dankPomodoroTimer"
+          "id": "dankPomodoroTimer",
+          "enabled": true
         },
         {
+          "id": "music",
           "enabled": true,
-          "id": "privacyIndicator"
+          "mediaSize": 1
         },
         {
+          "id": "clock",
           "enabled": true,
-          "id": "music"
+          "clockCompactMode": false
         },
         {
-          "clockCompactMode": false,
-          "enabled": true,
-          "id": "clock"
+          "id": "weather",
+          "enabled": true
         },
         {
-          "enabled": true,
-          "id": "weather"
+          "id": "idleInhibitor",
+          "enabled": true
         },
         {
-          "enabled": true,
-          "id": "idleInhibitor"
-        },
-        {
-          "enabled": true,
-          "id": "wallpaperBing"
+          "id": "wallpaperBing",
+          "enabled": true
         }
       ],
       "clickThrough": false,
@@ -495,35 +493,31 @@
       "innerPadding": 4,
       "leftWidgets": [
         {
-          "id": "launcherButton",
-          "enabled": true
+          "enabled": true,
+          "id": "launcherButton"
         },
         {
-          "id": "workspaceSwitcher",
-          "enabled": true
+          "enabled": true,
+          "id": "workspaceSwitcher"
         },
         {
-          "id": "focusedWindow",
-          "enabled": true
+          "enabled": true,
+          "id": "focusedWindow"
         },
         {
-          "id": "systemTray",
-          "enabled": true
+          "enabled": true,
+          "id": "systemTray"
         },
         {
-          "id": "dankKDEConnect",
-          "enabled": true
+          "enabled": true,
+          "id": "dankKDEConnect"
         },
         {
-          "id": "clipboard",
-          "enabled": true
+          "enabled": true,
+          "id": "easyEffects"
         },
         {
-          "id": "colorPicker",
-          "enabled": true
-        },
-        {
-          "id": "easyEffects",
+          "id": "privacyIndicator",
           "enabled": true
         }
       ],
@@ -539,43 +533,51 @@
       "removeWidgetPadding": true,
       "rightWidgets": [
         {
-          "enabled": true,
+          "id": "clipboard",
+          "enabled": true
+        },
+        {
+          "id": "colorPicker",
+          "enabled": true
+        },
+        {
           "id": "cpuTemp",
+          "enabled": true,
           "minimumWidth": true
         },
         {
-          "enabled": true,
           "id": "cpuUsage",
+          "enabled": true,
           "minimumWidth": true
         },
         {
-          "enabled": true,
           "id": "memUsage",
-          "showInGb": false,
-          "showSwap": false
+          "enabled": true,
+          "showSwap": false,
+          "showInGb": false
         },
         {
-          "enabled": true,
-          "id": "network_speed_monitor"
+          "id": "network_speed_monitor",
+          "enabled": true
         },
         {
-          "enabled": true,
-          "id": "notificationButton"
+          "id": "notificationButton",
+          "enabled": true
         },
         {
-          "enabled": true,
-          "id": "battery"
+          "id": "battery",
+          "enabled": true
         },
         {
-          "enabled": true,
           "id": "controlCenterButton",
+          "enabled": true,
           "showAudioPercent": false,
-          "showBatteryIcon": false,
+          "showVpnIcon": true,
           "showBrightnessIcon": false,
           "showBrightnessPercent": false,
           "showMicIcon": false,
           "showMicPercent": true,
-          "showVpnIcon": true
+          "showBatteryIcon": false
         }
       ],
       "screenPreferences": [
