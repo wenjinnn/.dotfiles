@@ -493,31 +493,28 @@
       "innerPadding": 4,
       "leftWidgets": [
         {
-          "enabled": true,
-          "id": "launcherButton"
+          "id": "launcherButton",
+          "enabled": true
         },
         {
-          "enabled": true,
-          "id": "workspaceSwitcher"
+          "id": "workspaceSwitcher",
+          "enabled": true
         },
         {
+          "id": "focusedWindow",
           "enabled": true,
-          "id": "focusedWindow"
+          "focusedWindowCompactMode": false
         },
         {
-          "enabled": true,
-          "id": "systemTray"
+          "id": "easyEffects",
+          "enabled": true
         },
         {
-          "enabled": true,
-          "id": "dankKDEConnect"
+          "id": "dankKDEConnect",
+          "enabled": true
         },
         {
-          "enabled": true,
-          "id": "easyEffects"
-        },
-        {
-          "id": "privacyIndicator",
+          "id": "systemTray",
           "enabled": true
         }
       ],
@@ -532,6 +529,10 @@
       "position": 2,
       "removeWidgetPadding": true,
       "rightWidgets": [
+        {
+          "id": "privacyIndicator",
+          "enabled": true
+        },
         {
           "id": "clipboard",
           "enabled": true
