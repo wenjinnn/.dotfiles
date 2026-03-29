@@ -36,10 +36,23 @@
 
   services.remmina.enable = true;
 
+  programs = {
+    obs-studio = {
+      enable = true;
+      plugins = with pkgs.obs-studio-plugins; [
+        wlrobs
+        input-overlay
+      ];
+    };
+    obsidian = {
+      enable = true;
+      cli.enable = true;
+    };
+  };
+
   home.packages = with pkgs; [
     gimp3-with-plugins
     darktable
-    obs-studio
     scrcpy
     wireshark
     mitmproxy
@@ -47,15 +60,12 @@
     bottles
     telegram-desktop
     discord
-    showmethekey
     dbeaver-bin
     redisinsight
     wechat
     shotcut
     qq
     wemeet
-    obsidian
-    obsidian-export
     wpsoffice-cn
     inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps
     inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps-launcher
