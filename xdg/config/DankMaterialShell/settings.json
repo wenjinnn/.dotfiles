@@ -94,7 +94,8 @@
     {
       "enabled": true,
       "id": "brightnessSlider",
-      "width": 50
+      "width": 50,
+      "deviceName": "backlight:intel_backlight"
     },
     {
       "enabled": true,
@@ -491,6 +492,10 @@
         },
         {
           "id": "weather",
+          "enabled": true
+        },
+        {
+          "id": "displayManager",
           "enabled": true
         },
         {

@@ -79,6 +79,7 @@
         dankGifSearch.enable = true;
         dmsPass.enable = true;
         niriWindows.enable = true;
+        displayManager.enable = true;
         commandRunner = {
           enable = true;
           settings = {
