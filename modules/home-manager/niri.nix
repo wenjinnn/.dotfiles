@@ -162,7 +162,7 @@
           };
           "Mod+P" = {
             hotkey-overlay.title = "Toggle DMS pomodoroTimer";
-            action = sh "dms ipc call pomodoroTimer toggleTimer";
+            action = sh "dms ipc pomodoroTimer toggleTimer";
           };
           "Mod+M" = {
             hotkey-overlay.title = "Toggle DMS system monitor";
