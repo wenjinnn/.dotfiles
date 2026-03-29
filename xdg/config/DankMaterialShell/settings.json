@@ -26,7 +26,7 @@
   "firstDayOfWeek": -1,
   "showWeekNumber": false,
   "use24HourClock": true,
-  "showSeconds": false,
+  "showSeconds": true,
   "padHours12Hour": false,
   "useFahrenheit": false,
   "windSpeedUnit": "kmh",
@@ -456,30 +456,30 @@
       "bottomGap": 0,
       "centerWidgets": [
         {
-          "id": "dankPomodoroTimer",
-          "enabled": true
+          "enabled": true,
+          "id": "dankPomodoroTimer"
         },
         {
-          "id": "music",
           "enabled": true,
+          "id": "music",
           "mediaSize": 1
         },
         {
-          "id": "clock",
+          "clockCompactMode": false,
           "enabled": true,
-          "clockCompactMode": false
+          "id": "clock"
         },
         {
-          "id": "weather",
-          "enabled": true
+          "enabled": true,
+          "id": "weather"
         },
         {
-          "id": "idleInhibitor",
-          "enabled": true
+          "enabled": true,
+          "id": "idleInhibitor"
         },
         {
-          "id": "wallpaperBing",
-          "enabled": true
+          "enabled": true,
+          "id": "wallpaperBing"
         }
       ],
       "clickThrough": false,
@@ -493,29 +493,29 @@
       "innerPadding": 4,
       "leftWidgets": [
         {
-          "id": "launcherButton",
-          "enabled": true
-        },
-        {
-          "id": "workspaceSwitcher",
-          "enabled": true
-        },
-        {
-          "id": "focusedWindow",
           "enabled": true,
-          "focusedWindowCompactMode": false
+          "id": "launcherButton"
         },
         {
-          "id": "easyEffects",
-          "enabled": true
+          "enabled": true,
+          "id": "workspaceSwitcher"
         },
         {
-          "id": "dankKDEConnect",
-          "enabled": true
+          "enabled": true,
+          "focusedWindowCompactMode": false,
+          "id": "focusedWindow"
         },
         {
-          "id": "systemTray",
-          "enabled": true
+          "enabled": true,
+          "id": "easyEffects"
+        },
+        {
+          "enabled": true,
+          "id": "dankKDEConnect"
+        },
+        {
+          "enabled": true,
+          "id": "systemTray"
         }
       ],
       "maximizeDetection": true,
@@ -530,55 +530,55 @@
       "removeWidgetPadding": true,
       "rightWidgets": [
         {
-          "id": "privacyIndicator",
-          "enabled": true
+          "enabled": true,
+          "id": "privacyIndicator"
         },
         {
-          "id": "clipboard",
-          "enabled": true
+          "enabled": true,
+          "id": "clipboard"
         },
         {
-          "id": "colorPicker",
-          "enabled": true
+          "enabled": true,
+          "id": "colorPicker"
         },
         {
+          "enabled": true,
           "id": "cpuTemp",
-          "enabled": true,
           "minimumWidth": true
         },
         {
+          "enabled": true,
           "id": "cpuUsage",
-          "enabled": true,
           "minimumWidth": true
         },
         {
+          "enabled": true,
           "id": "memUsage",
+          "showInGb": false,
+          "showSwap": false
+        },
+        {
           "enabled": true,
-          "showSwap": false,
-          "showInGb": false
+          "id": "network_speed_monitor"
         },
         {
-          "id": "network_speed_monitor",
-          "enabled": true
+          "enabled": true,
+          "id": "notificationButton"
         },
         {
-          "id": "notificationButton",
-          "enabled": true
+          "enabled": true,
+          "id": "battery"
         },
         {
-          "id": "battery",
-          "enabled": true
-        },
-        {
+          "enabled": true,
           "id": "controlCenterButton",
-          "enabled": true,
           "showAudioPercent": false,
-          "showVpnIcon": true,
+          "showBatteryIcon": false,
           "showBrightnessIcon": false,
           "showBrightnessPercent": false,
           "showMicIcon": false,
           "showMicPercent": true,
-          "showBatteryIcon": false
+          "showVpnIcon": true
         }
       ],
       "screenPreferences": [
