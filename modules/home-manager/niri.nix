@@ -429,7 +429,10 @@
       ];
       layer-rules = [
         {
-          matches = [ { namespace = "^notification$"; } ];
+          matches = [
+            { namespace = "^notification$"; }
+            { namespace = "^dms:notification-popup$"; }
+          ];
 
           block-out-from = "screencast";
         }
