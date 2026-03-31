@@ -4,6 +4,14 @@
       "rev": "4f1c58a59d3a4da095743dd6f04b73caa0cefc3d",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
+    "codecompanion-history.nvim": {
+      "rev": "bc1b4fe06eaaf0aa2399be742e843c22f7f1652a",
+      "src": "https://github.com/ravitemer/codecompanion-history.nvim"
+    },
+    "codecompanion.nvim": {
+      "rev": "190cb215a449f0a7dba49951d90f1f167aa708c5",
+      "src": "https://github.com/olimorris/codecompanion.nvim"
+    },
     "conform.nvim": {
       "rev": "086a40dc7ed8242c03be9f47fbcee68699cc2395",
       "src": "https://github.com/stevearc/conform.nvim"

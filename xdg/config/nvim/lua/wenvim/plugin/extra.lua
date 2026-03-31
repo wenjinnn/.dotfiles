@@ -45,4 +45,10 @@ later(function()
       map({ 'n', 'x' }, '<CR>', 'db#op_exec()', { expr = true, desc = 'DB exec current query' })
     end,
   })
+
+  -- AI assistant
+  vim.pack.add({ gh('olimorris/codecompanion.nvim'), gh('ravitemer/codecompanion-history.nvim') })
+  require('codecompanion').setup({
+    extensions = { history = { enabled = true } },
+  })
 end)
