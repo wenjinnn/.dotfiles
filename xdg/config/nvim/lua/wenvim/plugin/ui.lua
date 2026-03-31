@@ -16,11 +16,14 @@ require('mini.tabline').setup()
 local starter = require('mini.starter')
 starter.setup({
   items = {
-    starter.sections.sessions(5, true),
-    starter.sections.recent_files(5, true, true),
     starter.sections.builtin_actions(),
-    { name = 'Switch', action = function() vim.cmd('Obsidian quick_switch') end, section = 'Note' },
-    { name = 'Dailies', action = function() vim.cmd('Obsidian dailies') end, section = 'Note' },
+    starter.sections.recent_files(3, true, true),
+    starter.sections.recent_files(3, false, true),
+    starter.sections.sessions(3, true),
+  },
+  content_hooks = {
+    starter.gen_hook.indexing('all', { 'Builtin actions' }),
+    starter.gen_hook.aligning('center', 'center'),
   },
 })
 
