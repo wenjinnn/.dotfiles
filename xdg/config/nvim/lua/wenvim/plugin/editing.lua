@@ -299,7 +299,6 @@ later(function()
   vim.pack.add({ gh('chrisgrieser/nvim-scissors') })
   require('scissors').setup({
     snippetDir = snippet_path,
-    jsonFormatter = 'jq',
     backdrop = { enabled = false },
   })
   map('n', '<leader>cS', '<cmd>ScissorsEditSnippet<cr>', 'Snippet edit')
