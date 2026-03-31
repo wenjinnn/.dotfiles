@@ -1,7 +1,7 @@
 {
   "plugins": {
     "SchemaStore.nvim": {
-      "rev": "24eeb97da8d605c480dc68bb6276248702e31d2a",
+      "rev": "4f1c58a59d3a4da095743dd6f04b73caa0cefc3d",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "conform.nvim": {
@@ -53,7 +53,7 @@
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-scissors": {
-      "rev": "59902c749117640bd5d434642b2df67fb038d4f2",
+      "rev": "b3eda2318d1892eefee516af02a232588e0fa1a9",
       "src": "https://github.com/chrisgrieser/nvim-scissors"
     },
     "nvim-treesitter": {
@@ -69,7 +69,7 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
     },
     "obsidian.nvim": {
-      "rev": "38552249c6dbeaa539849171b859f8cc8441a536",
+      "rev": "47063e6b94f2d491a601058de4eb79bc636cd543",
       "src": "https://github.com/obsidian-nvim/obsidian.nvim"
     },
     "one-small-step-for-vimkind": {
