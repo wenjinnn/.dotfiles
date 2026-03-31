@@ -92,10 +92,10 @@
       "width": 50
     },
     {
+      "deviceName": "backlight:intel_backlight",
       "enabled": true,
       "id": "brightnessSlider",
-      "width": 50,
-      "deviceName": "backlight:intel_backlight"
+      "width": 50
     },
     {
       "enabled": true,
@@ -119,36 +119,27 @@
     },
     {
       "enabled": true,
-      "id": "diskUsage",
-      "instanceId": "mmpp64afz1lk5nh7enmoktn2kkgwr",
-      "mountPath": "/",
+      "id": "plugin_dankKDEConnect",
       "width": 50
     },
     {
       "enabled": true,
-      "id": "diskUsage",
-      "instanceId": "mmrsth4i7n6iba6mszizopg1n25j24",
-      "mountPath": "/home",
-      "width": 50
-    },
-    {
       "id": "colorPicker",
-      "enabled": true,
       "width": 50
+    },
+    {
+      "id": "builtin_cups",
+      "enabled": true,
+      "width": 25
     },
     {
       "enabled": true,
       "id": "builtin_vpn",
-      "width": 50
+      "width": 25
     },
     {
-      "id": "battery",
       "enabled": true,
-      "width": 50
-    },
-    {
       "id": "idleInhibitor",
-      "enabled": true,
       "width": 25
     },
     {
@@ -157,18 +148,25 @@
       "width": 25
     },
     {
-      "id": "plugin_dankKDEConnect",
       "enabled": true,
-      "width": 50
+      "id": "battery",
+      "width": 25
     },
     {
       "enabled": true,
-      "id": "nightMode",
+      "id": "diskUsage",
+      "instanceId": "mmpp64afz1lk5nh7enmoktn2kkgwr",
+      "mountPath": "/",
       "width": 25
     },
     {
       "enabled": true,
       "id": "darkMode",
+      "width": 25
+    },
+    {
+      "enabled": true,
+      "id": "nightMode",
       "width": 25
     }
   ],
@@ -477,30 +475,30 @@
       "bottomGap": 0,
       "centerWidgets": [
         {
-          "id": "dankPomodoroTimer",
-          "enabled": true
+          "enabled": true,
+          "id": "dankPomodoroTimer"
         },
         {
-          "id": "music",
           "enabled": true,
+          "id": "music",
           "mediaSize": 1
         },
         {
-          "id": "clock",
+          "clockCompactMode": false,
           "enabled": true,
-          "clockCompactMode": false
+          "id": "clock"
         },
         {
-          "id": "weather",
-          "enabled": true
+          "enabled": true,
+          "id": "weather"
         },
         {
-          "id": "displayManager",
-          "enabled": true
+          "enabled": true,
+          "id": "displayManager"
         },
         {
-          "id": "wallpaperBing",
-          "enabled": true
+          "enabled": true,
+          "id": "wallpaperBing"
         }
       ],
       "clickThrough": false,
@@ -543,48 +541,48 @@
       "removeWidgetPadding": true,
       "rightWidgets": [
         {
-          "id": "privacyIndicator",
-          "enabled": true
+          "enabled": true,
+          "id": "privacyIndicator"
         },
         {
-          "id": "easyEffects",
-          "enabled": true
+          "enabled": true,
+          "id": "easyEffects"
         },
         {
-          "id": "clipboard",
-          "enabled": true
+          "enabled": true,
+          "id": "clipboard"
         },
         {
+          "enabled": true,
           "id": "cpuTemp",
-          "enabled": true,
           "minimumWidth": true
         },
         {
+          "enabled": true,
           "id": "cpuUsage",
-          "enabled": true,
           "minimumWidth": true
         },
         {
+          "enabled": true,
           "id": "memUsage",
+          "showInGb": false,
+          "showSwap": false
+        },
+        {
           "enabled": true,
-          "showSwap": false,
-          "showInGb": false
+          "id": "notificationButton"
         },
         {
-          "id": "notificationButton",
-          "enabled": true
-        },
-        {
+          "enabled": true,
           "id": "controlCenterButton",
-          "enabled": true,
           "showAudioPercent": false,
-          "showVpnIcon": true,
+          "showBatteryIcon": true,
           "showBrightnessIcon": true,
           "showBrightnessPercent": false,
           "showMicIcon": true,
           "showMicPercent": false,
-          "showBatteryIcon": true,
-          "showPrinterIcon": true
+          "showPrinterIcon": true,
+          "showVpnIcon": true
         }
       ],
       "screenPreferences": [
