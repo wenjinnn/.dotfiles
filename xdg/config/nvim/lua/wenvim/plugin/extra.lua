@@ -41,12 +41,10 @@ later(function()
 
   -- AI assistant
   vim.pack.add({ gh('olimorris/codecompanion.nvim'), gh('ravitemer/codecompanion-history.nvim') })
-  require('codecompanion').setup({
-    extensions = { history = { enabled = true } },
-  })
+  require('codecompanion').setup({ extensions = { history = { enabled = true } } })
   map({ 'n', 'v' }, '<leader>Ca', '<cmd>CodeCompanionActions<cr>', 'Open Code Companion actions menu')
   map({ 'n', 'v' }, '<leader>CC', '<cmd>CodeCompanionChat Toggle<cr>', 'Toggle Code Companion chat window')
-  map('v', '<leader>Ca', '<cmd>CodeCompanionChat Add<cr>', 'Add selection to Code Companion chat context')
+  map('v', '<leader>CA', '<cmd>CodeCompanionChat Add<cr>', 'Add selection to Code Companion chat context')
 
   -- Expand 'cc' into 'CodeCompanion' in the command line
   vim.cmd([[cab cc CodeCompanion]])
