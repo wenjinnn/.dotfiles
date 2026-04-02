@@ -76,6 +76,8 @@
     external-controller: :9090
 
     geodata-mode: true
+    geo-auto-update: true
+    geo-update-interval: 168
 
     geox-url:
       geoip: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
@@ -455,13 +457,8 @@
     # - GEOSITE,biliintl,video
     # - GEOSITE,bilibili,video
 
-      - GEOSITE,openai,AI
-      - GEOSITE,google,AI
-      - GEOSITE,anthropic,AI
-      - GEOSITE,x,AI
-      - GEOSITE,xai,AI
-      - DOMAIN-SUFFIX,claude.ai,AI
-      - DOMAIN-SUFFIX,claudeusercontent.com,AI
+      - GEOSITE,category-ai-!cn,AI
+      - GEOSITE,category-ai-chat-!cn,AI
       - GEOSITE,reddit,hongkong
       - GEOSITE,apple,universal
       - GEOSITE,apple-cn,universal
