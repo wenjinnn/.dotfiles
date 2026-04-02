@@ -452,10 +452,11 @@
       - DOMAIN-SUFFIX,wenjin.me,DIRECT
       # 若需禁用 QUIC 请取消注释 QUIC 两条规则
       # 防止 YouTube 等使用 QUIC 导致速度不佳, 禁用 443 端口 UDP 流量（不包括国内）
-    # - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,cn))),REJECT # quic
+      - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,cn))),REJECT # quic
       - AND,((RULE-SET,anti-AD),(NOT,((RULE-SET,anti-AD-white)))),ad-block # 感谢 Telegram @nextyahooquery 提供的建议
     # - GEOSITE,biliintl,video
     # - GEOSITE,bilibili,video
+      - GEOSITE,category-ads-all,REJECT
 
       - GEOSITE,category-ai-!cn,AI
       - GEOSITE,category-ai-chat-!cn,AI
