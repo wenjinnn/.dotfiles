@@ -173,6 +173,7 @@
 
   home.packages = with pkgs; [
     yt-dlp
+    spotdl
     kdePackages.qt6ct
     libsForQt5.qt5ct
     imagemagick
