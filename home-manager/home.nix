@@ -149,6 +149,7 @@ in
     john
     dig
     browserpass
+    tldr
   ];
 
   # xresources.properties = {
