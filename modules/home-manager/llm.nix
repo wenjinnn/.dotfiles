@@ -52,7 +52,7 @@
 
       settings = {
         general = {
-          preferredEditor = "nvim";
+          preferredEditor = "neovim";
           disableAutoUpdate = true;
           previewFeatures = true;
         };
