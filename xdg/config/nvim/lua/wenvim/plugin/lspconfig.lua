@@ -17,7 +17,7 @@ later(function()
   vim.lsp.enable({
     'jsonls',
     'jdtls',
-    'lua_ls',
+    'emmylua_ls',
     'vtsls',
     'vue_ls',
     'yamlls',
