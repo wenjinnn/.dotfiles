@@ -304,14 +304,6 @@ later(function()
   map('n', '<leader>cS', '<cmd>ScissorsEditSnippet<cr>', 'Snippet edit')
   map({ 'n', 'x' }, '<leader>cs', '<cmd>ScissorsAddNewSnippet<cr>', 'Snippet add')
 
-  -- annotation and comment generation
-  vim.pack.add({ gh('danymat/neogen') })
-  require('neogen').setup({ snippet_engine = 'mini' })
-  map('n', '<leader>cA', '<cmd>Neogen<cr>', 'Generate annotation')
-
-  vim.pack.add({ gh('monaqa/dial.nvim') })
-  map({ 'n', 'x' }, '<C-a>', function() require('dial.map').manipulate('increment', 'normal') end, 'Dial increment')
-  map({ 'n', 'x' }, 'g<C-a>', function() require('dial.map').manipulate('increment', 'gnormal') end, 'Dial increment')
-  map({ 'n', 'x' }, '<C-x>', function() require('dial.map').manipulate('decrement', 'normal') end, 'Dial decrement')
-  map({ 'n', 'x' }, 'g<C-x>', function() require('dial.map').manipulate('decrement', 'gnormal') end, 'Dial decrement')
+  -- enhance <C-a> and <C-x>
+  vim.pack.add({ gh('tpope/vim-speeddating') })
 end)
