@@ -59,6 +59,7 @@
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.niri-unstable.url = "github:wrvsrx/niri/support-shm-sharing";
     };
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
