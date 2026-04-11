@@ -79,8 +79,11 @@ vim.schedule(function()
   vim.cmd('packadd nvim.difftool')
 
   opt.clipboard = vim.env.SSH_TTY and '' or 'unnamedplus'
-  -- Copy/Paste when using wsl
-  if vim.fn.has('wsl') == 1 then
+  -- tmux clipboard first, then ssh, then wsl clipboard
+  if vim.env.TMUX then
+    vim.g.clipboard = 'tmux'
+  elseif not vim.env.SSH_TTY and vim.fn.has('wsl') == 1 then
+    -- Copy/Paste when using wsl
     vim.g.clipboard = {
       name = 'WslClipboard',
       copy = {
