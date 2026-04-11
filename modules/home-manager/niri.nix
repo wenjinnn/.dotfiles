@@ -394,12 +394,23 @@
               app-id = "steam";
               title = ''r#"^notificationtoasts_\d+_desktop$"#'';
             }
+            {
+              app-id = "wemeetapp";
+              title = "wemeetapp";
+              is-floating = true;
+            }
+            {
+              app-id = "wemeetapp";
+              title = "EmojiFloatWnd";
+            }
           ];
           default-floating-position = {
-            x = 10;
-            y = 10;
+            x = 50;
+            y = 50;
             relative-to = "bottom-right";
           };
+          open-floating = true;
+          open-focused = false;
         }
         {
           matches = [
@@ -412,8 +423,16 @@
           open-floating = true;
         }
         {
-          matches = [ { app-id = "^xwaylandvideobridge$"; } ];
+          matches = [
+            { app-id = "^xwaylandvideobridge$"; }
+            {
+              title = "wemeetapp";
+              app-id = "wemeetapp";
+              is-floating = false;
+            }
+          ];
           open-floating = true;
+          tiled-state = true;
           focus-ring.enable = false;
           opacity = 0.0;
           default-floating-position = {
