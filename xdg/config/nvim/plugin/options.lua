@@ -66,6 +66,9 @@ opt.sessionoptions:remove({ 'blank' })
 opt.smoothscroll = true
 opt.winborder = 'single'
 opt.diffopt:append({ 'algorithm:histogram', 'indent-heuristic' })
+-- linematch algorithm is breaking the functionality of diffget. Disabling this til this issue gets solved. related to:
+-- https://github.com/tpope/vim-fugitive/issues/2436 https://github.com/neovim/neovim/issues/35513
+opt.diffopt:remove({ 'linematch' })
 opt.foldlevel = 99
 opt.exrc = true
 
