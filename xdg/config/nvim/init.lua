@@ -131,7 +131,7 @@ vim.schedule(function()
   map('n', ']n', '<cmd>lnewer<cr>', 'Go to newer location list')
 
   --- AUTOCMD
-  local augroup = require('wenvim.util').augroup
+  local augroup = util.augroup
   local au = vim.api.nvim_create_autocmd
 
   -- Check if we need to reload the file when it changed
@@ -166,7 +166,7 @@ vim.schedule(function()
       local win = vim.api.nvim_get_current_win()
       local rhs = function() vim.api.nvim_win_close(win, true) end
       local opts = { buffer = true, nowait = true, unique = true }
-      if require('wenvim.util').is_floating_win(ev.buf) then pcall(vim.keymap.set, 'n', 'q', rhs, opts) end
+      if util.is_floating_win(ev.buf) then pcall(vim.keymap.set, 'n', 'q', rhs, opts) end
     end,
   })
 
