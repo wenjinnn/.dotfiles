@@ -1,4 +1,4 @@
-local util = require('wenvim.util')
+local util = wenvim.util
 local map = util.map
 local gh = util.gh
 local later = util.later

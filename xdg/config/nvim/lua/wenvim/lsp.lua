@@ -1,5 +1,4 @@
 local M = {}
-local augroup = require('wenvim.util').augroup
 
 function M.on_detach(ev)
   local bufnr = ev.buf
@@ -10,7 +9,7 @@ function M.on_detach(ev)
     if client.id ~= detach_client.id and client.server_capabilities.documentHighlightProvider then return end
   end
   vim.lsp.buf.clear_references()
-  local lsp_document_highlight = augroup('lsp_document_highlight', { clear = false })
+  local lsp_document_highlight = wenvim.util.augroup('lsp_document_highlight', { clear = false })
   vim.api.nvim_clear_autocmds({
     buffer = bufnr,
     group = lsp_document_highlight,
@@ -22,7 +21,7 @@ function M.on_attach(ev)
   local client = vim.lsp.get_client_by_id(ev.data.client_id)
   if not client then return end
   if client.server_capabilities.documentHighlightProvider then
-    local lsp_document_highlight = augroup('lsp_document_highlight', { clear = false })
+    local lsp_document_highlight = wenvim.util.augroup('lsp_document_highlight', { clear = false })
     vim.api.nvim_clear_autocmds({
       buffer = bufnr,
       group = lsp_document_highlight,

@@ -1,6 +1,6 @@
 if vim.g.vscode then return end
 
-local util = require('wenvim.util')
+local util = wenvim.util
 local map = util.map
 local later = util.later
 

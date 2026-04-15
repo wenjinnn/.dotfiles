@@ -138,7 +138,7 @@ return {
   on_attach = function(client, bufnr)
     -- setup keymaps
     local jdtls = require('jdtls')
-    local map = require('wenvim.util').buf_map(bufnr)
+  local map = wenvim.util.buf_map(bufnr)
     local jdtls_tests = require('jdtls.tests')
     map('n', '<leader>cC', '<cmd>JdtCompile full<CR>', 'Jdt compile full')
     map('n', '<leader>cc', '<cmd>JdtCompile incremental<CR>', 'Jdt compile incremental')

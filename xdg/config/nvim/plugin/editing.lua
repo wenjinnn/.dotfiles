@@ -1,4 +1,4 @@
-local util = require('wenvim.util')
+local util = wenvim.util
 local map = util.map
 local augroup = util.augroup
 local gh = util.gh
@@ -211,7 +211,7 @@ local function pre_read()
 end
 local function post_read()
   MiniMisc.setup_auto_root()
-  require('wenvim.util').delete_dap_terminals()
+  util.delete_dap_terminals()
 end
 
 require('mini.sessions').setup({
@@ -262,7 +262,7 @@ later(function()
   vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave', 'TextChanged' }, {
     group = augroup('lint'),
     callback = function(ev)
-      if not require('wenvim.util').is_floating_win(ev.buf) then
+      if not util.is_floating_win(ev.buf) then
         lint.try_lint()
         lint.try_lint('compiler')
       end
