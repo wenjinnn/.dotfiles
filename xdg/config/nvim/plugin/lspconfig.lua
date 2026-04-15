@@ -1,10 +1,9 @@
 if vim.g.vscode then return end
 
-local util = require('wenvim.util')
+local util = wenvim.util
 local map = util.map
 local gh = util.gh
 local augroup = util.augroup
-local util_lsp = require('wenvim.util.lsp')
 local later = util.later
 
 later(function()
@@ -38,11 +37,11 @@ later(function()
   })
   vim.api.nvim_create_autocmd('LspAttach', {
     group = augroup('lsp_attach'),
-    callback = util_lsp.on_attach,
+    callback = wenvim.lsp.on_attach,
   })
   vim.api.nvim_create_autocmd('LspDetach', {
     group = augroup('lsp_detach'),
-    callback = util_lsp.on_detach,
+    callback = wenvim.lsp.on_detach,
   })
   -- finally, some LSP related keymaps
   local function inlay_hint_toggle() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end

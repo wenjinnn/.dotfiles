@@ -77,6 +77,8 @@ opt.diffopt:remove({ 'linematch' })
 opt.foldlevel = 99
 opt.exrc = true
 
+require('wenvim').setup()
+
 vim.schedule(function()
   vim.diagnostic.config({ virtual_text = true })
   if vim.g.vscode then vim.notify = require('vscode-neovim').notify end
@@ -106,7 +108,7 @@ vim.schedule(function()
   --- KEYMAP
   -- The keymaps here are independent of plugins
   -- all the keymap that related to plugin it self are declared after plugin
-  local util = require('wenvim.util')
+  local util = wenvim.util
   local map = util.map
   map('n', '<leader>S', '<cmd>windo set scrollbind!<CR>', 'Scroll all buffer')
   map('n', '<leader>O', '<cmd>only<CR>', 'Only')

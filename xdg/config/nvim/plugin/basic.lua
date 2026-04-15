@@ -1,21 +1,18 @@
-local util = require('wenvim.util')
-local map = util.map
-local gh = util.gh
+local map = wenvim.util.map
+local gh = wenvim.util.gh
 
 vim.pack.add({
   gh('nvim-mini/mini.nvim'),
   gh('nvim-lua/plenary.nvim'),
 })
 
--- COLORSCHEME --
-vim.cmd.colorscheme('wenvim-brown')
 require('mini.misc').setup()
 MiniMisc.setup_auto_root()
 MiniMisc.setup_termbg_sync()
 MiniMisc.setup_restore_cursor()
 local use_nested_comments = function() MiniMisc.use_nested_comments() end
 vim.api.nvim_create_autocmd('BufEnter', {
-  group = util.augroup('nested_comments'),
+  group = wenvim.util.augroup('nested_comments'),
   callback = use_nested_comments,
 })
 map('n', '<leader>z', '<cmd>lua MiniMisc.zoom()<cr>', 'Zoom current window')

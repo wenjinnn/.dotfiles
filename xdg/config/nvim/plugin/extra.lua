@@ -1,6 +1,6 @@
 if vim.g.vscode then return end
 
-local util = require('wenvim.util')
+local util = wenvim.util
 local map = util.map
 local gh = util.gh
 local later = util.later
@@ -31,7 +31,7 @@ later(function()
   -- db manage
   vim.pack.add({ gh('tpope/vim-dadbod'), gh('kristijanhusak/vim-dadbod-completion') })
   vim.api.nvim_create_autocmd('FileType', {
-    group = require('wenvim.util').augroup('dadbod'),
+    group = util.augroup('dadbod'),
     pattern = 'sql',
     callback = function(ev)
       vim.bo[ev.buf].omnifunc = 'vim_dadbod_completion#omni'

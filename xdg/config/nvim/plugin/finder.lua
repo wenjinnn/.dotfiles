@@ -1,6 +1,6 @@
 if vim.g.vscode then return end
 
-local util = require('wenvim.util')
+local util = wenvim.util
 local map = util.map
 local later = util.later
 local augroup = util.augroup
@@ -21,7 +21,8 @@ later(function()
   vim.api.nvim_create_autocmd('User', {
     group = augroup('mini_files_lsp_rename'),
     pattern = 'MiniFilesActionRename',
-    callback = function(event) require('wenvim.util.lsp').on_rename_file(event.data.from, event.data.to) end,
+    callback = function(event)     util.lsp.on_rename_file(event.data.from, event.data.to)
+end,
   })
   -- Create mappings to modify target window via split
   local map_split = function(buf_id, lhs, direction)
