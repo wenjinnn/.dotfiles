@@ -15,17 +15,17 @@
 
 ## Principle and Goal
 
-* Simple, yet powerful, always on develop.
-* Lazy load all plugins if it could, to optimize startup time to the shortest possible time, right now on my PC, the startup time are less then 30ms.
-* Avoid sidebar, focus on editing. personally, I prefer to use float window, sidebar buffer just distract me a lot.
-* Avoid extra UI plugins. In common scenarios, [mini.notify](https://github.com/echasnovski/mini.notify) and [mini.pick](https://github.com/echasnovski/mini.pick) with `vim.ui.select()` wrapper already done well enough for notify and float window.
-* Provide out-of-box experience for web development.
-* AI powered by [CodeCompanion.nvim](https://github.com/olimorris/codecompanion.nvim) and [Github Copilot](https://github.com/features/copilot).
+* Simple, yet powerful, always in development.
+* Lazy load all plugins whenever possible to optimize startup time. Currently, the startup time on my PC is less than 30ms.
+* Avoid sidebars and focus on editing. Personally, I prefer using floating windows; sidebar buffers distract me.
+* Avoid extra UI plugins. In most scenarios, [mini.notify](https://github.com/echasnovski/mini.notify) and [mini.pick](https://github.com/echasnovski/mini.pick) (via `vim.ui.select()` wrapper) perform well enough for notifications and floating windows.
+* Provide an out-of-the-box experience for web development.
+* AI-powered by [CodeCompanion.nvim](https://github.com/olimorris/codecompanion.nvim) and [GitHub Copilot](https://github.com/features/copilot).
 
 > [!NOTE]
-> * This configuration only guaranteed to be compatible with the nightly version.
-> * I'm not using mason.nvim now, The LSP package should managed by you own system.
-> * To get all the custom keymap clue you need, just press `space`.
+> * This configuration is only guaranteed to be compatible with the Neovim nightly version.
+> * I am not using mason.nvim; LSP packages should be managed by your own system.
+> * To see all custom keymap hints, just press `<space>`.
 
 ## Installation Instructions
 
@@ -45,15 +45,15 @@ NVIM_APPNAME=wenjinnn/wenvim nvim
 
 ## Special notes
 
-Some behavior are not common in this configuration, but it's reasonable in my opinion:
+Some behaviors in this configuration are not common but are reasonable in my opinion:
 
-* `ss` in normal mode will trigger mini.jump2d motion `MiniJump2d.builtin_opts.single_character`
-* `sq` in normal mode will trigger mini.jump2d motion `MiniJump2d.builtin_opts.query`
-* if you login to Copilot, `<M-CR>` in insert mode will accept Copilot suggestion.
+* `ss` in normal mode triggers mini.jump2d motion `MiniJump2d.builtin_opts.single_character`.
+* `sq` in normal mode triggers mini.jump2d motion `MiniJump2d.builtin_opts.query`.
+* If you log in to Copilot, `<M-CR>` in insert mode will accept a Copilot suggestion.
 
 ## Directory notes
 
-[plugin/](plugin) Custom configurations for plugins, keymaps and options.
+[plugin/](plugin) Custom configurations for plugins, keymaps, and options.
 
 [lua/wenvim/lsp.lua](lua/wenvim/lsp.lua) LSP event handlers like `on_attach` and `on_detach`.
 
@@ -63,52 +63,52 @@ Some behavior are not common in this configuration, but it's reasonable in my op
 
 [colors/](colors) Custom color schemes based on [mini.hues](https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-hues.md).
 
-## Defined environment variables cheatsheets:
+## Defined environment variables cheatsheet:
 
 ### Java
 
-`JAVA_HOME` fallback java home
+`JAVA_HOME` Fallback Java home.
 
-`JAVA8_HOME` java 8 home
+`JAVA8_HOME` Java 8 home.
 
-`JAVA17_HOME` java 17 home
+`JAVA17_HOME` Java 17 home.
 
-`JAVA21_HOME` java 21 home
+`JAVA21_HOME` Java 21 home.
 
-`JDTLS_MAVEN_SETTINGS`  jdtls maven user settings.xml path
+`JDTLS_MAVEN_SETTINGS` Path to JDTLS Maven `settings.xml`.
 
-`JAVA_TEST_PATH` path to [vscode-java-test](https://github.com/microsoft/vscode-java-test) jars
+`JAVA_TEST_PATH` Path to [vscode-java-test](https://github.com/microsoft/vscode-java-test) jars.
 
-`JAVA_DEBUG_PATH` path to [vscode-java-debug](https://github.com/microsoft/vscode-java-debug) jars
+`JAVA_DEBUG_PATH` Path to [vscode-java-debug](https://github.com/microsoft/vscode-java-debug) jars.
 
-`LOMBOK_PATH` path to [lombok](https://projectlombok.org/) java agent jar
+`LOMBOK_PATH` Path to the [Lombok](https://projectlombok.org/) Java agent jar.
 
-`JDTLS_XMX` jdtls xmx jvm arg value
+`JDTLS_XMX` JVM `-Xmx` value for JDTLS.
 
-`JDTLS_DAP_VMARGS` jdtls dap vm args
+`JDTLS_DAP_VMARGS` JVM arguments for JDTLS DAP.
 
 ### AI
-`NVIM_AI_ADAPTER` default AI adapter for CodeCompanion.nvim (e.g., `copilot`, `ollama`).
+`NVIM_AI_ADAPTER` Default AI adapter for CodeCompanion.nvim (e.g., `copilot`, `ollama`).
 
-`NVIM_OLLAMA_MODEL` default model for ollama adapter.
+`NVIM_OLLAMA_MODEL` Default model for the Ollama adapter.
 
-`NVIM_OPENROUTER_MODEL` default model for openrouter adapter.
+`NVIM_OPENROUTER_MODEL` Default model for the OpenRouter adapter.
 
 ### Vue
 
-`VUE_LANGUAGE_SERVER_PATH` path to vue language server
+`VUE_LANGUAGE_SERVER_PATH` Path to the Vue language server.
 
-### Note taking
-`NOTE` note directory path for obsidian
+### Note-taking
+`NOTE` Directory path for Obsidian notes.
 
-### Must have
-1. [ripgrep](https://github.com/BurntSushi/ripgrep) depend by many plugin.
-2. All the LSP package that configured in [plugin/lspconfig.lua](plugin/lspconfig.lua), if you're going to use these.
-3. Linters and formatters that you want to use for conform.nvim and nvim-lint, you may also need to configure them in [plugin/editing.lua](plugin/editing.lua)
+### Must-have
+1. [ripgrep](https://github.com/BurntSushi/ripgrep): Required by many plugins.
+2. All LSP packages configured in [plugin/lspconfig.lua](plugin/lspconfig.lua).
+3. Linters and formatters for conform.nvim and nvim-lint; you may also need to configure them in [plugin/editing.lua](plugin/editing.lua).
 
-### Recommend
-1. [tmux](https://github.com/tmux/tmux) for terminal multiplexing.
-2. [lazygit](https://github.com/jesseduffield/lazygit) smooth git operation.
+### Recommended
+1. [tmux](https://github.com/tmux/tmux): For terminal multiplexing.
+2. [lazygit](https://github.com/jesseduffield/lazygit): For smooth Git operations.
 
 ## Plugins
 
