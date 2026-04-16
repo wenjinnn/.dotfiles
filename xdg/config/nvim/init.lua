@@ -78,6 +78,10 @@ opt.foldlevel = 99
 opt.exrc = true
 
 require('wenvim').setup()
+-- load mini.nvim first because customizing colorschemes depend on mini.hues
+vim.pack.add({ wenvim.util.gh('nvim-mini/mini.nvim') })
+--- COLORSCHEME
+vim.cmd.colorscheme('wenvim-brown')
 
 vim.schedule(function()
   vim.diagnostic.config({ virtual_text = true })
@@ -189,6 +193,4 @@ vim.schedule(function()
       callback = function() vim.cmd("silent call system('/mnt/c/im-select.exe 1033')") end,
     })
   end
-  --- COLORSCHEME
-  vim.cmd.colorscheme('wenvim-brown')
 end)
