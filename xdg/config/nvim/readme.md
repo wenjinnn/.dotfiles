@@ -1,4 +1,3 @@
-
 # wenvim
 ### wenjinnn's neovim configuration, basically a distribution of [mini.nvim](https://github.com/nvim-mini/mini.nvim)
 
@@ -21,12 +20,11 @@
 * Avoid sidebar, focus on editing. personally, I prefer to use float window, sidebar buffer just distract me a lot.
 * Avoid extra UI plugins. In common scenarios, [mini.notify](https://github.com/echasnovski/mini.notify) and [mini.pick](https://github.com/echasnovski/mini.pick) with `vim.ui.select()` wrapper already done well enough for notify and float window.
 * Provide out-of-box experience for web development.
-* AI powered by Github copilot, for AI agentic, I'm using [opencode](https://github.com/sst/opencode).
+* AI powered by [CodeCompanion.nvim](https://github.com/olimorris/codecompanion.nvim) and [Github Copilot](https://github.com/features/copilot).
 
 > [!NOTE]
 > * This configuration only guaranteed to be compatible with the nightly version.
 > * I'm not using mason.nvim now, The LSP package should managed by you own system.
-> you need to setup your own api key in [lua/plugin/extra.lua](lua/plugin/extra.lua#L198).
 > * To get all the custom keymap clue you need, just press `space`.
 
 ## Installation Instructions
@@ -49,26 +47,21 @@ NVIM_APPNAME=wenjinnn/wenvim nvim
 
 Some behavior are not common in this configuration, but it's reasonable in my opinion:
 
-* `sj` in normal mode will trigger mini.jump2d motion `MiniJump2d.builtin_opts.default`
 * `ss` in normal mode will trigger mini.jump2d motion `MiniJump2d.builtin_opts.single_character`
 * `sq` in normal mode will trigger mini.jump2d motion `MiniJump2d.builtin_opts.query`
 * if you login to Copilot, `<M-CR>` in insert mode will accept Copilot suggestion.
 
 ## Directory notes
 
-[plugin](plugin) vim custom autocmd keymap option and more
+[plugin/](plugin) Custom configurations for plugins, keymaps and options.
 
-[lua/wenvim/lsp](lua/wenvim/lsp)
-Some LSP that didn't depends on neovim built-in lsp-config like jdtls
+[lua/wenvim/lsp.lua](lua/wenvim/lsp.lua) LSP event handlers like `on_attach` and `on_detach`.
 
-[lua/plugin](lua/wenvim/plugin)
-plugins with particular settings and keymap
+[lua/wenvim/util.lua](lua/wenvim/util.lua) Common utility functions.
 
-[lua/util](lua/wenvim/util)
-common utils
+[after/](after) Filetype-specific settings and LSP server configurations.
 
-[after](after)
-just some filetype and lsp related settings
+[colors/](colors) Custom color schemes based on [mini.hues](https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-hues.md).
 
 ## Defined environment variables cheatsheets:
 
@@ -94,6 +87,13 @@ just some filetype and lsp related settings
 
 `JDTLS_DAP_VMARGS` jdtls dap vm args
 
+### AI
+`NVIM_AI_ADAPTER` default AI adapter for CodeCompanion.nvim (e.g., `copilot`, `ollama`).
+
+`NVIM_OLLAMA_MODEL` default model for ollama adapter.
+
+`NVIM_OPENROUTER_MODEL` default model for openrouter adapter.
+
 ### Vue
 
 `VUE_LANGUAGE_SERVER_PATH` path to vue language server
@@ -103,17 +103,23 @@ just some filetype and lsp related settings
 
 ### Must have
 1. [ripgrep](https://github.com/BurntSushi/ripgrep) depend by many plugin.
-2. All the LSP package that configured in [lua/plugin/lspconfig.lua](lua/plugin/lspconfig.lua), if you're going to use these.
-3. Linters and formatters that you want to use for conform.nvim and nvim-lint, you may also need to configure them in [lua/plugin/editing.lua](lua/plugin/editing.lua)
+2. All the LSP package that configured in [plugin/lspconfig.lua](plugin/lspconfig.lua), if you're going to use these.
+3. Linters and formatters that you want to use for conform.nvim and nvim-lint, you may also need to configure them in [plugin/editing.lua](plugin/editing.lua)
 
 ### Recommend
-1. [tmux](https://github.com/tmux/tmux) for terminal multiplexing, I'm almost using it only in WSL.
+1. [tmux](https://github.com/tmux/tmux) for terminal multiplexing.
 2. [lazygit](https://github.com/jesseduffield/lazygit) smooth git operation.
 
 ## Plugins
 
-### comment
+### core
++ [echasnovski/mini.nvim](https://github.com/echasnovski/mini.nvim) - The heart of this configuration.
 
+### AI
++ [olimorris/codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim)
++ [ravitemer/codecompanion-history.nvim](https://github.com/ravitemer/codecompanion-history.nvim)
+
+### comment and annotation
 + [danymat/neogen](https://github.com/danymat/neogen)
 
 ### database
@@ -128,24 +134,26 @@ just some filetype and lsp related settings
 
 ### VCS
 
-+ [vim-fugitive](https://github.com/tpope/vim-fugitive)
++ [tpope/vim-fugitive](https://github.com/tpope/vim-fugitive)
 
 ### formatting
 
 + [stevearc/conform.nvim](https://github.com/stevearc/conform.nvim)
+
 ### lsp
 
++ [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
 + [b0o/SchemaStore.nvim](https://github.com/b0o/SchemaStore.nvim)
 + [mfussenegger/nvim-lint](https://github.com/mfussenegger/nvim-lint)
 + [mfussenegger/nvim-jdtls](https://github.com/mfussenegger/nvim-jdtls)
-+ [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
-### markdown-and-latex
 
-+ [brianhuster/live-preview.nvim](https://github.com/brianhuster/live-preview.nvim)
+### preview
+
++ [barrettruth/preview.nvim](https://github.com/barrettruth/preview.nvim)
 
 ### note-taking
 
-+ [obsidian-nvim/obsidian.nvim](github.com/obsidian-nvim/obsidian.nvim)
++ [obsidian-nvim/obsidian.nvim](https://github.com/obsidian-nvim/obsidian.nvim)
 + [jbyuki/venn.nvim](https://github.com/jbyuki/venn.nvim)
 
 ### runner
@@ -158,18 +166,18 @@ just some filetype and lsp related settings
 
 + [rafamadriz/friendly-snippets](https://github.com/rafamadriz/friendly-snippets)
 + [chrisgrieser/nvim-scissors](https://github.com/chrisgrieser/nvim-scissors)
+
 ### syntax
 
-+ [hiphish/rainbow-delimiters.nvim](https://github.com/hiphish/rainbow-delimiters.nvim)
-+ [nvim-treesitter/nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects)
-+ [nvim-treesitter/nvim-treesitter-context](https://https://github.com/nvim-treesitter/nvim-treesitter-context)
 + [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
++ [nvim-treesitter/nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects)
++ [nvim-treesitter/nvim-treesitter-context](https://github.com/nvim-treesitter/nvim-treesitter-context)
++ [hiphish/rainbow-delimiters.nvim](https://github.com/hiphish/rainbow-delimiters.nvim)
 
 ### utility
 
-+ [echasnovski/mini.nvim](https://github.com/echasnovski/mini.nvim)
-### web-development
++ [nvim-lua/plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
++ [tpope/vim-speeddating](https://github.com/tpope/vim-speeddating)
++ [oysandvik94/curl.nvim](https://github.com/oysandvik94/curl.nvim)
 
-+ [mistweaverco/kulala.nvim](https://github.com/mistweaverco/kulala.nvim)
-
- Part of this readme was generated by [Dotfyle](https://dotfyle.com)
+Part of this readme was generated by [Dotfyle](https://dotfyle.com)
