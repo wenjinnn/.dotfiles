@@ -1,3 +1,4 @@
+vim.schedule(function()
   --- AUTOCMD
   local augroup = wenvim.util.augroup
   local au = vim.api.nvim_create_autocmd
@@ -55,3 +56,4 @@
       callback = function() vim.cmd("silent call system('/mnt/c/im-select.exe 1033')") end,
     })
   end
+end)
