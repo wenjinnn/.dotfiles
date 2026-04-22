@@ -10,7 +10,7 @@ vim.cmd.colorscheme('wenvim-brown')
 
 vim.schedule(function()
   vim.diagnostic.config({ virtual_text = true })
-  if vim.g.vscode then vim.notify = require('vscode-neovim').notify end
+  if vim.g.vscode then vim.notify = vscode.notify end
   vim.cmd('packadd nvim.undotree')
   vim.cmd('packadd nvim.difftool')
 
