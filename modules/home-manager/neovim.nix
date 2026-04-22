@@ -73,10 +73,7 @@
     vimAlias = true;
     vimdiffAlias = true;
     defaultEditor = true;
-
-    withRuby = true;
-    withNodeJs = true;
-    withPython3 = true;
+    sideloadInitLua = true;
 
     extraWrapperArgs = [
       "--suffix"
