@@ -396,6 +396,14 @@
   # It will use `systemctl restart` rather than stopping it with `systemctl stop`
   # followed by a delayed `systemctl start`.
   systemd.services = {
+    reboot-weekly = {
+      description = "Weekly reboot service";
+      script = "${pkgs.coreutils}/bin/true";
+      serviceConfig = {
+        Type = "oneshot";
+      };
+      startAt = "Tue *-*-* 04:00:00";
+    };
     aria2.serviceConfig = {
       User = lib.mkForce me.username;
       Group = lib.mkForce "users";
