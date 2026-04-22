@@ -1,7 +1,7 @@
 {
   "plugins": {
     "SchemaStore.nvim": {
-      "rev": "b2e84d00db4d5432f471d58898e796b478f075a7",
+      "rev": "250aed7415ddd6cb3ea321490c7b35094ed9148d",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "codecompanion-history.nvim": {
@@ -9,7 +9,7 @@
       "src": "https://github.com/ravitemer/codecompanion-history.nvim"
     },
     "codecompanion.nvim": {
-      "rev": "cea5b18c3446ff8d9d44547238bf35b2e5cd2565",
+      "rev": "0bc486860666272c7ed73612aed56301b1b8e24d",
       "src": "https://github.com/olimorris/codecompanion.nvim"
     },
     "conform.nvim": {
@@ -25,7 +25,7 @@
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "mini.nvim": {
-      "rev": "27a3e747a4e603b4121f5759e74020430ec7b7d5",
+      "rev": "5849ef04c32a6a8e55957b946c0a275801d87530",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "neogen": {
@@ -53,7 +53,7 @@
       "src": "https://codeberg.org/mfussenegger/nvim-lint"
     },
     "nvim-lspconfig": {
-      "rev": "d10ce09e42bb0ca8600fd610c3bb58676e61208d",
+      "rev": "e146efacbafed3789ac568abcc5a981c5decaa58",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-scissors": {
@@ -73,7 +73,7 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
     },
     "obsidian.nvim": {
-      "rev": "6e558fcdc869efcdd018d58b0a2667ed16b13d27",
+      "rev": "325a83ae6f410b5087af4fa912950671be8b271b",
       "src": "https://github.com/obsidian-nvim/obsidian.nvim"
     },
     "one-small-step-for-vimkind": {
@@ -85,11 +85,11 @@
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "preview.nvim": {
-      "rev": "9f93eb36f477c60ed262e154efbb2bdb004bb971",
+      "rev": "ac8bc8447dd7f1fd24bf711c350c233c23491ce0",
       "src": "https://github.com/barrettruth/preview.nvim"
     },
     "rainbow-delimiters.nvim": {
-      "rev": "aab6caaffd79b8def22ec4320a5344f7c42f58d2",
+      "rev": "08783ec022e7ddefe0f12a16f1ac4968f55478b0",
       "src": "https://github.com/hiphish/rainbow-delimiters.nvim"
     },
     "venn.nvim": {
