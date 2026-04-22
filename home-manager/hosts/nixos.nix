@@ -61,7 +61,8 @@
     telegram-desktop
     discord
     dbeaver-bin
-    redisinsight
+    # temp disabled because of build error
+    # redisinsight
     wechat
     shotcut
     qq
