@@ -57,6 +57,7 @@
     tpacpi-bat
   ];
   systemd.packages = with pkgs; [ lact ];
+  hardware.amdgpu.overdrive.enable = true;
   systemd.services.lactd.wantedBy = [ "multi-user.target" ];
   powerManagement.powertop.enable = true;
   services = {
@@ -64,6 +65,7 @@
     flatpak.enable = true;
     thermald.enable = true;
   };
+  services.hardware.bolt.enable = true;
 
   boot.extraModprobeConfig = ''
     options snd-hda-intel enable=1,0  # only enable the first audio card
