@@ -6,6 +6,9 @@ vim.pack.add({
   gh('nvim-lua/plenary.nvim'),
 })
 
+--- COLORSCHEME
+vim.cmd.colorscheme('wenvim-brown')
+
 require('mini.misc').setup()
 MiniMisc.setup_auto_root()
 MiniMisc.setup_termbg_sync()

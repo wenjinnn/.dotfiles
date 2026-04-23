@@ -1,6 +1,7 @@
 --- OPTIONS
 local opt = vim.opt
 
+opt.clipboard = vim.env.SSH_TTY and '' or 'unnamedplus'
 opt.breakindent = true
 opt.linebreak = true
 opt.number = true
