@@ -4,10 +4,6 @@
       "rev": "0c303573345e710a233f5ba75f9aadc05852771b",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
-    "codecompanion-history.nvim": {
-      "rev": "bc1b4fe06eaaf0aa2399be742e843c22f7f1652a",
-      "src": "https://github.com/ravitemer/codecompanion-history.nvim"
-    },
     "codecompanion.nvim": {
       "rev": "f70759ee8b63b46ea0cf158dc22daa2a5e9c6319",
       "src": "https://github.com/olimorris/codecompanion.nvim"
