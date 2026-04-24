@@ -36,10 +36,6 @@
       "rev": "23e7e9f883d01289ebd90e98025acc860ea26366",
       "src": "https://github.com/danymat/neogen"
     },
-    "neoterm": {
-      "rev": "eca22dc90a9db5e52d8baf91f31991ad540ffe36",
-      "src": "https://github.com/kassio/neoterm"
-    },
     "nvim-dap": {
       "rev": "45a69eba683a2c448dd9ecfc4de89511f0646b5f",
       "src": "https://codeberg.org/mfussenegger/nvim-dap"

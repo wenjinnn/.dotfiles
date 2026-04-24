@@ -4,8 +4,7 @@ local gh = util.gh
 local later = util.later
 
 later(function()
-  vim.g.neoterm_automap_keys = '<leader>tt'
-  vim.pack.add({ gh('kassio/neoterm'), gh('tpope/vim-dispatch'), gh('vim-test/vim-test') })
+  vim.pack.add({ gh('tpope/vim-dispatch'), gh('vim-test/vim-test') })
   vim.g['test#strategy'] = 'dispatch'
   vim.g.dispatch_no_tmux_make = 1
   map('n', '<leader>tt', '<cmd>call neoterm#map_do()<CR>', 'Neoterm tmap do')
