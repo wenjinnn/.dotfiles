@@ -44,12 +44,14 @@ later(function()
   local default_adapter = os.getenv('NVIM_AI_ADAPTER') or 'copilot'
   local ollama_model = os.getenv('NVIM_OLLAMA_MODEL') or 'deepseek-r1:14b'
   local openrouter_model = os.getenv('NVIM_OPENROUTER_MODEL') or 'anthropic/claude-sonnet-4.6'
-  local api_key_cmd = "cmd:sops exec-env $SOPS_SECRETS 'echo -n $%s'"
+  local api_key_cmd = "sops exec-env $SOPS_SECRETS 'echo -n $%s'"
   local ollama_setting = { schema = { model = { default = ollama_model } } }
 
   local function extend_adapter(adapter, key_or_set)
     local extend_set = key_or_set
-    if type(key_or_set) == 'string' then extend_set = { env = { api_key = api_key_cmd:format(key_or_set) } } end
+    if type(key_or_set) == 'string' then
+      extend_set = { env = { api_key = 'cmd:' .. api_key_cmd:format(key_or_set) } }
+    end
     return function() return require('codecompanion.adapters').extend(adapter, extend_set) end
   end
 
@@ -84,4 +86,37 @@ later(function()
 
   -- Expand 'cc' into 'CodeCompanion' in the command line
   vim.cmd([[cab cc CodeCompanion]])
+
+  -- AI completion
+  vim.pack.add({ gh('milanglacier/minuet-ai.nvim') })
+  require('minuet').setup({
+    virtualtext = {
+      auto_trigger_ft = {},
+      keymap = {
+        -- accept whole completion
+        accept = '<A-A>',
+        -- accept one line
+        accept_line = '<A-a>',
+        -- accept n lines (prompts for number)
+        -- e.g. "A-n 2 CR" will accept 2 lines
+        accept_n_lines = '<A-n>',
+        -- Cycle to prev completion item, or manually invoke completion
+        prev = '<A-[>',
+        -- Cycle to next completion item, or manually invoke completion
+        next = '<A-]>',
+        dismiss = '<A-e>',
+      },
+    },
+    provider = 'openai_fim_compatible',
+    provider_options = {
+      openai_fim_compatible = {
+        api_key = function() return vim.system(api_key_cmd:format('DEEPSEEK_API_KEY')) end,
+        name = 'deepseek',
+        optional = {
+          max_tokens = 256,
+          top_p = 0.9,
+        },
+      },
+    },
+  })
 end)
