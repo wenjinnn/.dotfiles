@@ -40,16 +40,12 @@ later(function()
   })
 
   -- AI assistant
-  vim.pack.add({ gh('olimorris/codecompanion.nvim'), gh('ravitemer/codecompanion-history.nvim') })
-  local default_adapter = os.getenv('NVIM_AI_ADAPTER') or 'copilot'
-  local ollama_model = os.getenv('NVIM_OLLAMA_MODEL') or 'deepseek-r1:14b'
-  local openrouter_model = os.getenv('NVIM_OPENROUTER_MODEL') or 'anthropic/claude-sonnet-4.6'
+  vim.pack.add({ gh('olimorris/codecompanion.nvim') })
+  local default_adapter = os.getenv('NVIM_CC_ADAPTER') or 'opencode'
   local get_api_key = function(key)
     local key_cmd = "sops exec-env $SOPS_SECRETS 'echo -n $%s'"
     return function() return vim.fn.system(key_cmd:format(key)) end
   end
-  local ollama_setting = { schema = { model = { default = ollama_model } } }
-
   local function extend_adapter(adapter, key_or_set)
     local extend_set = key_or_set
     if type(key_or_set) == 'string' then extend_set = { env = { api_key = get_api_key(key_or_set) } } end
@@ -59,7 +55,6 @@ later(function()
   require('codecompanion').setup({
     adapters = {
       http = {
-        ollama = extend_adapter('ollama', ollama_setting),
         anthropic = extend_adapter('anthropic', 'ANTHROPIC_API_KEY'),
         deepseek = extend_adapter('deepseek', 'DEEPSEEK_API_KEY'),
         gemini = extend_adapter('gemini', 'GEMINI_API_KEY'),
@@ -69,7 +64,6 @@ later(function()
             api_key = get_api_key('OPENROUTER_API_KEY'),
             chat_url = '/v1/chat/completions',
           },
-          schema = { model = { default = openrouter_model } },
         }),
       },
     },
@@ -79,7 +73,6 @@ later(function()
       inline = { adapter = default_adapter },
       cmd = { adapter = default_adapter },
     },
-    extensions = { history = { enabled = true } },
   })
 
   map({ 'n', 'v' }, '<leader>Ca', '<cmd>CodeCompanionActions<cr>', 'Open Code Companion actions menu')
