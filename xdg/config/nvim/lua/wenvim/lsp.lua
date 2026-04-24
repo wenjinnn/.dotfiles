@@ -51,6 +51,18 @@ function M.on_attach(ev)
       replace_keycodes = true,
       desc = 'Get the current inline completion',
     })
+    vim.keymap.set(
+      'i',
+      '<M-]>',
+      function() vim.lsp.inline_completion.select({ count = 1 }) end,
+      { desc = 'Next current inline completion' }
+    )
+    vim.keymap.set(
+      'i',
+      '<M-[>',
+      function() vim.lsp.inline_completion.select({ count = -1 }) end,
+      { desc = 'Prev current inline completion' }
+    )
   end
   -- enable on type formatting
   if client:supports_method('textDocument/onTypeFormatting', bufnr) then

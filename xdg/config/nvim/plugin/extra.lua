@@ -44,14 +44,15 @@ later(function()
   local default_adapter = os.getenv('NVIM_AI_ADAPTER') or 'copilot'
   local ollama_model = os.getenv('NVIM_OLLAMA_MODEL') or 'deepseek-r1:14b'
   local openrouter_model = os.getenv('NVIM_OPENROUTER_MODEL') or 'anthropic/claude-sonnet-4.6'
-  local api_key_cmd = "sops exec-env $SOPS_SECRETS 'echo -n $%s'"
+  local get_api_key = function(key)
+    local key_cmd = "sops exec-env $SOPS_SECRETS 'echo -n $%s'"
+    return function() return vim.fn.system(key_cmd:format(key)) end
+  end
   local ollama_setting = { schema = { model = { default = ollama_model } } }
 
   local function extend_adapter(adapter, key_or_set)
     local extend_set = key_or_set
-    if type(key_or_set) == 'string' then
-      extend_set = { env = { api_key = 'cmd:' .. api_key_cmd:format(key_or_set) } }
-    end
+    if type(key_or_set) == 'string' then extend_set = { env = { api_key = get_api_key(key_or_set) } } end
     return function() return require('codecompanion.adapters').extend(adapter, extend_set) end
   end
 
@@ -65,7 +66,7 @@ later(function()
         openrouter = extend_adapter('openai_compatible', {
           env = {
             url = 'https://openrouter.ai/api',
-            api_key = api_key_cmd:format('OPENROUTER_API_KEY'),
+            api_key = get_api_key('OPENROUTER_API_KEY'),
             chat_url = '/v1/chat/completions',
           },
           schema = { model = { default = openrouter_model } },
@@ -80,6 +81,7 @@ later(function()
     },
     extensions = { history = { enabled = true } },
   })
+
   map({ 'n', 'v' }, '<leader>Ca', '<cmd>CodeCompanionActions<cr>', 'Open Code Companion actions menu')
   map({ 'n', 'v' }, '<leader>CC', '<cmd>CodeCompanionChat Toggle<cr>', 'Toggle Code Companion chat window')
   map('v', '<leader>CA', '<cmd>CodeCompanionChat Add<cr>', 'Add selection to Code Companion chat context')
@@ -90,27 +92,16 @@ later(function()
   -- AI completion
   vim.pack.add({ gh('milanglacier/minuet-ai.nvim') })
   require('minuet').setup({
-    virtualtext = {
-      auto_trigger_ft = {},
-      keymap = {
-        -- accept whole completion
-        accept = '<A-A>',
-        -- accept one line
-        accept_line = '<A-a>',
-        -- accept n lines (prompts for number)
-        -- e.g. "A-n 2 CR" will accept 2 lines
-        accept_n_lines = '<A-n>',
-        -- Cycle to prev completion item, or manually invoke completion
-        prev = '<A-[>',
-        -- Cycle to next completion item, or manually invoke completion
-        next = '<A-]>',
-        dismiss = '<A-e>',
+    lsp = {
+      inline_completion = {
+        enable = true,
       },
     },
     provider = 'openai_fim_compatible',
     provider_options = {
       openai_fim_compatible = {
-        api_key = function() return vim.system(api_key_cmd:format('DEEPSEEK_API_KEY')) end,
+        model = 'deepseek-v4-flash',
+        api_key = get_api_key('DEEPSEEK_API_KEY'),
         name = 'deepseek',
         optional = {
           max_tokens = 256,
@@ -118,5 +109,37 @@ later(function()
         },
       },
     },
+    duet = {
+      provider = 'gemini',
+      provider_options = {
+        gemini = {
+          model = 'gemini-3-flash-preview',
+          api_key = get_api_key('GEMINI_API_KEY'),
+          optional = {
+            generationConfig = {
+              thinkingConfig = {
+                -- Disable thinking is recommended
+                thinkingLevel = 'minimal',
+              },
+            },
+          },
+        },
+        openai_compatible = {
+          model = 'minimax/minimax-m2.7',
+          api_key = get_api_key('OPENROUTER_API_KEY'),
+          optional = {
+            reasoning_effort = 'minimal',
+            -- prioritize throughput for faster completion
+            provider = {
+              sort = 'throughput',
+            },
+          },
+        },
+      },
+    },
   })
+
+  map({ 'n', 'i' }, '<A-d>', '<cmd>Minuet duet predict<cr>', 'Minuet duet predict')
+  map({ 'n', 'i' }, '<A-a>', '<cmd>Minuet duet apply<cr>', 'Minuet duet apply')
+  map({ 'n', 'i' }, '<A-x>', '<cmd>Minuet duet dismiss<cr>', 'Minuet duet dismiss')
 end)
