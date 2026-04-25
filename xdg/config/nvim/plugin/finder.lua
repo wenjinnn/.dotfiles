@@ -17,13 +17,6 @@ later(function()
     },
   })
   map('n', '<leader>fe', MiniFiles.open, 'MiniFiles open')
-  -- send notification to lsp when mini.files rename actions triggered, modified from snacks.nvim
-  vim.api.nvim_create_autocmd('User', {
-    group = augroup('mini_files_lsp_rename'),
-    pattern = 'MiniFilesActionRename',
-    callback = function(event)     util.lsp.on_rename_file(event.data.from, event.data.to)
-end,
-  })
   -- Create mappings to modify target window via split
   local map_split = function(buf_id, lhs, direction)
     local rhs = function()
