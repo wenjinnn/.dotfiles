@@ -163,7 +163,6 @@ Some behaviors in this configuration are not common but are reasonable in my opi
 
 ### runner
 
-+ [kassio/neoterm](https://github.com/kassio/neoterm)
 + [tpope/vim-dispatch](https://github.com/tpope/vim-dispatch)
 + [vim-test/vim-test](https://github.com/vim-test/vim-test)
 
