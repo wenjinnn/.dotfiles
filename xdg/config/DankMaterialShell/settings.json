@@ -509,10 +509,6 @@
           "id": "displayManager"
         },
         {
-          "enabled": true,
-          "id": "wallpaperBing"
-        },
-        {
           "id": "wallpaperBingWidget",
           "enabled": true
         }
