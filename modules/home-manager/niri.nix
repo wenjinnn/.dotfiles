@@ -451,6 +451,7 @@
           matches = [
             { namespace = "^notification$"; }
             { namespace = "^dms:notification-popup$"; }
+            { namespace = "^dms:clipboard$"; }
           ];
 
           block-out-from = "screencast";
