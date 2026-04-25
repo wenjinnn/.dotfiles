@@ -80,6 +80,7 @@
         dmsPass.enable = true;
         niriWindows.enable = true;
         displayManager.enable = true;
+        wallpaperBingWidget.enable = true;
         commandRunner = {
           enable = true;
           settings = {
