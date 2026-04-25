@@ -20,7 +20,7 @@
 * Avoid sidebars and focus on editing. Personally, I prefer using floating windows; sidebar buffers distract me.
 * Avoid extra UI plugins. In most scenarios, [mini.notify](https://github.com/echasnovski/mini.notify) and [mini.pick](https://github.com/echasnovski/mini.pick) (via `vim.ui.select()` wrapper) perform well enough for notifications and floating windows.
 * Provide an out-of-the-box experience for web development.
-* AI-powered by [CodeCompanion.nvim](https://github.com/olimorris/codecompanion.nvim) and [GitHub Copilot](https://github.com/features/copilot).
+* AI-powered by [CodeCompanion.nvim](https://github.com/olimorris/codecompanion.nvim), [minuet-ai.nvim](https://github.com/milanglacier/minuet-ai.nvim).
 
 > [!NOTE]
 > * This configuration is only guaranteed to be compatible with the Neovim nightly version.
@@ -49,7 +49,8 @@ Some behaviors in this configuration are not common but are reasonable in my opi
 
 * `ss` in normal mode triggers mini.jump2d motion `MiniJump2d.builtin_opts.single_character`.
 * `sq` in normal mode triggers mini.jump2d motion `MiniJump2d.builtin_opts.query`.
-* If you log in to Copilot, `<M-CR>` in insert mode will accept a Copilot suggestion.
+* `<M-CR>` in insert mode will accept a lsp inline completion suggestion.
+* `<A-d>`/`<A-a>`/`<A-x>` trigger minuet-ai.nvim duet inline completion (predict/apply/dismiss).
 
 ## Directory notes
 
@@ -57,7 +58,11 @@ Some behaviors in this configuration are not common but are reasonable in my opi
 
 [lua/wenvim/lsp.lua](lua/wenvim/lsp.lua) LSP event handlers like `on_attach` and `on_detach`.
 
+[lua/wenvim/init.lua](lua/wenvim/init.lua) Entry point, registers the global `wenvim` table.
+
 [lua/wenvim/util.lua](lua/wenvim/util.lua) Common utility functions.
+
+[lua/wenvim/color.lua](lua/wenvim/color.lua) Colorscheme helpers and highlight overrides.
 
 [after/](after) Filetype-specific settings and LSP server configurations.
 
