@@ -48,6 +48,10 @@
   "modalElevationEnabled": true,
   "popoutElevationEnabled": true,
   "barElevationEnabled": true,
+  "blurEnabled": false,
+  "blurBorderColor": "outline",
+  "blurBorderCustomColor": "#ffffff",
+  "blurBorderOpacity": 1,
   "wallpaperFillMode": "Fill",
   "blurredWallpaperLayer": true,
   "blurWallpaperOnOverview": false,
@@ -64,6 +68,7 @@
   "selectedGpuIndex": 0,
   "enabledGpuPciIds": [],
   "showSystemTray": true,
+  "systemTrayMonochromeIcons": false,
   "showClock": true,
   "showNotificationButton": true,
   "showBattery": true,
@@ -128,8 +133,8 @@
       "width": 50
     },
     {
-      "id": "builtin_cups",
       "enabled": true,
+      "id": "builtin_cups",
       "width": 25
     },
     {
@@ -194,6 +199,7 @@
   "workspaceNameIcons": {},
   "waveProgressEnabled": true,
   "scrollTitleEnabled": true,
+  "mediaAdaptiveWidthEnabled": true,
   "audioVisualizerEnabled": true,
   "audioScrollMode": "volume",
   "audioWheelScrollAmount": 5,
@@ -238,6 +244,7 @@
   "sortAppsAlphabetically": false,
   "appLauncherGridColumns": 5,
   "spotlightCloseNiriOverview": true,
+  "rememberLastQuery": false,
   "spotlightSectionViewModes": {},
   "appDrawerSectionViewModes": {},
   "niriOverviewOverlayEnabled": true,
@@ -247,6 +254,8 @@
   "dankLauncherV2BorderColor": "primary",
   "dankLauncherV2ShowFooter": true,
   "dankLauncherV2UnloadOnClose": false,
+  "dankLauncherV2IncludeFilesInAll": false,
+  "dankLauncherV2IncludeFoldersInAll": false,
   "useAutoLocation": false,
   "weatherEnabled": true,
   "networkPreference": "auto",
@@ -286,6 +295,7 @@
   "notepadLastCustomTransparency": 0.7,
   "soundsEnabled": true,
   "useSystemSoundTheme": false,
+  "soundLogin": false,
   "soundNewNotification": true,
   "soundVolumeChanged": true,
   "soundPluggedIn": true,
@@ -294,11 +304,13 @@
   "acSuspendTimeout": 0,
   "acSuspendBehavior": 0,
   "acProfileName": "",
+  "acPostLockMonitorTimeout": 0,
   "batteryMonitorTimeout": 300,
   "batteryLockTimeout": 300,
   "batterySuspendTimeout": 0,
   "batterySuspendBehavior": 0,
   "batteryProfileName": "",
+  "batteryPostLockMonitorTimeout": 0,
   "batteryChargeLimit": 100,
   "lockBeforeSuspend": true,
   "loginctlLockIntegration": true,
@@ -499,6 +511,10 @@
         {
           "enabled": true,
           "id": "wallpaperBing"
+        },
+        {
+          "id": "wallpaperBingWidget",
+          "enabled": true
         }
       ],
       "clickThrough": false,
