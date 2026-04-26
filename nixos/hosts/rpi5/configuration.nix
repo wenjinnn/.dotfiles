@@ -53,9 +53,9 @@
     amule-web
     amule-daemon
   ];
-  sops.secrets.MATRIX_REGISTRATION_TOKEN = { };
-  sops.secrets.MATRIX_REGISTRATION_TOKEN.owner = config.services.matrix-tuwunel.user;
-  sops.secrets.MATRIX_REGISTRATION_TOKEN.group = config.services.matrix-tuwunel.group;
+  # sops.secrets.MATRIX_REGISTRATION_TOKEN = { };
+  # sops.secrets.MATRIX_REGISTRATION_TOKEN.owner = config.services.matrix-tuwunel.user;
+  # sops.secrets.MATRIX_REGISTRATION_TOKEN.group = config.services.matrix-tuwunel.group;
   services = {
     nginx = {
       enable = true;
@@ -137,16 +137,16 @@
         adminpassFile = config.sops.secrets.NEXTCLOUD_ADMIN_PASS.path;
       };
     };
-    matrix-tuwunel = {
-      enable = true;
-      settings = {
-        global = {
-          server_name = "matrix.ts.wenjin.me";
-          allow_registration = true;
-          registration_token_file = config.sops.secrets.MATRIX_REGISTRATION_TOKEN.path;
-        };
-      };
-    };
+    # matrix-tuwunel = {
+    #   enable = true;
+    #   settings = {
+    #     global = {
+    #       server_name = "matrix.ts.wenjin.me";
+    #       allow_registration = true;
+    #       registration_token_file = config.sops.secrets.MATRIX_REGISTRATION_TOKEN.path;
+    #     };
+    #   };
+    # };
     home-assistant = {
       enable = true;
       openFirewall = true;
@@ -218,7 +218,7 @@
     samba = {
       enable = true;
       openFirewall = true;
-      nmbd.extraArgs = [ "--option=interfaces= lo wlan0 end0" ];
+      nmbd.enable = false;
       settings = {
         global = {
           "invalid users" = [
