@@ -15,7 +15,11 @@ vim.schedule(function()
   au({ 'TermEnter', 'TermOpen' }, {
     group = augroup('terminal_buffer'),
     pattern = '*',
-    callback = function() vim.b.miniindentscope_disable = true end,
+    callback = function()
+      vim.b.miniindentscope_disable = true
+      vim.opt_local.number = false
+      vim.opt_local.relativenumber = false
+    end,
   })
 
   -- resize splits if window got resized
