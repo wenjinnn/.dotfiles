@@ -108,25 +108,14 @@ later(function()
       },
     },
     duet = {
-      provider = 'gemini',
+      provider = 'openai_compatible',
       provider_options = {
-        gemini = {
-          model = 'gemini-3-flash-preview',
-          api_key = get_api_key('GEMINI_API_KEY'),
-          optional = {
-            generationConfig = {
-              thinkingConfig = {
-                -- Disable thinking is recommended
-                thinkingLevel = 'minimal',
-              },
-            },
-          },
-        },
         openai_compatible = {
-          model = 'minimax/minimax-m2.7',
-          api_key = get_api_key('OPENROUTER_API_KEY'),
+          model = 'deepseek-v4-flash',
+          end_point = 'https://api.deepseek.com/chat/completions',
+          api_key = get_api_key('DEEPSEEK_API_KEY'),
           optional = {
-            reasoning_effort = 'minimal',
+            reasoning_effort = 'low',
             -- prioritize throughput for faster completion
             provider = {
               sort = 'throughput',
