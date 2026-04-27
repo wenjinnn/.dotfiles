@@ -93,11 +93,9 @@ Some behaviors in this configuration are not common but are reasonable in my opi
 `JDTLS_DAP_VMARGS` JVM arguments for JDTLS DAP.
 
 ### AI
-`NVIM_AI_ADAPTER` Default AI adapter for CodeCompanion.nvim (e.g., `copilot`, `ollama`).
+`NVIM_AI_ACP_ADAPTER` Default AI adapter for CodeCompanion.nvim ACP interactions (e.g., `claude_code`).
 
-`NVIM_OLLAMA_MODEL` Default model for the Ollama adapter.
-
-`NVIM_OPENROUTER_MODEL` Default model for the OpenRouter adapter.
+`NVIM_AI_HTTP_ADAPTER` Default AI adapter for CodeCompanion.nvim HTTP cmd interactions (e.g., `deepseek`).
 
 ### Vue
 
@@ -122,7 +120,7 @@ Some behaviors in this configuration are not common but are reasonable in my opi
 
 ### AI
 + [olimorris/codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim)
-+ [ravitemer/codecompanion-history.nvim](https://github.com/ravitemer/codecompanion-history.nvim)
++ [milanglacier/minuet-ai.nvim](https://github.com/milanglacier/minuet-ai.nvim)
 
 ### comment and annotation
 + [danymat/neogen](https://github.com/danymat/neogen)
