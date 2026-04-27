@@ -21,11 +21,11 @@
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "mini.nvim": {
-      "rev": "4f6f84a96b076747b736d100388a8d7844771d7d",
+      "rev": "be81509b7160aa02264a59789164a2e1c4a6750a",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "minuet-ai.nvim": {
-      "rev": "2141046f480a4582072854faffbe507f202a3c55",
+      "rev": "07cdfad8714aada4a231b1cfaf1ef415caa333ca",
       "src": "https://github.com/milanglacier/minuet-ai.nvim"
     },
     "neogen": {
@@ -49,7 +49,7 @@
       "src": "https://codeberg.org/mfussenegger/nvim-lint"
     },
     "nvim-lspconfig": {
-      "rev": "8fde495949782bb61c2605174e231d145a048d8c",
+      "rev": "01b503f395cfb81053cc6b4826fe8f06d54b76f6",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-scissors": {
@@ -81,7 +81,7 @@
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "preview.nvim": {
-      "rev": "ac8bc8447dd7f1fd24bf711c350c233c23491ce0",
+      "rev": "97b1991b10a0accae3894d44ce34ab44063d83eb",
       "src": "https://github.com/barrettruth/preview.nvim"
     },
     "rainbow-delimiters.nvim": {
