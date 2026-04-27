@@ -76,7 +76,6 @@ later(function()
   })
 
   map({ 'n', 'v' }, '<leader>Ca', '<cmd>CodeCompanionActions<cr>', 'Open Code Companion actions menu')
-  map({ 'n', 'v' }, '<leader>Ch', '<cmd>CodeCompanionHistory<cr>', 'Open Code Companion history list')
   map({ 'n', 'v' }, '<leader>CC', '<cmd>CodeCompanionChat Toggle<cr>', 'Toggle Code Companion chat window')
   map('v', '<leader>CA', '<cmd>CodeCompanionChat Add<cr>', 'Add selection to Code Companion chat context')
 
