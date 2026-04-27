@@ -5,6 +5,7 @@
     qwen-code
     mcp-nixos
     nur.repos.definfo.cc-switch-cli
+    claude-agent-acp
   ];
   programs = {
     bash = {
