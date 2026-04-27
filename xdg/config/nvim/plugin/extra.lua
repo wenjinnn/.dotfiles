@@ -41,7 +41,7 @@ later(function()
 
   -- AI assistant
   vim.pack.add({ gh('olimorris/codecompanion.nvim') })
-  local default_adapter = os.getenv('NVIM_CC_ADAPTER') or 'claude_code'
+  local default_adapter = os.getenv('NVIM_CC_ADAPTER') or 'opencode'
   local get_api_key = function(key)
     local key_cmd = "sops exec-env $SOPS_SECRETS 'echo -n $%s'"
     return function() return vim.fn.system(key_cmd:format(key)) end
