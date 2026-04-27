@@ -72,15 +72,20 @@ later(function()
       chat = { adapter = default_adapter },
       inline = { adapter = default_adapter },
       cmd = { adapter = default_adapter },
+      cli = {
+        agent = 'claude',
+        agents = {
+          claude = { cmd = 'claude', args = {}, description = 'Claude Code Agent' },
+          opencode = { cmd = 'opencode', args = {}, description = 'Opencode Agent' },
+          gemini = { cmd = 'gemini', args = {}, description = 'Gemini Agent' },
+        },
+      },
     },
   })
 
   map({ 'n', 'v' }, '<leader>Ca', '<cmd>CodeCompanionActions<cr>', 'Open Code Companion actions menu')
   map({ 'n', 'v' }, '<leader>CC', '<cmd>CodeCompanionChat Toggle<cr>', 'Toggle Code Companion chat window')
   map('v', '<leader>CA', '<cmd>CodeCompanionChat Add<cr>', 'Add selection to Code Companion chat context')
-
-  -- Expand 'cc' into 'CodeCompanion' in the command line
-  vim.cmd([[cab cc CodeCompanion]])
 
   -- AI completion
   vim.pack.add({ gh('milanglacier/minuet-ai.nvim') })
