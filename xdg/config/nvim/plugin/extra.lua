@@ -87,6 +87,10 @@ later(function()
   vim.pack.add({ gh('milanglacier/minuet-ai.nvim') })
   require('minuet').setup({
     lsp = {
+      enabled_ft = { '*' },
+      completion = {
+        enable = false,
+      },
       inline_completion = {
         enable = true,
       },
