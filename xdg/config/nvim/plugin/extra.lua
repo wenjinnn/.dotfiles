@@ -41,7 +41,8 @@ later(function()
 
   -- AI assistant
   vim.pack.add({ gh('olimorris/codecompanion.nvim') })
-  local default_adapter = os.getenv('NVIM_CC_ADAPTER') or 'claude_code'
+  local acp_adapter = os.getenv('NVIM_AI_ACP_ADAPTER') or 'claude_code'
+  local http_adapter = os.getenv('NVIM_AI_HTTP_ADAPTER') or 'deepseek'
   local get_api_key = function(key)
     local key_cmd = "sops exec-env $SOPS_SECRETS 'echo -n $%s'"
     return function() return vim.fn.system(key_cmd:format(key)) end
@@ -68,10 +69,10 @@ later(function()
       },
     },
     interactions = {
-      background = { adapter = default_adapter },
-      chat = { adapter = default_adapter },
-      inline = { adapter = default_adapter },
-      cmd = { adapter = default_adapter },
+      background = { adapter = acp_adapter },
+      chat = { adapter = acp_adapter },
+      inline = { adapter = acp_adapter },
+      cmd = { adapter = http_adapter },
       cli = {
         agent = 'claude',
         agents = {
@@ -85,6 +86,7 @@ later(function()
 
   map({ 'n', 'v' }, '<leader>Ca', '<cmd>CodeCompanionActions<cr>', 'Open Code Companion actions menu')
   map({ 'n', 'v' }, '<leader>CC', '<cmd>CodeCompanionChat Toggle<cr>', 'Toggle Code Companion chat window')
+  map({ 'n', 'v' }, '<leader>Cc', '<cmd>CodeCompanionCLI Ask<cr>', 'Ask Code Companion ACP cli')
   map('v', '<leader>CA', '<cmd>CodeCompanionChat Add<cr>', 'Add selection to Code Companion chat context')
 
   -- AI completion
