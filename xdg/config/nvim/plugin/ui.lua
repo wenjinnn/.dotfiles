@@ -74,9 +74,10 @@ later(function()
       { mode = 'n', keys = 'g' },
       { mode = 'x', keys = 'g' },
       -- Marks
-      { mode = 'n', keys = "'" },
+      -- triggers of `'` make mini.files `'` mark not working
+      -- { mode = 'n', keys = "'" },
+      -- { mode = 'x', keys = "'" },
       { mode = 'n', keys = '`' },
-      { mode = 'x', keys = "'" },
       { mode = 'x', keys = '`' },
       -- Registers
       { mode = 'n', keys = '"' },
