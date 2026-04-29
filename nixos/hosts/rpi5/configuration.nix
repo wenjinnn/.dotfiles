@@ -53,9 +53,9 @@
     amule-web
     amule-daemon
   ];
-  # sops.secrets.MATRIX_REGISTRATION_TOKEN = { };
-  # sops.secrets.MATRIX_REGISTRATION_TOKEN.owner = config.services.matrix-tuwunel.user;
-  # sops.secrets.MATRIX_REGISTRATION_TOKEN.group = config.services.matrix-tuwunel.group;
+  sops.secrets.MATRIX_REGISTRATION_TOKEN = { };
+  sops.secrets.MATRIX_REGISTRATION_TOKEN.owner = config.services.matrix-tuwunel.user;
+  sops.secrets.MATRIX_REGISTRATION_TOKEN.group = config.services.matrix-tuwunel.group;
   services = {
     nginx = {
       enable = true;
@@ -137,16 +137,16 @@
         adminpassFile = config.sops.secrets.NEXTCLOUD_ADMIN_PASS.path;
       };
     };
-    # matrix-tuwunel = {
-    #   enable = true;
-    #   settings = {
-    #     global = {
-    #       server_name = "matrix.ts.wenjin.me";
-    #       allow_registration = true;
-    #       registration_token_file = config.sops.secrets.MATRIX_REGISTRATION_TOKEN.path;
-    #     };
-    #   };
-    # };
+    matrix-tuwunel = {
+      enable = true;
+      settings = {
+        global = {
+          server_name = "matrix.ts.wenjin.me";
+          allow_registration = true;
+          registration_token_file = config.sops.secrets.MATRIX_REGISTRATION_TOKEN.path;
+        };
+      };
+    };
     home-assistant = {
       enable = true;
       openFirewall = true;
@@ -197,7 +197,7 @@
       openPorts = true;
       serviceUMask = "0000";
       rpcSecretFile = config.sops.secrets.RPI5_ARIA2_SECRET.path;
-      downloadDirPermission = "2755";
+      downloadDirPermission = "0775";
       settings = {
         config-path = "/mnt/data/media/video/aria2/aria2.conf";
         input-file = "/mnt/data/media/video/aria2/aria2.session";
@@ -403,10 +403,6 @@
         Type = "oneshot";
       };
       startAt = "Tue *-*-* 04:00:00";
-    };
-    aria2.serviceConfig = {
-      User = lib.mkForce me.username;
-      Group = lib.mkForce "users";
     };
     # Configure the amuleweb systemd service
     amuleweb = {
