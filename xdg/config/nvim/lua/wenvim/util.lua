@@ -83,7 +83,7 @@ function M.filter_buffers(pattern, cmd_opts)
   cmd_opts = cmd_opts or {}
   local items = {}
   local buffers_output =
-    vim.api.nvim_exec2('filter' .. (cmd_opts.revert and '! ' or ' ') .. pattern .. ' ls', { output = true })
+    vim.api.nvim_exec2('filter' .. (cmd_opts.revert and '! ' or ' ') .. pattern .. ' ls' .. (cmd_opts.ls_revert and '! ' or ' '), { output = true })
   if buffers_output.output ~= '' then
     for _, l in ipairs(vim.split(buffers_output.output, '\n')) do
       local buf_str, name = l:match('^%s*%d+'), l:match('"(.*)"')
