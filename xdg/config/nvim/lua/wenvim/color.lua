@@ -29,10 +29,11 @@ function M.override_hl(name, opts)
 end
 
 -- Some personal preferences for highlighting settings
-function M.setup_mini_hues_hl()
+function M.setup_hl()
   vim.api.nvim_set_hl(0, '@lsp.type.interface', { link = '@interface' })
   vim.api.nvim_set_hl(0, '@interface', { link = '@constant' })
   vim.api.nvim_set_hl(0, '@lsp.type.class', { link = '@punctuation' })
+  M.override_hl('@comment', { italic = true })
   M.override_hl('Visual', { bold = true })
   M.override_hl('Comment', { italic = true })
   M.override_hl('DiagnosticError', { italic = true })
@@ -45,7 +46,6 @@ end
 -- A wrapper for above functions
 function M.setup_wenvim_color(base_color)
   M.setup_terminal_color(base_color)
-  M.setup_mini_hues_hl()
 end
 
 return M
