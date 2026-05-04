@@ -44,6 +44,14 @@
       version = "0.44.2026030602";
       sha256 = "sha256-hPgDdPx3nrL9abQmmTuWt5gzerItID6iiLkjve92DFs=";
     };
+    wireshark = prev.wireshark.overrideAttrs (old: {
+      src = prev.pkgs.fetchFromGitHub {
+        repo = "wireshark";
+        owner = "wireshark";
+        tag = "v4.6.5";
+        hash = "sha256-Zvrwxjp4LK2J3QnxmPxKKrU01YHQvPyp54UWzeGNCjA=";
+      };
+    });
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
