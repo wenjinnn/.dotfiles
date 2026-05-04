@@ -1,2 +1,4 @@
 **/tags
 **/*.spl
+colors/dms.lua
+lua/lualine/
