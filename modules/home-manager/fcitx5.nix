@@ -5,7 +5,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   # rime sync dir link to rclone dir
   xdg.dataFile = {
     "fcitx5/rime/sync" = {
@@ -25,6 +26,7 @@
         (fcitx5-rime.override {
           rimeDataPkgs = [
             nur.repos.xddxdd.rime-aurora-pinyin
+            nur.repos.xddxdd.rime-custom-pinyin-dictionary
             nur.repos.xddxdd.rime-dict
             nur.repos.xddxdd.rime-ice
             nur.repos.xddxdd.rime-moegirl
