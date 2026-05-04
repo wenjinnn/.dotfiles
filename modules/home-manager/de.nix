@@ -77,10 +77,21 @@
         calculator.enable = true;
         sshConnections.enable = true;
         dankGifSearch.enable = true;
-        dmsPass.enable = true;
         niriWindows.enable = true;
         displayManager.enable = true;
         wallpaperBingWidget.enable = true;
+        dankVault = {
+          enable = true;
+          settings = {
+            trigger = ":p";
+          };
+        };
+        dankTranslate = {
+          enable = true;
+          settings = {
+            trigger = ":t";
+          };
+        };
         commandRunner = {
           enable = true;
           settings = {
