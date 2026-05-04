@@ -66,6 +66,13 @@ later(function()
             chat_url = '/v1/chat/completions',
           },
         }),
+        mimo = extend_adapter('openai_compatible', {
+          env = {
+            url = 'https://token-plan-cn.xiaomimimo.com',
+            api_key = get_api_key('MIMO_API_KEY'),
+            chat_url = '/v1/chat/completions',
+          },
+        }),
       },
     },
     interactions = {
