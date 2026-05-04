@@ -41,29 +41,6 @@ function M.on_attach(ev)
   if client:supports_method('textDocument/inlayHint', bufnr) then vim.lsp.inlay_hint.enable(true, { bufnr = bufnr }) end
   -- code lens
   if client:supports_method('textDocument/codeLens', bufnr) then vim.lsp.codelens.enable(true, { bufnr = bufnr }) end
-  -- inline completion, only work after neovim commit 58060c2340a52377a0e1d2b782ce1deef13b2b9b
-  if client:supports_method('textDocument/inlineCompletion', bufnr) then
-    vim.lsp.inline_completion.enable(true)
-    vim.keymap.set('i', '<M-CR>', function()
-      if not vim.lsp.inline_completion.get() then return '<M-CR>' end
-    end, {
-      expr = true,
-      replace_keycodes = true,
-      desc = 'Get the current inline completion',
-    })
-    vim.keymap.set(
-      'i',
-      '<M-]>',
-      function() vim.lsp.inline_completion.select({ count = 1 }) end,
-      { desc = 'Next current inline completion' }
-    )
-    vim.keymap.set(
-      'i',
-      '<M-[>',
-      function() vim.lsp.inline_completion.select({ count = -1 }) end,
-      { desc = 'Prev current inline completion' }
-    )
-  end
   -- enable on type formatting
   if client:supports_method('textDocument/onTypeFormatting', bufnr) then
     vim.lsp.on_type_formatting.enable(true, { client_id = client.id })
