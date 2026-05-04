@@ -12,8 +12,8 @@
       # lsp related
       jdt-language-server
       lombok
+      emmylua-ls
       bash-language-server
-      lua-language-server
       vue-language-server
       vscode-langservers-extracted
       nur.repos.wenjinnn.lemminx-maven
