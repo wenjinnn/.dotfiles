@@ -61,4 +61,10 @@ vim.schedule(function()
       callback = function() vim.cmd("silent call system('/mnt/c/im-select.exe 1033')") end,
     })
   end
+  -- set up highlights after colorscheme
+  au({ 'ColorScheme' }, {
+    group = augroup('colorscheme'),
+    callback = function() wenvim.color.setup_hl() end,
+  })
+
 end)
