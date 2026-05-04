@@ -57,7 +57,6 @@
     wireshark
     mitmproxy
     waydroid
-    bottles
     telegram-desktop
     discord
     dbeaver-bin
@@ -70,6 +69,6 @@
     wpsoffice-cn
     inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps
     inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps-launcher
-    nur.repos.yakkhini.dingtalk
+    nur.repos.xddxdd.dingtalk
   ];
 }
