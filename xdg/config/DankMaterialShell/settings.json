@@ -49,6 +49,8 @@
   "popoutElevationEnabled": true,
   "barElevationEnabled": true,
   "blurEnabled": false,
+  "blurForegroundLayers": true,
+  "blurLayerOutlineOpacity": 0.12,
   "blurBorderColor": "outline",
   "blurBorderCustomColor": "#ffffff",
   "blurBorderOpacity": 1,
@@ -68,7 +70,9 @@
   "selectedGpuIndex": 0,
   "enabledGpuPciIds": [],
   "showSystemTray": true,
-  "systemTrayMonochromeIcons": false,
+  "systemTrayIconTintMode": "none",
+  "systemTrayIconTintSaturation": 50,
+  "systemTrayIconTintStrength": 135,
   "showClock": true,
   "showNotificationButton": true,
   "showBattery": true,
@@ -343,12 +347,13 @@
   "matugenTemplatePywalfox": true,
   "matugenTemplateZenBrowser": true,
   "matugenTemplateVesktop": true,
+  "matugenTemplateVencord": true,
   "matugenTemplateEquibop": true,
   "matugenTemplateGhostty": true,
   "matugenTemplateKitty": true,
   "matugenTemplateFoot": true,
   "matugenTemplateAlacritty": true,
-  "matugenTemplateNeovim": false,
+  "matugenTemplateNeovim": true,
   "matugenTemplateWezterm": true,
   "matugenTemplateDgop": true,
   "matugenTemplateKcolorscheme": true,
@@ -357,8 +362,8 @@
   "matugenTemplateZed": true,
   "matugenTemplateNeovimSettings": {
     "dark": {
-      "baseTheme": "github_dark",
-      "harmony": 0.5
+      "baseTheme": "default-dark",
+      "harmony": 0.1
     },
     "light": {
       "baseTheme": "github_light",
@@ -393,6 +398,9 @@
   "dockMaxVisibleApps": 0,
   "dockMaxVisibleRunningApps": 0,
   "dockShowOverflowBadge": true,
+  "dockShowTrash": false,
+  "dockTrashFileManager": "default",
+  "dockTrashCustomCommand": "",
   "notificationOverlayEnabled": false,
   "notificationPopupShadowEnabled": true,
   "notificationPopupPrivacyMode": false,
@@ -466,6 +474,9 @@
   "updaterUseCustomCommand": false,
   "updaterCustomCommand": "",
   "updaterTerminalAdditionalParams": "",
+  "updaterIntervalSeconds": 1800,
+  "updaterIncludeFlatpak": true,
+  "updaterAllowAUR": true,
   "displayNameMode": "system",
   "screenPreferences": {},
   "showOnLastDisplay": {},
@@ -509,8 +520,8 @@
           "id": "displayManager"
         },
         {
-          "id": "wallpaperBingWidget",
-          "enabled": true
+          "enabled": true,
+          "id": "wallpaperBingWidget"
         }
       ],
       "clickThrough": false,

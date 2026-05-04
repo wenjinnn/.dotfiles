@@ -1,11 +1,15 @@
 {
   "plugins": {
     "SchemaStore.nvim": {
-      "rev": "c3709d579066ab8f9600f5b76ade2da5042ec1ac",
+      "rev": "6db1246640e9e1bdf8a1d1f6d27a940fc0a572d5",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
+    "base46": {
+      "rev": "eb54ce645266cac86bb6a4241428fefe61e90a8a",
+      "src": "https://github.com/AvengeMedia/base46"
+    },
     "codecompanion.nvim": {
-      "rev": "bc82fbca915f28467a2e2e74e11845ce20d8017c",
+      "rev": "9d985b1cc4e650a676a977ab1f9ed50dc6d0f4d8",
       "src": "https://github.com/olimorris/codecompanion.nvim"
     },
     "conform.nvim": {
@@ -21,11 +25,11 @@
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "mini.nvim": {
-      "rev": "be81509b7160aa02264a59789164a2e1c4a6750a",
+      "rev": "0f339bf5c93f392dc5d2417d47d7b9edc5f96fe8",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "minuet-ai.nvim": {
-      "rev": "07cdfad8714aada4a231b1cfaf1ef415caa333ca",
+      "rev": "7e696b717082e524286192ddaf397f709427f1a5",
       "src": "https://github.com/milanglacier/minuet-ai.nvim"
     },
     "neogen": {
@@ -49,7 +53,7 @@
       "src": "https://codeberg.org/mfussenegger/nvim-lint"
     },
     "nvim-lspconfig": {
-      "rev": "01b503f395cfb81053cc6b4826fe8f06d54b76f6",
+      "rev": "31026a13eefb20681124706a79fc1df6bf11ab27",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-scissors": {

@@ -6,9 +6,15 @@ vim.pack.add({
   gh('nvim-lua/plenary.nvim'),
 })
 
---- COLORSCHEME
-vim.cmd.colorscheme('wenvim-brown')
-
+if vim.fn.executable('dms') == 1 then
+  vim.pack.add({ gh('AvengeMedia/base46') })
+  require('base46').setup()
+  --- COLORSCHEME
+  vim.cmd.colorscheme('dms')
+  wenvim.color.setup_hl()
+else
+  vim.cmd.colorscheme('wenvim-brown')
+end
 require('mini.misc').setup()
 MiniMisc.setup_auto_root()
 MiniMisc.setup_termbg_sync()
