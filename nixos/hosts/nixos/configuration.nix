@@ -40,11 +40,11 @@
 
   nixpkgs.config.rocmSupport = true;
 
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   services.ollama = {
     environmentVariables = {
-      HCC_AMDGPU_TARGET = "gfx1101"; # used to be necessary, but doesn't seem to anymore
+      HCC_AMDGPU_TARGET = "gfx1100"; # used to be necessary, but doesn't seem to anymore
       OLLAMA_KEEP_ALIVE = "30m";
     };
     rocmOverrideGfx = "11.0.1";
@@ -90,6 +90,25 @@
 
   };
   services.hardware.bolt.enable = true;
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "thunderbolt"
+    "nvme"
+    "uas"
+    "sd_mod"
+    "amdgpu"
+  ];
+  boot.kernelModules = [
+    "amdgpu"
+    "thunderbolt"
+  ];
+  boot.kernelParams = [
+    "pci=realloc"
+    "pci=hpmemsize=512M"
+    "pcie_ports=native"
+    "amdgpu.gpu_recovery=1"
+    "amdgpu.runpm=0"
+  ];
 
   boot.extraModprobeConfig = ''
     options snd-hda-intel enable=1,0  # only enable the first audio card
