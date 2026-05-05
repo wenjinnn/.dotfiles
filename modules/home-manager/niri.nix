@@ -184,6 +184,10 @@
             hotkey-overlay.title = "Notification: dms notifications";
             action = sh "dms ipc call notifications toggle";
           };
+          "Mod+B" = {
+            hotkey-overlay.title = "Toggle wayscriber";
+            action = sh "wayscriber -a";
+          };
           "Mod+Ctrl+Shift+P" = {
             hotkey-overlay.title = "Power menu: dms powermenu";
             action = sh "dms ipc call powermenu toggle";

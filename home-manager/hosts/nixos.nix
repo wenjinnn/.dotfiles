@@ -52,6 +52,7 @@
 
   home.packages = with pkgs; [
     gimp3-with-plugins
+    wayscriber
     darktable
     scrcpy
     wireshark
