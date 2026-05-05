@@ -41,7 +41,7 @@
         mounts = {
           "/" = {
             enable = true;
-            autoMount = false;
+            # autoMount = false;
             mountPoint = "${config.home.homeDirectory}/Rclone/nextcloud";
           };
         };
