@@ -3,7 +3,8 @@
   pkgs,
   me,
   ...
-}: {
+}:
+{
   services = {
     offlineimap = {
       enable = true;
@@ -19,11 +20,13 @@
     # setup lmtp and rss2email for read local rss source
     dovecot2 = {
       enable = true;
-      protocols.lmtp = true;
       settings = {
         dovecot_config_version = config.services.dovecot2.package.version;
         dovecot_storage_version = config.services.dovecot2.package.version;
         mail_path = "maildir:~/Maildir/%u/Inbox";
+        protocols = {
+          lmtp = true;
+        };
       };
     };
     rss2email = {
