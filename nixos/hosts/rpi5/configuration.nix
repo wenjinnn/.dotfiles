@@ -48,7 +48,13 @@
   time.timeZone = "Asia/Shanghai";
 
   environment.systemPackages = with pkgs; [
+    nodejs
+    claude-code
+    opencode
+    tmux
+    nur.repos.definfo.cc-switch-cli
     neovim
+    git
     amule
     amule-web
     amule-daemon
@@ -386,6 +392,7 @@
       cache-size = 1000;
       server = [
         "127.0.0.1#1053"
+        "/ts.wenjin.me/100.100.100.100"
       ];
     };
   };
