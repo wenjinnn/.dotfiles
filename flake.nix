@@ -149,8 +149,6 @@
             nur.modules.nixos.default
             sops-nix.nixosModules.sops
             nix-index-database.nixosModules.nix-index
-            # for eGPU
-            nixos-hardware.nixosModules.common-gpu-amd
           ];
         };
         nixos-wsl = nixpkgs.lib.nixosSystem {
