@@ -200,6 +200,7 @@
                 nixpkgs-rpi
                 disko.nixosModules.disko
                 sops-nix.nixosModules.sops
+                nur.modules.nixos.default
                 ./nixos/hosts/rpi5/configuration.nix
               ];
             }
