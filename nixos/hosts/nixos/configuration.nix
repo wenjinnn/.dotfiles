@@ -96,15 +96,13 @@
     "nvme"
     "uas"
     "sd_mod"
-    "amdgpu"
   ];
   boot.kernelModules = [
-    "amdgpu"
     "thunderbolt"
   ];
   boot.kernelParams = [
     "pci=realloc"
-    "pci=hpmemsize=512M"
+    "pci=hpmemsize=1G"
     "pcie_ports=native"
     "amdgpu.gpu_recovery=1"
     "amdgpu.runpm=0"
