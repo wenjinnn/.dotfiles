@@ -15,10 +15,10 @@ au({ 'TermEnter', 'TermOpen' }, {
   group = augroup('terminal_buffer'),
   pattern = '*',
   callback = function()
-  vim.b.miniindentscope_disable = true
-  vim.opt_local.number = false
-  vim.opt_local.relativenumber = false
-  vim.opt_local.signcolumn = 'no'
+    vim.b.miniindentscope_disable = true
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+    vim.opt_local.signcolumn = 'no'
   end,
 })
 
@@ -49,8 +49,7 @@ if vim.fn.executable('fcitx5') == 1 then
   au({ 'InsertLeave' }, {
     group = augroup('fcitx5'),
     pattern = '*',
-    callback = function()     vim.cmd("silent call system('fcitx5-remote -c')")
-end,
+    callback = function() vim.cmd("silent call system('fcitx5-remote -c')") end,
   })
 elseif vim.fn.has('wsl') == 1 and vim.fn.executable('/mnt/c/im-select.exe') == 1 then
   -- auto switch to default keyboard when in wsl, to make this work
@@ -58,8 +57,7 @@ elseif vim.fn.has('wsl') == 1 and vim.fn.executable('/mnt/c/im-select.exe') == 1
   au({ 'InsertLeave' }, {
     group = augroup('wsl_im'),
     pattern = '*',
-    callback = function()     vim.cmd("silent call system('/mnt/c/im-select.exe 1033')")
-end,
+    callback = function() vim.cmd("silent call system('/mnt/c/im-select.exe 1033')") end,
   })
 end
 -- set up highlights after colorscheme
