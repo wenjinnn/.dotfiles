@@ -20,7 +20,7 @@ later(function()
   require('curl').setup()
 
   -- markdown, html, asciidoc, svg preview in browser
-  vim.pack.add({ gh('barrettruth/preview.nvim') })
+  vim.pack.add({ 'https://git.barrettruth.com/barrettruth/preview.nvim' })
   vim.g.preview = {
     markdown = {
       extra_args = { '-F', 'mermaid-filter' },
