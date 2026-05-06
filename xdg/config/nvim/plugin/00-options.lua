@@ -5,6 +5,7 @@ opt.clipboard = vim.env.SSH_TTY and '' or 'unnamedplus'
 opt.breakindent = true
 opt.linebreak = true
 opt.number = true
+opt.numberwidth = 1
 opt.signcolumn = 'yes'
 opt.relativenumber = true
 opt.cursorline = true
