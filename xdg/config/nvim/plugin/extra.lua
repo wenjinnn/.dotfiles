@@ -112,10 +112,11 @@ later(function()
     provider_options = {
       openai_fim_compatible = {
         model = 'deepseek-v4-flash',
+        end_point = 'https://api.deepseek.com/beta/completions',
         api_key = get_api_key('DEEPSEEK_API_KEY'),
         name = 'deepseek',
         optional = {
-          thinking = { type = 'disabled' },
+          stop = { '\n\n' },
           max_tokens = 256,
           top_p = 0.9,
         },
