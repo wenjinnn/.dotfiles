@@ -4,6 +4,9 @@
   pkgs,
   ...
 }: {
+  home.packages = with pkgs; [
+    git-filter-repo
+  ];
   # git
   programs.git = {
     enable = true;
