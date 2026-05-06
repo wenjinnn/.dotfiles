@@ -115,6 +115,7 @@ later(function()
         api_key = get_api_key('DEEPSEEK_API_KEY'),
         name = 'deepseek',
         optional = {
+          thinking = { type = 'disabled' },
           max_tokens = 256,
           top_p = 0.9,
         },
@@ -129,6 +130,7 @@ later(function()
           api_key = get_api_key('DEEPSEEK_API_KEY'),
           optional = {
             reasoning_effort = 'low',
+            thinking = { type = 'disabled' },
             -- prioritize throughput for faster completion
             provider = {
               sort = 'throughput',
