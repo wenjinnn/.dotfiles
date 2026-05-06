@@ -130,7 +130,7 @@ in
     cloc
     frp
     xdg-utils
-    trashy
+    trash-cli
     w3m
     networkmanagerapplet
     devenv
