@@ -32,6 +32,8 @@
 
   services.ollama.package = pkgs.ollama-rocm;
 
+  services.k3s.serverAddr = "https://nixos:6443";
+
   networking = {
     firewall.enable = false;
     hostName = "nixos-wsl";

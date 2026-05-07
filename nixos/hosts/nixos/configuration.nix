@@ -125,6 +125,8 @@
 
   powerManagement.cpuFreqGovernor = "ondemand";
 
+  services.k3s.serverAddr = "https://nixos-wsl:6443";
+
   boot.binfmt.emulatedSystems = [
     "aarch64-linux"
   ];
