@@ -16,6 +16,7 @@
       domain = "wenjin.me";
     })
     rustdesk-server
+    docker
     sops
     k3s-agent
   ];
