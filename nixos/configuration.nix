@@ -14,7 +14,7 @@
   imports = with outputs.nixosModules; [
     # If you want to use modules your own flake exports (from modules/nixos):
     # outputs.nixosModules.interception-tools
-    podman
+    docker
     ollama
     mihomo
     mail
