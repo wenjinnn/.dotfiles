@@ -487,6 +487,10 @@
       ENV{UDISKS_IGNORE}="1"
   '';
 
+  services.journald.extraConfig = ''
+    SystemMaxUse=100M
+  '';
+
   networking.hostName = "rpi${config.boot.loader.raspberry-pi.variant}";
 
   boot.loader.raspberry-pi.bootloader = "kernel";
