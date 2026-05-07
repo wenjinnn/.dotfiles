@@ -11,6 +11,7 @@
 }: {
   # You can import other NixOS modules here
   imports = [
+    outputs.nixosModules.k3s
     # If you want to use modules your own flake exports (from modules/nixos):
     inputs.nixos-wsl.nixosModules.default
     ../../configuration.nix

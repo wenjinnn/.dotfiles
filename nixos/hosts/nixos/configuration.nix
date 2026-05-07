@@ -20,6 +20,7 @@
     bluetooth
     steam
     de
+    k3s
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd

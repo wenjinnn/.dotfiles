@@ -17,5 +17,6 @@
     secrets.RPI5_ARIA2_SECRET = { };
     secrets.NEXTCLOUD_ADMIN_PASS = { };
     secrets.NEXTCLOUD_DB_PASS = { };
+    secrets.K3S_TOKEN = { };
   };
 }
