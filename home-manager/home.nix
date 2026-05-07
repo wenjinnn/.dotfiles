@@ -117,7 +117,6 @@ in
     glib
     killall
     k9s
-    minikube
     kubernetes
     kubectl
     autossh
