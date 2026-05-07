@@ -16,6 +16,7 @@
       domain = "wenjin.me";
     })
     rustdesk-server
+    sops
     k3s-agent
   ];
   boot.loader.grub = {

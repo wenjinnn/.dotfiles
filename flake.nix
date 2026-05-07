@@ -172,6 +172,7 @@
           system = "x86_64-linux";
           specialArgs = { inherit inputs outputs me; };
           modules = [
+            sops-nix.nixosModules.sops
             disko.nixosModules.disko
             ./nixos/hosts/aliyun
           ];
