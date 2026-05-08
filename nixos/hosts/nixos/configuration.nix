@@ -20,7 +20,7 @@
     bluetooth
     steam
     de
-    k3s
+    (k3s {})
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
@@ -125,7 +125,6 @@
 
   powerManagement.cpuFreqGovernor = "ondemand";
 
-  services.k3s.serverAddr = "https://nixos-wsl:6443";
 
   boot.binfmt.emulatedSystems = [
     "aarch64-linux"

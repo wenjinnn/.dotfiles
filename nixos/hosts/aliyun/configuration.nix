@@ -18,7 +18,8 @@
     rustdesk-server
     docker
     sops
-    k3s-agent
+    (k3s-agent {})
+    tailscale
   ];
   boot.loader.grub = {
     # no need to set devices, disko will add all devices that have a EF02 partition to the list already
@@ -28,6 +29,7 @@
   };
   services = {
     openssh.enable = true;
+    tailscale.useRoutingFeatures = "both";
   };
 
   environment.systemPackages = map lib.lowPrio [
