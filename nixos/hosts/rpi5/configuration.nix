@@ -528,6 +528,11 @@
     SystemMaxUse=100M
   '';
 
+  boot.kernelModules = [
+    "modprobe"
+    "br_netfilter"
+  ];
+
   networking.hostName = "rpi${config.boot.loader.raspberry-pi.variant}";
 
   boot.loader.raspberry-pi.bootloader = "kernel";

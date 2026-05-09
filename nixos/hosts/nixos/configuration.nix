@@ -100,6 +100,8 @@
   ];
   boot.kernelModules = [
     "thunderbolt"
+    "modprobe"
+    "br_netfilter"
   ];
   boot.kernelParams = [
     "pci=realloc"
@@ -124,7 +126,6 @@
   };
 
   powerManagement.cpuFreqGovernor = "ondemand";
-
 
   boot.binfmt.emulatedSystems = [
     "aarch64-linux"
