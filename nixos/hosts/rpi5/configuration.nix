@@ -24,6 +24,7 @@
     (k3s {
       role = "agent";
       serverAddr = "https://nixos:6443";
+      moreExtraFlags = [ "--node-label=svccontroller.k3s.cattle.io/lbpool=traefik" ];
     })
     mihomo
     sops

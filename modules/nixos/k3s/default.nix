@@ -37,11 +37,8 @@
     ]
     ++ moreExtraFlags;
     clusterInit = serverAddr == null && role == "server";
-    manifests = lib.optionalAttrs (role == "server") {
-      traefik-config = {
-        enable = true;
-        source = ./traefik-config.yaml;
-      };
+    manifests = lib.mkIf (role == "server") {
+      traefik-config.source = ./traefik-config.yaml;
     };
   }
   // lib.optionalAttrs (serverAddr != null) { inherit serverAddr; };
