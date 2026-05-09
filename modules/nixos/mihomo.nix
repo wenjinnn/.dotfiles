@@ -129,11 +129,15 @@
       auto-redirect: true
       auto-detect-interface: true
       strict-route: true
-      # exclude-interface:
-      #   - "tailscale*"
+      exclude-interface:
+        - "cni0"
+        - "flannel.1"
+        - "veth*"
       route-exclude-address:
         - "100.64.0.0/10"
         - "fd7a:115c:a1e0::/48"
+        - "10.42.0.0/16"
+        - "10.43.0.0/16"
 
     # dns 设置
     # 已配置 ipv6
@@ -160,6 +164,8 @@
       proxy-server-nameserver:
         - https://doh.pub/dns-query
       nameserver-policy:
+        "+.cluster.local": "10.43.0.10"
+        "+.in-addr.arpa": "10.43.0.10"
         "geosite:cn,private":
           - https://doh.pub/dns-query
           - https://dns.alidns.com/dns-query
