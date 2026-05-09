@@ -18,7 +18,7 @@
     rustdesk-server
     docker
     sops
-    (k3s-agent {})
+    (k3s { role = "agent"; })
     tailscale
   ];
   boot.loader.grub = {
