@@ -31,6 +31,10 @@
       2222
     ];
   };
+  boot.kernelModules = [
+    "modprobe"
+    "br_netfilter"
+  ];
 
   services.ollama.package = pkgs.ollama-rocm;
 

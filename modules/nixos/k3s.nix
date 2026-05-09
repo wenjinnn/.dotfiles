@@ -37,28 +37,8 @@
     ]
     ++ moreExtraFlags;
     clusterInit = serverAddr == null && role == "server";
-    manifests = lib.mkIf (role == "server") {
-      traefik-config.text = ''
-        apiVersion: helm.cattle.io/v1
-        kind: HelmChartConfig
-        metadata:
-          name: traefik
-          namespace: kube-system
-        spec:
-          valuesContent: |-
-            # 这里是 Traefik 的自定义配置
-            additionalArguments:
-              # 添加证书解析器，用于自动申请 Let's Encrypt 证书
-              - "--certificatesresolvers.default.acme.email=hewenjin94@outlook.com"  # 替换为你的邮箱
-              - "--certificatesresolvers.default.acme.storage=/data/acme.json"
-              - "--certificatesresolvers.default.acme.httpchallenge.entrypoint=web"  # 使用 HTTP-01 验证
-            ports:
-              web:
-                exposedPort: 8000
-              websecure:
-                exposedPort: 8443
-
-      '';
+    manifests = lib.mkIf (serverAddr == null && role == "server") {
+      traefik-config.source = ./traefik-config.yaml;
     };
   }
   // lib.optionalAttrs (serverAddr != null) { inherit serverAddr; };
