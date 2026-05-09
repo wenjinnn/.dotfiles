@@ -408,14 +408,6 @@
   # It will use `systemctl restart` rather than stopping it with `systemctl stop`
   # followed by a delayed `systemctl start`.
   systemd.services = {
-    reboot-weekly = {
-      description = "Weekly reboot service";
-      script = "${pkgs.coreutils}/bin/true";
-      serviceConfig = {
-        Type = "oneshot";
-      };
-      startAt = "Tue *-*-* 04:00:00";
-    };
     # Configure the amuleweb systemd service
     amuleweb = {
       enable = true;
@@ -437,6 +429,44 @@
     # systemd-networkd.stopIfChanged = false;
     # Services that are only restarted might be not able to resolve when resolved is stopped before
     # systemd-resolved.stopIfChanged = false;
+    opencode-serve = {
+      description = "OpenCode Server";
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+      environment = {
+        HOME = "/home/wenjin";
+      };
+      serviceConfig = {
+        WorkingDirectory = "/home/wenjin";
+        User = "wenjin";
+        Group = "users";
+        ExecStart = "${pkgs.opencode}/bin/opencode serve";
+        Restart = "on-failure";
+        RestartSec = 5;
+      };
+    };
+    opencode-telegram-bot = {
+      description = "OpenCode Telegram Bot";
+      after = [ "opencode-serve.service" ];
+      requires = [ "opencode-serve.service" ];
+      wantedBy = [ "multi-user.target" ];
+      path = [
+        "/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/run/wrappers/bin"
+        "/home/wenjin/.local/share/npm/bin"
+      ];
+      environment = {
+        HOME = "/home/wenjin";
+      };
+      serviceConfig = {
+        Type = "simple";
+        WorkingDirectory = "/home/wenjin";
+        User = "wenjin";
+        Group = "users";
+        ExecStart = "${pkgs.nodejs}/bin/npx -y @grinev/opencode-telegram-bot@latest";
+        Restart = "on-failure";
+        RestartSec = 5;
+      };
+    };
   };
   networking.interfaces = {
     end0 = {
