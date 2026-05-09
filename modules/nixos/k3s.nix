@@ -23,14 +23,14 @@
     enable = true;
     inherit role;
     tokenFile = config.sops.secrets.K3S_TOKEN.path;
-    extraFlags =
-      [
-        "--flannel-iface=tailscale0"
-      ]
-      ++ lib.optionals (role == "server") [
-        "--write-kubeconfig-mode=644"
-        "--write-kubeconfig-group=k3sconfig"
-      ];
+    extraFlags = [
+      "--flannel-iface=tailscale0"
+      "--embedded-registry=true"
+    ]
+    ++ lib.optionals (role == "server") [
+      "--write-kubeconfig-mode=644"
+      "--write-kubeconfig-group=k3sconfig"
+    ];
     clusterInit = serverAddr == null && role == "server";
   }
   // lib.optionalAttrs (serverAddr != null) { inherit serverAddr; };
