@@ -3,7 +3,8 @@
   me,
   domain,
   ...
-}: {
+}:
+{
   services = {
     headscale = {
       enable = true;
@@ -122,8 +123,14 @@
       };
     };
   };
-  networking.firewall.allowedUDPPorts = [3478 41641];
-  networking.firewall.allowedTCPPorts = [80 443];
+  networking.firewall.allowedUDPPorts = [
+    3478
+    41641
+  ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
 
   security.acme = {
     defaults.email = me.mail.outlook;

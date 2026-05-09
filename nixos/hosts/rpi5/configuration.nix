@@ -24,7 +24,6 @@
     (k3s {
       role = "agent";
       serverAddr = "https://nixos:6443";
-      moreExtraFlags = [ "--node-label=svccontroller.k3s.cattle.io/enablelb=true" ];
     })
     mihomo
     sops
@@ -70,7 +69,6 @@
   services = {
     nginx = {
       enable = true;
-      defaultHTTPListenPort = 8000;
       recommendedOptimisation = true;
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
