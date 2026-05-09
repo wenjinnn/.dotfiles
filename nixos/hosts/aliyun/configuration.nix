@@ -22,7 +22,6 @@
     (k3s {
       role = "agent";
       serverAddr = "https://nixos:6443";
-      moreExtraFlags = [ "--node-label=traefik-exclude=true" ];
     })
     tailscale
   ];
