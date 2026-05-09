@@ -27,5 +27,5 @@
   rustdesk-server = import ./rustdesk-server.nix;
   niri = import ./niri.nix;
   de = import ./de.nix;
-  k3s = import ./k3s;
+  k3s = import ./k3s.nix;
 }
