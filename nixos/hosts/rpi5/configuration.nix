@@ -21,7 +21,7 @@
     # You can also split up your configuration and import pieces of it here:
     # ./users.nix
 
-    (k3s-agent {})
+    (k3s { role = "agent"; })
     mihomo
     sops
     firewall
@@ -66,6 +66,7 @@
   services = {
     nginx = {
       enable = true;
+      defaultHTTPListenPort = 8000;
       recommendedOptimisation = true;
       recommendedProxySettings = true;
       recommendedTlsSettings = true;

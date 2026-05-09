@@ -1,4 +1,7 @@
-{ serverAddr ? null }:
+{
+  role ? "server",
+  serverAddr ? null,
+}:
 {
   config,
   lib,
@@ -6,29 +9,46 @@
   ...
 }:
 {
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = lib.optionals (role == "server") (with pkgs; [
     k9s
     kubernetes
     kubernetes-helm
     kubectl
-  ];
-  environment.variables.KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
+  ]);
+  environment.variables = lib.optionalAttrs (role == "server") {
+    KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
+  };
 
   services.k3s = {
     enable = true;
-    role = "server";
+    inherit role;
     tokenFile = config.sops.secrets.K3S_TOKEN.path;
-    disable = [ "traefik" ];
-    extraFlags = [
-      "--flannel-iface=tailscale0"
-      "--write-kubeconfig-mode=644"
-      "--write-kubeconfig-group=k3sconfig"
-    ];
-    clusterInit = serverAddr == null;
-  } // lib.optionalAttrs (serverAddr != null) { inherit serverAddr; };
+    extraFlags =
+      [
+        "--flannel-iface=tailscale0"
+      ]
+      ++ lib.optionals (role == "server") [
+        "--write-kubeconfig-mode=644"
+        "--write-kubeconfig-group=k3sconfig"
+      ];
+    clusterInit = serverAddr == null && role == "server";
+  }
+  // lib.optionalAttrs (serverAddr != null) { inherit serverAddr; };
 
   systemd.services.k3s = lib.mkIf config.services.tailscale.enable {
     after = [ "tailscaled.service" ];
     bindsTo = [ "tailscaled.service" ];
+  };
+
+  environment.etc."rancher/k3s/registries.yaml" = {
+    text = ''
+      mirrors:
+        docker.io:
+          endpoint:
+            - "https://registry-1.docker.io"
+        rancher:
+          endpoint:
+            - "https://rancher.mirror.aliyuncs.com"
+    '';
   };
 }

@@ -28,5 +28,4 @@
   niri = import ./niri.nix;
   de = import ./de.nix;
   k3s = import ./k3s.nix;
-  k3s-agent = import ./k3s-agent.nix;
 }
