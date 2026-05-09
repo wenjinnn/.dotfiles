@@ -20,7 +20,7 @@
     bluetooth
     steam
     de
-    (k3s { moreExtraFlags = [ "--node-label=svccontroller.k3s.cattle.io/lbpool=traefik" ]; })
+    (k3s { moreExtraFlags = [ "--node-label=svccontroller.k3s.cattle.io/enablelb=true" ]; })
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
