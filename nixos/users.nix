@@ -32,6 +32,7 @@
         "sambashare"
         "aria2"
         "i2c"
+        "k3sconfig"
       ];
     };
   };

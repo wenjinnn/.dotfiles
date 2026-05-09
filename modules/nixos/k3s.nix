@@ -2,13 +2,27 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 {
+  environment.systemPackages = with pkgs; [
+    k9s
+    kubernetes
+    kubectl
+  ];
+  environment.variables.KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
+
   services.k3s = {
     enable = true;
     role = "server";
     tokenFile = config.sops.secrets.K3S_TOKEN.path;
+    disable = [ "traefik" ];
+    extraFlags = [
+      "--flannel-iface=tailscale0"
+      "--write-kubeconfig-mode=644"
+      "--write-kubeconfig-group=k3sconfig"
+    ];
     clusterInit = serverAddr == null;
   } // lib.optionalAttrs (serverAddr != null) { inherit serverAddr; };
 
