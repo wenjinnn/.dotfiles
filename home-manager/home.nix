@@ -116,9 +116,6 @@ in
     unzipNLS
     glib
     killall
-    k9s
-    kubernetes
-    kubectl
     autossh
     sshfs
     mermaid-cli

@@ -43,5 +43,7 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEtBUbTuGD34mJCUZp7hIFuDR9kACg4y8iWhjAPB5R66 wenjin@nixos"
   ];
 
+  networking.hostName = "nixos-aliyun";
+
   system.stateVersion = "24.11";
 }

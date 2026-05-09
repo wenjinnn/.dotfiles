@@ -271,6 +271,10 @@
     "net.ipv4.ip_forward" = 1;
     "net.ipv6.conf.all.forwarding" = 1;
   };
+  boot.kernelParams = [
+    "cgroup_enable=memory"
+    "cgroup_memory=1"
+  ];
 
   nix =
     let

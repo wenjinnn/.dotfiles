@@ -9,6 +9,7 @@
     enable = true;
     role = "agent";
     tokenFile = config.sops.secrets.K3S_TOKEN.path;
+    extraFlags = [ "--flannel-iface=tailscale0" ];
     inherit serverAddr;
   };
 
