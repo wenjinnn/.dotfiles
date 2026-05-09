@@ -6,7 +6,8 @@
   pkgs,
   me,
   ...
-}: {
+}:
+{
   imports = with outputs.nixosModules; [
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
@@ -18,7 +19,11 @@
     rustdesk-server
     docker
     sops
-    (k3s { role = "agent"; })
+    (k3s {
+      role = "agent";
+      serverAddr = "https://nixos:6443";
+      moreExtraFlags = [ "--node-label=traefik-exclude=true" ];
+    })
     tailscale
   ];
   boot.loader.grub = {

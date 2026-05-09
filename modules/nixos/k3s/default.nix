@@ -1,6 +1,7 @@
 {
   role ? "server",
   serverAddr ? null,
+  moreExtraFlags ? [ ],
 }:
 {
   config,
@@ -9,12 +10,15 @@
   ...
 }:
 {
-  environment.systemPackages = lib.optionals (role == "server") (with pkgs; [
-    k9s
-    kubernetes
-    kubernetes-helm
-    kubectl
-  ]);
+  environment.systemPackages = lib.optionals (role == "server") (
+    with pkgs;
+    [
+      k9s
+      kubernetes
+      kubernetes-helm
+      kubectl
+    ]
+  );
   environment.variables = lib.optionalAttrs (role == "server") {
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
   };
@@ -25,13 +29,20 @@
     tokenFile = config.sops.secrets.K3S_TOKEN.path;
     extraFlags = [
       "--flannel-iface=tailscale0"
-      "--embedded-registry=true"
     ]
     ++ lib.optionals (role == "server") [
+      "--embedded-registry=true"
       "--write-kubeconfig-mode=644"
       "--write-kubeconfig-group=k3sconfig"
-    ];
+    ]
+    ++ moreExtraFlags;
     clusterInit = serverAddr == null && role == "server";
+    manifests = lib.optionalAttrs (role == "server") {
+      traefik-config = {
+        enable = true;
+        source = ./traefik-config.yaml;
+      };
+    };
   }
   // lib.optionalAttrs (serverAddr != null) { inherit serverAddr; };
 
@@ -40,15 +51,17 @@
     bindsTo = [ "tailscaled.service" ];
   };
 
-  environment.etc."rancher/k3s/registries.yaml" = {
-    text = ''
-      mirrors:
-        docker.io:
-          endpoint:
-            - "https://registry-1.docker.io"
-        rancher:
-          endpoint:
-            - "https://rancher.mirror.aliyuncs.com"
-    '';
+  environment.etc = {
+    "rancher/k3s/registries.yaml" = {
+      text = ''
+        mirrors:
+          docker.io:
+            endpoint:
+              - "https://registry-1.docker.io"
+          rancher:
+            endpoint:
+              - "https://rancher.mirror.aliyuncs.com"
+      '';
+    };
   };
 }

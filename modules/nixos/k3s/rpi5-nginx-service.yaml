@@ -1,0 +1,24 @@
+# Service 定义（无 selector）
+apiVersion: v1
+kind: Service
+metadata:
+  name: rpi5-nginx-service   # 自定义名称
+  namespace: default          # 与 Ingress 同 namespace
+spec:
+  ports:
+    - protocol: TCP
+      port: 8000              # Service 暴露的端口
+      targetPort: 8000       # 目标端口（宿主机 Nginx 监听的端口）
+
+---
+# 手动定义 Endpoint，指向宿主机 IP
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: rpi5-nginx-service   # 名称必须与 Service 完全一致
+  namespace: default
+subsets:
+  - addresses:
+      - ip: 100.64.0.1     # 替换为宿主机的实际 IP
+    ports:
+      - port: 8000            # 宿主机 Nginx 监听的端口
