@@ -9,6 +9,7 @@
   environment.systemPackages = with pkgs; [
     k9s
     kubernetes
+    kubernetes-helm
     kubectl
   ];
   environment.variables.KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
