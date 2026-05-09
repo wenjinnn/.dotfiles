@@ -14,6 +14,7 @@ keys:
   - &nixos-wsl-wenjin age1u7g2z73c3fq28purtn9kvkpsxlq4srkkn4944u5krfwqjkeqeshq9zgs3m
   - &nixos-wsl age10ff9heqlh8qjunnt9060a97aqxa7vqj4nclmzm0gwe54fe95mdlqc7k6r4
   - &nixos-rpi5 age1d4uqfckxlpv4lyduskytjuk2ahltssvynyv3332g2l5pyqq0feqqxp0rmc
+  - &nixos-aliyun age1ccf6pupm4ja5wx25zvghcyd633vkdj97qz9t3vdvf6jaj0zf8efs5k7rqa
 creation_rules:
   - path_regex: ^secrets.yaml$
     key_groups:
@@ -23,3 +24,4 @@ creation_rules:
       - *nixos-wsl-wenjin
       - *nixos-wsl
       - *nixos-rpi5
+      - *nixos-aliyun
