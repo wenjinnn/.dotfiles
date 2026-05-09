@@ -1,24 +1,131 @@
-# Service 定义（无 selector）
+# Service 保持不变（无 selector 的手动 Service）
 apiVersion: v1
 kind: Service
 metadata:
-  name: rpi5-nginx-service   # 自定义名称
-  namespace: default          # 与 Ingress 同 namespace
+  name: rpi5-nginx-service
+  namespace: default
 spec:
   ports:
     - protocol: TCP
-      port: 8000              # Service 暴露的端口
-      targetPort: 8000       # 目标端口（宿主机 Nginx 监听的端口）
+      port: 8000
+      targetPort: 8000
 
 ---
-# 手动定义 Endpoint，指向宿主机 IP
-apiVersion: v1
-kind: Endpoints
+# 使用 EndpointSlice 替代 Endpoints
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
 metadata:
-  name: rpi5-nginx-service   # 名称必须与 Service 完全一致
+  name: rpi5-nginx-service-slice   # 可以自定义，但建议关联 Service 名
   namespace: default
-subsets:
+  labels:
+    # 这个标签必须设置，用来关联对应的 Service
+    kubernetes.io/service-name: rpi5-nginx-service
+addressType: IPv4
+endpoints:
   - addresses:
-      - ip: 100.64.0.1     # 替换为宿主机的实际 IP
-    ports:
-      - port: 8000            # 宿主机 Nginx 监听的端口
+      - "100.64.0.1"       # 宿主机的 IP
+    conditions:
+      ready: true          # 表示该端点已就绪
+ports:
+  - name: ""               # 可选，与 Service 中的 port 名称对应（本例没有 name）
+    protocol: TCP
+    port: 8000
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rpi5-hosts-ingress
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: nextcloud.ts.wenjin.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: rpi5-nginx-service
+            port:
+              number: 8000
+  - host: samba.ts.wenjin.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: rpi5-nginx-service
+            port:
+              number: 8000
+  - host: qbittorrent.ts.wenjin.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: rpi5-nginx-service
+            port:
+              number: 8000
+  - host: syncthing.ts.wenjin.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: rpi5-nginx-service
+            port:
+              number: 8000
+  - host: homeassistant.ts.wenjin.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: rpi5-nginx-service
+            port:
+              number: 8000
+  - host: atuin.ts.wenjin.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: rpi5-nginx-service
+            port:
+              number: 8000
+  - host: ariang.ts.wenjin.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: rpi5-nginx-service
+            port:
+              number: 8000
+  - host: amule.ts.wenjin.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: rpi5-nginx-service
+            port:
+              number: 8000
+  - host: matrix.ts.wenjin.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: rpi5-nginx-service
+            port:
+              number: 8000
