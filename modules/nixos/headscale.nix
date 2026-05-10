@@ -9,7 +9,7 @@
     headscale = {
       enable = true;
       address = "0.0.0.0";
-      port = 8080;
+      port = 8880;
 
       settings = {
         server_url = "https://hs.${domain}";

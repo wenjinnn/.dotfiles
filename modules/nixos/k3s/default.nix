@@ -37,7 +37,7 @@
     ]
     ++ moreExtraFlags;
     clusterInit = serverAddr == null && role == "server";
-    manifests = lib.mkIf (serverAddr == null && role == "server") {
+    manifests = lib.mkIf (role == "server") {
       traefik-config.source = ./traefik-config.yaml;
     };
   }
