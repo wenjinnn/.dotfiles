@@ -28,7 +28,7 @@
 
   services.openiscsi = {
     enable = true;
-    name = config.networking.hostName;
+    name = "${config.networking.hostName}-initiatorhost";
   };
   services.k3s = {
     enable = true;
@@ -46,13 +46,11 @@
     clusterInit = serverAddr == null && role == "server";
     manifests = lib.mkIf (role == "server") {
       traefik-config.source = ./traefik-config.yaml;
-    };
-    autoDeployCharts = {
       longhorn = {
-        name = "longhorn";
-        repo = "https://charts.longhorn.io"; # 官方 Helm 仓库地址
-        version = "v1.11.2";
-        hash = "sha256-pwJyyDaDkj7ZyvoH/h5POm59XXSHQRGzqK1CHmQQKnc=";
+        source = pkgs.fetchurl {
+          url = "https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml";
+          hash = "sha256-taRC4AaZRYipY9DGKCsjRDxDefWc5BtSMLzAEr1ACyk=";
+        };
       };
     };
   }
@@ -62,6 +60,9 @@
     after = [ "tailscaled.service" ];
     bindsTo = [ "tailscaled.service" ];
   };
+  systemd.tmpfiles.rules = [
+    "L+ /usr/local/bin/iscsiadm - - - - /run/current-system/sw/bin/iscsiadm"
+  ];
 
   environment.etc = {
     "rancher/k3s/registries.yaml" = {
