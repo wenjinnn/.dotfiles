@@ -17,12 +17,19 @@
       kubernetes
       kubernetes-helm
       kubectl
+      openiscsi
+      nfs-utils
     ]
   );
+
   environment.variables = lib.optionalAttrs (role == "server") {
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
   };
 
+  services.openiscsi = {
+    enable = true;
+    name = config.networking.hostName;
+  };
   services.k3s = {
     enable = true;
     inherit role;
@@ -39,6 +46,14 @@
     clusterInit = serverAddr == null && role == "server";
     manifests = lib.mkIf (role == "server") {
       traefik-config.source = ./traefik-config.yaml;
+    };
+    autoDeployCharts = {
+      longhorn = {
+        name = "longhorn";
+        repo = "https://charts.longhorn.io"; # 官方 Helm 仓库地址
+        version = "v1.11.2";
+        hash = "sha256-pwJyyDaDkj7ZyvoH/h5POm59XXSHQRGzqK1CHmQQKnc=";
+      };
     };
   }
   // lib.optionalAttrs (serverAddr != null) { inherit serverAddr; };
@@ -61,4 +76,6 @@
       '';
     };
   };
+  # 确保内核模块可用
+  boot.kernelModules = [ "iscsi_tcp" ];
 }
