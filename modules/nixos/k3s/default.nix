@@ -46,11 +46,23 @@
     clusterInit = serverAddr == null && role == "server";
     manifests = lib.mkIf (role == "server") {
       traefik-config.source = ./traefik-config.yaml;
+    };
+    autoDeployCharts = {
       longhorn = {
-        source = pkgs.fetchurl {
-          url = "https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml";
-          hash = "sha256-taRC4AaZRYipY9DGKCsjRDxDefWc5BtSMLzAEr1ACyk=";
+        repo = "https://charts.longhorn.io";
+        version = "v1.11.2";
+        name = "longhorn";
+        targetNamespace = "longhorn-system";
+        createNamespace = true;
+        hash = "sha256-pwJyyDaDkj7ZyvoH/h5POm59XXSHQRGzqK1CHmQQKnc=";
+        values = {
+          global = {
+            nodeSelector = {
+              longhorn-storage-node = "enabled";
+            };
+          };
         };
+
       };
     };
   }
@@ -77,6 +89,4 @@
       '';
     };
   };
-  # 确保内核模块可用
-  boot.kernelModules = [ "iscsi_tcp" ];
 }
