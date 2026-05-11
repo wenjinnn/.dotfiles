@@ -22,6 +22,7 @@
     (k3s {
       role = "agent";
       serverAddr = "https://nixos:6443";
+      moreExtraFlags = [ "--node-label=longhorn-storage-node=enabled" ];
     })
     tailscale
   ];
