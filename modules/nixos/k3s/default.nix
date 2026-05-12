@@ -61,6 +61,9 @@
               longhorn-storage-node = "enabled";
             };
           };
+          defaultSettings = {
+            systemManagedComponentsNodeSelector = "longhorn-storage-node:enabled";
+          };
         };
 
       };
