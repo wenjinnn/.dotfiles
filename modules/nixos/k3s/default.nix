@@ -17,7 +17,6 @@
       kubernetes
       kubernetes-helm
       kubectl
-      openiscsi
       nfs-utils
     ]
   );
@@ -26,7 +25,7 @@
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
   };
 
-  services.openiscsi = {
+  services.openiscsi = lib.mkIf (config.networking.hostName != "rpi5") {
     enable = true;
     name = "${config.networking.hostName}-initiatorhost";
   };
@@ -44,10 +43,10 @@
     ]
     ++ moreExtraFlags;
     clusterInit = serverAddr == null && role == "server";
-    manifests = lib.mkIf (role == "server") {
+    manifests = lib.mkIf (serverAddr == null && role == "server") {
       traefik-config.source = ./traefik-config.yaml;
     };
-    autoDeployCharts = {
+    autoDeployCharts = lib.mkIf (serverAddr == null && role == "server") {
       longhorn = {
         repo = "https://charts.longhorn.io";
         version = "v1.11.2";
@@ -65,7 +64,6 @@
             systemManagedComponentsNodeSelector = "longhorn-storage-node:enabled";
           };
         };
-
       };
     };
   }
@@ -75,9 +73,6 @@
     after = [ "tailscaled.service" ];
     bindsTo = [ "tailscaled.service" ];
   };
-  systemd.tmpfiles.rules = [
-    "L+ /usr/local/bin/iscsiadm - - - - /run/current-system/sw/bin/iscsiadm"
-  ];
 
   environment.etc = {
     "rancher/k3s/registries.yaml" = {
