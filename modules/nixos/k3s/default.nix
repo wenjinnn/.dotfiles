@@ -9,6 +9,7 @@
   pkgs,
   ...
 }:
+
 {
   environment.systemPackages = lib.optionals (role == "server") (
     with pkgs;
@@ -29,46 +30,51 @@
     enable = true;
     name = "${config.networking.hostName}-initiatorhost";
   };
-  services.k3s = {
-    enable = true;
-    inherit role;
-    tokenFile = config.sops.secrets.K3S_TOKEN.path;
-    gracefulNodeShutdown.enable = true;
-    extraFlags = [
-      "--flannel-iface=tailscale0"
-    ]
-    ++ lib.optionals (role == "server") [
-      "--embedded-registry=true"
-      "--write-kubeconfig-mode=644"
-      "--write-kubeconfig-group=k3sconfig"
-    ]
-    ++ moreExtraFlags;
-    clusterInit = serverAddr == null && role == "server";
-    manifests = lib.mkIf (serverAddr == null && role == "server") {
-      traefik-config.source = ./traefik-config.yaml;
-    };
-    autoDeployCharts = lib.mkIf (serverAddr == null && role == "server") {
-      longhorn = {
-        repo = "https://charts.longhorn.io";
-        version = "v1.11.2";
-        name = "longhorn";
-        targetNamespace = "longhorn-system";
-        createNamespace = true;
-        hash = "sha256-pwJyyDaDkj7ZyvoH/h5POm59XXSHQRGzqK1CHmQQKnc=";
-        values = {
-          global = {
-            nodeSelector = {
-              longhorn-storage-node = "enabled";
+  services.k3s =
+    let
+      initMachine = serverAddr == null && role == "server";
+    in
+    {
+      enable = true;
+      inherit role;
+      tokenFile = config.sops.secrets.K3S_TOKEN.path;
+      gracefulNodeShutdown.enable = true;
+      extraFlags = [
+        "--flannel-iface=tailscale0"
+      ]
+      ++ lib.optionals (role == "server") [
+        "--embedded-registry=true"
+        "--write-kubeconfig-mode=644"
+        "--write-kubeconfig-group=k3sconfig"
+      ]
+      ++ moreExtraFlags;
+      clusterInit = initMachine;
+      manifests = lib.mkIf initMachine {
+        traefik-config.source = ./traefik-config.yaml;
+      };
+      autoDeployCharts = lib.mkIf initMachine {
+        longhorn = {
+          repo = "https://charts.longhorn.io";
+          version = "v1.11.2";
+          name = "longhorn";
+          targetNamespace = "longhorn-system";
+          createNamespace = true;
+          hash = "sha256-pwJyyDaDkj7ZyvoH/h5POm59XXSHQRGzqK1CHmQQKnc=";
+          values = {
+            global = {
+              nodeSelector = {
+                longhorn-storage-node = "enabled";
+              };
             };
-          };
-          defaultSettings = {
-            systemManagedComponentsNodeSelector = "longhorn-storage-node:enabled";
+            defaultSettings = {
+              systemManagedComponentsNodeSelector = "longhorn-storage-node:enabled";
+            };
           };
         };
       };
-    };
-  }
-  // lib.optionalAttrs (serverAddr != null) { inherit serverAddr; };
+
+    }
+    // lib.optionalAttrs (serverAddr != null) { inherit serverAddr; };
 
   systemd.services.k3s = lib.mkIf config.services.tailscale.enable {
     after = [ "tailscaled.service" ];

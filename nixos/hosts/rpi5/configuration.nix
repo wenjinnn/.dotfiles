@@ -22,7 +22,6 @@
     # ./users.nix
 
     (k3s {
-      role = "agent";
       serverAddr = "https://nixos:6443";
     })
     mihomo
