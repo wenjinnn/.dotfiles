@@ -38,7 +38,6 @@
       enable = true;
       inherit role;
       tokenFile = config.sops.secrets.K3S_TOKEN.path;
-      gracefulNodeShutdown.enable = true;
       extraFlags = [
         "--flannel-iface=tailscale0"
       ]
