@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   anthropic-skills = pkgs.fetchFromGitHub {
     owner = "anthropics";
@@ -26,7 +31,6 @@ in
     qwen-code
     mcp-nixos
     claude-agent-acp
-    codex-acp
   ];
   programs = {
     bash = {
@@ -35,22 +39,6 @@ in
           env GEMINI_API_KEY="$(sops exec-env $SOPS_SECRETS 'echo -n $GEMINI_API_KEY')" \
           GOOGLE_CLOUD_PROJECT="$(sops exec-env $SOPS_SECRETS 'echo -n $GOOGLE_CLOUD_PROJECT')" \
           gemini
-        '';
-        claude = ''
-          env \
-          ANTHROPIC_AUTH_TOKEN="$(sops exec-env $SOPS_SECRETS 'echo -n $MIMO_API_KEY')" \
-          ANTHROPIC_BASE_URL="https://token-plan-cn.xiaomimimo.com/anthropic" \
-          ANTHROPIC_DEFAULT_HAIKU_MODEL="mimo-v2.5-pro" \
-          ANTHROPIC_DEFAULT_OPUS_MODEL="mimo-v2.5-pro" \
-          ANTHROPIC_DEFAULT_SONNET_MODEL="mimo-v2.5-pro" \
-          ANTHROPIC_MODEL="mimo-v2.5-pro" \
-          ANTHROPIC_REASONING_MODEL="mimo-v2-pro" \
-          claude
-        '';
-        codex = ''
-          env \
-          OPENAI_API_KEY="$(sops exec-env $SOPS_SECRETS 'echo -n $OPENROUTER_API_KEY')" \
-          claude
         '';
       };
     };
@@ -71,6 +59,26 @@ in
         obra-superpowers
       ];
       settings = {
+        # deepseek integration
+        # apiKeyHelper = "${lib.getExe pkgs.sops} exec-env ${config.home.sessionVariables.SOPS_SECRETS} 'echo -n $DEEPSEEK_API_KEY'";
+        # env = {
+        #   ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic";
+        #   ANTHROPIC_MODEL="deepseek-v4-pro[1m]";
+        #   ANTHROPIC_DEFAULT_OPUS_MODEL="deepseek-v4-pro[1m]";
+        #   ANTHROPIC_DEFAULT_SONNET_MODEL="deepseek-v4-pro[1m]";
+        #   ANTHROPIC_DEFAULT_HAIKU_MODEL="deepseek-v4-flash";
+        #   CLAUDE_CODE_SUBAGENT_MODEL="deepseek-v4-flash";
+        #   CLAUDE_CODE_EFFORT_LEVEL="max";
+        # };
+        apiKeyHelper = "${lib.getExe pkgs.sops} exec-env ${config.home.sessionVariables.SOPS_SECRETS} 'echo -n $MIMO_API_KEY'";
+        env = {
+          ANTHROPIC_BASE_URL = "https://token-plan-cn.xiaomimimo.com/anthropic";
+          ANTHROPIC_DEFAULT_HAIKU_MODEL = "mimo-v2.5-pro";
+          ANTHROPIC_DEFAULT_OPUS_MODEL = "mimo-v2.5-pro";
+          ANTHROPIC_DEFAULT_SONNET_MODEL = "mimo-v2.5-pro";
+          ANTHROPIC_MODEL = "mimo-v2.5-pro";
+          ANTHROPIC_REASONING_MODEL = "mimo-v2-pro";
+        };
         statusLine = {
           command = "jq -r '\"\\(.model.display_name)[\\(.context_window.context_window_size)] | \\(.context_window.used_percentage // 0)% context | \\(.context_window.current_usage.input_tokens // 0) 📥 \\(.context_window.current_usage.output_tokens // 0) 📤 \\(.context_window.current_usage.cache_creation_input_tokens // 0) ✏️ \\(.context_window.current_usage.cache_read_input_tokens // 0) 📖 token | $\\((.cost.total_cost_usd // 0) | .*100 | round / 100) | 📁 \\(.workspace.current_dir) \"'";
           padding = 0;
@@ -84,14 +92,18 @@ in
         model_provider = "openrouter";
         model = "deepseek/deepseek-v4-pro";
         model_reasoning_effort = "high";
-        disable_response_storage = true;
 
         model_providers = {
           openrouter = {
+            auth = {
+              command = "bash";
+              args = [
+                "-c"
+                "sops exec-env $SOPS_SECRETS 'echo -n $OPENROUTER_API_KEY'"
+              ];
+            };
             name = "openrouter";
             base_url = "https://openrouter.ai/api/v1";
-            wire_api = "responses";
-            requires_openai_auth = true;
           };
         };
 
