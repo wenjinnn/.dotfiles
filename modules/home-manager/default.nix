@@ -36,6 +36,6 @@
   kdeconnect = import ./kdeconnect.nix;
   udiskie = import ./udiskie.nix;
   de = import ./de.nix;
-  llm = import ./llm.nix;
+  llm = import ./llm;
   ghostty = import ./ghostty.nix;
 }
