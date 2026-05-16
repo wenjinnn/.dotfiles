@@ -56,10 +56,6 @@
       "rev": "31026a13eefb20681124706a79fc1df6bf11ab27",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
-    "nvim-scissors": {
-      "rev": "9cc1ba06afa8b23b0d30cadc02c40940df1d701e",
-      "src": "https://github.com/chrisgrieser/nvim-scissors"
-    },
     "nvim-treesitter": {
       "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
@@ -86,7 +82,7 @@
     },
     "preview.nvim": {
       "rev": "97b1991b10a0accae3894d44ce34ab44063d83eb",
-      "src": "https://github.com/barrettruth/preview.nvim"
+      "src": "https://git.barrettruth.com/barrettruth/preview.nvim"
     },
     "rainbow-delimiters.nvim": {
       "rev": "08783ec022e7ddefe0f12a16f1ac4968f55478b0",

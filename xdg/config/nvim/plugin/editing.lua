@@ -295,14 +295,6 @@ later(function()
       end,
     },
   })
-  -- painless snippet editing and creation
-  vim.pack.add({ gh('chrisgrieser/nvim-scissors') })
-  require('scissors').setup({
-    snippetDir = snippet_path,
-    backdrop = { enabled = false },
-  })
-  map('n', '<leader>cS', '<cmd>ScissorsEditSnippet<cr>', 'Snippet edit')
-  map({ 'n', 'x' }, '<leader>cs', '<cmd>ScissorsAddNewSnippet<cr>', 'Snippet add')
 
   -- annotation and comment generation
   vim.pack.add({ gh('danymat/neogen') })
