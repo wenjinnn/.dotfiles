@@ -2,21 +2,25 @@
   config,
   username,
   ...
-}: {
+}:
+{
   sops = {
     defaultSopsFile = ../../secrets.yaml;
     age = {
       generateKey = true;
-      sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+      sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
       keyFile = "/etc/ssh/age/keys.txt";
     };
-    secrets.MIHOMO_PROVIDER = { };
-    secrets.MIHOMO_PROVIDER2 = { };
-    secrets.RPI5_PASS = { };
-    secrets.RPI5_TAILSCALE_AUTHKEY = { };
-    secrets.RPI5_ARIA2_SECRET = { };
-    secrets.NEXTCLOUD_ADMIN_PASS = { };
-    secrets.NEXTCLOUD_DB_PASS = { };
-    secrets.K3S_TOKEN = { };
+    secrets = {
+      MIHOMO_PROVIDER = { };
+      MIHOMO_PROVIDER2 = { };
+      RPI5_PASS = { };
+      RPI5_TAILSCALE_AUTHKEY = { };
+      RPI5_ARIA2_SECRET = { };
+      NEXTCLOUD_ADMIN_PASS = { };
+      NEXTCLOUD_DB_PASS = { };
+      K3S_TOKEN = { };
+      CACHIX_TOKEN = { };
+    };
   };
 }
