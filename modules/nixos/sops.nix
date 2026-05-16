@@ -14,6 +14,7 @@
     secrets = {
       MIHOMO_PROVIDER = { };
       MIHOMO_PROVIDER2 = { };
+      MIHOMO_PROVIDER3 = { };
       RPI5_PASS = { };
       RPI5_TAILSCALE_AUTHKEY = { };
       RPI5_ARIA2_SECRET = { };
