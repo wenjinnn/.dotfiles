@@ -106,7 +106,54 @@ in
             base_url = "https://openrouter.ai/api/v1";
           };
         };
-
+        tui.status_line = [
+          "model-with-reasoning"
+          "context-used"
+          "total-input-tokens"
+          "total-output-tokens"
+          "current-dir"
+          "git-branch"
+          "branch-changes"
+        ];
+      };
+      skills = {
+        inherit
+          superpower
+          doc-coauthoring
+          skill-creator
+          xlsx
+          docx
+          pptx
+          pdf
+          ;
+      };
+    };
+    opencode = {
+      enable = true;
+      settings = {
+        autoupdate = false;
+        provider = {
+          deepseek = {
+            options = {
+              apiKey = "{file:${config.sops.secrets.DEEPSEEK_API_KEY.path}}";
+            };
+          };
+          xiaomi-token-plan-cn = {
+            options = {
+              apiKey = "{file:${config.sops.secrets.MIMO_API_KEY.path}}";
+            };
+          };
+          google = {
+            options = {
+              apiKey = "{file:${config.sops.secrets.GEMINI_API_KEY.path}}";
+            };
+          };
+          openrouter = {
+            options = {
+              apiKey = "{file:${config.sops.secrets.OPENROUTER_API_KEY.path}}";
+            };
+          };
+        };
       };
       skills = {
         inherit
@@ -121,6 +168,5 @@ in
       };
     };
     gemini-cli.enable = true;
-    opencode.enable = true;
   };
 }
