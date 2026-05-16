@@ -15,12 +15,18 @@
       sshKeyPaths = ["${config.home.homeDirectory}/.ssh/id_ed25519"];
       keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt"; # must have no password!
     };
-    secrets.OUTLOOK_CLIENT_ID = { };
-    secrets.GMAIL_CLIENT_ID = { };
-    secrets.GMAIL_CLIENT_SECRET = { };
-    secrets.RCLONE_TOKEN = { };
-    secrets.NEXTCLOUD_WEBDAV_PASS = { };
-    secrets.ATUIN_KEY = { };
+    secrets = {
+      OUTLOOK_CLIENT_ID = { };
+      GMAIL_CLIENT_ID = { };
+      GMAIL_CLIENT_SECRET = { };
+      RCLONE_TOKEN = { };
+      NEXTCLOUD_WEBDAV_PASS = { };
+      ATUIN_KEY = { };
+      DEEPSEEK_API_KEY = { };
+      MIMO_API_KEY = { };
+      GEMINI_API_KEY = { };
+      OPENROUTER_API_KEY = { };
+    };
   };
 
   home.packages = with pkgs; [
