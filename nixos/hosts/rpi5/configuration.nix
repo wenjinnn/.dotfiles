@@ -28,6 +28,7 @@
     sops
     firewall
     tailscale
+    cachix
     podman
     ../../users.nix
     ./disko-usb-btrfs.nix
