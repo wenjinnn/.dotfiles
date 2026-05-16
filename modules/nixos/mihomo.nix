@@ -27,8 +27,6 @@
           tolerance: 100
         path: ./proxy_provider/p1.yaml
         url: "${config.sops.placeholder.MIHOMO_PROVIDER}"
-        override:
-          udp: true
       p2:
         type: http
         interval: 36000
@@ -40,8 +38,19 @@
           tolerance: 100
         path: ./proxy_provider/p2.yaml
         url: "${config.sops.placeholder.MIHOMO_PROVIDER2}"
-        override:
-          udp: true
+      p3:
+        type: http
+        interval: 36000
+        health-check:
+          enable: true
+          url: https://cp.cloudflare.com
+          interval: 300
+          timeout: 1000
+          tolerance: 100
+        path: ./proxy_provider/p3.yaml
+        url: "${config.sops.placeholder.MIHOMO_PROVIDER3}"
+        # override:
+        #   udp: true
 
       # local-subscription:
         # path: ./proxy_provider/local.yaml
@@ -213,9 +222,14 @@
       - name: auto-fast
         type: url-test
         use:
+        - p3
         - p2
         - p1
         tolerance: 2
+      - name: JMS
+        type: url-test
+        use:
+        - p3
       - name: manual
         type: select
         proxies:
@@ -267,6 +281,7 @@
       - name: AI
         type: url-test
         proxies:
+        - JMS
         - taiwan
         - singapore
         - japan
