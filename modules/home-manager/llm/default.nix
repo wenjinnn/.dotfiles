@@ -42,6 +42,15 @@ in
         '';
       };
     };
+    mcp = {
+      enable = true;
+      servers = {
+        nixos = {
+          enable = true;
+          command = "mcp-nixos";
+        };
+      };
+    };
     claude-code = {
       enable = true;
       enableMcpIntegration = true;
@@ -88,6 +97,7 @@ in
     };
     codex = {
       enable = true;
+      enableMcpIntegration = true;
       settings = {
         model_provider = "openrouter";
         model = "deepseek/deepseek-v4-pro";
@@ -130,6 +140,7 @@ in
     };
     opencode = {
       enable = true;
+      enableMcpIntegration = true;
       settings = {
         autoupdate = false;
         provider = {
@@ -167,6 +178,9 @@ in
           ;
       };
     };
-    gemini-cli.enable = true;
+    gemini-cli = {
+      enable = true;
+      enableMcpIntegration = true;
+    };
   };
 }
