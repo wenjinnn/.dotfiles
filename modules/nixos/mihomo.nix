@@ -89,9 +89,11 @@
     geo-update-interval: 168
 
     geox-url:
-      geoip: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
-      geosite: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
-      mmdb: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
+      geoip: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+      geosite: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+      mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
+      asn: "https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
+
 
     # default: strict
     find-process-mode: strict
@@ -166,8 +168,10 @@
         - https://doh.pub/dns-query
         - https://dns.alidns.com/dns-query
       fallback:
-        - 'tls://8.8.4.4#dns'
-        - 'tls://1.0.0.1#dns'
+        - tls://8.8.4.4
+        - tls://1.0.0.1
+        - tls://223.5.5.5
+        - tls://223.6.6.6
         - 'tls://[2001:4860:4860::8844]#dns'
         - 'tls://[2606:4700:4700::1001]#dns'
       proxy-server-nameserver:
