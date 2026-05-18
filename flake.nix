@@ -265,6 +265,14 @@
             nix-index-database.homeModules.nix-index
           ];
         };
+        "wenjin@rpi5" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-linux; # Home-manager requires 'pkgs' instance
+          extraSpecialArgs = { inherit inputs outputs me; };
+          modules = [
+            # > Our main home-manager configuration file <
+            ./home-manager/hosts/rpi5.nix
+          ];
+        };
       };
     };
 }
