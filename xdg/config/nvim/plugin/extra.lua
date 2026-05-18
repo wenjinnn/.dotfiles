@@ -86,6 +86,7 @@ later(function()
           claude = { cmd = 'claude', args = {}, description = 'Claude Code Agent' },
           opencode = { cmd = 'opencode', args = {}, description = 'Opencode Agent' },
           gemini = { cmd = 'gemini', args = {}, description = 'Gemini Agent' },
+          codex = { cmd = 'codex', args = {}, description = 'OpenAI Codex Agent' },
         },
       },
     },
