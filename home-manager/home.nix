@@ -239,7 +239,6 @@ in
     atuin = {
       enable = true;
       enableBashIntegration = true;
-      daemon.enable = true;
       settings = {
         auto_sync = true;
         sync_frequency = "10m";
