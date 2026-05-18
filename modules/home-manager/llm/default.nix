@@ -11,7 +11,7 @@ let
     rev = "f458cee31a7577a47ba0c9a101976fa599385174";
     sha256 = "sha256-jKNYFom6R+Qw7LQ8vFPBe51JpqIP0tTSY8LM4aPlnT4=";
   };
-  caveman = pkgs.fetchFromGitHub {
+  juliusbrussee-caveman = pkgs.fetchFromGitHub {
     owner = "JuliusBrussee";
     repo = "caveman";
     rev = "18e45320a0b1aecc959a807f8568ee44b3aaa055";
@@ -30,7 +30,7 @@ let
   doc-coauthoring = "${anthropic-skills}/skills/doc-coauthoring";
   skill-creator = "${anthropic-skills}/skills/skill-creator";
   superpower = "${obra-superpowers}/skills";
-  caveman-skill = "${caveman}/skills";
+  caveman-skill = "${juliusbrussee-caveman}/skills";
 in
 {
 
@@ -64,18 +64,15 @@ in
       enableMcpIntegration = true;
       marketplaces = {
         anthropic-skills = anthropic-skills;
+        claude-plugins-official = pkgs.fetchFromGitHub {
+          owner = "anthropics";
+          repo = "claude-plugins-official";
+          rev = "f475d3ce5806c7edf9fc204ee276e7f45e24c798";
+          sha256 = "sha256-FvTtM4JT0UUkpmH6mKh9ZDmcKbOcaGEe0vU0Whzd+nI=";
+        };
         obra-superpowers = obra-superpowers;
+        juliusbrussee-caveman = juliusbrussee-caveman;
       };
-      plugins = [
-        doc-coauthoring
-        skill-creator
-        xlsx
-        docx
-        pptx
-        pdf
-        obra-superpowers
-        caveman
-      ];
       settings = {
         # deepseek integration
         # apiKeyHelper = "${lib.getExe pkgs.sops} exec-env ${config.home.sessionVariables.SOPS_SECRETS} 'echo -n $DEEPSEEK_API_KEY'";
@@ -101,6 +98,12 @@ in
           command = "jq -r '\"\\(.model.display_name)[\\(.context_window.context_window_size)] | \\(.context_window.used_percentage // 0)% context | \\(.context_window.current_usage.input_tokens // 0) 📥 \\(.context_window.current_usage.output_tokens // 0) 📤 \\(.context_window.current_usage.cache_creation_input_tokens // 0) ✏️ \\(.context_window.current_usage.cache_read_input_tokens // 0) 📖 token | $\\((.cost.total_cost_usd // 0) | .*100 | round / 100) | 📁 \\(.workspace.current_dir) \"'";
           padding = 0;
           type = "command";
+        };
+        enabledPlugins = {
+          "document-skills@anthropic-skills" = true;
+          "skill-creator@claude-plugins-official" = true;
+          "superpowers@obra-superpowers" = true;
+          "caveman@juliusbrussee-caveman" = true;
         };
       };
     };
