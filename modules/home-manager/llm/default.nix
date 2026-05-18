@@ -31,6 +31,7 @@ in
     qwen-code
     mcp-nixos
     claude-agent-acp
+    codex-acp
   ];
   programs = {
     bash = {
