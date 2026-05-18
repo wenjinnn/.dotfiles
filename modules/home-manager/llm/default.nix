@@ -11,6 +11,12 @@ let
     rev = "f458cee31a7577a47ba0c9a101976fa599385174";
     sha256 = "sha256-jKNYFom6R+Qw7LQ8vFPBe51JpqIP0tTSY8LM4aPlnT4=";
   };
+  caveman = pkgs.fetchFromGitHub {
+    owner = "JuliusBrussee";
+    repo = "caveman";
+    rev = "18e45320a0b1aecc959a807f8568ee44b3aaa055";
+    sha256 = "sha256-/WDG+AL5onxME7WmteTTKhU82lpDucv3PL7G1mbfIpI=";
+  };
   obra-superpowers = pkgs.fetchFromGitHub {
     owner = "obra";
     repo = "superpowers";
@@ -24,6 +30,7 @@ let
   doc-coauthoring = "${anthropic-skills}/skills/doc-coauthoring";
   skill-creator = "${anthropic-skills}/skills/skill-creator";
   superpower = "${obra-superpowers}/skills";
+  caveman-skill = "${caveman}/skills";
 in
 {
 
@@ -67,6 +74,7 @@ in
         pptx
         pdf
         obra-superpowers
+        caveman
       ];
       settings = {
         # deepseek integration
@@ -136,6 +144,7 @@ in
           docx
           pptx
           pdf
+          caveman-skill
           ;
       };
     };
@@ -176,6 +185,7 @@ in
           docx
           pptx
           pdf
+          caveman-skill
           ;
       };
     };
