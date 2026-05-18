@@ -29,7 +29,7 @@
     firewall
     tailscale
     cachix
-    podman
+    docker
     ../../users.nix
     ./disko-usb-btrfs.nix
     ./pi5-configtxt.nix
@@ -56,7 +56,7 @@
     claude-code
     opencode
     tmux
-    nur.repos.definfo.cc-switch-cli
+    gnumake
     neovim
     git
     amule
@@ -448,28 +448,28 @@
         RestartSec = 5;
       };
     };
-    opencode-telegram-bot = {
-      description = "OpenCode Telegram Bot";
-      after = [ "opencode-serve.service" ];
-      requires = [ "opencode-serve.service" ];
-      wantedBy = [ "multi-user.target" ];
-      path = [
-        "/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/run/wrappers/bin"
-        "/home/wenjin/.local/share/npm/bin"
-      ];
-      environment = {
-        HOME = "/home/wenjin";
-      };
-      serviceConfig = {
-        Type = "simple";
-        WorkingDirectory = "/home/wenjin";
-        User = "wenjin";
-        Group = "users";
-        ExecStart = "${pkgs.nodejs}/bin/npx -y @grinev/opencode-telegram-bot@latest";
-        Restart = "on-failure";
-        RestartSec = 5;
-      };
-    };
+    # opencode-telegram-bot = {
+    #   description = "OpenCode Telegram Bot";
+    #   after = [ "opencode-serve.service" ];
+    #   requires = [ "opencode-serve.service" ];
+    #   wantedBy = [ "multi-user.target" ];
+    #   path = [
+    #     "/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/run/wrappers/bin"
+    #     "/home/wenjin/.local/share/npm/bin"
+    #   ];
+    #   environment = {
+    #     HOME = "/home/wenjin";
+    #   };
+    #   serviceConfig = {
+    #     Type = "simple";
+    #     WorkingDirectory = "/home/wenjin";
+    #     User = "wenjin";
+    #     Group = "users";
+    #     ExecStart = "${pkgs.nodejs}/bin/npx -y @grinev/opencode-telegram-bot@latest";
+    #     Restart = "on-failure";
+    #     RestartSec = 5;
+    #   };
+    # };
   };
   networking.interfaces = {
     end0 = {
@@ -513,25 +513,10 @@
   #     Settings.AutoConnect = true;
   #   };
   # };
-  services.udev.extraRules = ''
-    # ACTION=="add", SUBSYSTEM=="block", \
-    # ENV{ID_FS_UUID}=="3b4a7972-8635-40ad-8f8f-488187b7d75a", \
-    # RUN+="${pkgs.systemd}/bin/systemctl start mnt-nas.mount"
-    # Ignore partitions with "Required Partition" GPT partition attribute
-    # On our RPis this is firmware (/boot/firmware) partition
-    ENV{ID_PART_ENTRY_SCHEME}=="gpt", \
-      ENV{ID_PART_ENTRY_FLAGS}=="0x1", \
-      ENV{UDISKS_IGNORE}="1"
-  '';
 
   services.journald.extraConfig = ''
     SystemMaxUse=100M
   '';
-
-  boot.kernelModules = [
-    "modprobe"
-    "br_netfilter"
-  ];
 
   networking.hostName = "rpi${config.boot.loader.raspberry-pi.variant}";
 
