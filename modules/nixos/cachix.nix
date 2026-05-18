@@ -1,6 +1,7 @@
 { config, ...}: {
-  services.cachix-agent = {
+  services.cachix-watch-store = {
     enable = true;
-    credentialsFile = config.sops.secrets.CACHIX_TOKEN.path;
+    cacheName = "wenjinnn";
+    cachixTokenFile = config.sops.secrets.CACHIX_TOKEN.path;
   };
 }
