@@ -157,7 +157,7 @@
       ipv6: true
       listen: 0.0.0.0:1053
       respect-rules: true
-      enhanced-mode: fake-ip
+      # enhanced-mode: fake-ip
       fake-ip-filter:
         - "*"
         - "+.lan"
