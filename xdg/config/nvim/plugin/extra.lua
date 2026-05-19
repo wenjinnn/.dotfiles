@@ -140,7 +140,6 @@ later(function()
           end_point = 'https://api.deepseek.com/chat/completions',
           api_key = get_api_key('DEEPSEEK_API_KEY'),
           optional = {
-            reasoning_effort = 'low',
             thinking = { type = 'disabled' },
             -- prioritize throughput for faster completion
             provider = {
