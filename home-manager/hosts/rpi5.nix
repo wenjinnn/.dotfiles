@@ -20,4 +20,5 @@
     username = "${me.username}";
     homeDirectory = "/home/${me.username}";
   };
+  programs.bash.enable = true;
 }
