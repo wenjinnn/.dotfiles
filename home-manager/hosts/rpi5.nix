@@ -14,7 +14,7 @@
     llm
     tmux
     sops
-    startship
+    starship
   ];
   nixpkgs = {
     # Configure your nixpkgs instance
