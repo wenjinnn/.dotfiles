@@ -52,6 +52,7 @@
   time.timeZone = "Asia/Shanghai";
 
   environment.systemPackages = with pkgs; [
+    home-manager
     nodejs
     claude-code
     opencode
@@ -448,28 +449,28 @@
         RestartSec = 5;
       };
     };
-    # opencode-telegram-bot = {
-    #   description = "OpenCode Telegram Bot";
-    #   after = [ "opencode-serve.service" ];
-    #   requires = [ "opencode-serve.service" ];
-    #   wantedBy = [ "multi-user.target" ];
-    #   path = [
-    #     "/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/run/wrappers/bin"
-    #     "/home/wenjin/.local/share/npm/bin"
-    #   ];
-    #   environment = {
-    #     HOME = "/home/wenjin";
-    #   };
-    #   serviceConfig = {
-    #     Type = "simple";
-    #     WorkingDirectory = "/home/wenjin";
-    #     User = "wenjin";
-    #     Group = "users";
-    #     ExecStart = "${pkgs.nodejs}/bin/npx -y @grinev/opencode-telegram-bot@latest";
-    #     Restart = "on-failure";
-    #     RestartSec = 5;
-    #   };
-    # };
+    opencode-telegram-bot = {
+      description = "OpenCode Telegram Bot";
+      after = [ "opencode-serve.service" ];
+      requires = [ "opencode-serve.service" ];
+      wantedBy = [ "multi-user.target" ];
+      path = [
+        "/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/run/wrappers/bin"
+        "/home/wenjin/.local/share/npm/bin"
+      ];
+      environment = {
+        HOME = "/home/wenjin";
+      };
+      serviceConfig = {
+        Type = "simple";
+        WorkingDirectory = "/home/wenjin";
+        User = "wenjin";
+        Group = "users";
+        ExecStart = "${pkgs.nodejs}/bin/npx -y @grinev/opencode-telegram-bot@latest";
+        Restart = "on-failure";
+        RestartSec = 5;
+      };
+    };
   };
   networking.interfaces = {
     end0 = {

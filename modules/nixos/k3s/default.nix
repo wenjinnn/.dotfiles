@@ -18,6 +18,7 @@
       kubernetes
       kubernetes-helm
       kubectl
+      openiscsi
       nfs-utils
     ]
   );
@@ -26,7 +27,7 @@
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
   };
 
-  services.openiscsi = lib.mkIf (config.networking.hostName != "rpi5") {
+  services.openiscsi = {
     enable = true;
     name = "${config.networking.hostName}-initiatorhost";
   };
@@ -59,16 +60,6 @@
           targetNamespace = "longhorn-system";
           createNamespace = true;
           hash = "sha256-pwJyyDaDkj7ZyvoH/h5POm59XXSHQRGzqK1CHmQQKnc=";
-          values = {
-            global = {
-              nodeSelector = {
-                longhorn-storage-node = "enabled";
-              };
-            };
-            defaultSettings = {
-              systemManagedComponentsNodeSelector = "longhorn-storage-node:enabled";
-            };
-          };
         };
       };
 
@@ -79,6 +70,9 @@
     after = [ "tailscaled.service" ];
     bindsTo = [ "tailscaled.service" ];
   };
+  systemd.tmpfiles.rules = [
+    "L+ /usr/local/bin/iscsiadm - - - - /run/current-system/sw/bin/iscsiadm"
+  ];
 
   environment.etc = {
     "rancher/k3s/registries.yaml" = {
