@@ -106,14 +106,14 @@ later(function()
         -- accept whole completion
         accept = '<A-w>',
         -- accept one line
-        accept_line = '<A-a>',
+        accept_line = '<A-j>',
         -- accept n lines (prompts for number)
         -- e.g. "A-z 2 CR" will accept 2 lines
         accept_n_lines = '<A-z>',
         -- Cycle to prev completion item, or manually invoke completion
-        prev = '<A-[>',
+        prev = '<A-p>',
         -- Cycle to next completion item, or manually invoke completion
-        next = '<A-]>',
+        next = '<A-n>',
         dismiss = '<A-e>',
       },
       show_on_completion_menu = true,
@@ -152,6 +152,6 @@ later(function()
   })
 
   map({ 'n', 'i' }, '<A-d>', '<cmd>Minuet duet predict<cr>', 'Minuet duet predict')
-  map({ 'n', 'i' }, '<A-p>', '<cmd>Minuet duet apply<cr>', 'Minuet duet apply')
+  map({ 'n', 'i' }, '<A-a>', '<cmd>Minuet duet apply<cr>', 'Minuet duet apply')
   map({ 'n', 'i' }, '<A-x>', '<cmd>Minuet duet dismiss<cr>', 'Minuet duet dismiss')
 end)
