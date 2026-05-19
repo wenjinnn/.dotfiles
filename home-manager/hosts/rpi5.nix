@@ -36,7 +36,11 @@
     # sops secrets file location
     SOPS_SECRETS = "${config.home.homeDirectory}/.dotfiles/secrets.yaml";
   };
+  programs.bash.enable = true;
+
+  # Nicely reload system units when changing configs
+  systemd.user.startServices = "sd-switch";
+
 
   home.stateVersion = "26.05";
-  programs.bash.enable = true;
 }
