@@ -8,11 +8,12 @@ vim.pack.add({
 })
 
 --- COLORSCHEME
+require('base46').setup()
 if vim.fn.executable('dms') == 1 then
-  require('base46').setup()
+  -- use dms colorscheme if running inside dms
   vim.cmd.colorscheme('dms')
 else
-  vim.cmd.colorscheme('wenvim-brown')
+  vim.cmd.colorscheme('base46-default-dark')
 end
 require('mini.misc').setup()
 MiniMisc.setup_auto_root()
