@@ -202,9 +202,6 @@ in
     # sudo askpass program
     SUDO_ASKPASS = "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
   };
-  home.file.".abook/addressbook" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${archive_path}/abook/addressbook";
-  };
   # XDG base directory settings
   xdg = {
     enable = true;
