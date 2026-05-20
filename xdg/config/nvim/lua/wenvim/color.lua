@@ -55,6 +55,8 @@ function M.setup_hl()
   M.override_hl('DiagnosticInfo', { italic = true })
   M.override_hl('DiagnosticHint', { italic = true })
   M.override_hl('DiagnosticOk', { italic = true })
+  M.override_hl('NonText', { italic = true })
+  M.override_hl('LspInlayHint', { italic = true })
 end
 
 -- A wrapper for above functions
