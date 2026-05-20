@@ -123,7 +123,7 @@ in
     yq
     quicktype
     openpomodoro-cli
-    cloc
+    tokei
     frp
     xdg-utils
     trash-cli
