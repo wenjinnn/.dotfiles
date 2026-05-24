@@ -133,5 +133,13 @@
     "aarch64-linux"
   ];
 
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
+    algorithm = "zstd";
+    priority = 100;
+  };
+  # swapfile only for hibernation, managed by systemd hooks in configuration.nix
+
   networking.hostName = "nixos";
 }
