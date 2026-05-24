@@ -64,6 +64,11 @@
     amule-web
     amule-daemon
   ];
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
+    algorithm = "zstd";
+  };
   sops.secrets.MATRIX_REGISTRATION_TOKEN = { };
   sops.secrets.MATRIX_REGISTRATION_TOKEN.owner = config.services.matrix-tuwunel.user;
   sops.secrets.MATRIX_REGISTRATION_TOKEN.group = config.services.matrix-tuwunel.group;
