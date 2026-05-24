@@ -21,7 +21,7 @@
     sops
     (k3s {
       role = "agent";
-      serverAddr = "https://nixos:6443";
+      serverAddr = "https://rpi5:6443";
     })
     tailscale
   ];

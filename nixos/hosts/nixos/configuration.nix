@@ -20,7 +20,9 @@
     bluetooth
     steam
     de
-    (k3s { })
+    (k3s {
+      serverAddr = "https://rpi5:6443";
+    })
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
