@@ -58,8 +58,8 @@
         struts = {
           # top = 3;
           # left = 6;
-          right = 8;
-          # bottom = 3;
+          right = 10;
+          # bottom = 4;
         };
       };
       screenshot-path = "~/Pictures/Screenshots/Screenshot-%Y-%m-%d_%H-%M-%S.png";
