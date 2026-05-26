@@ -135,7 +135,7 @@
 
   zramSwap = {
     enable = true;
-    memoryPercent = 50;
+    memoryPercent = 75;
     algorithm = "zstd";
     priority = 100;
   };

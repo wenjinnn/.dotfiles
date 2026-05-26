@@ -66,13 +66,14 @@
   ];
   zramSwap = {
     enable = true;
-    memoryPercent = 50;
+    memoryPercent = 75;
     algorithm = "zstd";
   };
   sops.secrets.MATRIX_REGISTRATION_TOKEN = { };
   sops.secrets.MATRIX_REGISTRATION_TOKEN.owner = config.services.matrix-tuwunel.user;
   sops.secrets.MATRIX_REGISTRATION_TOKEN.group = config.services.matrix-tuwunel.group;
   services = {
+    watchdogd.enable = true;
     nginx = {
       enable = true;
       recommendedOptimisation = true;
