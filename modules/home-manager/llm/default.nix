@@ -89,10 +89,10 @@ in
         env = {
           ANTHROPIC_BASE_URL = "https://token-plan-cn.xiaomimimo.com/anthropic";
           ANTHROPIC_DEFAULT_HAIKU_MODEL = "mimo-v2.5-pro";
-          ANTHROPIC_DEFAULT_OPUS_MODEL = "mimo-v2.5-pro";
-          ANTHROPIC_DEFAULT_SONNET_MODEL = "mimo-v2.5-pro";
-          ANTHROPIC_MODEL = "mimo-v2.5-pro";
-          ANTHROPIC_REASONING_MODEL = "mimo-v2-pro";
+          ANTHROPIC_DEFAULT_OPUS_MODEL = "mimo-v2.5-pro[1m]";
+          ANTHROPIC_DEFAULT_SONNET_MODEL = "mimo-v2.5-pro[1m]";
+          ANTHROPIC_MODEL = "mimo-v2.5-pro[1m]";
+          ANTHROPIC_REASONING_MODEL = "mimo-v2-pro[1m]";
         };
         statusLine = {
           command = "jq -r '\"\\(.model.display_name)[\\(.context_window.context_window_size)] | \\(.context_window.used_percentage // 0)% context | \\(.context_window.current_usage.input_tokens // 0) 📥 \\(.context_window.current_usage.output_tokens // 0) 📤 \\(.context_window.current_usage.cache_creation_input_tokens // 0) ✏️ \\(.context_window.current_usage.cache_read_input_tokens // 0) 📖 token | $\\((.cost.total_cost_usd // 0) | .*100 | round / 100) | 📁 \\(.workspace.current_dir) \"'";
