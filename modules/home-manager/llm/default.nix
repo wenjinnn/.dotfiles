@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  outputs,
   ...
 }:
 let
@@ -34,167 +35,220 @@ let
 in
 {
 
+  # You can import other home-manager modules here
+  imports = with outputs.homeManagerModules; [
+    pi
+  ];
+
   home.packages = with pkgs; [
     qwen-code
     mcp-nixos
     claude-agent-acp
     codex-acp
   ];
-  programs = {
-    bash = {
-      shellAliases = {
-        gemini = ''
-          env GEMINI_API_KEY="$(sops exec-env $SOPS_SECRETS 'echo -n $GEMINI_API_KEY')" \
-          GOOGLE_CLOUD_PROJECT="$(sops exec-env $SOPS_SECRETS 'echo -n $GOOGLE_CLOUD_PROJECT')" \
-          gemini
-        '';
-      };
-    };
-    mcp = {
-      enable = true;
-      servers = {
-        nixos = {
-          enable = true;
-          command = "mcp-nixos";
+  programs =
+    let
+      sops-exec-env = "${lib.getExe pkgs.sops} exec-env ${config.home.sessionVariables.SOPS_SECRETS}";
+    in
+    {
+      bash = {
+        shellAliases = {
+          gemini = ''
+            env GEMINI_API_KEY="$(sops exec-env $SOPS_SECRETS 'echo -n $GEMINI_API_KEY')" \
+            GOOGLE_CLOUD_PROJECT="$(sops exec-env $SOPS_SECRETS 'echo -n $GOOGLE_CLOUD_PROJECT')" \
+            gemini
+          '';
         };
       };
-    };
-    claude-code = {
-      enable = true;
-      enableMcpIntegration = true;
-      marketplaces = {
-        anthropic-skills = anthropic-skills;
-        claude-plugins-official = pkgs.fetchFromGitHub {
-          owner = "anthropics";
-          repo = "claude-plugins-official";
-          rev = "f475d3ce5806c7edf9fc204ee276e7f45e24c798";
-          sha256 = "sha256-FvTtM4JT0UUkpmH6mKh9ZDmcKbOcaGEe0vU0Whzd+nI=";
-        };
-        obra-superpowers = obra-superpowers;
-        juliusbrussee-caveman = juliusbrussee-caveman;
-      };
-      settings = {
-        # deepseek integration
-        # apiKeyHelper = "${lib.getExe pkgs.sops} exec-env ${config.home.sessionVariables.SOPS_SECRETS} 'echo -n $DEEPSEEK_API_KEY'";
-        # env = {
-        #   ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic";
-        #   ANTHROPIC_MODEL="deepseek-v4-pro[1m]";
-        #   ANTHROPIC_DEFAULT_OPUS_MODEL="deepseek-v4-pro[1m]";
-        #   ANTHROPIC_DEFAULT_SONNET_MODEL="deepseek-v4-pro[1m]";
-        #   ANTHROPIC_DEFAULT_HAIKU_MODEL="deepseek-v4-flash";
-        #   CLAUDE_CODE_SUBAGENT_MODEL="deepseek-v4-flash";
-        #   CLAUDE_CODE_EFFORT_LEVEL="max";
-        # };
-        apiKeyHelper = "${lib.getExe pkgs.sops} exec-env ${config.home.sessionVariables.SOPS_SECRETS} 'echo -n $MIMO_API_KEY'";
-        env = {
-          ANTHROPIC_BASE_URL = "https://token-plan-cn.xiaomimimo.com/anthropic";
-          ANTHROPIC_DEFAULT_HAIKU_MODEL = "mimo-v2.5-pro";
-          ANTHROPIC_DEFAULT_OPUS_MODEL = "mimo-v2.5-pro[1m]";
-          ANTHROPIC_DEFAULT_SONNET_MODEL = "mimo-v2.5-pro[1m]";
-          ANTHROPIC_MODEL = "mimo-v2.5-pro[1m]";
-          ANTHROPIC_REASONING_MODEL = "mimo-v2-pro[1m]";
-        };
-        statusLine = {
-          command = "jq -r '\"\\(.model.display_name)[\\(.context_window.context_window_size)] | \\(.context_window.used_percentage // 0)% context | \\(.context_window.current_usage.input_tokens // 0) 📥 \\(.context_window.current_usage.output_tokens // 0) 📤 \\(.context_window.current_usage.cache_creation_input_tokens // 0) ✏️ \\(.context_window.current_usage.cache_read_input_tokens // 0) 📖 token | $\\((.cost.total_cost_usd // 0) | .*100 | round / 100) | 📁 \\(.workspace.current_dir) \"'";
-          padding = 0;
-          type = "command";
-        };
-        enabledPlugins = {
-          "document-skills@anthropic-skills" = true;
-          "skill-creator@claude-plugins-official" = true;
-          "superpowers@obra-superpowers" = true;
-          "caveman@juliusbrussee-caveman" = true;
+      mcp = {
+        enable = true;
+        servers = {
+          nixos = {
+            enable = true;
+            command = "mcp-nixos";
+          };
         };
       };
-    };
-    codex = {
-      enable = true;
-      enableMcpIntegration = true;
-      settings = {
-        model_provider = "openrouter";
-        model = "deepseek/deepseek-v4-pro";
-        model_reasoning_effort = "high";
+      claude-code = {
+        enable = true;
+        enableMcpIntegration = true;
+        marketplaces = {
+          anthropic-skills = anthropic-skills;
+          claude-plugins-official = pkgs.fetchFromGitHub {
+            owner = "anthropics";
+            repo = "claude-plugins-official";
+            rev = "f475d3ce5806c7edf9fc204ee276e7f45e24c798";
+            sha256 = "sha256-FvTtM4JT0UUkpmH6mKh9ZDmcKbOcaGEe0vU0Whzd+nI=";
+          };
+          obra-superpowers = obra-superpowers;
+          juliusbrussee-caveman = juliusbrussee-caveman;
+        };
+        settings = {
+          # deepseek integration
+          # apiKeyHelper = "${lib.getExe pkgs.sops} exec-env ${config.home.sessionVariables.SOPS_SECRETS} 'echo -n $DEEPSEEK_API_KEY'";
+          # env = {
+          #   ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic";
+          #   ANTHROPIC_MODEL="deepseek-v4-pro[1m]";
+          #   ANTHROPIC_DEFAULT_OPUS_MODEL="deepseek-v4-pro[1m]";
+          #   ANTHROPIC_DEFAULT_SONNET_MODEL="deepseek-v4-pro[1m]";
+          #   ANTHROPIC_DEFAULT_HAIKU_MODEL="deepseek-v4-flash";
+          #   CLAUDE_CODE_SUBAGENT_MODEL="deepseek-v4-flash";
+          #   CLAUDE_CODE_EFFORT_LEVEL="max";
+          # };
+          apiKeyHelper = "${sops-exec-env} 'echo -n $MIMO_API_KEY'";
+          env = {
+            ANTHROPIC_BASE_URL = "https://token-plan-cn.xiaomimimo.com/anthropic";
+            ANTHROPIC_DEFAULT_HAIKU_MODEL = "mimo-v2.5-pro";
+            ANTHROPIC_DEFAULT_OPUS_MODEL = "mimo-v2.5-pro[1m]";
+            ANTHROPIC_DEFAULT_SONNET_MODEL = "mimo-v2.5-pro[1m]";
+            ANTHROPIC_MODEL = "mimo-v2.5-pro[1m]";
+            ANTHROPIC_REASONING_MODEL = "mimo-v2-pro[1m]";
+          };
+          statusLine = {
+            command = "jq -r '\"\\(.model.display_name)[\\(.context_window.context_window_size)] | \\(.context_window.used_percentage // 0)% context | \\(.context_window.current_usage.input_tokens // 0) 📥 \\(.context_window.current_usage.output_tokens // 0) 📤 \\(.context_window.current_usage.cache_creation_input_tokens // 0) ✏️ \\(.context_window.current_usage.cache_read_input_tokens // 0) 📖 token | $\\((.cost.total_cost_usd // 0) | .*100 | round / 100) | 📁 \\(.workspace.current_dir) \"'";
+            padding = 0;
+            type = "command";
+          };
+          enabledPlugins = {
+            "document-skills@anthropic-skills" = true;
+            "skill-creator@claude-plugins-official" = true;
+            "superpowers@obra-superpowers" = true;
+            "caveman@juliusbrussee-caveman" = true;
+          };
+        };
+      };
+      codex = {
+        enable = true;
+        enableMcpIntegration = true;
+        settings = {
+          model_provider = "openrouter";
+          model = "deepseek/deepseek-v4-pro";
+          model_reasoning_effort = "high";
 
-        model_providers = {
-          openrouter = {
-            auth = {
-              command = "bash";
-              args = [
-                "-c"
-                "sops exec-env $SOPS_SECRETS 'echo -n $OPENROUTER_API_KEY'"
-              ];
+          model_providers = {
+            openrouter = {
+              auth = {
+                command = "bash";
+                args = [
+                  "-c"
+                  "${sops-exec-env} 'echo -n $OPENROUTER_API_KEY'"
+                ];
+              };
+              name = "openrouter";
+              base_url = "https://openrouter.ai/api/v1";
             };
-            name = "openrouter";
-            base_url = "https://openrouter.ai/api/v1";
+          };
+          tui.status_line = [
+            "model-with-reasoning"
+            "context-used"
+            "total-input-tokens"
+            "total-output-tokens"
+            "current-dir"
+            "git-branch"
+            "branch-changes"
+          ];
+        };
+        skills = {
+          inherit
+            superpower
+            doc-coauthoring
+            skill-creator
+            xlsx
+            docx
+            pptx
+            pdf
+            caveman-skill
+            ;
+        };
+      };
+      opencode = {
+        enable = true;
+        enableMcpIntegration = true;
+        settings = {
+          autoupdate = false;
+          provider = {
+            deepseek = {
+              options = {
+                apiKey = "{file:${config.sops.secrets.DEEPSEEK_API_KEY.path}}";
+              };
+            };
+            xiaomi-token-plan-cn = {
+              options = {
+                apiKey = "{file:${config.sops.secrets.MIMO_API_KEY.path}}";
+              };
+            };
+            google = {
+              options = {
+                apiKey = "{file:${config.sops.secrets.GEMINI_API_KEY.path}}";
+              };
+            };
+            openrouter = {
+              options = {
+                apiKey = "{file:${config.sops.secrets.OPENROUTER_API_KEY.path}}";
+              };
+            };
           };
         };
-        tui.status_line = [
-          "model-with-reasoning"
-          "context-used"
-          "total-input-tokens"
-          "total-output-tokens"
-          "current-dir"
-          "git-branch"
-          "branch-changes"
-        ];
+        skills = {
+          inherit
+            superpower
+            doc-coauthoring
+            skill-creator
+            xlsx
+            docx
+            pptx
+            pdf
+            caveman-skill
+            ;
+        };
       };
-      skills = {
-        inherit
-          superpower
-          doc-coauthoring
-          skill-creator
-          xlsx
-          docx
-          pptx
-          pdf
-          caveman-skill
-          ;
+      gemini-cli = {
+        enable = true;
+        enableMcpIntegration = true;
       };
-    };
-    opencode = {
-      enable = true;
-      enableMcpIntegration = true;
-      settings = {
-        autoupdate = false;
-        provider = {
-          deepseek = {
-            options = {
-              apiKey = "{file:${config.sops.secrets.DEEPSEEK_API_KEY.path}}";
-            };
-          };
+      pi = {
+        enable = true;
+        auth = {
           xiaomi-token-plan-cn = {
-            options = {
-              apiKey = "{file:${config.sops.secrets.MIMO_API_KEY.path}}";
-            };
+            type = "api_key";
+            key = "!${sops-exec-env} 'echo -n $MIMO_API_KEY'";
+          };
+          deepseek = {
+            type = "api_key";
+            key = "!${sops-exec-env} 'echo -n $DEEPSEEK_API_KEY'";
           };
           google = {
-            options = {
-              apiKey = "{file:${config.sops.secrets.GEMINI_API_KEY.path}}";
-            };
+            type = "api_key";
+            key = "!${sops-exec-env} 'echo -n $GEMINI_API_KEY'";
           };
           openrouter = {
-            options = {
-              apiKey = "{file:${config.sops.secrets.OPENROUTER_API_KEY.path}}";
-            };
+            type = "api_key";
+            key = "!${sops-exec-env} 'echo -n $OPENROUTER_API_KEY'";
           };
         };
-      };
-      skills = {
-        inherit
-          superpower
-          doc-coauthoring
-          skill-creator
-          xlsx
-          docx
-          pptx
-          pdf
-          caveman-skill
-          ;
+        settings = {
+          defaultProvider = "xiaomi-token-plan-cn";
+          defaultModel = "mimo-v2.5-pro";
+          defaultThinkingLevel = "high";
+          theme = "dark";
+          enableInstallTelemetry = false;
+          skills = [
+            superpower
+            doc-coauthoring
+            skill-creator
+            xlsx
+            docx
+            pptx
+            pdf
+            caveman-skill
+          ];
+          packages = [
+            "npm:@gotgenes/pi-subagents"
+            "npm:@junghanacs/pi-shell-acp"
+            "npm:@marcfargas/brainiac"
+            "npm:pi-mcp-adapter"
+          ];
+        };
       };
     };
-    gemini-cli = {
-      enable = true;
-      enableMcpIntegration = true;
-    };
-  };
 }

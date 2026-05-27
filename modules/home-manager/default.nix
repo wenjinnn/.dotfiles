@@ -37,5 +37,6 @@
   udiskie = import ./udiskie.nix;
   de = import ./de.nix;
   llm = import ./llm;
+  pi = import ./pi.nix;
   ghostty = import ./ghostty.nix;
 }
