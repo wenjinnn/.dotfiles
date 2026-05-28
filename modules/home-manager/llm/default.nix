@@ -35,7 +35,6 @@ let
 in
 {
 
-  # You can import other home-manager modules here
   imports = with outputs.homeManagerModules; [
     pi
   ];
@@ -45,6 +44,7 @@ in
     mcp-nixos
     claude-agent-acp
     codex-acp
+    pi-acp
   ];
   programs =
     let
@@ -105,7 +105,7 @@ in
             ANTHROPIC_REASONING_MODEL = "mimo-v2-pro[1m]";
           };
           statusLine = {
-            command = "jq -r '\"\\(.model.display_name)[\\(.context_window.context_window_size)] | \\(.context_window.used_percentage // 0)% context | \\(.context_window.current_usage.input_tokens // 0) 📥 \\(.context_window.current_usage.output_tokens // 0) 📤 \\(.context_window.current_usage.cache_creation_input_tokens // 0) ✏️ \\(.context_window.current_usage.cache_read_input_tokens // 0) 📖 token | $\\((.cost.total_cost_usd // 0) | .*100 | round / 100) | 📁 \\(.workspace.current_dir) \"'";
+            command = "jq -r '\"\\(.model.display_name) | \\(.context_window.used_percentage // 0)% context | \\(.context_window.current_usage.input_tokens // 0) 📥 \\(.context_window.current_usage.output_tokens // 0) 📤 \\(.context_window.current_usage.cache_creation_input_tokens // 0) ✏️ \\(.context_window.current_usage.cache_read_input_tokens // 0) 📖 token | $\\((.cost.total_cost_usd // 0) | .*100 | round / 100) | 📁 \\(.workspace.current_dir) \"'";
             padding = 0;
             type = "command";
           };
@@ -248,6 +248,17 @@ in
             "npm:@marcfargas/brainiac"
             "npm:pi-mcp-adapter"
           ];
+        };
+        keybindings = {
+          "tui.select.up" = [
+            "up"
+            "ctrl+p"
+          ];
+          "tui.select.down" = [
+            "down"
+            "ctrl+n"
+          ];
+          "app.model.cycleForward" = [ "ctrl+alt+p" ];
         };
       };
     };

@@ -49,6 +49,8 @@
       grpcurl
       websocat
       openssl
+      # ACP adapter for pi coding agent (codecompanion.nvim)
+      pi-acp
       # for vim-dadbod
       mariadb
       redis

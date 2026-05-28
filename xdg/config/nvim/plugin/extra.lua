@@ -41,7 +41,7 @@ later(function()
 
   -- AI assistant
   vim.pack.add({ gh('olimorris/codecompanion.nvim') })
-  local acp_adapter = os.getenv('NVIM_AI_ACP_ADAPTER') or 'claude_code'
+  local acp_adapter = os.getenv('NVIM_AI_ACP_ADAPTER') or 'pi'
   local http_adapter = os.getenv('NVIM_AI_HTTP_ADAPTER') or 'deepseek'
   local get_api_key = function(key)
     local key_cmd = "sops exec-env $SOPS_SECRETS 'echo -n $%s'"
@@ -55,6 +55,47 @@ later(function()
 
   require('codecompanion').setup({
     adapters = {
+      acp = {
+        pi = function()
+          local helpers = require('codecompanion.adapters.acp.helpers')
+          return {
+            name = 'pi',
+            formatted_name = 'Pi',
+            type = 'acp',
+            roles = {
+              llm = 'assistant',
+              user = 'user',
+            },
+            commands = {
+              default = {
+                'pi-acp',
+              },
+            },
+            defaults = {
+              mcpServers = {},
+              timeout = 120000,
+            },
+            parameters = {
+              protocolVersion = 1,
+              clientCapabilities = {
+                fs = { readTextFile = true, writeTextFile = true },
+              },
+              clientInfo = {
+                name = 'CodeCompanion.nvim',
+                version = '1.0.0',
+              },
+            },
+            handlers = {
+              setup = function(self) return true end,
+              auth = function(self) return true end,
+              form_messages = function(self, messages, capabilities)
+                return helpers.form_messages(self, messages, capabilities)
+              end,
+              on_exit = function(self, code) end,
+            },
+          }
+        end,
+      },
       http = {
         anthropic = extend_adapter('anthropic', 'ANTHROPIC_API_KEY'),
         deepseek = extend_adapter('deepseek', 'DEEPSEEK_API_KEY'),
@@ -81,13 +122,13 @@ later(function()
       inline = { adapter = acp_adapter },
       cmd = { adapter = http_adapter },
       cli = {
-        agent = 'claude',
+        agent = 'pi',
         agents = {
+          pi = { cmd = 'pi', args = {}, description = 'Pi Agent' },
           claude = { cmd = 'claude', args = {}, description = 'Claude Code Agent' },
           opencode = { cmd = 'opencode', args = {}, description = 'Opencode Agent' },
           gemini = { cmd = 'gemini', args = {}, description = 'Gemini Agent' },
           codex = { cmd = 'codex', args = {}, description = 'OpenAI Codex Agent' },
-          pi = { cmd = 'pi', args = {}, description = 'Pi Agent' },
         },
       },
     },
@@ -102,7 +143,7 @@ later(function()
   vim.pack.add({ gh('milanglacier/minuet-ai.nvim') })
   require('minuet').setup({
     virtualtext = {
-      auto_trigger_ft = {'*'},
+      auto_trigger_ft = { '*' },
       keymap = {
         -- accept whole completion
         accept = '<A-w>',
