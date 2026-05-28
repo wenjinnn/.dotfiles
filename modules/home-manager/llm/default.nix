@@ -230,6 +230,7 @@ in
           defaultProvider = "xiaomi-token-plan-cn";
           defaultModel = "mimo-v2.5-pro";
           defaultThinkingLevel = "high";
+          quietStartup = true;
           theme = "dark";
           enableInstallTelemetry = false;
           skills = [
