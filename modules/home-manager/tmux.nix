@@ -24,6 +24,8 @@
           set -g @floax-change-path 'false'
           set -g @floax-border-color 'default'
           set -g @floax-text-color 'default'
+          set -g extended-keys on
+          set -g extended-keys-format csi-u
         '';
       }
       {
