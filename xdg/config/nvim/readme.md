@@ -93,7 +93,7 @@ Some behaviors in this configuration are not common but are reasonable in my opi
 `JDTLS_DAP_VMARGS` JVM arguments for JDTLS DAP.
 
 ### AI
-`NVIM_AI_ACP_ADAPTER` Default AI adapter for CodeCompanion.nvim ACP interactions (e.g., `claude_code`).
+`NVIM_AI_ACP_ADAPTER` Default AI adapter for CodeCompanion.nvim ACP interactions (e.g., `pi`, `claude_code`).
 
 `NVIM_AI_HTTP_ADAPTER` Default AI adapter for CodeCompanion.nvim HTTP cmd interactions (e.g., `deepseek`).
 

@@ -126,6 +126,7 @@ let
     export NPM_CONFIG_PREFIX="$HOME/.pi/npm"
     export PATH="${cfg.nodejs}/bin:$PATH"
     export PI_SKIP_VERSION_CHECK=1
+    export PI_OFFLINE=1
 
     ${preLaunchScript}
 
