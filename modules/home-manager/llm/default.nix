@@ -253,13 +253,12 @@ in
         keybindings = {
           "tui.select.up" = [
             "up"
-            "ctrl+p"
+            "alt+p"
           ];
           "tui.select.down" = [
             "down"
-            "ctrl+n"
+            "alt+n"
           ];
-          "app.model.cycleForward" = [ "ctrl+alt+p" ];
         };
       };
     };
