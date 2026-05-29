@@ -184,6 +184,7 @@
   };
 
   home.packages = with pkgs; [
+    wl-clipboard
     yt-dlp
     spotdl
     kdePackages.qt6ct
