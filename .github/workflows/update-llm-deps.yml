@@ -1,0 +1,144 @@
+name: Update LLM Dependencies
+
+on:
+  schedule:
+    # Every Monday at 06:00 UTC
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: cachix/install-nix-action@v31
+
+      - name: Check and update dependencies
+        id: check
+        run: |
+          set -euo pipefail
+
+          NIX_FILE="modules/home-manager/llm/default.nix"
+          UPDATES=""
+
+          declare -A REPOS=(
+            ["anthropics/skills"]="f458cee31a7577a47ba0c9a101976fa599385174"
+            ["anthropics/claude-plugins-official"]="f475d3ce5806c7edf9fc204ee276e7f45e24c798"
+            ["JuliusBrussee/caveman"]="18e45320a0b1aecc959a807f8568ee44b3aaa055"
+            ["obra/superpowers"]="v5.1.0"
+          )
+
+          for REPO in "${!REPOS[@]}"; do
+            CURRENT_REV="${REPOS[$REPO]}"
+            echo "::group::Checking $REPO"
+
+            LATEST_SHA=$(curl -fsSL \
+              -H "Authorization: token ${{ github.token }}" \
+              "https://api.github.com/repos/$REPO/commits/HEAD" \
+              | jq -r '.sha')
+
+            if [ -z "$LATEST_SHA" ] || [ "$LATEST_SHA" = "null" ]; then
+              echo "⚠️  Failed to fetch latest SHA for $REPO, skipping"
+              echo "::endgroup::"
+              continue
+            fi
+
+            # Resolve current rev if it's a tag
+            RESOLVED_REV=$(curl -fsSL \
+              -H "Authorization: token ${{ github.token }}" \
+              "https://api.github.com/repos/$REPO/commits/$CURRENT_REV" \
+              | jq -r '.sha' 2>/dev/null || echo "$CURRENT_REV")
+
+            if [ "$LATEST_SHA" = "$RESOLVED_REV" ]; then
+              echo "✅ $REPO is up to date ($CURRENT_REV)"
+              echo "::endgroup::"
+              continue
+            fi
+
+            echo "🔄 $REPO has updates: $CURRENT_REV -> $LATEST_SHA"
+
+            # Prefetch and compute SRI hash
+            HASH=$(nix-prefetch-url --unpack \
+              "https://github.com/$REPO/archive/$LATEST_SHA.tar.gz" \
+              --type sha256)
+
+            SRI_HASH=$(nix hash to-sri --type sha256 "$HASH")
+
+            UPDATES="$UPDATES $REPO|$CURRENT_REV|$LATEST_SHA|$SRI_HASH"
+            echo "::endgroup::"
+          done
+
+          if [ -z "$UPDATES" ]; then
+            echo "All dependencies are up to date."
+            echo "updated=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "updated=true" >> "$GITHUB_OUTPUT"
+
+          # Apply all updates via Python
+          python3 /dev/stdin "$NIX_FILE" "$GITHUB_OUTPUT" $UPDATES <<'PYEOF'
+          import re, sys
+
+          path = sys.argv[1]
+          output_file = sys.argv[2]
+          updates = []
+          for arg in sys.argv[3:]:
+              parts = arg.split("|")
+              if len(parts) == 4:
+                  updates.append(parts)
+
+          with open(path) as f:
+              content = f.read()
+
+          updated_repos = []
+          for repo, old_rev, new_rev, new_hash in updates:
+              owner, name = repo.split("/")
+              pattern = (
+                  r'owner\s*=\s*"' + re.escape(owner) + r'"\s*;\s*\n'
+                  r'\s*repo\s*=\s*"' + re.escape(name) + r'"\s*;\s*\n'
+                  r'\s*rev\s*=\s*"([^"]*)"' + r'\s*;\s*\n'
+                  r'\s*sha256\s*=\s*"([^"]*)"'
+              )
+              m = re.search(pattern, content)
+              if not m:
+                  print(f"WARNING: could not find fetchFromGitHub block for {repo}", file=sys.stderr)
+                  continue
+
+              old_block = m.group(0)
+              new_block = old_block.replace(old_rev, new_rev)
+              old_hash = m.group(2)
+              new_block = new_block.replace(old_hash, new_hash)
+              content = content.replace(old_block, new_block, 1)
+
+              updated_repos.append(repo)
+              print(f"✅ Updated {repo}: {old_rev[:12]}… -> {new_rev[:12]}…")
+
+          with open(path, "w") as f:
+              f.write(content)
+
+          with open(output_file, "a") as f:
+              f.write(f"repos={' '.join(updated_repos)}\n")
+          PYEOF
+
+      - name: Create Pull Request
+        if: steps.check.outputs.updated == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ github.token }}
+          branch: auto-update/llm-deps
+          delete-branch: true
+          title: "chore(llm): update LLM dependencies"
+          body: |
+            Automated weekly update of LLM-related `fetchFromGitHub` dependencies.
+
+            **Updated repos:** ${{ steps.check.outputs.repos }}
+
+            Please review the changes and merge if everything looks correct.
+          commit-message: "chore(llm): update LLM dependency revs and hashes"
+          labels: dependencies, automated
