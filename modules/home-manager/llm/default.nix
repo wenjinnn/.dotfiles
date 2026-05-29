@@ -226,11 +226,20 @@ in
             key = "!${sops-exec-env} 'echo -n $OPENROUTER_API_KEY'";
           };
         };
+        packages = [
+          pkgs.piPackages."@gotgenes/pi-subagents"
+          pkgs.piPackages."@junghanacs/pi-shell-acp"
+          pkgs.piPackages."@juicesharp/rpiv-ask-user-question"
+          pkgs.piPackages."@juicesharp/rpiv-btw"
+          pkgs.piPackages."pi-mcp-adapter"
+          pkgs.piPackages."pi-web-access"
+          pkgs.piPackages."pi-hermes-memory"
+        ];
         settings = {
           defaultProvider = "xiaomi-token-plan-cn";
           defaultModel = "mimo-v2.5-pro";
           defaultThinkingLevel = "high";
-          quietStartup = true;
+          # quietStartup = true;
           theme = "dark";
           enableInstallTelemetry = false;
           skills = [
@@ -242,12 +251,6 @@ in
             pptx
             pdf
             caveman-skill
-          ];
-          packages = [
-            "npm:@gotgenes/pi-subagents"
-            "npm:@junghanacs/pi-shell-acp"
-            "npm:@marcfargas/brainiac"
-            "npm:pi-mcp-adapter"
           ];
         };
         keybindings = {

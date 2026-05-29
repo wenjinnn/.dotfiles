@@ -7,4 +7,10 @@
   fhs = pkgs.callPackage ./fhs {};
   rofi-screenshot-wayland = pkgs.callPackage ./rofi-screenshot-wayland {};
   pi-acp = pkgs.callPackage ./pi-acp {};
+
+  # Pi packages - uses buildNpmPackage for packages with dependencies
+  piPackages = import ./pi-packages {
+    inherit pkgs;
+    lib = pkgs.lib;
+  };
 }
