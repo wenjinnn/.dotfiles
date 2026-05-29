@@ -8,41 +8,6 @@
 let
   cfg = config.programs.pi;
 
-  builtinProviders = [
-    # Subscription
-    "chatgpt"
-    "claude"
-    "github-copilot"
-    # API key
-    "anthropic"
-    "openai"
-    "azure-openai-responses"
-    "deepseek"
-    "google"
-    "mistral"
-    "groq"
-    "cerebras"
-    "cloudflare-ai-gateway"
-    "cloudflare-workers-ai"
-    "xai"
-    "openrouter"
-    "vercel-ai-gateway"
-    "zai"
-    "opencode"
-    "opencode-go"
-    "huggingface"
-    "fireworks"
-    "together"
-    "kimi-coding"
-    "minimax"
-    "minimax-cn"
-    "xiaomi"
-    "xiaomi-token-plan-cn"
-    "xiaomi-token-plan-ams"
-    "xiaomi-token-plan-sgp"
-    "amazon-bedrock"
-  ];
-
   modelType = lib.types.submodule {
     options = {
       id = lib.mkOption {
@@ -160,7 +125,7 @@ let
         derivations = derivations;
       };
 
-  processedPackages = processPackages (cfg.packages ++ cfg.extraPackages);
+  processedPackages = processPackages (cfg.extraPackages);
 
   # Merge settings with processed packages
   finalSettings = cfg.settings // {
@@ -193,16 +158,6 @@ in
       type = lib.types.attrsOf providerType;
       default = { };
       description = "Custom provider definitions (written to models.json)";
-    };
-
-    packages = lib.mkOption {
-      type = lib.types.listOf (lib.types.either lib.types.str lib.types.package);
-      default = [ ];
-      description = ''
-        Extension pi packages. Can be:
-          - String specifiers: "npm:@foo/bar" or "git:github.com/user/repo"
-          - Nix packages from piPackages: pkgs.piPackages.pi-mcp-adapter
-      '';
     };
 
     # Additional pi packages to install (derivations only)
@@ -284,7 +239,7 @@ in
       ".pi/agent/auth.json" = lib.mkIf (cfg.auth != { }) {
         text = builtins.toJSON cfg.auth;
       };
-      ".pi/agent/settings.json" = lib.mkIf (cfg.auth != { }) {
+      ".pi/agent/settings.json" = lib.mkIf (cfg.settings != { }) {
         text = builtins.toJSON finalSettings;
       };
       ".pi/agent/keybindings.json" = lib.mkIf (cfg.keybindings != { }) {

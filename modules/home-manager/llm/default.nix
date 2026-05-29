@@ -44,7 +44,7 @@ in
     mcp-nixos
     claude-agent-acp
     codex-acp
-    pi-acp
+    pkgs.nur.repos.wenjinnn.pi-acp
   ];
   programs =
     let
@@ -226,14 +226,15 @@ in
             key = "!${sops-exec-env} 'echo -n $OPENROUTER_API_KEY'";
           };
         };
-        packages = [
-          pkgs.piPackages."@gotgenes/pi-subagents"
-          pkgs.piPackages."@junghanacs/pi-shell-acp"
-          pkgs.piPackages."@juicesharp/rpiv-ask-user-question"
-          pkgs.piPackages."@juicesharp/rpiv-btw"
-          pkgs.piPackages."pi-mcp-adapter"
-          pkgs.piPackages."pi-web-access"
-          pkgs.piPackages."pi-hermes-memory"
+        extraPackages = [
+          pkgs.nur.repos.wenjinnn.piPackages."@gotgenes/pi-subagents"
+          pkgs.nur.repos.wenjinnn.piPackages."@plannotator/pi-extension"
+          pkgs.nur.repos.wenjinnn.piPackages."@junghanacs/pi-shell-acp"
+          pkgs.nur.repos.wenjinnn.piPackages."@juicesharp/rpiv-ask-user-question"
+          pkgs.nur.repos.wenjinnn.piPackages."@juicesharp/rpiv-btw"
+          pkgs.nur.repos.wenjinnn.piPackages."pi-mcp-adapter"
+          pkgs.nur.repos.wenjinnn.piPackages."pi-web-access"
+          pkgs.nur.repos.wenjinnn.piPackages."pi-hermes-memory"
         ];
         settings = {
           defaultProvider = "xiaomi-token-plan-cn";
