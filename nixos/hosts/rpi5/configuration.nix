@@ -73,7 +73,32 @@
   sops.secrets.MATRIX_REGISTRATION_TOKEN.owner = config.services.matrix-tuwunel.user;
   sops.secrets.MATRIX_REGISTRATION_TOKEN.group = config.services.matrix-tuwunel.group;
   services = {
-    watchdogd.enable = true;
+    watchdogd = {
+      enable = true;
+      settings = {
+        timeout = 15;
+        interval = 5;
+        safe-exit = true;
+
+        # Built-in: memory usage monitoring
+        meminfo = {
+          enabled = true;
+          interval = 10;
+          warning = 0.90; # 90% used -> log warning
+          critical = 0.98; # 95% used -> reboot
+          logmark = true;
+        };
+
+        # Built-in: system load monitoring
+        loadavg = {
+          enabled = true;
+          interval = 15;
+          warning = 6; # 1.5x of 4 cores
+          critical = 12; # 3x of 4 cores -> reboot
+          logmark = true;
+        };
+      };
+    };
     nginx = {
       enable = true;
       recommendedOptimisation = true;
@@ -301,6 +326,9 @@
         # Deduplicate and optimize nix store
         auto-optimise-store = true;
         trusted-users = [ "${me.username}" ];
+        # Limit build parallelism to avoid OOM on RPi5 (4GB RAM)
+        max-jobs = 1;
+        cores = 2;
         # the system-level substituers & trusted-public-keys
         # given the users in this list the right to specify additional substituters via:
         #    1. `nixConfig.substituers` in `flake.nix`
