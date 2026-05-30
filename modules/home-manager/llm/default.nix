@@ -229,6 +229,7 @@ in
         };
         extraPackages = [
           pkgs.nur.repos.wenjinnn.piPackages."@gotgenes/pi-subagents"
+          pkgs.nur.repos.wenjinnn.piPackages."@gotgenes/pi-permission-system"
           pkgs.nur.repos.wenjinnn.piPackages."@plannotator/pi-extension"
           pkgs.nur.repos.wenjinnn.piPackages."@tmustier/pi-usage-extension"
           pkgs.nur.repos.wenjinnn.piPackages."@junghanacs/pi-shell-acp"
