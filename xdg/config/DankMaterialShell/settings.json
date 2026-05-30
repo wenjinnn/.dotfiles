@@ -39,6 +39,8 @@
   "modalAnimationSpeed": 1,
   "modalCustomAnimationDuration": 150,
   "enableRippleEffects": true,
+  "animationVariant": 0,
+  "motionEffect": 0,
   "m3ElevationEnabled": true,
   "m3ElevationIntensity": 12,
   "m3ElevationOpacity": 30,
@@ -138,8 +140,8 @@
     },
     {
       "enabled": true,
-      "id": "builtin_cups",
-      "width": 25
+      "id": "plugin_tlpControl",
+      "width": 50
     },
     {
       "enabled": true,
@@ -158,24 +160,17 @@
     },
     {
       "enabled": true,
-      "id": "battery",
-      "width": 25
-    },
-    {
-      "enabled": true,
-      "id": "diskUsage",
-      "instanceId": "mmpp64afz1lk5nh7enmoktn2kkgwr",
-      "mountPath": "/",
-      "width": 25
-    },
-    {
-      "enabled": true,
-      "id": "darkMode",
+      "id": "builtin_cups",
       "width": 25
     },
     {
       "enabled": true,
       "id": "nightMode",
+      "width": 25
+    },
+    {
+      "enabled": true,
+      "id": "darkMode",
       "width": 25
     }
   ],
@@ -209,6 +204,7 @@
   "audioWheelScrollAmount": 5,
   "clockCompactMode": false,
   "focusedWindowCompactMode": false,
+  "focusedWindowSize": 1,
   "runningAppsCompactMode": true,
   "barMaxVisibleApps": 0,
   "barMaxVisibleRunningApps": 0,
@@ -249,6 +245,7 @@
   "appLauncherGridColumns": 5,
   "spotlightCloseNiriOverview": true,
   "rememberLastQuery": false,
+  "rememberLastMode": true,
   "spotlightSectionViewModes": {},
   "appDrawerSectionViewModes": {},
   "niriOverviewOverlayEnabled": true,
@@ -260,6 +257,9 @@
   "dankLauncherV2UnloadOnClose": false,
   "dankLauncherV2IncludeFilesInAll": false,
   "dankLauncherV2IncludeFoldersInAll": false,
+  "launcherUseOverlayLayer": false,
+  "launcherStyle": "full",
+  "spotlightBarShowModeChips": false,
   "useAutoLocation": false,
   "weatherEnabled": true,
   "networkPreference": "auto",
@@ -291,6 +291,8 @@
   "monoFontFamily": "Fira Code",
   "fontWeight": 400,
   "fontScale": 1,
+  "textRenderType": 0,
+  "textRenderQuality": 0,
   "notepadUseMonospace": true,
   "notepadFontFamily": "",
   "notepadFontSize": 14,
@@ -374,6 +376,7 @@
   "showDock": true,
   "dockAutoHide": false,
   "dockSmartAutoHide": true,
+  "dockUseOverlayLayer": false,
   "dockGroupByApp": false,
   "dockRestoreSpecialWorkspaceOnClick": false,
   "dockOpenOnOverview": true,
@@ -429,6 +432,7 @@
   "notificationTimeoutNormal": 5000,
   "notificationTimeoutCritical": 0,
   "notificationCompactMode": false,
+  "notificationDedupeEnabled": true,
   "notificationPopupPosition": 0,
   "notificationAnimationSpeed": 1,
   "notificationCustomAnimationDuration": 400,
@@ -471,6 +475,7 @@
   "customPowerActionReboot": "",
   "customPowerActionPowerOff": "",
   "updaterHideWidget": false,
+  "updaterCheckOnStart": false,
   "updaterUseCustomCommand": false,
   "updaterCustomCommand": "",
   "updaterTerminalAdditionalParams": "",
@@ -487,6 +492,7 @@
   "displayProfileAutoSelect": false,
   "displayShowDisconnected": false,
   "displaySnapToEdge": true,
+  "connectedFrameBarStyleBackups": {},
   "barConfigs": [
     {
       "autoHide": false,
@@ -846,6 +852,9 @@
   ],
   "desktopWidgetGroups": [],
   "builtInPluginSettings": {
+    "dms_clipboard_search": {
+      "trigger": "cb"
+    },
     "dms_settings_search": {
       "trigger": "?"
     }
@@ -853,5 +862,20 @@
   "clipboardEnterToPaste": false,
   "launcherPluginVisibility": {},
   "launcherPluginOrder": [],
-  "configVersion": 5
+  "frameEnabled": false,
+  "frameThickness": 7,
+  "frameRounding": 23,
+  "frameColor": "",
+  "frameOpacity": 1,
+  "frameScreenPreferences": [
+    "all"
+  ],
+  "frameBarSize": 40,
+  "frameShowOnOverview": false,
+  "frameBlurEnabled": true,
+  "frameCloseGaps": true,
+  "frameLauncherEmergeSide": "bottom",
+  "frameLauncherArcExtender": false,
+  "frameMode": "connected",
+  "configVersion": 11
 }
