@@ -80,6 +80,7 @@
         niriWindows.enable = true;
         displayManager.enable = true;
         wallpaperBingWidget.enable = true;
+        tlpControl.enable = true;
         dankVault = {
           enable = true;
           settings = {
