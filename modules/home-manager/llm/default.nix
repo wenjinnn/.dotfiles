@@ -32,6 +32,7 @@ let
   skill-creator = "${anthropic-skills}/skills/skill-creator";
   superpower = "${obra-superpowers}/skills";
   caveman-skill = "${juliusbrussee-caveman}/skills";
+  personnal-skill = ./skills;
 in
 {
 
@@ -252,6 +253,7 @@ in
             pptx
             pdf
             caveman-skill
+            personnal-skill
           ];
         };
         keybindings = {
