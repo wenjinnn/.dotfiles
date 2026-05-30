@@ -230,6 +230,7 @@ in
         extraPackages = [
           pkgs.nur.repos.wenjinnn.piPackages."@gotgenes/pi-subagents"
           pkgs.nur.repos.wenjinnn.piPackages."@plannotator/pi-extension"
+          pkgs.nur.repos.wenjinnn.piPackages."@tmustier/pi-usage-extension"
           pkgs.nur.repos.wenjinnn.piPackages."@junghanacs/pi-shell-acp"
           pkgs.nur.repos.wenjinnn.piPackages."@juicesharp/rpiv-ask-user-question"
           pkgs.nur.repos.wenjinnn.piPackages."@juicesharp/rpiv-btw"
