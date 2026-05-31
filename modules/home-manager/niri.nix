@@ -58,7 +58,7 @@
         struts = {
           # top = 3;
           # left = 6;
-          right = 8;
+          # right = 8;
           # bottom = 4;
         };
       };

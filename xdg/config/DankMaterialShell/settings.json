@@ -145,11 +145,6 @@
     },
     {
       "enabled": true,
-      "id": "builtin_vpn",
-      "width": 25
-    },
-    {
-      "enabled": true,
       "id": "idleInhibitor",
       "width": 25
     },
@@ -161,6 +156,11 @@
     {
       "enabled": true,
       "id": "builtin_cups",
+      "width": 25
+    },
+    {
+      "enabled": true,
+      "id": "builtin_vpn",
       "width": 25
     },
     {
@@ -225,7 +225,7 @@
   "lockDateFormat": "",
   "greeterRememberLastSession": true,
   "greeterRememberLastUser": true,
-  "greeterEnableFprint": false,
+  "greeterEnableFprint": true,
   "greeterEnableU2f": false,
   "greeterWallpaperPath": "",
   "greeterUse24HourClock": true,
@@ -492,7 +492,14 @@
   "displayProfileAutoSelect": false,
   "displayShowDisconnected": false,
   "displaySnapToEdge": true,
-  "connectedFrameBarStyleBackups": {},
+  "connectedFrameBarStyleBackups": {
+    "default": {
+      "borderEnabled": false,
+      "gothCornersEnabled": false,
+      "shadowIntensity": 0,
+      "squareCorners": false
+    }
+  },
   "barConfigs": [
     {
       "autoHide": false,
@@ -550,12 +557,14 @@
         },
         {
           "enabled": true,
-          "focusedWindowCompactMode": false,
-          "id": "focusedWindow"
+          "id": "systemTray",
+          "trayUseInlineExpansion": false
         },
         {
           "enabled": true,
-          "id": "systemTray"
+          "focusedWindowCompactMode": false,
+          "focusedWindowSize": 1,
+          "id": "focusedWindow"
         }
       ],
       "maximizeDetection": true,
@@ -629,6 +638,7 @@
       "spacing": 4,
       "squareCorners": false,
       "transparency": 1,
+      "useOverlayLayer": false,
       "visible": true,
       "widgetOutlineColor": "primary",
       "widgetOutlineEnabled": false,
@@ -636,74 +646,6 @@
       "widgetOutlineThickness": 1,
       "widgetPadding": 8,
       "widgetTransparency": 1
-    },
-    {
-      "autoHide": false,
-      "autoHideDelay": 250,
-      "borderColor": "primary",
-      "borderEnabled": false,
-      "borderOpacity": 1,
-      "borderThickness": 1,
-      "bottomGap": -50,
-      "centerWidgets": [],
-      "clickThrough": true,
-      "enabled": true,
-      "fontScale": 1,
-      "gothCornerRadiusOverride": false,
-      "gothCornerRadiusValue": 12,
-      "gothCornersEnabled": false,
-      "iconScale": 1,
-      "id": "bar1773464806853",
-      "innerPadding": 4,
-      "leftWidgets": [],
-      "maximizeDetection": true,
-      "maximizeWidgetIcons": false,
-      "maximizeWidgetText": false,
-      "name": "Music Lyrics Bar",
-      "noBackground": false,
-      "openOnOverview": false,
-      "popupGapsAuto": true,
-      "popupGapsManual": 14,
-      "position": 1,
-      "removeWidgetPadding": false,
-      "rightWidgets": [
-        {
-          "enabled": true,
-          "id": "musicLyrics"
-        },
-        {
-          "enabled": true,
-          "id": "spacer",
-          "size": 10
-        }
-      ],
-      "screenPreferences": [
-        {
-          "model": "0x1403",
-          "name": "eDP-1"
-        }
-      ],
-      "scrollEnabled": false,
-      "scrollXBehavior": "column",
-      "scrollYBehavior": "workspace",
-      "shadowColorMode": "default",
-      "shadowCustomColor": "#000000",
-      "shadowDirection": "top",
-      "shadowDirectionMode": "inherit",
-      "shadowIntensity": 0,
-      "shadowOpacity": 60,
-      "showOnLastDisplay": false,
-      "showOnWindowsOpen": false,
-      "spacing": 0,
-      "squareCorners": false,
-      "transparency": 0,
-      "visible": true,
-      "widgetOutlineColor": "surfaceText",
-      "widgetOutlineEnabled": false,
-      "widgetOutlineOpacity": 1,
-      "widgetOutlineThickness": 1,
-      "widgetPadding": 8,
-      "widgetTransparency": 0.5
     }
   ],
   "desktopClockEnabled": false,
@@ -862,16 +804,16 @@
   "clipboardEnterToPaste": false,
   "launcherPluginVisibility": {},
   "launcherPluginOrder": [],
-  "frameEnabled": false,
-  "frameThickness": 7,
-  "frameRounding": 23,
+  "frameEnabled": true,
+  "frameThickness": 6,
+  "frameRounding": 15,
   "frameColor": "",
   "frameOpacity": 1,
   "frameScreenPreferences": [
     "all"
   ],
   "frameBarSize": 40,
-  "frameShowOnOverview": false,
+  "frameShowOnOverview": true,
   "frameBlurEnabled": true,
   "frameCloseGaps": true,
   "frameLauncherEmergeSide": "bottom",
