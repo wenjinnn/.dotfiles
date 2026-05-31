@@ -20,6 +20,7 @@
     bluetooth
     steam
     de
+    fingerprint
     (k3s {
       serverAddr = "https://rpi5:6443";
     })

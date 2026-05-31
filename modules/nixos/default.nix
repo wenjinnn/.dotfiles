@@ -29,4 +29,5 @@
   de = import ./de.nix;
   k3s = import ./k3s;
   cachix = import ./cachix.nix;
+  fingerprint = import ./fingerprint.nix;
 }
