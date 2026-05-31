@@ -17,12 +17,4 @@
     libfprint
   ];
 
-  # Enable fingerprint authentication for login and sudo
-  security.pam.services = {
-    login.fprintAuth = true;
-    sudo.fprintAuth = true;
-    # If you use a display manager like SDDM or GDM:
-    # sddm.fprintAuth = true;
-    # gdm-fingerprint.fprintAuth = true;
-  };
 }
