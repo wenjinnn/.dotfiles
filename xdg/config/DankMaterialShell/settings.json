@@ -402,7 +402,7 @@
   "dockMaxVisibleRunningApps": 0,
   "dockShowOverflowBadge": true,
   "dockShowTrash": true,
-  "dockTrashFileManager": "default",
+  "dockTrashFileManager": "nautilus",
   "dockTrashCustomCommand": "",
   "notificationOverlayEnabled": false,
   "notificationPopupShadowEnabled": true,
