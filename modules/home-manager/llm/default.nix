@@ -9,20 +9,20 @@ let
   anthropic-skills = pkgs.fetchFromGitHub {
     owner = "anthropics";
     repo = "skills";
-    rev = "f458cee31a7577a47ba0c9a101976fa599385174";
-    sha256 = "sha256-jKNYFom6R+Qw7LQ8vFPBe51JpqIP0tTSY8LM4aPlnT4=";
+    rev = "da20c92503b2e8ff1cf28ca81a0df4673debdbf7";
+    sha256 = "sha256-BiZvEV7VK1AwhiGg+pNMgTUQmt4exevLWwL0Brx4YyE=";
   };
   juliusbrussee-caveman = pkgs.fetchFromGitHub {
     owner = "JuliusBrussee";
     repo = "caveman";
-    rev = "18e45320a0b1aecc959a807f8568ee44b3aaa055";
-    sha256 = "sha256-/WDG+AL5onxME7WmteTTKhU82lpDucv3PL7G1mbfIpI=";
+    rev = "655b7d9c5431f822264b7732e9901c5578ac84cf";
+    sha256 = "sha256-BydREt/vai3j7kO5+e1OxsjXf6Vy+jSY1yA/yyxjHbI=";
   };
   obra-superpowers = pkgs.fetchFromGitHub {
     owner = "obra";
     repo = "superpowers";
-    rev = "v5.1.0";
-    sha256 = "sha256-3E3rO6hR87JUfS3XV1Eaoz6SDWOftleWvN9UPNFEMjw=";
+    rev = "6fd4507659784c351abbd2bc264c7162cfd386dc";
+    sha256 = "sha256-P/FD8HTQO+QzvMe3A/B2v2vjs8T6ZmIYH3MPp79dSzo=";
   };
   xlsx = "${anthropic-skills}/skills/xlsx";
   docx = "${anthropic-skills}/skills/docx";
@@ -78,8 +78,8 @@ in
           claude-plugins-official = pkgs.fetchFromGitHub {
             owner = "anthropics";
             repo = "claude-plugins-official";
-            rev = "f475d3ce5806c7edf9fc204ee276e7f45e24c798";
-            sha256 = "sha256-FvTtM4JT0UUkpmH6mKh9ZDmcKbOcaGEe0vU0Whzd+nI=";
+            rev = "0d82eac145a50e6867d908419dccc5087b8595b0";
+            sha256 = "sha256-ibYr5nu+YNv8LoMYQYFKShq4m8KdznZxsc6K7RX7mPA=";
           };
           obra-superpowers = obra-superpowers;
           juliusbrussee-caveman = juliusbrussee-caveman;
