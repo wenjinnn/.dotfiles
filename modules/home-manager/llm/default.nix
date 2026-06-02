@@ -234,6 +234,7 @@ in
           pkgs.nur.repos.wenjinnn.piPackages."@juicesharp/rpiv-btw"
           pkgs.nur.repos.wenjinnn.piPackages."@llblab/pi-telegram"
           pkgs.nur.repos.wenjinnn.piPackages."@wenjinnn/pi-mimo-voice"
+          pkgs.nur.repos.wenjinnn.piPackages."pi-lens"
           pkgs.nur.repos.wenjinnn.piPackages."pi-subagents"
           pkgs.nur.repos.wenjinnn.piPackages."pi-intercom"
           pkgs.nur.repos.wenjinnn.piPackages."pi-mcp-adapter"
