@@ -485,7 +485,7 @@
 
       - GEOSITE,category-ai-!cn,AI
       - GEOSITE,category-ai-chat-!cn,AI
-      - GEOSITE,reddit,hongkong
+      - GEOSITE,reddit,JMS
       - GEOSITE,apple,universal
       - GEOSITE,apple-cn,universal
       - GEOSITE,ehentai,universal
