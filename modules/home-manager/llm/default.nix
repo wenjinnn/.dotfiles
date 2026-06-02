@@ -228,14 +228,16 @@ in
           };
         };
         extraPackages = [
-          pkgs.nur.repos.wenjinnn.piPackages."@gotgenes/pi-subagents"
-          pkgs.nur.repos.wenjinnn.piPackages."@gotgenes/pi-permission-system"
+          pkgs.nur.repos.wenjinnn.piPackages."@aliou/pi-guardrails"
           pkgs.nur.repos.wenjinnn.piPackages."@plannotator/pi-extension"
           pkgs.nur.repos.wenjinnn.piPackages."@tmustier/pi-usage-extension"
           pkgs.nur.repos.wenjinnn.piPackages."@juicesharp/rpiv-ask-user-question"
           pkgs.nur.repos.wenjinnn.piPackages."@juicesharp/rpiv-btw"
           pkgs.nur.repos.wenjinnn.piPackages."@llblab/pi-telegram"
           pkgs.nur.repos.wenjinnn.piPackages."@wenjinnn/pi-mimo-voice"
+          pkgs.nur.repos.wenjinnn.piPackages."pi-lens"
+          pkgs.nur.repos.wenjinnn.piPackages."pi-subagents"
+          pkgs.nur.repos.wenjinnn.piPackages."pi-intercom"
           pkgs.nur.repos.wenjinnn.piPackages."pi-mcp-adapter"
           pkgs.nur.repos.wenjinnn.piPackages."pi-web-access"
           pkgs.nur.repos.wenjinnn.piPackages."pi-hermes-memory"
