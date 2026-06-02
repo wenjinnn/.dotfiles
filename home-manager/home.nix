@@ -146,6 +146,7 @@ in
     dig
     browserpass
     tldr
+    ast-grep
   ];
 
   # xresources.properties = {
