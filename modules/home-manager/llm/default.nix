@@ -239,6 +239,7 @@ in
           pkgs.nur.repos.wenjinnn.piPackages."pi-mcp-adapter"
           pkgs.nur.repos.wenjinnn.piPackages."pi-web-access"
           pkgs.nur.repos.wenjinnn.piPackages."pi-hermes-memory"
+          pkgs.nur.repos.wenjinnn.piPackages."context-mode"
         ];
         settings = {
           defaultProvider = "xiaomi-token-plan-cn";
@@ -255,7 +256,6 @@ in
             docx
             pptx
             pdf
-            caveman-skill
             personnal-skill
           ];
         };
