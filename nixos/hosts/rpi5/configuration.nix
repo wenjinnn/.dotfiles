@@ -70,8 +70,8 @@
     algorithm = "zstd";
   };
   sops.secrets.MATRIX_REGISTRATION_TOKEN = { };
-  sops.secrets.MATRIX_REGISTRATION_TOKEN.owner = config.services.matrix-tuwunel.user;
-  sops.secrets.MATRIX_REGISTRATION_TOKEN.group = config.services.matrix-tuwunel.group;
+  sops.secrets.MATRIX_REGISTRATION_TOKEN.owner = "matrix-synapse";
+  sops.secrets.MATRIX_REGISTRATION_TOKEN.group = "matrix-synapse";
   services = {
     watchdogd = {
       enable = true;
@@ -128,6 +128,9 @@
             proxyPass = "http://127.0.0.1:6167";
             proxyWebsockets = true;
           };
+          locations."/_matrix/federation" = {
+            proxyPass = "http://127.0.0.1:6167";
+          };
         };
         "homeassistant.ts.wenjin.me" = {
           locations."/" = {
@@ -179,15 +182,54 @@
         adminpassFile = config.sops.secrets.NEXTCLOUD_ADMIN_PASS.path;
       };
     };
-    matrix-tuwunel = {
+    matrix-synapse = {
       enable = true;
       settings = {
-        global = {
-          server_name = "matrix.ts.wenjin.me";
-          allow_registration = true;
-          registration_token_file = config.sops.secrets.MATRIX_REGISTRATION_TOKEN.path;
+        server_name = "ts.wenjin.me";
+        public_baseurl = "https://matrix.ts.wenjin.me/";
+        database = {
+          name = "psycopg2";
+          args = {
+            database = "matrix-synapse";
+            user = "matrix-synapse";
+            host = "/run/postgresql";
+          };
         };
+        listeners = [
+          {
+            port = 6167;
+            bind_addresses = [ "127.0.0.1" ];
+            type = "http";
+            tls = false;
+            x_forwarded = true;
+            resources = [
+              {
+                names = [
+                  "client"
+                  "federation"
+                ];
+                compress = true;
+              }
+            ];
+          }
+        ];
+        enable_registration = true;
+        registration_shared_secret_path = config.sops.secrets.MATRIX_REGISTRATION_TOKEN.path;
+        event_cache_size = "256M";
+        max_upload_size = "50M";
+        url_preview_enabled = true;
       };
+      configureRedisLocally = true;
+    };
+    postgresql = {
+      enable = true;
+      ensureDatabases = [ "matrix-synapse" ];
+      ensureUsers = [
+        {
+          name = "matrix-synapse";
+          ensureDBOwnership = true;
+        }
+      ];
     };
     home-assistant = {
       enable = true;
