@@ -263,18 +263,18 @@ in
         keybindings = {
           "tui.select.up" = [
             "up"
-            "alt+p"
+            "ctrl+p"
           ];
           "tui.select.down" = [
             "down"
-            "alt+n"
+            "ctrl+n"
           ];
+          "app.model.cycleForward" = [ "ctrl+alt+p" ];
         };
       };
       oh-my-pi = {
         enable = true;
         settings = {
-          setupVersion = 1;
           modelRoles = {
             default = "xiaomi/mimo-v2.5-pro";
             smol = "xiaomi/mimo-v2.5-pro";
@@ -285,6 +285,8 @@ in
           theme.dark = "titanium";
           display.showTokenUsage = true;
           symbolPreset = "unicode";
+          startup.quiet = true;
+          startup.setupWizard = false;
         };
         # API keys via sops — injected at launch time
         preLaunchHook = ''
@@ -294,14 +296,9 @@ in
           export OPENROUTER_API_KEY="$(${sops-exec-env} 'echo -n $OPENROUTER_API_KEY')"
         '';
         keybindings = {
-          "tui.select.up" = [
-            "up"
-            "alt+p"
-          ];
-          "tui.select.down" = [
-            "down"
-            "alt+n"
-          ];
+          "tui.select.up" = "ctrl+p";
+          "tui.select.down" = "ctrl+n";
+          "app.model.cycleForward" = "ctrl+alt+p";
         };
       };
     };
