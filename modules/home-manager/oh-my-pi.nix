@@ -106,8 +106,8 @@ in
         };
       };
 
-      ".omp/agent/keybindings.json" = lib.mkIf (cfg.keybindings != { }) {
-        text = builtins.toJSON cfg.keybindings;
+      ".omp/agent/keybindings.yml" = lib.mkIf (cfg.keybindings != { }) {
+        source = yamlFmt.generate "omp-keybindings.yml" cfg.keybindings;
       };
 
       ".omp/.env" = lib.mkIf (cfg.env != { }) {
