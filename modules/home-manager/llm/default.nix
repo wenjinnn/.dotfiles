@@ -38,6 +38,7 @@ in
 
   imports = with outputs.homeManagerModules; [
     pi
+    oh-my-pi
   ];
 
   home.packages = with pkgs; [
@@ -259,6 +260,39 @@ in
             personnal-skill
           ];
         };
+        keybindings = {
+          "tui.select.up" = [
+            "up"
+            "alt+p"
+          ];
+          "tui.select.down" = [
+            "down"
+            "alt+n"
+          ];
+        };
+      };
+      oh-my-pi = {
+        enable = true;
+        settings = {
+          setupVersion = 1;
+          modelRoles = {
+            default = "xiaomi/mimo-v2.5-pro";
+            smol = "xiaomi/mimo-v2.5-pro";
+            slow = "xiaomi/mimo-v2.5-pro";
+            plan = "xiaomi/mimo-v2.5-pro";
+            commit = "xiaomi/mimo-v2.5-pro";
+          };
+          theme.dark = "titanium";
+          display.showTokenUsage = true;
+          symbolPreset = "unicode";
+        };
+        # API keys via sops — injected at launch time
+        preLaunchHook = ''
+          export XIAOMI_API_KEY="$(${sops-exec-env} 'echo -n $MIMO_API_KEY')"
+          export DEEPSEEK_API_KEY="$(${sops-exec-env} 'echo -n $DEEPSEEK_API_KEY')"
+          export GEMINI_API_KEY="$(${sops-exec-env} 'echo -n $GEMINI_API_KEY')"
+          export OPENROUTER_API_KEY="$(${sops-exec-env} 'echo -n $OPENROUTER_API_KEY')"
+        '';
         keybindings = {
           "tui.select.up" = [
             "up"

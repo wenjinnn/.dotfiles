@@ -38,5 +38,6 @@
   de = import ./de.nix;
   llm = import ./llm;
   pi = import ./pi.nix;
+  oh-my-pi = import ./oh-my-pi.nix;
   ghostty = import ./ghostty.nix;
 }
