@@ -162,10 +162,10 @@ later(function()
       inline = { adapter = acp_adapter },
       cmd = { adapter = http_adapter },
       cli = {
-        agent = 'pi',
+        agent = 'oh_my_pi',
         agents = {
           pi = { cmd = 'pi', args = {}, description = 'Pi Agent' },
-          oh_my_pi = { cmd = 'omp', args = {}, description = 'Oh my pi Agent' },
+          oh_my_pi = { cmd = 'omp', args = {}, description = 'Oh My Pi Agent' },
           claude = { cmd = 'claude', args = {}, description = 'Claude Code Agent' },
           opencode = { cmd = 'opencode', args = {}, description = 'Opencode Agent' },
           gemini = { cmd = 'gemini', args = {}, description = 'Gemini Agent' },
