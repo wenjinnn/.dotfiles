@@ -77,6 +77,10 @@
       url = "github:AvengeMedia/danksearch";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hermes-agent = {
+      url = "github:NousResearch/hermes-agent";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nix-on-droid.url = "github:nix-community/nix-on-droid/release-23.11";
     # follow `main` branch of this repository, considered being stable
@@ -96,6 +100,7 @@
       nix-index-database,
       nixos-raspberrypi,
       disko,
+      hermes-agent,
       ...
     }@inputs:
     let
@@ -200,6 +205,7 @@
                 disko.nixosModules.disko
                 sops-nix.nixosModules.sops
                 nur.modules.nixos.default
+                hermes-agent.nixosModules.default
                 ./nixos/hosts/rpi5/configuration.nix
               ];
             }

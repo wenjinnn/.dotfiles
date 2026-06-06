@@ -73,6 +73,17 @@
   sops.secrets.MATRIX_REGISTRATION_TOKEN.owner = "matrix-synapse";
   sops.secrets.MATRIX_REGISTRATION_TOKEN.group = "matrix-synapse";
   services = {
+    hermes-agent = {
+      enable = true;
+      settings.model.default = "xiaomi/mimo-v2.5";
+      environmentFiles = [ config.sops.templates."hermes-env.yaml".path ];
+      extraDependencyGroups = [ "messaging" ];
+      extraPackages = with pkgs.python3Packages; [
+        aiohttp
+        cryptography
+      ];
+      addToSystemPackages = true;
+    };
     watchdogd = {
       enable = true;
       settings = {
@@ -223,7 +234,9 @@
     };
     postgresql = {
       enable = true;
-      ensureDatabases = [ "matrix-synapse" ];
+      ensureDatabases = [
+        "matrix-synapse"
+      ];
       ensureUsers = [
         {
           name = "matrix-synapse";
@@ -509,44 +522,6 @@
     # systemd-networkd.stopIfChanged = false;
     # Services that are only restarted might be not able to resolve when resolved is stopped before
     # systemd-resolved.stopIfChanged = false;
-    opencode-serve = {
-      description = "OpenCode Server";
-      after = [ "network.target" ];
-      wantedBy = [ "multi-user.target" ];
-      environment = {
-        HOME = "/home/wenjin";
-      };
-      serviceConfig = {
-        WorkingDirectory = "/home/wenjin";
-        User = "wenjin";
-        Group = "users";
-        ExecStart = "${pkgs.opencode}/bin/opencode serve";
-        Restart = "on-failure";
-        RestartSec = 5;
-      };
-    };
-    opencode-telegram-bot = {
-      description = "OpenCode Telegram Bot";
-      after = [ "opencode-serve.service" ];
-      requires = [ "opencode-serve.service" ];
-      wantedBy = [ "multi-user.target" ];
-      path = [
-        "/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/run/wrappers/bin"
-        "/home/wenjin/.local/share/npm/bin"
-      ];
-      environment = {
-        HOME = "/home/wenjin";
-      };
-      serviceConfig = {
-        Type = "simple";
-        WorkingDirectory = "/home/wenjin";
-        User = "wenjin";
-        Group = "users";
-        ExecStart = "${pkgs.nodejs}/bin/npx -y @grinev/opencode-telegram-bot@latest";
-        Restart = "on-failure";
-        RestartSec = 5;
-      };
-    };
   };
   networking.interfaces = {
     end0 = {
