@@ -9,6 +9,8 @@
 let
   cfg = config.programs.oh-my-pi;
   yamlFmt = pkgs.formats.yaml { };
+
+  derivations = lib.filter lib.isDerivation cfg.extraPackages;
 in
 {
   options.programs.oh-my-pi = {
@@ -66,6 +68,16 @@ in
       '';
     };
 
+    extraPackages = lib.mkOption {
+      type = lib.types.listOf lib.types.package;
+      default = [ ];
+      description = ''
+        Pi packages as Nix derivations to install declaratively.
+        These are linked to ~/.omp/npm/lib/node_modules/ for omp to discover.
+        Use pkgs.nur.repos.wenjinnn.piPackages.* or pkgs.piPackages.* to reference available packages.
+      '';
+    };
+
     preLaunchHook = lib.mkOption {
       type = lib.types.lines;
       default = "";
@@ -88,6 +100,48 @@ in
       "omp-reset-config" =
         "rm -f $HOME/.omp/agent/config.yml && echo 'Config reset. Next omp launch will re-seed from nix config.'";
     };
+
+    home.activation.omp-plugins-link = lib.mkIf (derivations != []) (
+      let
+        pluginsDir = "$HOME/.omp/plugins";
+        linkCommands = map (drv: ''
+          if [ -f "${drv}/package.json" ]; then
+            pkg_name=$(${pkgs.nodejs}/bin/node -e "console.log(JSON.parse(require('fs').readFileSync('${drv}/package.json', 'utf8')).name)")
+            if [ -n "$pkg_name" ]; then
+              if [[ "$pkg_name" == @* ]]; then
+                scope="''${pkg_name%%/*}"
+                name="''${pkg_name#*/}"
+                mkdir -p "${pluginsDir}/node_modules/$scope"
+                ln -sfn "${drv}" "${pluginsDir}/node_modules/$scope/$name"
+              else
+                mkdir -p "${pluginsDir}/node_modules"
+                ln -sfn "${drv}" "${pluginsDir}/node_modules/$pkg_name"
+              fi
+              # Accumulate dependency entries for package.json
+              echo "$pkg_name" >> "${pluginsDir}/.nix-deps"
+            fi
+          fi
+        '') derivations;
+        # Build package.json with all deps pointing to "link:" (already symlinked)
+        genPkgJson = ''
+          if [ -f "${pluginsDir}/.nix-deps" ]; then
+            deps=""
+            while IFS= read -r dep; do
+              [ -n "$deps" ] && deps="$deps,"
+              deps="$deps\"$dep\":\"link:$dep\"";
+            done < "${pluginsDir}/.nix-deps"
+            printf '{"name":"omp-plugins","private":true,"dependencies":{%s}}\n' "$deps" \
+              > "${pluginsDir}/package.json"
+            rm -f "${pluginsDir}/.nix-deps"
+          fi
+        '';
+      in
+      lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        mkdir -p "${pluginsDir}/node_modules"
+        ${lib.concatStringsSep "\n" linkCommands}
+        ${genPkgJson}
+      ''
+    );
 
     home.file = {
       ".omp/agent/config.yml" = lib.mkIf (cfg.settings != { }) {

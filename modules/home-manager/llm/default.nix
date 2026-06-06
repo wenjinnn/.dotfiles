@@ -32,6 +32,12 @@ let
   skill-creator = "${anthropic-skills}/skills/skill-creator";
   superpower = "${obra-superpowers}/skills";
   caveman-skill = "${juliusbrussee-caveman}/skills";
+  claude-plugins-official = pkgs.fetchFromGitHub {
+    owner = "anthropics";
+    repo = "claude-plugins-official";
+    rev = "bd7cf41fc8a468b136a9266633303ff4a011c7b4";
+    sha256 = "sha256-miC00qNR67rFSfRPulYkfUzfwXv0CeUkjhTGD6UXr+A=";
+  };
   personnal-skill = ./skills;
 in
 {
@@ -76,12 +82,7 @@ in
         enableMcpIntegration = true;
         marketplaces = {
           anthropic-skills = anthropic-skills;
-          claude-plugins-official = pkgs.fetchFromGitHub {
-            owner = "anthropics";
-            repo = "claude-plugins-official";
-            rev = "0d82eac145a50e6867d908419dccc5087b8595b0";
-            sha256 = "sha256-ibYr5nu+YNv8LoMYQYFKShq4m8KdznZxsc6K7RX7mPA=";
-          };
+          claude-plugins-official = claude-plugins-official;
           obra-superpowers = obra-superpowers;
           juliusbrussee-caveman = juliusbrussee-caveman;
         };
@@ -284,8 +285,11 @@ in
           };
           theme.dark = "titanium";
           display.showTokenUsage = true;
+          startup.checkUpdate = false;
+          marketplace.autoUpdate = "off";
           symbolPreset = "unicode";
-          startup.quiet = true;
+          memory.backend = "local";
+          # startup.quiet = true;
           startup.setupWizard = false;
         };
         # API keys via sops — injected at launch time
