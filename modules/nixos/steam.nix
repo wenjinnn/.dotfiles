@@ -34,7 +34,8 @@ in {
   programs = {
     gamescope = {
       enable = true;
-      capSysNice = true;
+      # temporary disable for bwarp setuid issue, see https://github.com/NixOS/nixpkgs/issues/523200
+      capSysNice = false;
     };
     steam = {
       enable = true;
