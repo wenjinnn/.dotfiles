@@ -224,6 +224,12 @@ stdenvNoCC.mkDerivation {
 
     install -Dm755 packages/coding-agent/dist/omp $out/bin/omp
 
+    # Install native addon alongside the binary so it can be found at runtime
+    install -Dm644 packages/natives/native/pi_natives.linux-x64-gnu.node $out/bin/pi_natives.linux-x64-gnu.node
+    ln -sf pi_natives.linux-x64-gnu.node $out/bin/pi_natives.linux-x64.node
+    ln -sf pi_natives.linux-x64-gnu.node $out/bin/pi_natives.linux-x64-modern.node
+    ln -sf pi_natives.linux-x64-gnu.node $out/bin/pi_natives.linux-x64-baseline.node
+
     wrapProgram $out/bin/omp \
       --prefix PATH : ${
         lib.makeBinPath [
