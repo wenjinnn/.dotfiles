@@ -61,7 +61,6 @@
     tpacpi-bat
   ];
   systemd.packages = with pkgs; [ lact ];
-  hardware.amdgpu.overdrive.enable = true;
   systemd.services.lactd.wantedBy = [ "multi-user.target" ];
   powerManagement.powertop.enable = true;
   services = {
@@ -104,21 +103,33 @@
   ];
   boot.kernelModules = [
     "thunderbolt"
-    "modprobe"
     "br_netfilter"
   ];
   boot.kernelParams = [
     "pci=realloc"
     "pci=hpmemsize=1G"
     "pcie_ports=native"
-    "amdgpu.gpu_recovery=1"
-    "amdgpu.runpm=0"
+    "modprobe.blacklist=amdgpu"
   ];
 
   boot.extraModprobeConfig = ''
     options snd-hda-intel enable=1,0  # only enable the first audio card
     blacklist snd_hda_codec_hdmi  # disable HDMI audio output
   '';
+
+  # Load amdgpu after greeter starts - eGPU has BAR allocation issues at boot,
+  # but loading the module late allows niri to use i915 for display first
+  systemd.services.load-amdgpu = {
+    description = "Load amdgpu kernel module for eGPU";
+    after = [ "greetd.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.bash}/bin/bash -c 'sleep 10 && ${pkgs.kmod}/bin/modprobe amdgpu'";
+      RemainAfterExit = true;
+      TimeoutStartSec = 30;
+    };
+  };
 
   xdg.terminal-exec = {
     enable = true;

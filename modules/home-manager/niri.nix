@@ -366,6 +366,8 @@
         };
       debug = {
         dbus-interfaces-in-non-session-instances = [ ];
+        render-drm-device = "/dev/dri/renderD128";
+
       };
       hotkey-overlay.skip-at-startup = true;
       outputs."${mainMonitor}" = {
