@@ -109,6 +109,8 @@
     "pci=realloc"
     "pci=hpmemsize=1G"
     "pcie_ports=native"
+    "amdgpu.gpu_recovery=1"
+    "amdgpu.runpm=0"
     "modprobe.blacklist=amdgpu"
   ];
 
@@ -117,17 +119,27 @@
     blacklist snd_hda_codec_hdmi  # disable HDMI audio output
   '';
 
-  # Load amdgpu after greeter starts - eGPU has BAR allocation issues at boot,
-  # but loading the module late allows niri to use i915 for display first
-  systemd.services.load-amdgpu = {
+  # Allow wenjin to load amdgpu without password (for user service)
+  security.sudo.extraRules = [
+    {
+      users = [ "wenjin" ];
+      commands = [
+        {
+          command = "${pkgs.kmod}/bin/modprobe amdgpu";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
+  # User service: loads amdgpu after graphical session starts (i.e. after login)
+  systemd.user.services.load-amdgpu = {
     description = "Load amdgpu kernel module for eGPU";
-    after = [ "greetd.service" ];
-    wantedBy = [ "multi-user.target" ];
+    after = [ "graphical-session.target" ];
+    wantedBy = [ "graphical-session.target" ];
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${pkgs.bash}/bin/bash -c 'sleep 10 && ${pkgs.kmod}/bin/modprobe amdgpu'";
+      ExecStart = "/run/wrappers/bin/sudo ${pkgs.kmod}/bin/modprobe amdgpu";
       RemainAfterExit = true;
-      TimeoutStartSec = 30;
     };
   };
 
