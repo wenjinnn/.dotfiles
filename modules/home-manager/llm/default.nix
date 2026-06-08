@@ -10,7 +10,7 @@ let
     owner = "anthropics";
     repo = "skills";
     rev = "da20c92503b2e8ff1cf28ca81a0df4673debdbf7";
-    sha256 = "sha256-BiZvEV7VK1AwhiGg+pNMgTUQmt4exevLWwL0Brx4YyE=";
+    sha256 = "sha256-szcnow0yO1ViQt6Mxrd+PNdfZ5jzPqqSmqA0jEQnS1o=";
   };
   juliusbrussee-caveman = pkgs.fetchFromGitHub {
     owner = "JuliusBrussee";
@@ -40,7 +40,7 @@ let
     owner = "anthropics";
     repo = "claude-plugins-official";
     rev = "bd7cf41fc8a468b136a9266633303ff4a011c7b4";
-    sha256 = "sha256-miC00qNR67rFSfRPulYkfUzfwXv0CeUkjhTGD6UXr+A=";
+    sha256 = "sha256-MpchXfvpMe5k3DMjJdjSPKNikzlWMqSrlyrhEArtLrQ=";
   };
   personnal-skill = ./skills;
 in
