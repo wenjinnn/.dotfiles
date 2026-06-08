@@ -62,11 +62,20 @@ jobs:
 
             echo "🔄 $REPO has updates: $CURRENT_REV -> $LATEST_SHA"
 
-            # Prefetch and compute SRI hash
-            HASH=$(nix-prefetch-url --unpack \
-              "https://github.com/$REPO/archive/$LATEST_SHA.tar.gz" \
-              --type sha256)
-
+            # Prefetch and compute SRI hash with retry
+            MAX_RETRIES=5
+            for attempt in $(seq 1 $MAX_RETRIES); do
+              HASH=$(nix-prefetch-url --unpack \
+                "https://github.com/$REPO/archive/$LATEST_SHA.tar.gz" \
+                --type sha256 2>/dev/null) && break || {
+                echo "⚠️  Attempt $attempt/$MAX_RETRIES failed for $REPO"
+                if [ "$attempt" = "$MAX_RETRIES" ]; then
+                  echo "❌ Failed to download $REPO archive after $MAX_RETRIES attempts"
+                  continue 2
+                fi
+                sleep $((attempt * 15))
+              }
+            done
             SRI_HASH=$(nix hash to-sri --type sha256 "$HASH")
 
             UPDATES="$UPDATES $REPO|$CURRENT_REV|$LATEST_SHA|$SRI_HASH"
@@ -177,10 +186,20 @@ jobs:
 
           echo "🔄 oh-my-pi: v$CURRENT_VERSION -> v$LATEST_VERSION"
 
-          # Prefetch new src hash
-          HASH=$(nix-prefetch-url --unpack \
-            "https://github.com/can1357/oh-my-pi/archive/v${LATEST_VERSION}.tar.gz" \
-            --type sha256)
+          # Prefetch new src hash with retry (GitHub archive endpoint is flaky)
+          MAX_RETRIES=5
+          for attempt in $(seq 1 $MAX_RETRIES); do
+            HASH=$(nix-prefetch-url --unpack \
+              "https://github.com/can1357/oh-my-pi/archive/v${LATEST_VERSION}.tar.gz" \
+              --type sha256 2>/dev/null) && break || {
+              echo "⚠️  Attempt $attempt/$MAX_RETRIES failed"
+              if [ "$attempt" = "$MAX_RETRIES" ]; then
+                echo "❌ Failed to download source archive after $MAX_RETRIES attempts"
+                exit 1
+              fi
+              sleep $((attempt * 15))
+            }
+          done
           NEW_SRC_HASH=$(nix hash to-sri --type sha256 "$HASH")
           echo "New src hash: $NEW_SRC_HASH"
 
