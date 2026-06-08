@@ -30,7 +30,11 @@ let
   pdf = "${anthropic-skills}/skills/pdf";
   doc-coauthoring = "${anthropic-skills}/skills/doc-coauthoring";
   skill-creator = "${anthropic-skills}/skills/skill-creator";
-  superpower = "${obra-superpowers}/skills";
+  # obra-superpowers has individual skills under skills/, not a single SKILL.md at root.
+  # Enumerate them so each gets its own symlink in ~/.codex/skills/, ~/.claude/skills/, etc.
+  superpowers-skills = lib.mapAttrs'
+    (name: _: lib.nameValuePair "superpower-${name}" "${obra-superpowers}/skills/${name}")
+    (lib.filterAttrs (_: type: type == "directory") (builtins.readDir "${obra-superpowers}/skills"));
   caveman-skill = "${juliusbrussee-caveman}/skills";
   claude-plugins-official = pkgs.fetchFromGitHub {
     owner = "anthropics";
@@ -153,7 +157,6 @@ in
         };
         skills = {
           inherit
-            superpower
             doc-coauthoring
             skill-creator
             xlsx
@@ -162,7 +165,7 @@ in
             pdf
             caveman-skill
             ;
-        };
+        } // superpowers-skills;
       };
       opencode = {
         enable = true;
@@ -194,7 +197,6 @@ in
         };
         skills = {
           inherit
-            superpower
             doc-coauthoring
             skill-creator
             xlsx
@@ -203,7 +205,7 @@ in
             pdf
             caveman-skill
             ;
-        };
+        } // superpowers-skills;
       };
       gemini-cli = {
         enable = true;
@@ -251,7 +253,6 @@ in
           theme = "dark";
           enableInstallTelemetry = false;
           skills = [
-            superpower
             doc-coauthoring
             skill-creator
             xlsx
@@ -259,7 +260,7 @@ in
             pptx
             pdf
             personnal-skill
-          ];
+          ] ++ (lib.attrValues superpowers-skills);
         };
         keybindings = {
           "tui.select.up" = [
