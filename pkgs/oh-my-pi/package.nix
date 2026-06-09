@@ -11,13 +11,13 @@
 }:
 
 let
-  version = "15.10.4";
+  version = "15.9.1";
 
   src = fetchFromGitHub {
     owner = "can1357";
     repo = "oh-my-pi";
     tag = "v${version}";
-    hash = "sha256-ioIWGlByu+1zQ3d2tx9Om1qnbbbKjlf/i2loPu2FHSM=";
+    hash = "sha256-WrTbC+b51a3J3OnMv8YYr+VS3A3D7SYmf6qOtBCRahs=";
   };
 
   # ── Step 1: Fixed-output derivation for bun dependencies ──────────────────
@@ -60,7 +60,7 @@ let
 
     dontFixup = true;
 
-    outputHash = "sha256-vpj0r2jp+11C9/Zw0iSa2umprv9g/4hkCeUUzXeW/Ww=";
+    outputHash = "sha256-jaQq2nWsFIvk4OtNTCauqYXwFbq7l61p8x4IolOV5QA=";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
