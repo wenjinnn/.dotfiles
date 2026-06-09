@@ -83,6 +83,7 @@ in
       };
       claude-code = {
         enable = true;
+        package = pkgs.llm-agents.claude-code;
         enableMcpIntegration = true;
         marketplaces = {
           anthropic-skills = anthropic-skills;
@@ -126,6 +127,7 @@ in
       };
       codex = {
         enable = true;
+        package = pkgs.llm-agents.codex;
         enableMcpIntegration = true;
         settings = {
           model_provider = "openrouter";
@@ -169,6 +171,7 @@ in
       };
       opencode = {
         enable = true;
+        package = pkgs.llm-agents.opencode;
         enableMcpIntegration = true;
         settings = {
           autoupdate = false;
@@ -207,8 +210,9 @@ in
             ;
         } // superpowers-skills;
       };
-      gemini-cli = {
+      antigravity-cli = {
         enable = true;
+        package = pkgs.llm-agents.gemini-cli;
         enableMcpIntegration = true;
       };
       pi = {
@@ -276,6 +280,7 @@ in
       };
       oh-my-pi = {
         enable = true;
+        package = pkgs.llm-agents.omp;
         settings = {
           modelRoles = {
             default = "xiaomi/mimo-v2.5-pro";
