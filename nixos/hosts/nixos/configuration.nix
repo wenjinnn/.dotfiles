@@ -96,6 +96,43 @@
     };
 
   };
+
+  # Dynamic CPU frequency control when eGPU (RX 7800 XT) is connected via Thunderbolt
+  # Prevents thermal shutdown by lowering CPU power when eGPU adds heat
+  services.udev.extraRules = let
+    egpu-thermal = pkgs.writeShellScript "egpu-thermal" ''
+      ACTION=$1
+
+      set_cpu() {
+        local max_perf=$1 boost=$2 epp=$3
+        for cpu in /sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq; do
+          base=$(cat "''${cpu%scaling_max_freq}cpuinfo_max_freq" 2>/dev/null)
+          [ -n "$base" ] && echo "$((base * max_perf / 100))" > "$cpu" 2>/dev/null
+        done
+        for p in /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference; do
+          echo "$epp" > "$p" 2>/dev/null
+        done
+        # no_turbo: 0=turbo ON, 1=turbo OFF
+        echo "$boost" > /sys/devices/system/cpu/intel_pstate/no_turbo 2>/dev/null
+      }
+
+      case "$ACTION" in
+        add)
+          logger -t egpu-thermal "eGPU connected, lowering CPU to 80%% no-turbo"
+          set_cpu 80 1 "balance_performance"
+          ;;
+        remove)
+          logger -t egpu-thermal "eGPU disconnected, restoring CPU to 100%% turbo"
+          set_cpu 100 0 "performance"
+          ;;
+      esac
+    '';
+  in ''
+    # eGPU (AMD RX 7800 XT) connected via Thunderbolt
+    ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x1002", ATTR{device}=="0x747e", RUN+="${egpu-thermal} add"
+    ACTION=="remove", SUBSYSTEM=="pci", ATTR{vendor}=="0x1002", ATTR{device}=="0x747e", RUN+="${egpu-thermal} remove"
+  '';
+
   services.hardware.bolt.enable = true;
   boot.initrd.availableKernelModules = [
     "xhci_pci"
