@@ -18,6 +18,9 @@ jobs:
 
       - uses: cachix/install-nix-action@v31
 
+      - name: Install nix-prefetch-github
+        run: nix profile install nixpkgs#nix-prefetch-github
+
       - name: Check and update dependencies
         id: check
         run: |
@@ -26,16 +29,30 @@ jobs:
           NIX_FILE="modules/home-manager/llm/default.nix"
           UPDATES=""
 
-          declare -A REPOS=(
-            ["anthropics/skills"]="f458cee31a7577a47ba0c9a101976fa599385174"
-            ["anthropics/claude-plugins-official"]="f475d3ce5806c7edf9fc204ee276e7f45e24c798"
-            ["JuliusBrussee/caveman"]="18e45320a0b1aecc959a807f8568ee44b3aaa055"
-            ["obra/superpowers"]="v5.1.0"
+          # Repos to track — each entry: owner/name
+          REPOS=(
+            "anthropics/skills"
+            "anthropics/claude-plugins-official"
+            "JuliusBrussee/caveman"
+            "obra/superpowers"
           )
 
-          for REPO in "${!REPOS[@]}"; do
-            CURRENT_REV="${REPOS[$REPO]}"
+          for REPO in "${REPOS[@]}"; do
+            OWNER="${REPO%%/*}"
+            NAME="${REPO#*/}"
             echo "::group::Checking $REPO"
+
+            # Read current rev from the nix file
+            CURRENT_REV=$(grep -A3 "owner = \"$OWNER\"" "$NIX_FILE" \
+              | grep -A1 "repo = \"$NAME\"" \
+              | grep 'rev = ' \
+              | sed 's/.*rev = "\([^"]*\)".*/\1/')
+
+            if [ -z "$CURRENT_REV" ]; then
+              echo "⚠️  Could not find current rev for $REPO in $NIX_FILE"
+              echo "::endgroup::"
+              continue
+            fi
 
             LATEST_SHA=$(curl -fsSL \
               -H "Authorization: token ${{ github.token }}" \
@@ -48,35 +65,33 @@ jobs:
               continue
             fi
 
-            # Resolve current rev if it's a tag
-            RESOLVED_REV=$(curl -fsSL \
-              -H "Authorization: token ${{ github.token }}" \
-              "https://api.github.com/repos/$REPO/commits/$CURRENT_REV" \
-              | jq -r '.sha' 2>/dev/null || echo "$CURRENT_REV")
-
-            if [ "$LATEST_SHA" = "$RESOLVED_REV" ]; then
+            if [ "$LATEST_SHA" = "$CURRENT_REV" ]; then
               echo "✅ $REPO is up to date ($CURRENT_REV)"
               echo "::endgroup::"
               continue
             fi
 
-            echo "🔄 $REPO has updates: $CURRENT_REV -> $LATEST_SHA"
+            echo "🔄 $REPO has updates: ${CURRENT_REV:0:12}… -> ${LATEST_SHA:0:12}…"
 
-            # Prefetch and compute SRI hash with retry
-            MAX_RETRIES=5
+            # Use nix-prefetch-github which produces hashes compatible with fetchFromGitHub
+            MAX_RETRIES=3
             for attempt in $(seq 1 $MAX_RETRIES); do
-              HASH=$(nix-prefetch-url --unpack \
-                "https://github.com/$REPO/archive/$LATEST_SHA.tar.gz" \
-                --type sha256 2>/dev/null) && break || {
+              SRI_HASH=$(nix-prefetch-github "$OWNER" "$NAME" --rev "$LATEST_SHA" \
+                | jq -r '.hash' 2>/dev/null) && break || {
                 echo "⚠️  Attempt $attempt/$MAX_RETRIES failed for $REPO"
                 if [ "$attempt" = "$MAX_RETRIES" ]; then
-                  echo "❌ Failed to download $REPO archive after $MAX_RETRIES attempts"
+                  echo "❌ Failed to prefetch $REPO after $MAX_RETRIES attempts"
                   continue 2
                 fi
                 sleep $((attempt * 15))
               }
             done
-            SRI_HASH=$(nix hash to-sri --type sha256 "$HASH")
+
+            if [ -z "$SRI_HASH" ]; then
+              echo "❌ Got empty hash for $REPO, skipping"
+              echo "::endgroup::"
+              continue
+            fi
 
             UPDATES="$UPDATES $REPO|$CURRENT_REV|$LATEST_SHA|$SRI_HASH"
             echo "::endgroup::"
@@ -150,159 +165,4 @@ jobs:
 
             Please review the changes and merge if everything looks correct.
           commit-message: "chore(llm): update LLM dependency revs and hashes"
-          labels: dependencies, automated
-
-  update-oh-my-pi:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: cachix/install-nix-action@v31
-
-      - name: Check and update oh-my-pi
-        id: check
-        run: |
-          set -euo pipefail
-
-          PKG_FILE="pkgs/oh-my-pi/package.nix"
-
-          # Read current version from package.nix
-          CURRENT_VERSION=$(grep -oP 'version\s*=\s*"\K[^"]+' "$PKG_FILE")
-          echo "Current version: $CURRENT_VERSION"
-
-          # Get latest release tag (strip leading 'v')
-          LATEST_TAG=$(curl -fsSL \
-            -H "Authorization: token ${{ github.token }}" \
-            "https://api.github.com/repos/can1357/oh-my-pi/releases/latest" \
-            | jq -r '.tag_name')
-          LATEST_VERSION="${LATEST_TAG#v}"
-          echo "Latest version: $LATEST_VERSION"
-
-          if [ "$CURRENT_VERSION" = "$LATEST_VERSION" ]; then
-            echo "oh-my-pi is up to date (v$CURRENT_VERSION)"
-            echo "updated=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          echo "🔄 oh-my-pi: v$CURRENT_VERSION -> v$LATEST_VERSION"
-
-          # Prefetch new src hash with retry (GitHub archive endpoint is flaky)
-          MAX_RETRIES=5
-          for attempt in $(seq 1 $MAX_RETRIES); do
-            HASH=$(nix-prefetch-url --unpack \
-              "https://github.com/can1357/oh-my-pi/archive/v${LATEST_VERSION}.tar.gz" \
-              --type sha256 2>/dev/null) && break || {
-              echo "⚠️  Attempt $attempt/$MAX_RETRIES failed"
-              if [ "$attempt" = "$MAX_RETRIES" ]; then
-                echo "❌ Failed to download source archive after $MAX_RETRIES attempts"
-                exit 1
-              fi
-              sleep $((attempt * 15))
-            }
-          done
-          NEW_SRC_HASH=$(nix hash to-sri --type sha256 "$HASH")
-          echo "New src hash: $NEW_SRC_HASH"
-
-          # Update version and src hash, then discover new node_modules hash via build
-          python3 /dev/stdin "$PKG_FILE" "$LATEST_VERSION" "$NEW_SRC_HASH" <<'PYEOF'
-          import re, sys, subprocess
-
-          path = sys.argv[1]
-          new_version = sys.argv[2]
-          new_src_hash = sys.argv[3]
-
-          with open(path) as f:
-              content = f.read()
-
-          # 1. Update version string
-          content = re.sub(
-              r'(version\s*=\s*)"[^"]+"',
-              r'\g<1>"' + new_version + '"',
-              content, count=1
-          )
-
-          # 2. Update src hash
-          content = re.sub(
-              r'(hash\s*=\s*)"[^"]+"',
-              r'\g<1>"' + new_src_hash + '"',
-              content, count=1
-          )
-
-          with open(path, "w") as f:
-              f.write(content)
-
-          # 3. Build to discover new node_modules outputHash
-          old_hash_m = re.search(r'outputHash\s*=\s*"([^"]+)"', content)
-          old_nm_hash = old_hash_m.group(1) if old_hash_m else None
-
-          print("Building oh-my-pi to discover node_modules hash...")
-          result = subprocess.run(
-              ["nix", "build", ".#oh-my-pi",
-               "--no-link", "--print-out-paths", "--no-update-lock-file"],
-              capture_output=True, text=True
-          )
-
-          if result.returncode == 0:
-              print("✅ Build succeeded — node_modules hash unchanged")
-              sys.exit(0)
-
-          # Extract expected hash from hash-mismatch error
-          err = result.stderr
-          expected = re.search(r'got:\s*(sha256-[A-Za-z0-9+/=]+)', err)
-          if not expected:
-              expected = re.search(r'hash mismatch in fixed-output derivation.*?got:\s*(sha256-[A-Za-z0-9+/=]+)', err, re.DOTALL)
-          if not expected:
-              print(f"Build failed but no hash mismatch found:\n{err}", file=sys.stderr)
-              sys.exit(1)
-
-          new_nm_hash = expected.group(1)
-          print(f"New node_modules hash: {new_nm_hash}")
-
-          # Update node_modules outputHash
-          content = re.sub(
-              r'(outputHash\s*=\s*)"[^"]+"',
-              r'\g<1>"' + new_nm_hash + '"',
-              content, count=1
-          )
-          with open(path, "w") as f:
-              f.write(content)
-
-          # Verify the build passes with the new hash
-          print("Verifying build with new hash...")
-          verify = subprocess.run(
-              ["nix", "build", ".#oh-my-pi",
-               "--no-link", "--print-out-paths", "--no-update-lock-file"],
-              capture_output=True, text=True
-          )
-          if verify.returncode != 0:
-              print(f"Verification build failed:\n{verify.stderr}", file=sys.stderr)
-              sys.exit(1)
-          print("✅ Build verified successfully")
-          PYEOF
-
-          echo "updated=true" >> "$GITHUB_OUTPUT"
-          echo "old_version=$CURRENT_VERSION" >> "$GITHUB_OUTPUT"
-          echo "new_version=$LATEST_VERSION" >> "$GITHUB_OUTPUT"
-
-      - name: Create Pull Request
-        if: steps.check.outputs.updated == 'true'
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ github.token }}
-          branch: auto-update/oh-my-pi
-          delete-branch: true
-          title: "chore(nix): update oh-my-pi ${{ steps.check.outputs.old_version }} → ${{ steps.check.outputs.new_version }}"
-          body: |
-            Automated update of `oh-my-pi` package.
-
-            **Version:** ${{ steps.check.outputs.old_version }} → ${{ steps.check.outputs.new_version }}
-
-            Updated hashes:
-            - `src` (fetchFromGitHub)
-            - `node_modules` (FOD outputHash)
-
-            The `pi-natives` Rust crate uses `cargoLock` and resolves automatically.
-
-            Please review and merge if everything looks correct.
-          commit-message: "chore(nix): update oh-my-pi to v${{ steps.check.outputs.new_version }}"
           labels: dependencies, automated
