@@ -224,7 +224,7 @@
             ];
           }
         ];
-        enable_registration = true;
+        enable_registration = false;
         registration_shared_secret_path = config.sops.secrets.MATRIX_REGISTRATION_TOKEN.path;
         event_cache_size = "256M";
         max_upload_size = "50M";
