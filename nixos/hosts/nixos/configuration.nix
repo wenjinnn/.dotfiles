@@ -66,7 +66,10 @@
   services = {
     printing.enable = true;
     flatpak.enable = true;
-    thermald.enable = true;
+    thermald = {
+      enable = true;
+      ignoreCpuidCheck = true;
+    };
     power-profiles-daemon.enable = lib.mkForce false;
     tlp = {
       enable = true;
