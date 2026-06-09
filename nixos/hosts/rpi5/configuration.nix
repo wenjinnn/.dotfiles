@@ -9,6 +9,16 @@
   me,
   ...
 }:
+let
+  checkK3s = pkgs.writeShellScript "check-k3s" ''
+    # Skip check if k3s service isn't running (avoids reboot loop during startup)
+    if ! systemctl is-active --quiet k3s; then
+      exit 0
+    fi
+    # k3s API health check with 10s timeout
+    timeout 10 k3s kubectl get --raw /healthz >/dev/null 2>&1
+  '';
+in
 {
   # You can import other NixOS modules here
   imports = with outputs.nixosModules; [
@@ -64,6 +74,10 @@
     amule-web
     amule-daemon
   ];
+  environment.etc."watchdogd/check-k3s.sh" = {
+    source = checkK3s;
+    mode = "0755";
+  };
   zramSwap = {
     enable = true;
     memoryPercent = 75;
@@ -107,6 +121,15 @@
           warning = 6; # 1.5x of 4 cores
           critical = 12; # 3x of 4 cores -> reboot
           logmark = true;
+        };
+
+        # Custom: k3s API health check (reboot if unresponsive)
+        "generic /etc/watchdogd/check-k3s.sh" = {
+          enabled = true;
+          interval = 30;
+          timeout = 20;
+          warning = 1;
+          critical = 1;
         };
       };
     };
@@ -234,15 +257,10 @@
     };
     postgresql = {
       enable = true;
-      ensureDatabases = [
-        "matrix-synapse"
-      ];
-      ensureUsers = [
-        {
-          name = "matrix-synapse";
-          ensureDBOwnership = true;
-        }
-      ];
+      initialScript = pkgs.writeText "synapse-init.sql" ''
+        CREATE USER \"matrix-synapse\" WITH CREATEDB;
+        CREATE DATABASE "matrix-synapse" LC_COLLATE='C' LC_CTYPE='C' OWNER "matrix-synapse" TEMPLATE template0;
+      '';
     };
     home-assistant = {
       enable = true;
