@@ -66,17 +66,13 @@
   services = {
     printing.enable = true;
     flatpak.enable = true;
-    thermald = {
-      enable = true;
-      ignoreCpuidCheck = true;
-    };
+    thermald.enable = true;
+    thinkfan.enable = true;
     power-profiles-daemon.enable = lib.mkForce false;
     tlp = {
       enable = true;
       pd.enable = true;
       settings = {
-        INTEL_GPU_MIN_FREQ_ON_AC = 500;
-        INTEL_GPU_MIN_FREQ_ON_BAT = 500;
         START_CHARGE_THRESH_BAT0 = 75;
         STOP_CHARGE_THRESH_BAT0 = 80;
         PLATFORM_PROFILE_ON_AC = "performance";
@@ -93,7 +89,7 @@
         CPU_HWP_DYN_BOOST_ON_AC = 1;
         CPU_HWP_DYN_BOOST_ON_BAT = 0;
         CPU_MAX_PERF_ON_AC = 100;
-        CPU_MAX_PERF_ON_BAT = 50;
+        CPU_MAX_PERF_ON_BAT = 70;
       };
     };
 
