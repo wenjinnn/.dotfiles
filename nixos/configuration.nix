@@ -17,7 +17,7 @@
     docker
     ollama
     mihomo
-    cachix
+    # cachix
     mail
     tailscale
     fonts
