@@ -177,7 +177,8 @@ later(function()
 
   map({ 'n', 'v' }, '<leader>Ca', '<cmd>CodeCompanionActions<cr>', 'Open Code Companion actions menu')
   map({ 'n', 'v' }, '<leader>CC', '<cmd>CodeCompanionChat Toggle<cr>', 'Toggle Code Companion chat window')
-  map({ 'n', 'v' }, '<leader>Cc', '<cmd>CodeCompanionCLI Ask<cr>', 'Ask Code Companion ACP cli')
+  map({ 'n', 'v' }, '<leader>Cc', require('codecompanion').toggle, 'Toggle Code Companion chat window')
+  map('n', '<leader>CA', '<cmd>CodeCompanionCLI Ask<cr>', 'Ask Code Companion ACP cli')
   map('v', '<leader>CA', '<cmd>CodeCompanionChat Add<cr>', 'Add selection to Code Companion chat context')
 
   -- AI completion
