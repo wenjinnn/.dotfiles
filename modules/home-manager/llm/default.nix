@@ -32,9 +32,9 @@ let
   skill-creator = "${anthropic-skills}/skills/skill-creator";
   # obra-superpowers has individual skills under skills/, not a single SKILL.md at root.
   # Enumerate them so each gets its own symlink in ~/.codex/skills/, ~/.claude/skills/, etc.
-  superpowers-skills = lib.mapAttrs'
-    (name: _: lib.nameValuePair "superpower-${name}" "${obra-superpowers}/skills/${name}")
-    (lib.filterAttrs (_: type: type == "directory") (builtins.readDir "${obra-superpowers}/skills"));
+  superpowers-skills = lib.mapAttrs' (
+    name: _: lib.nameValuePair "superpower-${name}" "${obra-superpowers}/skills/${name}"
+  ) (lib.filterAttrs (_: type: type == "directory") (builtins.readDir "${obra-superpowers}/skills"));
   caveman-skill = "${juliusbrussee-caveman}/skills";
   claude-plugins-official = pkgs.fetchFromGitHub {
     owner = "anthropics";
@@ -167,7 +167,8 @@ in
             pdf
             caveman-skill
             ;
-        } // superpowers-skills;
+        }
+        // superpowers-skills;
       };
       opencode = {
         enable = true;
@@ -208,7 +209,8 @@ in
             pdf
             caveman-skill
             ;
-        } // superpowers-skills;
+        }
+        // superpowers-skills;
       };
       antigravity-cli = {
         enable = true;
@@ -264,7 +266,8 @@ in
             pptx
             pdf
             personnal-skill
-          ] ++ (lib.attrValues superpowers-skills);
+          ]
+          ++ (lib.attrValues superpowers-skills);
         };
         keybindings = {
           "tui.select.up" = [
@@ -306,8 +309,14 @@ in
           export OPENROUTER_API_KEY="$(${sops-exec-env} 'echo -n $OPENROUTER_API_KEY')"
         '';
         keybindings = {
-          "tui.select.up" = "ctrl+p";
-          "tui.select.down" = "ctrl+n";
+          "tui.select.up" = [
+            "up"
+            "ctrl+p"
+          ];
+          "tui.select.down" = [
+            "down"
+            "ctrl+n"
+          ];
           "app.model.cycleForward" = "ctrl+alt+p";
         };
       };
