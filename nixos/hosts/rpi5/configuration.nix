@@ -109,8 +109,8 @@ in
         meminfo = {
           enabled = true;
           interval = 10;
-          warning = 0.90; # 90% used -> log warning
-          critical = 0.98; # 95% used -> reboot
+          warning = 0.80; # 80% used -> log warning
+          critical = 0.90; # 90% used -> reboot
           logmark = true;
         };
 
@@ -249,9 +249,9 @@ in
         ];
         enable_registration = false;
         registration_shared_secret_path = config.sops.secrets.MATRIX_REGISTRATION_TOKEN.path;
-        event_cache_size = "256M";
+        event_cache_size = "64M";
+        caches.global_factor = 0.5;
         max_upload_size = "50M";
-        url_preview_enabled = true;
       };
       configureRedisLocally = true;
     };
@@ -519,6 +519,27 @@ in
   # It will use `systemctl restart` rather than stopping it with `systemctl stop`
   # followed by a delayed `systemctl start`.
   systemd.services = {
+    # Protect SSH from OOM killer
+    sshd.serviceConfig.OOMScoreAdjust = -1000;
+
+    # Limit memory for heavy services to prevent total exhaustion
+    k3s.serviceConfig = {
+      MemoryMax = "1500M";
+      MemoryHigh = "1200M";
+    };
+    matrix-synapse.serviceConfig = {
+      MemoryMax = "512M";
+      MemoryHigh = "384M";
+    };
+    postgresql.serviceConfig = {
+      MemoryMax = "512M";
+      MemoryHigh = "384M";
+    };
+    nextcloud.serviceConfig = {
+      MemoryMax = "512M";
+      MemoryHigh = "384M";
+    };
+
     # Configure the amuleweb systemd service
     amuleweb = {
       enable = true;
