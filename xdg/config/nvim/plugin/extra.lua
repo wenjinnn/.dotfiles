@@ -23,8 +23,9 @@ later(function()
   map('n', '<leader>rT', curl.open_global_tab, 'Open a curl tab with global scope')
   map('n', '<leader>rc', curl.create_scoped_collection, 'Create or open a collection scoped to current CWD')
   map('n', '<leader>rC', curl.create_global_collection, 'Create or open a collection with global scope')
-  map('n', '<leader>rr', curl.pick_scoped_collection, 'Pick a scoped collection')
-  map('n', '<leader>rR', curl.pick_global_collection, 'Pick a global collection')
+  map('n', '<leader>re', curl.close_curl_tab, 'Close curl tab')
+  map('n', '<leader>rp', curl.pick_scoped_collection, 'Pick a scoped collection')
+  map('n', '<leader>rP', curl.pick_global_collection, 'Pick a global collection')
 
   -- markdown, html, asciidoc, svg preview in browser
   vim.pack.add({ 'https://git.barrettruth.com/barrettruth/preview.nvim' })
