@@ -28,7 +28,6 @@ starter.setup({
 })
 
 later(function()
-  require('mini.input').setup({ scope = 'cursor' })
   require('mini.indentscope').setup({
     draw = {
       animation = require('mini.indentscope').gen_animation.none(),
