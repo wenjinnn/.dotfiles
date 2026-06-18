@@ -17,7 +17,14 @@ later(function()
 
   -- curl client in neovim
   vim.pack.add({ gh('oysandvik94/curl.nvim') })
-  require('curl').setup()
+  local curl = require('curl')
+  curl.setup()
+  map('n', '<leader>rt', curl.open_curl_tab, 'Open a curl tab scoped to current CWD')
+  map('n', '<leader>rT', curl.open_global_tab, 'Open a curl tab with global scope')
+  map('n', '<leader>rc', curl.create_scoped_collection, 'Create or open a collection scoped to current CWD')
+  map('n', '<leader>rC', curl.create_global_collection, 'Create or open a collection with global scope')
+  map('n', '<leader>rr', curl.pick_scoped_collection, 'Pick a scoped collection')
+  map('n', '<leader>rR', curl.pick_global_collection, 'Pick a global collection')
 
   -- markdown, html, asciidoc, svg preview in browser
   vim.pack.add({ 'https://git.barrettruth.com/barrettruth/preview.nvim' })
