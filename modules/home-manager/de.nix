@@ -13,7 +13,7 @@
   imports = [
     inputs.dms.homeModules.niri
     inputs.dms.homeModules.dank-material-shell
-    inputs.dms-plugin-registry.modules.default
+    inputs.dms-plugin-registry.homeModules.default
     inputs.danksearch.homeModules.default
     outputs.homeManagerModules.niri
   ];
