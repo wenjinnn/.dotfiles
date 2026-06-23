@@ -10,6 +10,8 @@
   "popupTransparency": 1,
   "dockTransparency": 1,
   "widgetBackgroundColor": "sch",
+  "widgetBackgroundCustomColor": "#6750A4",
+  "widgetBackgroundCustomStrength": 0.5,
   "widgetColorMode": "default",
   "controlCenterTileColorMode": "primary",
   "buttonColorMode": "primary",
@@ -27,6 +29,7 @@
   "mangoTrackpadNaturalScrolling": true,
   "firstDayOfWeek": -1,
   "showWeekNumber": false,
+  "calendarBackend": "auto",
   "use24HourClock": true,
   "showSeconds": true,
   "padHours12Hour": false,
@@ -61,6 +64,8 @@
   "wallpaperFillMode": "Fill",
   "blurredWallpaperLayer": true,
   "blurWallpaperOnOverview": false,
+  "wallpaperBackgroundColorMode": "black",
+  "wallpaperBackgroundCustomColor": "#000000",
   "showLauncherButton": true,
   "showWorkspaceSwitcher": true,
   "showFocusedWindow": true,
@@ -80,6 +85,10 @@
   "showClock": true,
   "showNotificationButton": true,
   "showBattery": true,
+  "showBatteryPercent": true,
+  "showBatteryPercentOnlyOnBattery": false,
+  "showBatteryTime": false,
+  "showBatteryTimeOnlyOnBattery": false,
   "showControlCenterButton": true,
   "showCapsLockIndicator": true,
   "controlCenterShowNetworkIcon": true,
@@ -194,11 +203,16 @@
   "dwlShowAllTags": false,
   "workspaceActiveAppHighlightEnabled": false,
   "workspaceColorMode": "default",
+  "workspaceFocusedCustomColor": "#6750A4",
   "workspaceOccupiedColorMode": "none",
+  "workspaceOccupiedCustomColor": "#625B71",
   "workspaceUnfocusedColorMode": "default",
+  "workspaceUnfocusedCustomColor": "#49454E",
   "workspaceUrgentColorMode": "default",
+  "workspaceUrgentCustomColor": "#B3261E",
   "workspaceFocusedBorderEnabled": false,
   "workspaceFocusedBorderColor": "primary",
+  "workspaceFocusedBorderCustomColor": "#6750A4",
   "workspaceFocusedBorderThickness": 2,
   "workspaceNameIcons": {},
   "waveProgressEnabled": true,
@@ -207,6 +221,7 @@
   "audioVisualizerEnabled": true,
   "audioScrollMode": "volume",
   "audioWheelScrollAmount": 5,
+  "audioDeviceScrollVolumeEnabled": false,
   "clockCompactMode": false,
   "focusedWindowCompactMode": false,
   "focusedWindowSize": 1,
@@ -214,6 +229,9 @@
   "barMaxVisibleApps": 0,
   "barMaxVisibleRunningApps": 0,
   "barShowOverflowBadge": true,
+  "trayAutoOverflow": true,
+  "trayPopupSingleLine": true,
+  "trayMaxVisibleItems": 0,
   "appsDockHideIndicators": false,
   "appsDockColorizeActive": false,
   "appsDockActiveColorMode": "primary",
@@ -257,6 +275,7 @@
   "appDrawerSectionViewModes": {},
   "niriOverviewOverlayEnabled": true,
   "dankLauncherV2Size": "compact",
+  "dankLauncherV2ShowSourceBadges": true,
   "dankLauncherV2BorderEnabled": false,
   "dankLauncherV2BorderThickness": 2,
   "dankLauncherV2BorderColor": "primary",
@@ -267,10 +286,14 @@
   "launcherUseOverlayLayer": false,
   "launcherStyle": "full",
   "spotlightBarShowModeChips": false,
+  "keybindsFloatingWindow": false,
   "useAutoLocation": false,
   "weatherEnabled": true,
   "networkPreference": "auto",
-  "iconTheme": "MoreWaita",
+  "iconThemeDark": "MoreWaita",
+  "iconThemeLight": "System Default",
+  "iconThemePerMode": false,
+  "lastAppliedIconTheme": "",
   "cursorSettings": {
     "dwl": {
       "cursorHideTimeout": 0
@@ -303,15 +326,23 @@
   "notepadUseMonospace": true,
   "notepadFontFamily": "",
   "notepadFontSize": 14,
+  "notificationSummaryFontSize": 0,
+  "notificationBodyFontSize": 0,
   "notepadShowLineNumbers": false,
+  "notepadAutoSave": false,
+  "notepadSlideoutSide": "right",
+  "notepadDefaultMode": "slideout",
   "notepadTransparencyOverride": -1,
   "notepadLastCustomTransparency": 0.7,
+  "notepadUseCompositorGap": false,
+  "notepadEdgeGap": 0,
   "soundsEnabled": true,
   "useSystemSoundTheme": false,
   "soundLogin": false,
   "soundNewNotification": true,
   "soundVolumeChanged": true,
   "soundPluggedIn": true,
+  "muteSoundsWhenMediaPlaying": true,
   "acMonitorTimeout": 600,
   "acLockTimeout": 300,
   "acSuspendTimeout": 0,
@@ -325,6 +356,13 @@
   "batteryProfileName": "",
   "batteryPostLockMonitorTimeout": 0,
   "batteryChargeLimit": 100,
+  "batteryNotifyChargeLimit": false,
+  "batteryCriticalThreshold": 10,
+  "batteryNotifyCritical": true,
+  "batteryLowThreshold": 20,
+  "batteryNotifyLow": false,
+  "batteryNotificationType": 0,
+  "batteryAutoPowerSaver": false,
   "lockBeforeSuspend": true,
   "loginctlLockIntegration": true,
   "fadeToLockEnabled": true,
@@ -439,6 +477,7 @@
   "notificationTimeoutNormal": 5000,
   "notificationTimeoutCritical": 0,
   "notificationCompactMode": false,
+  "notificationShowTimeoutBar": false,
   "notificationDedupeEnabled": true,
   "notificationPopupPosition": 0,
   "notificationAnimationSpeed": 1,
@@ -586,48 +625,39 @@
       "removeWidgetPadding": true,
       "rightWidgets": [
         {
-          "enabled": true,
-          "id": "privacyIndicator"
+          "id": "privacyIndicator",
+          "enabled": true
         },
         {
-          "enabled": true,
-          "id": "easyEffects"
+          "id": "clipboard",
+          "enabled": true
         },
         {
-          "enabled": true,
-          "id": "clipboard"
-        },
-        {
-          "enabled": true,
-          "id": "cpuTemp",
-          "minimumWidth": true
-        },
-        {
-          "enabled": true,
           "id": "cpuUsage",
+          "enabled": true,
           "minimumWidth": true
         },
         {
-          "enabled": true,
           "id": "memUsage",
-          "showInGb": false,
-          "showSwap": false
+          "enabled": true,
+          "minimumWidth": true,
+          "showInGb": false
         },
         {
-          "enabled": true,
-          "id": "notificationButton"
+          "id": "notificationButton",
+          "enabled": true
         },
         {
-          "enabled": true,
           "id": "controlCenterButton",
+          "enabled": true,
           "showAudioPercent": false,
-          "showBatteryIcon": true,
+          "showVpnIcon": true,
           "showBrightnessIcon": true,
           "showBrightnessPercent": false,
           "showMicIcon": true,
           "showMicPercent": false,
-          "showPrinterIcon": true,
-          "showVpnIcon": true
+          "showBatteryIcon": true,
+          "showPrinterIcon": true
         }
       ],
       "screenPreferences": [
@@ -808,7 +838,15 @@
       "trigger": "?"
     }
   },
+  "clipboardClickToPaste": false,
   "clipboardEnterToPaste": false,
+  "clipboardRememberTypeFilter": false,
+  "clipboardTypeFilter": "all",
+  "clipboardVisibleEntryActions": [
+    "pin",
+    "edit",
+    "delete"
+  ],
   "launcherPluginVisibility": {},
   "launcherPluginOrder": [],
   "frameEnabled": true,
@@ -826,5 +864,8 @@
   "frameLauncherEmergeSide": "bottom",
   "frameLauncherArcExtender": false,
   "frameMode": "connected",
+  "barInsetPaddingShared": -1,
+  "barInsetPaddingSyncAll": false,
+  "frameBarInsetPadding": -1,
   "configVersion": 11
 }
