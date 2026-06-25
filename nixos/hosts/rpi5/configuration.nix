@@ -519,6 +519,11 @@ in
   # It will use `systemctl restart` rather than stopping it with `systemctl stop`
   # followed by a delayed `systemctl start`.
   systemd.services = {
+    k3s.serviceConfig = {
+      CPUQuota = "100%"; # 限制为 1 个 CPU 核心
+      MemoryMax = "1G"; # 硬限制内存 1GB
+      MemoryHigh = "768M"; # 达到 768M 时开始回收，避免直接触发 OOM kill
+    };
     # Configure the amuleweb systemd service
     amuleweb = {
       enable = true;
