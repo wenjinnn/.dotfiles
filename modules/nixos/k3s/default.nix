@@ -60,6 +60,21 @@
           targetNamespace = "longhorn-system";
           createNamespace = true;
           hash = "sha256-pwJyyDaDkj7ZyvoH/h5POm59XXSHQRGzqK1CHmQQKnc=";
+          values = {
+            defaultSettings = {
+              createDefaultDiskLabeledNodes = true;
+            };
+            longhornDriver = {
+              nodeSelector = {
+                "longhorn.io/only" = "true";
+              };
+            };
+            longhornManager = {
+              nodeSelector = {
+                "longhorn.io/only" = "true";
+              };
+            };
+          };
         };
       };
 
