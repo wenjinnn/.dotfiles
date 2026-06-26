@@ -16,7 +16,7 @@
   "controlCenterTileColorMode": "primary",
   "buttonColorMode": "primary",
   "cornerRadius": 12,
-  "niriLayoutGapsOverride": 6,
+  "niriLayoutGapsOverride": 4,
   "niriLayoutRadiusOverride": 12,
   "niriLayoutBorderSize": 2,
   "hyprlandLayoutGapsOverride": -1,
@@ -625,39 +625,39 @@
       "removeWidgetPadding": true,
       "rightWidgets": [
         {
-          "id": "privacyIndicator",
-          "enabled": true
-        },
-        {
-          "id": "clipboard",
-          "enabled": true
-        },
-        {
-          "id": "cpuUsage",
           "enabled": true,
+          "id": "privacyIndicator"
+        },
+        {
+          "enabled": true,
+          "id": "clipboard"
+        },
+        {
+          "enabled": true,
+          "id": "cpuUsage",
           "minimumWidth": true
         },
         {
-          "id": "memUsage",
           "enabled": true,
+          "id": "memUsage",
           "minimumWidth": true,
           "showInGb": false
         },
         {
-          "id": "notificationButton",
-          "enabled": true
+          "enabled": true,
+          "id": "notificationButton"
         },
         {
-          "id": "controlCenterButton",
           "enabled": true,
+          "id": "controlCenterButton",
           "showAudioPercent": false,
-          "showVpnIcon": true,
+          "showBatteryIcon": true,
           "showBrightnessIcon": true,
           "showBrightnessPercent": false,
           "showMicIcon": true,
           "showMicPercent": false,
-          "showBatteryIcon": true,
-          "showPrinterIcon": true
+          "showPrinterIcon": true,
+          "showVpnIcon": true
         }
       ],
       "screenPreferences": [
