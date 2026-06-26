@@ -9,16 +9,6 @@
   me,
   ...
 }:
-let
-  checkK3s = pkgs.writeShellScript "check-k3s" ''
-    # Skip check if k3s service isn't running (avoids reboot loop during startup)
-    if ! systemctl is-active --quiet k3s; then
-      exit 0
-    fi
-    # k3s API health check with 10s timeout
-    timeout 10 k3s kubectl get --raw /healthz >/dev/null 2>&1
-  '';
-in
 {
   # You can import other NixOS modules here
   imports = with outputs.nixosModules; [
@@ -31,9 +21,6 @@ in
     # You can also split up your configuration and import pieces of it here:
     # ./users.nix
 
-    (k3s {
-      moreExtraFlags = [ "--node-label=traefik=primary" ];
-    })
     mihomo
     sops
     firewall
@@ -74,10 +61,6 @@ in
     amule-web
     amule-daemon
   ];
-  environment.etc."watchdogd/check-k3s.sh" = {
-    source = checkK3s;
-    mode = "0755";
-  };
   zramSwap = {
     enable = true;
     memoryPercent = 75;
@@ -123,14 +106,6 @@ in
           logmark = true;
         };
 
-        # Custom: k3s API health check (reboot if unresponsive)
-        "generic /etc/watchdogd/check-k3s.sh" = {
-          enabled = true;
-          interval = 30;
-          timeout = 20;
-          warning = 1;
-          critical = 1;
-        };
       };
     };
     nginx = {
@@ -519,11 +494,6 @@ in
   # It will use `systemctl restart` rather than stopping it with `systemctl stop`
   # followed by a delayed `systemctl start`.
   systemd.services = {
-    k3s.serviceConfig = {
-      CPUQuota = "100%"; # 限制为 1 个 CPU 核心
-      MemoryMax = "1G"; # 硬限制内存 1GB
-      MemoryHigh = "768M"; # 达到 768M 时开始回收，避免直接触发 OOM kill
-    };
     # Configure the amuleweb systemd service
     amuleweb = {
       enable = true;

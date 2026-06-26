@@ -12,7 +12,7 @@
   # You can import other NixOS modules here
   imports = [
     (outputs.nixosModules.k3s {
-      serverAddr = "https://rpi5:6443";
+      serverAddr = "https://nixos:6443";
       moreExtraFlags = [ "--node-label=longhorn.io/only=true" ];
     })
     # If you want to use modules your own flake exports (from modules/nixos):
