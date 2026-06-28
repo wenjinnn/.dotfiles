@@ -73,7 +73,6 @@
         dankHooks.enable = true;
         dankStickerSearch.enable = true;
         emojiLauncher.enable = true;
-        easyEffects.enable = true;
         calculator.enable = true;
         sshConnections.enable = true;
         dankGifSearch.enable = true;
