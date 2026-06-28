@@ -372,6 +372,7 @@
       hotkey-overlay.skip-at-startup = true;
       outputs."${mainMonitor}" = {
         variable-refresh-rate = true;
+        background-color = "#000000";
       };
       window-rules = [
         {
