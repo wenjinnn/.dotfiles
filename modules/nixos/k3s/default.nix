@@ -18,7 +18,6 @@
       kubernetes
       kubernetes-helm
       kubectl
-      openiscsi
       nfs-utils
     ]
   );
@@ -27,10 +26,6 @@
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
   };
 
-  services.openiscsi = {
-    enable = true;
-    name = "${config.networking.hostName}-initiatorhost";
-  };
   services.k3s =
     let
       initMachine = serverAddr == null && role == "server";
@@ -53,29 +48,6 @@
         traefik-config.source = ./traefik-config.yaml;
       };
       autoDeployCharts = lib.mkIf initMachine {
-        longhorn = {
-          repo = "https://charts.longhorn.io";
-          version = "v1.11.2";
-          name = "longhorn";
-          targetNamespace = "longhorn-system";
-          createNamespace = true;
-          hash = "sha256-pwJyyDaDkj7ZyvoH/h5POm59XXSHQRGzqK1CHmQQKnc=";
-          values = {
-            defaultSettings = {
-              createDefaultDiskLabeledNodes = true;
-            };
-            longhornDriver = {
-              nodeSelector = {
-                "longhorn.io/only" = "true";
-              };
-            };
-            longhornManager = {
-              nodeSelector = {
-                "longhorn.io/only" = "true";
-              };
-            };
-          };
-        };
       };
 
     }
