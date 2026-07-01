@@ -37,7 +37,6 @@
         "--flannel-iface=tailscale0"
       ]
       ++ lib.optionals (role == "server") [
-        "--embedded-registry=true"
         "--write-kubeconfig-mode=644"
         "--write-kubeconfig-group=k3sconfig"
       ]
