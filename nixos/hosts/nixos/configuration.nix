@@ -23,6 +23,7 @@
     fingerprint
     (k3s {
       serverAddr = "https://nixos:6443";
+      moreExtraFlags = [ "--node-label=longhorn.io/only=true" ];
     })
 
     # Or modules from other flakes (such as nixos-hardware):
