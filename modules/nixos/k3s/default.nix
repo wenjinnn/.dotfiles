@@ -39,6 +39,7 @@
     {
       enable = true;
       inherit role;
+      tokenFile = config.sops.secrets.K3S_TOKEN.path;
       extraFlags = [
         "--flannel-iface=tailscale0"
       ]
