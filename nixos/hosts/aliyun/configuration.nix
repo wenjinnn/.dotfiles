@@ -16,6 +16,10 @@
       inherit config me;
       domain = "wenjin.me";
     })
+    (k3s {
+      serverAddr = "https://nixos:6443";
+      moreExtraFlags = [ "--node-label=longhorn.io/only=true" ];
+    })
     rustdesk-server
     docker
     sops
