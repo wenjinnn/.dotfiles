@@ -17,6 +17,7 @@
       domain = "wenjin.me";
     })
     (k3s {
+      role = "agent";
       serverAddr = "https://nixos:6443";
       moreExtraFlags = [ "--node-label=longhorn.io/only=true" ];
     })
