@@ -290,8 +290,11 @@ in
             smol = "xiaomi/mimo-v2.5-pro";
             slow = "xiaomi/mimo-v2.5-pro";
             plan = "xiaomi/mimo-v2.5-pro";
+            vision = "xiaomi/mimo-v2.5";
+            designer = "xiaomi/mimo-v2.5";
             commit = "xiaomi/mimo-v2.5-pro";
           };
+          providers.webSearch = "exa";
           theme.dark = "titanium";
           display.showTokenUsage = true;
           startup.checkUpdate = false;
