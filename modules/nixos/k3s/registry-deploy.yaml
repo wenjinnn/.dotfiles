@@ -33,6 +33,9 @@ spec:
       labels:
         app: registry
     spec:
+      nodeSelector:
+        longhorn.io/only: "true"
+        mihomo: "true"
       hostNetwork: true
       tolerations:
         - key: node-role.kubernetes.io/control-plane

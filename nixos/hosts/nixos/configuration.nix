@@ -22,7 +22,10 @@
     de
     fingerprint
     (k3s {
-      moreExtraFlags = [ "--node-label=longhorn.io/only=true" ];
+      moreExtraFlags = [
+        "--node-label=longhorn.io/only=true"
+        "--node-label=mihomo=true"
+      ];
     })
 
     # Or modules from other flakes (such as nixos-hardware):
