@@ -99,11 +99,11 @@
         mirrors:
           docker.io:
             endpoint:
-              - "http://localhost:5000"
+              - "http://nixos:5000"
               - "https://registry-1.docker.io"
           rancher:
             endpoint:
-              - "http://localhost:5000"
+              - "http://nixos:5000"
               - "https://rancher.mirror.aliyuncs.com"
       '';
     };

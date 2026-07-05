@@ -13,7 +13,10 @@
   imports = [
     (outputs.nixosModules.k3s {
       serverAddr = "https://nixos:6443";
-      moreExtraFlags = [ "--node-label=longhorn.io/only=true" ];
+      moreExtraFlags = [
+        "--node-label=longhorn.io/only=true"
+        "--node-label=mihomo=true"
+      ];
     })
     # If you want to use modules your own flake exports (from modules/nixos):
     inputs.nixos-wsl.nixosModules.default
