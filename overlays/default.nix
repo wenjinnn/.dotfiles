@@ -8,14 +8,14 @@
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
-    blesh = prev.blesh.overrideAttrs (old: {
-      # Fix blesh on WSL2+systemd: /run/user/$UID exists and is writable,
-      # but blesh unconditionally skips it when is-wsl is true.
-      postPatch = (old.postPatch or "") + ''
-        sed -i '/\[\[ $runtime_dir == \/run\/user\/\* \]\] && ble\/base\/is-wsl && return 1/d' ble.sh
-      '';
-      installPhase = builtins.replaceStrings [ "cp -rv $src/*" ] [ "cp -rv ./*" ] old.installPhase;
-    });
+    # blesh = prev.blesh.overrideAttrs (old: {
+    #   # Fix blesh on WSL2+systemd: /run/user/$UID exists and is writable,
+    #   # but blesh unconditionally skips it when is-wsl is true.
+    #   postPatch = (old.postPatch or "") + ''
+    #     sed -i '/\[\[ $runtime_dir == \/run\/user\/\* \]\] && ble\/base\/is-wsl && return 1/d' ble.sh
+    #   '';
+    #   installPhase = builtins.replaceStrings [ "cp -rv $src/*" ] [ "cp -rv ./*" ] old.installPhase;
+    # });
     nautilus = prev.nautilus.overrideAttrs (nsuper: {
       buildInputs =
         nsuper.buildInputs
