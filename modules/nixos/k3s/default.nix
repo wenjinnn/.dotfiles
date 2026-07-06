@@ -1,16 +1,16 @@
 {
-  role ? "server",
-  serverAddr ? null,
-  moreExtraFlags ? [ ],
-}:
-{
   config,
   lib,
   pkgs,
   ...
 }:
-
+let
+  role = "server";
+  serverAddr = null;
+  moreExtraFlags = [ ];
+in
 {
+
   environment.systemPackages = lib.optionals (role == "server") (
     with pkgs;
     [
@@ -44,7 +44,6 @@
       clusterInit = initMachine;
       manifests = lib.mkIf initMachine {
         traefik-config.source = ./traefik-config.yaml;
-        registry.source = ./registry-deploy.yaml;
       };
 
     }
