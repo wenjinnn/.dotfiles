@@ -18,18 +18,12 @@
       kubernetes
       kubernetes-helm
       kubectl
-      openiscsi
       nfs-utils
     ]
   );
 
   environment.variables = lib.optionalAttrs (role == "server") {
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
-  };
-
-  services.openiscsi = {
-    enable = true;
-    name = "${config.networking.hostName}-initiatorhost";
   };
 
   services.k3s =
@@ -39,7 +33,6 @@
     {
       enable = true;
       inherit role;
-      tokenFile = config.sops.secrets.K3S_TOKEN.path;
       extraFlags = [
         "--flannel-iface=tailscale0"
       ]
@@ -53,31 +46,6 @@
         traefik-config.source = ./traefik-config.yaml;
         registry.source = ./registry-deploy.yaml;
       };
-      autoDeployCharts = {
-        longhorn = {
-          repo = "https://charts.longhorn.io";
-          version = "v1.11.2";
-          name = "longhorn";
-          targetNamespace = "longhorn-system";
-          createNamespace = true;
-          hash = "sha256-pwJyyDaDkj7ZyvoH/h5POm59XXSHQRGzqK1CHmQQKnc=";
-          values = {
-            defaultSettings = {
-              createDefaultDiskLabeledNodes = true;
-            };
-            longhornDriver = {
-              nodeSelector = {
-                "longhorn.io/only" = "true";
-              };
-            };
-            longhornManager = {
-              nodeSelector = {
-                "longhorn.io/only" = "true";
-              };
-            };
-          };
-        };
-      };
 
     }
     // lib.optionalAttrs (serverAddr != null) { inherit serverAddr; };
@@ -89,23 +57,5 @@
     })
   ];
 
-  systemd.tmpfiles.rules = [
-    "L+ /usr/local/bin/iscsiadm - - - - /run/current-system/sw/bin/iscsiadm"
-  ];
 
-  environment.etc = {
-    "rancher/k3s/registries.yaml" = {
-      text = ''
-        mirrors:
-          docker.io:
-            endpoint:
-              - "http://nixos:5000"
-              - "https://registry-1.docker.io"
-          rancher:
-            endpoint:
-              - "http://nixos:5000"
-              - "https://rancher.mirror.aliyuncs.com"
-      '';
-    };
-  };
 }
