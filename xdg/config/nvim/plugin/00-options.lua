@@ -61,7 +61,7 @@ opt.updatetime = 500
 opt.fileencodings:append({ 'gbk', 'cp936', 'gb2312', 'gb18030', 'big5', 'euc-jp', 'euc-kr', 'prc' })
 opt.termguicolors = true
 opt.complete:append({ 'kspell' })
-opt.completeopt = { 'menuone', 'noselect', 'fuzzy', 'popup', 'nearest' }
+opt.completeopt = { 'menuone', 'preselect', 'noinsert', 'fuzzy', 'popup', 'nearest' }
 opt.pumheight = 20
 opt.pumborder = 'single'
 opt.sessionoptions:remove({ 'blank' })
