@@ -487,6 +487,7 @@
       - GEOSITE,category-ai-chat-!cn,AI
       - GEOSITE,reddit,JMS
       - GEOSITE,youtube,JMS
+      - GEOSITE,spotify,JMS
       - GEOSITE,apple,universal
       - GEOSITE,apple-cn,universal
       - GEOSITE,ehentai,universal
