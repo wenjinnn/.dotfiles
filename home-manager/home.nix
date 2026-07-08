@@ -301,6 +301,7 @@ in
     jq.enable = true;
     fzf = {
       enable = true;
+      historyWidget.command = "";
       enableBashIntegration = true;
     };
     # batter z
