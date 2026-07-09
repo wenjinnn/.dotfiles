@@ -183,10 +183,10 @@ later(function()
     },
   })
 
-  map({ 'n', 'v' }, '<leader>aa', '<cmd>CodeCompanionActions<cr>', 'Open Code Companion actions menu')
-  map({ 'n', 'v' }, '<leader>aC', '<cmd>CodeCompanionChat Toggle<cr>', 'Toggle Code Companion chat window')
-  map({ 'n', 'v' }, '<leader>ac', require('codecompanion').toggle, 'Toggle Code Companion chat window')
-  map({ 'n', 'v' }, '<leader>aA', '<cmd>CodeCompanionCLI Ask<cr>', 'Ask Code Companion ACP cli')
+  map({ 'n', 'v' }, '<leader>ac', '<cmd>CodeCompanionActions<cr>', 'Open Code Companion actions menu')
+  map({ 'n', 'v' }, '<leader>aa', '<cmd>CodeCompanionChat Toggle<cr>', 'Toggle Code Companion chat window')
+  map({ 'n', 'v' }, '<leader>aA', require('codecompanion').toggle, 'Toggle Code Companion chat window')
+  map({ 'n', 'v' }, '<leader>aC', '<cmd>CodeCompanionCLI Ask<cr>', 'Ask Code Companion ACP cli')
 
   -- AI completion
   vim.pack.add({ gh('milanglacier/minuet-ai.nvim') })
