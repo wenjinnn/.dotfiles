@@ -9,20 +9,26 @@ let
   anthropic-skills = pkgs.fetchFromGitHub {
     owner = "anthropics";
     repo = "skills";
-    rev = "da20c92503b2e8ff1cf28ca81a0df4673debdbf7";
-    sha256 = "sha256-BiZvEV7VK1AwhiGg+pNMgTUQmt4exevLWwL0Brx4YyE=";
+    rev = "9d2f1ae187231d8199c64b5b762e1bdf2244733d";
+    sha256 = "sha256-U7Nt1xrFOSOEm4vuWmy4pVsEyvv+Hj4sv8yXOofmwAw=";
   };
   juliusbrussee-caveman = pkgs.fetchFromGitHub {
     owner = "JuliusBrussee";
     repo = "caveman";
-    rev = "655b7d9c5431f822264b7732e9901c5578ac84cf";
-    sha256 = "sha256-BydREt/vai3j7kO5+e1OxsjXf6Vy+jSY1yA/yyxjHbI=";
+    rev = "0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0";
+    sha256 = "sha256-VqRHx3/4SSCnEh3cUJ/he5saIfwNhS0hOzoH/wwtU2o=";
   };
   obra-superpowers = pkgs.fetchFromGitHub {
     owner = "obra";
     repo = "superpowers";
-    rev = "6fd4507659784c351abbd2bc264c7162cfd386dc";
-    sha256 = "sha256-P/FD8HTQO+QzvMe3A/B2v2vjs8T6ZmIYH3MPp79dSzo=";
+    rev = "d884ae04edebef577e82ff7c4e143debd0bbec99";
+    sha256 = "sha256-kHdQ9e44doBk2yYW88tMSCqVG8ycYcvJSZlrIziXhpA=";
+  };
+  dietrichgebert-ponytail = pkgs.fetchFromGitHub {
+    owner = "DietrichGebert";
+    repo = "ponytail";
+    rev = "8e69b4a55f735e1319999064f82786b838cb3d7b";
+    sha256 = "sha256-D3mSVFQ3Y9T4Y21yz2/BVl827G11qPuKHCfwVnOvCQo=";
   };
   xlsx = "${anthropic-skills}/skills/xlsx";
   docx = "${anthropic-skills}/skills/docx";
@@ -35,12 +41,15 @@ let
   superpowers-skills = lib.mapAttrs' (
     name: _: lib.nameValuePair "superpower-${name}" "${obra-superpowers}/skills/${name}"
   ) (lib.filterAttrs (_: type: type == "directory") (builtins.readDir "${obra-superpowers}/skills"));
+  ponytail-skills = lib.mapAttrs' (
+    name: _: lib.nameValuePair "ponytail-${name}" "${dietrichgebert-ponytail}/skills/${name}"
+  ) (lib.filterAttrs (_: type: type == "directory") (builtins.readDir "${dietrichgebert-ponytail}/skills"));
   caveman-skill = "${juliusbrussee-caveman}/skills";
   claude-plugins-official = pkgs.fetchFromGitHub {
     owner = "anthropics";
     repo = "claude-plugins-official";
-    rev = "bd7cf41fc8a468b136a9266633303ff4a011c7b4";
-    sha256 = "sha256-miC00qNR67rFSfRPulYkfUzfwXv0CeUkjhTGD6UXr+A=";
+    rev = "8d9e142e4ec5665f6561efef0ec10b3955e747dd";
+    sha256 = "sha256-s9Yc0Or7DM85m5GbHjCumV2BhX6Sxqv7B7UG7NtGBJU=";
   };
   personnal-skill = ./skills;
 in
@@ -90,6 +99,7 @@ in
           claude-plugins-official = claude-plugins-official;
           obra-superpowers = obra-superpowers;
           juliusbrussee-caveman = juliusbrussee-caveman;
+          dietrichgebert-ponytail = dietrichgebert-ponytail;
         };
         settings = {
           # deepseek integration
@@ -122,6 +132,7 @@ in
             "skill-creator@claude-plugins-official" = true;
             "superpowers@obra-superpowers" = true;
             "caveman@juliusbrussee-caveman" = true;
+            "ponytail@dietrichgebert-ponytail" = true;
           };
         };
       };
@@ -168,7 +179,8 @@ in
             caveman-skill
             ;
         }
-        // superpowers-skills;
+        // superpowers-skills
+        // ponytail-skills;
       };
       opencode = {
         enable = true;
@@ -210,7 +222,8 @@ in
             caveman-skill
             ;
         }
-        // superpowers-skills;
+        // superpowers-skills
+        // ponytail-skills;
       };
       antigravity-cli = {
         enable = true;
@@ -267,7 +280,8 @@ in
             pdf
             personnal-skill
           ]
-          ++ (lib.attrValues superpowers-skills);
+          ++ (lib.attrValues superpowers-skills)
+          ++ (lib.attrValues ponytail-skills);
         };
         keybindings = {
           "tui.select.up" = [
