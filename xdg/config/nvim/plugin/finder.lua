@@ -117,7 +117,7 @@ later(function()
   -- select terminals
   MiniPick.registry.terminals = function()
     local dap_terms = util.filter_buffers('/^\\[dap-terminal\\]/')
-    local terms = util.filter_buffers('/^term:\\/\\//', { ls_revert = true })
+    local terms = util.filter_buffers('/^term:\\/\\//', {})
     local items = vim.list_extend(terms, dap_terms)
     local terminal_opts = { source = { name = 'Terminal buffers', show = show_with_icons, items = items } }
     return MiniPick.start(terminal_opts)
