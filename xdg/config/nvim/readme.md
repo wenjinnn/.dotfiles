@@ -47,9 +47,9 @@ NVIM_APPNAME=wenjinnn/wenvim nvim
 
 Some behaviors in this configuration are not common but are reasonable in my opinion:
 
-* `ss` in normal mode triggers mini.jump2d motion `MiniJump2d.builtin_opts.single_character`.
+* `ss` in normal mode triggers mini.jump2d motion `MiniJump2d.builtin_opts.default`.
 * `sq` in normal mode triggers mini.jump2d motion `MiniJump2d.builtin_opts.query`.
-* `<M-CR>` in insert mode will accept a lsp inline completion suggestion.
+* `<M-w>` in insert mode will accept a lsp inline completion suggestion.
 * `<A-d>`/`<A-a>`/`<A-x>` trigger minuet-ai.nvim duet inline completion (predict/apply/dismiss).
 
 ## Directory notes
