@@ -4,6 +4,13 @@ local later = util.later
 
 later(function()
   require('mini.jump').setup()
+  -- Stop jumping after pressing `<Esc>`
+  local jump_stop = function()
+    if not MiniJump.state.jumping then return '<Esc>' end
+    MiniJump.stop_jumping()
+  end
+  local opts = { expr = true, desc = 'Stop jumping' }
+  map({ 'n', 'x', 'o' }, '<Esc>', jump_stop, opts)
   require('mini.jump2d').setup({
     mappings = {
       start_jumping = 'ss',
