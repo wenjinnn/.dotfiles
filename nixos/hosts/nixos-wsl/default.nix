@@ -41,6 +41,9 @@
     hostName = "nixos-wsl";
   };
 
+  # Require password for sudo (nixos-wsl defaults to NOPASSWD)
+  security.sudo.wheelNeedsPassword = true;
+
   wsl = {
     enable = true;
     defaultUser = "${me.username}";
