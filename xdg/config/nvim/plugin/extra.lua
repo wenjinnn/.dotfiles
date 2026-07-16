@@ -27,15 +27,6 @@ later(function()
   map('n', '<leader>Cf', curl.pick_scoped_collection, 'Pick a scoped collection')
   map('n', '<leader>CF', curl.pick_global_collection, 'Pick a global collection')
 
-  -- markdown, html, asciidoc, svg preview in browser
-  vim.pack.add({ 'https://git.barrettruth.com/barrettruth/preview.nvim' })
-  vim.g.preview = {
-    markdown = {
-      extra_args = { '-F', 'mermaid-filter' },
-      output = function(ctx) return '/tmp/' .. vim.fn.fnamemodify(ctx.file, ':t:r') .. '.html' end,
-    },
-  }
-
   -- db manage
   vim.pack.add({ gh('tpope/vim-dadbod'), gh('kristijanhusak/vim-dadbod-completion') })
   vim.api.nvim_create_autocmd('FileType', {

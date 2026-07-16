@@ -49,8 +49,8 @@ Some behaviors in this configuration are not common but are reasonable in my opi
 
 * `ss` in normal mode triggers mini.jump2d motion `MiniJump2d.builtin_opts.default`.
 * `sq` in normal mode triggers mini.jump2d motion `MiniJump2d.builtin_opts.query`.
-* `<M-w>` in insert mode will accept a lsp inline completion suggestion.
-* `<A-d>`/`<A-a>`/`<A-x>` trigger minuet-ai.nvim duet inline completion (predict/apply/dismiss).
+* `<M-CR>` in insert mode will accept a lsp inline completion suggestion.
+* `<A-w>`/`<A-d>`/`<A-a>`/`<A-x>` trigger minuet-ai.nvim completion and duet inline completion (predict/apply/dismiss).
 
 ## Directory notes
 
@@ -93,7 +93,7 @@ Some behaviors in this configuration are not common but are reasonable in my opi
 `JDTLS_DAP_VMARGS` JVM arguments for JDTLS DAP.
 
 ### AI
-`NVIM_AI_ACP_ADAPTER` Default AI adapter for CodeCompanion.nvim ACP interactions (e.g., `pi`, `claude_code`).
+`NVIM_AI_ACP_ADAPTER` Default AI adapter for CodeCompanion.nvim ACP interactions (e.g., `oh_my_pi`, `claude_code`).
 
 `NVIM_AI_HTTP_ADAPTER` Default AI adapter for CodeCompanion.nvim HTTP cmd interactions (e.g., `deepseek`).
 
@@ -117,6 +117,7 @@ Some behaviors in this configuration are not common but are reasonable in my opi
 
 ### core
 + [echasnovski/mini.nvim](https://github.com/echasnovski/mini.nvim) - The heart of this configuration.
++ [AvengeMedia/base46](https://github.com/AvengeMedia/base46) - Colorscheme framework.
 
 ### AI
 + [olimorris/codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim)
@@ -167,7 +168,6 @@ Some behaviors in this configuration are not common but are reasonable in my opi
 ### snippet
 
 + [rafamadriz/friendly-snippets](https://github.com/rafamadriz/friendly-snippets)
-+ [chrisgrieser/nvim-scissors](https://github.com/chrisgrieser/nvim-scissors)
 
 ### syntax
 
