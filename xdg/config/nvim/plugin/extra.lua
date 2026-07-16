@@ -158,7 +158,7 @@ later(function()
     interactions = {
       background = { adapter = acp_adapter },
       chat = { adapter = acp_adapter },
-      inline = { adapter = acp_adapter },
+      inline = { adapter = http_adapter },
       cmd = { adapter = http_adapter },
       cli = {
         agent = 'oh_my_pi',
