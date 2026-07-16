@@ -156,7 +156,7 @@ later(function()
       },
     },
     interactions = {
-      background = { adapter = acp_adapter },
+      background = { adapter = http_adapter },
       chat = { adapter = acp_adapter },
       inline = { adapter = http_adapter },
       cmd = { adapter = http_adapter },
@@ -172,6 +172,43 @@ later(function()
         },
       },
     },
+  })
+
+  vim.api.nvim_create_autocmd({ 'User' }, {
+    pattern = 'CodeCompanionRequest*',
+    group = wenvim.util.augroup('codecompanion_request'),
+    callback = function(request)
+      local msg
+      local duration = 3000
+      if request.match == 'CodeCompanionRequestStarted' then
+        msg = 'CodeCompanion requesing...'
+        duration = 60000
+      elseif request.match == 'CodeCompanionRequestFinished' then
+        msg = 'CodeCompanion request finished.'
+      elseif request.match == 'CodeCompanionRequestStreaming' then
+        msg = 'CodeCompanion request streaming...'
+      end
+      if not msg then return end
+      local data = {
+        codecompantion = {
+          id = request.data.id,
+          interaction = request.data.interaction,
+          status = request.data.status,
+        },
+      }
+      local id = MiniNotify.add(msg)
+      data.id = id
+      MiniNotify.update(id, { data = data })
+      if request.data.status == 'success' then
+        local notifies = MiniNotify.get_all()
+        for _, notify in ipairs(notifies) do
+          if notify.data.codecompantion and notify.data.codecompantion.id == request.data.id then
+            vim.defer_fn(function() MiniNotify.remove(notify.data.id) end, duration)
+          end
+        end
+      end
+      vim.defer_fn(function() MiniNotify.remove(id) end, duration)
+    end,
   })
 
   map({ 'n', 'v' }, '<leader>ac', '<cmd>CodeCompanionActions<cr>', 'Open Code Companion actions menu')
