@@ -4,7 +4,8 @@ let
   image-viewer = "imv.desktop";
   pdf-viewer = "org.pwmt.zathura.desktop";
   nvim = "nvim.desktop";
-in {
+in
+{
   xdg.configFile."mimeapps.list".force = true;
   xdg.mimeApps = rec {
     enable = true;
@@ -17,6 +18,7 @@ in {
       "application/xhtml+xml" = browser;
       "text/html" = browser;
       "text/plain" = nvim;
+      "text/markdown" = browser;
 
       "application/pdf" = pdf-viewer;
 
