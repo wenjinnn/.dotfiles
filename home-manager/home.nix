@@ -203,6 +203,7 @@ in
     TERMINAL = lib.getExe pkgs.ghostty;
     # sudo askpass program
     SUDO_ASKPASS = "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
+    MERMAID_FILTER_FORMAT = "svg";
   };
   # XDG base directory settings
   xdg = {
