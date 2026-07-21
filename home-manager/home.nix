@@ -204,6 +204,8 @@ in
     # sudo askpass program
     SUDO_ASKPASS = "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
     MERMAID_FILTER_FORMAT = "svg";
+    MERMAID_FILTER_THEME = "neutral";
+    MERMAID_FILTER_BACKGROUND = "black";
   };
   # XDG base directory settings
   xdg = {
