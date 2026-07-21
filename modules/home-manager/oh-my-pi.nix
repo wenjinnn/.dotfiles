@@ -68,6 +68,16 @@ in
       '';
     };
 
+    skills = lib.mkOption {
+      type = lib.types.listOf lib.types.path;
+      default = [ ];
+      description = ''
+        List of skill directories to symlink into ~/.omp/skills/.
+        Each directory should contain a SKILL.md or subdirectories with SKILL.md files.
+        See <https://omp.sh/docs/skills>.
+      '';
+    };
+
     extraPackages = lib.mkOption {
       type = lib.types.listOf lib.types.package;
       default = [ ];
@@ -140,6 +150,25 @@ in
         mkdir -p "${pluginsDir}/node_modules"
         ${lib.concatStringsSep "\n" linkCommands}
         ${genPkgJson}
+      ''
+    );
+
+    home.activation.omp-skills-link = lib.mkIf (cfg.skills != [ ]) (
+      let
+        skillsDir = "$HOME/.omp/skills";
+        linkSkill = src: ''
+          if [ -f "${src}/SKILL.md" ]; then
+            ln -sfn "${src}" "${skillsDir}/$(basename "${src}")"
+          else
+            for d in "${src}"/*/; do
+              [ -f "$d/SKILL.md" ] && ln -sfn "$d" "${skillsDir}/$(basename "$d")"
+            done
+          fi
+        '';
+      in
+      lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        mkdir -p "${skillsDir}"
+        ${lib.concatStringsSep "\n" (map linkSkill cfg.skills)}
       ''
     );
 

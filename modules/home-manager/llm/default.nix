@@ -24,6 +24,12 @@ let
     rev = "d884ae04edebef577e82ff7c4e143debd0bbec99";
     sha256 = "sha256-kHdQ9e44doBk2yYW88tMSCqVG8ycYcvJSZlrIziXhpA=";
   };
+  mattpocock-skills-src = pkgs.fetchFromGitHub {
+    owner = "mattpocock";
+    repo = "skills";
+    rev = "9603c1cc8118d08bc1b3bf34cf714f62178dea3b";
+    sha256 = "sha256-S6pARK99oGGSi6XdFm6zYKHT4gjOCN0wIPZFcl1hREE=";
+  };
   dietrichgebert-ponytail = pkgs.fetchFromGitHub {
     owner = "DietrichGebert";
     repo = "ponytail";
@@ -45,6 +51,19 @@ let
     name: _: lib.nameValuePair "ponytail-${name}" "${dietrichgebert-ponytail}/skills/${name}"
   ) (lib.filterAttrs (_: type: type == "directory") (builtins.readDir "${dietrichgebert-ponytail}/skills"));
   caveman-skill = "${juliusbrussee-caveman}/skills";
+  # Enumerate mattpocock skills from all categories
+  mattpocock-skills = lib.concatMapAttrs (
+    category: _:
+    let
+      categoryDir = "${mattpocock-skills-src}/skills/${category}";
+    in
+    if builtins.pathExists categoryDir then
+      lib.mapAttrs' (name: _: lib.nameValuePair "matt-${name}" "${categoryDir}/${name}") (
+        lib.filterAttrs (_: type: type == "directory") (builtins.readDir categoryDir)
+      )
+    else
+      { }
+  ) (builtins.readDir "${mattpocock-skills-src}/skills");
   claude-plugins-official = pkgs.fetchFromGitHub {
     owner = "anthropics";
     repo = "claude-plugins-official";
@@ -180,7 +199,8 @@ in
             ;
         }
         // superpowers-skills
-        // ponytail-skills;
+        // ponytail-skills
+        // mattpocock-skills;
       };
       opencode = {
         enable = true;
@@ -338,6 +358,18 @@ in
           ];
           "app.model.cycleForward" = "ctrl+alt+p";
         };
+        skills = [
+          doc-coauthoring
+          skill-creator
+          xlsx
+          docx
+          pptx
+          pdf
+          personnal-skill
+        ]
+        ++ (lib.attrValues superpowers-skills)
+        ++ (lib.attrValues ponytail-skills)
+        ++ (lib.attrValues mattpocock-skills);
       };
     };
 }
