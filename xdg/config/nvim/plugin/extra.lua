@@ -199,7 +199,7 @@ later(function()
       end
       if not msg then return end
       local data = {
-        codecompantion = {
+        codecompanion = {
           id = request.data.id,
           interaction = request.data.interaction,
           status = request.data.status,
@@ -211,8 +211,12 @@ later(function()
       if request.data.status == 'success' then
         local notifies = MiniNotify.get_all()
         for _, notify in ipairs(notifies) do
-          if notify.data.codecompantion and notify.data.codecompantion.id == request.data.id then
-            vim.defer_fn(function() MiniNotify.remove(notify.data.id) end, duration)
+          if
+            notify.data.codecompanion
+            and notify.data.codecompanion.id == request.data.id
+            and notify.data.codecompanion.status ~= 'success'
+          then
+            MiniNotify.remove(notify.data.id)
           end
         end
       end
