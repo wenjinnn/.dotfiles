@@ -9,8 +9,8 @@ let
   anthropic-skills = pkgs.fetchFromGitHub {
     owner = "anthropics";
     repo = "skills";
-    rev = "9d2f1ae187231d8199c64b5b762e1bdf2244733d";
-    sha256 = "sha256-U7Nt1xrFOSOEm4vuWmy4pVsEyvv+Hj4sv8yXOofmwAw=";
+    rev = "fa0fa64bdc967915dc8399e803be67759e1e62b8";
+    sha256 = "sha256-QZ+zJkyLd/42rxgtJEZSUOz9R75Tse6UXW7G0nOkFS8=";
   };
   juliusbrussee-caveman = pkgs.fetchFromGitHub {
     owner = "JuliusBrussee";
@@ -33,8 +33,8 @@ let
   dietrichgebert-ponytail = pkgs.fetchFromGitHub {
     owner = "DietrichGebert";
     repo = "ponytail";
-    rev = "8e69b4a55f735e1319999064f82786b838cb3d7b";
-    sha256 = "sha256-D3mSVFQ3Y9T4Y21yz2/BVl827G11qPuKHCfwVnOvCQo=";
+    rev = "16f29800fd2681bdf24f3eb4ccffe38be3baec6b";
+    sha256 = "sha256-Y7d4s7uqjH6IbEXhqAiQ+yaxr6iiGcv2X64LuMtG1T8=";
   };
   xlsx = "${anthropic-skills}/skills/xlsx";
   docx = "${anthropic-skills}/skills/docx";
@@ -67,8 +67,8 @@ let
   claude-plugins-official = pkgs.fetchFromGitHub {
     owner = "anthropics";
     repo = "claude-plugins-official";
-    rev = "8d9e142e4ec5665f6561efef0ec10b3955e747dd";
-    sha256 = "sha256-s9Yc0Or7DM85m5GbHjCumV2BhX6Sxqv7B7UG7NtGBJU=";
+    rev = "9ddfad2e999789e0220cacaf359b64dd873e7d72";
+    sha256 = "sha256-jlo28awHcmoNN42tmit0Mif9WyrkC2OmjJgRDlLpVCo=";
   };
   personnal-skill = ./skills;
 in
@@ -198,7 +198,7 @@ in
             caveman-skill
             ;
         }
-        // superpowers-skills
+        # // superpowers-skills
         // ponytail-skills
         // mattpocock-skills;
       };
@@ -242,7 +242,7 @@ in
             caveman-skill
             ;
         }
-        // superpowers-skills
+        # // superpowers-skills
         // ponytail-skills;
       };
       antigravity-cli = {
@@ -300,7 +300,7 @@ in
             pdf
             personnal-skill
           ]
-          ++ (lib.attrValues superpowers-skills)
+          # ++ (lib.attrValues superpowers-skills)
           ++ (lib.attrValues ponytail-skills);
         };
         keybindings = {
@@ -367,7 +367,7 @@ in
           pdf
           personnal-skill
         ]
-        ++ (lib.attrValues superpowers-skills)
+        # ++ (lib.attrValues superpowers-skills)
         ++ (lib.attrValues ponytail-skills)
         ++ (lib.attrValues mattpocock-skills);
       };
