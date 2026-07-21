@@ -188,12 +188,12 @@ later(function()
     group = wenvim.util.augroup('codecompanion_request'),
     callback = function(request)
       local msg
-      local duration = 3000
+      local duration = 60000
       if request.match == 'CodeCompanionRequestStarted' then
         msg = 'CodeCompanion requesing...'
-        duration = 60000
       elseif request.match == 'CodeCompanionRequestFinished' then
         msg = 'CodeCompanion request finished.'
+        duration = 3000
       elseif request.match == 'CodeCompanionRequestStreaming' then
         msg = 'CodeCompanion request streaming...'
       end
