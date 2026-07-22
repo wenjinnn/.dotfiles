@@ -187,40 +187,23 @@ later(function()
     pattern = 'CodeCompanionRequest*',
     group = wenvim.util.augroup('codecompanion_request'),
     callback = function(request)
-      local msg
-      local duration = 60000
-      if request.match == 'CodeCompanionRequestStarted' then
-        msg = 'CodeCompanion requesing...'
-      elseif request.match == 'CodeCompanionRequestFinished' then
-        msg = 'CodeCompanion request finished.'
-        duration = 3000
-      elseif request.match == 'CodeCompanionRequestStreaming' then
-        msg = 'CodeCompanion request streaming...'
-      end
-      if not msg then return end
-      local data = {
-        codecompanion = {
-          id = request.data.id,
-          interaction = request.data.interaction,
-          status = request.data.status,
-        },
+      local map = {
+        CodeCompanionRequestStarted = { msg = 'CodeCompanion requesting…', ttl = 60000 },
+        CodeCompanionRequestStreaming = { msg = 'CodeCompanion streaming…', ttl = 60000 },
+        CodeCompanionRequestFinished = { msg = 'CodeCompanion request done.', ttl = 3000 },
       }
-      local id = MiniNotify.add(msg)
-      data.id = id
-      MiniNotify.update(id, { data = data })
-      if request.data.status == 'success' then
-        local notifies = MiniNotify.get_all()
-        for _, notify in ipairs(notifies) do
-          if
-            notify.data.codecompanion
-            and notify.data.codecompanion.id == request.data.id
-            and notify.data.codecompanion.status ~= 'success'
-          then
-            MiniNotify.remove(notify.data.id)
-          end
-        end
+      local info = map[request.match]
+      if not info then return end
+
+      -- First remove any existing notifications for this request
+      for _, n in ipairs(MiniNotify.get_all()) do
+        if n.data.cc_id == request.data.id then MiniNotify.remove(n.data.id) end
       end
-      vim.defer_fn(function() MiniNotify.remove(id) end, duration)
+
+      -- Then add the new notification
+      local id = MiniNotify.add(info.msg)
+      MiniNotify.update(id, { data = { cc_id = request.data.id, id = id } })
+      vim.defer_fn(function() MiniNotify.remove(id) end, info.ttl)
     end,
   })
 
