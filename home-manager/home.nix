@@ -46,7 +46,7 @@ in
     overlays = [
       # Add overlays your own flake exports (from overlays and pkgs dir):
       inputs.niri.overlays.niri
-      inputs.llm-agents.overlays.default
+      inputs.llm-agents.overlays.shared-nixpkgs
       outputs.overlays.additions
       outputs.overlays.modifications
       # outputs.overlays.unstable-packages
