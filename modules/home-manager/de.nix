@@ -15,6 +15,7 @@
     inputs.dms.homeModules.dank-material-shell
     inputs.dms-plugin-registry.homeModules.default
     inputs.danksearch.homeModules.default
+    inputs.dankcalendar.homeModules.default
     outputs.homeManagerModules.niri
   ];
 
@@ -156,6 +157,7 @@
         ];
       };
     };
+    dank-calendar.enable = true;
     # vim like image viewer
     imv.enable = true;
     # vim like pdf viewer
