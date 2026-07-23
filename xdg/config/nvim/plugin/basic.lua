@@ -13,7 +13,7 @@ if vim.fn.executable('dms') == 1 then
   -- use dms colorscheme if running inside dms
   vim.cmd.colorscheme('dms')
 else
-  vim.cmd.colorscheme('base46-default-dark')
+  vim.cmd.colorscheme('base46-gruvchad')
 end
 require('mini.misc').setup()
 MiniMisc.setup_auto_root()
