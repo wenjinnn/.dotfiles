@@ -37,9 +37,18 @@
     geoclue2.enable = true;
     # accounts-daemon for those programs who base on login user account info, e.g. gtklock
     accounts-daemon.enable = true;
-    displayManager.dms-greeter = {
-      enable = true;
-      configHome = config.users.users.${me.username}.home;
+    # displayManager.dms-greeter = {
+    #   enable = true;
+    #   configHome = config.users.users.${me.username}.home;
+    # };
+  };
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-session --background matrix --cmd niri-session";
+        user = me.username;
+      };
     };
   };
   location.provider = "geoclue2";
@@ -52,10 +61,6 @@
   ];
   environment.pathsToLink = [ "share/thumbnailers" ];
 
-  programs.dms-shell = {
-    enable = true;
-    package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
-  };
   # tell Electron/Chromium to run on Wayland
   environment.variables.NIXOS_OZONE_WL = "1";
   # simple display manager daemon with tui

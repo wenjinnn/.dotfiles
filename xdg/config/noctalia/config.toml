@@ -1,0 +1,185 @@
+[backdrop]
+enabled = true
+
+[bar]
+order = [ "default" ]
+
+    [bar.default]
+    background_opacity = 0.89999997988343239
+    center = [ "notifications", "clock", "media" ]
+    end = [ "sysmon", "network", "bluetooth", "volume", "brightness", "power_profile", "battery", "control-center" ]
+    position = "left"
+    start = [ "launcher", "clipboard", "wallpaper", "workspaces", "tray", "audio_visualizer", "privacy" ]
+
+[battery]
+warning_threshold = 15
+
+[desktop_widgets]
+schema_version = 2
+widget_order = []
+
+    [desktop_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [desktop_widgets.widget]
+
+[dock]
+enabled = true
+reserve_space = false
+show_dots = true
+smart_auto_hide = true
+
+[idle]
+behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
+
+    [idle.behavior.lock]
+    action = "lock"
+    enabled = true
+    timeout = 600.0
+
+    [idle.behavior.lock-and-suspend]
+    action = "lock_and_suspend"
+    enabled = false
+    timeout = 900.0
+
+    [idle.behavior.screen-off]
+    action = "screen_off"
+    enabled = true
+    timeout = 660.0
+
+[keybinds]
+down = [ "Down", "Ctrl+n" ]
+up = [ "Up", "Ctrl+p" ]
+
+[location]
+auto_locate = true
+
+[lockscreen_widgets]
+enabled = true
+schema_version = 2
+widget_order = [ "lockscreen-login-box@eDP-1", "lockscreen-widget-0000000000000001", "lockscreen-widget-0000000000000002" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
+    box_height = 70.0
+    box_width = 400.0
+    cx = 768.0
+    cy = 841.0
+    output = "eDP-1"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.0
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_password_hint = true
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
+    box_height = 320.0
+    box_width = 1008.0
+    cx = 768.0
+    cy = 464.0
+    output = "eDP-1"
+    rotation = -0.0
+    type = "clock"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000001.settings]
+        background = false
+        center_text = true
+        clock_style = "digital"
+        font_family = ""
+        format = "{:%H:%M:%S}"
+        shadow = false
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000002]
+    box_height = 160.0
+    box_width = 352.0
+    cx = 768.0
+    cy = 128.0
+    output = "eDP-1"
+    rotation = 0.0
+    type = "weather"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000002.settings]
+        background = false
+        shadow = false
+
+[nightlight]
+enabled = true
+
+[plugin_settings."nzlov/daily-wallpaper"]
+source = "nasa"
+
+[plugins]
+enabled = []
+
+[shell]
+clipboard_history_max_entries = 500
+clipboard_image_action_command = "satty -f -"
+polkit_agent = true
+telemetry_enabled = true
+launch_apps_as_systemd_services = true
+
+    [shell.screenshot]
+    directory = "/home/wenjin/Pictures/Screenshots"
+    filename_pattern = "Screenshot-%Y-%m-%d_%H-%M-%S.png"
+
+[theme]
+builtin = "Noctalia"
+community_palette = "Oxocarbon"
+mode = "dark"
+source = "wallpaper"
+wallpaper_scheme = "m3-content"
+
+    [theme.templates]
+    builtin_ids = [ "gtk3", "gtk4", "qt" ]
+
+[wallpaper]
+directory = "/home/wenjin/Pictures/BingWallpaper"
+
+    [wallpaper.default]
+    path = "/home/wenjin/Pictures/BingWallpaper/20221103-PeytoIce_ZH-CN7517633327_UHD.jpg"
+
+    [wallpaper.last]
+    path = "/home/wenjin/Pictures/BingWallpaper/20221103-PeytoIce_ZH-CN7517633327_UHD.jpg"
+
+    [wallpaper.monitors.eDP-1]
+    path = "/home/wenjin/Pictures/BingWallpaper/20221103-PeytoIce_ZH-CN7517633327_UHD.jpg"
+
+[widget.battery]
+show_label = false
+
+[widget.brightness]
+show_label = false
+
+[widget.clock]
+format = "{:%H:%M:%S}"
+
+[widget.network]
+show_label = false
+
+[widget.privacy]
+hide_inactive = true
+
+[widget.sysmon]
+show_label = false
+stat = "cpu_temp"
+
+[widget.volume]
+show_label = false
+
+[widget.weather]
+show_temperature = false

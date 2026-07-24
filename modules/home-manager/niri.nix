@@ -35,7 +35,7 @@
         path = lib.getExe pkgs.xwayland-satellite-unstable;
       };
       layout = {
-        # gaps = 9;
+        gaps = 9;
         center-focused-column = "never";
         preset-column-widths = [
           { proportion = 0.33333; }
@@ -45,22 +45,22 @@
         default-column-width = {
           proportion = 0.5;
         };
-        # focus-ring = {
-        #   active.gradient = {
-        #     from = colors.base0C;
-        #     to = colors.base0A;
-        #     angle = 45;
-        #     in' = "oklch longer hue";
-        #   };
-        #   width = 2;
-        # };
-        shadow.enable = true;
-        struts = {
-          # top = 3;
-          # left = 6;
-          # right = 8;
-          # bottom = 4;
+        focus-ring = {
+          active.gradient = {
+            from = "#b8bb26";
+            to = "#83a598";
+            angle = 45;
+            in' = "oklch longer hue";
+          };
+          width = 2;
         };
+        shadow.enable = true;
+        # struts = {
+        #   top = 3;
+        #   left = 6;
+        #   right = 8;
+        #   bottom = 4;
+        # };
       };
       screenshot-path = "~/Pictures/Screenshots/Screenshot-%Y-%m-%d_%H-%M-%S.png";
       spawn-at-startup = [
@@ -86,46 +86,39 @@
             };
             action = spawn "ghostty";
           };
-          "Mod+Slash" = {
-            hotkey-overlay = {
-              title = "Open keybind cheatsheets";
-            };
-            action = sh "dms ipc call keybinds toggle niri";
-          };
           "Mod+Shift+Slash".action = show-hotkey-overlay;
           "Mod+D" = {
             hotkey-overlay = {
-              title = "Run an Application: dms applications";
+              title = "Run an Application: noctalia launcher";
             };
-            action = sh "dms ipc call spotlight toggle";
+            action = sh "noctalia msg panel-toggle launcher";
           };
           "Mod+V" = {
             hotkey-overlay = {
-              title = "List clipboard history: dms clipboard";
+              title = "List clipboard history: noctalia clipboard";
             };
-            action = sh "dms ipc call clipboard toggle";
+            action = sh "noctalia msg panel-toggle clipboard";
           };
           "Super+Alt+L" = {
             hotkey-overlay = {
-              title = "Lock the Screen: dms lock";
+              title = "Lock the Screen: noctalia lock";
             };
             allow-when-locked = true;
-            action = sh "dms ipc call lock lock";
+            action = sh "noctalia msg session lock";
           };
 
           "XF86AudioRaiseVolume" = {
             allow-when-locked = true;
-            action = sh "dms ipc call audio increment 5";
+            action = sh "noctalia msg volume-up 5";
           };
           "XF86AudioLowerVolume" = {
             allow-when-locked = true;
-            action = sh "dms ipc call audio decrement 5";
+            action = sh "noctalia msg volume-down 5";
           };
           "XF86AudioMute" = {
             allow-when-locked = true;
-            action = sh "dms ipc call audio mute";
+            action = sh "noctalia msg volume-mute";
           };
-          "Mod+A".action = sh "dms ipc call audio cycleoutput";
 
           "Mod+Tab" = {
             repeat = false;
@@ -133,40 +126,36 @@
           };
 
           "Mod+Ctrl+P" = {
-            hotkey-overlay.title = "Pause player: dms mpris playPause";
-            action = sh "dms ipc call mpris playPause";
+            hotkey-overlay.title = "Pause player: noctalia media toggle";
+            action = sh "noctalia msg media toggle";
           };
           "Mod+Shift+P" = {
-            hotkey-overlay.title = "Previous player: dms mpris previous";
-            action = sh "dms ipc call mpris previous";
+            hotkey-overlay.title = "Previous player: noctalia media previous";
+            action = sh "noctalia msg media previous";
           };
           "Mod+Shift+N" = {
-            hotkey-overlay.title = "Next player: dms mpris next";
-            action = sh "dms ipc call mpris next";
+            hotkey-overlay.title = "Next player: noctalia media next";
+            action = sh "noctalia msg media next";
           };
           "Mod+Shift+C" = {
-            hotkey-overlay.title = "Pick color to clipboard: dms color pick";
-            action = sh "dms color pick -a";
-          };
-          "Mod+Shift+B" = {
-            hotkey-overlay.title = "Inhibit toggle: dms inhibit toggle";
-            action = sh "dms ipc call inhibit toggle";
+            hotkey-overlay.title = "Pick color to clipboard: niri color pick";
+            action = sh "niri msg pick-color | grep -o '#[0-9a-fA-F]\{6\}' | wl-copy";
           };
           "Mod+Shift+W" = {
             hotkey-overlay.title = "Browser wallpaper";
-            action = sh "dms ipc call dankdash wallpaper";
+            action = sh "noctalia msg panel-toggle wallpaper";
+          };
+          "Mod+Ctrl+W" = {
+            hotkey-overlay.title = "Random wallpaper";
+            action = sh "noctalia msg wallpaper-random";
           };
           "Mod+Ctrl+S" = {
-            hotkey-overlay.title = "Toggle DMS Settings";
-            action = sh "dms ipc call settings toggle";
+            hotkey-overlay.title = "Toggle noctalia settings";
+            action = sh "noctalia msg settings-toggle";
           };
           "Mod+P" = {
-            hotkey-overlay.title = "Toggle DMS pomodoroTimer";
-            action = sh "dms ipc pomodoroTimer toggleTimer";
-          };
-          "Mod+M" = {
-            hotkey-overlay.title = "Toggle DMS system monitor";
-            action = sh "dms ipc call processlist focusOrToggle";
+            hotkey-overlay.title = "Power cycle";
+            action = sh "noctalia msg power-cycle";
           };
           "Mod+T" = {
             hotkey-overlay = {
@@ -176,37 +165,29 @@
           };
           "Mod+E" = {
             hotkey-overlay = {
-              title = "Controll: dms control center";
+              title = "Controll: noctalia control center";
             };
-            action = sh "dms ipc call control-center toggle";
-          };
-          "Mod+N" = {
-            hotkey-overlay.title = "Notification: dms notifications";
-            action = sh "dms ipc call notifications toggle";
+            action = sh "noctalia msg panel-toggle control-center";
           };
           "Mod+B" = {
             hotkey-overlay.title = "Toggle wayscriber";
             action = sh "wayscriber -a";
           };
           "Mod+Ctrl+Shift+P" = {
-            hotkey-overlay.title = "Power menu: dms powermenu";
-            action = sh "dms ipc call powermenu toggle";
+            hotkey-overlay.title = "Power menu: noctalia powermenu";
+            action = sh "noctalia msg panel-toggle session";
           };
           "Ctrl+Print" = {
             hotkey-overlay.title = "Screenshot: full screen";
-            action = sh "dms ipc call niri screenshotScreen";
+            action = sh "noctalia msg screenshot-fullscreen monitor";
           };
           "Alt+Print" = {
-            hotkey-overlay.title = "Screenshot: window";
-            action = sh "dms ipc call niri screenshotWindow";
+            hotkey-overlay.title = "Screenshot: pick";
+            action = sh "noctalia msg screenshot-fullscreen pick";
           };
           "Print" = {
-            hotkey-overlay.title = "Screenshot: choose";
-            action = sh "dms ipc call niri screenshot";
-          };
-          "Mod+Ctrl+M" = {
-            hotkey-overlay.title = "Toggle music lyrics bar";
-            action = sh "dms ipc call bar toggle name 'Music Lyrics Bar'";
+            hotkey-overlay.title = "Screenshot: region";
+            action = sh "noctalia msg screenshot-region";
           };
 
           "Mod+Q".action = close-window;
@@ -352,8 +333,8 @@
             action = sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
           };
 
-          "XF86MonBrightnessUp".action = sh "dms ipc call brightness increment 5 \"\"";
-          "XF86MonBrightnessDown".action = sh "dms ipc call brightness decrement 5 \"\"";
+          "XF86MonBrightnessUp".action = sh "noctalia msg brightness-up 5";
+          "XF86MonBrightnessDown".action = sh "noctalia msg brightness-down 5 ";
 
           "Mod+Escape" = {
             allow-inhibiting = false;
@@ -366,6 +347,7 @@
         };
       debug = {
         dbus-interfaces-in-non-session-instances = [ ];
+        honor-xdg-activation-with-invalid-serial = [ ];
         render-drm-device = "/dev/dri/renderD128";
 
       };
@@ -377,6 +359,13 @@
       window-rules = [
         {
           draw-border-with-background = false;
+          geometry-corner-radius = {
+            bottom-left = 12.0;
+            bottom-right = 12.0;
+            top-left = 12.0;
+            top-right = 12.0;
+          };
+          clip-to-geometry = true;
         }
         {
           matches = [
@@ -457,11 +446,18 @@
         {
           matches = [
             { namespace = "^notification$"; }
-            { namespace = "^dms:notification-popup$"; }
-            { namespace = "^dms:clipboard$"; }
+            { namespace = "^noctalia-notification$"; }
+            { namespace = "^noctalia-clipboard$"; }
           ];
 
           block-out-from = "screencast";
+        }
+        {
+          matches = [
+            { namespace = "^noctalia-backdrop"; }
+          ];
+
+          place-within-backdrop = true;
         }
       ];
     };

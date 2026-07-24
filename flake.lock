@@ -49,79 +49,6 @@
         "type": "github"
       }
     },
-    "dank-qml-common": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1784074596,
-        "narHash": "sha256-/rCqHgC39mHvBDxb/dZLWCQ3W4ev94y3/1KtCRSPDp8=",
-        "owner": "AvengeMedia",
-        "repo": "dank-qml-common",
-        "rev": "b50afcf549f7e9c8f07c85b7f3fbba867701650d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "AvengeMedia",
-        "repo": "dank-qml-common",
-        "type": "github"
-      }
-    },
-    "dank-qml-common_2": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1784647395,
-        "narHash": "sha256-kcLSJC8XBzmWoSBc90Zn81qrNsqWMkwQ1m/zZixOw30=",
-        "owner": "AvengeMedia",
-        "repo": "dank-qml-common",
-        "rev": "1919595f0dde4f5bf5ac0baa1902ff6d070971d5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "AvengeMedia",
-        "repo": "dank-qml-common",
-        "type": "github"
-      }
-    },
-    "dankcalendar": {
-      "inputs": {
-        "dank-qml-common": "dank-qml-common",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1784646155,
-        "narHash": "sha256-lYmS+w4W7eWqBv3FX95UCIMsUsG2oCNl9Uxppn3dm0U=",
-        "owner": "AvengeMedia",
-        "repo": "dankcalendar",
-        "rev": "caf3b37a550023d687531c92df92e30cc672aefa",
-        "type": "github"
-      },
-      "original": {
-        "owner": "AvengeMedia",
-        "repo": "dankcalendar",
-        "type": "github"
-      }
-    },
-    "danksearch": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1784433272,
-        "narHash": "sha256-5Gz3pC/rcn8LLwzLZZhrpPMqY+PDdUzoFtXV3uWoitg=",
-        "owner": "AvengeMedia",
-        "repo": "danksearch",
-        "rev": "4b4905e2ef3454230fb648d2139f3139b742b0eb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "AvengeMedia",
-        "repo": "danksearch",
-        "type": "github"
-      }
-    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -142,65 +69,23 @@
         "type": "github"
       }
     },
-    "dms": {
-      "inputs": {
-        "dank-qml-common": "dank-qml-common_2",
-        "flake-compat": "flake-compat",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1784691333,
-        "narHash": "sha256-e9j+rFQMyQ4BsREr+W6LiqO4a3Ofu574U33iEHwHjFU=",
-        "owner": "AvengeMedia",
-        "repo": "DankMaterialShell",
-        "rev": "fe561f2b5d42c6718cc91c12556b6651eb55c23b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "AvengeMedia",
-        "repo": "DankMaterialShell",
-        "type": "github"
-      }
-    },
-    "dms-plugin-registry": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1784685525,
-        "narHash": "sha256-b9rGb5APOHh6LAcI6t8AoKlVCVXtdC8RubGpNDjyEx4=",
-        "owner": "AvengeMedia",
-        "repo": "dms-plugin-registry",
-        "rev": "52f829bc6ee993733dbb9b2d3c68748d0ebd536a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "AvengeMedia",
-        "repo": "dms-plugin-registry",
-        "type": "github"
-      }
-    },
     "flake-compat": {
-      "flake": false,
       "locked": {
         "lastModified": 1767039857,
         "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
-        "owner": "NixOS",
+        "owner": "edolstra",
         "repo": "flake-compat",
         "rev": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
+        "owner": "edolstra",
         "repo": "flake-compat",
         "type": "github"
       }
     },
     "flake-compat_2": {
+      "flake": false,
       "locked": {
         "lastModified": 1767039857,
         "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
@@ -216,22 +101,6 @@
       }
     },
     "flake-compat_3": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1767039857,
-        "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "rev": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
-        "type": "github"
-      },
-      "original": {
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "type": "github"
-      }
-    },
-    "flake-compat_4": {
       "locked": {
         "lastModified": 1733328505,
         "narHash": "sha256-NeCCThCEP3eCl2l/+27kNNK7QrwZB1IJCrXfrbv5oqU=",
@@ -663,7 +532,7 @@
     "nixos-raspberrypi": {
       "inputs": {
         "argononed": "argononed",
-        "flake-compat": "flake-compat_2",
+        "flake-compat": "flake-compat",
         "nixos-images": "nixos-images",
         "nixpkgs": "nixpkgs_3"
       },
@@ -684,7 +553,7 @@
     },
     "nixos-wsl": {
       "inputs": {
-        "flake-compat": "flake-compat_3",
+        "flake-compat": "flake-compat_2",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -865,6 +734,26 @@
         "type": "gitlab"
       }
     },
+    "noctalia": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1784725423,
+        "narHash": "sha256-Sgj7CZQk5MREP5OQPbPjaj07alGngBcQvkTGjT/BykM=",
+        "owner": "noctalia-dev",
+        "repo": "noctalia",
+        "rev": "088b45a8b8b273082331588a148bd9397fccda7e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "noctalia-dev",
+        "repo": "noctalia",
+        "type": "github"
+      }
+    },
     "npm-lockfile-fix": {
       "inputs": {
         "nixpkgs": [
@@ -959,11 +848,7 @@
     },
     "root": {
       "inputs": {
-        "dankcalendar": "dankcalendar",
-        "danksearch": "danksearch",
         "disko": "disko",
-        "dms": "dms",
-        "dms-plugin-registry": "dms-plugin-registry",
         "hermes-agent": "hermes-agent",
         "home-manager": "home-manager",
         "llm-agents": "llm-agents",
@@ -975,6 +860,7 @@
         "nixos-raspberrypi": "nixos-raspberrypi",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_4",
+        "noctalia": "noctalia",
         "nur": "nur",
         "sops-nix": "sops-nix",
         "winapps": "winapps"
@@ -1094,7 +980,7 @@
     },
     "winapps": {
       "inputs": {
-        "flake-compat": "flake-compat_4",
+        "flake-compat": "flake-compat_3",
         "flake-utils": "flake-utils",
         "nix-filter": "nix-filter",
         "nixpkgs": [
