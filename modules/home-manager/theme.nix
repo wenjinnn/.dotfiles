@@ -27,7 +27,7 @@
   };
   qt = {
     enable = true;
-    platformTheme.name = "qtct";
+    platformTheme.name = "qt6ct";
   };
   home.packages = with pkgs; [
     adwaita-icon-theme
