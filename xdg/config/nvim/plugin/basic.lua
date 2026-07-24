@@ -4,17 +4,11 @@ local gh = wenvim.util.gh
 vim.pack.add({
   gh('nvim-mini/mini.nvim'),
   gh('nvim-lua/plenary.nvim'),
-  gh('AvengeMedia/base46'),
 })
 
 --- COLORSCHEME
-require('base46').setup()
-if vim.fn.executable('dms') == 1 then
-  -- use dms colorscheme if running inside dms
-  vim.cmd.colorscheme('dms')
-else
-  vim.cmd.colorscheme('base46-gruvchad')
-end
+vim.cmd.colorscheme('wenvim-gruvchad')
+
 require('mini.misc').setup()
 MiniMisc.setup_auto_root()
 MiniMisc.setup_termbg_sync()
