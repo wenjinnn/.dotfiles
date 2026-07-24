@@ -35,6 +35,12 @@ later(function()
       output = function(ctx) return '/tmp/' .. vim.fn.fnamemodify(ctx.file, ':t:r') .. '.html' end,
     },
   }
+  map('n', '<leader>pp', '<cmd>Preview<cr>', 'Preview toggle')
+  map('n', '<leader>po', '<cmd>Preview open<cr>', 'Preview open')
+  map('n', '<leader>pc', '<cmd>Preview compile<cr>', 'Preview compile')
+  map('n', '<leader>pC', '<cmd>Preview clean<cr>', 'Preview clean')
+  map('n', '<leader>pO', '<cmd>Preview open<cr>', 'Preview open')
+  map('n', '<leader>ps', '<cmd>Preview status<cr>', 'Preview status')
 
   -- db manage
   vim.pack.add({ gh('tpope/vim-dadbod'), gh('kristijanhusak/vim-dadbod-completion') })
