@@ -155,7 +155,52 @@ telemetry_enabled = true
 
     [shell.screenshot]
     directory = "/home/wenjin/Pictures/Screenshots"
-    filename_pattern = "Screenshot-%Y-%m-%d_%H-%M-%S.png"
+    filename_pattern = "Screenshot-%Y-%m-%d_%H-%M-%S"
+
+    [[shell.session.actions]]
+    action = "lock"
+    countdown_seconds = 1.0
+    enabled = true
+    shortcut = "l"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "logout"
+    countdown_seconds = 1.0
+    enabled = true
+    shortcut = "o"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "reboot"
+    countdown_seconds = 1.0
+    enabled = true
+    shortcut = "r"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "lock_and_suspend"
+    countdown_seconds = 1.0
+    enabled = true
+    shortcut = "s"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "command"
+    command = "noctalia msg dpms-off && loginctl lock-session && systemctl hibernate"
+    countdown_seconds = 1.0
+    enabled = true
+    glyph = "hibernate"
+    label = "Lock & Hibernate"
+    shortcut = "h"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "shutdown"
+    countdown_seconds = 1.0
+    enabled = true
+    shortcut = "d"
+    variant = "destructive"
 
 [theme]
 builtin = "Noctalia"
