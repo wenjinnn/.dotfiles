@@ -26,6 +26,13 @@
   security = {
     # polkit for privilege escalation in GUI apps
     polkit.enable = true;
+    wrappers.pkexec = {
+      enable = lib.mkForce true;
+      setuid = true;
+      owner = "root";
+      group = "root";
+      source = "${pkgs.polkit}/bin/pkexec";
+    };
   };
   services = {
     # gvfs for file management in GUI apps, e.g. Nautilus
