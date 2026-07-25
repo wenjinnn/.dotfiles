@@ -5,14 +5,28 @@ enabled = true
 order = [ "default" ]
 
     [bar.default]
-    background_opacity = 0.89999997988343239
-    center = [ "notifications", "clock", "media" ]
-    end = [ "sysmon", "network", "bluetooth", "volume", "brightness", "power_profile", "battery", "control-center" ]
+    background_opacity = 0.9499999787658453
+    center = [ "audio_visualizer", "media", "clock", "notifications" ]
+    end = [
+        "tray",
+        "sysmon",
+        "network",
+        "bluetooth",
+        "volume",
+        "input_volume",
+        "brightness",
+        "power_profile",
+        "battery",
+        "control-center"
+    ]
     position = "left"
-    start = [ "launcher", "clipboard", "wallpaper", "workspaces", "tray", "audio_visualizer", "privacy" ]
+    start = [ "launcher", "clipboard", "caffeine", "wallpaper", "workspaces", "active_window", "privacy" ]
 
 [battery]
 warning_threshold = 15
+
+[calendar]
+enabled = true
 
 [desktop_widgets]
 schema_version = 2
@@ -120,6 +134,12 @@ widget_order = [ "lockscreen-login-box@eDP-1", "lockscreen-widget-00000000000000
 [nightlight]
 enabled = true
 
+[plugin_settings."h465855hgg/lyrics"]
+double_line = false
+karaoke_enabled = false
+max_chars = 10
+show_translation = false
+
 [plugin_settings."nzlov/daily-wallpaper"]
 source = "nasa"
 
@@ -129,9 +149,9 @@ enabled = []
 [shell]
 clipboard_history_max_entries = 500
 clipboard_image_action_command = "satty -f -"
+launch_apps_as_systemd_services = true
 polkit_agent = true
 telemetry_enabled = true
-launch_apps_as_systemd_services = true
 
     [shell.screenshot]
     directory = "/home/wenjin/Pictures/Screenshots"
@@ -142,22 +162,26 @@ builtin = "Noctalia"
 community_palette = "Oxocarbon"
 mode = "dark"
 source = "wallpaper"
-wallpaper_scheme = "m3-content"
+wallpaper_scheme = "m3-rainbow"
 
     [theme.templates]
-    builtin_ids = [ "gtk3", "gtk4", "qt" ]
+    builtin_ids = [ "gtk3", "gtk4", "kcolorscheme", "niri", "qt" ]
 
 [wallpaper]
 directory = "/home/wenjin/Pictures/BingWallpaper"
 
     [wallpaper.default]
-    path = "/home/wenjin/Pictures/BingWallpaper/20221103-PeytoIce_ZH-CN7517633327_UHD.jpg"
+    path = "/home/wenjin/Pictures/BingWallpaper/20241105-LencoisMaranhao_ROW0281331597_UHD.jpg"
 
     [wallpaper.last]
-    path = "/home/wenjin/Pictures/BingWallpaper/20221103-PeytoIce_ZH-CN7517633327_UHD.jpg"
+    path = "/home/wenjin/Pictures/BingWallpaper/20241105-LencoisMaranhao_ROW0281331597_UHD.jpg"
 
     [wallpaper.monitors.eDP-1]
-    path = "/home/wenjin/Pictures/BingWallpaper/20221103-PeytoIce_ZH-CN7517633327_UHD.jpg"
+    path = "/home/wenjin/Pictures/BingWallpaper/20241105-LencoisMaranhao_ROW0281331597_UHD.jpg"
+
+    [[wallpaper.favorite]]
+    path = "/home/wenjin/Pictures/BingWallpaper/20221029-SealRiver_ZH-CN6334858649_UHD.jpg"
+    theme_mode = "auto"
 
 [widget.battery]
 show_label = false
@@ -166,7 +190,14 @@ show_label = false
 show_label = false
 
 [widget.clock]
+anchor = true
 format = "{:%H:%M:%S}"
+
+[widget.input_volume]
+show_label = false
+
+[widget.media]
+album_art_only = true
 
 [widget.network]
 show_label = false
@@ -182,4 +213,5 @@ stat = "cpu_temp"
 show_label = false
 
 [widget.weather]
+show_condition = false
 show_temperature = false
