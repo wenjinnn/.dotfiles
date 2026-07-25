@@ -49,7 +49,7 @@ class ImageToolsExtension(GObject.GObject, Nautilus.MenuProvider):
     def setup_wallpaper(self, menu, file):
         path = file.get_location().get_path()
         subprocess.run(
-            ["dms", "ipc", "call", "wallpaper", "set", path],
+            ["noctalia", "msg", "wallpaper-set", path],
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         )
@@ -78,8 +78,8 @@ class ImageToolsExtension(GObject.GObject, Nautilus.MenuProvider):
 
         item_setup_wallpaper = Nautilus.MenuItem(
             name="ImageToolsExtension::SetupWallpaper",
-            label="Setup wallpaper via dms",
-            tip="Setup wallpaper via dms",
+            label="Setup wallpaper via noctalia",
+            tip="Setup wallpaper via noctalia",
         )
         item_setup_wallpaper.connect("activate", self.setup_wallpaper, files[0])
 

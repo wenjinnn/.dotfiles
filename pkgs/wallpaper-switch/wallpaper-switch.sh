@@ -10,5 +10,5 @@ else
 fi
 echo "next wallpaper: $next"
 echo "current desktop environment: $XDG_CURRENT_DESKTOP"
-dms ipc call wallpaper set "$next"
+noctalia msg wallpaper-set "$next"
 ln -sf "$next" "${XDG_DATA_HOME:-$HOME/.local/share}/.wallpaper"
