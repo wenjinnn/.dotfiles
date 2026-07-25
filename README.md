@@ -1,7 +1,7 @@
 # Personal NixOS configuration with Flake and Home Manager
 # Screenshot
 
-![Niri screenshot](https://github.com/user-attachments/assets/5813c5e1-784f-4299-8f45-c60013412b7b)
+![Niri screenshot](https://github.com/wenjinnn/.dotfiles/releases/download/0.1.0/Screenshot.png)
 
 The old Arch configuration can be found in the [Arch branch](https://github.com/wenjinnn/config/tree/arch).
 
