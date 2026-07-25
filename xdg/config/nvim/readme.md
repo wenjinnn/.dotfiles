@@ -3,12 +3,11 @@
 
 <a href="https://dotfyle.com/wenjinnn/dotfiles-xdg-config-nvim"><img src="https://dotfyle.com/wenjinnn/dotfiles-xdg-config-nvim/badges/plugins?style=flat" /></a>
 <a href="https://dotfyle.com/wenjinnn/dotfiles-xdg-config-nvim"><img src="https://dotfyle.com/wenjinnn/dotfiles-xdg-config-nvim/badges/leaderkey?style=flat" /></a>
-<a href="https://dotfyle.com/wenjinnn/dotfiles-xdg-config-nvim"><img src="https://dotfyle.com/wenjinnn/dotfiles-xdg-config-nvim/badges/plugin-manager?style=flat" /></a>
 
 # Screenshots
 | | | | |
 | :--------------: | :--------------: | :--------------: | :--------------: |
-| ![starter](https://github.com/user-attachments/assets/736dae00-311e-44c1-8840-a33fd6fd1b53 "starter") | ![auto completion](https://github.com/user-attachments/assets/e4996800-da09-47bd-85f5-86f44b847ba8 "auto completion") | ![mini.deps](https://github.com/user-attachments/assets/1db44925-8d78-45de-aa15-50f28338a19a "mini.deps") | ![key clue](https://github.com/user-attachments/assets/9c73e035-87f4-4be9-b973-639b9690ded3 "key clue") |
+| ![starter](https://github.com/user-attachments/assets/736dae00-311e-44c1-8840-a33fd6fd1b53 "starter") | ![auto completion](https://github.com/user-attachments/assets/e4996800-da09-47bd-85f5-86f44b847ba8 "auto completion") | ![plugin management](https://github.com/user-attachments/assets/1db44925-8d78-45de-aa15-50f28338a19a "plugin management") | ![key clue](https://github.com/user-attachments/assets/9c73e035-87f4-4be9-b973-639b9690ded3 "key clue") |
 | ![HTTP request](https://github.com/user-attachments/assets/34a03fc4-f8fb-47db-96d0-d0c7f671058f "HTTP request with hurl") | ![pick anything](https://github.com/user-attachments/assets/57d9064a-3630-472d-bf22-28fef9be5619 "pick anything") | ![DAP integration](https://github.com/user-attachments/assets/9b773251-ea74-4b8b-9172-35f52e74da98 "DAP integration") | ![file explorer](https://github.com/user-attachments/assets/9f1ae398-21fd-4d70-a3bf-92f5f0b3d69b "file explorer") |
  | ![LSP process and notify](https://github.com/user-attachments/assets/25a624d2-c080-4cda-b45c-3e3af8499563 "LSP process and notify") | ![code action](https://github.com/user-attachments/assets/c3fb3dc8-233c-4f07-9392-c0c3dedc8825 "code action") | ![LSP jump to](https://github.com/user-attachments/assets/cf15f776-ae51-424d-b456-7254392be4dd "LSP jump to") | ![LSP symbol](https://github.com/user-attachments/assets/93bf429d-f9fc-4681-96ac-0cfed750c51d "LSP symbol") |
 
@@ -18,7 +17,7 @@
 * Simple, yet powerful, always in development.
 * Lazy load all plugins whenever possible to optimize startup time. Currently, the startup time on my PC is less than 30ms.
 * Avoid sidebars and focus on editing. Personally, I prefer using floating windows; sidebar buffers distract me.
-* Avoid extra UI plugins. In most scenarios, [mini.notify](https://github.com/echasnovski/mini.notify) and [mini.pick](https://github.com/echasnovski/mini.pick) (via `vim.ui.select()` wrapper) perform well enough for notifications and floating windows.
+* Avoid extra UI plugins. In most scenarios, [mini.notify](https://github.com/nvim-mini/mini.notify) and [mini.pick](https://github.com/nvim-mini/mini.pick) (via `vim.ui.select()` wrapper) perform well enough for notifications and floating windows.
 * Provide an out-of-the-box experience for web development.
 * AI-powered by [CodeCompanion.nvim](https://github.com/olimorris/codecompanion.nvim), [minuet-ai.nvim](https://github.com/milanglacier/minuet-ai.nvim).
 
@@ -29,7 +28,7 @@
 
 ## Installation Instructions
 
-> Installation requires Neovim 0.11+. Always review the code before installing a configuration.
+> Installation requires Neovim 0.12+. Always review the code before installing a configuration.
 
 Clone the repository and install the plugins:
 
@@ -47,7 +46,7 @@ NVIM_APPNAME=wenjinnn/wenvim nvim
 
 Some behaviors in this configuration are not common but are reasonable in my opinion:
 
-* `ss` in normal mode triggers mini.jump2d motion `MiniJump2d.builtin_opts.default`.
+* `ss` in normal mode triggers mini.jump2d motion `MiniJump2d.builtin_opts.single_character`.
 * `sq` in normal mode triggers mini.jump2d motion `MiniJump2d.builtin_opts.query`.
 * `<M-w>` in insert mode will accept a lsp inline completion suggestion.
 * `<A-d>`/`<A-a>`/`<A-x>` trigger minuet-ai.nvim duet inline completion (predict/apply/dismiss).
@@ -66,7 +65,9 @@ Some behaviors in this configuration are not common but are reasonable in my opi
 
 [after/](after) Filetype-specific settings and LSP server configurations.
 
-[colors/](colors) Custom color schemes based on [mini.hues](https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-hues.md).
+[colors/](colors) Custom color schemes based on [mini.hues](https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-hues.md) and [mini.base16](https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-base16.md).
+
+[snippets/](snippets) Custom VS Code-style snippets loaded by [mini.snippets](https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-snippets.md).
 
 ## Defined environment variables cheatsheet:
 
@@ -93,7 +94,7 @@ Some behaviors in this configuration are not common but are reasonable in my opi
 `JDTLS_DAP_VMARGS` JVM arguments for JDTLS DAP.
 
 ### AI
-`NVIM_AI_ACP_ADAPTER` Default AI adapter for CodeCompanion.nvim ACP interactions (e.g., `pi`, `claude_code`).
+`NVIM_AI_ACP_ADAPTER` Default AI adapter for CodeCompanion.nvim ACP interactions (e.g., `oh_my_pi`, `claude_code`).
 
 `NVIM_AI_HTTP_ADAPTER` Default AI adapter for CodeCompanion.nvim HTTP cmd interactions (e.g., `deepseek`).
 
@@ -116,7 +117,7 @@ Some behaviors in this configuration are not common but are reasonable in my opi
 ## Plugins
 
 ### core
-+ [echasnovski/mini.nvim](https://github.com/echasnovski/mini.nvim) - The heart of this configuration.
++ [nvim-mini/mini.nvim](https://github.com/nvim-mini/mini.nvim) - The heart of this configuration.
 
 ### AI
 + [olimorris/codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim)
@@ -167,7 +168,6 @@ Some behaviors in this configuration are not common but are reasonable in my opi
 ### snippet
 
 + [rafamadriz/friendly-snippets](https://github.com/rafamadriz/friendly-snippets)
-+ [chrisgrieser/nvim-scissors](https://github.com/chrisgrieser/nvim-scissors)
 
 ### syntax
 
