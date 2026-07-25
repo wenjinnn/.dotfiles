@@ -3,7 +3,7 @@
 { pkgs, ... }:
 {
   # example = pkgs.callPackage ./example { };
-  bingwallpaper-get = pkgs.callPackage ./bingwallpaper-get { };
+  wallpaper-get = pkgs.callPackage ./wallpaper-get { };
   wallpaper-switch = pkgs.callPackage ./wallpaper-switch { };
   fhs = pkgs.callPackage ./fhs { };
   rofi-screenshot-wayland = pkgs.callPackage ./rofi-screenshot-wayland { };

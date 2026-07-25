@@ -8,14 +8,14 @@
   coreutils-full,
   gnused,
 }:
-runCommand "bingwallpaper-get"
+runCommand "wallpaper-get"
   {
     nativeBuildInputs = [ makeWrapper ];
   }
   ''
     mkdir -p $out/bin
-    dest="$out/bin/bingwallpaper-get"
-    cp ${./bingwallpaper-get.sh} $dest
+    dest="$out/bin/wallpaper-get"
+    cp ${./wallpaper-get.sh} $dest
     chmod +x $dest
     patchShebangs $dest
 

@@ -9,7 +9,7 @@ This is a Nix flake-based NixOS + home-manager configuration repo, based on [nix
 - **`home-manager/`** — User-level configs (`home.nix` for shared, `hosts/<name>.nix` for per-host overrides).
 - **`modules/nixos/`** — Reusable NixOS modules (~30: docker, tailscale, k3s, mihomo, ollama, etc.).
 - **`modules/home-manager/`** — Reusable home-manager modules (~35: neovim, zsh, git, ghostty, mpd, etc.).
-- **`pkgs/`** — Custom Nix packages (bingwallpaper-get, wallpaper-switch, rofi-screenshot-wayland, fhs).
+- **`pkgs/`** — Custom Nix packages (wallpaper-get, wallpaper-switch, rofi-screenshot-wayland, fhs).
 - **`overlays/default.nix`** — Package additions and modifications.
 - **`xdg/config/`** — XDG config files (Neovim config symlinked via `mkOutOfStoreSymlink` for fast iteration).
 
