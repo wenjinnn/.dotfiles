@@ -17,6 +17,7 @@
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
+      accent-color = "slate";
       font-name = "Sans 11";
       monospace-font-name = "Monospace 10";
       document-font-name = "Sans 11";
@@ -27,7 +28,7 @@
   };
   qt = {
     enable = true;
-    platformTheme.name = "qt6ct";
+    platformTheme.name = "qtct";
   };
   home.packages = with pkgs; [
     adwaita-icon-theme
