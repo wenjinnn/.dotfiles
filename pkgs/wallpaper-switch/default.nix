@@ -2,7 +2,7 @@
   runCommand,
   lib,
   makeWrapper,
-  dms-shell,
+  noctalia-shell,
   gawk,
   bash,
   coreutils-full,
@@ -22,7 +22,7 @@ runCommand "wallpaper-switch"
       wrapProgram $dest \
         --prefix PATH : ${
           lib.makeBinPath [
-            dms-shell
+            noctalia-shell
             gawk
             findutils
             coreutils-full

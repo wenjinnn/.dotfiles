@@ -4,6 +4,7 @@
   outputs,
   config,
   pkgs,
+  lib,
   me,
   ...
 }:
@@ -37,17 +38,12 @@
     geoclue2.enable = true;
     # accounts-daemon for those programs who base on login user account info, e.g. gtklock
     accounts-daemon.enable = true;
-    # displayManager.dms-greeter = {
-    #   enable = true;
-    #   configHome = config.users.users.${me.username}.home;
-    # };
   };
   services.greetd = {
     enable = true;
     settings = {
       default_session = {
         command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-session --background matrix --cmd niri-session";
-        user = me.username;
       };
     };
   };
