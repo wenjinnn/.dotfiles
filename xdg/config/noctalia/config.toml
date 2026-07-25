@@ -171,17 +171,7 @@ wallpaper_scheme = "m3-rainbow"
 directory = "/home/wenjin/Pictures/BingWallpaper"
 
     [wallpaper.default]
-    path = "/home/wenjin/Pictures/BingWallpaper/20241105-LencoisMaranhao_ROW0281331597_UHD.jpg"
-
-    [wallpaper.last]
-    path = "/home/wenjin/Pictures/BingWallpaper/20241105-LencoisMaranhao_ROW0281331597_UHD.jpg"
-
-    [wallpaper.monitors.eDP-1]
-    path = "/home/wenjin/Pictures/BingWallpaper/20241105-LencoisMaranhao_ROW0281331597_UHD.jpg"
-
-    [[wallpaper.favorite]]
-    path = "/home/wenjin/Pictures/BingWallpaper/20221029-SealRiver_ZH-CN6334858649_UHD.jpg"
-    theme_mode = "auto"
+    path = "/home/wenjin/.local/share/.wallpaper"
 
 [widget.battery]
 show_label = false
