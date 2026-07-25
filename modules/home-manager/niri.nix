@@ -179,7 +179,7 @@
           };
           "Ctrl+Print" = {
             hotkey-overlay.title = "Screenshot: full screen";
-            action = sh "noctalia msg screenshot-fullscreen monitor";
+            action = sh "noctalia msg screenshot-fullscreen all";
           };
           "Alt+Print" = {
             hotkey-overlay.title = "Screenshot: pick";
