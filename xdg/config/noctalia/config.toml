@@ -14,6 +14,10 @@ order = [ "default" ]
 [battery]
 warning_threshold = 15
 
+[brightness]
+enable_ddcutil = true
+sync_all_monitors = true
+
 [calendar]
 enabled = true
 
@@ -59,8 +63,10 @@ behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
     timeout = 660.0
 
 [keybinds]
-down = [ "Down", "Ctrl+n" ]
-up = [ "Up", "Ctrl+p" ]
+down = [ "Down", "Ctrl+j" ]
+left = [ "Left", "Ctrl+h" ]
+right = [ "Right", "Ctrl+l" ]
+up = [ "Up", "Ctrl+k" ]
 
 [location]
 auto_locate = true
@@ -172,7 +178,29 @@ clipboard_history_max_entries = 500
 clipboard_image_action_command = "satty -f -"
 launch_apps_as_systemd_services = true
 polkit_agent = true
-telemetry_enabled = true
+screen_time_enabled = true
+telemetry_enabled = false
+
+    [shell.launcher.providers.emoji]
+    global = true
+
+    [shell.launcher.providers.session]
+    global = true
+
+    [shell.launcher.providers.wallpaper]
+    global = true
+
+    [shell.launcher.providers.windows]
+    global = true
+
+    [shell.panel]
+    clipboard_placement = "attached"
+    launcher_placement = "attached"
+    launcher_position = "auto"
+
+    [shell.screen_corners]
+    enabled = true
+    size = 24
 
     [shell.screenshot]
     directory = "/home/wenjin/Pictures/Screenshots"
