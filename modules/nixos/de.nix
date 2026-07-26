@@ -50,7 +50,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-session --background matrix --cmd niri-session";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd niri-session";
       };
     };
   };
