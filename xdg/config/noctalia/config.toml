@@ -7,18 +7,7 @@ order = [ "default" ]
     [bar.default]
     background_opacity = 0.9499999787658453
     center = [ "audio_visualizer", "media", "clock", "notifications" ]
-    end = [
-        "tray",
-        "sysmon",
-        "network",
-        "bluetooth",
-        "volume",
-        "input_volume",
-        "brightness",
-        "power_profile",
-        "battery",
-        "control-center"
-    ]
+    end = [ "tray", "sysmon", "network", "bluetooth", "volume", "input_volume", "brightness", "battery", "control-center" ]
     position = "left"
     start = [ "launcher", "clipboard", "caffeine", "wallpaper", "workspaces", "active_window", "privacy" ]
 
@@ -27,6 +16,12 @@ warning_threshold = 15
 
 [calendar]
 enabled = true
+
+    [calendar.account.home_nextcloud]
+    provider = "custom"
+    server_url = "http://nextcloud.ts.wenjin.me/remote.php/dav/"
+    type = "caldav"
+    username = "wenjin"
 
 [desktop_widgets]
 schema_version = 2
@@ -73,12 +68,38 @@ auto_locate = true
 [lockscreen_widgets]
 enabled = true
 schema_version = 2
-widget_order = [ "lockscreen-login-box@eDP-1", "lockscreen-widget-0000000000000001", "lockscreen-widget-0000000000000002" ]
+widget_order = [
+    "lockscreen-login-box@HDMI-A-1",
+    "lockscreen-login-box@eDP-1",
+    "lockscreen-widget-0000000000000001",
+    "lockscreen-widget-0000000000000002"
+]
 
     [lockscreen_widgets.grid]
     cell_size = 16
     major_interval = 4
     visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1"]
+    box_height = 70.0
+    box_width = 400.0
+    cx = 960.0
+    cy = 961.0
+    output = "HDMI-A-1"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_password_hint = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
     box_height = 70.0
@@ -226,7 +247,7 @@ show_label = false
 
 [widget.clock]
 anchor = true
-format = "{:%H:%M:%S}"
+format = "{:%m:%d%n─%n%H:%M:%S}"
 
 [widget.input_volume]
 show_label = false
