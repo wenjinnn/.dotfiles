@@ -476,6 +476,7 @@
       - IP-CIDR,172.1.1.0/24,DIRECT,no-resolve
       - DOMAIN-SUFFIX,wenjin.me,DIRECT
       - DOMAIN-SUFFIX,open-meteo.com,DIRECT
+      - DOMAIN-SUFFIX,noctalia.dev,DIRECT
       # 若需禁用 QUIC 请取消注释 QUIC 两条规则
       # 防止 YouTube 等使用 QUIC 导致速度不佳, 禁用 443 端口 UDP 流量（不包括国内）
       - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,cn))),REJECT # quic
