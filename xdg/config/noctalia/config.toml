@@ -22,6 +22,10 @@ sync_all_monitors = true
 enabled = true
 
     [calendar.account.home_nextcloud]
+    calendars = []
+    credential_source = "file"
+    name = "Nextcloud"
+    password_file = "/home/wenjin/.config/sops-nix/secrets/NEXTCLOUD_USER_PASS"
     provider = "custom"
     server_url = "http://nextcloud.ts.wenjin.me/remote.php/dav/"
     type = "caldav"
