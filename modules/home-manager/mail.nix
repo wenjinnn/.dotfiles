@@ -124,7 +124,7 @@ in
             enable = true;
             collections = [
               "personal"
-              "contact_birthdays"
+              # "contact_birthdays"
             ];
             # conflictResolution = "local wins";
             metadata = [
