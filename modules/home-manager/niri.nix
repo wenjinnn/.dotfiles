@@ -47,8 +47,8 @@
         };
         focus-ring = {
           active.gradient = {
-            from = "#b8bb26";
-            to = "#83a598";
+            from = "#ab4642";
+            to = "#a1b56c";
             angle = 45;
             in' = "oklch longer hue";
           };
@@ -141,11 +141,11 @@
             hotkey-overlay.title = "Pick color to clipboard: niri color pick";
             action = sh "niri msg pick-color | grep -o '#[0-9a-fA-F]\{6\}' | wl-copy";
           };
-          "Mod+Shift+W" = {
+          "Mod+W" = {
             hotkey-overlay.title = "Browser wallpaper";
             action = sh "noctalia msg panel-toggle wallpaper";
           };
-          "Mod+Ctrl+W" = {
+          "Mod+Shift+W" = {
             hotkey-overlay.title = "Random wallpaper";
             action = sh "noctalia msg wallpaper-random";
           };
@@ -157,7 +157,7 @@
             hotkey-overlay.title = "Power cycle";
             action = sh "noctalia msg power-cycle";
           };
-          "Mod+T" = {
+          "Mod+A" = {
             hotkey-overlay = {
               title = "Trigger keyboard pointer: wl-kbptr";
             };
@@ -320,7 +320,7 @@
           "Mod+S".action = toggle-window-floating;
           "Mod+Shift+S".action = switch-focus-between-floating-and-tiling;
 
-          "Mod+W".action = toggle-column-tabbed-display;
+          "Mod+T".action = toggle-column-tabbed-display;
 
           # "Print".action.screentshot-screen = [ ];
 
