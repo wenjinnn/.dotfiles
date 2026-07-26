@@ -21,6 +21,7 @@
       GMAIL_CLIENT_SECRET = { };
       RCLONE_TOKEN = { };
       NEXTCLOUD_WEBDAV_PASS = { };
+      NEXTCLOUD_USER_PASS = { };
       ATUIN_KEY = { };
       DEEPSEEK_API_KEY = { };
       MIMO_API_KEY = { };
