@@ -86,13 +86,13 @@ widget_order = [
 ]
 
     [lockscreen_widgets.grid]
-    cell_size = 16
+    cell_size = 64
     major_interval = 4
     visible = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1"]
-    box_height = 70.0
-    box_width = 400.0
+    box_height = 201.0
+    box_width = 720.0
     cx = 960.0
     cy = 961.0
     output = "HDMI-A-1"
@@ -106,14 +106,16 @@ widget_order = [
         center_password_text = false
         input_opacity = 1.0
         input_radius = 6.0
+        layout = "regular"
         show_caps_lock = true
         show_keyboard_layout = true
         show_login_button = true
         show_password_hint = true
+        show_session_buttons = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
-    box_height = 70.0
-    box_width = 400.0
+    box_height = 213.0
+    box_width = 810.0
     cx = 768.0
     cy = 841.0
     output = "eDP-1"
@@ -127,16 +129,18 @@ widget_order = [
         center_password_text = false
         input_opacity = 1.0
         input_radius = 6.0
+        layout = "regular"
         show_caps_lock = true
         show_keyboard_layout = true
         show_login_button = true
         show_password_hint = true
+        show_session_buttons = true
 
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
-    box_height = 320.0
-    box_width = 1008.0
+    box_height = 480.0
+    box_width = 1424.0
     cx = 768.0
-    cy = 464.0
+    cy = 448.0
     output = "eDP-1"
     rotation = -0.0
     type = "clock"
@@ -150,17 +154,19 @@ widget_order = [
         shadow = false
 
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000002]
-    box_height = 160.0
-    box_width = 352.0
+    box_height = 256.0
+    box_width = 1536.0
     cx = 768.0
     cy = 128.0
     output = "eDP-1"
     rotation = 0.0
-    type = "weather"
+    type = "audio_visualizer"
 
         [lockscreen_widgets.widget.lockscreen-widget-0000000000000002.settings]
         background = false
+        bands = 32
         shadow = false
+        show_when_idle = true
 
 [nightlight]
 enabled = true
@@ -184,6 +190,7 @@ launch_apps_as_systemd_services = true
 polkit_agent = true
 screen_time_enabled = true
 telemetry_enabled = false
+time_format = "{:%H:%M:%S}"
 
     [shell.launcher.providers.emoji]
     global = true
