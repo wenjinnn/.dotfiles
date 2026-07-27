@@ -150,7 +150,7 @@ widget_order = [
         center_text = true
         clock_style = "digital"
         font_family = ""
-        format = "{:%H:%M:%S}"
+        format = "{:%H %M %S}"
         shadow = false
 
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000002]
@@ -190,7 +190,6 @@ launch_apps_as_systemd_services = true
 polkit_agent = true
 screen_time_enabled = true
 telemetry_enabled = false
-time_format = "{:%H:%M:%S}"
 
     [shell.launcher.providers.emoji]
     global = true
@@ -263,7 +262,7 @@ time_format = "{:%H:%M:%S}"
     variant = "destructive"
 
 [theme]
-builtin = "Noctalia"
+builtin = "Eldritch"
 community_palette = "Oxocarbon"
 mode = "dark"
 source = "wallpaper"
