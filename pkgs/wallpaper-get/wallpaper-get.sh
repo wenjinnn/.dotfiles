@@ -89,7 +89,11 @@ fetch_nasa() {
     fi
 
     title=$(echo "${response}" | jq -r '.title' | sed 's/[^a-zA-Z0-9 _-]//g;s/ /-/g')
-    img_url=$(echo "${response}" | jq -r '.hdurl // .url')
+    img_url=$(echo "${response}" | jq -r '.hdurl // empty')
+    if [[ -z "${img_url}" ]]; then
+        echo "NASA APOD today has no HD image, skipping (use WALLPAPER_SOURCE=bing for guaranteed UHD)"
+        return 1
+    fi
     ext="${img_url##*.}"
     ext="${ext%%\?*}"
     [[ "${ext}" =~ ^(jpg|jpeg|png|gif|webp)$ ]] || ext="jpg"
