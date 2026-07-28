@@ -8,7 +8,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   # You can import other NixOS modules here
   imports = [
     outputs.nixosModules.k3s
@@ -35,6 +36,10 @@
   ];
 
   services.ollama.package = pkgs.ollama-rocm;
+
+  virtualisation.docker.rootless.daemon.settings = {
+    insecure-registries = [ "192.168.1.217:8082" ];
+  };
 
   networking = {
     firewall.enable = false;
