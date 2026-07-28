@@ -163,6 +163,12 @@
             };
             action = sh "${wl-kbptr}";
           };
+          "Mod+X" = {
+            hotkey-overlay = {
+              title = "Action: Invoke latest noctalia notification action";
+            };
+            action = sh "noctalia msg panel-toggle notification-invoke-latest";
+          };
           "Mod+E" = {
             hotkey-overlay = {
               title = "Controll: noctalia control center";
