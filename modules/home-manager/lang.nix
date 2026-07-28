@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     (python3.withPackages (p: [
       p.debugpy
+      p.python-docx
     ]))
     gnumake
     cmake
