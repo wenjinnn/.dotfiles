@@ -91,7 +91,7 @@ widget_order = [
     visible = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1"]
-    box_height = 201.0
+    box_height = 229.0
     box_width = 720.0
     cx = 960.0
     cy = 961.0
@@ -110,11 +110,12 @@ widget_order = [
         show_caps_lock = true
         show_keyboard_layout = true
         show_login_button = true
-        show_password_hint = true
+        show_media = true
         show_session_buttons = true
+        show_weather = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
-    box_height = 213.0
+    box_height = 229.0
     box_width = 810.0
     cx = 768.0
     cy = 841.0
@@ -133,8 +134,9 @@ widget_order = [
         show_caps_lock = true
         show_keyboard_layout = true
         show_login_button = true
-        show_password_hint = true
+        show_media = true
         show_session_buttons = true
+        show_weather = true
 
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
     box_height = 480.0
@@ -272,7 +274,7 @@ wallpaper_scheme = "m3-rainbow"
     builtin_ids = [ "gtk3", "gtk4", "kcolorscheme", "niri", "qt" ]
 
 [wallpaper]
-directory = "/home/wenjin/Pictures/BingWallpaper"
+directory = "/home/wenjin/Pictures/Wallpaper"
 
     [wallpaper.default]
     path = "/home/wenjin/.local/share/.wallpaper"
