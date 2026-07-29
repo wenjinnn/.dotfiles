@@ -327,6 +327,7 @@ in
             vision = "xiaomi/mimo-v2.5";
             designer = "xiaomi/mimo-v2.5";
             commit = "xiaomi/mimo-v2.5-pro";
+            task = "xiaomi/mimo-v2.5-pro";
             tiny = "xiaomi/mimo-v2.5";
             advisor = "xiaomi/mimo-v2.5-pro";
           };
@@ -337,6 +338,7 @@ in
           marketplace.autoUpdate = "off";
           symbolPreset = "unicode";
           memory.backend = "local";
+          autolearn.enabled = true;
           # startup.quiet = true;
           startup.setupWizard = false;
         };
