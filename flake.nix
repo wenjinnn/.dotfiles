@@ -79,6 +79,11 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nix-on-droid.url = "github:nix-community/nix-on-droid/release-23.11";
     # follow `main` branch of this repository, considered being stable
@@ -95,6 +100,7 @@
       nixos-hardware,
       nur,
       sops-nix,
+      stylix,
       nix-index-database,
       nixos-raspberrypi,
       disko,
@@ -151,6 +157,7 @@
             nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
             nur.modules.nixos.default
             sops-nix.nixosModules.sops
+            stylix.nixosModules.stylix
             nix-index-database.nixosModules.nix-index
           ];
         };
@@ -161,6 +168,7 @@
             ./nixos/hosts/nixos-wsl
             nur.modules.nixos.default
             sops-nix.nixosModules.sops
+            stylix.nixosModules.stylix
             nix-index-database.nixosModules.nix-index
           ];
         };
@@ -256,6 +264,7 @@
             ./home-manager/home.nix
             ./home-manager/hosts/nixos.nix
             nur.modules.homeManager.default
+            stylix.homeModules.stylix
             nix-index-database.homeModules.nix-index
           ];
         };
@@ -266,6 +275,7 @@
             # > Our main home-manager configuration file <
             ./home-manager/home.nix
             nur.modules.homeManager.default
+            stylix.homeModules.stylix
             nix-index-database.homeModules.nix-index
           ];
         };

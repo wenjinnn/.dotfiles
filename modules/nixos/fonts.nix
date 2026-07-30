@@ -12,6 +12,7 @@
       sarasa-gothic
       nerd-fonts.fira-code
       nerd-fonts.ubuntu
+      nerd-fonts.ubuntu-sans
       nerd-fonts.ubuntu-mono
       nerd-fonts.caskaydia-cove
       source-han-serif-vf-ttf

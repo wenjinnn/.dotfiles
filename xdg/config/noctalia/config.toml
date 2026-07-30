@@ -267,7 +267,7 @@ telemetry_enabled = false
 builtin = "Eldritch"
 community_palette = "Oxocarbon"
 mode = "dark"
-source = "wallpaper"
+source = "custom"
 wallpaper_scheme = "m3-rainbow"
 
     [theme.templates]

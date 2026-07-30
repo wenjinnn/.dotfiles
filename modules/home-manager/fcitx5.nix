@@ -84,8 +84,9 @@
           };
         };
         addons = {
+          # classicui.globalSection.Theme = "stylix";
           classicui.globalSection.PreferTextIcon = "True";
-          classicui.globalSection.UseDarkTheme = "True";
+          # classicui.globalSection.UseDarkTheme = "True";
         };
       };
 
