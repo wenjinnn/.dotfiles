@@ -13,7 +13,6 @@
     fcitx5
     mpv
     ghostty
-    theme
   ];
 
   nixpkgs.config.permittedInsecurePackages = [

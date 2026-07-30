@@ -26,7 +26,7 @@
     noctalia = {
       enable = true;
       systemd.enable = true;
-      settings = ../../xdg/config/noctalia/config.toml;
+      settings = builtins.fromTOML (builtins.readFile ../../xdg/config/noctalia/config.toml);
     };
     # vim like image viewer
     imv.enable = true;
@@ -48,7 +48,7 @@
         };
       };
       nativeMessagingHosts = with pkgs; [
-        pywalfox-native
+        # pywalfox-native
         # Tridactyl native connector
         tridactyl-native
       ];
