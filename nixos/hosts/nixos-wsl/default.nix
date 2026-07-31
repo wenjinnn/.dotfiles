@@ -49,6 +49,9 @@
   # Require password for sudo (nixos-wsl defaults to NOPASSWD)
   security.sudo.wheelNeedsPassword = true;
 
+  # Needed for home-manager dconf activation (stylix, etc.)
+  programs.dconf.enable = true;
+
   wsl = {
     enable = true;
     defaultUser = "${me.username}";
