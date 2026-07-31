@@ -321,15 +321,15 @@ in
         settings = {
           modelRoles = {
             default = "xiaomi/mimo-v2.5-pro";
-            smol = "xiaomi/mimo-v2.5-pro";
-            slow = "xiaomi/mimo-v2.5-pro";
-            plan = "xiaomi/mimo-v2.5-pro";
+            smol = "openai-codex/gpt-5.6-luna";
+            slow = "openai-codex/gpt-5.6-sol";
+            plan = "openai-codex/gpt-5.6-terra";
             vision = "xiaomi/mimo-v2.5";
-            designer = "xiaomi/mimo-v2.5";
+            designer = "openai-codex/gpt-5.6-terra";
             commit = "xiaomi/mimo-v2.5-pro";
-            task = "xiaomi/mimo-v2.5-pro";
+            task = "openai-codex/gpt-5.6-terra";
             tiny = "xiaomi/mimo-v2.5";
-            advisor = "xiaomi/mimo-v2.5-pro";
+            advisor = "openai-codex/gpt-5.6-sol";
           };
           providers.webSearch = "exa";
           theme.dark = "dark-gruvbox";
