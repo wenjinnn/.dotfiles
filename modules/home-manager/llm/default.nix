@@ -332,7 +332,7 @@ in
             advisor = "xiaomi/mimo-v2.5-pro";
           };
           providers.webSearch = "exa";
-          theme.dark = "titanium";
+          theme.dark = "dark-gruvbox";
           display.showTokenUsage = true;
           startup.checkUpdate = false;
           marketplace.autoUpdate = "off";
