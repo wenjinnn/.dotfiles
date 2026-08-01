@@ -84,7 +84,7 @@ in
     mcp-nixos
     claude-agent-acp
     codex-acp
-    pkgs.nur.repos.wenjinnn.pi-acp
+    pi-acp
   ];
   programs =
     let

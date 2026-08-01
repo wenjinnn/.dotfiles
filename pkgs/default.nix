@@ -8,4 +8,5 @@
   fhs = pkgs.callPackage ./fhs { };
   rofi-screenshot-wayland = pkgs.callPackage ./rofi-screenshot-wayland { };
   oh-my-pi = pkgs.callPackage ./oh-my-pi/package.nix { };
+  pi-acp = pkgs.callPackage ./pi-acp/package.nix { };
 }
