@@ -5,7 +5,7 @@ enabled = true
 order = [ "default" ]
 
     [bar.default]
-    background_opacity = 0.9499999787658453
+    background_opacity = 0.99999997764825821
     center = [ "audio_visualizer", "media", "clock", "notifications" ]
     end = [ "tray", "sysmon", "network", "bluetooth", "volume", "input_volume", "brightness", "battery", "control-center" ]
     position = "left"
@@ -43,6 +43,7 @@ widget_order = []
     [desktop_widgets.widget]
 
 [dock]
+background_opacity = 1.0
 enabled = true
 reserve_space = false
 show_dots = true
@@ -139,12 +140,12 @@ widget_order = [
         show_weather = true
 
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
-    box_height = 480.0
-    box_width = 1424.0
+    box_height = 640.0
+    box_width = 1536.0
     cx = 768.0
-    cy = 480.0
+    cy = 448.0
     output = "eDP-1"
-    rotation = -0.0
+    rotation = 0.0
     type = "clock"
 
         [lockscreen_widgets.widget.lockscreen-widget-0000000000000001.settings]
@@ -152,7 +153,7 @@ widget_order = [
         center_text = true
         clock_style = "digital"
         font_family = ""
-        format = "{:%H %M %S}"
+        format = "{:%H %M}"
         shadow = false
 
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000002]
@@ -173,6 +174,12 @@ widget_order = [
 [nightlight]
 enabled = true
 
+[notification]
+background_opacity = 1.0
+
+[osd]
+background_opacity = 1.0
+
 [plugin_settings."h465855hgg/lyrics"]
 double_line = false
 karaoke_enabled = false
@@ -188,6 +195,7 @@ enabled = []
 [shell]
 clipboard_history_max_entries = 500
 clipboard_image_action_command = "satty -f -"
+font_family = "Ubuntu Nerd Font"
 launch_apps_as_systemd_services = true
 polkit_agent = true
 screen_time_enabled = true
@@ -264,14 +272,15 @@ telemetry_enabled = false
     variant = "destructive"
 
 [theme]
-builtin = "Eldritch"
-community_palette = "Oxocarbon"
+builtin = "Kanagawa"
+community_palette = "Kanagawa Dragon"
+custom_palette = "stylix"
 mode = "dark"
 source = "custom"
 wallpaper_scheme = "m3-rainbow"
 
     [theme.templates]
-    builtin_ids = [ "gtk3", "gtk4", "kcolorscheme", "niri", "qt" ]
+    builtin_ids = []
 
 [wallpaper]
 directory = "/home/wenjin/Pictures/Wallpaper"
@@ -287,7 +296,7 @@ show_label = false
 
 [widget.clock]
 anchor = true
-format = "{:%m:%d%n─%n%H:%M:%S}"
+format = "{:%m:%d%n─%n%H:%M}"
 
 [widget.input_volume]
 show_label = false
@@ -302,7 +311,7 @@ show_label = false
 hide_inactive = true
 
 [widget.sysmon]
-show_label = false
+show_value = false
 stat = "cpu_temp"
 
 [widget.volume]

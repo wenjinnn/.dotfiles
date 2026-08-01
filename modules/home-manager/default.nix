@@ -40,4 +40,5 @@
   pi = import ./pi.nix;
   oh-my-pi = import ./oh-my-pi.nix;
   ghostty = import ./ghostty.nix;
+  noctalia = import ./noctalia.nix;
 }
