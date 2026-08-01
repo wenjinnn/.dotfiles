@@ -1,11 +1,11 @@
 {
   "plugins": {
     "SchemaStore.nvim": {
-      "rev": "3d2c297f7152208daf4a382ea7123f9e4ebf9da1",
+      "rev": "9f98b46e1dd61aeb666989c344d76517df63af55",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "codecompanion.nvim": {
-      "rev": "29a27ee961493fc162c4ca04cc12fc2f1b8d4b45",
+      "rev": "2b959b2bf5fdb13e3b333c078ba549996e477b7c",
       "src": "https://github.com/olimorris/codecompanion.nvim"
     },
     "conform.nvim": {
@@ -21,11 +21,11 @@
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "mini.nvim": {
-      "rev": "946ae64e0ee807ae3c41f382f0114b4ed4915b2c",
+      "rev": "8bf5c57bc82dd590932faa41bfde9fd6d40a9433",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "minuet-ai.nvim": {
-      "rev": "449cf6ac16fbc5529f834c10e5fc1be7c75c3ffb",
+      "rev": "e61ace2032473b67706da9e3dae0fe12f3d50758",
       "src": "https://github.com/milanglacier/minuet-ai.nvim"
     },
     "neogen": {
@@ -49,11 +49,11 @@
       "src": "https://codeberg.org/mfussenegger/nvim-lint"
     },
     "nvim-lspconfig": {
-      "rev": "d592c1e6ad9a0a01b3d5ed3f0345d68407167181",
+      "rev": "9ae2b3b63b924b1329724dae76e9d2c5c40b389c",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
-      "rev": "8b3a191c015dd66a92d51a112ed96af0aac13b63",
+      "rev": "0f32dff7f19476629c77467f887b95e5e2d33509",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
@@ -65,7 +65,7 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
     },
     "obsidian.nvim": {
-      "rev": "6156c02ab8b0e4d38ccc7c3776c64b49c3287311",
+      "rev": "5acd67bd55eaeeb28cd7167ca48ba2276655137d",
       "src": "https://github.com/obsidian-nvim/obsidian.nvim"
     },
     "one-small-step-for-vimkind": {
@@ -81,7 +81,7 @@
       "src": "https://git.barrettruth.com/barrettruth/preview.nvim"
     },
     "rainbow-delimiters.nvim": {
-      "rev": "a798325b7f36acc62741d1029930a7b96d4dd4bf",
+      "rev": "012f1480cd9a5fc99fce7678e0a536421a53fc46",
       "src": "https://github.com/hiphish/rainbow-delimiters.nvim"
     },
     "venn.nvim": {

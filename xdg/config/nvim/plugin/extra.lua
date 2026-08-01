@@ -55,7 +55,7 @@ later(function()
 
   -- AI assistant
   vim.pack.add({ gh('olimorris/codecompanion.nvim') })
-  local acp_adapter = os.getenv('NVIM_AI_ACP_ADAPTER') or 'oh_my_pi'
+  local acp_adapter = os.getenv('NVIM_AI_ACP_ADAPTER') or 'pi'
   local http_adapter = os.getenv('NVIM_AI_HTTP_ADAPTER') or 'deepseek'
   local get_api_key = function(key)
     local key_cmd = "sops exec-env $SOPS_SECRETS 'echo -n $%s'"
@@ -109,46 +109,6 @@ later(function()
             },
           }
         end,
-        oh_my_pi = function()
-          local helpers = require('codecompanion.adapters.acp.helpers')
-          return {
-            name = 'oh-my-pi',
-            formatted_name = 'oh-my-pi',
-            type = 'acp',
-            roles = {
-              llm = 'assistant',
-              user = 'user',
-            },
-            commands = {
-              default = {
-                'omp',
-                'acp',
-              },
-            },
-            defaults = {
-              mcpServers = {},
-              timeout = 120000,
-            },
-            parameters = {
-              protocolVersion = 1,
-              clientCapabilities = {
-                fs = { readTextFile = true, writeTextFile = true },
-              },
-              clientInfo = {
-                name = 'CodeCompanion.nvim',
-                version = '1.0.0',
-              },
-            },
-            handlers = {
-              setup = function(self) return true end,
-              auth = function(self) return true end,
-              form_messages = function(self, messages, capabilities)
-                return helpers.form_messages(self, messages, capabilities)
-              end,
-              on_exit = function(self, code) end,
-            },
-          }
-        end,
       },
       http = {
         anthropic = extend_adapter('anthropic', 'ANTHROPIC_API_KEY'),
@@ -176,10 +136,9 @@ later(function()
       inline = { adapter = http_adapter },
       cmd = { adapter = http_adapter },
       cli = {
-        agent = 'oh_my_pi',
+        agent = 'pi',
         agents = {
           pi = { cmd = 'pi', args = {}, description = 'Pi Agent' },
-          oh_my_pi = { cmd = 'omp', args = {}, description = 'Oh My Pi Agent' },
           claude = { cmd = 'claude', args = {}, description = 'Claude Code Agent' },
           opencode = { cmd = 'opencode', args = {}, description = 'Opencode Agent' },
           gemini = { cmd = 'gemini', args = {}, description = 'Gemini Agent' },
