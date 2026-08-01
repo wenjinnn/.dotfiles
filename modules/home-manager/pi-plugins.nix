@@ -137,6 +137,15 @@ in
       "pi-permission-system" = {
         config = {
           yoloMode = false;
+          permission = {
+            "*" = "allow";
+            bash = {
+              "*" = "allow";
+              "rm -rf *" = "ask";
+              "sudo *" = "ask";
+              "git push *" = "ask";
+            };
+          };
         };
       };
     };

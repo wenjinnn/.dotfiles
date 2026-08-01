@@ -325,6 +325,7 @@ in
             "npm:context-mode"
             "npm:pi-goal-list-loop-audit"
             "npm:@narumitw/pi-usage"
+            "npm:@gotgenes/pi-permission-system"
             "npm:@juicesharp/rpiv-ask-user-question"
             "npm:@juicesharp/rpiv-todo"
             "npm:@juicesharp/rpiv-btw"
@@ -362,6 +363,58 @@ in
             path = "${config.home.homeDirectory}/.pi/agent/pi-goal-list-loop-audit.settings.json";
             config = {
               auditorModel = "deepseek/deepseek-v4-pro";
+            };
+          };
+          "pi-permission-system" = {
+            # Danger-command guardrail only: everything is allowed by
+            # default; only destructive/privileged commands prompt or
+            # are blocked. Requires yoloMode = false (yoloMode auto-
+            # approves every ask-state check, i.e. no protection at all).
+            # Semantics (docs/configuration.md): each command in a chain
+            # is matched independently, most restrictive wins
+            # (deny > ask > allow), last matching pattern wins.
+            config = {
+              yoloMode = false;
+              debugLog = false;
+              permissionReviewLog = true;
+              permission = {
+                # Universal fallback: allow every tool by default.
+                "*" = "allow";
+                bash = {
+                  # Catch-all first; specific rules below override it.
+                  "*" = "allow";
+                  # deny — filesystem-level destruction an agent has no
+                  # legitimate reason to run.
+                  "mkfs*" = {
+                    action = "deny";
+                    reason = "Formatting a filesystem is destructive and irreversible";
+                  };
+                  "fdisk *" = {
+                    action = "deny";
+                    reason = "Disk partitioning is destructive and irreversible";
+                  };
+                  "parted *" = {
+                    action = "deny";
+                    reason = "Disk partitioning is destructive and irreversible";
+                  };
+                  "shred *" = {
+                    action = "deny";
+                    reason = "Secure erase is destructive and irreversible";
+                  };
+                  # ask — dangerous but sometimes legitimate; confirm first.
+                  "rm -rf *" = "ask";
+                  "rm -fr *" = "ask";
+                  "git clean -f*" = "ask";
+                  "git reset --hard *" = "ask";
+                  "sudo *" = "ask";
+                  "git push *" = "ask";
+                  "npm publish *" = "ask";
+                  "shutdown *" = "ask";
+                  "reboot *" = "ask";
+                  "poweroff *" = "ask";
+                  "dd *" = "ask";
+                };
+              };
             };
           };
         };
