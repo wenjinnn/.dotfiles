@@ -258,6 +258,12 @@ in
       pi-coding-agent = {
         enable = true;
         package = pkgs.llm-agents.pi;
+        agents = {
+          # Custom pi-subagents agents → ~/.pi/agent/agents/
+          "vision-reader" = {
+            source = ./agents/vision-reader.md;
+          };
+        };
         models = {
           providers = {
             xiaomi-token-plan-cn = {
