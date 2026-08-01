@@ -81,6 +81,7 @@ in
 
   imports = with outputs.homeManagerModules; [
     oh-my-pi
+    pi-plugins
   ];
 
   home.packages = with pkgs; [
@@ -305,7 +306,22 @@ in
             personnal-skill
           ]
           # ++ (lib.attrValues superpowers-skills)
-          ++ (lib.attrValues ponytail-skills);
+          ++ (lib.attrValues ponytail-skills)
+          ++ (lib.attrValues mattpocock-skills);
+        };
+        # Declarative config for individual plugins (pi-web-access, ...).
+        # Managed via modules/home-manager/pi-plugins.nix.
+        # Config lands at $XDG_CONFIG_HOME/pi/web-search.json (copy mode:
+        # re-synced on every rebuild, stays writable between rebuilds).
+        plugins = {
+          "pi-web-access" = {
+            config = {
+              workflow = "auto-summary";
+              # Credential source syntax: only the command is stored in the
+              # nix store, the actual key stays in sops. Resolved per request.
+              geminiApiKey = "!${sops-exec-env} 'echo -n $GEMINI_API_KEY'";
+            };
+          };
         };
         keybindings = {
           "tui.select.up" = [
