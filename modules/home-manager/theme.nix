@@ -10,8 +10,8 @@
     enable = true;
     gtk.enable = true;
     x11.enable = true;
-    # package = pkgs.adwaita-icon-theme;
-    name = "Adwaita";
+    # package = pkgs.bibata-cursors;
+    # name = "Bibata-Modern-Classic";
     size = 24;
   };
   stylix = {
@@ -19,8 +19,8 @@
     polarity = "dark";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
     cursor = {
-      name = "Adwaita";
-      package = pkgs.adwaita-icon-theme;
+      name = "Bibata-Modern-Classic";
+      package = pkgs.bibata-cursors;
       size = 24;
     };
     targets = {
@@ -52,22 +52,21 @@
       };
     };
   };
-  # qt = {
-  #   enable = true;
-  #   platformTheme.name = "qtct";
-  # };
-  # home.packages = with pkgs; [
-  #   adwaita-icon-theme
-  #   hicolor-icon-theme
-  #   adw-gtk3
-  # ];
-  #
-  # gtk = {
-  #   enable = true;
-  #
-  #   iconTheme = {
-  #     package = pkgs.morewaita-icon-theme;
-  #     name = "MoreWaita";
-  #   };
-  # };
+  qt = {
+    enable = true;
+    platformTheme.name = "qtct";
+  };
+  home.packages = with pkgs; [
+    adwaita-icon-theme
+    hicolor-icon-theme
+    adw-gtk3
+  ];
+  gtk = {
+    enable = true;
+
+    iconTheme = {
+      package = pkgs.morewaita-icon-theme;
+      name = "MoreWaita";
+    };
+  };
 }
