@@ -62,10 +62,6 @@
       url = "github:noctalia-dev/noctalia";
       inputs.nixpkgs.follows = "nixpkgs"; # this line is optional, prevents downloading two versions of nixpkgs but disables cache
     };
-    hermes-agent = {
-      url = "github:NousResearch/hermes-agent";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     llm-agents = {
       url = "github:numtide/llm-agents.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -99,7 +95,6 @@
       nix-index-database,
       nixos-raspberrypi,
       disko,
-      hermes-agent,
       ...
     }@inputs:
     let
@@ -206,7 +201,6 @@
                 disko.nixosModules.disko
                 sops-nix.nixosModules.sops
                 nur.modules.nixos.default
-                hermes-agent.nixosModules.default
                 ./nixos/hosts/rpi5/configuration.nix
               ];
             }
