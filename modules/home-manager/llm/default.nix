@@ -308,17 +308,17 @@ in
           enableInstallTelemetry = false;
           packages = [
             "npm:pi-subagents"
-            "npm:@juicesharp/rpiv-ask-user-question"
-            "npm:@juicesharp/rpiv-todo"
-            "npm:@juicesharp/rpiv-btw"
-            "npm:@llblab/pi-telegram"
-            "npm:pi-goal-list-loop-audit"
             "npm:pi-lens"
             "npm:pi-mcp-adapter"
             "npm:pi-web-access"
             "npm:pi-hermes-memory"
             "npm:context-mode"
-            "npm:@tmustier/pi-usage-extension"
+            "npm:pi-goal-list-loop-audit"
+            "npm:@narumitw/pi-usage"
+            "npm:@juicesharp/rpiv-ask-user-question"
+            "npm:@juicesharp/rpiv-todo"
+            "npm:@juicesharp/rpiv-btw"
+            "npm:@llblab/pi-telegram"
           ];
           skills = [
             doc-coauthoring
