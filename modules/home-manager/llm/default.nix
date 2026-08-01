@@ -322,7 +322,6 @@ in
           ];
           skills = [
             doc-coauthoring
-            skill-creator
             xlsx
             docx
             pptx
@@ -341,6 +340,18 @@ in
           "pi-web-access" = {
             config = {
               workflow = "auto-summary";
+            };
+          };
+          "pi-goal-list-loop-audit" = {
+            # Global settings file — NOT the conventional
+            # extensions/<name>/config.json: goal-settings.ts hardcodes
+            # ~/.pi/agent/pi-goal-list-loop-audit.settings.json.
+            # copy mode keeps it writable for /glla runtime edits, and
+            # every rebuild re-syncs the declared values (same trade-off
+            # as pi-web-access).
+            path = "${config.home.homeDirectory}/.pi/agent/pi-goal-list-loop-audit.settings.json";
+            config = {
+              auditorModel = "deepseek/deepseek-v4-pro";
             };
           };
         };
