@@ -47,9 +47,14 @@ let
   superpowers-skills = lib.mapAttrs' (
     name: _: lib.nameValuePair "superpower-${name}" "${obra-superpowers}/skills/${name}"
   ) (lib.filterAttrs (_: type: type == "directory") (builtins.readDir "${obra-superpowers}/skills"));
-  ponytail-skills = lib.mapAttrs' (
-    name: _: lib.nameValuePair "ponytail-${name}" "${dietrichgebert-ponytail}/skills/${name}"
-  ) (lib.filterAttrs (_: type: type == "directory") (builtins.readDir "${dietrichgebert-ponytail}/skills"));
+  ponytail-skills =
+    lib.mapAttrs'
+      (name: _: lib.nameValuePair "ponytail-${name}" "${dietrichgebert-ponytail}/skills/${name}")
+      (
+        lib.filterAttrs (_: type: type == "directory") (
+          builtins.readDir "${dietrichgebert-ponytail}/skills"
+        )
+      );
   caveman-skill = "${juliusbrussee-caveman}/skills";
   # Enumerate mattpocock skills from all categories
   mattpocock-skills = lib.concatMapAttrs (
@@ -75,7 +80,6 @@ in
 {
 
   imports = with outputs.homeManagerModules; [
-    pi
     oh-my-pi
   ];
 
@@ -250,40 +254,25 @@ in
         package = pkgs.llm-agents.gemini-cli;
         enableMcpIntegration = true;
       };
-      pi = {
+      pi-coding-agent = {
         enable = true;
-        auth = {
-          xiaomi-token-plan-cn = {
-            type = "api_key";
-            key = "!${sops-exec-env} 'echo -n $MIMO_API_KEY'";
-          };
-          deepseek = {
-            type = "api_key";
-            key = "!${sops-exec-env} 'echo -n $DEEPSEEK_API_KEY'";
-          };
-          google = {
-            type = "api_key";
-            key = "!${sops-exec-env} 'echo -n $GEMINI_API_KEY'";
-          };
-          openrouter = {
-            type = "api_key";
-            key = "!${sops-exec-env} 'echo -n $OPENROUTER_API_KEY'";
+        package = pkgs.llm-agents.pi;
+        models = {
+          providers = {
+            xiaomi-token-plan-cn = {
+              apiKey = "!${sops-exec-env} 'echo -n $MIMO_API_KEY'";
+            };
+            deepseek = {
+              apiKey = "!${sops-exec-env} 'echo -n $DEEPSEEK_API_KEY'";
+            };
+            google = {
+              apiKey = "!${sops-exec-env} 'echo -n $GEMINI_API_KEY'";
+            };
+            openrouter = {
+              apiKey = "!${sops-exec-env} 'echo -n $OPENROUTER_API_KEY'";
+            };
           };
         };
-        extraPackages = [
-          pkgs.nur.repos.wenjinnn.piPackages."@gotgenes/pi-subagents"
-          pkgs.nur.repos.wenjinnn.piPackages."@gotgenes/pi-permission-system"
-          pkgs.nur.repos.wenjinnn.piPackages."@tmustier/pi-usage-extension"
-          pkgs.nur.repos.wenjinnn.piPackages."@juicesharp/rpiv-ask-user-question"
-          pkgs.nur.repos.wenjinnn.piPackages."@juicesharp/rpiv-btw"
-          pkgs.nur.repos.wenjinnn.piPackages."@llblab/pi-telegram"
-          pkgs.nur.repos.wenjinnn.piPackages."@wenjinnn/pi-mimo-voice"
-          pkgs.nur.repos.wenjinnn.piPackages."pi-lens"
-          pkgs.nur.repos.wenjinnn.piPackages."pi-mcp-adapter"
-          pkgs.nur.repos.wenjinnn.piPackages."pi-web-access"
-          pkgs.nur.repos.wenjinnn.piPackages."pi-hermes-memory"
-          pkgs.nur.repos.wenjinnn.piPackages."context-mode"
-        ];
         settings = {
           defaultProvider = "xiaomi-token-plan-cn";
           defaultModel = "mimo-v2.5-pro";
@@ -291,6 +280,21 @@ in
           # quietStartup = true;
           theme = "dark";
           enableInstallTelemetry = false;
+          packages = [
+            "npm:pi-subagents"
+            "npm:pi-intercom"
+            "npm:@juicesharp/rpiv-ask-user-question"
+            "npm:@juicesharp/rpiv-todo"
+            "npm:@juicesharp/rpiv-btw"
+            "npm:@llblab/pi-telegram"
+            "npm:pi-goal-list-loop-audit"
+            "npm:pi-lens"
+            "npm:pi-mcp-adapter"
+            "npm:pi-web-access"
+            "npm:pi-hermes-memory"
+            "npm:context-mode"
+            "npm:@tmustier/pi-usage-extension"
+          ];
           skills = [
             doc-coauthoring
             skill-creator
