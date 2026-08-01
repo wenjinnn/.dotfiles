@@ -11,6 +11,7 @@
 #                                 (runtime resolution in the plugin's utils.ts)
 #   - pi-permission-system     -> <configDir>/extensions/pi-permission-system/config.json
 #   - any other package        -> <configDir>/extensions/<name>/config.json
+#   - pi-subagents agents      -> <configDir>/agents/<name>.md
 #
 # This module lets you declare those files in Nix. Because most plugins
 # *write* their own config at runtime (settings modals, /web-search
@@ -19,6 +20,11 @@
 # stays writable, and the next `home-manager switch` re-syncs it to the
 # declared values. Use `mode = "symlink"` only for plugins whose config is
 # strictly read-only.
+#
+# pi-subagents agent files (`agents`) are markdown (frontmatter + system
+# prompt), so the default is inverted: `mode = "symlink"` (read-only,
+# fully declarative) since agents are static by nature; use `copy` if some
+# tool rewrites the live file at runtime.
 {
   config,
   lib,
@@ -29,6 +35,7 @@ let
   inherit (lib) mkIf mkOption types;
   cfg = config.programs.pi-coding-agent;
   plugins = cfg.plugins;
+  agents = cfg.agents;
   jsonFormat = pkgs.formats.json { };
 
   upstreamConfigDir = "${config.home.homeDirectory}/.pi/agent";
@@ -37,13 +44,7 @@ let
   #   PI_CODING_AGENT_DIR > $XDG_CONFIG_HOME/pi > ~/.pi
   # PI_CODING_AGENT_DIR is only exported by the upstream module when
   # configDir differs from the upstream default.
-  piWebAccessPath =
-    if cfg.configDir or upstreamConfigDir != upstreamConfigDir then
-      "${cfg.configDir}/web-search.json"
-    else if config.xdg.enable or false then
-      "${config.xdg.configHome}/pi/web-search.json"
-    else
-      "${config.home.homeDirectory}/.pi/web-search.json";
+  piWebAccessPath = "${cfg.configDir}/web-search.json";
 
   pluginPath =
     name: p:
@@ -56,8 +57,16 @@ let
 
   generate = name: p: jsonFormat.generate "pi-plugin-${name}" p.config;
 
+  # Store path for an agent's markdown content; `source` wins over `text`.
+  agentSource =
+    name: a: if a.source != null then a.source else pkgs.writeText "pi-agent-${name}.md" a.text;
+
+  agentPath = name: "${cfg.configDir or upstreamConfigDir}/agents/${name}.md";
+
   symlinkPlugins = lib.filterAttrs (_: p: p.mode == "symlink") plugins;
   copyPlugins = lib.filterAttrs (_: p: p.mode == "copy") plugins;
+  symlinkAgents = lib.filterAttrs (_: a: a.mode == "symlink") agents;
+  copyAgents = lib.filterAttrs (_: a: a.mode == "copy") agents;
 in
 {
   options.programs.pi-coding-agent.plugins = mkOption {
@@ -138,16 +147,83 @@ in
     '';
   };
 
-  config = mkIf (cfg.enable or false) {
-    home.file = mkIf (symlinkPlugins != { }) (
-      lib.mapAttrs' (
-        name: p:
-        lib.nameValuePair "pi-plugin-${name}" {
-          target = pluginPath name p;
-          source = generate name p;
-        }
-      ) symlinkPlugins
+  options.programs.pi-coding-agent.agents = mkOption {
+    type = types.attrsOf (
+      types.submodule {
+        options = {
+          source = mkOption {
+            type = types.nullOr types.path;
+            default = null;
+            description = ''
+              Path to the agent's markdown file (YAML frontmatter + system
+              prompt). Preferred over `text` for maintainability.
+            '';
+          };
+
+          text = mkOption {
+            type = types.str;
+            default = "";
+            description = ''
+              Inline agent markdown content when no `source` is given.
+            '';
+          };
+
+          mode = mkOption {
+            type = types.enum [
+              "copy"
+              "symlink"
+            ];
+            default = "symlink";
+            description = ''
+              - `symlink` (default): link the agent file directly into the
+                nix store (read-only). Fully declarative; agents are
+                static by nature.
+
+              - `copy`: on every home-manager activation the declared
+                content is copied over the live file, which stays
+                writable for tools that rewrite the file at runtime
+                (e.g. pi-goal-list-loop-audit).
+            '';
+          };
+        };
+      }
     );
+    default = { };
+    example = {
+      "vision-reader" = {
+        source = ./agents/vision-reader.md;
+      };
+    };
+    description = ''
+      Declarative pi-subagents agent files, written to
+      `<configDir>/agents/<name>.md` (user-scope discovery). Each
+      attribute name is the agent id; the file must carry `name` and
+      `description` in its frontmatter for pi-subagents to load it.
+    '';
+  };
+
+  config = mkIf (cfg.enable or false) {
+    home.file = lib.mkMerge [
+      (mkIf (symlinkPlugins != { }) (
+        lib.mapAttrs' (
+          name: p:
+          lib.nameValuePair "pi-plugin-${name}" {
+            target = pluginPath name p;
+            source = generate name p;
+          }
+        ) symlinkPlugins
+      ))
+
+      (mkIf (symlinkAgents != { }) (
+        lib.mapAttrs' (
+          name: a:
+          lib.nameValuePair "pi-agent-${name}" {
+            target = agentPath name;
+            source = agentSource name a;
+          }
+        ) symlinkAgents
+      ))
+    ];
 
     home.activation.piPluginConfigs = mkIf (copyPlugins != { }) (
       lib.hm.dag.entryAfter [ "linkGeneration" ] (
@@ -162,6 +238,22 @@ in
             cp -f '${generate name p}' '${path}'
           ''
         ) (lib.attrNames copyPlugins)
+      )
+    );
+
+    home.activation.piAgentConfigs = mkIf (copyAgents != { }) (
+      lib.hm.dag.entryAfter [ "linkGeneration" ] (
+        lib.concatMapStringsSep "\n" (
+          name:
+          let
+            a = copyAgents.${name};
+            path = agentPath name;
+          in
+          ''
+            mkdir -p "$(dirname '${path}')"
+            cp -f '${agentSource name a}' '${path}'
+          ''
+        ) (lib.attrNames copyAgents)
       )
     );
   };
