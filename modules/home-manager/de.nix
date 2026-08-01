@@ -10,10 +10,11 @@
   ...
 }:
 {
-  imports = [
-    inputs.noctalia.homeModules.default
-    outputs.homeManagerModules.niri
-    outputs.homeManagerModules.wallpaper
+  imports = with outputs.homeManagerModules; [
+    noctalia
+    niri
+    wallpaper
+    kdeconnect
   ];
 
   services = {
@@ -23,11 +24,6 @@
     udiskie.enable = true;
   };
   programs = {
-    noctalia = {
-      enable = true;
-      systemd.enable = true;
-      settings = builtins.fromTOML (builtins.readFile ../../xdg/config/noctalia/config.toml);
-    };
     # vim like image viewer
     imv.enable = true;
     # vim like pdf viewer
