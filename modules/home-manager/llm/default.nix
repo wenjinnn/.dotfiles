@@ -281,15 +281,33 @@ in
           };
         };
         settings = {
-          defaultProvider = "xiaomi-token-plan-cn";
-          defaultModel = "mimo-v2.5-pro";
+          defaultProvider = "deepseek";
+          defaultModel = "deepseek-v4-flash";
           defaultThinkingLevel = "high";
-          # quietStartup = true;
+          quietStartup = true;
+          subagents = {
+            agentOverrides = {
+              oracle = {
+                model = "openai-codex/gpt-5.6-sol";
+                thinking = "high";
+                fallbackModels = [ "deepseek/deepseek-v4-pro" ];
+              };
+              planner = {
+                model = "openai-codex/gpt-5.6-sol";
+                thinking = "high";
+                fallbackModels = [ "deepseek/deepseek-v4-pro" ];
+              };
+              researcher = {
+                model = "openai-codex/gpt-5.6-sol";
+                thinking = "high";
+                fallbackModels = [ "deepseek/deepseek-v4-pro" ];
+              };
+            };
+          };
           theme = "dark";
           enableInstallTelemetry = false;
           packages = [
             "npm:pi-subagents"
-            "npm:pi-intercom"
             "npm:@juicesharp/rpiv-ask-user-question"
             "npm:@juicesharp/rpiv-todo"
             "npm:@juicesharp/rpiv-btw"
@@ -323,9 +341,6 @@ in
           "pi-web-access" = {
             config = {
               workflow = "auto-summary";
-              # Credential source syntax: only the command is stored in the
-              # nix store, the actual key stays in sops. Resolved per request.
-              geminiApiKey = "!${sops-exec-env} 'echo -n $GEMINI_API_KEY'";
             };
           };
         };
