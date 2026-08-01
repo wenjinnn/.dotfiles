@@ -1,0 +1,246 @@
+input {
+    keyboard {
+        xkb {
+            layout ""
+            model ""
+            rules ""
+            variant ""
+        }
+        repeat-delay 600
+        repeat-rate 25
+        track-layout "global"
+        numlock
+    }
+    touchpad {
+        tap
+        natural-scroll
+    }
+}
+output "eDP-1" {
+    transform "normal"
+    variable-refresh-rate on-demand=false
+}
+screenshot-path "~/Pictures/Screenshots/Screenshot-%Y-%m-%d_%H-%M-%S.png"
+prefer-no-csd
+layout {
+    gaps 8
+    struts {
+        left 1
+        right 2
+        top -4
+        bottom -4
+    }
+    focus-ring {
+        width 2
+        active-gradient angle=45 from="#ab4642" in="oklch longer hue" relative-to="window" to="#a1b56c"
+    }
+    border { off; }
+    shadow {
+        on
+        offset x=0.000000 y=5.000000
+        softness 30.000000
+        spread 5.000000
+        draw-behind-window false
+        color "#00000070"
+    }
+    default-column-width { proportion 0.500000; }
+    preset-column-widths {
+        proportion 0.333330
+        proportion 0.500000
+        proportion 0.666670
+    }
+    center-focused-column "never"
+}
+cursor {
+    xcursor-theme "default"
+    xcursor-size 24
+}
+hotkey-overlay { skip-at-startup; }
+binds {
+    Alt+Print hotkey-overlay-title="Screenshot: pick" { spawn "sh" "-c" "noctalia msg screenshot-fullscreen pick"; }
+    Ctrl+Alt+Delete { quit; }
+    Ctrl+Print hotkey-overlay-title="Screenshot: full screen" { spawn "sh" "-c" "noctalia msg screenshot-fullscreen all"; }
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+A hotkey-overlay-title="Trigger keyboard pointer: wl-kbptr" { spawn "sh" "-c" "wl-kbptr -o modes=floating,click -o mode_floating.source=detect"; }
+    Mod+B hotkey-overlay-title="Toggle wayscriber" { spawn "sh" "-c" "wayscriber -a"; }
+    Mod+BracketLeft { consume-or-expel-window-left; }
+    Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+C { center-column; }
+    Mod+Comma { consume-window-into-column; }
+    Mod+Ctrl+C { center-visible-columns; }
+    Mod+Ctrl+Down { focus-monitor-down; }
+    Mod+Ctrl+End { move-column-to-last; }
+    Mod+Ctrl+F { expand-column-to-available-width; }
+    Mod+Ctrl+H { focus-monitor-left; }
+    Mod+Ctrl+Home { move-column-to-first; }
+    Mod+Ctrl+I { move-column-to-workspace-up; }
+    Mod+Ctrl+J { focus-monitor-down; }
+    Mod+Ctrl+K { focus-monitor-up; }
+    Mod+Ctrl+L { focus-monitor-right; }
+    Mod+Ctrl+Left { focus-monitor-left; }
+    Mod+Ctrl+O { move-column-to-workspace-down; }
+    Mod+Ctrl+P hotkey-overlay-title="Pause player: noctalia media toggle" { spawn "sh" "-c" "noctalia msg media toggle"; }
+    "Mod+Ctrl+Page_Down" { move-column-to-workspace-down; }
+    "Mod+Ctrl+Page_Up" { move-column-to-workspace-up; }
+    Mod+Ctrl+R { reset-window-height; }
+    Mod+Ctrl+Right { focus-monitor-right; }
+    Mod+Ctrl+S hotkey-overlay-title="Toggle noctalia settings" { spawn "sh" "-c" "noctalia msg settings-toggle"; }
+    Mod+Ctrl+Shift+F { toggle-windowed-fullscreen; }
+    Mod+Ctrl+Shift+P hotkey-overlay-title="Power menu: noctalia powermenu" { spawn "sh" "-c" "noctalia msg panel-toggle session"; }
+    Mod+Ctrl+Shift+WheelScrollLeft { move-column-left; }
+    Mod+Ctrl+Shift+WheelScrollRight { move-column-right; }
+    Mod+Ctrl+Up { focus-monitor-up; }
+    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Ctrl+WheelScrollLeft { move-column-left; }
+    Mod+Ctrl+WheelScrollRight { move-column-right; }
+    Mod+Ctrl+WheelScrollUp cooldown-ms=150 { move-column-to-workspace-up; }
+    Mod+D hotkey-overlay-title="Run an Application: noctalia launcher" { spawn "sh" "-c" "noctalia msg panel-toggle launcher"; }
+    Mod+Delete { clear-dynamic-cast-target; }
+    Mod+Down { focus-window-down; }
+    Mod+E hotkey-overlay-title="Controll: noctalia control center" { spawn "sh" "-c" "noctalia msg panel-toggle control-center"; }
+    Mod+End { focus-column-last; }
+    Mod+Equal { set-column-width "+5%"; }
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+    Mod+F { maximize-column; }
+    Mod+H { focus-column-left; }
+    Mod+Home { focus-column-first; }
+    Mod+I { focus-workspace-up; }
+    Mod+Insert { set-dynamic-cast-window; }
+    Mod+J { focus-window-down; }
+    Mod+K { focus-window-up; }
+    Mod+L { focus-column-right; }
+    Mod+Left { focus-column-left; }
+    Mod+Minus { set-column-width "-5%"; }
+    Mod+O { focus-workspace-down; }
+    Mod+P hotkey-overlay-title="Power cycle" { spawn "sh" "-c" "noctalia msg power-cycle"; }
+    "Mod+Page_Down" { focus-workspace-down; }
+    "Mod+Page_Up" { focus-workspace-up; }
+    Mod+Period { expel-window-from-column; }
+    Mod+Q { close-window; }
+    Mod+R { switch-preset-column-width; }
+    Mod+Return hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
+    Mod+Right { focus-column-right; }
+    Mod+S { toggle-window-floating; }
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
+    Mod+Shift+C hotkey-overlay-title="Pick color to clipboard: niri color pick" { spawn "sh" "-c" "niri msg pick-color | grep -o '#[0-9a-fA-F]{6}' | wl-copy"; }
+    Mod+Shift+Ctrl+Down { move-column-to-monitor-down; }
+    Mod+Shift+Ctrl+H { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+J { move-column-to-monitor-down; }
+    Mod+Shift+Ctrl+K { move-column-to-monitor-up; }
+    Mod+Shift+Ctrl+L { move-column-to-monitor-right; }
+    Mod+Shift+Ctrl+Left { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
+    Mod+Shift+Ctrl+Up { move-column-to-monitor-up; }
+    Mod+Shift+Down { move-window-down; }
+    Mod+Shift+E { quit; }
+    Mod+Shift+Equal { set-window-height "+5%"; }
+    Mod+Shift+F { fullscreen-window; }
+    Mod+Shift+H { move-column-left; }
+    Mod+Shift+I { move-workspace-up; }
+    Mod+Shift+Insert { set-dynamic-cast-monitor; }
+    Mod+Shift+J { move-window-down; }
+    Mod+Shift+K { move-window-up; }
+    Mod+Shift+L { move-column-right; }
+    Mod+Shift+Left { move-column-left; }
+    Mod+Shift+Minus { set-window-height "-5%"; }
+    Mod+Shift+N hotkey-overlay-title="Next player: noctalia media next" { spawn "sh" "-c" "noctalia msg media next"; }
+    Mod+Shift+O { move-workspace-down; }
+    Mod+Shift+P hotkey-overlay-title="Previous player: noctalia media previous" { spawn "sh" "-c" "noctalia msg media previous"; }
+    "Mod+Shift+Page_Down" { move-workspace-down; }
+    "Mod+Shift+Page_Up" { move-workspace-up; }
+    Mod+Shift+R { switch-preset-window-height; }
+    Mod+Shift+Right { move-column-right; }
+    Mod+Shift+S { switch-focus-between-floating-and-tiling; }
+    Mod+Shift+Slash { show-hotkey-overlay; }
+    Mod+Shift+Up { move-window-up; }
+    Mod+Shift+W hotkey-overlay-title="Random wallpaper" { spawn "sh" "-c" "noctalia msg wallpaper-random"; }
+    Mod+Shift+WheelScrollLeft { focus-column-left; }
+    Mod+Shift+WheelScrollRight { focus-column-right; }
+    Mod+T { toggle-column-tabbed-display; }
+    Mod+Tab repeat=false { toggle-overview; }
+    Mod+Up { focus-window-up; }
+    Mod+V hotkey-overlay-title="List clipboard history: noctalia clipboard" { spawn "sh" "-c" "noctalia msg panel-toggle clipboard"; }
+    Mod+W hotkey-overlay-title="Browser wallpaper" { spawn "sh" "-c" "noctalia msg panel-toggle wallpaper"; }
+    Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollLeft { focus-column-left; }
+    Mod+WheelScrollRight { focus-column-right; }
+    Mod+WheelScrollUp cooldown-ms=150 { focus-workspace-up; }
+    Mod+X hotkey-overlay-title="Action: Invoke latest noctalia notification action" { spawn "sh" "-c" "noctalia msg panel-toggle notification-invoke-latest"; }
+    Print hotkey-overlay-title="Screenshot: region" { spawn "sh" "-c" "noctalia msg screenshot-region"; }
+    Super+Alt+L allow-when-locked=true hotkey-overlay-title="Lock the Screen: noctalia lock" { spawn "sh" "-c" "noctalia msg session lock"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "sh" "-c" "noctalia msg volume-down 5"; }
+    XF86AudioMicMute allow-when-locked=true { spawn "sh" "-c" "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    XF86AudioMute allow-when-locked=true { spawn "sh" "-c" "noctalia msg volume-mute"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "sh" "-c" "noctalia msg volume-up 5"; }
+    XF86MonBrightnessDown { spawn "sh" "-c" "noctalia msg brightness-down 5 "; }
+    XF86MonBrightnessUp { spawn "sh" "-c" "noctalia msg brightness-up 5"; }
+}
+spawn-at-startup "bash" "-c" "echo 'Xft.dpi: 192' | xrdb -merge"
+window-rule {
+    draw-border-with-background false
+    geometry-corner-radius 12.000000 12.000000 12.000000 12.000000
+    clip-to-geometry true
+}
+window-rule { match app-id="^firefox$" title="Private Browsing"; }
+window-rule {
+    match app-id="^signal$"
+    block-out-from "screencast"
+}
+window-rule {
+    match app-id="steam" title="r#\"^notificationtoasts_\\d+_desktop$\"#"
+    match app-id="wemeetapp" is-floating=true title="wemeetapp"
+    match app-id="wemeetapp" title="EmojiFloatWnd"
+    open-floating true
+    open-focused false
+    default-floating-position relative-to="bottom-right" x=50 y=50
+}
+window-rule {
+    match app-id="wps" title="wps"
+    open-floating true
+}
+window-rule {
+    match app-id="^xwaylandvideobridge$"
+    match app-id="wemeetapp" is-floating=false title="wemeetapp"
+    open-floating true
+    focus-ring { off; }
+    opacity 0.000000
+    min-width 1
+    max-width 1
+    min-height 1
+    max-height 1
+    default-floating-position relative-to="bottom-right" x=0 y=0
+    tiled-state true
+}
+layer-rule {
+    match namespace="^notification$"
+    match namespace="^noctalia-notification$"
+    match namespace="^noctalia-clipboard$"
+    block-out-from "screencast"
+}
+layer-rule {
+    match namespace="^noctalia-backdrop"
+    place-within-backdrop true
+}
+gestures { hot-corners { off; }; }
+xwayland-satellite { path "xwayland-satellite"; }
+debug {
+    dbus-interfaces-in-non-session-instances
+    honor-xdg-activation-with-invalid-serial
+    render-drm-device "/dev/dri/renderD128"
+}
