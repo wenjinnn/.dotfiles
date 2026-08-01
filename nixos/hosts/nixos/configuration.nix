@@ -92,7 +92,7 @@ in
   powerManagement.powertop.enable = true;
   services = {
     printing.enable = true;
-    flatpak.enable = true;
+    # flatpak.enable = true;
     thermald.enable = true;
     thinkfan.enable = true;
     power-profiles-daemon.enable = true;
