@@ -10,7 +10,7 @@ state_file="${state_dir}/source-index"
 NASA_API_KEY="${NASA_API_KEY:-DEMO_KEY}"
 
 # Source rotation
-sources=(bing nasa yande wallhaven)
+sources=(bing nasa)
 mkdir -p "${state_dir}"
 index=$(cat "${state_file}" 2>/dev/null || echo 0)
 index=$(( index % ${#sources[@]} ))

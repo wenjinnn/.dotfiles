@@ -8,7 +8,7 @@
     services = {
       wallpaper-get = {
         Unit = {
-          Description = "Download wallpaper (rotating: bing/nasa/yande/wallhaven)";
+          Description = "Download wallpaper (rotating: bing/nasa)";
           After = "graphical-session.target";
           Conflicts = "wallpaper-random.service";
         };
