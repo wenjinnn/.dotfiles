@@ -10,9 +10,6 @@
 }:
 {
 
-  imports = with outputs.nixosModules; [
-    niri
-  ];
   programs = {
     # for camera support in file managers
     gphoto2.enable = true;

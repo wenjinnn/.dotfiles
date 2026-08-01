@@ -24,6 +24,20 @@
           gst-plugins-bad
         ]);
     });
+    niri = prev.niri.overrideAttrs (
+      finalAttrs: prevAttrs: {
+        src = final.fetchFromGitHub {
+          inherit (prevAttrs.src) repo;
+          owner = "wrvsrx";
+          # support-shm-sharing branch
+          # update this with the tag you want to use, if ≠'version'
+          rev = "2ab59b90d55afbbe362a63e2a061afe4b524d8c4";
+          # update this with the appropriate hash for your tag
+          hash = "sha256-Af2T/DggorxzIYcRg1BzzrarRc4OHxTdu7Zjj/3eSkA";
+        };
+
+      }
+    );
     tuigreet = prev.tuigreet.overrideAttrs (
       finalAttrs: prevAttrs: {
         version = "0.11.0";

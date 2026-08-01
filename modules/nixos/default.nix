@@ -25,7 +25,6 @@
   headscale = import ./headscale.nix;
   tailscale = import ./tailscale.nix;
   rustdesk-server = import ./rustdesk-server.nix;
-  niri = import ./niri.nix;
   de = import ./de.nix;
   k3s = import ./k3s;
   cachix = import ./cachix.nix;
