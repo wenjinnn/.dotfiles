@@ -69,17 +69,6 @@
   sops.secrets.MATRIX_REGISTRATION_TOKEN.owner = "matrix-synapse";
   sops.secrets.MATRIX_REGISTRATION_TOKEN.group = "matrix-synapse";
   services = {
-    hermes-agent = {
-      enable = true;
-      settings.model.default = "xiaomi/mimo-v2.5";
-      environmentFiles = [ config.sops.templates."hermes-env.yaml".path ];
-      extraDependencyGroups = [ "messaging" ];
-      extraPackages = with pkgs.python3Packages; [
-        aiohttp
-        cryptography
-      ];
-      addToSystemPackages = true;
-    };
     watchdogd = {
       enable = true;
       settings = {
