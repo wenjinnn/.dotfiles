@@ -53,10 +53,6 @@
           Behavior = {
             ActiveByDefault = false;
           };
-          Hotkey = {
-            EnumerateWithTriggerKeys = true;
-            EnumerateSkipFirst = false;
-          };
           "Hotkey/TriggerKeys" = {
             "0" = "Super+space";
           };
