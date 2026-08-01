@@ -257,7 +257,17 @@ in
       };
       pi-coding-agent = {
         enable = true;
-        package = pkgs.llm-agents.pi;
+        # pi-lens launches the Java LSP server via $JDTLS_PATH and reads the
+        # lombok jar from $PI_LENS_LOMBOK_JAR. Inject both only into pi's own
+        # process environment (not the global shell env) by wrapping the pi
+        # binary: JDTLS_PATH -> jdtls-pi-lens wrapper (no metadata files at
+        # project root, shares nvim's jdtls cache, see pkgs/jdtls-pi-lens),
+        # PI_LENS_LOMBOK_JAR -> the nixpkgs lombok jar used by nvim too.
+        package = pkgs.writeShellScriptBin "pi" ''
+          export JDTLS_PATH="${pkgs.jdtls-pi-lens}/bin/jdtls-pi-lens"
+          export PI_LENS_LOMBOK_JAR="${pkgs.lombok}/share/java/lombok.jar"
+          exec "${pkgs.llm-agents.pi}/bin/pi" "$@"
+        '';
         agents = {
           # Custom pi-subagents agents → ~/.pi/agent/agents/
           "vision-reader" = {
