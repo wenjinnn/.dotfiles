@@ -25,7 +25,7 @@
     firewall
     tailscale
     cachix
-    docker
+    podman
     ../../users.nix
     ./disko-usb-btrfs.nix
     ./pi5-configtxt.nix
@@ -68,6 +68,17 @@
   sops.secrets.MATRIX_REGISTRATION_TOKEN = { };
   sops.secrets.MATRIX_REGISTRATION_TOKEN.owner = "matrix-synapse";
   sops.secrets.MATRIX_REGISTRATION_TOKEN.group = "matrix-synapse";
+  sops.secrets.RPI5_PASS = { };
+  sops.templates."iwd-ap" = {
+    content = ''
+      [Security]
+      Passphrase=${config.sops.placeholder.RPI5_PASS}
+
+      [IPv4]
+      Address=192.168.222.1
+      Netmask=255.255.255.0
+    '';
+  };
   services = {
     watchdogd = {
       enable = true;
@@ -341,6 +352,9 @@
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;
     "net.ipv6.conf.all.forwarding" = 1;
+    # Fix "Too many open files" during nix builds on RPi5
+    "fs.file-max" = 524288;
+    "fs.nr_open" = 524288;
   };
   boot.kernelParams = [
     "cgroup_enable=memory"
@@ -388,6 +402,8 @@
         options = "--delete-older-than 7d";
       };
     };
+  # Fix "Too many open files" during nix builds (store has 24k+ entries)
+  systemd.services.nix-daemon.serviceConfig.LimitNOFILE = lib.mkForce 1048576;
   programs = {
     gnupg.agent = {
       enable = true;
@@ -518,34 +534,21 @@
       ];
     };
   };
-  services.hostapd = {
+  # iwd as AP — avoids brcmfmac P2P action frame crash (raspberrypi/linux#7033)
+  networking.wireless.iwd = {
     enable = true;
-    radios = {
-      # Simple 2.4GHz AP
-      wlan0 = {
-        countryCode = "CN";
-        networks.wlan0 = {
-          ssid = "rpi5nixos";
-          authentication.saePasswords = [ { passwordFile = config.sops.secrets.RPI5_PASS.path; } ];
-        };
-      };
-
+    settings = {
+      General.CountryCode = "CN";
+      Network.EnableIPv6 = true;
+      General.EnableNetworkConfiguration = false;
     };
   };
-
-  # Use iwd instead of wpa_supplicant. It has a user friendly CLI
-  networking.wireless.interfaces = [ "wlan0" ];
-  # networking.wireless.enable = false;
-  # networking.wireless.iwd = {
-  #   enable = true;
-  #   settings = {
-  #     Network = {
-  #       EnableIPv6 = true;
-  #       RoutePriorityOffset = 300;
-  #     };
-  #     Settings.AutoConnect = true;
-  #   };
-  # };
+  # Place sops-managed AP config into iwd's state dir via bind mount
+  fileSystems."/var/lib/iwd/rpi5nixos.ap" = {
+    device = config.sops.templates."iwd-ap".path;
+    options = [ "bind" ];
+  };
+  systemd.tmpfiles.rules = [ "d /var/lib/iwd 0755 root root -" ];
 
   services.journald.extraConfig = ''
     SystemMaxUse=100M
