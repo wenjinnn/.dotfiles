@@ -205,6 +205,9 @@ in
     SUDO_ASKPASS = "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
     MERMAID_FILTER_FORMAT = "svg";
     MERMAID_FILTER_THEME = "neutral";
+    # XWayland cursor: set to logical_size × scale_factor (e.g. 24×2=48)
+    XCURSOR_SIZE = "60";
+    XCURSOR_THEME = "Bibata-Modern-Classic";
     MERMAID_FILTER_BACKGROUND = "black";
   };
   # XDG base directory settings
