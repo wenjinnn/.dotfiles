@@ -10,6 +10,9 @@
       window-padding-y = "0,0";
       window-padding-x = "0,0";
       window-padding-balance = true;
+      keybind = [
+        "alt+backspace=text:\\x1b\\x7f"
+      ];
     };
   };
 }
