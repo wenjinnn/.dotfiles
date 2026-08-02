@@ -76,6 +76,43 @@ let
     sha256 = "sha256-jlo28awHcmoNN42tmit0Mif9WyrkC2OmjJgRDlLpVCo=";
   };
   personnal-skill = ./skills;
+  # Copy a skill dir and add `disable-model-invocation: true` to its SKILL.md
+  # frontmatter: the skill stays out of the system prompt (model won't
+  # auto-trigger it) but remains invocable via /skill:name.
+  slashOnlySkill =
+    skillDir:
+    pkgs.runCommand "slash-only-${builtins.baseNameOf skillDir}" { } ''
+      mkdir -p $out
+      cp -r ${skillDir}/. $out/
+      chmod +w $out/SKILL.md
+      # insert the flag right after the frontmatter opening line
+      sed -i '2i disable-model-invocation: true' $out/SKILL.md
+    '';
+  # mattpocock skills we keep auto-invocable (realtime), the rest go slash-only.
+  # ask-matt/implement are already disable-model-invocation upstream — whether
+  # listed here or not they stay slash-only, so they're omitted for clarity.
+  mattRealtime = [
+    "code-review"
+    "diagnosing-bugs"
+    "research"
+    "tdd"
+    "resolving-merge-conflicts"
+  ];
+  # mattpocock skills the upstream repo marks as deprecated: drop entirely
+  mattDeprecated = [
+    "design-an-interface"
+    "qa"
+    "request-refactor-plan"
+    "ubiquitous-language"
+  ];
+  mattName = key: lib.strings.removePrefix "matt-" key;
+  mattpocock-adjusted = lib.mapAttrs (
+    key: dir: if lib.elem (mattName key) mattRealtime then dir else slashOnlySkill dir
+  ) (lib.filterAttrs (key: _: !(lib.elem (mattName key) mattDeprecated)) mattpocock-skills);
+  # ponytail core stays realtime; audit/debt/gain/help/review go slash-only
+  ponytail-adjusted = lib.mapAttrs (
+    key: dir: if key == "ponytail-ponytail" then dir else slashOnlySkill dir
+  ) ponytail-skills;
 in
 {
 
@@ -332,16 +369,20 @@ in
             "npm:@llblab/pi-telegram"
           ];
           skills = [
-            doc-coauthoring
-            xlsx
-            docx
-            pptx
-            pdf
+            # anthropic file-format skills: slash-only (long descriptions,
+            # only needed when actually touching such files)
+            (slashOnlySkill doc-coauthoring)
+            (slashOnlySkill xlsx)
+            (slashOnlySkill docx)
+            (slashOnlySkill pptx)
+            (slashOnlySkill pdf)
+            # ./skills: nix-first stays realtime, nix-packing already
+            # declares disable-model-invocation in its own frontmatter
             personnal-skill
           ]
           # ++ (lib.attrValues superpowers-skills)
-          ++ (lib.attrValues ponytail-skills)
-          ++ (lib.attrValues mattpocock-skills);
+          ++ (lib.attrValues ponytail-adjusted)
+          ++ (lib.attrValues mattpocock-adjusted);
         };
         # Declarative config for individual plugins (pi-web-access, ...).
         # Managed via modules/home-manager/pi-plugins.nix.
