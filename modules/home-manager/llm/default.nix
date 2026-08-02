@@ -306,6 +306,7 @@ in
         package = pkgs.writeShellScriptBin "pi" ''
           export JDTLS_PATH="${pkgs.jdtls-pi-lens}/bin/jdtls-pi-lens"
           export PI_LENS_LOMBOK_JAR="${pkgs.lombok}/share/java/lombok.jar"
+          export TELEGRAM_BOT_TOKEN="$(${sops-exec-env} 'echo -n $TELEGRAM_BOT_TOKEN')"
           exec "${pkgs.llm-agents.pi}/bin/pi" "$@"
         '';
         agents = {
