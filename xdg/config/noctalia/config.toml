@@ -228,28 +228,28 @@ telemetry_enabled = false
 
     [[shell.session.actions]]
     action = "lock"
-    countdown_seconds = 1.0
+    countdown_seconds = 3.0
     enabled = true
     shortcut = "l"
     variant = "default"
 
     [[shell.session.actions]]
     action = "logout"
-    countdown_seconds = 1.0
+    countdown_seconds = 3.0
     enabled = true
     shortcut = "o"
     variant = "default"
 
     [[shell.session.actions]]
     action = "reboot"
-    countdown_seconds = 1.0
+    countdown_seconds = 3.0
     enabled = true
     shortcut = "r"
     variant = "default"
 
     [[shell.session.actions]]
     action = "lock_and_suspend"
-    countdown_seconds = 1.0
+    countdown_seconds = 3.0
     enabled = true
     shortcut = "s"
     variant = "default"
@@ -257,7 +257,7 @@ telemetry_enabled = false
     [[shell.session.actions]]
     action = "command"
     command = "noctalia msg dpms-off && loginctl lock-session && systemctl hibernate"
-    countdown_seconds = 1.0
+    countdown_seconds = 3.0
     enabled = true
     glyph = "hibernate"
     label = "Lock & Hibernate"
@@ -266,7 +266,7 @@ telemetry_enabled = false
 
     [[shell.session.actions]]
     action = "shutdown"
-    countdown_seconds = 1.0
+    countdown_seconds = 3.0
     enabled = true
     shortcut = "d"
     variant = "destructive"
