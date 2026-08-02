@@ -111,7 +111,7 @@ binds {
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
     Mod+F { maximize-column; }
     Mod+H { focus-column-left; }
-    Mod+M hotkey-overlay-title="Toggle noctalia media center" { spawn "sh" "-c" "noctalia msg panel-toggle media"; }
+    Mod+M hotkey-overlay-title="Toggle noctalia media center" { spawn "sh" "-c" "noctalia msg panel-toggle control-center media"; }
     Mod+N hotkey-overlay-title="Toggle noctalia notifications center" { spawn "sh" "-c" "noctalia msg panel-toggle control-center notifications"; }
     Mod+Home { focus-column-first; }
     Mod+I { focus-workspace-up; }
