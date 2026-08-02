@@ -10,7 +10,6 @@
     packages = with pkgs; [
       noto-fonts-color-emoji
       sarasa-gothic
-      nerd-fonts.fira-code
       nerd-fonts.ubuntu
       nerd-fonts.ubuntu-sans
       nerd-fonts.ubuntu-mono
@@ -23,11 +22,6 @@
       source-han-sans
       source-han-mono
       source-han-code-jp
-      font-awesome
-      lexend
-      material-symbols
-      wqy_zenhei
-      wqy_microhei
       nur.repos.rewine.ttf-wps-fonts
       # microsoft fonts
       corefonts
