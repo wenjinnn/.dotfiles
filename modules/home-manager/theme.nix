@@ -28,7 +28,7 @@
       # qt.enable = false;
       # gtk.enable = false;
       firefox = {
-        # colorTheme.enable = true;
+        colorTheme.enable = true;
         # firefoxGnomeTheme.enable = true;
         profileNames = [ me.username ];
       };
