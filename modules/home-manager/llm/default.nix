@@ -451,6 +451,7 @@ in
                   "rm -fr *" = "ask";
                   "git clean -f*" = "ask";
                   "git reset --hard *" = "ask";
+                  "ssh *" = "ask";
                   "sudo *" = "ask";
                   "git push *" = "ask";
                   "npm publish *" = "ask";
@@ -464,6 +465,22 @@ in
           };
         };
         keybindings = {
+          "tui.editor.cursorUp" = [
+            "up"
+            "ctrl+p"
+          ];
+          "tui.editor.cursorDown" = [
+            "down"
+            "ctrl+n"
+          ];
+          "tui.editor.cursorLeft" = [
+            "left"
+            "ctrl+b"
+          ];
+          "tui.editor.cursorRight" = [
+            "right"
+            "ctrl+f"
+          ];
           "tui.select.up" = [
             "up"
             "ctrl+p"
@@ -473,6 +490,8 @@ in
             "ctrl+n"
           ];
           "app.model.cycleForward" = [ "ctrl+alt+p" ];
+          # C-n is occupied by tui.select.down, naming filter moved to Ctrl+Shift+N
+          "app.session.toggleNamedFilter" = [ "ctrl+shift+n" ];
         };
       };
       oh-my-pi = {
