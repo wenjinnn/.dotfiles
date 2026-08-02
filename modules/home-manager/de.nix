@@ -53,6 +53,7 @@
 
   home.packages = with pkgs; [
     wl-clipboard
+    wl-kbptr
     yt-dlp
     spotdl
     kdePackages.qt6ct
