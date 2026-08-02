@@ -129,7 +129,6 @@ in
     xdg-utils
     trash-cli
     w3m
-    networkmanagerapplet
     devenv
     nix-init
     typst
