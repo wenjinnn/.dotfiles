@@ -1,6 +1,7 @@
 ---
 name: nix-packing
 description: Add a package to a Nix flake the reproducible way. Use when the user wants to install a package that is not in nixpkgs, package a pi/npm extension for Nix, provides a pi.dev/packages URL, or asks to write a derivation or update an existing package with new hashes. Covers attribute lookup, derivation writing, dependency lock generation, hash computation, and build verification.
+disable-model-invocation: true
 ---
 
 # Nix Packing
