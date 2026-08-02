@@ -79,14 +79,17 @@ let
   # Copy a skill dir and add `disable-model-invocation: true` to its SKILL.md
   # frontmatter: the skill stays out of the system prompt (model won't
   # auto-trigger it) but remains invocable via /skill:name.
+  # Idempotent: many upstream skills already declare the flag — skip those.
   slashOnlySkill =
     skillDir:
     pkgs.runCommand "slash-only-${builtins.baseNameOf skillDir}" { } ''
       mkdir -p $out
       cp -r ${skillDir}/. $out/
       chmod +w $out/SKILL.md
-      # insert the flag right after the frontmatter opening line
-      sed -i '2i disable-model-invocation: true' $out/SKILL.md
+      # only insert when the frontmatter doesn't already have it
+      if ! grep -q '^disable-model-invocation:' $out/SKILL.md; then
+        sed -i '2i disable-model-invocation: true' $out/SKILL.md
+      fi
     '';
   # mattpocock skills we keep auto-invocable (realtime), the rest go slash-only.
   # ask-matt/implement are already disable-model-invocation upstream — whether
