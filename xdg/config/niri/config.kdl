@@ -111,6 +111,8 @@ binds {
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
     Mod+F { maximize-column; }
     Mod+H { focus-column-left; }
+    Mod+M hotkey-overlay-title="Toggle noctalia media center" { spawn "sh" "-c" "noctalia msg panel-toggle media"; }
+    Mod+N hotkey-overlay-title="Toggle noctalia notifications center" { spawn "sh" "-c" "noctalia msg panel-toggle control-center notifications"; }
     Mod+Home { focus-column-first; }
     Mod+I { focus-workspace-up; }
     Mod+Insert { set-dynamic-cast-window; }
@@ -160,8 +162,10 @@ binds {
     Mod+Shift+Left { move-column-left; }
     Mod+Shift+Minus { set-window-height "-5%"; }
     Mod+Shift+N hotkey-overlay-title="Next player: noctalia media next" { spawn "sh" "-c" "noctalia msg media next"; }
+    Mod+Alt+N hotkey-overlay-title="Previous player: noctalia media next player" { spawn "sh" "-c" "noctalia msg media next-player"; }
     Mod+Shift+O { move-workspace-down; }
     Mod+Shift+P hotkey-overlay-title="Previous player: noctalia media previous" { spawn "sh" "-c" "noctalia msg media previous"; }
+    Mod+Alt+P hotkey-overlay-title="Previous player: noctalia media previous player" { spawn "sh" "-c" "noctalia msg media previous-player"; }
     "Mod+Shift+Page_Down" { move-workspace-down; }
     "Mod+Shift+Page_Up" { move-workspace-up; }
     Mod+Shift+R { switch-preset-window-height; }
