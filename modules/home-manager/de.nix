@@ -23,6 +23,15 @@
     # udisks2 GUI front end
     udiskie.enable = true;
   };
+  # EasyEffects 8 (Qt) checks the system tray only once at startup (QSystemTrayIcon::isSystemTrayAvailable),
+  # which races with noctalia's tray watcher (StatusNotifierWatcher) at startup, causing the tray icon to appear inconsistently.
+  # Disabling the showTrayIcon preference deterministically disables the icon. xdg.configFile cannot be used:
+  # KConfig rewrites this file at runtime, which conflicts with the store's read-only symlink, so write it once via activation.
+  home.activation.setEasyEffectsNoTray = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    ${pkgs.kdePackages.kconfig}/bin/kwriteconfig6 \
+      --file easyeffects/db/easyeffectsrc \
+      --group Window --key showTrayIcon false
+  '';
   programs = {
     # vim like image viewer
     imv.enable = true;
