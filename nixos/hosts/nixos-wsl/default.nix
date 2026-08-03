@@ -52,6 +52,9 @@
   # Needed for home-manager dconf activation (stylix, etc.)
   programs.dconf.enable = true;
 
+  # setuid fusermount3 so non-root rclone/sshfs FUSE mounts work (WSL2)
+  programs.fuse.enable = true;
+
   wsl = {
     enable = true;
     defaultUser = "${me.username}";
