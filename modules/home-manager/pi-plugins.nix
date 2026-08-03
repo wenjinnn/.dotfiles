@@ -199,8 +199,8 @@ in
     );
     default = { };
     example = {
-      "vision-reader" = {
-        source = ./agents/vision-reader.md;
+      "vision" = {
+        source = ./agents/vision.md;
       };
     };
     description = ''

@@ -311,8 +311,8 @@ in
         '';
         agents = {
           # Custom pi-subagents agents → ~/.pi/agent/agents/
-          "vision-reader" = {
-            source = ./agents/vision-reader.md;
+          "vision" = {
+            source = ./agents/vision.md;
           };
         };
         models = {
