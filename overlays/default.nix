@@ -33,9 +33,10 @@
           # update this with the tag you want to use, if ≠'version'
           rev = "2ab59b90d55afbbe362a63e2a061afe4b524d8c4";
           # update this with the appropriate hash for your tag
-          hash = "sha256-Af2T/DggorxzIYcRg1BzzrarRc4OHxTdu7Zjj/3eSkA";
+          hash = "sha256-Af2T/DggorxzIYcRg1BzzrarRc4OHxTdu7Zjj/3eSkA=";
         };
 
+        cargoHash = "sha256-gfnalA3qI3a9h3PvsxgQLCrzapfjLLkxhTMJpwRh+ro=";
       }
     );
     tuigreet = prev.tuigreet.overrideAttrs (
