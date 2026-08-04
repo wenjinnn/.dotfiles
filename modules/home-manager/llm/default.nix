@@ -374,7 +374,6 @@ in
           packages = [
             "npm:pi-lens"
             "npm:pi-intercom"
-            "npm:pi-messenger"
             "npm:pi-subagents"
             "npm:pi-mcp-adapter"
             "npm:pi-web-access"
