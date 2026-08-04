@@ -38,6 +38,7 @@
   de = import ./de.nix;
   llm = import ./llm;
   oh-my-pi = import ./oh-my-pi.nix;
+  pi-theme = import ./pi-theme.nix;
   pi-plugins = import ./pi-plugins.nix;
   ghostty = import ./ghostty.nix;
   noctalia = import ./noctalia.nix;

@@ -122,6 +122,7 @@ in
   imports = with outputs.homeManagerModules; [
     oh-my-pi
     pi-plugins
+    pi-theme
   ];
 
   home.packages = with pkgs; [
@@ -371,7 +372,10 @@ in
               };
             };
           };
-          theme = "dark";
+          # theme = "stylix" is owned by modules/home-manager/pi-theme.nix
+          # (generates ~/.pi/agent/themes/stylix.json from the stylix palette).
+          # Don't set a plain `theme` here or the two definitions collide;
+          # disable via `programs.pi-coding-agent.stylixTheme = false`.
           enableInstallTelemetry = false;
           packages = [
             "npm:pi-lens"
