@@ -353,6 +353,16 @@ in
                 thinking = "high";
                 fallbackModels = [ "deepseek/deepseek-v4-pro" ];
               };
+              worker = {
+                model = "openai-codex/gpt-5.6-terra";
+                thinking = "high";
+                fallbackModels = [ "deepseek/deepseek-v4-flash" ];
+              };
+              reviewer = {
+                model = "openai-codex/gpt-5.6-terra";
+                thinking = "high";
+                fallbackModels = [ "deepseek/deepseek-v4-flash" ];
+              };
             };
           };
           theme = "dark";
