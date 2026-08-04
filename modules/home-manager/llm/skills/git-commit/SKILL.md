@@ -1,6 +1,6 @@
 ---
 name: git-commit
-description: Write git commits in the current repo's commit voice — sample ~10 recent commits by the user and ~10 by other authors, absorb the repo's style and human language, split the changeset into logical commits, and write detailed messages matching the repo's format. Commits only: never push, always hand off for manual review and push.
+description: "Write git commits in the current repo's commit voice — sample ~10 recent commits by the user and ~10 by other authors, absorb the repo's style and human language, split the changeset into logical commits, and write detailed messages matching the repo's format. Commits only: never push, always hand off for manual review and push."
 disable-model-invocation: true
 ---
 
