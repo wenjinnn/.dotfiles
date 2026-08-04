@@ -309,6 +309,10 @@ in
           export TELEGRAM_BOT_TOKEN="$(${sops-exec-env} 'echo -n $TELEGRAM_BOT_TOKEN')"
           exec "${pkgs.llm-agents.pi}/bin/pi" "$@"
         '';
+        extraPackages = [
+          pkgs.nodejs
+          pkgs.bun
+        ];
         agents = {
           # Custom pi-subagents agents → ~/.pi/agent/agents/
           "vision" = {

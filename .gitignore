@@ -4,5 +4,6 @@
 **/.envrc
 **/.opencode/
 **/.claude/
+.pi/
 .pi-glla/
 .pi-subagents/
