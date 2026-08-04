@@ -368,8 +368,9 @@ in
           theme = "dark";
           enableInstallTelemetry = false;
           packages = [
-            "npm:pi-subagents"
             "npm:pi-lens"
+            "npm:pi-intercom"
+            "npm:pi-subagents"
             "npm:pi-mcp-adapter"
             "npm:pi-web-access"
             "npm:pi-hermes-memory"
