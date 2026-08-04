@@ -313,6 +313,8 @@ in
           pkgs.nodejs
           pkgs.bun
         ];
+        context = ./pi-context.md;
+        # this option came form modules/home-manager/pi-plugins.nix
         agents = {
           # Custom pi-subagents agents → ~/.pi/agent/agents/
           "vision" = {
