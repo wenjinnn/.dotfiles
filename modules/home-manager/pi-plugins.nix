@@ -44,7 +44,13 @@ let
   #   PI_CODING_AGENT_DIR > $XDG_CONFIG_HOME/pi > ~/.pi
   # PI_CODING_AGENT_DIR is only exported by the upstream module when
   # configDir differs from the upstream default.
-  piWebAccessPath = "${cfg.configDir}/web-search.json";
+  piWebAccessPath =
+    if cfg.configDir or upstreamConfigDir != upstreamConfigDir then
+      "${cfg.configDir}/web-search.json"
+    else if config.xdg.enable or false then
+      "${config.xdg.configHome}/pi/web-search.json"
+    else
+      "${config.home.homeDirectory}/.pi/web-search.json";
 
   pluginPath =
     name: p:
