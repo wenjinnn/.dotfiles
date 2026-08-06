@@ -181,7 +181,6 @@ later(function()
   vim.pack.add({ gh('milanglacier/minuet-ai.nvim') })
   require('minuet').setup({
     virtualtext = {
-      auto_trigger_ft = { '*' },
       keymap = {
         -- accept whole completion
         accept = '<A-w>',
