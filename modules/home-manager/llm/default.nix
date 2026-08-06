@@ -388,9 +388,7 @@ in
             "npm:pi-goal-list-loop-audit"
             "npm:@narumitw/pi-usage"
             "npm:@gotgenes/pi-permission-system"
-            "npm:@juicesharp/rpiv-ask-user-question"
             "npm:@juicesharp/rpiv-todo"
-            "npm:@juicesharp/rpiv-btw"
             "npm:@llblab/pi-telegram"
           ];
           skills = [
