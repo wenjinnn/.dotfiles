@@ -1,6 +1,8 @@
 -- my nvim config write in lua
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
+vim.cmd.packadd('old-zip')
+
 
 -- Set the clipboard provider synchronously at startup, before any plugin,
 -- autocmd or RPC client (vscode-neovim/firenvim/preview) can touch the "+"
