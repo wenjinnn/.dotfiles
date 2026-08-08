@@ -126,12 +126,97 @@ esac
 # Notifications don't suit multi-line/long text: single-line + truncate
 body="$(printf '%s' "$body" | tr '\n\r' '  ' | cut -c1-180)"
 
-# ── 1) Ghostty native notification (OSC 9) ──
-if { [ -e /dev/tty ] && [ -w /dev/tty ]; } 2>/dev/null; then
-	{ printf '\033]9;%s: %s\033\\' "$title" "$body" >/dev/tty; } 2>/dev/null || true
+# ── Terminal channel: resolve this pi instance's PTY ──
+# pi spawns tool/hook processes detached (no controlling tty), so /dev/tty is
+# unusable here. Walk the PPID chain up to the pi process and write OSC
+# sequences (OSC 9 ghostty notification, OSC 2 title marker) directly to its
+# /dev/pts/N — that is the ghostty tab running this exact pi instance.
+pi_tty=""
+pid="$$"
+for _ in 1 2 3 4 5 6 7 8; do
+	ppid="$(ps -o ppid= -p "$pid" 2>/dev/null | tr -d ' ')"
+	[ -n "$ppid" ] || break
+	comm="$(ps -o comm= -p "$ppid" 2>/dev/null | tr -d ' ')"
+	if [ "$comm" = "pi" ]; then
+		pi_tty="$(ps -o tty= -p "$ppid" 2>/dev/null | tr -d ' ')"
+		break
+	fi
+	pid="$ppid"
+done
+pty=""
+if [ -n "$pi_tty" ] && [ -e "/dev/$pi_tty" ]; then
+	pty="/dev/$pi_tty"
+elif { [ -e /dev/tty ] && [ -w /dev/tty ]; } 2>/dev/null; then
+	pty="/dev/tty"
 fi
 
-# ── 2) noctalia desktop notification ──
-notify-send -u critical -a "pi-hooks" "$title" "$body" >/dev/null 2>&1 || true
+# ── 1) Ghostty native notification (OSC 9) — opt-in ──
+# OSC 9 is text-only (no action button) and on Linux/GTK ghostty renders it
+# through the same XDG daemon (noctalia) as notify-send, so it duplicates the
+# notification below. Disabled by default; enable with PI_HOOKS_GHOSTTY_OSC9=1.
+if [ "${PI_HOOKS_GHOSTTY_OSC9:-0}" = "1" ] && [ -n "$pty" ]; then
+	{ printf '\033]9;%s: %s\033\\' "$title" "$body" >"$pty"; } 2>/dev/null || true
+fi
+
+# ── 2) noctalia desktop notification + "Focus Pi" action ──
+# The sender window is resolved precisely via a unique OSC-2 title marker
+# written to our pi's PTY (two pi instances in the same dir share title and
+# ghostty PID, so title matching alone is ambiguous): mark -> resolve window
+# id in niri -> restore title. notify-send -A implies --wait (prints the chosen
+# action name to stdout and blocks), so the whole flow runs in a backgrounded
+# subshell; the action name and resolved window id travel via temp files
+# because the hook's stdout is captured.
+cwd_bn=""
+cwd="$(printf '%s' "$payload" | jq -r '.cwd // ""')"
+[ -n "$cwd" ] || cwd="${PI_PROJECT_DIR:-}"
+[ -n "$cwd" ] && cwd_bn="$(basename "$cwd" 2>/dev/null)"
+
+out="$(mktemp /tmp/pi-hooks-action.XXXXXX 2>/dev/null || echo /tmp/pi-hooks-action.$$)"
+widfile="$(mktemp /tmp/pi-hooks-wid.XXXXXX 2>/dev/null || echo /tmp/pi-hooks-wid.$$)"
+(
+	# 1) resolve our own window id via a unique title marker on our PTY
+	marker="pi-hooks-$$-$RANDOM"
+	orig="$(niri msg windows 2>/dev/null | awk '
+		/Title:/ { t = $0; sub(/^ *Title: "/, "", t); sub(/"$/, "", t); if (t ~ /^π/) { print t; exit } }
+	')"
+	[ -n "$orig" ] || orig="π - ${cwd_bn}"
+	[ -n "$pty" ] && printf '\033]2;%s [%s]\007' "$orig" "$marker" >"$pty" 2>/dev/null || true
+	wid=""
+	for _ in 1 2 3 4 5; do
+		sleep 0.1
+		wid="$(niri msg windows 2>/dev/null | awk -v m="$marker" '
+			/^Window ID/ { id = $3; gsub(/:/, "", id) }
+			index($0, m) > 0 { print id; exit }
+		')"
+		[ -n "$wid" ] && break
+	done
+	[ -n "$pty" ] && printf '\033]2;%s\007' "$orig" >"$pty" 2>/dev/null || true
+	printf '%s' "$wid" >"$widfile"
+
+	# 2) wait for the user to click "Focus Pi", then focus the resolved window
+	notify-send -u critical -a "pi-hooks" -A "focus=Focus Pi" "$title" "$body" >"$out" 2>/dev/null || true
+	if [ "$(cat "$out" 2>/dev/null)" = "focus" ]; then
+		target="$(cat "$widfile" 2>/dev/null)"
+		if [ -z "$target" ]; then
+			# marker resolution failed — best-effort fallback: prefer the
+			# unfocused π window (the focus gate guarantees the sender is one)
+			target="$(niri msg windows 2>/dev/null | awk -v bn="$cwd_bn" '
+				/^Window ID/ { id = $3; gsub(/:/, "", id); title = ""; app = ""; focused = 0; if ($0 ~ /\(focused\)/) focused = 1; next }
+				/Title:/ { title = $0; sub(/^ *Title: "/, "", title); sub(/"$/, "", title); next }
+				/App ID:/ {
+					app = $3; gsub(/"/, "", app)
+					if (app == "com.mitchellh.ghostty" && title ~ /^π/ && (bn == "" || index(title, bn) > 0)) {
+						if (any == "") any = id
+						if (!focused && unfocused == "") unfocused = id
+					}
+					next
+				}
+				END { print (unfocused != "" ? unfocused : any) }
+			')"
+		fi
+		[ -n "$target" ] && niri msg action focus-window --id "$target" >/dev/null 2>&1 || true
+	fi
+	rm -f "$out" "$widfile"
+) >/dev/null 2>&1 &
 
 exit 0
