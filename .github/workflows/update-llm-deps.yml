@@ -10,159 +10,48 @@ permissions:
   contents: write
   pull-requests: write
 
+concurrency:
+  group: update-deps
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: cachix/install-nix-action@v31
 
-      - name: Install nix-prefetch-github
-        run: nix profile install nixpkgs#nix-prefetch-github
+      - name: Install nix-prefetch-github and prefetch-npm-deps
+        run: nix profile install nixpkgs#nix-prefetch-github nixpkgs#prefetch-npm-deps
 
       - name: Check and update dependencies
         id: check
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-
-          NIX_FILE="modules/home-manager/llm/default.nix"
-          UPDATES=""
-
-          # Repos to track — each entry: owner/name
-          REPOS=(
-            "anthropics/skills"
-            "anthropics/claude-plugins-official"
-            "JuliusBrussee/caveman"
-            "obra/superpowers"
-          )
-
-          for REPO in "${REPOS[@]}"; do
-            OWNER="${REPO%%/*}"
-            NAME="${REPO#*/}"
-            echo "::group::Checking $REPO"
-
-            # Read current rev from the nix file
-            CURRENT_REV=$(grep -A3 "owner = \"$OWNER\"" "$NIX_FILE" \
-              | grep -A1 "repo = \"$NAME\"" \
-              | grep 'rev = ' \
-              | sed 's/.*rev = "\([^"]*\)".*/\1/')
-
-            if [ -z "$CURRENT_REV" ]; then
-              echo "⚠️  Could not find current rev for $REPO in $NIX_FILE"
-              echo "::endgroup::"
-              continue
-            fi
-
-            LATEST_SHA=$(curl -fsSL \
-              -H "Authorization: token ${{ github.token }}" \
-              "https://api.github.com/repos/$REPO/commits/HEAD" \
-              | jq -r '.sha')
-
-            if [ -z "$LATEST_SHA" ] || [ "$LATEST_SHA" = "null" ]; then
-              echo "⚠️  Failed to fetch latest SHA for $REPO, skipping"
-              echo "::endgroup::"
-              continue
-            fi
-
-            if [ "$LATEST_SHA" = "$CURRENT_REV" ]; then
-              echo "✅ $REPO is up to date ($CURRENT_REV)"
-              echo "::endgroup::"
-              continue
-            fi
-
-            echo "🔄 $REPO has updates: ${CURRENT_REV:0:12}… -> ${LATEST_SHA:0:12}…"
-
-            # Use nix-prefetch-github which produces hashes compatible with fetchFromGitHub
-            MAX_RETRIES=3
-            for attempt in $(seq 1 $MAX_RETRIES); do
-              SRI_HASH=$(nix-prefetch-github "$OWNER" "$NAME" --rev "$LATEST_SHA" \
-                | jq -r '.hash' 2>/dev/null) && break || {
-                echo "⚠️  Attempt $attempt/$MAX_RETRIES failed for $REPO"
-                if [ "$attempt" = "$MAX_RETRIES" ]; then
-                  echo "❌ Failed to prefetch $REPO after $MAX_RETRIES attempts"
-                  continue 2
-                fi
-                sleep $((attempt * 15))
-              }
-            done
-
-            if [ -z "$SRI_HASH" ]; then
-              echo "❌ Got empty hash for $REPO, skipping"
-              echo "::endgroup::"
-              continue
-            fi
-
-            UPDATES="$UPDATES $REPO|$CURRENT_REV|$LATEST_SHA|$SRI_HASH"
-            echo "::endgroup::"
-          done
-
-          if [ -z "$UPDATES" ]; then
-            echo "All dependencies are up to date."
-            echo "updated=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          echo "updated=true" >> "$GITHUB_OUTPUT"
-
-          # Apply all updates via Python
-          python3 /dev/stdin "$NIX_FILE" "$GITHUB_OUTPUT" $UPDATES <<'PYEOF'
-          import re, sys
-
-          path = sys.argv[1]
-          output_file = sys.argv[2]
-          updates = []
-          for arg in sys.argv[3:]:
-              parts = arg.split("|")
-              if len(parts) == 4:
-                  updates.append(parts)
-
-          with open(path) as f:
-              content = f.read()
-
-          updated_repos = []
-          for repo, old_rev, new_rev, new_hash in updates:
-              owner, name = repo.split("/")
-              pattern = (
-                  r'owner\s*=\s*"' + re.escape(owner) + r'"\s*;\s*\n'
-                  r'\s*repo\s*=\s*"' + re.escape(name) + r'"\s*;\s*\n'
-                  r'\s*rev\s*=\s*"([^"]*)"' + r'\s*;\s*\n'
-                  r'\s*sha256\s*=\s*"([^"]*)"'
-              )
-              m = re.search(pattern, content)
-              if not m:
-                  print(f"WARNING: could not find fetchFromGitHub block for {repo}", file=sys.stderr)
-                  continue
-
-              old_block = m.group(0)
-              new_block = old_block.replace(old_rev, new_rev)
-              old_hash = m.group(2)
-              new_block = new_block.replace(old_hash, new_hash)
-              content = content.replace(old_block, new_block, 1)
-
-              updated_repos.append(repo)
-              print(f"✅ Updated {repo}: {old_rev[:12]}… -> {new_rev[:12]}…")
-
-          with open(path, "w") as f:
-              f.write(content)
-
-          with open(output_file, "a") as f:
-              f.write(f"repos={' '.join(updated_repos)}\n")
-          PYEOF
+          python3 .github/scripts/update-deps.py
 
       - name: Create Pull Request
         if: steps.check.outputs.updated == 'true'
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ github.token }}
-          branch: auto-update/llm-deps
+          branch: auto-update/deps
           delete-branch: true
-          title: "chore(llm): update LLM dependencies"
+          title: "chore: update GitHub dependencies"
           body: |
-            Automated weekly update of LLM-related `fetchFromGitHub` dependencies.
+            Automated weekly update of `fetchFromGitHub` dependencies
+            (`modules/home-manager/llm/default.nix`,
+            `modules/home-manager/de.nix`,
+            `pkgs/pi-acp/package.nix`).
 
             **Updated repos:** ${{ steps.check.outputs.repos }}
 
+            ${{ steps.check.outputs.warnings && '**Warnings:**' || '' }}
+            ${{ steps.check.outputs.warnings }}
+
             Please review the changes and merge if everything looks correct.
-          commit-message: "chore(llm): update LLM dependency revs and hashes"
+          commit-message: "chore: update GitHub dependency revs and hashes"
           labels: dependencies, automated
