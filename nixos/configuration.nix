@@ -81,8 +81,6 @@
           # status: https://mirror.sjtu.edu.cn/
           # "https://mirror.sjtu.edu.cn/nix-channels/store"
           # status: https://mirrors.ustc.edu.cn/status/
-          "https://mirrors.ustc.edu.cn/nix-channels/store"
-          "https://cache.nixos.org"
         ];
         trusted-public-keys = [
           # the default public key of cache.nixos.org, it's built-in, no need to add it here

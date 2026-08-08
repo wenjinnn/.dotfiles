@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  inputs,
   outputs,
   ...
 }:
@@ -157,7 +158,7 @@ in
       };
       claude-code = {
         enable = true;
-        package = pkgs.llm-agents.claude-code;
+        package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code;
         enableMcpIntegration = true;
         marketplaces = {
           anthropic-skills = anthropic-skills;
@@ -203,7 +204,7 @@ in
       };
       codex = {
         enable = true;
-        package = pkgs.llm-agents.codex;
+        package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex;
         enableMcpIntegration = true;
         settings = {
           model_provider = "openrouter";
@@ -250,7 +251,7 @@ in
       };
       opencode = {
         enable = true;
-        package = pkgs.llm-agents.opencode;
+        package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
         enableMcpIntegration = true;
         settings = {
           autoupdate = false;
@@ -293,7 +294,7 @@ in
       };
       antigravity-cli = {
         enable = true;
-        package = pkgs.llm-agents.gemini-cli;
+        package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.gemini-cli;
         enableMcpIntegration = true;
       };
       pi-coding-agent = {
@@ -308,7 +309,8 @@ in
           export JDTLS_PATH="${pkgs.jdtls-pi-lens}/bin/jdtls-pi-lens"
           export PI_LENS_LOMBOK_JAR="${pkgs.lombok}/share/java/lombok.jar"
           export TELEGRAM_BOT_TOKEN="$(${sops-exec-env} 'echo -n $TELEGRAM_BOT_TOKEN')"
-          exec "${pkgs.llm-agents.pi}/bin/pi" "$@"
+
+          exec "${inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi}/bin/pi" "$@"
         '';
         extraPackages = [
           pkgs.nodejs
@@ -582,7 +584,7 @@ in
       };
       oh-my-pi = {
         enable = true;
-        package = pkgs.llm-agents.omp;
+        package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.omp;
         settings = {
           modelRoles = {
             default = "xiaomi/mimo-v2.5-pro";
