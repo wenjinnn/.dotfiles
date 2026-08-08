@@ -36,9 +36,20 @@ let
   cfg = config.programs.pi-coding-agent;
   plugins = cfg.plugins;
   agents = cfg.agents;
+  files = cfg.files;
   jsonFormat = pkgs.formats.json { };
 
   upstreamConfigDir = "${config.home.homeDirectory}/.pi/agent";
+
+  # pi-yaml-hooks hook files (hooks.yaml + helper scripts), written to
+  # <configDir>/hook/<name> — the global hooks discovery path. `copy` is the
+  # default so the live file stays writable for lazy hot-reload edits until
+  # the next rebuild re-syncs it; the plugin only reads these at runtime.
+  fileSource =
+    name: f: if f.source != null then f.source else pkgs.writeText "pi-file-${name}" f.text;
+
+  filePath =
+    name: f: if f.path != null then f.path else "${cfg.configDir or upstreamConfigDir}/hook/${name}";
 
   # Mirror pi-web-access's runtime resolution (utils.ts):
   #   PI_CODING_AGENT_DIR > $XDG_CONFIG_HOME/pi > ~/.pi
@@ -73,6 +84,8 @@ let
   copyPlugins = lib.filterAttrs (_: p: p.mode == "copy") plugins;
   symlinkAgents = lib.filterAttrs (_: a: a.mode == "symlink") agents;
   copyAgents = lib.filterAttrs (_: a: a.mode == "copy") agents;
+  symlinkFiles = lib.filterAttrs (_: f: f.mode == "symlink") files;
+  copyFiles = lib.filterAttrs (_: f: f.mode == "copy") files;
 in
 {
   options.programs.pi-coding-agent.plugins = mkOption {
@@ -217,6 +230,74 @@ in
     '';
   };
 
+  options.programs.pi-coding-agent.files = mkOption {
+    type = types.attrsOf (
+      types.submodule {
+        options = {
+          source = mkOption {
+            type = types.nullOr types.path;
+            default = null;
+            description = ''
+              Path to an existing file. Preferred over `text` for
+              maintainability.
+            '';
+          };
+
+          text = mkOption {
+            type = types.str;
+            default = "";
+            description = ''
+              Inline file content when no `source` is given.
+            '';
+          };
+
+          path = mkOption {
+            type = types.nullOr types.str;
+            default = null;
+            description = ''
+              Override the target location. Defaults to
+              `<configDir>/hook/<name>` (pi-yaml-hooks global discovery
+              path).
+            '';
+          };
+
+          mode = mkOption {
+            type = types.enum [
+              "copy"
+              "symlink"
+            ];
+            default = "copy";
+            description = ''
+              - `copy` (default): on every home-manager activation the
+                declared content is copied over the live file, which
+                stays writable for hot-reload edits until the next
+                rebuild re-syncs it.
+
+              - `symlink`: link the file directly into the nix store
+                (read-only). Fully declarative.
+            '';
+          };
+        };
+      }
+    );
+    default = { };
+    example = {
+      "hooks.yaml" = {
+        text = ''
+          hooks:
+            - event: session.idle
+              actions:
+                - notify: "Agent is idle"
+        '';
+      };
+    };
+    description = ''
+      Declarative pi-yaml-hooks hook files, written to
+      `<configDir>/hook/<name>` (the global hooks discovery path).
+      Each attribute name is the file name under the hook directory.
+    '';
+  };
+
   config = mkIf (cfg.enable or false) {
     home.file = lib.mkMerge [
       (mkIf (symlinkPlugins != { }) (
@@ -237,6 +318,16 @@ in
             source = agentSource name a;
           }
         ) symlinkAgents
+      ))
+
+      (mkIf (symlinkFiles != { }) (
+        lib.mapAttrs' (
+          name: f:
+          lib.nameValuePair "pi-file-${name}" {
+            target = filePath name f;
+            source = fileSource name f;
+          }
+        ) symlinkFiles
       ))
     ];
 
@@ -269,6 +360,23 @@ in
             cp -f '${agentSource name a}' '${path}'
           ''
         ) (lib.attrNames copyAgents)
+      )
+    );
+
+    home.activation.piFileConfigs = mkIf (copyFiles != { }) (
+      lib.hm.dag.entryAfter [ "linkGeneration" ] (
+        lib.concatMapStringsSep "\n" (
+          name:
+          let
+            f = copyFiles.${name};
+            path = filePath name f;
+          in
+          ''
+            mkdir -p "$(dirname '${path}')"
+            cp -f '${fileSource name f}' '${path}'
+            chmod +x '${path}'
+          ''
+        ) (lib.attrNames copyFiles)
       )
     );
   };
