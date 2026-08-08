@@ -5,10 +5,13 @@
   nixConfig = {
     # will be appended to the system-level substituters
     extra-substituters = [
+      "https://mirrors.ustc.edu.cn/nix-channels/store"
+      "https://cache.nixos.org"
       # nix community's cache server
       "https://nix-community.cachix.org"
       "https://nixos-raspberrypi.cachix.org"
       "https://wenjinnn.cachix.org"
+      "https://noctalia.cachix.org"
       "https://cache.numtide.com"
     ];
 
@@ -18,6 +21,7 @@
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
       "wenjinnn.cachix.org-1:g4YUsgvT21EYKUP4n9p677m5SwJ85gX3NSi+P5wyFKg="
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
     ];
   };
@@ -58,23 +62,14 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    noctalia = {
-      url = "github:noctalia-dev/noctalia";
-      inputs.nixpkgs.follows = "nixpkgs"; # this line is optional, prevents downloading two versions of nixpkgs but disables cache
-    };
-    llm-agents = {
-      url = "github:numtide/llm-agents.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     stylix = {
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    noctalia.url = "github:noctalia-dev/noctalia/cachix";
+    llm-agents.url = "github:numtide/llm-agents.nix";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nix-on-droid.url = "github:nix-community/nix-on-droid/release-23.11";
     # follow `main` branch of this repository, considered being stable
