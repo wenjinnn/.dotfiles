@@ -185,7 +185,7 @@ binds {
     Mod+WheelScrollLeft { focus-column-left; }
     Mod+WheelScrollRight { focus-column-right; }
     Mod+WheelScrollUp cooldown-ms=150 { focus-workspace-up; }
-    Mod+X hotkey-overlay-title="Action: Invoke latest noctalia notification action" { spawn "sh" "-c" "noctalia msg panel-toggle notification-invoke-latest"; }
+    Mod+X hotkey-overlay-title="Action: Invoke latest noctalia notification action" { spawn "sh" "-c" "noctalia msg notification-invoke-latest"; }
     Print hotkey-overlay-title="Screenshot: region" { spawn "sh" "-c" "noctalia msg screenshot-region"; }
     Super+Alt+L allow-when-locked=true hotkey-overlay-title="Lock the Screen: noctalia lock" { spawn "sh" "-c" "noctalia msg session lock"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn "sh" "-c" "noctalia msg volume-down 5"; }
