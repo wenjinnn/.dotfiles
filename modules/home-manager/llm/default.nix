@@ -338,23 +338,41 @@ in
             openrouter = {
               apiKey = "!${sops-exec-env} 'echo -n $OPENROUTER_API_KEY'";
             };
+            # Codex Plus subscription models: the built-in catalog caps the
+            # GPT-5.6 family at 272000 context so requests stay inside OpenAI's
+            # short-context pricing tier. The models actually support 1.05M;
+            # opt in here. Note: Codex usage is token-based — longer contexts
+            # drain the Plus allowance faster (docs/models.md, modelOverrides).
+            openai-codex = {
+              modelOverrides = {
+                "gpt-5.6-terra" = {
+                  contextWindow = 1050000;
+                };
+                "gpt-5.6-sol" = {
+                  contextWindow = 1050000;
+                };
+                "gpt-5.6-luna" = {
+                  contextWindow = 1050000;
+                };
+              };
+            };
           };
         };
         settings = {
-          defaultProvider = "deepseek";
-          defaultModel = "deepseek-v4-flash";
+          defaultProvider = "openai-codex";
+          defaultModel = "gpt-5.6-luna";
           defaultThinkingLevel = "high";
           quietStartup = true;
           subagents = {
             agentOverrides = {
               oracle = {
                 model = "openai-codex/gpt-5.6-terra";
-                thinking = "high";
+                thinking = "xhigh";
                 fallbackModels = [ "deepseek/deepseek-v4-pro" ];
               };
               planner = {
                 model = "openai-codex/gpt-5.6-terra";
-                thinking = "high";
+                thinking = "xhigh";
                 fallbackModels = [ "deepseek/deepseek-v4-pro" ];
               };
               researcher = {
@@ -369,7 +387,7 @@ in
               };
               reviewer = {
                 model = "openai-codex/gpt-5.6-terra";
-                thinking = "high";
+                thinking = "xhigh";
                 fallbackModels = [ "deepseek/deepseek-v4-flash" ];
               };
             };
@@ -394,7 +412,11 @@ in
             "npm:pi-goal-list-loop-audit"
             "npm:@narumitw/pi-usage"
             "npm:@gotgenes/pi-permission-system"
-            "npm:@juicesharp/rpiv-ask-user-question"
+            # Model-reviewed auto-permission: registers the "pi-auto-review"
+            # authorizer chain link (codex-auto-review model) into
+            # pi-permission-system's authorizerChain. Actively maintained
+            # against pi 0.83 + pps v24 (this repo's stack).
+            "npm:@erichll/pi-auto-review"
             "npm:@llblab/pi-telegram"
           ];
           skills = [
@@ -447,6 +469,16 @@ in
               yoloMode = false;
               debugLog = false;
               permissionReviewLog = true;
+              # Model-reviewed auto-permission (Codex-style): when a
+              # permission check lands on "ask", the pi-auto-review authorizer
+              # link (from @erichll/pi-auto-review) consults the
+              # codex-auto-review model first; only a non-defer verdict skips
+              # the human prompt. Fail-closed: an unavailable review denies
+              # (failureMode "deny", not defer) so a broken reviewer can
+              # never become a silent allow.
+              authorizerChain = [
+                "pi-auto-review"
+              ];
               permission = {
                 # Universal fallback: allow every tool by default.
                 "*" = "allow";
@@ -491,6 +523,32 @@ in
                   "dd *" = "ask";
                 };
               };
+            };
+          };
+          "pi-auto-review" = {
+            # Codex-style auto permission review (Claude Code Auto-mode
+            # analogue). Model decision on "ask": allow/deny/defer. Uses the
+            # openai-codex provider's codex-auto-review model (synthesized
+            # from the provider template when not in the model store), so it
+            # reuses your existing Codex OAuth login — no extra key.
+            #
+            # Notable defaults (differ from @mzwing/pi-permission-auto-review):
+            # - failureMode "defer" (explicit): when the review cannot run
+            #   (model/auth/timeout/parse), fall back to the human prompt
+            #   instead of blocking outright.
+            # - autoConfirmBoundedAllows ["external_directory","path"]: a
+            #   model allow on a bounded surface is bound to the immediately
+            #   following local permission dialog and auto-confirms it in the
+            #   TUI (10s expiry, one-use, v24 compatibility bridge).
+            # - circuit breaker: 3 consecutive or 10/50 recent denials stop
+            #   automatic review until the next turn.
+            config = {
+              model = "openai-codex/codex-auto-review";
+              # Defer to the human prompt when the review cannot run (the
+              # package default is "deny" — fail-closed).
+              failureMode = "defer";
+              # reasoning = "low";    # default
+              # timeoutMs = 45000;    # default
             };
           };
         };
