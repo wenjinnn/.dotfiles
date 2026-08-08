@@ -73,12 +73,25 @@ session.idle)
 		;;
 
 	# pi-permission-system: only alert for commands that trigger an ask
-	# confirmation (keep in sync with the ask rules)
+	# confirmation. Mirror the gate's rules (declared in llm/default.nix
+	# plugins."pi-permission-system".permission.bash): split the chain on
+	# shell operators, strip env-var prefixes, then anchor-match each
+	# command segment — same semantics as the gate's ^pattern$ + " *" glob.
 	bash)
 		command="$(printf '%s' "$payload" | jq -r '.tool_args.command // ""')"
-		if ! printf '%s' "$command" | grep -qE '(^|[;&|]|\s)(sudo|rm[[:space:]]+-rf|git[[:space:]]+push)([[:space:]]|$)'; then
-			exit 0
-		fi
+		matched=""
+		while IFS= read -r seg; do
+			# strip env-var prefixes ("A=1 B=2 cmd") then leading whitespace
+			seg="$(printf '%s' "$seg" | sed -E 's/^([A-Za-z_][A-Za-z0-9_]*=[^[:space:]]*[[:space:]]+)*//; s/^[[:space:]]+//')"
+			[ -z "$seg" ] && continue
+			# "cmd *" rules match "cmd" or "cmd <args>"; "git clean -f*" matches "-f<anything>"
+			if printf '%s' "$seg" | grep -qE '^(rm -rf|rm -fr|git reset --hard|git push|ssh|sudo|npm publish|shutdown|reboot|poweroff|dd)([[:space:]]|$)' ||
+				printf '%s' "$seg" | grep -qE '^git clean -f'; then
+				matched="1"
+				break
+			fi
+		done < <(printf '%s\n' "$command" | tr ';&|\n' '\n')
+		[ -n "$matched" ] || exit 0
 		title="🔐 Pi needs your confirmation"
 		body="$command"
 		;;
