@@ -346,17 +346,17 @@ in
           subagents = {
             agentOverrides = {
               oracle = {
-                model = "openai-codex/gpt-5.6-sol";
+                model = "openai-codex/gpt-5.6-terra";
                 thinking = "high";
                 fallbackModels = [ "deepseek/deepseek-v4-pro" ];
               };
               planner = {
-                model = "openai-codex/gpt-5.6-sol";
+                model = "openai-codex/gpt-5.6-terra";
                 thinking = "high";
                 fallbackModels = [ "deepseek/deepseek-v4-pro" ];
               };
               researcher = {
-                model = "openai-codex/gpt-5.6-sol";
+                model = "openai-codex/gpt-5.6-terra";
                 thinking = "high";
                 fallbackModels = [ "deepseek/deepseek-v4-pro" ];
               };
@@ -472,6 +472,11 @@ in
                   # ask — dangerous but sometimes legitimate; confirm first.
                   "rm -rf *" = "ask";
                   "rm -fr *" = "ask";
+                  # /tmp scratch cleanup is routine agent work — allow un-prompted.
+                  # Later rules win over "rm -rf *" above (last-match-wins).
+                  "rm -rf /tmp/*" = "allow";
+                  "rm -fr /tmp/*" = "allow";
+                  "nix build *" = "allow";
                   "git clean -f*" = "ask";
                   "git reset --hard *" = "ask";
                   "ssh *" = "ask";
