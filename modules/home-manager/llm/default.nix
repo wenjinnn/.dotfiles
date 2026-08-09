@@ -132,7 +132,90 @@ in
     claude-agent-acp
     codex-acp
     pi-acp
+    pi-web
   ];
+
+  home.file.".config/pi-web/config.json".text = builtins.toJSON {
+    host = "127.0.0.1";
+    port = 8504;
+    spawnSessions = true;
+    subsessions = false;
+    agent = {
+      command = "pi";
+      dir = "${config.home.homeDirectory}/.pi/agent";
+    };
+    pathAccess = {
+      allowedPaths = [
+        "${config.home.homeDirectory}/Downloads/paper-adjust"
+        "${config.home.homeDirectory}/.dotfiles"
+      ];
+    };
+  };
+
+  systemd.user.services = {
+    pi-web-sessiond = {
+      Unit = {
+        Description = "PI WEB persistent Pi session daemon";
+        After = [ "network-online.target" ];
+        Wants = [ "network-online.target" ];
+      };
+      Service = {
+        ExecStart = "/usr/bin/env \"${pkgs.bash}/bin/bash\" -lc 'exec ${pkgs.pi-web}/bin/pi-web-sessiond'";
+        Environment = [
+          "\"PI_WEB_CONFIG=${config.home.homeDirectory}/.config/pi-web/config.json\""
+          "\"SOPS_SECRETS=${config.home.sessionVariables.SOPS_SECRETS}\""
+          "\"PATH=${
+            lib.makeBinPath [
+              config.programs.pi-coding-agent.package
+              pkgs.nodejs
+              pkgs.bash
+              pkgs.coreutils
+              pkgs.git
+              pkgs.ripgrep
+            ]
+          }\""
+        ];
+        Restart = "on-failure";
+        RestartSec = 5;
+      };
+      Install.WantedBy = [ "default.target" ];
+    };
+
+    pi-web = {
+      Unit = {
+        Description = "PI WEB browser gateway";
+        After = [
+          "network-online.target"
+          "pi-web-sessiond.service"
+        ];
+        Wants = [
+          "network-online.target"
+          "pi-web-sessiond.service"
+        ];
+      };
+      Service = {
+        ExecStart = "/usr/bin/env \"${pkgs.bash}/bin/bash\" -lc 'exec ${pkgs.pi-web}/bin/pi-web-server'";
+        Environment = [
+          "\"PI_WEB_CONFIG=${config.home.homeDirectory}/.config/pi-web/config.json\""
+          "\"SOPS_SECRETS=${config.home.sessionVariables.SOPS_SECRETS}\""
+          "\"PATH=${
+            lib.makeBinPath [
+              config.programs.pi-coding-agent.package
+              pkgs.nodejs
+              pkgs.bash
+              pkgs.coreutils
+              pkgs.git
+              pkgs.ripgrep
+            ]
+          }\""
+        ];
+        Restart = "on-failure";
+        RestartSec = 5;
+      };
+      Install.WantedBy = [ "default.target" ];
+    };
+  };
+
   programs =
     let
       sops-exec-env = "${lib.getExe pkgs.sops} exec-env ${config.home.sessionVariables.SOPS_SECRETS}";
