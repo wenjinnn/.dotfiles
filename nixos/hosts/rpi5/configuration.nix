@@ -269,7 +269,7 @@
     tailscale = {
       authKeyFile = config.sops.secrets.RPI5_TAILSCALE_AUTHKEY.path;
       useRoutingFeatures = "both";
-      extraSetFlags = [ "--advertise-exit-node" ];
+      extraUpFlags = [ "--advertise-exit-node" ];
     };
     syncthing = {
       enable = true;
