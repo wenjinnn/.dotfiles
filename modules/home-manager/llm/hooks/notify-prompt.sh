@@ -194,8 +194,8 @@ widfile="$(mktemp /tmp/pi-hooks-wid.XXXXXX 2>/dev/null || echo /tmp/pi-hooks-wid
 	printf '%s' "$wid" >"$widfile"
 
 	# 2) wait for the user to click "Focus Pi", then focus the resolved window
-	notify-send -u critical -a "pi-hooks" -A "focus=Focus Pi" "$title" "$body" >"$out" 2>/dev/null || true
-	if [ "$(cat "$out" 2>/dev/null)" = "focus" ]; then
+	notify-send -u critical -a "pi-hooks" -A "default=Focus Pi" "$title" "$body" >"$out" 2>/dev/null || true
+	if [ "$(cat "$out" 2>/dev/null)" = "default" ]; then
 		target="$(cat "$widfile" 2>/dev/null)"
 		if [ -z "$target" ]; then
 			# marker resolution failed — best-effort fallback: prefer the
