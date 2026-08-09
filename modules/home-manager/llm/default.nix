@@ -492,7 +492,8 @@ in
             "npm:pi-web-access"
             "npm:pi-hermes-memory"
             "npm:context-mode"
-            "npm:pi-goal-list-loop-audit"
+            "npm:@narumitw/pi-goal"
+            "npm:@tmustier/pi-ralph-wiggum"
             "npm:@narumitw/pi-usage"
             "npm:@gotgenes/pi-permission-system"
             # Model-reviewed auto-permission: registers the "pi-auto-review"
@@ -500,7 +501,6 @@ in
             # pi-permission-system's authorizerChain. Actively maintained
             # against pi 0.83 + pps v24 (this repo's stack).
             "npm:@erichll/pi-auto-review"
-            "npm:@llblab/pi-telegram"
           ];
           skills = [
             # anthropic file-format skills: slash-only (long descriptions,
@@ -537,7 +537,8 @@ in
             # as pi-web-access).
             path = "${config.home.homeDirectory}/.pi/agent/pi-goal-list-loop-audit.settings.json";
             config = {
-              auditorModel = "deepseek/deepseek-v4-pro";
+              auditorModel = "openai-codex/gpt-5.6-terra";
+              auditorThinkingLevel = "xhigh";
             };
           };
           "pi-permission-system" = {
