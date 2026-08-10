@@ -106,7 +106,6 @@ ships with these capabilities:
 - **Structured questions**: `ask_user_question` when requirements are ambiguous
 - **Task tracking**: `todo` for step-by-step progress
 - **Permission guardrails**: pi-permission-system — destructive/privileged commands (`rm -rf`, `mkfs`, `git reset --hard`, `sudo`, `git push`) are blocked or require confirmation
-- **Notifications**: pi-telegram — long-running work can push to Telegram
 - **MCP**: the `nixos` MCP server (`mcp-nixos`) is available for NixOS/Nix operations
 - **Token usage**: pi-usage tracks per-session usage
 

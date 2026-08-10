@@ -328,7 +328,6 @@ in
         package = pkgs.writeShellScriptBin "pi" ''
           export JDTLS_PATH="${pkgs.jdtls-pi-lens}/bin/jdtls-pi-lens"
           export PI_LENS_LOMBOK_JAR="${pkgs.lombok}/share/java/lombok.jar"
-          export TELEGRAM_BOT_TOKEN="$(${sops-exec-env} 'echo -n $TELEGRAM_BOT_TOKEN')"
           export PI_YAML_HOOKS_SHOW_ADVISORIES=0
           export PI_YAML_HOOKS_SHOW_LOAD_SUMMARY=0
 
@@ -441,7 +440,6 @@ in
             # pi-permission-system's authorizerChain. Actively maintained
             # against pi 0.83 + pps v24 (this repo's stack).
             "npm:@erichll/pi-auto-review"
-            "npm:@llblab/pi-telegram"
           ];
           skills = [
             # anthropic file-format skills: slash-only (long descriptions,
@@ -467,19 +465,6 @@ in
           "pi-web-access" = {
             config = {
               workflow = "auto-summary";
-            };
-          };
-          "pi-goal-list-loop-audit" = {
-            # Global settings file — NOT the conventional
-            # extensions/<name>/config.json: goal-settings.ts hardcodes
-            # ~/.pi/agent/pi-goal-list-loop-audit.settings.json.
-            # copy mode keeps it writable for /glla runtime edits, and
-            # every rebuild re-syncs the declared values (same trade-off
-            # as pi-web-access).
-            path = "${config.home.homeDirectory}/.pi/agent/pi-goal-list-loop-audit.settings.json";
-            config = {
-              auditorModel = "openai-codex/gpt-5.6-terra";
-              auditorThinkingLevel = "xhigh";
             };
           };
           "pi-permission-system" = {
