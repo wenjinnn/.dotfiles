@@ -146,6 +146,7 @@ in
     browserpass
     tldr
     ast-grep
+    libreoffice
   ];
 
   # xresources.properties = {
