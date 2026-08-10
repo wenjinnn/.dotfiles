@@ -272,11 +272,6 @@
       useRoutingFeatures = "both";
       extraUpFlags = [ "--advertise-exit-node" ];
     };
-    pi-web = {
-      enable = true;
-      # Keep PI WEB private; remote clients use an SSH tunnel to port 8504.
-      host = "127.0.0.1";
-    };
     syncthing = {
       enable = true;
       openDefaultPorts = true;
