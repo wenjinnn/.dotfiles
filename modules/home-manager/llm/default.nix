@@ -126,6 +126,22 @@ in
     pi-theme
   ];
 
+  # pi-yaml-hooks has no setting for hiding loader advisories. Keep explicit
+  # custom-tool events, but suppress only this informational UI entry.
+  home.activation.piYamlHooksAdvisories = lib.hm.dag.entryAfter [ "installPackages" ] ''
+    hook_dir="${config.home.homeDirectory}/.pi/agent/npm/node_modules/pi-yaml-hooks"
+    for hook_js in "$hook_dir/src/pi/runtime-registry.ts" "$hook_dir/dist/pi/runtime-registry.js"; do
+      [ -f "$hook_js" ] || continue
+      # Pi loads the package's TypeScript entrypoint; patch both source and
+      # dist because npm/package updates may switch the loaded representation.
+      sed -i \
+        -e 's/process.env.PI_YAML_HOOKS_SHOW_ADVISORIES !== 0/process.env.PI_YAML_HOOKS_SHOW_ADVISORIES !== "0"/' \
+        -e 's/if (loaded.advisories.length > 0) {/if (process.env.PI_YAML_HOOKS_SHOW_ADVISORIES !== "0" \&\& loaded.advisories.length > 0) {/' \
+        -e 's/console.info(summary);/if (process.env.PI_YAML_HOOKS_SHOW_LOAD_SUMMARY !== "0") console.info(summary);/' \
+        "$hook_js"
+    done
+  '';
+
   home.packages = with pkgs; [
     qwen-code
     mcp-nixos
@@ -310,6 +326,8 @@ in
           export JDTLS_PATH="${pkgs.jdtls-pi-lens}/bin/jdtls-pi-lens"
           export PI_LENS_LOMBOK_JAR="${pkgs.lombok}/share/java/lombok.jar"
           export TELEGRAM_BOT_TOKEN="$(${sops-exec-env} 'echo -n $TELEGRAM_BOT_TOKEN')"
+          export PI_YAML_HOOKS_SHOW_ADVISORIES=0
+          export PI_YAML_HOOKS_SHOW_LOAD_SUMMARY=0
 
           exec "${inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi}/bin/pi" "$@"
         '';
@@ -409,6 +427,7 @@ in
             "npm:pi-mcp-adapter"
             "npm:pi-web-access"
             "npm:pi-hermes-memory"
+            "npm:pi-interactive-shell"
             "npm:context-mode"
             "npm:@narumitw/pi-goal"
             "npm:@tmustier/pi-ralph-wiggum"
@@ -419,6 +438,7 @@ in
             # pi-permission-system's authorizerChain. Actively maintained
             # against pi 0.83 + pps v24 (this repo's stack).
             "npm:@erichll/pi-auto-review"
+            "npm:@llblab/pi-telegram"
           ];
           skills = [
             # anthropic file-format skills: slash-only (long descriptions,
