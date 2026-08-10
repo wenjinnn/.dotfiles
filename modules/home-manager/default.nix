@@ -40,6 +40,7 @@
   oh-my-pi = import ./oh-my-pi.nix;
   pi-theme = import ./pi-theme.nix;
   pi-plugins = import ./pi-plugins.nix;
+  pi-web = import ./pi-web.nix;
   ghostty = import ./ghostty.nix;
   noctalia = import ./noctalia.nix;
 }
