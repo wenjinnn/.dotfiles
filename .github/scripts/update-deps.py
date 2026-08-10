@@ -307,10 +307,17 @@ def update_npm_deps_hash(path, owner, name, tag):
 
 
 def set_output(name, value):
+    value = str(value)
     if GITHUB_OUTPUT:
         try:
             with open(GITHUB_OUTPUT, "a", encoding="utf-8") as f:
-                f.write(f"{name}={value}\n")
+                if "\n" in value:
+                    delimiter = f"ghadelimiter_{os.getpid()}_{time.time_ns()}"
+                    while delimiter in value:
+                        delimiter += "_"
+                    f.write(f"{name}<<{delimiter}\n{value}\n{delimiter}\n")
+                else:
+                    f.write(f"{name}={value}\n")
         except OSError as e:
             print(f"⚠️  could not write GITHUB_OUTPUT: {e}")
     print(f"[output] {name}={value}")
