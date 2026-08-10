@@ -15,6 +15,38 @@
 }:
 let
   cfg = config.programs.pi-coding-agent;
+  palette = config.lib.stylix.colors.withHashtag;
+
+  # Base16 gives us semantic foreground colors, but not enough tinted surfaces
+  # for pi's tool/message states. Generate those variants from the same palette.
+  hexToRgb =
+    color:
+    let
+      value = lib.removePrefix "#" color;
+    in
+    map (offset: lib.fromHexString (builtins.substring offset 2 value)) [
+      0
+      2
+      4
+    ];
+  padHex =
+    value:
+    let
+      hex = lib.toHexString value;
+    in
+    if lib.strings.stringLength hex == 1 then "0${hex}" else hex;
+  rgbToHex = channels: "#${lib.concatStringsSep "" (map padHex channels)}";
+  tint =
+    background: foreground: weight:
+    let
+      backgroundRgb = hexToRgb background;
+      foregroundRgb = hexToRgb foreground;
+    in
+    rgbToHex (
+      lib.imap0 (
+        index: channel: lib.floor (channel * (1 - weight) + builtins.elemAt foregroundRgb index * weight)
+      ) backgroundRgb
+    );
 in
 {
   options.programs.pi-coding-agent.stylixTheme = lib.mkOption {
@@ -35,65 +67,92 @@ in
         "$schema" =
           "https://raw.githubusercontent.com/earendil-works/pi/main/packages/coding-agent/src/modes/interactive/theme/theme-schema.json";
         name = "stylix";
-        colors = with config.lib.stylix.colors.withHashtag; {
-          accent = base0D;
-          border = base03;
-          borderAccent = base0D;
-          borderMuted = base02;
-          success = base0B;
-          error = base08;
-          warning = base0A;
-          muted = base04;
-          dim = base03;
-          text = "";
-          thinkingText = base04;
+        vars = {
+          accent = palette.base0D;
+          text = palette.base05;
+          muted = palette.base04;
+          dim = palette.base03;
+          selectedBg = palette.base02;
+          userMsgBg = palette.base01;
+          customMsgBg = tint palette.base00 palette.base0E 0.16;
+          toolPendingBg = tint palette.base00 palette.base0D 0.12;
+          toolSuccessBg = tint palette.base00 palette.base0B 0.12;
+          toolErrorBg = tint palette.base00 palette.base08 0.12;
+          infoBg = tint palette.base00 palette.base0A 0.16;
+          pageBg = palette.base00;
+          cardBg = palette.base01;
+        };
+        colors = {
+          # Core UI/status colors.
+          accent = "accent";
+          border = palette.base03;
+          borderAccent = palette.base0D;
+          borderMuted = palette.base02;
+          success = palette.base0B;
+          error = palette.base08;
+          warning = palette.base0A;
+          muted = "muted";
+          dim = "dim";
+          text = "text";
+          thinkingText = palette.base04;
 
-          selectedBg = base02;
-          userMessageBg = base01;
-          userMessageText = "";
-          customMessageBg = base01;
-          customMessageText = "";
-          customMessageLabel = base0D;
-          toolPendingBg = base00;
-          toolSuccessBg = base01;
-          toolErrorBg = base01;
-          toolTitle = base0D;
-          toolOutput = "";
+          # Keep every message/tool surface distinct, like pi's native theme.
+          selectedBg = "selectedBg";
+          userMessageBg = "userMsgBg";
+          userMessageText = "text";
+          customMessageBg = "customMsgBg";
+          customMessageText = "text";
+          customMessageLabel = palette.base0E;
+          toolPendingBg = "toolPendingBg";
+          toolSuccessBg = "toolSuccessBg";
+          toolErrorBg = "toolErrorBg";
+          toolTitle = "text";
+          toolOutput = "muted";
 
-          mdHeading = base0E;
-          mdLink = base0D;
-          mdLinkUrl = base0C;
-          mdCode = base0B;
-          mdCodeBlock = "";
-          mdCodeBlockBorder = base03;
-          mdQuote = base04;
-          mdQuoteBorder = base03;
-          mdHr = base03;
-          mdListBullet = base0C;
+          # Markdown.
+          mdHeading = palette.base0E;
+          mdLink = palette.base0D;
+          mdLinkUrl = palette.base0C;
+          mdCode = palette.base0B;
+          mdCodeBlock = palette.base0B;
+          mdCodeBlockBorder = palette.base03;
+          mdQuote = palette.base04;
+          mdQuoteBorder = palette.base03;
+          mdHr = palette.base03;
+          mdListBullet = palette.base0C;
 
-          toolDiffAdded = base0B;
-          toolDiffRemoved = base08;
-          toolDiffContext = base04;
+          # Tool diffs.
+          toolDiffAdded = palette.base0B;
+          toolDiffRemoved = palette.base08;
+          toolDiffContext = palette.base04;
 
-          syntaxComment = base03;
-          syntaxKeyword = base0E;
-          syntaxFunction = base0D;
-          syntaxVariable = base08;
-          syntaxString = base0B;
-          syntaxNumber = base09;
-          syntaxType = base0A;
-          syntaxOperator = base0C;
-          syntaxPunctuation = base05;
+          # Syntax highlighting.
+          syntaxComment = palette.base03;
+          syntaxKeyword = palette.base0E;
+          syntaxFunction = palette.base0D;
+          syntaxVariable = palette.base08;
+          syntaxString = palette.base0B;
+          syntaxNumber = palette.base09;
+          syntaxType = palette.base0A;
+          syntaxOperator = palette.base0C;
+          syntaxPunctuation = palette.base05;
 
-          thinkingOff = base03;
-          thinkingMinimal = base0D;
-          thinkingLow = base0C;
-          thinkingMedium = base0B;
-          thinkingHigh = base0A;
-          thinkingXhigh = base09;
-          thinkingMax = base08;
+          # Thinking-level border hierarchy.
+          thinkingOff = palette.base03;
+          thinkingMinimal = palette.base0D;
+          thinkingLow = palette.base0C;
+          thinkingMedium = palette.base0B;
+          thinkingHigh = palette.base0A;
+          thinkingXhigh = palette.base09;
+          thinkingMax = palette.base08;
 
-          bashMode = base0A;
+          # `!` shell mode gets the success/green semantic color.
+          bashMode = palette.base0B;
+        };
+        export = {
+          pageBg = "pageBg";
+          cardBg = "cardBg";
+          infoBg = "infoBg";
         };
       };
     };
