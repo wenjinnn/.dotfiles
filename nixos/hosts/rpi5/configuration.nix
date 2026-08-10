@@ -24,6 +24,7 @@
     sops
     firewall
     tailscale
+    pi-web
     cachix
     podman
     ../../users.nix
@@ -271,6 +272,11 @@
       useRoutingFeatures = "both";
       extraUpFlags = [ "--advertise-exit-node" ];
     };
+    pi-web = {
+      enable = true;
+      # Keep PI WEB private; remote clients use an SSH tunnel to port 8504.
+      host = "127.0.0.1";
+    };
     syncthing = {
       enable = true;
       openDefaultPorts = true;
@@ -365,7 +371,7 @@
     let
       flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
     in
-    {
+    builtins.seq flakeInputs {
       settings = {
         # Enable flakes and new 'nix' command
         experimental-features = "nix-command flakes";
