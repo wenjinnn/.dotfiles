@@ -124,6 +124,7 @@ in
     oh-my-pi
     pi-plugins
     pi-theme
+    pi-web
   ];
 
   # pi-yaml-hooks has no setting for hiding loader advisories. Keep explicit
@@ -149,6 +150,8 @@ in
     codex-acp
     pi-acp
   ];
+
+  services.pi-web.enable = true;
 
   programs =
     let
