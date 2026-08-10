@@ -223,6 +223,18 @@ def file_field(text, name):
 # ------------------------------------------------------------------- prefetch
 
 
+def _error_output(error):
+    """Return the useful tail of captured subprocess output."""
+    output = []
+    for attr in ("stderr", "stdout", "output"):
+        value = getattr(error, attr, "")
+        if isinstance(value, bytes):
+            value = value.decode(errors="replace")
+        if value:
+            output.append(value.strip())
+    return "\n".join(output)[-4000:]
+
+
 def prefetch_src_hash(owner, name, rev):
     last = None
     for attempt in range(3):
@@ -239,16 +251,21 @@ def prefetch_src_hash(owner, name, rev):
             if h and h != "null":
                 return h
             last = RuntimeError(f"empty hash in output: {proc.stdout[:200]!r}")
-        except (
-            subprocess.CalledProcessError,
-            json.JSONDecodeError,
-            OSError,
-            RuntimeError,
-        ) as e:
+        except subprocess.CalledProcessError as e:
+            detail = _error_output(e)
+            last = RuntimeError(f"{e}" + (f":\n{detail}" if detail else ""))
+        except subprocess.TimeoutExpired as e:
+            detail = _error_output(e)
+            last = RuntimeError(
+                f"timed out after {e.timeout}s" + (f":\n{detail}" if detail else "")
+            )
+        except (json.JSONDecodeError, OSError, RuntimeError) as e:
             last = e
         print(f"  ⚠️  prefetch attempt {attempt + 1}/3 failed: {last}")
         if attempt < 2:
-            time.sleep(15 * (attempt + 1))
+            delay = 30 * (2**attempt)
+            print(f"  ⏳ retrying in {delay}s")
+            time.sleep(delay)
     raise RuntimeError(f"could not prefetch {owner}/{name}@{rev}: {last}")
 
 
