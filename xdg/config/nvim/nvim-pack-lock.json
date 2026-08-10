@@ -5,7 +5,7 @@
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "codecompanion.nvim": {
-      "rev": "b27a1a734fdaf73e40328091cb5929d65aaa09e9",
+      "rev": "f1afd02537c68b3dd6e0d41d4adda5ef538e0473",
       "src": "https://github.com/olimorris/codecompanion.nvim"
     },
     "conform.nvim": {
@@ -53,7 +53,7 @@
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
-      "rev": "3d3321b560a63ff92a8692401f303a5123336b86",
+      "rev": "c9f9ed6c1892f629ea399f4ee7905f2686fa13f2",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
