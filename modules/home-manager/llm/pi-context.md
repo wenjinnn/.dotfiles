@@ -31,13 +31,13 @@ Prefer delegating to subagents for heavy or parallelizable work instead of doing
 </subagent-first>
 
 <pi-interactive-shell>
-Use `interactive_shell` for commands expected to run longer than a few seconds when the user needs visibility, takeover, manual interruption, interactive input, or TUI support.
+Prefer `interactive_shell` for commands that may block on downloads, dependency resolution, or remote services—even when they are otherwise non-interactive. Network-dependent commands such as `nix build`, `nix develop`, `nix flake update`, `npm install`, package-manager commands, `git clone`, and remote fetches can stall for a long time; foreground supervision makes progress visible and allows interruption or recovery.
 
-**When:** Long-running TUI or interactive CLIs, servers or watchers the user should observe, and commands the user may need to take over or stop.
+**When:** Commands expected to run longer than a few seconds, especially network-dependent builds and installs; long-running TUI or interactive CLIs; and servers or watchers the user should observe.
 
-**Not when:** Unattended commands whose results only need to be checked, summarized, or searched.
+**Not when:** Short, deterministic local commands whose results only need to be checked, summarized, or searched.
 
-**How:** Start the command with `interactive_shell` and keep the session foreground for user takeover. Clean up finite test sessions once they complete.
+**How:** Start potentially blocking commands with `interactive_shell` and keep the session foreground for user takeover. Clean up finite sessions once they complete.
 
-**Principle:** `interactive_shell` provides execution visibility and control. Use context-mode (`ctx_execute` or `ctx_batch_execute`) for unattended execution, parallel commands, and output summarization; do not run the same task through both.
+**Principle:** Prefer `interactive_shell` when the main risk is an invisible network stall. Use context-mode (`ctx_execute` or `ctx_batch_execute`) for unattended local execution, parallel commands, and output summarization; do not run the same command through both.
 </pi-interactive-shell>
