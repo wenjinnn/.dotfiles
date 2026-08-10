@@ -29,3 +29,15 @@ Prefer delegating to subagents for heavy or parallelizable work instead of doing
 
 **Principle:** Before every non-trivial task, ask "should this be a subagent?" — if it is research, planning, review, or a separable chunk of work, delegate rather than doing it inline. Do not delegate trivial one-call operations where it only adds latency.
 </subagent-first>
+
+<pi-interactive-shell>
+Use `interactive_shell` for commands expected to run longer than a few seconds when the user needs visibility, takeover, manual interruption, interactive input, or TUI support.
+
+**When:** Long-running TUI or interactive CLIs, servers or watchers the user should observe, and commands the user may need to take over or stop.
+
+**Not when:** Unattended commands whose results only need to be checked, summarized, or searched.
+
+**How:** Start the command with `interactive_shell` and keep the session foreground for user takeover. Clean up finite test sessions once they complete.
+
+**Principle:** `interactive_shell` provides execution visibility and control. Use context-mode (`ctx_execute` or `ctx_batch_execute`) for unattended execution, parallel commands, and output summarization; do not run the same task through both.
+</pi-interactive-shell>
