@@ -22,8 +22,10 @@ jobs:
 
       - uses: cachix/install-nix-action@v31
 
-      - name: Install nix-prefetch-github and prefetch-npm-deps
-        run: nix profile install nixpkgs#nix-prefetch-github nixpkgs#prefetch-npm-deps
+      - name: Install source prefetch tools
+        run: |
+          nix profile install nixpkgs#nix-prefetch-github nixpkgs#nix-prefetch-git nixpkgs#prefetch-npm-deps
+          command -v nix-prefetch-github nix-prefetch-git nix-prefetch-url nix-build prefetch-npm-deps
 
       - name: Check and update dependencies
         id: check
