@@ -124,7 +124,6 @@ in
     oh-my-pi
     pi-plugins
     pi-theme
-    pi-web
   ];
 
   home.packages = with pkgs; [
@@ -134,8 +133,6 @@ in
     codex-acp
     pi-acp
   ];
-
-  services.pi-web.enable = true;
 
   programs =
     let
