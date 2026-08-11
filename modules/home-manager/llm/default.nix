@@ -391,11 +391,6 @@ in
                 thinking = "xhigh";
                 fallbackModels = [ "deepseek/deepseek-v4-pro" ];
               };
-              planner = {
-                model = "openai-codex/gpt-5.6-terra";
-                thinking = "xhigh";
-                fallbackModels = [ "deepseek/deepseek-v4-pro" ];
-              };
               researcher = {
                 model = "openai-codex/gpt-5.6-terra";
                 thinking = "high";
@@ -408,7 +403,7 @@ in
               };
               reviewer = {
                 model = "openai-codex/gpt-5.6-terra";
-                thinking = "xhigh";
+                thinking = "high";
                 fallbackModels = [ "deepseek/deepseek-v4-flash" ];
               };
             };
