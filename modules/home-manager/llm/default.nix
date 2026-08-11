@@ -359,24 +359,6 @@ in
             openrouter = {
               apiKey = "!${sops-exec-env} 'echo -n $OPENROUTER_API_KEY'";
             };
-            # Codex Plus subscription models: the built-in catalog caps the
-            # GPT-5.6 family at 272000 context so requests stay inside OpenAI's
-            # short-context pricing tier. The models actually support 1.05M;
-            # opt in here. Note: Codex usage is token-based — longer contexts
-            # drain the Plus allowance faster (docs/models.md, modelOverrides).
-            openai-codex = {
-              modelOverrides = {
-                "gpt-5.6-terra" = {
-                  contextWindow = 1050000;
-                };
-                "gpt-5.6-sol" = {
-                  contextWindow = 1050000;
-                };
-                "gpt-5.6-luna" = {
-                  contextWindow = 1050000;
-                };
-              };
-            };
           };
         };
         settings = {
