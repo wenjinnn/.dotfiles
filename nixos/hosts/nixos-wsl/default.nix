@@ -35,8 +35,6 @@
     "br_netfilter"
   ];
 
-  services.ollama.package = pkgs.ollama-rocm;
-
   virtualisation.docker.rootless.daemon.settings = {
     insecure-registries = [ "192.168.1.217:8082" ];
   };
