@@ -177,7 +177,7 @@ in
         };
       };
       claude-code = {
-        enable = true;
+        enable = false;
         package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code;
         enableMcpIntegration = true;
         marketplaces = {
@@ -270,7 +270,7 @@ in
         // mattpocock-skills;
       };
       opencode = {
-        enable = true;
+        enable = false;
         package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
         enableMcpIntegration = true;
         settings = {
@@ -313,7 +313,7 @@ in
         // ponytail-skills;
       };
       antigravity-cli = {
-        enable = true;
+        enable = false;
         package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.gemini-cli;
         enableMcpIntegration = true;
       };
@@ -326,10 +326,10 @@ in
         # project root, shares nvim's jdtls cache, see pkgs/jdtls-pi-lens),
         # PI_LENS_LOMBOK_JAR -> the nixpkgs lombok jar used by nvim too.
         package = pkgs.writeShellScriptBin "pi" ''
-          export JDTLS_PATH="${pkgs.jdtls-pi-lens}/bin/jdtls-pi-lens"
-          export PI_LENS_LOMBOK_JAR="${pkgs.lombok}/share/java/lombok.jar"
-          export PI_YAML_HOOKS_SHOW_ADVISORIES=0
-          export PI_YAML_HOOKS_SHOW_LOAD_SUMMARY=0
+            export JDTLS_PATH="${pkgs.jdtls-pi-lens}/bin/jdtls-pi-lens"
+            export PI_LENS_LOMBOK_JAR="${pkgs.lombok}/share/java/lombok.jar"
+            export PI_YAML_HOOKS_SHOW_ADVISORIES=0
+            export PI_YAML_HOOKS_SHOW_LOAD_SUMMARY=0
 
           exec "${inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi}/bin/pi" "$@"
         '';
@@ -381,12 +381,12 @@ in
               worker = {
                 model = "openai-codex/gpt-5.6-terra";
                 thinking = "high";
-                fallbackModels = [ "deepseek/deepseek-v4-flash" ];
+                fallbackModels = [ "deepseek/deepseek-v4-pro" ];
               };
               reviewer = {
                 model = "openai-codex/gpt-5.6-terra";
                 thinking = "high";
-                fallbackModels = [ "deepseek/deepseek-v4-flash" ];
+                fallbackModels = [ "deepseek/deepseek-v4-pro" ];
               };
             };
           };
@@ -628,7 +628,7 @@ in
         };
       };
       oh-my-pi = {
-        enable = true;
+        enable = false;
         package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.omp;
         settings = {
           modelRoles = {
