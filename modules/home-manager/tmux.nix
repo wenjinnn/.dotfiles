@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   programs.tmux = {
     enable = true;
-    prefix = "C-q";
+    prefix = "C-Space";
     aggressiveResize = true;
     clock24 = true;
     customPaneNavigationAndResize = true;
