@@ -368,7 +368,7 @@ in
           defaultProvider = "openai-codex";
           defaultModel = "gpt-5.6-luna";
           defaultThinkingLevel = "high";
-          quietStartup = true;
+          # quietStartup = true;
           subagents = {
             agentOverrides = {
               oracle = {
@@ -625,8 +625,10 @@ in
             "ctrl+n"
           ];
           "app.model.cycleForward" = [ "ctrl+alt+p" ];
-          # C-n is occupied by tui.select.down, naming filter moved to Ctrl+Shift+N
+          # C-n/C-p are occupied by selection movement; remap picker actions.
+          "app.session.togglePath" = [ "ctrl+alt+l" ];
           "app.session.toggleNamedFilter" = [ "ctrl+shift+n" ];
+          "app.models.toggleProvider" = [ "ctrl+alt+v" ];
         };
       };
       oh-my-pi = {
