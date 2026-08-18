@@ -270,7 +270,12 @@ later(function()
   })
   -- completion
   require('mini.cmdline').setup()
-  require('mini.completion').setup()
+  require('mini.completion').setup({
+    mappings = {
+      force_twostep = '<C-x><C-x>',
+      force_fallback = '<C-x><C-b>',
+    }
+  })
 
   local snippet_path = vim.fn.stdpath('config') .. '/snippets'
   -- snippet support and preset
