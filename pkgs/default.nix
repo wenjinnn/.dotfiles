@@ -7,6 +7,7 @@
   wallpaper-switch = pkgs.callPackage ./wallpaper-switch { };
   fhs = pkgs.callPackage ./fhs { };
   rofi-screenshot-wayland = pkgs.callPackage ./rofi-screenshot-wayland { };
+  qmd = pkgs.callPackage ./qmd { };
   oh-my-pi = pkgs.callPackage ./oh-my-pi/package.nix { };
   pi-acp = pkgs.callPackage ./pi-acp/package.nix { };
   pi-web = pkgs.callPackage ./pi-web/package.nix { };

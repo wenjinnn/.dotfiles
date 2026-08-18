@@ -149,6 +149,7 @@ in
     claude-agent-acp
     codex-acp
     pi-acp
+    qmd
   ];
 
   services.pi-web.enable = true;
@@ -407,9 +408,8 @@ in
             "npm:pi-subagents"
             "npm:pi-mcp-adapter"
             "npm:pi-web-access"
-            "npm:pi-hermes-memory"
-            "npm:pi-interactive-shell"
             "npm:context-mode"
+            "npm:pi-memory"
             "npm:@narumitw/pi-goal"
             "npm:@tmustier/pi-ralph-wiggum"
             "npm:@narumitw/pi-usage"
