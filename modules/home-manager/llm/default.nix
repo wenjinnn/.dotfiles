@@ -102,17 +102,34 @@ let
     "tdd"
     "resolving-merge-conflicts"
   ];
-  # mattpocock skills the upstream repo marks as deprecated: drop entirely
+  # Matt Pocock skills the upstream repo marks as deprecated: drop entirely
   mattDeprecated = [
     "design-an-interface"
     "qa"
     "request-refactor-plan"
     "ubiquitous-language"
   ];
+  # Experimental and non-current-development skills: keep out of Pi entirely.
+  mattExcluded = [
+    "ask-matt"
+    "claude-handoff"
+    "setup-ts-deep-modules"
+    "writing-beats"
+    "writing-fragments"
+    "writing-shape"
+    "git-guardrails-claude-code"
+    "migrate-to-shoehorn"
+    "scaffold-exercises"
+    "setup-pre-commit"
+  ];
   mattName = key: lib.strings.removePrefix "matt-" key;
   mattpocock-adjusted = lib.mapAttrs (
     key: dir: if lib.elem (mattName key) mattRealtime then dir else slashOnlySkill dir
-  ) (lib.filterAttrs (key: _: !(lib.elem (mattName key) mattDeprecated)) mattpocock-skills);
+  ) (
+    lib.filterAttrs (
+      key: _: !(lib.elem (mattName key) (mattDeprecated ++ mattExcluded))
+    ) mattpocock-skills
+  );
   # ponytail core stays realtime; audit/debt/gain/help/review go slash-only
   ponytail-adjusted = lib.mapAttrs (
     key: dir: if key == "ponytail-ponytail" then dir else slashOnlySkill dir
