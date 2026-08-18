@@ -1,101 +1,78 @@
 # QMD - on-device hybrid search for markdown files (BM25 + vector + LLM rerank)
 # https://github.com/tobi/qmd
 #
-# Adapted from the upstream flake.nix (MIT): bun install (production deps) into a
-# fixed-output derivation, node-gyp rebuild for better-sqlite3, then wrap
-# `bun src/cli/qmd.ts` with sqlite on LD_LIBRARY_PATH.
+# npm 路线: npm 包自带预编译 dist/, bin/qmd 是纯 node 脚本 (运行时不需要 bun)。
+# - 依赖通过 buildNpmPackage 的离线 store (npmDepsHash) 安装, 沙箱内零网络
+# - 跳过 install 脚本 (prebuild 下载在无网络沙箱里会失败), 改为 postInstall 里
+#   node-gyp 编译 better-sqlite3 (上游 flake 同款做法)
+# - src 用 runCommand 把预生成的 package-lock.json 并进 npm tarball
 { pkgs, lib }:
 
 let
   version = "2.8.3";
-  src = pkgs.fetchFromGitHub {
-    owner = "tobi";
-    repo = "qmd";
-    rev = "facd35e01359e59d938bc9418e93fb9318addee3"; # v2.8.3
-    hash = "sha256-/7Z94r/9rXqzKlz/YkB6/nToSCPamV4Dnxm8EhelTDo=";
-  };
 
-  # node_modules via bun install (production only, no scripts run)
-  nodeModules = pkgs.stdenvNoCC.mkDerivation {
-    pname = "qmd-node-modules";
-    inherit version src;
-
-    nativeBuildInputs = [ pkgs.bun ];
-
-    dontConfigure = true;
-
-    buildPhase = ''
-      export HOME=$(mktemp -d)
-
-      bun install \
-        --backend copyfile \
-        --frozen-lockfile \
-        --ignore-scripts \
-        --no-progress \
-        --production
-    '';
-
-    installPhase = ''
-      mkdir -p $out
-      cp -R node_modules $out/
-    '';
-
-    dontFixup = true;
-
-    # x86_64-linux hash from the upstream flake.nix (re-verify on bump;
-    # a mismatch reports the correct `got:` value)
-    outputHash = "sha256-jvq2TO0SxEV1BHyT6C32VQ916wMTM/D1nsV2rNcJQSo=";
-    outputHashAlgo = "sha256";
-    outputHashMode = "recursive";
+  tarball = pkgs.fetchurl {
+    url = "https://registry.npmjs.org/@tobilu/qmd/-/qmd-${version}.tgz";
+    hash = "sha256-LmCCmROgxkYjSpBc79YQQxZ6E5L9z9GbxU+JCvicoPA=";
   };
 in
-pkgs.stdenv.mkDerivation {
+pkgs.buildNpmPackage {
   pname = "qmd";
-  inherit version src;
+  inherit version;
+
+  src = pkgs.runCommand "qmd-src-${version}" { nativeBuildInputs = [ pkgs.jq ]; } ''
+    mkdir -p $out
+    tar xzf ${tarball} -C $out --strip-components=1
+    jq 'del(.devDependencies, .peerDependencies) | .optionalDependencies |= with_entries(select(.key == "sqlite-vec-linux-x64"))' \
+      $out/package.json > $out/package.json.tmp
+    mv $out/package.json.tmp $out/package.json
+    cp ${./package-lock.json} $out/package-lock.json
+  '';
+
+  npmDepsHash = "sha256-7+lrimCtgFcVVnuLProO0jChTtVdDU+Gn3YxCIXpLds=";
+
+  # dist/ 已在 npm 包里预编译 (src/ 不在包里, 无法重新构建), 跳过 npm run build
+  dontNpmBuild = true;
+
+  # 不跑 install 脚本 (better-sqlite3/node-llama-cpp 的 prebuild 需要网络下载)
+  npmInstallFlags = [ "--ignore-scripts" ];
+  dontNpmInstall = true;
 
   nativeBuildInputs = [
-    pkgs.bun
-    pkgs.makeWrapper
     pkgs.nodejs
     pkgs.node-gyp
-    pkgs.python3 # node-gyp needs a Python to build better-sqlite3
+    pkgs.python3 # node-gyp 编译 better-sqlite3 需要
+    pkgs.makeWrapper
   ];
 
   buildInputs = [ pkgs.sqlite ];
 
-  buildPhase = ''
-    export HOME=$(mktemp -d)
-
-    cp -R ${nodeModules}/node_modules ./
-    chmod -R u+w node_modules
-
-    (cd node_modules/better-sqlite3 && node-gyp rebuild --release)
+  installPhase = ''
+    runHook preInstall
+    packageOut="$out/lib/node_modules/@tobilu/qmd"
+    mkdir -p "$packageOut" "$out/bin"
+    cp -r ./* "$packageOut/"
+    makeWrapper "$packageOut/bin/qmd" "$out/bin/qmd"
+    runHook postInstall
   '';
 
-  installPhase = ''
-    mkdir -p $out/lib/qmd
-    mkdir -p $out/bin
+  postInstall = ''
+    # 编译 better-sqlite3 原生绑定 (与上游 flake 相同)
+    cd "$out/lib/node_modules/@tobilu/qmd/node_modules/better-sqlite3"
+    node-gyp rebuild --release
+  '';
 
-    cp -r node_modules $out/lib/qmd/
-    cp -r src $out/lib/qmd/
-    cp -r skills $out/lib/qmd/
-    cp package.json $out/lib/qmd/
-
-    # Wrap `bun src/cli/qmd.ts` directly (upstream approach, mirrors bin/qmd):
-    # quiet llama/ggml native logs for `qmd mcp` (stdio is JSON-RPC), and
-    # disable Metal residency sets on Darwin so ggml's process-static
-    # destructor does not dump a stack trace after a successful query.
-    makeWrapper ${pkgs.bun}/bin/bun $out/bin/qmd \
-      --add-flags "$out/lib/qmd/src/cli/qmd.ts" \
+  postFixup = ''
+    # 运行时 sqlite 库路径 (sqlite-vec 扩展加载用), 镜像上游 wrapper
+    wrapProgram "$out/bin/qmd" \
       --set DYLD_LIBRARY_PATH "${pkgs.sqlite.out}/lib" \
-      --set LD_LIBRARY_PATH "${pkgs.sqlite.out}/lib${lib.optionalString pkgs.stdenv.hostPlatform.isLinux ":${pkgs.stdenv.cc.libc.out}/lib:${pkgs.stdenv.cc.cc.lib}/lib"}" \
-      --run 'if [ "$1" = mcp ]; then export LLAMA_LOG_LEVEL="''${LLAMA_LOG_LEVEL:-error}"; export GGML_LOG_LEVEL="''${GGML_LOG_LEVEL:-error}"; export GGML_BACKEND_SILENT="''${GGML_BACKEND_SILENT:-1}"; fi; if [ "$(uname -s)" = Darwin ] && [ "''${QMD_METAL_KEEP_RESIDENCY:-}" != 1 ]; then export GGML_METAL_NO_RESIDENCY="''${GGML_METAL_NO_RESIDENCY:-1}"; fi'
+      --set LD_LIBRARY_PATH "${pkgs.sqlite.out}/lib${lib.optionalString pkgs.stdenv.hostPlatform.isLinux ":${pkgs.stdenv.cc.libc.out}/lib:${pkgs.stdenv.cc.cc.lib}/lib"}"
   '';
 
   meta = with lib; {
     description = "On-device search engine for markdown notes, meeting transcripts, and knowledge bases";
     homepage = "https://github.com/tobi/qmd";
     license = licenses.mit;
-    platforms = platforms.unix;
+    platforms = [ "x86_64-linux" ];
   };
 }

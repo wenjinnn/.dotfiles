@@ -29,15 +29,3 @@ Prefer delegating to subagents for heavy or parallelizable work instead of doing
 
 **Principle:** Before every non-trivial task, ask "should this be a subagent?" — if it is research, planning, review, or a separable chunk of work, delegate rather than doing it inline. Do not delegate trivial one-call operations where it only adds latency.
 </subagent-first>
-
-<pi-interactive-shell>
-Prefer `interactive_shell` for commands that may block on downloads, dependency resolution, or remote services—even when they are otherwise non-interactive. Network-dependent commands such as `nix build`, `nix develop`, `nix flake update`, `npm install`, package-manager commands, `git clone`, and remote fetches can stall for a long time; foreground supervision makes progress visible and allows interruption or recovery.
-
-**When:** Commands expected to run longer than a few seconds, especially network-dependent builds and installs; long-running TUI or interactive CLIs; and servers or watchers the user should observe.
-
-**Not when:** Short, deterministic local commands whose results only need to be checked, summarized, or searched.
-
-**How:** Start potentially blocking commands with `interactive_shell` and keep the session foreground for user takeover. Clean up finite sessions once they complete.
-
-**Principle:** Prefer `interactive_shell` when the main risk is an invisible network stall. Use context-mode (`ctx_execute` or `ctx_batch_execute`) for unattended local execution, parallel commands, and output summarization; do not run the same command through both.
-</pi-interactive-shell>
