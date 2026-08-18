@@ -331,7 +331,9 @@ in
             export PI_YAML_HOOKS_SHOW_ADVISORIES=0
             export PI_YAML_HOOKS_SHOW_LOAD_SUMMARY=0
 
-          exec "${inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi}/bin/pi" "$@"
+          exec "${
+            inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi.override { useBun = false; }
+          }/bin/pi" "$@"
         '';
         extraPackages = [
           pkgs.nodejs
