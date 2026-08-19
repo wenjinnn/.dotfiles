@@ -123,13 +123,13 @@ let
     "setup-pre-commit"
   ];
   mattName = key: lib.strings.removePrefix "matt-" key;
-  mattpocock-adjusted = lib.mapAttrs (
-    key: dir: if lib.elem (mattName key) mattRealtime then dir else slashOnlySkill dir
-  ) (
-    lib.filterAttrs (
-      key: _: !(lib.elem (mattName key) (mattDeprecated ++ mattExcluded))
-    ) mattpocock-skills
-  );
+  mattpocock-adjusted =
+    lib.mapAttrs (key: dir: if lib.elem (mattName key) mattRealtime then dir else slashOnlySkill dir)
+      (
+        lib.filterAttrs (
+          key: _: !(lib.elem (mattName key) (mattDeprecated ++ mattExcluded))
+        ) mattpocock-skills
+      );
   # ponytail core stays realtime; audit/debt/gain/help/review go slash-only
   ponytail-adjusted = lib.mapAttrs (
     key: dir: if key == "ponytail-ponytail" then dir else slashOnlySkill dir
@@ -344,14 +344,12 @@ in
         # project root, shares nvim's jdtls cache, see pkgs/jdtls-pi-lens),
         # PI_LENS_LOMBOK_JAR -> the nixpkgs lombok jar used by nvim too.
         package = pkgs.writeShellScriptBin "pi" ''
-            export JDTLS_PATH="${pkgs.jdtls-pi-lens}/bin/jdtls-pi-lens"
-            export PI_LENS_LOMBOK_JAR="${pkgs.lombok}/share/java/lombok.jar"
-            export PI_YAML_HOOKS_SHOW_ADVISORIES=0
-            export PI_YAML_HOOKS_SHOW_LOAD_SUMMARY=0
+          export JDTLS_PATH="${pkgs.jdtls-pi-lens}/bin/jdtls-pi-lens"
+          export PI_LENS_LOMBOK_JAR="${pkgs.lombok}/share/java/lombok.jar"
+          export PI_YAML_HOOKS_SHOW_ADVISORIES=0
+          export PI_YAML_HOOKS_SHOW_LOAD_SUMMARY=0
 
-          exec "${
-            inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi.override { useBun = false; }
-          }/bin/pi" "$@"
+          exec "${inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi}/bin/pi" "$@"
         '';
         extraPackages = [
           pkgs.nodejs
