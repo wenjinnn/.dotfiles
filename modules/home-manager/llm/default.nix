@@ -144,22 +144,6 @@ in
     pi-web
   ];
 
-  # pi-yaml-hooks has no setting for hiding loader advisories. Keep explicit
-  # custom-tool events, but suppress only this informational UI entry.
-  home.activation.piYamlHooksAdvisories = lib.hm.dag.entryAfter [ "installPackages" ] ''
-    hook_dir="${config.home.homeDirectory}/.pi/agent/npm/node_modules/pi-yaml-hooks"
-    for hook_js in "$hook_dir/src/pi/runtime-registry.ts" "$hook_dir/dist/pi/runtime-registry.js"; do
-      [ -f "$hook_js" ] || continue
-      # Pi loads the package's TypeScript entrypoint; patch both source and
-      # dist because npm/package updates may switch the loaded representation.
-      sed -i \
-        -e 's/process.env.PI_YAML_HOOKS_SHOW_ADVISORIES !== 0/process.env.PI_YAML_HOOKS_SHOW_ADVISORIES !== "0"/' \
-        -e 's/if (loaded.advisories.length > 0) {/if (process.env.PI_YAML_HOOKS_SHOW_ADVISORIES !== "0" \&\& loaded.advisories.length > 0) {/' \
-        -e 's/console.info(summary);/if (process.env.PI_YAML_HOOKS_SHOW_LOAD_SUMMARY !== "0") console.info(summary);/' \
-        "$hook_js"
-    done
-  '';
-
   home.packages = with pkgs; [
     qwen-code
     mcp-nixos
