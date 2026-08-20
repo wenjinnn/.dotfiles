@@ -92,48 +92,25 @@ let
         sed -i '2i disable-model-invocation: true' $out/SKILL.md
       fi
     '';
-  # mattpocock skills we keep auto-invocable (realtime), the rest go slash-only.
-  # ask-matt/implement are already disable-model-invocation upstream — whether
-  # listed here or not they stay slash-only, so they're omitted for clarity.
-  mattRealtime = [
-    "code-review"
-    "diagnosing-bugs"
-    "research"
-    "tdd"
-    "resolving-merge-conflicts"
-  ];
-  # Matt Pocock skills the upstream repo marks as deprecated: drop entirely
-  mattDeprecated = [
-    "design-an-interface"
-    "qa"
-    "request-refactor-plan"
-    "ubiquitous-language"
-  ];
+  # Matt Pocock skills: provide exactly as upstream ships them — no
+  # disable-model-invocation injection. Skills whose upstream SKILL.md
+  # already declares the flag stay slash-only on their own.
   # Experimental and non-current-development skills: keep out of Pi entirely.
   mattExcluded = [
     "ask-matt"
     "claude-handoff"
     "setup-ts-deep-modules"
-    "writing-beats"
-    "writing-fragments"
-    "writing-shape"
+    # One-time installer for the engineering skills — already ran, keep out.
+    "setup-matt-pocock-skills"
     "git-guardrails-claude-code"
     "migrate-to-shoehorn"
     "scaffold-exercises"
     "setup-pre-commit"
   ];
   mattName = key: lib.strings.removePrefix "matt-" key;
-  mattpocock-adjusted =
-    lib.mapAttrs (key: dir: if lib.elem (mattName key) mattRealtime then dir else slashOnlySkill dir)
-      (
-        lib.filterAttrs (
-          key: _: !(lib.elem (mattName key) (mattDeprecated ++ mattExcluded))
-        ) mattpocock-skills
-      );
-  # ponytail core stays realtime; audit/debt/gain/help/review go slash-only
-  ponytail-adjusted = lib.mapAttrs (
-    key: dir: if key == "ponytail-ponytail" then dir else slashOnlySkill dir
-  ) ponytail-skills;
+  mattpocock-adjusted = lib.filterAttrs (
+    key: _: !(lib.elem (mattName key) mattExcluded)
+  ) mattpocock-skills;
 in
 {
 
@@ -428,6 +405,7 @@ in
             "npm:@narumitw/pi-goal"
             "npm:@tmustier/pi-ralph-wiggum"
             "npm:@narumitw/pi-usage"
+            "npm:@dietrichgebert/ponytail"
             "npm:@gotgenes/pi-permission-system"
             # Model-reviewed auto-permission: registers the "pi-auto-review"
             # authorizer chain link (codex-auto-review model) into
@@ -448,7 +426,7 @@ in
             personnal-skill
           ]
           # ++ (lib.attrValues superpowers-skills)
-          ++ (lib.attrValues ponytail-adjusted)
+          # ponytail installed separately as a pi plugin by the user
           ++ (lib.attrValues mattpocock-adjusted);
         };
         # Declarative config for individual plugins (pi-web-access, ...).
