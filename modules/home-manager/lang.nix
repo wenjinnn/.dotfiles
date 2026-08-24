@@ -18,15 +18,12 @@
 
   home.sessionVariables = {
     JAVA8_HOME = "${pkgs.jdk8}/lib/openjdk";
-    JAVA17_HOME = "${pkgs.jdk17}/lib/openjdk";
-    JAVA21_HOME = "${pkgs.jdk21}/lib/openjdk";
     JAVA25_HOME = "${pkgs.jdk25}/lib/openjdk";
   };
 
   home.file = {
     ".local/lib/openjdk8".source = "${pkgs.jdk8}/lib/openjdk";
-    ".local/lib/openjdk17".source = "${pkgs.jdk17}/lib/openjdk";
-    ".local/lib/openjdk21".source = "${pkgs.jdk21}/lib/openjdk";
+    ".local/lib/openjdk25".source = "${pkgs.jdk25}/lib/openjdk";
     ".m2/toolchains.xml".text = ''
       <?xml version="1.0" encoding="UTF-8"?>
       <toolchains>
