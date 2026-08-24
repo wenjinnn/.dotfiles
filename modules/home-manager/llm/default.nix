@@ -124,8 +124,8 @@ in
   home.packages = with pkgs; [
     qwen-code
     mcp-nixos
-    claude-agent-acp
-    codex-acp
+    # claude-agent-acp
+    # codex-acp
     pi-acp
     qmd
   ];
