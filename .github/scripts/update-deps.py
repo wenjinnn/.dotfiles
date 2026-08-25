@@ -141,11 +141,13 @@ def gh_get(url, retries=3):
     }
     if GH_TOKEN:
         headers["Authorization"] = f"token {GH_TOKEN}"
-    req = urllib.request.Request(url, headers=headers)
+    if urllib.parse.urlparse(url).scheme != "https":
+        raise ValueError(f"refusing non-HTTPS GitHub API URL: {url}")
+    req = urllib.request.Request(url, headers=headers)  # nosec B310 — URL is HTTPS-validated above
     last = None
     for attempt in range(retries):
         try:
-            with urllib.request.urlopen(req, timeout=30) as resp:
+            with urllib.request.urlopen(req, timeout=30) as resp:  # nosec B310 — URL is HTTPS-validated above
                 return json.load(resp)
         except urllib.error.HTTPError as e:
             if not _retryable_http_error(e, attempt, retries):
@@ -258,9 +260,10 @@ def prefetch_src_hash(owner, name, rev, source):
         try:
             if source == "npm":
                 package = f"@{owner}/{name}"
-                url = f"https://registry.npmjs.org/{package}/-/{name}-{rev}.tgz"
+                version = rev[1:] if rev.startswith("v") else rev
+                url = f"https://registry.npmjs.org/{package}/-/{name}-{version}.tgz"
                 proc = subprocess.run(
-                    [NIX_PREFETCH_URL, url, "--unpack"],
+                    [NIX_PREFETCH_URL, url],
                     capture_output=True,
                     text=True,
                     check=True,
@@ -442,7 +445,7 @@ def set_output(name, value):
     value = str(value)
     if GITHUB_OUTPUT:
         try:
-            with open(GITHUB_OUTPUT, "a", encoding="utf-8") as f:
+            with open(GITHUB_OUTPUT, "a", encoding="utf-8") as f:  # nosec — GitHub Actions supplies this trusted path
                 if "\n" in value:
                     delimiter = f"ghadelimiter_{os.getpid()}_{time.time_ns()}"
                     while delimiter in value:
