@@ -310,7 +310,9 @@ in
           export PI_YAML_HOOKS_SHOW_ADVISORIES=0
           export PI_YAML_HOOKS_SHOW_LOAD_SUMMARY=0
 
-          exec "${inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi}/bin/pi" "$@"
+          exec "${
+            inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi.override { useBun = false; }
+          }/bin/pi" "$@"
         '';
         extraPackages = [
           pkgs.nodejs
@@ -509,7 +511,7 @@ in
             # - circuit breaker: 3 consecutive or 10/50 recent denials stop
             #   automatic review until the next turn.
             config = {
-              model = "openai-codex/codex-auto-review";
+              # model = "openai-codex/codex-auto-review";
               # Defer to the human prompt when the review cannot run (the
               # package default is "deny" — fail-closed).
               failureMode = "defer";
