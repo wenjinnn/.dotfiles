@@ -68,7 +68,7 @@ au({ 'ColorScheme' }, {
 
 -- Track the last 20 atoms.
 local atom_ring = {} ---@type vim.event.cmdatom.data[]
-vim.api.nvim_create_autocmd('CmdAtom', {
+au('CmdAtom', {
   callback = function(ev)
     -- Skip this mapping itself, and cmdwin edits.
     if ev.data.lhs ~= ' ' and vim.fn.getcmdwintype() == '' then
@@ -77,8 +77,9 @@ vim.api.nvim_create_autocmd('CmdAtom', {
     end
   end,
 })
--- [count]<space> shows a cmdwin where the user can edit/save the last [count] atoms as a "macro".
--- <space> (no count) replays it.
+
+-- [count]<space>@ shows a cmdwin where the user can edit/save the last [count] atoms as a "macro".
+-- <space>@ (no count) replays it.
 vim.keymap.set('n', '<leader>@', function()
   local count = vim.v.count
   -- CmdAtom is deferred; schedule it so pending events land in the ring first.
