@@ -69,6 +69,7 @@ later(function()
 
   require('codecompanion').setup({
     display = {
+      chat = { window = { layout = "buffer", }, },
       cli = {
         window = {
           opts = {
