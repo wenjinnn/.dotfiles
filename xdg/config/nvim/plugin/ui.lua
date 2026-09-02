@@ -116,4 +116,7 @@ later(function()
       { mode = 'n', keys = '<Leader>de', postkeys = '<Leader>d' },
     },
   })
+
+  -- let Neovim nightly's multicursor builtin Q functionality work
+  if vim.fn.has('nvim-0.13') == 1 then pcall(vim.keymap.del, 'n', 'Q') end
 end)
