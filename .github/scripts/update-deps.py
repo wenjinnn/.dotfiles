@@ -27,9 +27,7 @@ import subprocess
 import sys
 import tempfile
 import time
-import urllib.error
 import urllib.parse
-import urllib.request
 
 GH_TOKEN = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN") or ""
 GITHUB_OUTPUT = os.environ.get("GITHUB_OUTPUT")
@@ -38,6 +36,8 @@ NIX_PREFETCH_URL = os.environ.get("NIX_PREFETCH_URL", "nix-prefetch-url")
 NPM = os.environ.get("NPM", "npm")
 CURL = os.environ.get("CURL", "curl")
 PREFETCH_NPM_DEPS = os.environ.get("PREFETCH_NPM_DEPS", "prefetch-npm-deps")
+# buildNpmPackage uses fetcher version 2 for pi-web; keep the CI prefetch in sync.
+NPM_FETCHER_VERSION = os.environ.get("NPM_FETCHER_VERSION", "2")
 DRY_RUN = "--dry-run" in sys.argv
 
 API = "https://api.github.com/repos/{owner}/{name}"
@@ -134,6 +134,28 @@ def write_file(path, text):
 # ---------------------------------------------------------------- github api
 
 
+class HttpStatusError(RuntimeError):
+    def __init__(self, code, url):
+        super().__init__(f"HTTP {code} for {url}")
+        self.code = code
+
+
+def _https_url(url):
+    parsed = urllib.parse.urlparse(url)
+    if parsed.scheme != "https" or not parsed.netloc:
+        raise ValueError(f"refusing non-HTTPS URL: {url}")
+    return url
+
+
+def _retryable_http_error(error, attempt, retries):
+    """True when a transient HTTP error should be retried."""
+    return (
+        error.code != 404
+        and error.code in (403, 429, 500, 502, 503, 504)
+        and attempt < retries - 1
+    )
+
+
 def gh_get(url, retries=3):
     headers = {
         "Accept": "application/vnd.github+json",
@@ -141,33 +163,49 @@ def gh_get(url, retries=3):
     }
     if GH_TOKEN:
         headers["Authorization"] = f"token {GH_TOKEN}"
-    if urllib.parse.urlparse(url).scheme != "https":
-        raise ValueError(f"refusing non-HTTPS GitHub API URL: {url}")
-    req = urllib.request.Request(url, headers=headers)  # nosec B310 — URL is HTTPS-validated above
+    url = _https_url(url)
+    args = [
+        CURL,
+        "--silent",
+        "--show-error",
+        "--location",
+        "--proto",
+        "=https",
+        "--proto-redir",
+        "=https",
+        "--max-time",
+        "30",
+        "--write-out",
+        "\n%{http_code}",
+    ]
+    for name, value in headers.items():
+        args.extend(["--header", f"{name}: {value}"])
     last = None
     for attempt in range(retries):
         try:
-            with urllib.request.urlopen(req, timeout=30) as resp:  # nosec B310 — URL is HTTPS-validated above
-                return json.load(resp)
-        except urllib.error.HTTPError as e:
-            if not _retryable_http_error(e, attempt, retries):
-                raise e
-            last = e
-        except (urllib.error.URLError, TimeoutError, OSError) as e:
+            proc = subprocess.run(
+                [*args, url], capture_output=True, text=True, timeout=30
+            )
+            if proc.returncode:
+                raise RuntimeError(proc.stderr.strip() or "curl failed")
+            body, status = proc.stdout.rsplit("\n", 1)
+            error = HttpStatusError(int(status), url)
+            if error.code >= 400:
+                if not _retryable_http_error(error, attempt, retries):
+                    raise error
+                last = error
+            else:
+                return json.loads(body)
+        except (subprocess.TimeoutExpired, OSError, RuntimeError) as error:
+            if isinstance(error, HttpStatusError):
+                raise
             if attempt >= retries - 1:
-                raise RuntimeError(f"GitHub API request failed for {url}: {e}") from e
-            last = e
+                raise RuntimeError(
+                    f"GitHub API request failed for {url}: {error}"
+                ) from error
+            last = error
         time.sleep(10 * (attempt + 1))
     raise RuntimeError(f"GitHub API request failed for {url}: {last}")
-
-
-def _retryable_http_error(e, attempt, retries):
-    """True when a transient HTTP error should be retried."""
-    return (
-        e.code != 404
-        and e.code in (403, 429, 500, 502, 503, 504)
-        and attempt < retries - 1
-    )
 
 
 def latest_rev(owner, name, mode, prefix):
@@ -176,7 +214,7 @@ def latest_rev(owner, name, mode, prefix):
         try:
             rel = gh_get(f"{base}/releases/latest")
             tag = rel.get("tag_name") or ""
-        except urllib.error.HTTPError as e:
+        except HttpStatusError as e:
             if e.code != 404:
                 raise
             tag = ""
@@ -397,7 +435,24 @@ def update_npm_deps_hash(owner, name, tag):
     tarball = f"https://github.com/{owner}/{name}/archive/refs/tags/{tag}.tar.gz"
     with tempfile.TemporaryDirectory(prefix="update-deps-") as tmp:
         tgz = os.path.join(tmp, "src.tar.gz")
-        urllib.request.urlretrieve(tarball, tgz)
+        subprocess.run(
+            [
+                CURL,
+                "--fail",
+                "--silent",
+                "--show-error",
+                "--location",
+                "--proto",
+                "=https",
+                "--proto-redir",
+                "=https",
+                "--output",
+                tgz,
+                _https_url(tarball),
+            ],
+            check=True,
+            timeout=600,
+        )
         subprocess.run(
             ["tar", "xzf", tgz, "-C", tmp, "--strip-components=1"], check=True
         )
@@ -429,6 +484,7 @@ def update_npm_deps_hash(owner, name, tag):
             text=True,
             check=True,
             timeout=600,
+            env={**os.environ, "NPM_FETCHER_VERSION": NPM_FETCHER_VERSION},
         )
         npm_hash = proc.stdout.strip().splitlines()[-1] if proc.stdout.strip() else ""
         if not re.fullmatch(r"sha256-[A-Za-z0-9+/=]{44}", npm_hash):
