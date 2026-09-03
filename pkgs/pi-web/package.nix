@@ -31,7 +31,7 @@ buildNpmPackage rec {
     NODE
   '';
 
-  npmDepsHash = "sha256-AHjNQ3BOrcqFgVoKH2XLMyhE6cs69buCP4+mlb/VZOc=";
+  npmDepsHash = "sha256-+0HEELJ2GHJyZgdmTsGI1MDI+zXtgf1Lj5x1BspdH10=";
   npmDepsFetcherVersion = 2;
 
   nativeBuildInputs = [
