@@ -49,7 +49,7 @@ later(function()
     pattern = 'sql',
     callback = function(ev)
       vim.bo[ev.buf].omnifunc = 'vim_dadbod_completion#omni'
-      map({ 'n', 'x' }, '<CR>', 'db#op_exec()', { expr = true, desc = 'DB exec current query' })
+      map({ 'n', 'x' }, '<CR>', 'db#op_exec()', { buffer = ev.buf, expr = true, desc = 'DB exec current query' })
     end,
   })
 
@@ -69,7 +69,7 @@ later(function()
 
   require('codecompanion').setup({
     display = {
-      chat = { window = { layout = "buffer", }, },
+      chat = { window = { layout = 'buffer' } },
       cli = {
         window = {
           opts = {
