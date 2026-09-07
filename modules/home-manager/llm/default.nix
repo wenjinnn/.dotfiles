@@ -10,14 +10,14 @@ let
   anthropic-skills = pkgs.fetchFromGitHub {
     owner = "anthropics";
     repo = "skills";
-    rev = "3b3fad96af16a10759d930941b4520ba0c40edae";
-    sha256 = "sha256-nVid8vENmLDh7ffDqh+bJbEWtXcVltA0qa2rItmniZM=";
+    rev = "41bbe19d1a1a7eaab5e7bb9050a417e5c6cffc8f";
+    sha256 = "sha256-sjgPv9tZZVTXPxZWaCOc7JwFceNn3C1ghy8mSHqgqB8=";
   };
   juliusbrussee-caveman = pkgs.fetchFromGitHub {
     owner = "JuliusBrussee";
     repo = "caveman";
-    rev = "df2ccd85c94ec3c8289cb62ac020d241ccfb0c60";
-    sha256 = "sha256-KuOJYB+HH/vhQLEDOuHEETNUNtHSHdDuxvb5xFjk7Jc=";
+    rev = "15581d14007fd01fb3f132016741962f34936ca2";
+    sha256 = "sha256-GuCK3oy0DsMOQq7gHjIY/aeaukJcTvelfg+tp7R7Du4=";
   };
   obra-superpowers = pkgs.fetchFromGitHub {
     owner = "obra";
@@ -28,14 +28,14 @@ let
   mattpocock-skills-src = pkgs.fetchFromGitHub {
     owner = "mattpocock";
     repo = "skills";
-    rev = "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76";
-    sha256 = "sha256-N5tpUIHO2VFeJntBTl6/VLDIVpqoshwFxNJlfXXUwsQ=";
+    rev = "3cca18b368ae95cdbdebbff572ccafa662551015";
+    sha256 = "sha256-dF5i37jHnqfcXD1IRSVzSSm/pfCYSUmOsEhhs5Zx340=";
   };
   dietrichgebert-ponytail = pkgs.fetchFromGitHub {
     owner = "DietrichGebert";
     repo = "ponytail";
-    rev = "2ed6c52c9d7e5e56942508591085fd45dea277d3";
-    sha256 = "sha256-bGdXvzhWPwGdz3T2Yh2h6lf+3PBRFAfdBxP5pESmCHI=";
+    rev = "974d940a1c5344210874150b98ff0d2c861fab6a";
+    sha256 = "sha256-ytmLscDv7OVFyX/9gsfGaZmTpEnaMDTZnwzUtcbbcS0=";
   };
   xlsx = "${anthropic-skills}/skills/xlsx";
   docx = "${anthropic-skills}/skills/docx";
@@ -73,8 +73,8 @@ let
   claude-plugins-official = pkgs.fetchFromGitHub {
     owner = "anthropics";
     repo = "claude-plugins-official";
-    rev = "ed404106fcd80ba98ecb7c851e531dcb626d13b7";
-    sha256 = "sha256-wimwSUFVxE2TbhHeVE+iknfjHV6Ljv1AJ2X6hIbbsgI=";
+    rev = "85cce0381e7860082641b59d961a2b8c368b8b79";
+    sha256 = "sha256-gZxIOTXzNFxW+67iO5bveT4ZBKjP8HZfUlg1fAq4jE0=";
   };
   personnal-skill = ./skills;
   # Copy a skill dir and add `disable-model-invocation: true` to its SKILL.md
