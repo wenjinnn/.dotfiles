@@ -65,7 +65,10 @@
     {
       settings = {
         # Enable flakes and new 'nix' command
-        experimental-features = "nix-command flakes";
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
         # Opinionated: disable global registry
         # flake-registry = "";
         # Workaround for https://github.com/NixOS/nix/issues/9574
@@ -206,9 +209,9 @@
   systemd.sleep.settings.Sleep = {
     HibernateMode = "shutdown";
   };
-  services.journald.extraConfig = ''
-    SystemMaxUse=1G
-  '';
+  services.journald.settings.Journal = {
+    SystemMaxUse = "1G";
+  };
 
   # This setups a SSH server. Very important if you're setting up a headless system.
   # Feel free to remove if you don't need it.
