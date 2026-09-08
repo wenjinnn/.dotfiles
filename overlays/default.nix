@@ -75,14 +75,14 @@
     vscode-java-debug = prev.vscode-utils.extensionFromVscodeMarketplace {
       name = "vscode-java-debug";
       publisher = "vscjava";
-      version = "0.58.2026012907";
-      sha256 = "sha256-fukRuQe29GHeia+IdkXrrCU/6qusa3smF8AVs7SSb88=";
+      version = "0.59.2026072407";
+      sha256 = "sha256-jnoxo06T/uiEGOcL2I9YUTZ2rT0m8OghWzFCXLx6isY=";
     };
     vscode-java-test = prev.vscode-utils.extensionFromVscodeMarketplace {
       name = "vscode-java-test";
       publisher = "vscjava";
-      version = "0.44.2026030602";
-      sha256 = "sha256-hPgDdPx3nrL9abQmmTuWt5gzerItID6iiLkjve92DFs=";
+      version = "0.46.2026072702";
+      sha256 = "sha256-S91ZJhPOCTtVoI69jeaJNjvkQsduitxtMI88xrFoh8o=";
     };
   };
 
