@@ -24,7 +24,6 @@
     sops
     firewall
     tailscale
-    pi-web
     cachix
     podman
     ../../users.nix
@@ -39,6 +38,31 @@
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
+      # Redis 8.8 has timing-sensitive tests that fail on aarch64.
+      (final: prev: {
+        redis = prev.redis.overrideAttrs (_: {
+          doCheck = false;
+        });
+        wxwidgets_3_2 = prev.wxwidgets_3_2.override {
+          withWebKit = false;
+        };
+        libsecret = prev.libsecret.override {
+          withIntrospection = false;
+        };
+        pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+          (_pythonFinal: pythonPrev: {
+            cryptography = pythonPrev.cryptography.overridePythonAttrs (_: {
+              doCheck = false;
+            });
+            chacha20poly1305-reuseable = pythonPrev.chacha20poly1305-reuseable.overridePythonAttrs (_: {
+              doCheck = false;
+            });
+            zigpy = pythonPrev.zigpy.overridePythonAttrs (_: {
+              doCheck = false;
+            });
+          })
+        ];
+      })
     ];
     # Configure your nixpkgs instance
     config = {
@@ -47,6 +71,10 @@
     };
   };
   time.timeZone = "Asia/Shanghai";
+
+  # Headscale advertises the Tailscale service names, but the host itself
+  # cannot resolve its own ts.wenjin.me name during early boot.
+  networking.hosts."100.64.0.1" = [ "nextcloud.ts.wenjin.me" ];
 
   environment.systemPackages = with pkgs; [
     home-manager
@@ -57,16 +85,15 @@
     gnumake
     neovim
     git
-    amule
-    amule-web
-    amule-daemon
   ];
   zramSwap = {
     enable = true;
     memoryPercent = 75;
     algorithm = "zstd";
   };
+
   sops.secrets.MATRIX_REGISTRATION_TOKEN = { };
+  sops.secrets.RPI5_AMULE_EC_PASSWORD = { };
   sops.secrets.MATRIX_REGISTRATION_TOKEN.owner = "matrix-synapse";
   sops.secrets.MATRIX_REGISTRATION_TOKEN.group = "matrix-synapse";
   sops.secrets.RPI5_PASS = { };
@@ -190,6 +217,9 @@
         dbtype = "pgsql";
         adminpassFile = config.sops.secrets.NEXTCLOUD_ADMIN_PASS.path;
       };
+      settings = {
+        overwriteprotocol = "http";
+      };
     };
     matrix-synapse = {
       enable = true;
@@ -240,6 +270,13 @@
     home-assistant = {
       enable = true;
       openFirewall = true;
+      package = pkgs.home-assistant.override {
+        packageOverrides = _self: super: {
+          paho-mqtt = super.paho-mqtt.overridePythonAttrs (_: {
+            dontUsePytestCheck = true;
+          });
+        };
+      };
       customComponents = with pkgs.home-assistant-custom-components; [
         xiaomi_home
         xiaomi_gateway3
@@ -272,11 +309,6 @@
       useRoutingFeatures = "both";
       extraUpFlags = [ "--advertise-exit-node" ];
     };
-    pi-web = {
-      enable = true;
-      # Keep PI WEB private; remote clients use an SSH tunnel to port 8504.
-      host = "127.0.0.1";
-    };
     syncthing = {
       enable = true;
       openDefaultPorts = true;
@@ -285,7 +317,17 @@
     amule = {
       user = me.username;
       enable = true;
-      dataDir = "/mnt/data/media/video/amule";
+      dataDir = "/home/wenjin/amule";
+      ExternalConnectPasswordFile = config.sops.secrets.RPI5_AMULE_EC_PASSWORD.path;
+      WebServerPasswordFile = config.sops.secrets.RPI5_AMULE_EC_PASSWORD.path;
+      openExternalConnectPort = true;
+      openWebServerPort = true;
+      settings = {
+        ExternalConnect.AcceptExternalConnections = 1;
+        WebServer.Enabled = 1;
+        eMule.IncomingDir = "/home/wenjin/Videos/amule";
+        eMule.TempDir = "/home/wenjin/Videos/amule/Temp";
+      };
     };
     aria2 = {
       enable = true;
@@ -294,11 +336,10 @@
       rpcSecretFile = config.sops.secrets.RPI5_ARIA2_SECRET.path;
       downloadDirPermission = "0775";
       settings = {
-        config-path = "/mnt/data/media/video/aria2/aria2.conf";
-        input-file = "/mnt/data/media/video/aria2/aria2.session";
-        save-session = "/mnt/data/media/video/aria2/aria2.session";
+        input-file = "/home/wenjin/Videos/aria2/aria2.session";
+        save-session = "/home/wenjin/Videos/aria2/aria2.session";
         bt-tracker = "udp://tracker.opentrackr.org:1337/announce,http://tracker.opentrackr.org:1337/announce,udp://open.demonii.com:1337/announce,udp://open.stealth.si:80/announce,udp://exodus.desync.com:6969/announce,udp://wepzone.net:6969/announce,udp://tracker.wepzone.net:6969/announce,udp://tracker.torrent.eu.org:451/announce,udp://tracker.theoks.net:6969/announce,udp://tracker.srv00.com:6969/announce,udp://tracker.qu.ax:6969/announce,udp://tracker.filemail.com:6969/announce,udp://tracker.corpscorp.online:80/announce,udp://tracker.bittor.pw:1337/announce,udp://tracker.alaskantf.com:6969/announce,udp://tracker-udp.gbitt.info:80/announce,udp://t.overflow.biz:6969/announce,udp://opentracker.io:6969/announce,udp://open.dstud.io:6969/announce,udp://explodie.org:6969/announce,udp://bittorrent-tracker.e-n-c-r-y-p-t.net:1337/announce,https://tracker.zhuqiy.com:443/announce,https://tracker.pmman.tech:443/announce,https://tracker.moeblog.cn:443/announce,https://tracker.bt4g.com:443/announce,https://torrent.tracker.durukanbal.com:443/announce,https://cny.fan:443/announce,http://www.torrentsnipe.info:2701/announce,http://wepzone.net:6969/announce,http://tracker.zhuqiy.com:80/announce,http://tracker.wepzone.net:6969/announce,http://tracker.tritan.gg:8080/announce,http://tracker.sbsub.com:2710/announce,http://tracker.renfei.net:8080/announce,http://tracker.qu.ax:6969/announce,http://tracker.mywaifu.best:6969/announce,http://tracker.lintk.me:2710/announce,http://tracker.ipv6tracker.org:80/announce,http://tracker.dmcomic.org:2710/announce,http://tracker.dler.org:6969/announce,http://tracker.dler.com:6969/announce,http://tracker.dhitechnical.com:6969/announce,http://tracker.corpscorp.online:80/announce,http://tracker.bz:80/announce,http://tracker.bt4g.com:2095/announce,http://tracker.bt-hash.com:80/announce,http://tracker.bittor.pw:1337/announce,http://tracker.alaskantf.com:6969/announce,http://tr.kxmp.cf:80/announce,http://t.overflow.biz:6969/announce,http://servandroidkino.ru:80/announce,http://retracker.spark-rostov.ru:80/announce,http://open.trackerlist.xyz:80/announce,http://open.acgtracker.com:1096/announce,http://extracker.dahrkael.net:6969/announce,http://bvarf.tracker.sh:2086/announce,http://bittorrent-tracker.e-n-c-r-y-p-t.net:1337/announce,http://0d.kebhana.mx:443/announce,udp://utracker.ghostchu-services.top:6969/announce,udp://udp.tracker.projectk.org:23333/announce,udp://tracker.zupix.online:6969/announce,udp://tracker.tvunderground.org.ru:3218/announce,udp://tracker.tryhackx.org:6969/announce,udp://tracker.torrust-demo.com:6969/announce,udp://tracker.therarbg.to:6969/announce,udp://tracker.t-1.org:6969/announce,udp://tracker.startwork.cv:1337/announce,udp://tracker.plx.im:6969/announce,udp://tracker.playground.ru:6969/announce,udp://tracker.opentorrent.top:6969/announce,udp://tracker.ixuexi.click:6969/announce,udp://tracker.gmi.gd:6969/announce,udp://tracker.fnix.net:6969/announce,udp://tracker.flatuslifir.is:6969/announce,udp://tracker.ducks.party:1984/announce,udp://tracker.dler.org:6969/announce,udp://tracker.ddunlimited.net:6969/announce,udp://tracker.cloudbase.store:1333/announce,udp://tracker.bluefrog.pw:2710/announce,udp://tracker.1h.is:1337/announce,udp://tr4ck3r.duckdns.org:6969/announce,udp://torrentclub.online:54123/announce,udp://retracker.lanta.me:2710/announce,udp://rekcart.duckdns.org:15480/announce,udp://ns575949.ip-51-222-82.net:6969/announce,udp://martin-gebhardt.eu:25/announce,udp://leet-tracker.moe:1337/announce,udp://ipv4announce.sktorrent.eu:6969/announce,udp://evan.im:6969/announce,udp://d40969.acod.regrucolo.ru:6969/announce,udp://bandito.byterunner.io:6969/announce,https://tracker.iochimari.moe:443/announce,https://tracker.ghostchu-services.top:443/announce,https://tracker.gcrenwp.top:443/announce,https://tr.nyacat.pw:443/announce,https://t.213891.xyz:443/announce,https://shahidrazi.online:443/announce,http://tracker2.dler.org:80/announce,http://tracker.waaa.moe:6969/announce,http://tracker.tvunderground.org.ru:3218/announce,http://tracker.ghostchu-services.top:80/announce,http://tr.nyacat.pw:80/announce,http://tr.highstar.shop:80/announce,http://shubt.net:2710/announce,http://lucke.fenesisu.moe:6969/announce,http://buny.uk:6969/announce,http://aboutbeautifulgallopinghorsesinthegreenpasture.online:80/announce,http://1337.abcvg.info:80/announce";
-        dir = "/mnt/data/media/video/aria2";
+        dir = "/home/wenjin/Videos/aria2";
         enable-rpc = true;
         rpc-listen-all = true;
         rpc-allow-origin-all = true;
@@ -327,7 +368,7 @@
           comment = "Public samba share.";
           "read only" = "no";
           "write list" = "root, @sambashare, aria2, @aria2";
-          path = "/mnt/data/media";
+          path = "/home/wenjin";
           "admin users" = "@sambashare";
         };
       };
@@ -343,17 +384,6 @@
         "sambashare"
       ];
     };
-  };
-  fileSystems."/mnt/data" = {
-    device = "/dev/disk/by-uuid/3b4a7972-8635-40ad-8f8f-488187b7d75a";
-    fsType = "btrfs";
-    options = [
-      "noatime"
-      "nofail"
-      "compress=zstd"
-      "x-systemd.automount"
-      "x-systemd.idle-timeout=1min"
-    ];
   };
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;
@@ -389,16 +419,11 @@
         # given the users in this list the right to specify additional substituters via:
         #    1. `nixConfig.substituers` in `flake.nix`
         substituters = [
-          # cache mirror located in China
-          # status: https://mirror.sjtu.edu.cn/
-          "https://mirror.sjtu.edu.cn/nix-channels/store"
-          # status: https://mirrors.ustc.edu.cn/status/
-          "https://mirrors.ustc.edu.cn/nix-channels/store"
           "https://cache.nixos.org"
+          "https://nixos-raspberrypi.cachix.org"
         ];
         trusted-public-keys = [
-          # the default public key of cache.nixos.org, it's built-in, no need to add it here
-          # "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+          "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
         ];
       };
       # do garbage collection weekly to keep disk usage low
@@ -408,8 +433,9 @@
         options = "--delete-older-than 7d";
       };
     };
-  # Fix "Too many open files" during nix builds (store has 24k+ entries)
-  systemd.services.nix-daemon.serviceConfig.LimitNOFILE = lib.mkForce 1048576;
+  # The RPi5 kernel caps fs.nr_open at 524288; Nix's default 1048576
+  # makes nix-daemon fail before it can start (systemd status 205/LIMITS).
+  systemd.services.nix-daemon.serviceConfig.LimitNOFILE = lib.mkForce 524288;
   programs = {
     gnupg.agent = {
       enable = true;
@@ -458,8 +484,6 @@
       1053
       53
       67
-      4711 # aMuleWeb HTTP port
-      4712 # aMule External Connections (EC) port
     ];
     trustedInterfaces = [ "wlan0" ];
 
@@ -491,8 +515,11 @@
       ];
       no-resolv = true;
       cache-size = 1000;
+      # Keep bootstrapping independent from mihomo: mihomo needs DNS to
+      # download GeoSite.dat before its own DNS listener on :1053 is ready.
       server = [
-        "127.0.0.1#1053"
+        "223.5.5.5"
+        "223.6.6.6"
         "/ts.wenjin.me/100.100.100.100"
       ];
     };
@@ -504,24 +531,6 @@
   # It will use `systemctl restart` rather than stopping it with `systemctl stop`
   # followed by a delayed `systemctl start`.
   systemd.services = {
-    # Configure the amuleweb systemd service
-    amuleweb = {
-      enable = true;
-      description = "aMule Web Interface";
-      after = [
-        "network.target"
-        "amuled.service"
-      ]; # Ensure amule daemon is running
-      wantedBy = [ "multi-user.target" ];
-
-      serviceConfig = {
-        User = "wenjin";
-        Group = "users";
-        ExecStart = "${pkgs.amule-web}/bin/amuleweb --amule-config-file=${config.services.amule.dataDir}/.aMule/amule.conf";
-        Restart = "always";
-        WorkingDirectory = "/mnt/data/media/video/amule/.aMule"; # Set working directory for amuleweb
-      };
-    };
     # systemd-networkd.stopIfChanged = false;
     # Services that are only restarted might be not able to resolve when resolved is stopped before
     # systemd-resolved.stopIfChanged = false;
@@ -552,9 +561,20 @@
   # Place sops-managed AP config into iwd's state dir via bind mount
   fileSystems."/var/lib/iwd/rpi5nixos.ap" = {
     device = config.sops.templates."iwd-ap".path;
+    fsType = "none";
     options = [ "bind" ];
   };
-  systemd.tmpfiles.rules = [ "d /var/lib/iwd 0755 root root -" ];
+  systemd.tmpfiles.rules = [
+    "d /var/lib/iwd 0755 root root -"
+    "d /home/wenjin/Videos 0755 wenjin users -"
+    "d /home/wenjin/Videos/amule 0775 wenjin users -"
+    "d /home/wenjin/Videos/amule/Temp 0775 wenjin users -"
+    "d /home/wenjin/Videos/aria2 0775 aria2 users -"
+    # aria2 runs as its own user below the user's 0700 home directory.
+    "a+ /home/wenjin - - - - u:aria2:--x,m::--x"
+    "a+ /home/wenjin/aria2 - - - - u:aria2:rwx"
+    "a+ /home/wenjin/Videos - - - - u:aria2:--x"
+  ];
 
   services.journald.extraConfig = ''
     SystemMaxUse=100M
