@@ -15,9 +15,9 @@
     ghostty
   ];
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "openssl-1.1.1w"
-  ];
+  # nixpkgs.config.permittedInsecurePackages = [
+  #   "openssl-1.1.1w"
+  # ];
 
   gtk.gtk3.bookmarks = let
     homePath = "file://${config.home.homeDirectory}";
@@ -68,6 +68,6 @@
     wpsoffice-cn
     inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps
     inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps-launcher
-    nur.repos.xddxdd.dingtalk
+    # nur.repos.xddxdd.dingtalk
   ];
 }
