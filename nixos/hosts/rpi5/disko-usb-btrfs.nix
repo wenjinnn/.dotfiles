@@ -64,7 +64,7 @@ in
 
   disko.devices.disk.main = {
     type = "disk";
-    device = "/dev/mmcblk0";
+    device = "/dev/disk/by-id/usb-Lenovo_USB_Hard_Drive_1D59B23FDE9B4B738D528A8FEA2CAC-0:0";
 
     content = {
       type = "gpt";
