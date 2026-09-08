@@ -2,7 +2,8 @@
   pkgs,
   me,
   ...
-}: let
+}:
+let
   gs = pkgs.writeShellScript "gs" ''
     set -xeuo pipefail
 
@@ -30,7 +31,8 @@
     export "''${mangoVars[@]}"
     exec gamescope "''${gamescopeArgs[@]}" -- steam "''${steamArgs[@]}"
   '';
-in {
+in
+{
   programs = {
     gamescope = {
       enable = true;
@@ -45,8 +47,8 @@ in {
       gamescopeSession.enable = true;
       protontricks.enable = true;
       extest.enable = true;
-      extraCompatPackages = with pkgs; [proton-ge-bin];
-      extraPackages = with pkgs; [gamescope];
+      extraCompatPackages = with pkgs; [ proton-ge-bin ];
+      extraPackages = with pkgs; [ gamescope ];
     };
   };
   # hardware.xone.enable = true; # support for the xbox controller USB dongle
@@ -55,7 +57,7 @@ in {
   services = {
     # enable scx for game, needs kernel version >= 6.12, see https://github.com/sched-ext/scx/blob/main/scheds/rust/scx_lavd/README.md
     scx = {
-      enable = true;
+      # enable = true;
       scheduler = "scx_lavd";
     };
   };
