@@ -308,6 +308,8 @@
       authKeyFile = config.sops.secrets.RPI5_TAILSCALE_AUTHKEY.path;
       useRoutingFeatures = "both";
       extraUpFlags = [ "--advertise-exit-node" ];
+      # dnsmasq/openresolv owns /etc/resolv.conf on this host.
+      extraSetFlags = [ "--accept-dns=false" ];
     };
     syncthing = {
       enable = true;
