@@ -66,10 +66,13 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     noctalia.url = "github:noctalia-dev/noctalia/cachix";
     llm-agents.url = "github:numtide/llm-agents.nix";
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nix-on-droid.url = "github:nix-community/nix-on-droid/release-23.11";
     # follow `main` branch of this repository, considered being stable
