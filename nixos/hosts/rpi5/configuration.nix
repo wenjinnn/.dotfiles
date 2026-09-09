@@ -20,6 +20,10 @@
 
     # You can also split up your configuration and import pieces of it here:
     # ./users.nix
+    (k3s {
+      serverAddr = "https://nixos:6443";
+      moreExtraFlags = [ "--node-label=traefik=primary" ];
+    })
     mihomo
     sops
     firewall
