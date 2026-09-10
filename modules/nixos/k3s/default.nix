@@ -88,6 +88,57 @@
     })
   ];
 
+  # The bootstrap server may be offline while the other two servers stay up.
+  # Keep its workloads movable before planned shutdown and restore scheduling on boot.
+  systemd.services.k3s-node-drain = lib.mkIf (role == "server" && serverAddr == null) {
+    description = "Drain nixos workloads before shutdown";
+    wantedBy = [ "multi-user.target" ];
+    after = [
+      "k3s.service"
+      "network-online.target"
+    ];
+    wants = [ "network-online.target" ];
+    before = [ "shutdown.target" ];
+    environment.KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.coreutils}/bin/true";
+      ExecStop = "${pkgs.bash}/bin/bash -c '${pkgs.kubectl}/bin/kubectl cordon ${config.networking.hostName} || true; ${pkgs.kubectl}/bin/kubectl drain ${config.networking.hostName} --ignore-daemonsets --delete-emptydir-data --timeout=60s || true'";
+      TimeoutStopSec = "75s";
+    };
+    restartIfChanged = false;
+    stopIfChanged = false;
+  };
+
+  systemd.services.k3s-node-uncordon = lib.mkIf (role == "server" && serverAddr == null) {
+    description = "Uncordon nixos after k3s is ready";
+    wantedBy = [ "multi-user.target" ];
+    requires = [ "k3s.service" ];
+    after = [
+      "k3s.service"
+      "network-online.target"
+    ];
+    wants = [ "network-online.target" ];
+    environment.KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
+    script = ''
+      for attempt in $(${pkgs.coreutils}/bin/seq 1 60); do
+        if ${pkgs.kubectl}/bin/kubectl uncordon ${config.networking.hostName}; then
+          exit 0
+        fi
+        ${pkgs.coreutils}/bin/sleep 5
+      done
+      exit 1
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      TimeoutStartSec = "6min";
+    };
+    restartIfChanged = false;
+    stopIfChanged = false;
+  };
+
   systemd.tmpfiles.rules = [
     "L+ /usr/local/bin/iscsiadm - - - - /run/current-system/sw/bin/iscsiadm"
   ];
