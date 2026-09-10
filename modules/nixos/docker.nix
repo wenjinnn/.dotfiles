@@ -5,6 +5,10 @@
       enable = true;
       setSocketVariable = true;
     };
-    autoPrune.enable = true;
+    autoPrune = {
+      enable = true;
+      dates = "daily";
+      flags = [ "--volumes" ];
+    };
   };
 }
