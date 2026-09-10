@@ -79,6 +79,7 @@
   # Headscale advertises the Tailscale service names, but the host itself
   # cannot resolve its own ts.wenjin.me name during early boot.
   networking.hosts."100.64.0.1" = [ "nextcloud.ts.wenjin.me" ];
+  networking.hosts."100.64.0.4" = [ "nixos" ];
 
   environment.systemPackages = with pkgs; [
     home-manager
@@ -442,6 +443,7 @@
   # The RPi5 kernel caps fs.nr_open at 524288; Nix's default 1048576
   # makes nix-daemon fail before it can start (systemd status 205/LIMITS).
   systemd.services.nix-daemon.serviceConfig.LimitNOFILE = lib.mkForce 524288;
+  systemd.services.k3s.serviceConfig.LimitNOFILE = lib.mkForce 524288;
   programs = {
     gnupg.agent = {
       enable = true;

@@ -50,12 +50,7 @@ in
     steam
     de
     fingerprint
-    (k3s {
-      moreExtraFlags = [
-        "--node-label=longhorn.io/only=true"
-        "--node-label=mihomo=true"
-      ];
-    })
+    (k3s { })
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
