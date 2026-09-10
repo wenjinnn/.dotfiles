@@ -1,14 +1,14 @@
 {
+  role ? "server",
+  serverAddr ? null,
+  moreExtraFlags ? [ ],
+}:
+{
   config,
   lib,
   pkgs,
   ...
 }:
-let
-  role = "server";
-  serverAddr = null;
-  moreExtraFlags = [ ];
-in
 {
 
   environment.systemPackages = lib.optionals (role == "server") (
@@ -55,11 +55,11 @@ in
       autoDeployCharts = {
         longhorn = {
           repo = "https://charts.longhorn.io";
-          version = "v1.11.2";
+          version = "v1.12.1";
           name = "longhorn";
           targetNamespace = "longhorn-system";
           createNamespace = true;
-          hash = "sha256-pwJyyDaDkj7ZyvoH/h5POm59XXSHQRGzqK1CHmQQKnc=";
+          hash = "sha256-yM9LNanYcs1ffkT9JtjmrHwquu5C9OLyoLDrvG46YRY=";
           values = {
             defaultSettings = {
               createDefaultDiskLabeledNodes = true;

@@ -10,3 +10,5 @@ spec:
         exposedPort: 8000
       websecure:
         exposedPort: 8443
+    nodeSelector:
+      traefik: "primary"
