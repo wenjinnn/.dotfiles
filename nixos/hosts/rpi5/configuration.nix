@@ -22,7 +22,10 @@
     # ./users.nix
     (k3s {
       serverAddr = "https://nixos:6443";
-      moreExtraFlags = [ "--node-label=traefik=primary" ];
+      moreExtraFlags = [
+        "--node-label=traefik=primary"
+        "--node-label=longhorn.io/only=true"
+      ];
     })
     mihomo
     sops
