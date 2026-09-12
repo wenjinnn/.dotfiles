@@ -1,9 +1,13 @@
-{config, ...}: {
+{ config, ... }: {
   networking.nftables.enable = true;
   networking.firewall = {
     enable = true;
     checkReversePath = "loose";
-    trustedInterfaces = ["tun*" "Meta" "tailscale*"];
+    trustedInterfaces = [
+      "tun*"
+      "Meta"
+      "tailscale*"
+    ];
     allowedUDPPorts = [
       config.services.tailscale.port
       # snycthing
@@ -26,7 +30,8 @@
       # syncthing
       8384
       22000
-      5001 # k3s: Embedded Registry Mirror
+      5000 # k3s: Embedded Registry Mirror
+      5001
       6443 # k3s: required so that pods can reach the API server (running on port 6443 by default)
       2379 # k3s, etcd clients: required if using a "High Availability Embedded etcd" configuration
       2380 # k3s, etcd peers: required if using a "High Availability Embedded etcd" configuration

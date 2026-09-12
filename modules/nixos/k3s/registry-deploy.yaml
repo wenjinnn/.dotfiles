@@ -34,8 +34,7 @@ spec:
         app: registry
     spec:
       nodeSelector:
-        longhorn.io/only: "true"
-        mihomo: "true"
+        kubernetes.io/hostname: rpi5
       hostNetwork: true
       tolerations:
         - key: node-role.kubernetes.io/control-plane

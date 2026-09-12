@@ -9,6 +9,8 @@
 }:
 {
   # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
+  users.groups.k3sconfig = { };
+
   users.users = {
     ${me.username} = {
       # You can set an initial password for your user.

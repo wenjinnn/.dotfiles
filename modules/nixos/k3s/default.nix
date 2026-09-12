@@ -51,6 +51,7 @@
       clusterInit = initMachine;
       manifests = lib.mkIf initMachine {
         traefik-config.source = ./traefik-config.yaml;
+        registry.source = ./registry-deploy.yaml;
       };
       autoDeployCharts = {
         longhorn = {
@@ -86,6 +87,20 @@
       after = [ "tailscaled.service" ];
       bindsTo = [ "tailscaled.service" ];
     })
+    {
+      serviceConfig.ExecStartPre = [
+        (pkgs.writeShellScript "k3s-wait-for-tailscale" ''
+          for attempt in $(${pkgs.coreutils}/bin/seq 1 60); do
+            if ${pkgs.iproute2}/bin/ip -4 addr show dev tailscale0 scope global | ${pkgs.gnugrep}/bin/grep -q 'inet '; then
+              exit 0
+            fi
+            ${pkgs.coreutils}/bin/sleep 1
+          done
+          echo "tailscale0 has no global IPv4 address after 60 seconds" >&2
+          exit 1
+        '')
+      ];
+    }
   ];
 
   # The bootstrap server may be offline while the other two servers stay up.
@@ -114,7 +129,6 @@
   systemd.services.k3s-node-uncordon = lib.mkIf (role == "server" && serverAddr == null) {
     description = "Uncordon nixos after k3s is ready";
     wantedBy = [ "multi-user.target" ];
-    requires = [ "k3s.service" ];
     after = [
       "k3s.service"
       "network-online.target"
@@ -139,6 +153,41 @@
     stopIfChanged = false;
   };
 
+  # shutdown.target does not run for hibernate; systemd-sleep hooks cover the
+  # pre-hibernate drain and the post-resume uncordon instead.
+  environment.etc."systemd/system-sleep/k3s-node" =
+    lib.mkIf (role == "server" && serverAddr == null)
+      {
+        source = pkgs.writeShellScript "k3s-node-sleep" ''
+          set -u
+
+          node=${lib.escapeShellArg config.networking.hostName}
+          kubeconfig=/etc/rancher/k3s/k3s.yaml
+          kubectl=${pkgs.kubectl}/bin/kubectl
+
+          case "$1:$2" in
+            pre:hibernate|pre:hybrid-sleep|pre:suspend-then-hibernate)
+              "$kubectl" --kubeconfig "$kubeconfig" cordon "$node" --request-timeout=10s || true
+              "$kubectl" --kubeconfig "$kubeconfig" drain "$node" \
+                --ignore-daemonsets \
+                --delete-emptydir-data \
+                --timeout=60s || true
+              ;;
+            post:hibernate|post:hybrid-sleep|post:suspend-then-hibernate)
+              for attempt in $(${pkgs.coreutils}/bin/seq 1 60); do
+                if "$kubectl" --kubeconfig "$kubeconfig" get node "$node" --request-timeout=3s >/dev/null 2>&1 \
+                  && "$kubectl" --kubeconfig "$kubeconfig" uncordon "$node" --request-timeout=10s; then
+                  exit 0
+                fi
+                ${pkgs.coreutils}/bin/sleep 5
+              done
+              exit 1
+              ;;
+          esac
+        '';
+        mode = "0755";
+      };
+
   systemd.tmpfiles.rules = [
     "L+ /usr/local/bin/iscsiadm - - - - /run/current-system/sw/bin/iscsiadm"
   ];
@@ -149,11 +198,11 @@
         mirrors:
           docker.io:
             endpoint:
-              - "http://nixos:5000"
+              - "http://rpi5:5000"
               - "https://registry-1.docker.io"
           rancher:
             endpoint:
-              - "http://nixos:5000"
+              - "http://rpi5:5000"
               - "https://rancher.mirror.aliyuncs.com"
       '';
     };
