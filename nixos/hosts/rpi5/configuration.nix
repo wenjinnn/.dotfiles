@@ -270,6 +270,13 @@
     };
     postgresql = {
       enable = true;
+      ensureDatabases = [ "matrix-synapse" ];
+      ensureUsers = [
+        {
+          name = "matrix-synapse";
+          ensureDBOwnership = true;
+        }
+      ];
       initialScript = pkgs.writeText "synapse-init.sql" ''
         CREATE USER \"matrix-synapse\" WITH CREATEDB;
         CREATE DATABASE "matrix-synapse" LC_COLLATE='C' LC_CTYPE='C' OWNER "matrix-synapse" TEMPLATE template0;
