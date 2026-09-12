@@ -16,10 +16,18 @@
       inherit config me;
       domain = "wenjin.me";
     })
-    rustdesk-server
-    docker
+    (k3s {
+      role = "server";
+      serverAddr = "https://nixos:6443";
+      moreExtraFlags = [
+        "--node-label=infra=aliyun"
+        "--node-taint=infra=headscale:NoSchedule"
+      ];
+    })
+    firewall
     sops
     tailscale
+    docker
   ];
   boot.kernelModules = [
     "modprobe"
@@ -36,6 +44,12 @@
     tailscale.useRoutingFeatures = "both";
   };
 
+  # Keep the Headscale control plane preferred if the small VM reaches memory
+  # pressure while k3s/etcd is active.
+  systemd.services.headscale.serviceConfig.OOMScoreAdjust = -900;
+
+  users.groups.k3sconfig = { };
+
   environment.systemPackages = map lib.lowPrio [
     pkgs.curl
     pkgs.gitMinimal
@@ -48,6 +62,12 @@
   ];
 
   networking.hostName = "nixos-aliyun";
+
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
+    algorithm = "zstd";
+  };
 
   system.stateVersion = "24.11";
 }
