@@ -28,15 +28,16 @@
       finalAttrs: prevAttrs: {
         src = final.fetchFromGitHub {
           inherit (prevAttrs.src) repo;
-          owner = "wrvsrx";
-          # support-shm-sharing branch
-          # update this with the tag you want to use, if ≠'version'
-          rev = "2ab59b90d55afbbe362a63e2a061afe4b524d8c4";
-          # update this with the appropriate hash for your tag
-          hash = "sha256-Af2T/DggorxzIYcRg1BzzrarRc4OHxTdu7Zjj/3eSkA=";
+          owner = "niri-wm";
+          # Track the latest upstream commit.
+          rev = "e1d3b0c47ce5bb77f16e5006aba604d23b233649";
+          hash = "sha256-DHSudbdHVLNvSN3yhq7u0r68ZONHhWahkL0l30kD0hc=";
         };
 
-        cargoHash = "sha256-gfnalA3qI3a9h3PvsxgQLCrzapfjLLkxhTMJpwRh+ro=";
+        cargoDeps = final.rustPlatform.fetchCargoVendor {
+          inherit (finalAttrs) src;
+          hash = "sha256-Yqvambc4F7PdGkGxrxp5xD6PqAEAWmMgqOYZRY+TIBA=";
+        };
       }
     );
     tuigreet = prev.tuigreet.overrideAttrs (
