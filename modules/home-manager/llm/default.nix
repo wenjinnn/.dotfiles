@@ -353,17 +353,14 @@ in
               oracle = {
                 model = "openai-codex/gpt-5.6-terra";
                 thinking = "xhigh";
-                fallbackModels = [ "deepseek/deepseek-v4-pro" ];
               };
               researcher = {
                 model = "openai-codex/gpt-5.6-terra";
                 thinking = "high";
-                fallbackModels = [ "deepseek/deepseek-v4-pro" ];
               };
               reviewer = {
                 model = "openai-codex/gpt-5.6-terra";
                 thinking = "high";
-                fallbackModels = [ "deepseek/deepseek-v4-pro" ];
               };
             };
           };
