@@ -382,7 +382,6 @@ in
             "npm:context-mode"
             "npm:pi-memory"
             "npm:pi-goal-list-loop-audit"
-            "npm:@narumitw/pi-btw"
             "npm:@narumitw/pi-usage"
             "npm:@dietrichgebert/ponytail"
             "npm:@gotgenes/pi-permission-system"
