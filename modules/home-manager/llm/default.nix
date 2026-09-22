@@ -16,26 +16,26 @@ let
   juliusbrussee-caveman = pkgs.fetchFromGitHub {
     owner = "JuliusBrussee";
     repo = "caveman";
-    rev = "15581d14007fd01fb3f132016741962f34936ca2";
-    sha256 = "sha256-GuCK3oy0DsMOQq7gHjIY/aeaukJcTvelfg+tp7R7Du4=";
+    rev = "ae26f3a4775574bd49dc8bdb61c0287bbc3cd268";
+    sha256 = "sha256-bBz50cuIzniwHLUpO8TwuaJyHE1dvEdoKuOEt9bGkQE=";
   };
   obra-superpowers = pkgs.fetchFromGitHub {
     owner = "obra";
     repo = "superpowers";
-    rev = "b36e0829c6d0140e93cfef2ca599b1b07d4a7797";
-    sha256 = "sha256-EsGNO0dULWf5Bx6bGrCv2kI2Z8aKH0kRvGiuN23wChQ=";
+    rev = "5bf4e78011075bcfc0dc295f0724994cd123ee71";
+    sha256 = "sha256-rgeJhjQyABYlhlyFRmgyhbZmmmIPPNkch4CXyTkGEyM=";
   };
   mattpocock-skills-src = pkgs.fetchFromGitHub {
     owner = "mattpocock";
     repo = "skills";
-    rev = "3cca18b368ae95cdbdebbff572ccafa662551015";
-    sha256 = "sha256-dF5i37jHnqfcXD1IRSVzSSm/pfCYSUmOsEhhs5Zx340=";
+    rev = "c55ee46073ed923f86ce59a5eb3b6d895095d1b7";
+    sha256 = "sha256-L3CpIT2DeI+fUFl9fcygojtQo2DzEen69rMD1XqR1vM=";
   };
   dietrichgebert-ponytail = pkgs.fetchFromGitHub {
     owner = "DietrichGebert";
     repo = "ponytail";
-    rev = "356918eba965ee1eac64bd3a7f0dd02108350de5";
-    sha256 = "sha256-LPNMyHsri3+eeDmphEAKL1JgoRE4dLIPfZ4XZ+xu5UY=";
+    rev = "e3ba2aa6f1e6f0bc4d69eb09c9f0d0a93af56156";
+    sha256 = "sha256-PES5XrSYx0VBXWVHEDRykGy0SAmJfV/luzy8Gfg0aAQ=";
   };
   xlsx = "${anthropic-skills}/skills/xlsx";
   docx = "${anthropic-skills}/skills/docx";
@@ -73,8 +73,8 @@ let
   claude-plugins-official = pkgs.fetchFromGitHub {
     owner = "anthropics";
     repo = "claude-plugins-official";
-    rev = "022b3c274938ddfb9fd928fc582eb9b9ed0f537f";
-    sha256 = "sha256-aDBAfdm8zaRIHaMuMPL9tD7cjoy266fribVMAxPC2po=";
+    rev = "c447c3207a425bc4e2a0d068435f64b0477ae981";
+    sha256 = "sha256-SkAl6Yh4vmcVE+9NJOQSbRtX6okSfZbX0Mz+JAjHTWk=";
   };
   personnal-skill = ./skills;
   # Copy a skill dir and add `disable-model-invocation: true` to its SKILL.md
