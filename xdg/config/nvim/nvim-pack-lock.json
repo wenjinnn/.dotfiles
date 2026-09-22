@@ -1,11 +1,11 @@
 {
   "plugins": {
     "SchemaStore.nvim": {
-      "rev": "f8a0fd6d3a7d392f3d93c56ad1b27c96e92444a9",
+      "rev": "be687d17e4a9443e918c48c3c915b1f2ffd0f718",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "codecompanion.nvim": {
-      "rev": "5f8841d9ddc8cfdb202f84ae26b704beb4e14ce8",
+      "rev": "3e3de8479e6bf5773bfce8bbaada297925cae174",
       "src": "https://github.com/olimorris/codecompanion.nvim"
     },
     "conform.nvim": {
@@ -21,7 +21,7 @@
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "mini.nvim": {
-      "rev": "4389a4f31f854ce066949ea89c72dc71564f5c20",
+      "rev": "81ed10ebe1144b0eb9a7f289ffae000c22772c20",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "minuet-ai.nvim": {
@@ -65,7 +65,7 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
     },
     "obsidian.nvim": {
-      "rev": "ce5936f0b0e781442c30c5f91d4acaf85c6455a0",
+      "rev": "84ca67203a42f3780695e6e39aa9d52e6d45342f",
       "src": "https://github.com/obsidian-nvim/obsidian.nvim"
     },
     "one-small-step-for-vimkind": {
@@ -77,8 +77,8 @@
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "preview.nvim": {
-      "rev": "2ad428ae4d45c2720f577140dd639b81de24908d",
-      "src": "https://git.barrettruth.com/barrettruth/preview.nvim"
+      "rev": "06b0a04865b17b9fce5e0b75d96b0c3e45f70b14",
+      "src": "https://forge.barrettruth.com/barrettruth/preview.nvim"
     },
     "rainbow-delimiters.nvim": {
       "rev": "3a0fc08dd39e8bf034a4cfef3f2845bd5f565a2e",
