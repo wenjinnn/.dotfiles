@@ -307,13 +307,9 @@ in
         package = pkgs.writeShellScriptBin "pi" ''
           export JDTLS_PATH="${pkgs.jdtls-pi-lens}/bin/jdtls-pi-lens"
           export PI_LENS_LOMBOK_JAR="${pkgs.lombok}/share/java/lombok.jar"
-          export PI_YAML_HOOKS_SHOW_ADVISORIES=0
-          export PI_YAML_HOOKS_SHOW_LOAD_SUMMARY=0
           export LD_LIBRARY_PATH="${pkgs.icu}/lib''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
-          exec "${
-            inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi.override { useBun = false; }
-          }/bin/pi" "$@"
+          exec "${inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi}/bin/pi" "$@"
         '';
         extraPackages = [
           pkgs.nodejs
