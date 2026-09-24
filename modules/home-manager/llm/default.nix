@@ -202,7 +202,7 @@ in
         };
       };
       codex = {
-        enable = true;
+        enable = false;
         package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex;
         enableMcpIntegration = true;
         settings = {
@@ -298,7 +298,7 @@ in
       };
       pi-coding-agent = {
         enable = true;
-        # pi-lens launches the Java LSP server via $JDTLS_PATH and reads the
+        # pi-lens laufalsfalse $JDTLS_PATH and reads the
         # lombok jar from $PI_LENS_LOMBOK_JAR. Inject both only into pi's own
         # process environment (not the global shell env) by wrapping the pi
         # binary: JDTLS_PATH -> jdtls-pi-lens wrapper (no metadata files at
@@ -341,21 +341,21 @@ in
         };
         settings = {
           defaultProvider = "openai-codex";
-          defaultModel = "gpt-5.6-luna";
+          defaultModel = "gpt-6-luna";
           defaultThinkingLevel = "high";
           # quietStartup = true;
           subagents = {
             agentOverrides = {
               oracle = {
-                model = "openai-codex/gpt-5.6-terra";
+                model = "openai-codex/gpt-6-terra";
                 thinking = "xhigh";
               };
               researcher = {
-                model = "openai-codex/gpt-5.6-terra";
+                model = "openai-codex/gpt-6-terra";
                 thinking = "high";
               };
               reviewer = {
-                model = "openai-codex/gpt-5.6-terra";
+                model = "openai-codex/gpt-6-terra";
                 thinking = "high";
               };
             };
