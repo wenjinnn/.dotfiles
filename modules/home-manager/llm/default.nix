@@ -347,15 +347,15 @@ in
           subagents = {
             agentOverrides = {
               oracle = {
-                model = "openai-codex/gpt-6-terra";
+                model = "openai-codex/gpt-6-sol";
                 thinking = "xhigh";
               };
               researcher = {
-                model = "openai-codex/gpt-6-terra";
+                model = "openai-codex/gpt-6-sol";
                 thinking = "high";
               };
               reviewer = {
-                model = "openai-codex/gpt-6-terra";
+                model = "openai-codex/gpt-6-sol";
                 thinking = "high";
               };
             };
