@@ -14,6 +14,7 @@ keys:
   - &nixos-wsl-wenjin age1u7g2z73c3fq28purtn9kvkpsxlq4srkkn4944u5krfwqjkeqeshq9zgs3m
   - &nixos-wsl age10ff9heqlh8qjunnt9060a97aqxa7vqj4nclmzm0gwe54fe95mdlqc7k6r4
   - &nixos-wsl-new age1jc97uufkxzwff5s9s4glzvm8cnp39fpmcng9fa9jwzah9fqspawq7g9xz8
+  - &nixos-wsl-new-wenjin age17qjcljh523ke6y8v0khn6fhdft77dtk5c70yggf3wagcjjnt9a7s3r7r90
   - &nixos-rpi5 age1052qa3gqear4kdetvm5utacqxq27mpc7da7u0aprwmtk4k23esrqgaqgf6
   - &nixos-aliyun age1ccf6pupm4ja5wx25zvghcyd633vkdj97qz9t3vdvf6jaj0zf8efs5k7rqa
 creation_rules:
@@ -25,5 +26,6 @@ creation_rules:
           - *nixos-wsl-wenjin
           - *nixos-wsl
           - *nixos-wsl-new
+          - *nixos-wsl-new-wenjin
           - *nixos-rpi5
           - *nixos-aliyun
