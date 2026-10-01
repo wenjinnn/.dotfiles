@@ -65,7 +65,7 @@ behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
     [idle.behavior.screen-off]
     action = "screen_off"
     enabled = true
-    timeout = 660.0
+    timeout = 600.0
 
 [keybinds]
 down = [ "Down", "Ctrl+j" ]
@@ -92,11 +92,13 @@ widget_order = [
     visible = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1"]
-    box_height = 229.0
+    box_height = 196.0
     box_width = 720.0
     cx = 960.0
     cy = 961.0
     output = "HDMI-A-1"
+    placement_height = 1080.0
+    placement_width = 1920.0
     rotation = 0.0
     type = "login_box"
 
@@ -113,14 +115,17 @@ widget_order = [
         show_login_button = true
         show_media = true
         show_session_buttons = true
+        show_unlock_hint = true
         show_weather = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
-    box_height = 229.0
+    box_height = 196.0
     box_width = 810.0
     cx = 768.0
     cy = 841.0
     output = "eDP-1"
+    placement_height = 960.0
+    placement_width = 1536.0
     rotation = 0.0
     type = "login_box"
 
@@ -137,6 +142,7 @@ widget_order = [
         show_login_button = true
         show_media = true
         show_session_buttons = true
+        show_unlock_hint = true
         show_weather = true
 
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
@@ -145,6 +151,8 @@ widget_order = [
     cx = 768.0
     cy = 448.0
     output = "eDP-1"
+    placement_height = 960.0
+    placement_width = 1536.0
     rotation = 0.0
     type = "clock"
 
@@ -162,6 +170,8 @@ widget_order = [
     cx = 768.0
     cy = 128.0
     output = "eDP-1"
+    placement_height = 960.0
+    placement_width = 1536.0
     rotation = 0.0
     type = "audio_visualizer"
 
@@ -228,28 +238,28 @@ telemetry_enabled = false
 
     [[shell.session.actions]]
     action = "lock"
-    countdown_seconds = 3.0
+    countdown_seconds = 1.0
     enabled = true
     shortcut = "l"
     variant = "default"
 
     [[shell.session.actions]]
     action = "logout"
-    countdown_seconds = 3.0
+    countdown_seconds = 1.0
     enabled = true
     shortcut = "o"
     variant = "default"
 
     [[shell.session.actions]]
     action = "reboot"
-    countdown_seconds = 3.0
+    countdown_seconds = 1.0
     enabled = true
     shortcut = "r"
     variant = "default"
 
     [[shell.session.actions]]
     action = "lock_and_suspend"
-    countdown_seconds = 3.0
+    countdown_seconds = 1.0
     enabled = true
     shortcut = "s"
     variant = "default"
@@ -257,7 +267,7 @@ telemetry_enabled = false
     [[shell.session.actions]]
     action = "command"
     command = "noctalia msg dpms-off && loginctl lock-session && systemctl hibernate"
-    countdown_seconds = 3.0
+    countdown_seconds = 1.0
     enabled = true
     glyph = "hibernate"
     label = "Lock & Hibernate"
@@ -266,7 +276,7 @@ telemetry_enabled = false
 
     [[shell.session.actions]]
     action = "shutdown"
-    countdown_seconds = 3.0
+    countdown_seconds = 1.0
     enabled = true
     shortcut = "d"
     variant = "destructive"
@@ -275,7 +285,7 @@ telemetry_enabled = false
 builtin = "Kanagawa"
 community_palette = "Kanagawa Dragon"
 custom_palette = "stylix"
-mode = "dark"
+mode = "auto"
 source = "custom"
 wallpaper_scheme = "m3-rainbow"
 
@@ -286,7 +296,20 @@ wallpaper_scheme = "m3-rainbow"
 directory = "/home/wenjin/Pictures/Wallpaper"
 
     [wallpaper.default]
-    path = "/home/wenjin/.local/share/.wallpaper"
+    path = "/home/wenjin/Pictures/Wallpaper/bing/20250719-MothWeek_ROW9542610307_UHD.jpg"
+
+    [wallpaper.last]
+    path = "/home/wenjin/Pictures/Wallpaper/bing/20250719-MothWeek_ROW9542610307_UHD.jpg"
+
+    [wallpaper.monitors.HDMI-A-1]
+    path = "/home/wenjin/Pictures/Wallpaper/bing/20260310-SpringIceland_ROW2538267892_UHD.jpg"
+
+    [wallpaper.monitors.eDP-1]
+    path = "/home/wenjin/Pictures/Wallpaper/bing/20250719-MothWeek_ROW9542610307_UHD.jpg"
+
+    [[wallpaper.favorite]]
+    path = "/home/wenjin/Pictures/Wallpaper/bing/20260803-BoatsMalta_ROW6191359643_UHD.jpg"
+    theme_mode = "auto"
 
 [widget.battery]
 show_label = false
