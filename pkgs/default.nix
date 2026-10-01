@@ -13,4 +13,5 @@
   pi-web = pkgs.callPackage ./pi-web/package.nix { };
   # jdtls wrapper for pi-lens: no metadata files at project root + shared nvim cache dirs
   jdtls-pi-lens = pkgs.callPackage ./jdtls-pi-lens { };
+  reef-roll-filter-ble-gateway = pkgs.callPackage ./reef-roll-filter-ble-gateway { };
 }
