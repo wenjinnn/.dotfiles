@@ -202,7 +202,7 @@ in
         };
       };
       codex = {
-        enable = true;
+        enable = false;
         package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex;
         enableMcpIntegration = true;
         settings = {
@@ -298,7 +298,7 @@ in
       };
       pi-coding-agent = {
         enable = true;
-        # pi-lens launches the Java LSP server via $JDTLS_PATH and reads the
+        # pi-lens laufalsfalse $JDTLS_PATH and reads the
         # lombok jar from $PI_LENS_LOMBOK_JAR. Inject both only into pi's own
         # process environment (not the global shell env) by wrapping the pi
         # binary: JDTLS_PATH -> jdtls-pi-lens wrapper (no metadata files at
@@ -307,13 +307,9 @@ in
         package = pkgs.writeShellScriptBin "pi" ''
           export JDTLS_PATH="${pkgs.jdtls-pi-lens}/bin/jdtls-pi-lens"
           export PI_LENS_LOMBOK_JAR="${pkgs.lombok}/share/java/lombok.jar"
-          export PI_YAML_HOOKS_SHOW_ADVISORIES=0
-          export PI_YAML_HOOKS_SHOW_LOAD_SUMMARY=0
           export LD_LIBRARY_PATH="${pkgs.icu}/lib''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
-          exec "${
-            inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi.override { useBun = false; }
-          }/bin/pi" "$@"
+          exec "${inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi}/bin/pi" "$@"
         '';
         extraPackages = [
           pkgs.nodejs
@@ -345,21 +341,21 @@ in
         };
         settings = {
           defaultProvider = "openai-codex";
-          defaultModel = "gpt-5.6-luna";
+          defaultModel = "gpt-6-luna";
           defaultThinkingLevel = "high";
           # quietStartup = true;
           subagents = {
             agentOverrides = {
               oracle = {
-                model = "openai-codex/gpt-5.6-terra";
+                model = "openai-codex/gpt-6-sol";
                 thinking = "xhigh";
               };
               researcher = {
-                model = "openai-codex/gpt-5.6-terra";
+                model = "openai-codex/gpt-6-sol";
                 thinking = "high";
               };
               reviewer = {
-                model = "openai-codex/gpt-5.6-terra";
+                model = "openai-codex/gpt-6-sol";
                 thinking = "high";
               };
             };
