@@ -33,6 +33,7 @@
     tailscale
     cachix
     podman
+    reef-roll-filter-ble-gateway
     ../../users.nix
     ./disko-usb-btrfs.nix
     ./pi5-configtxt.nix
@@ -59,6 +60,10 @@
         pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
           (_pythonFinal: pythonPrev: {
             cryptography = pythonPrev.cryptography.overridePythonAttrs (_: {
+              doCheck = false;
+            });
+            # ponytail: websockets' sync test is flaky on the low-power RPi builder; runtime is unchanged.
+            websockets = pythonPrev.websockets.overridePythonAttrs (_: {
               doCheck = false;
             });
             chacha20poly1305-reuseable = pythonPrev.chacha20poly1305-reuseable.overridePythonAttrs (_: {
@@ -116,6 +121,10 @@
     '';
   };
   services = {
+    reef-roll-filter-ble-gateway = {
+      enable = true;
+      mode = "auto";
+    };
     watchdogd = {
       enable = true;
       settings = {
@@ -285,13 +294,19 @@
     home-assistant = {
       enable = true;
       openFirewall = true;
-      package = pkgs.home-assistant.override {
-        packageOverrides = _self: super: {
-          paho-mqtt = super.paho-mqtt.overridePythonAttrs (_: {
+      package =
+        (pkgs.home-assistant.override {
+          packageOverrides = _self: super: {
+            paho-mqtt = super.paho-mqtt.overridePythonAttrs (_: {
+              dontUsePytestCheck = true;
+            });
+          };
+        }).overrideAttrs
+          (_: {
+            # ponytail: Home Assistant's integration suite times out on the RPi builder; runtime is unchanged.
+            doCheck = false;
             dontUsePytestCheck = true;
           });
-        };
-      };
       customComponents = with pkgs.home-assistant-custom-components; [
         xiaomi_home
         xiaomi_gateway3
@@ -425,7 +440,7 @@
         # Opinionated: disable global registry
         # flake-registry = "";
         # Workaround for https://github.com/NixOS/nix/issues/9574
-        nix-path = config.nix.nixPath;
+        nix-path = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
         # Deduplicate and optimize nix store
         auto-optimise-store = true;
         trusted-users = [ "${me.username}" ];

@@ -30,4 +30,5 @@
   k3s = import ./k3s;
   cachix = import ./cachix.nix;
   fingerprint = import ./fingerprint.nix;
+  reef-roll-filter-ble-gateway = import ./reef-roll-filter-ble-gateway.nix;
 }
