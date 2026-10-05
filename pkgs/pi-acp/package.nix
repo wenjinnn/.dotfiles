@@ -7,7 +7,7 @@
   nodejs-slim,
 }:
 let
-  version = "0.0.33";
+  version = "0.0.34";
 in
 buildNpmPackage rec {
   pname = "pi-acp";
@@ -17,10 +17,10 @@ buildNpmPackage rec {
     owner = "svkozak";
     repo = "pi-acp";
     rev = "v${version}";
-    hash = "sha256-fENOOdooi4XbIDjcr02q8qzUCzdo2IW/Bca43SawZ44=";
+    hash = "sha256-QRwxOtTZOY+Np3PkAoy2o2PrUzEqjItM/372sCPlSMo=";
   };
 
-  npmDepsHash = "sha256-/fX79XucKojL/6gZbK5eizEfrXso8rlTgiHfJffmDuY=";
+  npmDepsHash = "sha256-1R/AoOkByWde/Ndrb15EdcSIKPNohVOUTW+Vw2F/Yj8=";
 
   nativeBuildInputs = [ makeWrapper ];
   buildInputs = [ nodejs ];
