@@ -8,3 +8,4 @@
 .pi-glla/
 .pi-subagents/
 **/__pycache__/
+/plans/
