@@ -38,6 +38,20 @@ let
     sha256 = "sha256-PES5XrSYx0VBXWVHEDRykGy0SAmJfV/luzy8Gfg0aAQ=";
   };
   xlsx = "${anthropic-skills}/skills/xlsx";
+  pi-subagents-typebox = pkgs.stdenvNoCC.mkDerivation {
+    pname = "pi-subagents-typebox";
+    version = "1.3.27";
+    src = pkgs.fetchurl {
+      url = "https://registry.npmjs.org/typebox/-/typebox-1.3.27.tgz";
+      hash = "sha512-zu+jc1pcy4UiNThxikUr36f0Rybk9PEeCg/NE6adeWr/SKsdNO4EzZHYRDlv2YCVAfj3Odq3dESSo/jNyoBXzA==";
+    };
+    nativeBuildInputs = [ pkgs.gnutar ];
+    dontUnpack = true;
+    installPhase = ''
+      mkdir -p "$out/node_modules/typebox"
+      tar -xzf "$src" --strip-components=1 -C "$out/node_modules/typebox"
+    '';
+  };
   docx = "${anthropic-skills}/skills/docx";
   pptx = "${anthropic-skills}/skills/pptx";
   pdf = "${anthropic-skills}/skills/pdf";
@@ -307,6 +321,7 @@ in
         package = pkgs.writeShellScriptBin "pi" ''
           export JDTLS_PATH="${pkgs.jdtls-pi-lens}/bin/jdtls-pi-lens"
           export PI_LENS_LOMBOK_JAR="${pkgs.lombok}/share/java/lombok.jar"
+          export PI_SUBAGENTS_PI_CODING_AGENT_PACKAGE_ROOT="${pi-subagents-typebox}"
           export LD_LIBRARY_PATH="${pkgs.icu}/lib''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
           exec "${inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi}/bin/pi" "$@"
@@ -373,7 +388,6 @@ in
             "npm:pi-yaml-hooks"
             "npm:pi-intercom"
             "npm:pi-subagents"
-            "npm:pi-mcp-adapter"
             "npm:pi-web-access"
             "npm:context-mode"
             "npm:pi-memory"
