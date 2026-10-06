@@ -91,8 +91,8 @@
       eePresets = pkgs.fetchFromGitHub {
         owner = "JackHack96";
         repo = "EasyEffects-Presets";
-        rev = "dd966e41ad9e44d4b11e19047f526ba718bbbe57";
-        hash = "sha256-JpQVWuEokBRu01xkGA22dPeV5Jo8Xzvfrg5oQ8RtIrI=";
+        rev = "1ac92c9be57bdfccec3fb9820924f9a870a9d56f";
+        hash = "sha256-Nd4LOgiZyrrkXeWfpBfrEkZwJ+i/xVjg6EPNf/+sGjw=";
       };
       presetFiles = builtins.readDir "${eePresets}";
       jsonPresets = lib.filterAttrs (
