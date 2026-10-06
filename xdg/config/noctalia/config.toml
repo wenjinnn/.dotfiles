@@ -31,6 +31,11 @@ enabled = true
     type = "caldav"
     username = "wenjin"
 
+    [calendar.account.local_calendar]
+    name = "Personal Calendar"
+    path = "~/Calendars"
+    type = "vdir"
+
 [desktop_widgets]
 schema_version = 2
 widget_order = []
@@ -50,11 +55,17 @@ show_dots = true
 smart_auto_hide = true
 
 [idle]
-behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
+behavior_order = [ "lock", "screen-off", "lock-and-suspend", "Lock & Screen Off" ]
+
+    [idle.behavior."Lock & Screen Off"]
+    action = "command"
+    command = "noctalia msg dpms-off && loginctl lock-session"
+    enabled = true
+    timeout = 600.0
 
     [idle.behavior.lock]
     action = "lock"
-    enabled = true
+    enabled = false
     timeout = 600.0
 
     [idle.behavior.lock-and-suspend]
@@ -64,7 +75,7 @@ behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
 
     [idle.behavior.screen-off]
     action = "screen_off"
-    enabled = true
+    enabled = false
     timeout = 600.0
 
 [keybinds]
@@ -238,28 +249,28 @@ telemetry_enabled = false
 
     [[shell.session.actions]]
     action = "lock"
-    countdown_seconds = 1.0
+    countdown_seconds = 2.0
     enabled = true
     shortcut = "l"
     variant = "default"
 
     [[shell.session.actions]]
     action = "logout"
-    countdown_seconds = 1.0
+    countdown_seconds = 2.0
     enabled = true
     shortcut = "o"
     variant = "default"
 
     [[shell.session.actions]]
     action = "reboot"
-    countdown_seconds = 1.0
+    countdown_seconds = 2.0
     enabled = true
     shortcut = "r"
     variant = "default"
 
     [[shell.session.actions]]
     action = "lock_and_suspend"
-    countdown_seconds = 1.0
+    countdown_seconds = 2.0
     enabled = true
     shortcut = "s"
     variant = "default"
@@ -267,7 +278,7 @@ telemetry_enabled = false
     [[shell.session.actions]]
     action = "command"
     command = "noctalia msg dpms-off && loginctl lock-session && systemctl hibernate"
-    countdown_seconds = 1.0
+    countdown_seconds = 2.0
     enabled = true
     glyph = "hibernate"
     label = "Lock & Hibernate"
@@ -276,7 +287,7 @@ telemetry_enabled = false
 
     [[shell.session.actions]]
     action = "shutdown"
-    countdown_seconds = 1.0
+    countdown_seconds = 2.0
     enabled = true
     shortcut = "d"
     variant = "destructive"
@@ -296,16 +307,16 @@ wallpaper_scheme = "m3-rainbow"
 directory = "/home/wenjin/Pictures/Wallpaper"
 
     [wallpaper.default]
-    path = "/home/wenjin/Pictures/Wallpaper/bing/20250719-MothWeek_ROW9542610307_UHD.jpg"
+    path = "/home/wenjin/Pictures/Wallpaper/bing/20260809-JMTjibaou_ROW6533820010_UHD.jpg"
 
     [wallpaper.last]
-    path = "/home/wenjin/Pictures/Wallpaper/bing/20250719-MothWeek_ROW9542610307_UHD.jpg"
+    path = "/home/wenjin/Pictures/Wallpaper/bing/20260809-JMTjibaou_ROW6533820010_UHD.jpg"
 
     [wallpaper.monitors.HDMI-A-1]
     path = "/home/wenjin/Pictures/Wallpaper/bing/20260310-SpringIceland_ROW2538267892_UHD.jpg"
 
     [wallpaper.monitors.eDP-1]
-    path = "/home/wenjin/Pictures/Wallpaper/bing/20250719-MothWeek_ROW9542610307_UHD.jpg"
+    path = "/home/wenjin/Pictures/Wallpaper/bing/20260809-JMTjibaou_ROW6533820010_UHD.jpg"
 
     [[wallpaper.favorite]]
     path = "/home/wenjin/Pictures/Wallpaper/bing/20260803-BoatsMalta_ROW6191359643_UHD.jpg"
@@ -336,6 +347,9 @@ hide_inactive = true
 [widget.sysmon]
 show_value = false
 stat = "cpu_temp"
+
+[widget.tray]
+hide_passive = false
 
 [widget.volume]
 show_label = false
