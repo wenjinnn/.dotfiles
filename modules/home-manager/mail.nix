@@ -366,11 +366,13 @@ in
     };
     notmuch = {
       enable = true;
-      new = {
-        ignore = [
-          "/.*[.](tmp|lock|bak)$/"
-          "/Trash/"
-        ];
+      settings = {
+        new = {
+          ignore = [
+            "/.*[.](tmp|lock|bak)$/"
+            "/Trash/"
+          ];
+        };
       };
     };
     khard.enable = true;
