@@ -20,7 +20,7 @@ buildNpmPackage rec {
     hash = "sha256-QRwxOtTZOY+Np3PkAoy2o2PrUzEqjItM/372sCPlSMo=";
   };
 
-  npmDepsHash = "sha256-1R/AoOkByWde/Ndrb15EdcSIKPNohVOUTW+Vw2F/Yj8=";
+  npmDepsHash = "sha256-BvLNtFfp1cMVjzWcMRSdhTqiJrTfbFoUbWkkPW9200o=";
 
   nativeBuildInputs = [ makeWrapper ];
   buildInputs = [ nodejs ];
