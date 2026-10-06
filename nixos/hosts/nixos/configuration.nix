@@ -96,7 +96,6 @@ in
     printing.enable = true;
     # flatpak.enable = true;
     thermald.enable = true;
-    thinkfan.enable = true;
     power-profiles-daemon.enable = true;
   };
 
