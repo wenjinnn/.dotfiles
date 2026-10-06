@@ -18,7 +18,12 @@ input {
 }
 output "eDP-1" {
     transform "normal"
+    position x=0 y=0
     variable-refresh-rate on-demand=false
+}
+output "HDMI-A-1" {
+    transform "normal"
+    position x=-192 y=-1080
 }
 screenshot-path "~/Pictures/Screenshots/Screenshot-%Y-%m-%d_%H-%M-%S.png"
 prefer-no-csd
