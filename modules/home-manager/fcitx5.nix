@@ -80,7 +80,7 @@
           };
         };
         addons = {
-          # classicui.globalSection.Theme = "stylix";
+          classicui.globalSection.Theme = lib.mkForce "plasma";
           classicui.globalSection.PreferTextIcon = "True";
           # classicui.globalSection.UseDarkTheme = "True";
         };

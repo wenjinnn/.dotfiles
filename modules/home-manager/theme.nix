@@ -25,23 +25,10 @@
     };
     targets = {
       # neovim.enable = false;
-      # qt.enable = false;
+      qt.enable = true;
       # gtk.enable = false;
       firefox = {
-        colorTheme.enable = true;
-        # firefoxGnomeTheme.enable = true;
         profileNames = [ me.username ];
-        # The address-bar dropdown (popup) highlight defaults to base04
-        # (#bdae93) — too bright against the light popup_highlight_text
-        # (base05), making the selected item unreadable. Darken it to base02.
-        #
-        # NOTE: stylix's firefox mkColor reads the `-rgb-r/g/b` channel keys,
-        # so overriding `base04-rgb-a` (alpha) would be ignored.
-        colors.override = {
-          "base04-rgb-r" = config.lib.stylix.colors."base02-rgb-r";
-          "base04-rgb-g" = config.lib.stylix.colors."base02-rgb-g";
-          "base04-rgb-b" = config.lib.stylix.colors."base02-rgb-b";
-        };
       };
     };
     fonts = {
