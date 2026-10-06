@@ -24,6 +24,8 @@ let
     "--connect-timeout ${toString cfg.connectTimeout}"
     "--state-file ${lib.escapeShellArg cfg.stateFile}"
     "--notify-timeout ${toString cfg.notifyTimeout}"
+    "--mode-check-interval ${toString cfg.modeCheckInterval}"
+    "--scheduled-check-time ${lib.escapeShellArg cfg.scheduledCheckTime}"
   ];
 in
 {
@@ -121,6 +123,18 @@ in
       type = lib.types.ints.positive;
       default = 5;
       description = "Seconds to wait for the matching FFE4 confirmation.";
+    };
+
+    modeCheckInterval = lib.mkOption {
+      type = lib.types.ints.positive;
+      default = 3600;
+      description = "Seconds between periodic mode checks.";
+    };
+
+    scheduledCheckTime = lib.mkOption {
+      type = lib.types.str;
+      default = "19:32";
+      description = "Local time for the scheduled recovery-day mode check (HH:MM).";
     };
   };
 

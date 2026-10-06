@@ -9,6 +9,7 @@ let
   python = python3Packages.python.withPackages (
     ps: with ps; [
       bleak
+      gattlib
     ]
   );
 in

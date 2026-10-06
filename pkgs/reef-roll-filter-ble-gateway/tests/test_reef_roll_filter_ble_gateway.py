@@ -33,6 +33,8 @@ def settings(mode="auto", state_file=None):
         recovery_window_end="19:45",
         connect_timeout=0.01,
         notify_timeout=0.01,
+        mode_check_interval=3600,
+        scheduled_check_time="19:32",
         state_file=state_file,
     )
 
@@ -43,18 +45,15 @@ class FakeCharacteristic:
 
 
 class FakeBleakClient:
-    prewrite_notification = False
-    during_write_notification = False
-    postwrite_notification = False
-    read_payload = b""
-    configured_read_payloads: tuple[bytes, ...] = ()
+    configured_notifications: tuple[bytes, ...] = ()
+    query_notifications: tuple[bytes, ...] = ()
+    during_write_notifications: tuple[bytes, ...] = ()
     last_instance: Any = None
 
     def __init__(self, device, timeout):
         self.device = device
         self.timeout = timeout
         self.callback: Any = None
-        self.read_payloads: list[bytes] = list(type(self).configured_read_payloads)
         self.writes = []
         self.services = [
             types.SimpleNamespace(
@@ -74,21 +73,21 @@ class FakeBleakClient:
 
     async def start_notify(self, _characteristic, callback):
         self.callback = callback
-        if type(self).prewrite_notification:
-            callback(None, bytearray(MODULE["expected_notifications"]("auto")[0]))
+        for value in type(self).configured_notifications:
+            callback(None, bytearray(value))
 
     async def stop_notify(self, _characteristic):
         return None
 
     async def write_gatt_char(self, characteristic, payload, response):
-        self.writes.append((characteristic.uuid, bytes(payload), response))
-        if type(self).during_write_notification:
-            self.callback(None, bytearray(MODULE["expected_notifications"]("auto")[0]))
-
-    async def read_gatt_char(self, _characteristic):
-        if self.read_payloads:
-            return self.read_payloads.pop(0)
-        return type(self).read_payload
+        payload = bytes(payload)
+        self.writes.append((characteristic.uuid, payload, response))
+        if payload == MODULE["STATE_QUERY_PAYLOAD"]:
+            notifications = type(self).query_notifications
+        else:
+            notifications = type(self).during_write_notifications
+        for value in notifications:
+            self.callback(None, bytearray(value))
 
 
 class ModePayloadTests(unittest.TestCase):
@@ -111,6 +110,46 @@ class ModePayloadTests(unittest.TestCase):
     def test_invalid_mode_is_rejected(self):
         with self.assertRaises(ValueError):
             MODULE["mode_payload"]("unknown")
+
+    def test_dynamic_long_notification_confirms_mode(self):
+        notification = bytes.fromhex("5254000D0C3104000064000C0005010101")
+        self.assertEqual(MODULE["notification_mode"](notification), "clean")
+
+    def test_gattlib_notification_strips_att_header(self):
+        notification = bytes.fromhex("1B0E005250000605F801040000")
+        self.assertEqual(
+            MODULE["notification_mode"](
+                MODULE["_normalize_gattlib_notification"](notification)
+            ),
+            "clean",
+        )
+
+    def test_query_state_notification_uses_rp_prefix(self):
+        notification = bytes.fromhex("5250000D0C3101000064000C0005010101")
+        self.assertEqual(MODULE["notification_mode"](notification), "auto")
+
+    def test_scheduled_check_is_tuesday_thursday_saturday_at_1932(self):
+        self.assertEqual(
+            MODULE["scheduled_check_key"](
+                datetime(2026, 10, 6, 19, 32), (1, 3, 5), "19:32"
+            ),
+            "2026-10-06 19:32",
+        )
+        self.assertIsNone(
+            MODULE["scheduled_check_key"](
+                datetime(2026, 10, 6, 19, 31), (1, 3, 5), "19:32"
+            )
+        )
+
+    def test_hourly_mode_check_due(self):
+        now = datetime(2026, 10, 6, 20, 32)
+        self.assertTrue(MODULE["mode_check_due"](now, None, 3600))
+        self.assertTrue(
+            MODULE["mode_check_due"](now, datetime(2026, 10, 6, 19, 31), 3600)
+        )
+        self.assertFalse(
+            MODULE["mode_check_due"](now, datetime(2026, 10, 6, 20, 0), 3600)
+        )
 
     def test_recovery_window_requires_configured_day_and_time(self):
         self.assertTrue(
@@ -371,32 +410,70 @@ class MonitorBehaviorTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(save_states, ["present"])
             self.assertEqual(restore_calls, [])
 
+    async def test_startup_ble_failure_retries_without_exiting_monitor(self):
+        device = types.SimpleNamespace(address="AA:BB:CC:DD:EE:FF")
+        globals_dict = MODULE["monitor"].__globals__
+        originals = {
+            name: globals_dict[name]
+            for name in ("discover_target", "ensure_device", "asyncio")
+        }
+        discoveries = iter((device, device))
+        attempts = 0
+        sleep_calls = 0
+
+        async def discover(_settings):
+            return next(discoveries)
+
+        async def ensure(_device, _settings):
+            nonlocal attempts
+            attempts += 1
+            if attempts == 1:
+                raise MODULE["TransientBleError"]
+            return True
+
+        async def stop_after_two(_seconds):
+            nonlocal sleep_calls
+            sleep_calls += 1
+            if sleep_calls == 2:
+                raise RuntimeError("stop test monitor")
+
+        globals_dict.update(
+            discover_target=discover,
+            ensure_device=ensure,
+            asyncio=types.SimpleNamespace(sleep=stop_after_two),
+        )
+        try:
+            with self.assertRaises(RuntimeError):
+                await MODULE["monitor"](settings())
+        finally:
+            globals_dict.update(originals)
+        self.assertEqual(attempts, 2)
+
 
 class RestoreDeviceTests(unittest.IsolatedAsyncioTestCase):
     def setUp(self):
         self.globals = MODULE["restore_device"].__globals__
         self.original_client = self.globals["BleakClient"]
         self.globals["BleakClient"] = FakeBleakClient
-        FakeBleakClient.prewrite_notification = False
-        FakeBleakClient.during_write_notification = False
-        FakeBleakClient.postwrite_notification = False
-        FakeBleakClient.read_payload = b""
-        FakeBleakClient.configured_read_payloads = ()
+        FakeBleakClient.configured_notifications = ()
+        FakeBleakClient.query_notifications = ()
+        FakeBleakClient.during_write_notifications = ()
 
     def tearDown(self):
         self.globals["BleakClient"] = self.original_client
 
-    async def test_notification_during_write_cannot_confirm_stale_read_state(self):
-        FakeBleakClient.during_write_notification = True
-        FakeBleakClient.read_payload = MODULE["expected_notifications"]("clean")[0]
+    async def test_wrong_mode_notification_cannot_confirm_mode(self):
+        FakeBleakClient.during_write_notifications = (
+            MODULE["expected_notifications"]("clean")[0],
+        )
         result = await MODULE["restore_device"](
             types.SimpleNamespace(address="AA:BB:CC:DD:EE:FF"), settings()
         )
         self.assertFalse(result)
         self.assertEqual(len(FakeBleakClient.last_instance.writes), 1)
 
-    async def test_matching_postwrite_read_confirms(self):
-        FakeBleakClient.read_payload = MODULE["expected_notifications"]("auto")[0]
+    async def test_matching_postwrite_state_notification_confirms(self):
+        FakeBleakClient.during_write_notifications = MODULE["expected_notifications"]("auto")
         result = await MODULE["restore_device"](
             types.SimpleNamespace(address="AA:BB:CC:DD:EE:FF"), settings()
         )
@@ -408,23 +485,44 @@ class RestoreDeviceTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(FakeBleakClient.last_instance.writes[0][2])
 
     async def test_startup_check_skips_write_when_mode_matches(self):
-        FakeBleakClient.read_payload = MODULE["expected_notifications"]("auto")[0]
+        FakeBleakClient.query_notifications = MODULE["expected_notifications"]("auto")
         result = await MODULE["ensure_device"](
             types.SimpleNamespace(address="AA:BB:CC:DD:EE:FF"), settings()
         )
         self.assertTrue(result)
-        self.assertEqual(FakeBleakClient.last_instance.writes, [])
+        self.assertEqual(
+            FakeBleakClient.last_instance.writes[0][1],
+            MODULE["STATE_QUERY_PAYLOAD"],
+        )
+        self.assertEqual(len(FakeBleakClient.last_instance.writes), 1)
 
     async def test_startup_check_writes_when_mode_differs(self):
-        FakeBleakClient.configured_read_payloads = (
-            MODULE["expected_notifications"]("clean")[0],
-            MODULE["expected_notifications"]("auto")[0],
-        )
+        FakeBleakClient.query_notifications = MODULE["expected_notifications"]("clean")
+        FakeBleakClient.during_write_notifications = MODULE["expected_notifications"]("auto")
         result = await MODULE["ensure_device"](
             types.SimpleNamespace(address="AA:BB:CC:DD:EE:FF"), settings()
         )
         self.assertTrue(result)
-        self.assertEqual(len(FakeBleakClient.last_instance.writes), 1)
+        self.assertEqual(len(FakeBleakClient.last_instance.writes), 2)
+        self.assertEqual(
+            FakeBleakClient.last_instance.writes[0][1],
+            MODULE["STATE_QUERY_PAYLOAD"],
+        )
+
+    async def test_ble_transaction_failure_returns_false_without_crashing_monitor(self):
+        original_find_characteristic = self.globals["find_characteristic"]
+
+        def fail_find_characteristic(_services, _uuid):
+            raise RuntimeError("services disappeared")
+
+        self.globals["find_characteristic"] = fail_find_characteristic
+        try:
+            with self.assertRaises(MODULE["TransientBleError"]):
+                await MODULE["ensure_device"](
+                    types.SimpleNamespace(address="AA:BB:CC:DD:EE:FF"), settings()
+                )
+        finally:
+            self.globals["find_characteristic"] = original_find_characteristic
 
 
 if __name__ == "__main__":

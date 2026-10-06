@@ -124,6 +124,8 @@
     reef-roll-filter-ble-gateway = {
       enable = true;
       mode = "auto";
+      modeCheckInterval = 3600;
+      scheduledCheckTime = "19:32";
     };
     watchdogd = {
       enable = true;

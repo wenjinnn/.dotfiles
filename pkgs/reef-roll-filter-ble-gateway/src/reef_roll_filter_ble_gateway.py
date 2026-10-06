@@ -8,6 +8,8 @@ import asyncio
 import json
 import logging
 import os
+import queue
+import time
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -15,11 +17,18 @@ from typing import Any
 
 from bleak import BleakClient, BleakScanner  # type: ignore[import-not-found]
 
+try:
+    import gattlib  # type: ignore[import-not-found]
+except ImportError:
+    gattlib = None
+
 LOG = logging.getLogger("reef-roll-filter-ble-gateway")
 
 DEVICE_NAME = "Paper_reel_REDACTED"
 WRITE_UUID = "0000ffe9-0000-1000-8000-00805f9b34fb"
 NOTIFY_UUID = "0000ffe4-0000-1000-8000-00805f9b34fb"
+CCCD_UUID = "00002902-0000-1000-8000-00805f9b34fb"
+STATE_QUERY_PAYLOAD = bytes.fromhex("47 54 00 02 01 31")
 
 MODES = {
     "auto": 0x01,
@@ -50,6 +59,35 @@ def expected_notifications(mode: str) -> tuple[bytes, bytes]:
 
 def hex_bytes(value: bytes) -> str:
     return value.hex(" ").upper()
+
+
+def notification_mode(data: bytes) -> str | None:
+    value = bytes(data)
+    for mode in MODES:
+        short, long = expected_notifications(mode)
+        if value == short:
+            return mode
+        if (
+            len(value) >= 7
+            and value[0] == 0x52
+            and value[1] in (0x50, 0x54)
+            and value[2:6] == long[2:6]
+            and value[6] == long[6]
+        ):
+            return mode
+    return None
+
+
+def is_long_state_notification(data: bytes, mode: str) -> bool:
+    expected = expected_notifications(mode)[1]
+    value = bytes(data)
+    return (
+        len(value) >= 7
+        and value[0] == 0x52
+        and value[1] in (0x50, 0x54)
+        and value[2:6] == expected[2:6]
+        and value[6] == expected[6]
+    )
 
 
 def monitor_transition(
@@ -176,6 +214,10 @@ async def discover_target(settings: Settings) -> Any | None:
     return None
 
 
+class TransientBleError(RuntimeError):
+    """A BLE transaction failed before its result could be trusted."""
+
+
 @dataclass(frozen=True)
 class Settings:
     mode: str
@@ -190,45 +232,88 @@ class Settings:
     recovery_window_end: str
     connect_timeout: float
     notify_timeout: float
+    mode_check_interval: float
+    scheduled_check_time: str
     state_file: str | None
 
 
-async def _read_state(client: Any, characteristic: Any, settings: Settings) -> bytes | None:
-    try:
-        state = bytes(
-            await asyncio.wait_for(
-                client.read_gatt_char(characteristic),
-                settings.notify_timeout,
-            )
-        )
-    except Exception:
-        LOG.exception("could not read FFE4 state")
-        return None
-    LOG.info("FFE4 read state: %s", hex_bytes(state))
+async def _wait_for_notification(
+    notifications: asyncio.Queue[bytes],
+    mode: str | None,
+    timeout: float,
+    long_state: bool = False,
+) -> bytes | None:
+    deadline = asyncio.get_running_loop().time() + timeout
+    while True:
+        remaining = deadline - asyncio.get_running_loop().time()
+        if remaining <= 0:
+            return None
+        try:
+            value = await asyncio.wait_for(notifications.get(), remaining)
+        except asyncio.TimeoutError:
+            return None
+        LOG.info("FFE4 notify: %s", hex_bytes(value))
+        detected_mode = notification_mode(value)
+        if (
+            detected_mode is not None
+            and (mode is None or detected_mode == mode)
+            and (not long_state or is_long_state_notification(value, detected_mode))
+        ):
+            return value
+
+
+async def _read_state(
+    client: Any,
+    write_characteristic: Any,
+    notifications: asyncio.Queue[bytes],
+    settings: Settings,
+) -> bytes | None:
+    _drain_notifications(notifications)
+    await client.write_gatt_char(
+        write_characteristic, STATE_QUERY_PAYLOAD, response=False
+    )
+    state = await _wait_for_notification(
+        notifications,
+        None,
+        settings.notify_timeout,
+    )
+    if state is not None:
+        LOG.info("FFE4 notification state: %s", hex_bytes(state))
     return state
 
 
 async def _write_mode(
     client: Any,
     write_characteristic: Any,
-    notify_characteristic: Any,
+    notifications: asyncio.Queue[bytes],
     settings: Settings,
 ) -> bool:
     payload = mode_payload(settings.mode)
-    expected = set(expected_notifications(settings.mode))
     LOG.info("writing %s mode to FFE9: %s", settings.mode, hex_bytes(payload))
     await client.write_gatt_char(write_characteristic, payload, response=False)
-    state = await _read_state(client, notify_characteristic, settings)
-    if state not in expected:
-        LOG.error("FFE4 state did not confirm %s mode", settings.mode)
+    state = await _wait_for_notification(
+        notifications,
+        settings.mode,
+        settings.notify_timeout,
+        long_state=True,
+    )
+    if state is None:
+        LOG.error("FFE4 notification did not confirm %s mode", settings.mode)
         return False
-    LOG.info("%s mode confirmed by FFE4 read", settings.mode)
+    LOG.info("%s mode confirmed by FFE4 notification", settings.mode)
     return True
 
 
-async def _with_device_client(device: Any, settings: Settings, ensure: bool) -> bool:
+def _drain_notifications(notifications: asyncio.Queue[bytes]) -> None:
+    while not notifications.empty():
+        notifications.get_nowait()
+
+
+async def _with_bleak_device_client_once(device: Any, settings: Settings, ensure: bool) -> bool:
+    notifications: asyncio.Queue[bytes] = asyncio.Queue()
+
     def on_notification(_sender: Any, data: bytearray) -> None:
-        LOG.info("FFE4 notify: %s", hex_bytes(bytes(data)))
+        notifications.put_nowait(bytes(data))
 
     LOG.info("connecting to %s", device.address)
     async with BleakClient(device, timeout=settings.connect_timeout) as client:
@@ -237,20 +322,157 @@ async def _with_device_client(device: Any, settings: Settings, ensure: bool) -> 
         await client.start_notify(notify_characteristic, on_notification)
         try:
             if ensure:
-                state = await _read_state(client, notify_characteristic, settings)
-                if state in set(expected_notifications(settings.mode)):
+                state = await _read_state(
+                    client, write_characteristic, notifications, settings
+                )
+                if state is not None and notification_mode(state) == settings.mode:
                     LOG.info("device already uses %s mode", settings.mode)
                     return True
                 if state is None:
+                    LOG.error("FFE4 did not report the current mode")
                     return False
+            else:
+                _drain_notifications(notifications)
             return await _write_mode(
                 client,
                 write_characteristic,
-                notify_characteristic,
+                notifications,
                 settings,
             )
         finally:
             await client.stop_notify(notify_characteristic)
+
+
+def _normalize_gattlib_notification(data: bytes | str) -> bytes:
+    raw = data.encode("latin1") if isinstance(data, str) else bytes(data)
+    if raw[:1] in (b"\x1b", b"\x1d") and len(raw) >= 3:
+        return raw[3:]
+    return raw
+
+
+def _gattlib_wait_for_notification(
+    notifications: queue.Queue[bytes],
+    mode: str | None,
+    timeout: float,
+    long_state: bool = False,
+) -> bytes | None:
+    deadline = time.monotonic() + timeout
+    while True:
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            return None
+        try:
+            value = notifications.get(timeout=remaining)
+        except queue.Empty:
+            return None
+        LOG.info("FFE4 notify: %s", hex_bytes(value))
+        detected_mode = notification_mode(value)
+        if (
+            detected_mode is not None
+            and (mode is None or detected_mode == mode)
+            and (not long_state or is_long_state_notification(value, detected_mode))
+        ):
+            return value
+
+
+def _gattlib_transaction(address: str, settings: Settings, ensure: bool) -> bool:
+    if gattlib is None:
+        raise RuntimeError("gattlib is not installed")
+
+    notifications: queue.Queue[bytes] = queue.Queue()
+
+    class Requester(gattlib.GATTRequester):
+        def on_notification(self, handle: int, data: bytes) -> None:
+            value = _normalize_gattlib_notification(data)
+            LOG.info("FFE4 gattlib notify handle=0x%04x: %s", handle, hex_bytes(value))
+            notifications.put(value)
+
+    requester = Requester(address, False)
+    try:
+        requester.connect()
+        deadline = time.monotonic() + settings.connect_timeout
+        while not requester.is_connected() and time.monotonic() < deadline:
+            time.sleep(0.1)
+        if not requester.is_connected():
+            raise RuntimeError("gattlib connection timed out")
+        characteristics = {
+            item["uuid"].lower(): item
+            for item in requester.discover_characteristics()
+        }
+        notify = characteristics[_full_uuid(NOTIFY_UUID)]
+        write = characteristics[_full_uuid(WRITE_UUID)]
+        descriptors = requester.discover_descriptors(
+            notify["handle"], write["handle"] - 1
+        )
+        cccd = next(
+            item
+            for item in descriptors
+            if item["uuid"].lower() == CCCD_UUID
+        )
+        requester.enable_notifications(cccd["handle"], True, False)
+        time.sleep(0.5)
+        LOG.info(
+            "FFE4 notifications enabled through CCCD 0x%04x",
+            cccd["handle"],
+        )
+
+        if ensure:
+            while True:
+                try:
+                    notifications.get_nowait()
+                except queue.Empty:
+                    break
+            requester.write_cmd(write["value_handle"], STATE_QUERY_PAYLOAD)
+            state = _gattlib_wait_for_notification(
+                notifications, None, settings.notify_timeout, long_state=True
+            )
+            if state is not None and notification_mode(state) == settings.mode:
+                LOG.info("device already uses %s mode", settings.mode)
+                return True
+            if state is None:
+                LOG.error("FFE4 did not report the current mode")
+                return False
+        else:
+            while True:
+                try:
+                    notifications.get_nowait()
+                except queue.Empty:
+                    break
+
+        payload = mode_payload(settings.mode)
+        LOG.info("writing %s mode to FFE9: %s", settings.mode, hex_bytes(payload))
+        requester.write_cmd(write["value_handle"], payload)
+        state = _gattlib_wait_for_notification(
+            notifications, settings.mode, settings.notify_timeout, long_state=True
+        )
+        if state is None:
+            LOG.error("FFE4 notification did not confirm %s mode", settings.mode)
+            return False
+        LOG.info("%s mode confirmed by FFE4 notification", settings.mode)
+        time.sleep(0.2)
+        return True
+    finally:
+        requester.disconnect()
+
+
+async def _with_device_client_once(device: Any, settings: Settings, ensure: bool) -> bool:
+    try:
+        return await _with_bleak_device_client_once(device, settings, ensure)
+    except RuntimeError as error:
+        if gattlib is None or "BLE characteristic not found" not in str(error):
+            raise
+        LOG.warning("Bleak exposed no GATT services; using gattlib fallback")
+        return await asyncio.to_thread(
+            _gattlib_transaction, str(device.address), settings, ensure
+        )
+
+
+async def _with_device_client(device: Any, settings: Settings, ensure: bool) -> bool:
+    try:
+        return await _with_device_client_once(device, settings, ensure)
+    except Exception as error:
+        LOG.warning("BLE transaction failed; will continue scanning: %s", error)
+        return False
 
 
 async def restore_device(device: Any, settings: Settings) -> bool:
@@ -258,7 +480,11 @@ async def restore_device(device: Any, settings: Settings) -> bool:
 
 
 async def ensure_device(device: Any, settings: Settings) -> bool:
-    return await _with_device_client(device, settings, ensure=True)
+    try:
+        return await _with_device_client_once(device, settings, ensure=True)
+    except Exception as error:
+        LOG.warning("BLE startup transaction failed; retrying next scan: %s", error)
+        raise TransientBleError from error
 
 
 async def restore_once(settings: Settings) -> bool:
@@ -272,11 +498,26 @@ async def restore_once(settings: Settings) -> bool:
     return await ensure_device(device, settings)
 
 
+def scheduled_check_key(now: datetime, days: tuple[int, ...], check_time: str) -> str | None:
+    configured = datetime.strptime(check_time, "%H:%M").time()
+    if now.weekday() not in days:
+        return None
+    if now.hour != configured.hour or now.minute != configured.minute:
+        return None
+    return f"{now.date()} {check_time}"
+
+
+def mode_check_due(now: datetime, last_check: datetime | None, interval: float) -> bool:
+    return last_check is None or (now - last_check).total_seconds() >= interval
+
+
 async def monitor(settings: Settings, startup_check: bool = True) -> None:
     state = load_monitor_state(settings.state_file)
     persistence_healthy = True
     durable_absence = state == "absent"
     startup_check_pending = startup_check
+    last_mode_check: datetime | None = None if startup_check else datetime.now()
+    last_scheduled_check: str | None = None
     absent_count = 0
 
     LOG.info("monitoring %s; target mode=%s; state=%s", settings.name, settings.mode, state)
@@ -298,14 +539,27 @@ async def monitor(settings: Settings, startup_check: bool = True) -> None:
                         continue
                     state = "present"
                     durable_absence = False
+                try:
+                    startup_ok = await ensure_device(device, settings)
+                except TransientBleError:
+                    await asyncio.sleep(settings.scan_interval)
+                    continue
+                last_mode_check = datetime.now()
+                scheduled_key = scheduled_check_key(
+                    last_mode_check,
+                    settings.recovery_days,
+                    settings.scheduled_check_time,
+                )
+                if scheduled_key is not None:
+                    last_scheduled_check = scheduled_key
                 startup_check_pending = False
-                if await ensure_device(device, settings):
+                if startup_ok:
                     if state != "present":
                         state = "present"
                         persistence_healthy = save_monitor_state(settings.state_file, state)
                     LOG.info("startup mode check complete")
                 else:
-                    LOG.error("startup mode check failed; no automatic retry this boot")
+                    LOG.error("startup mode check failed; hourly mode checks remain enabled")
                 await asyncio.sleep(settings.scan_interval)
                 continue
 
@@ -367,10 +621,37 @@ async def monitor(settings: Settings, startup_check: bool = True) -> None:
                 await asyncio.sleep(settings.recovery_delay)
                 if not await restore_device(device, settings):
                     LOG.error("restore failed; will not retry until the next outage")
+                last_mode_check = datetime.now()
         elif state != previous_state:
             persistence_healthy = save_monitor_state(settings.state_file, state)
         elif previous_state == "unknown":
             LOG.info("target present; establishing baseline without writing")
+
+        if device is not None and not startup_check_pending and identity_confident(device, settings):
+            now = datetime.now()
+            scheduled_key = scheduled_check_key(
+                now, settings.recovery_days, settings.scheduled_check_time
+            )
+            scheduled_due = (
+                scheduled_key is not None and scheduled_key != last_scheduled_check
+            )
+            hourly_due = mode_check_due(
+                now, last_mode_check, settings.mode_check_interval
+            )
+            if scheduled_due or hourly_due:
+                reason = "scheduled" if scheduled_due else "hourly"
+                LOG.info("running %s mode check", reason)
+                try:
+                    mode_ok = await ensure_device(device, settings)
+                except TransientBleError:
+                    mode_ok = False
+                last_mode_check = now
+                if scheduled_key is not None:
+                    last_scheduled_check = scheduled_key
+                if mode_ok:
+                    LOG.info("%s mode check complete", reason)
+                else:
+                    LOG.warning("%s mode check did not confirm %s mode", reason, settings.mode)
 
         await asyncio.sleep(settings.scan_interval)
 
@@ -404,6 +685,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--recovery-window-end", default="19:45")
     parser.add_argument("--connect-timeout", type=float, default=15.0)
     parser.add_argument("--notify-timeout", type=float, default=5.0)
+    parser.add_argument("--mode-check-interval", type=float, default=3600.0)
+    parser.add_argument("--scheduled-check-time", default="19:32")
     parser.add_argument("--state-file")
     parser.add_argument(
         "--once",
@@ -433,6 +716,8 @@ def main() -> int:
         recovery_window_end=args.recovery_window_end,
         connect_timeout=args.connect_timeout,
         notify_timeout=args.notify_timeout,
+        mode_check_interval=max(1.0, args.mode_check_interval),
+        scheduled_check_time=args.scheduled_check_time,
         state_file=args.state_file,
     )
 
