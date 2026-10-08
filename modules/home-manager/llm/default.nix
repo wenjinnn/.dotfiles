@@ -358,6 +358,7 @@ in
           defaultProvider = "openai-codex";
           defaultModel = "gpt-6-luna";
           defaultThinkingLevel = "high";
+          tuiMode = "regular";
           # quietStartup = true;
           subagents = {
             agentOverrides = {
@@ -391,7 +392,7 @@ in
             "npm:pi-web-access"
             "npm:context-mode"
             "npm:pi-memory"
-            "npm:pi-goal-list-loop-audit"
+            "npm:@narumitw/pi-goal"
             "npm:@narumitw/pi-usage"
             "npm:@dietrichgebert/ponytail"
             "npm:@gotgenes/pi-permission-system"
@@ -422,6 +423,10 @@ in
         # Config lands at $XDG_CONFIG_HOME/pi/web-search.json (copy mode:
         # re-synced on every rebuild, stays writable between rebuilds).
         plugins = {
+          "pi-lens" = {
+            path = "${config.home.homeDirectory}/.pi-lens/config.json";
+            config.ui.compactLspStatus = true;
+          };
           "pi-web-access" = {
             config = {
               workflow = "auto-summary";
