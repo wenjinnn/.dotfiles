@@ -1,7 +1,7 @@
 ---
 name: vision
 description: Vision-only subagent that reads local images (screenshots, photos, charts, UI mockups, diagrams) and answers questions about their visual content. Use for OCR, image description, UI/screenshot analysis, chart interpretation, and multi-image comparison when the user provides image paths.
-model: openai-codex/gpt-5.6-luna
+model: openai-codex/gpt-6-luna
 tools: read, ls, find
 systemPromptMode: replace
 inheritProjectContext: false
