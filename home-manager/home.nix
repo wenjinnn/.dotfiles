@@ -320,7 +320,10 @@ in
         display = "all";
       };
     };
-    gpg.enable = true;
+    gpg = {
+      enable = true;
+      settings.default-key = "5578 EA1D 8B63 7671 125D  8E90 8D45 D531 833E 80D0";
+    };
     pandoc.enable = true;
     browserpass.enable = true;
     password-store = {
