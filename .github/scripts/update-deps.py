@@ -11,10 +11,10 @@ For each entry it compares the pinned rev against the latest upstream rev
 (commit mode: default-branch HEAD; tag mode: latest release tag), prefetches
 the new source hash, and rewrites the nix file. GitHub sources use
 nix-prefetch-github; npm sources use the registry tarball and
-nix-prefetch-url. Tag-mode npm packages additionally refresh the checked-in
-package-lock.json and recompute `npmDepsHash` with prefetch-npm-deps, so the
-resulting PR stays buildable. If that step fails the package's update is
-rolled back.
+nix-prefetch-url. Tag-mode npm packages with patched dependency metadata refresh
+the checked-in package-lock.json and recompute `npmDepsHash` with
+prefetch-npm-deps, so the resulting PR stays buildable. If that step fails the
+package's update is rolled back.
 
 Runs from the repo root. Intended for CI (GitHub Actions) but also runnable
 locally with --dry-run.
@@ -36,7 +36,7 @@ NIX_PREFETCH_URL = os.environ.get("NIX_PREFETCH_URL", "nix-prefetch-url")
 NPM = os.environ.get("NPM", "npm")
 CURL = os.environ.get("CURL", "curl")
 PREFETCH_NPM_DEPS = os.environ.get("PREFETCH_NPM_DEPS", "prefetch-npm-deps")
-# buildNpmPackage uses fetcher version 2 for pi-web; keep the CI prefetch in sync.
+# pi-web uses fetcher version 2; pi-acp uses buildNpmPackage's default (1).
 NPM_FETCHER_VERSION = os.environ.get("NPM_FETCHER_VERSION", "2")
 DRY_RUN = "--dry-run" in sys.argv
 
@@ -430,8 +430,8 @@ def _fill_missing_npm_integrity(lockfile):
         write_file(lockfile, json.dumps(data, indent=2) + "\n")
 
 
-def update_npm_deps_hash(owner, name, tag):
-    """Return npmDepsHash and the patched upstream package-lock.json."""
+def update_npm_deps_hash(owner, name, tag, source):
+    """Return npmDepsHash and the package-lock used by its Nix derivation."""
     tarball = f"https://github.com/{owner}/{name}/archive/refs/tags/{tag}.tar.gz"
     with tempfile.TemporaryDirectory(prefix="update-deps-") as tmp:
         tgz = os.path.join(tmp, "src.tar.gz")
@@ -460,31 +460,34 @@ def update_npm_deps_hash(owner, name, tag):
         lockfile = os.path.join(tmp, "package-lock.json")
         if not os.path.exists(lockfile) or not os.path.exists(package_json):
             raise RuntimeError(f"{owner}/{name}@{tag} has no package metadata")
-        _patch_npm_package_json(package_json)
-        subprocess.run(
-            [
-                NPM,
-                "install",
-                "--package-lock-only",
-                "--ignore-scripts",
-                "--omit=dev",
-                "--no-audit",
-                "--no-fund",
-            ],
-            cwd=tmp,
-            capture_output=True,
-            text=True,
-            check=True,
-            timeout=600,
-        )
-        _fill_missing_npm_integrity(lockfile)
+        fetcher_version = "1"
+        if source == "npm":
+            _patch_npm_package_json(package_json)
+            subprocess.run(
+                [
+                    NPM,
+                    "install",
+                    "--package-lock-only",
+                    "--ignore-scripts",
+                    "--omit=dev",
+                    "--no-audit",
+                    "--no-fund",
+                ],
+                cwd=tmp,
+                capture_output=True,
+                text=True,
+                check=True,
+                timeout=600,
+            )
+            _fill_missing_npm_integrity(lockfile)
+            fetcher_version = NPM_FETCHER_VERSION
         proc = subprocess.run(
             [PREFETCH_NPM_DEPS, lockfile],
             capture_output=True,
             text=True,
             check=True,
             timeout=600,
-            env={**os.environ, "NPM_FETCHER_VERSION": NPM_FETCHER_VERSION},
+            env={**os.environ, "NPM_FETCHER_VERSION": fetcher_version},
         )
         npm_hash = proc.stdout.strip().splitlines()[-1] if proc.stdout.strip() else ""
         if not re.fullmatch(r"sha256-[A-Za-z0-9+/=]{44}", npm_hash):
@@ -593,7 +596,9 @@ def main():
             new_lock = None
             if mode == "tag" and re.search(r"\bnpmDepsHash\s*=", text):
                 try:
-                    npm_hash, new_lock = update_npm_deps_hash(owner, name, latest)
+                    npm_hash, new_lock = update_npm_deps_hash(
+                        owner, name, latest, source
+                    )
                     text = re.sub(
                         r'\bnpmDepsHash\s*=\s*"[^"]*"',
                         f'npmDepsHash = "{npm_hash}"',
