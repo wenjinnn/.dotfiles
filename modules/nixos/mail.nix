@@ -20,10 +20,12 @@
     # setup lmtp and rss2email for read local rss source
     dovecot2 = {
       enable = true;
+      enablePAM = true;
       settings = {
         dovecot_config_version = config.services.dovecot2.package.version;
         dovecot_storage_version = config.services.dovecot2.package.version;
-        mail_path = "maildir:~/Maildir/%u/Inbox";
+        mail_driver = "maildir";
+        mail_path = "~/Maildir/%u/Inbox";
         protocols = {
           lmtp = true;
         };
