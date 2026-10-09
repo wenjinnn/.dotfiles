@@ -232,6 +232,24 @@ in
     bash = {
       enable = true;
       enableVteIntegration = true;
+      bashrcExtra = ''
+        if [[ "$(hostname)" == "nixos-wsl" ]]; then
+          _gpg_unlock_mail_last_check=$((SECONDS - 300))
+          _gpg_unlock_mail_on_prompt() {
+            (( SECONDS - _gpg_unlock_mail_last_check < 300 )) && return
+            _gpg_unlock_mail_last_check=$SECONDS
+            local token
+            for token in "$HOME/.cache/neomutt/${me.mail.gmail}.tokens" "$HOME/.cache/neomutt/${me.mail.outlook}.tokens"; do
+              [[ -r $token ]] && break
+            done
+            [[ -r $token ]] || return
+            export GPG_TTY="$(tty)"
+            gpg-connect-agent updatestartuptty /bye >/dev/null
+            gpg --quiet --decrypt "$token" >/dev/null
+          }
+          PROMPT_COMMAND="_gpg_unlock_mail_on_prompt; ''${PROMPT_COMMAND:-:}"
+        fi
+      '';
       historyControl = [
         "erasedups"
         "ignoreboth"
