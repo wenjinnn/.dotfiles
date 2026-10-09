@@ -5,6 +5,24 @@
   ...
 }:
 {
+  systemd.tmpfiles.rules =
+    let
+      accountMaildir = "/home/${me.username}/Maildir/${me.username}";
+      maildir = "${accountMaildir}/Inbox";
+    in
+    [
+      "d ${accountMaildir} 0700 ${me.username} users - -"
+      "z ${accountMaildir} 0700 ${me.username} users - -"
+      "d ${maildir} 0700 ${me.username} users - -"
+      "d ${maildir}/cur 0700 ${me.username} users - -"
+      "d ${maildir}/new 0700 ${me.username} users - -"
+      "d ${maildir}/tmp 0700 ${me.username} users - -"
+      "z ${maildir} 0700 ${me.username} users - -"
+      "z ${maildir}/cur 0700 ${me.username} users - -"
+      "z ${maildir}/new 0700 ${me.username} users - -"
+      "z ${maildir}/tmp 0700 ${me.username} users - -"
+    ];
+
   services = {
     offlineimap = {
       enable = true;
@@ -25,7 +43,7 @@
         dovecot_config_version = config.services.dovecot2.package.version;
         dovecot_storage_version = config.services.dovecot2.package.version;
         mail_driver = "maildir";
-        mail_path = "~/Maildir/%u/Inbox";
+        mail_path = "~/Maildir/%{user}/Inbox";
         protocols = {
           lmtp = true;
         };
