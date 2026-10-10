@@ -12,8 +12,8 @@ let
   command = lib.concatStringsSep " " [
     "${cfg.package}/bin/${serviceName}"
     "--mode ${lib.escapeShellArg cfg.mode}"
-    "--address ${lib.escapeShellArg cfg.address}"
-    "--name ${lib.escapeShellArg cfg.name}"
+    "--address-file ${lib.escapeShellArg cfg.addressFile}"
+    "--name-file ${lib.escapeShellArg cfg.nameFile}"
     "--scan-timeout ${toString cfg.scanTimeout}"
     "--scan-interval ${toString cfg.scanInterval}"
     "--absent-scans ${toString cfg.absentScans}"
@@ -49,16 +49,16 @@ in
       description = "Mode to restore after the paper-reel returns from an outage.";
     };
 
-    address = lib.mkOption {
+    addressFile = lib.mkOption {
       type = lib.types.str;
-      default = "AA:BB:CC:DD:EE:FF";
-      description = "Known BLE address of the paper-reel device.";
+      default = "/run/secrets/REEF_ROLL_FILTER_BLE_ADDRESS";
+      description = "File containing the private BLE address of the paper-reel device.";
     };
 
-    name = lib.mkOption {
+    nameFile = lib.mkOption {
       type = lib.types.str;
-      default = "Paper_reel_REDACTED";
-      description = "BLE local name used as a fallback when the address is unavailable.";
+      default = "/run/secrets/REEF_ROLL_FILTER_BLE_NAME";
+      description = "File containing the private BLE local name.";
     };
 
     scanTimeout = lib.mkOption {
@@ -140,6 +140,17 @@ in
 
   config = lib.mkIf cfg.enable {
     hardware.bluetooth.enable = true;
+
+    sops.secrets.REEF_ROLL_FILTER_BLE_ADDRESS = {
+      owner = serviceUser;
+      group = serviceUser;
+      mode = "0400";
+    };
+    sops.secrets.REEF_ROLL_FILTER_BLE_NAME = {
+      owner = serviceUser;
+      group = serviceUser;
+      mode = "0400";
+    };
 
     users.users.${serviceUser} = {
       isSystemUser = true;

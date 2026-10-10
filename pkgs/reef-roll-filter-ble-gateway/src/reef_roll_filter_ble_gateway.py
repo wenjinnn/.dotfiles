@@ -193,25 +193,57 @@ def matches_device(
     return bool(wanted_name and device_name == wanted_name)
 
 
-async def discover_target(settings: Settings) -> Any | None:
-    discovered = await BleakScanner.discover(
-        timeout=settings.scan_timeout,
-        return_adv=True,
-    )
-    if isinstance(discovered, dict):
-        entries = discovered.values()
-    else:
-        entries = ((device, None) for device in discovered)
+async def _stop_scanner(scanner: Any, timeout: float) -> None:
+    stop = getattr(scanner, "stop", None)
+    if stop is None:
+        return
+    try:
+        await asyncio.wait_for(stop(), timeout)
+    except Exception as error:
+        LOG.warning("BLE scanner cleanup failed: %s", error)
 
-    for device, advertisement in entries:
-        if matches_device(device, advertisement, settings.address, settings.name):
-            LOG.info(
-                "found %s (%s)",
-                _advertisement_name(device, advertisement) or "unnamed device",
-                device.address,
-            )
-            return device
-    return None
+
+async def discover_target(settings: Settings) -> Any | None:
+    discovered: dict[str, tuple[Any, Any]] = {}
+    activity = 0
+
+    def remember_device(device: Any, advertisement: Any) -> None:
+        nonlocal activity
+        activity += 1
+        address = str(getattr(device, "address", "")).lower()
+        if address:
+            discovered[address] = (device, advertisement)
+
+    scanner = BleakScanner(detection_callback=remember_device)
+    cleaned_up = False
+    try:
+        await asyncio.wait_for(scanner.start(), settings.scan_timeout)
+        LOG.info("BLE scanner started")
+        await asyncio.sleep(settings.scan_timeout)
+        if activity == 0:
+            LOG.warning("BLE scan produced no advertisements; preserving monitor state")
+            raise TransientBleError
+        for device, advertisement in discovered.values():
+            if matches_device(device, advertisement, settings.address, settings.name):
+                LOG.info(
+                    "found %s (%s)",
+                    _advertisement_name(device, advertisement) or "unnamed device",
+                    device.address,
+                )
+                return device
+        return None
+    except asyncio.CancelledError:
+        await asyncio.shield(_stop_scanner(scanner, settings.scan_timeout))
+        cleaned_up = True
+        raise
+    except TransientBleError:
+        raise
+    except Exception as error:
+        LOG.warning("BLE scan failed; retrying at the next check: %s", error)
+        raise TransientBleError from error
+    finally:
+        if not cleaned_up:
+            await _stop_scanner(scanner, settings.scan_timeout)
 
 
 class TransientBleError(RuntimeError):
@@ -516,14 +548,37 @@ async def monitor(settings: Settings, startup_check: bool = True) -> None:
     persistence_healthy = True
     durable_absence = state == "absent"
     startup_check_pending = startup_check
-    last_mode_check: datetime | None = None if startup_check else datetime.now()
+    last_mode_check: datetime | None = None
     last_scheduled_check: str | None = None
     absent_count = 0
 
     LOG.info("monitoring %s; target mode=%s; state=%s", settings.name, settings.mode, state)
     while True:
-        device = await discover_target(settings)
-        if startup_check_pending and device is not None:
+        now = datetime.now()
+        scheduled_key = scheduled_check_key(
+            now, settings.recovery_days, settings.scheduled_check_time
+        )
+        scheduled_due = (
+            scheduled_key is not None and scheduled_key != last_scheduled_check
+        )
+        hourly_due = mode_check_due(now, last_mode_check, settings.mode_check_interval)
+        if not startup_check_pending and not scheduled_due and not hourly_due:
+            await asyncio.sleep(settings.scan_interval)
+            continue
+
+        scan_time = now
+        last_mode_check = scan_time
+        if scheduled_key is not None:
+            last_scheduled_check = scheduled_key
+        startup_pass = startup_check_pending
+        startup_check_pending = False
+        try:
+            device = await discover_target(settings)
+        except TransientBleError:
+            LOG.warning("BLE discovery unavailable; preserving monitor state")
+            continue
+
+        if startup_pass and device is not None:
             if not identity_confident(device, settings):
                 LOG.info("startup mode check waiting for the verified BLE address")
             elif not persistence_healthy:
@@ -535,24 +590,13 @@ async def monitor(settings: Settings, startup_check: bool = True) -> None:
                     if not save_monitor_state(settings.state_file, "present"):
                         persistence_healthy = False
                         LOG.error("state is not durable; refusing the startup mode check")
-                        await asyncio.sleep(settings.scan_interval)
                         continue
                     state = "present"
                     durable_absence = False
                 try:
                     startup_ok = await ensure_device(device, settings)
                 except TransientBleError:
-                    await asyncio.sleep(settings.scan_interval)
                     continue
-                last_mode_check = datetime.now()
-                scheduled_key = scheduled_check_key(
-                    last_mode_check,
-                    settings.recovery_days,
-                    settings.scheduled_check_time,
-                )
-                if scheduled_key is not None:
-                    last_scheduled_check = scheduled_key
-                startup_check_pending = False
                 if startup_ok:
                     if state != "present":
                         state = "present"
@@ -560,7 +604,6 @@ async def monitor(settings: Settings, startup_check: bool = True) -> None:
                     LOG.info("startup mode check complete")
                 else:
                     LOG.error("startup mode check failed; hourly mode checks remain enabled")
-                await asyncio.sleep(settings.scan_interval)
                 continue
 
         previous_state = state
@@ -570,6 +613,7 @@ async def monitor(settings: Settings, startup_check: bool = True) -> None:
             absent_count,
             settings.absent_scans,
         )
+        mode_checked = False
         if device is None:
             if state == "absent" and (
                 state != previous_state or not persistence_healthy or not durable_absence
@@ -587,6 +631,7 @@ async def monitor(settings: Settings, startup_check: bool = True) -> None:
             if state == "absent" and previous_state != "absent":
                 LOG.info("target considered powered off")
         elif recovered:
+            mode_checked = True
             if not durable_absence:
                 state = "absent"
                 LOG.warning("recovery evidence is not durably recorded; no write")
@@ -621,39 +666,26 @@ async def monitor(settings: Settings, startup_check: bool = True) -> None:
                 await asyncio.sleep(settings.recovery_delay)
                 if not await restore_device(device, settings):
                     LOG.error("restore failed; will not retry until the next outage")
-                last_mode_check = datetime.now()
         elif state != previous_state:
             persistence_healthy = save_monitor_state(settings.state_file, state)
         elif previous_state == "unknown":
             LOG.info("target present; establishing baseline without writing")
 
-        if device is not None and not startup_check_pending and identity_confident(device, settings):
-            now = datetime.now()
-            scheduled_key = scheduled_check_key(
-                now, settings.recovery_days, settings.scheduled_check_time
-            )
-            scheduled_due = (
-                scheduled_key is not None and scheduled_key != last_scheduled_check
-            )
-            hourly_due = mode_check_due(
-                now, last_mode_check, settings.mode_check_interval
-            )
-            if scheduled_due or hourly_due:
-                reason = "scheduled" if scheduled_due else "hourly"
-                LOG.info("running %s mode check", reason)
-                try:
-                    mode_ok = await ensure_device(device, settings)
-                except TransientBleError:
-                    mode_ok = False
-                last_mode_check = now
-                if scheduled_key is not None:
-                    last_scheduled_check = scheduled_key
-                if mode_ok:
-                    LOG.info("%s mode check complete", reason)
-                else:
-                    LOG.warning("%s mode check did not confirm %s mode", reason, settings.mode)
-
-        await asyncio.sleep(settings.scan_interval)
+        if (
+            device is not None
+            and not mode_checked
+            and identity_confident(device, settings)
+        ):
+            reason = "scheduled" if scheduled_due else "hourly"
+            LOG.info("running %s mode check", reason)
+            try:
+                mode_ok = await ensure_device(device, settings)
+            except TransientBleError:
+                mode_ok = False
+            if mode_ok:
+                LOG.info("%s mode check complete", reason)
+            else:
+                LOG.warning("%s mode check did not confirm %s mode", reason, settings.mode)
 
 
 def parse_recovery_days(value: str) -> tuple[int, ...]:
@@ -666,11 +698,33 @@ def parse_recovery_days(value: str) -> tuple[int, ...]:
     return days
 
 
+def read_identity_file(path: str, label: str) -> str:
+    try:
+        value = Path(path).read_text(encoding="utf-8").strip()
+    except OSError as error:
+        raise ValueError(f"could not read {label} from {path}") from error
+    if not value:
+        raise ValueError(f"{label} file is empty: {path}")
+    return value
+
+
+def resolve_identity(value: str | None, path: str | None, label: str) -> str:
+    if value and path:
+        raise ValueError(f"use either --{label} or --{label}-file")
+    if path:
+        return read_identity_file(path, label)
+    if value:
+        return value
+    raise ValueError(f"--{label} or --{label}-file is required")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mode", choices=sorted(MODES), default="auto")
-    parser.add_argument("--address", default="AA:BB:CC:DD:EE:FF")
-    parser.add_argument("--name", default=DEVICE_NAME)
+    parser.add_argument("--address")
+    parser.add_argument("--address-file")
+    parser.add_argument("--name")
+    parser.add_argument("--name-file")
     parser.add_argument("--scan-timeout", type=float, default=8.0)
     parser.add_argument("--scan-interval", type=float, default=10.0)
     parser.add_argument(
@@ -697,6 +751,14 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+async def _run_restore_once(settings: Settings) -> bool:
+    return await restore_once(settings)
+
+
+async def _run_monitor(settings: Settings) -> None:
+    await monitor(settings)
+
+
 def main() -> int:
     args = parse_args()
     logging.basicConfig(
@@ -705,8 +767,8 @@ def main() -> int:
     )
     settings = Settings(
         mode=args.mode,
-        address=args.address,
-        name=args.name,
+        address=resolve_identity(args.address, args.address_file, "address"),
+        name=resolve_identity(args.name, args.name_file, "name"),
         scan_timeout=args.scan_timeout,
         scan_interval=args.scan_interval,
         absent_scans=max(1, args.absent_scans),
@@ -723,8 +785,8 @@ def main() -> int:
 
     try:
         if args.once:
-            return 0 if asyncio.run(restore_once(settings)) else 1
-        asyncio.run(monitor(settings))
+            return 0 if asyncio.run(_run_restore_once(settings)) else 1
+        asyncio.run(_run_monitor(settings))
     except KeyboardInterrupt:
         LOG.info("stopped")
     except Exception:

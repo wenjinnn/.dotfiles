@@ -123,7 +123,7 @@
   services = {
     reef-roll-filter-ble-gateway = {
       enable = true;
-      mode = "eco";
+      mode = "auto";
       modeCheckInterval = 3600;
       scheduledCheckTime = "19:32";
     };

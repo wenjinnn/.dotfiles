@@ -1,3 +1,4 @@
+import asyncio
 import pathlib
 import runpy
 import sys
@@ -23,7 +24,7 @@ def settings(mode="auto", state_file=None):
     return MODULE["Settings"](
         mode=mode,
         address="AA:BB:CC:DD:EE:FF",
-        name="Paper_reel_REDACTED",
+        name="Paper_reel_TEST",
         scan_timeout=0.01,
         scan_interval=0.01,
         absent_scans=2,
@@ -33,7 +34,7 @@ def settings(mode="auto", state_file=None):
         recovery_window_end="19:45",
         connect_timeout=0.01,
         notify_timeout=0.01,
-        mode_check_interval=3600,
+        mode_check_interval=0.0,
         scheduled_check_time="19:32",
         state_file=state_file,
     )
@@ -169,6 +170,115 @@ class ModePayloadTests(unittest.TestCase):
         )
 
 
+class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
+    async def test_scan_is_one_shot_and_cleaned_up(self):
+        globals_dict = MODULE["discover_target"].__globals__
+        original_scanner = globals_dict["BleakScanner"]
+        instances = []
+
+        class WorkingScanner:
+            def __init__(self, detection_callback):
+                self.detection_callback = detection_callback
+                self.stop_count = 0
+                instances.append(self)
+
+            async def start(self):
+                self.detection_callback(
+                    types.SimpleNamespace(
+                        address="AA:BB:CC:DD:EE:FF",
+                        name="Paper_reel_TEST",
+                    ),
+                    types.SimpleNamespace(local_name="Paper_reel_TEST"),
+                )
+
+            async def stop(self):
+                self.stop_count += 1
+
+        globals_dict["BleakScanner"] = WorkingScanner
+        try:
+            first = await MODULE["discover_target"](settings())
+            second = await MODULE["discover_target"](settings())
+            self.assertIsNotNone(first)
+            self.assertIsNotNone(second)
+            self.assertEqual(len(instances), 2)
+            self.assertEqual([instance.stop_count for instance in instances], [1, 1])
+        finally:
+            globals_dict["BleakScanner"] = original_scanner
+
+    async def test_empty_scan_is_not_treated_as_absence(self):
+        globals_dict = MODULE["discover_target"].__globals__
+        original_scanner = globals_dict["BleakScanner"]
+        instance: Any = None
+
+        class SilentScanner:
+            def __init__(self, **_kwargs):
+                nonlocal instance
+                self.stop_count = 0
+                instance = self
+
+            async def start(self):
+                return None
+
+            async def stop(self):
+                self.stop_count += 1
+
+        globals_dict["BleakScanner"] = SilentScanner
+        try:
+            with self.assertRaises(MODULE["TransientBleError"]):
+                await MODULE["discover_target"](settings())
+            self.assertEqual(instance.stop_count, 1)
+        finally:
+            globals_dict["BleakScanner"] = original_scanner
+
+    async def test_cancelled_start_stops_local_scanner(self):
+        globals_dict = MODULE["discover_target"].__globals__
+        original_scanner = globals_dict["BleakScanner"]
+        started = asyncio.Event()
+        instance: Any = None
+
+        class BlockingScanner:
+            def __init__(self, **_kwargs):
+                nonlocal instance
+                self.stop_count = 0
+                instance = self
+
+            async def start(self):
+                started.set()
+                await asyncio.Future()
+
+            async def stop(self):
+                self.stop_count += 1
+
+        globals_dict["BleakScanner"] = BlockingScanner
+        task = asyncio.create_task(MODULE["discover_target"](settings()))
+        try:
+            await started.wait()
+            task.cancel()
+            with self.assertRaises(asyncio.CancelledError):
+                await task
+            self.assertEqual(instance.stop_count, 1)
+        finally:
+            globals_dict["BleakScanner"] = original_scanner
+
+    async def test_transient_scan_error_does_not_kill_monitor(self):
+        globals_dict = MODULE["discover_target"].__globals__
+        original_scanner = globals_dict["BleakScanner"]
+
+        class FailingScanner:
+            def __init__(self, **_kwargs):
+                pass
+
+            async def start(self):
+                raise RuntimeError("org.bluez.Error.InProgress")
+
+        globals_dict["BleakScanner"] = FailingScanner
+        try:
+            with self.assertRaises(MODULE["TransientBleError"]):
+                await MODULE["discover_target"](settings())
+        finally:
+            globals_dict["BleakScanner"] = original_scanner
+
+
 class MonitorStateTests(unittest.TestCase):
     def test_outage_requires_two_missed_scans(self):
         self.assertEqual(
@@ -205,7 +315,7 @@ class MonitorStateTests(unittest.TestCase):
     def test_device_matching_accepts_address_or_exact_name(self):
         device = types.SimpleNamespace(
             address="AA:BB:CC:DD:EE:FF",
-            name="Paper_reel_REDACTED",
+            name="Paper_reel_TEST",
         )
         advertisement = types.SimpleNamespace(local_name=device.name)
         self.assertTrue(
@@ -213,7 +323,7 @@ class MonitorStateTests(unittest.TestCase):
                 device,
                 advertisement,
                 "AA:BB:CC:DD:EE:FF",
-                "Paper_reel_REDACTED",
+                "Paper_reel_TEST",
             )
         )
         self.assertTrue(
@@ -221,7 +331,7 @@ class MonitorStateTests(unittest.TestCase):
                 types.SimpleNamespace(address="random", name=None),
                 advertisement,
                 "",
-                "Paper_reel_REDACTED",
+                "Paper_reel_TEST",
             )
         )
         name_only_device = types.SimpleNamespace(address="random", name=None)
@@ -233,7 +343,7 @@ class MonitorStateTests(unittest.TestCase):
                 types.SimpleNamespace(address="random", name="other"),
                 advertisement,
                 "",
-                "Paper_reel_REDACTED",
+                "Paper_reel_TEST",
             )
         )
 
@@ -409,6 +519,43 @@ class MonitorBehaviorTests(unittest.IsolatedAsyncioTestCase):
                 globals_dict.update(originals)
             self.assertEqual(save_states, ["present"])
             self.assertEqual(restore_calls, [])
+
+    async def test_discovery_failure_preserves_persisted_state(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = f"{directory}/state.json"
+            MODULE["save_monitor_state"](path, "present")
+            globals_dict = MODULE["monitor"].__globals__
+            original_discover = globals_dict["discover_target"]
+            original_save = globals_dict["save_monitor_state"]
+            original_asyncio = globals_dict["asyncio"]
+            attempts = 0
+            saved_states = []
+
+            async def discover(_settings):
+                nonlocal attempts
+                attempts += 1
+                if attempts == 1:
+                    raise MODULE["TransientBleError"]
+                raise RuntimeError("stop test monitor")
+
+            def save(_path, state):
+                saved_states.append(state)
+                return True
+
+            async def stop_after_failure(_seconds):
+                raise RuntimeError("stop test monitor")
+
+            globals_dict["discover_target"] = discover
+            globals_dict["save_monitor_state"] = save
+            globals_dict["asyncio"] = types.SimpleNamespace(sleep=stop_after_failure)
+            try:
+                with self.assertRaises(RuntimeError):
+                    await MODULE["monitor"](settings(state_file=path))
+            finally:
+                globals_dict["discover_target"] = original_discover
+                globals_dict["save_monitor_state"] = original_save
+                globals_dict["asyncio"] = original_asyncio
+            self.assertEqual(saved_states, [])
 
     async def test_startup_ble_failure_retries_without_exiting_monitor(self):
         device = types.SimpleNamespace(address="AA:BB:CC:DD:EE:FF")
