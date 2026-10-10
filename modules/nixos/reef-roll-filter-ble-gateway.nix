@@ -161,10 +161,7 @@ in
     systemd.services.${serviceName} = {
       description = "Restore the reef paper-reel BLE mode after power recovery";
       wantedBy = [ "multi-user.target" ];
-      after = [
-        "bluetooth.service"
-        "network-online.target"
-      ];
+      after = [ "bluetooth.service" ];
       wants = [ "bluetooth.service" ];
       serviceConfig = {
         Type = "simple";
