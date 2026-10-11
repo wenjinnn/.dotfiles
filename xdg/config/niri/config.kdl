@@ -118,6 +118,7 @@ binds {
     Mod+H { focus-column-left; }
     Mod+M hotkey-overlay-title="Toggle noctalia media center" { spawn "sh" "-c" "noctalia msg panel-toggle control-center media"; }
     Mod+N hotkey-overlay-title="Toggle noctalia notifications center" { spawn "sh" "-c" "noctalia msg panel-toggle control-center notifications"; }
+    Mod+Ctrl+N hotkey-overlay-title="Clear noctalia active notification" { spawn "sh" "-c" "noctalia msg notification-clear-active"; }
     Mod+Home { focus-column-first; }
     Mod+I { focus-workspace-up; }
     Mod+Insert { set-dynamic-cast-window; }
