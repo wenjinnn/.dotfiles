@@ -557,6 +557,54 @@ class MonitorBehaviorTests(unittest.IsolatedAsyncioTestCase):
                 globals_dict["asyncio"] = original_asyncio
             self.assertEqual(saved_states, [])
 
+    async def test_startup_return_outside_window_does_not_write(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = f"{directory}/state.json"
+            MODULE["save_monitor_state"](path, "absent")
+            globals_dict = MODULE["monitor"].__globals__
+            originals = {
+                name: globals_dict[name]
+                for name in (
+                    "discover_target",
+                    "save_monitor_state",
+                    "ensure_device",
+                    "recovery_window_open",
+                )
+            }
+            device = types.SimpleNamespace(address="AA:BB:CC:DD:EE:FF")
+            attempts = 0
+            saved_states = []
+
+            async def discover(_settings):
+                nonlocal attempts
+                attempts += 1
+                if attempts == 1:
+                    return device
+                raise RuntimeError("stop test monitor")
+
+            def save(_path, state):
+                saved_states.append(state)
+                return True
+
+            async def ensure(_device, _settings):
+                raise AssertionError("startup recovery must not write outside its window")
+
+            def recovery_window(*_args):
+                return False
+
+            globals_dict.update(
+                discover_target=discover,
+                save_monitor_state=save,
+                ensure_device=ensure,
+                recovery_window_open=recovery_window,
+            )
+            try:
+                with self.assertRaises(RuntimeError):
+                    await MODULE["monitor"](settings(state_file=path))
+            finally:
+                globals_dict.update(originals)
+            self.assertEqual(saved_states, ["present"])
+
     async def test_startup_ble_failure_retries_without_exiting_monitor(self):
         device = types.SimpleNamespace(address="AA:BB:CC:DD:EE:FF")
         globals_dict = MODULE["monitor"].__globals__
@@ -655,6 +703,63 @@ class RestoreDeviceTests(unittest.IsolatedAsyncioTestCase):
             FakeBleakClient.last_instance.writes[0][1],
             MODULE["STATE_QUERY_PAYLOAD"],
         )
+
+    def test_gattlib_requester_constructor_failure_is_fatal(self):
+        original_gattlib = self.globals["gattlib"]
+
+        class FailingRequester:
+            def __init__(self, _address, _auto_reconnect):
+                raise RuntimeError("gattlib requester construction failed")
+
+        self.globals["gattlib"] = types.SimpleNamespace(
+            GATTRequester=FailingRequester
+        )
+        try:
+            with self.assertRaises(MODULE["GattlibFailure"]):
+                MODULE["_gattlib_transaction"](
+                    "AA:BB:CC:DD:EE:FF", settings(), ensure=True
+                )
+        finally:
+            self.globals["gattlib"] = original_gattlib
+
+    def test_gattlib_requester_failure_is_fatal(self):
+        original_gattlib = self.globals["gattlib"]
+
+        class FailingRequester:
+            def __init__(self, _address, _auto_reconnect):
+                pass
+
+            def connect(self):
+                raise RuntimeError("Function not implemented")
+
+            def disconnect(self):
+                return None
+
+        self.globals["gattlib"] = types.SimpleNamespace(
+            GATTRequester=FailingRequester
+        )
+        try:
+            with self.assertRaises(MODULE["GattlibFailure"]):
+                MODULE["_gattlib_transaction"](
+                    "AA:BB:CC:DD:EE:FF", settings(), ensure=True
+                )
+        finally:
+            self.globals["gattlib"] = original_gattlib
+
+    async def test_gattlib_failure_is_not_swallowed(self):
+        original_transaction = self.globals["_with_device_client_once"]
+
+        async def fail_transaction(_device, _settings, ensure):
+            raise MODULE["GattlibFailure"]("gattlib connection timed out")
+
+        self.globals["_with_device_client_once"] = fail_transaction
+        try:
+            with self.assertRaises(MODULE["GattlibFailure"]):
+                await MODULE["ensure_device"](
+                    types.SimpleNamespace(address="AA:BB:CC:DD:EE:FF"), settings()
+                )
+        finally:
+            self.globals["_with_device_client_once"] = original_transaction
 
     async def test_ble_transaction_failure_returns_false_without_crashing_monitor(self):
         original_find_characteristic = self.globals["find_characteristic"]

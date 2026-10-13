@@ -250,6 +250,10 @@ class TransientBleError(RuntimeError):
     """A BLE transaction failed before its result could be trusted."""
 
 
+class GattlibFailure(RuntimeError):
+    """A gattlib failure requires a process restart to release its worker."""
+
+
 @dataclass(frozen=True)
 class Settings:
     mode: str
@@ -409,7 +413,7 @@ def _gattlib_wait_for_notification(
 
 def _gattlib_transaction(address: str, settings: Settings, ensure: bool) -> bool:
     if gattlib is None:
-        raise RuntimeError("gattlib is not installed")
+        raise GattlibFailure("gattlib is not installed")
 
     notifications: queue.Queue[bytes] = queue.Queue()
 
@@ -419,14 +423,16 @@ def _gattlib_transaction(address: str, settings: Settings, ensure: bool) -> bool
             LOG.info("FFE4 gattlib notify handle=0x%04x: %s", handle, hex_bytes(value))
             notifications.put(value)
 
-    requester = Requester(address, False)
+    requester: Any | None = None
+    operation_error: Exception | None = None
     try:
+        requester = Requester(address, False)
         requester.connect()
         deadline = time.monotonic() + settings.connect_timeout
         while not requester.is_connected() and time.monotonic() < deadline:
             time.sleep(0.1)
         if not requester.is_connected():
-            raise RuntimeError("gattlib connection timed out")
+            raise GattlibFailure("gattlib connection timed out")
         characteristics = {
             item["uuid"].lower(): item
             for item in requester.discover_characteristics()
@@ -483,8 +489,22 @@ def _gattlib_transaction(address: str, settings: Settings, ensure: bool) -> bool
         LOG.info("%s mode confirmed by FFE4 notification", settings.mode)
         time.sleep(0.2)
         return True
+    except GattlibFailure as error:
+        operation_error = error
+        raise
+    except Exception as error:
+        operation_error = error
+        raise GattlibFailure("gattlib transaction failed") from error
     finally:
-        requester.disconnect()
+        if requester is not None:
+            try:
+                requester.disconnect()
+            except Exception as error:
+                if operation_error is None:
+                    raise GattlibFailure("gattlib disconnect failed") from error
+                LOG.warning(
+                    "gattlib disconnect failed after transaction error: %s", error
+                )
 
 
 async def _with_device_client_once(device: Any, settings: Settings, ensure: bool) -> bool:
@@ -502,6 +522,8 @@ async def _with_device_client_once(device: Any, settings: Settings, ensure: bool
 async def _with_device_client(device: Any, settings: Settings, ensure: bool) -> bool:
     try:
         return await _with_device_client_once(device, settings, ensure)
+    except GattlibFailure:
+        raise
     except Exception as error:
         LOG.warning("BLE transaction failed; will continue scanning: %s", error)
         return False
@@ -514,8 +536,10 @@ async def restore_device(device: Any, settings: Settings) -> bool:
 async def ensure_device(device: Any, settings: Settings) -> bool:
     try:
         return await _with_device_client_once(device, settings, ensure=True)
+    except GattlibFailure:
+        raise
     except Exception as error:
-        LOG.warning("BLE startup transaction failed; retrying next scan: %s", error)
+        LOG.warning("BLE mode-check transaction failed; retrying next check: %s", error)
         raise TransientBleError from error
 
 
@@ -585,6 +609,22 @@ async def monitor(settings: Settings, startup_check: bool = True) -> None:
                 LOG.warning("startup mode check blocked by non-durable state")
             elif state == "absent" and not durable_absence:
                 LOG.warning("startup mode check blocked by non-durable outage evidence")
+            elif state == "absent" and not recovery_window_open(
+                settings.recovery_days,
+                settings.recovery_window_start,
+                settings.recovery_window_end,
+            ):
+                if save_monitor_state(settings.state_file, "present"):
+                    state = "present"
+                    durable_absence = False
+                    LOG.info(
+                        "target returned outside the configured recovery window; "
+                        "no startup write"
+                    )
+                else:
+                    persistence_healthy = False
+                    LOG.error("state is not durable; refusing the startup mode check")
+                continue
             else:
                 if state == "absent":
                     if not save_monitor_state(settings.state_file, "present"):
