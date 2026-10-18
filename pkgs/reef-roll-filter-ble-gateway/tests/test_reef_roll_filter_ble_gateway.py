@@ -463,7 +463,7 @@ class MonitorBehaviorTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(save_states, ["present", "absent", "present"])
             self.assertEqual(restore_calls, [True])
 
-    async def test_out_of_window_return_is_handled_without_later_write(self):
+    async def test_out_of_window_return_skips_recovery_but_runs_mode_check(self):
         with tempfile.TemporaryDirectory() as directory:
             path = f"{directory}/state.json"
             MODULE["save_monitor_state"](path, "absent")
@@ -475,6 +475,7 @@ class MonitorBehaviorTests(unittest.IsolatedAsyncioTestCase):
                     "discover_target",
                     "save_monitor_state",
                     "restore_device",
+                    "ensure_device",
                     "recovery_window_open",
                     "asyncio",
                 )
@@ -482,6 +483,7 @@ class MonitorBehaviorTests(unittest.IsolatedAsyncioTestCase):
             discoveries = iter((device, device))
             save_states = []
             restore_calls = []
+            mode_checks = []
             window_results = iter((False, True))
             sleep_calls = 0
 
@@ -494,6 +496,10 @@ class MonitorBehaviorTests(unittest.IsolatedAsyncioTestCase):
 
             async def restore(_device, _settings):
                 restore_calls.append(True)
+                return True
+
+            async def ensure(_device, _settings):
+                mode_checks.append(True)
                 return True
 
             def recovery_window(*_args):
@@ -509,6 +515,7 @@ class MonitorBehaviorTests(unittest.IsolatedAsyncioTestCase):
                 discover_target=discover,
                 save_monitor_state=save,
                 restore_device=restore,
+                ensure_device=ensure,
                 recovery_window_open=recovery_window,
                 asyncio=types.SimpleNamespace(sleep=stop_after_two),
             )
@@ -519,6 +526,7 @@ class MonitorBehaviorTests(unittest.IsolatedAsyncioTestCase):
                 globals_dict.update(originals)
             self.assertEqual(save_states, ["present"])
             self.assertEqual(restore_calls, [])
+            self.assertEqual(len(mode_checks), 2)
 
     async def test_discovery_failure_preserves_persisted_state(self):
         with tempfile.TemporaryDirectory() as directory:

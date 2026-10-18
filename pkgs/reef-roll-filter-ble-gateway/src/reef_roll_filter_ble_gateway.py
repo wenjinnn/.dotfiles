@@ -686,7 +686,12 @@ async def monitor(settings: Settings, startup_check: bool = True) -> None:
                 state = "present"
                 durable_absence = False
                 persistence_healthy = save_monitor_state(settings.state_file, state)
-                LOG.info("target returned outside the configured recovery window; no write")
+                if persistence_healthy:
+                    mode_checked = False
+                LOG.info(
+                    "target returned outside the configured recovery window; "
+                    "skipping recovery write but allowing the ordinary mode check"
+                )
             elif not identity_confident(device, settings):
                 state = "present"
                 durable_absence = False
