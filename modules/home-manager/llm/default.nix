@@ -50,6 +50,7 @@ let
     installPhase = ''
       mkdir -p "$out/node_modules/typebox"
       tar -xzf "$src" --strip-components=1 -C "$out/node_modules/typebox"
+      printf '%s\n' '{"name":"pi-subagents-typebox","version":"1.3.27","private":true}' > "$out/package.json"
     '';
   };
   docx = "${anthropic-skills}/skills/docx";
