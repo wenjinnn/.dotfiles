@@ -9,6 +9,27 @@
   me,
   ...
 }:
+let
+  syncthingBaseSettings = builtins.fromJSON (
+    builtins.readFile ../../../home-manager/syncthing-settings.json
+  );
+  syncthingSettings = syncthingBaseSettings // {
+    devices = lib.removeAttrs syncthingBaseSettings.devices [ "rpi5" ];
+    folders = lib.mapAttrs (
+      _: folder:
+      folder
+      // {
+        devices = lib.filter (device: device != "rpi5") folder.devices;
+      }
+    ) syncthingBaseSettings.folders;
+  };
+  syncthingFolderAcl = pkgs.writeShellScript "syncthing-folder-acl" ''
+    set -euo pipefail
+    ${lib.concatMapStringsSep "\n" (
+      path: "${pkgs.acl}/bin/setfacl -R -m u:syncthing:rwX -- ${lib.escapeShellArg path}"
+    ) (builtins.attrNames syncthingBaseSettings.folders)}
+  '';
+in
 {
   # You can import other NixOS modules here
   imports = with outputs.nixosModules; [
@@ -347,6 +368,10 @@
       enable = true;
       openDefaultPorts = true;
       guiAddress = "http://0.0.0.0:8384";
+      settings = syncthingSettings;
+      # Preserve any existing Pi-only peers/folders while adding the shared set.
+      overrideDevices = false;
+      overrideFolders = false;
     };
     amule = {
       user = me.username;
@@ -566,6 +591,16 @@
   # It will use `systemctl restart` rather than stopping it with `systemctl stop`
   # followed by a delayed `systemctl start`.
   systemd.services = {
+    syncthing-folder-acl = {
+      description = "Grant Syncthing access to the shared folder";
+      before = [ "syncthing.service" ];
+      requiredBy = [ "syncthing.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = syncthingFolderAcl;
+      };
+    };
     # systemd-networkd.stopIfChanged = false;
     # Services that are only restarted might be not able to resolve when resolved is stopped before
     # systemd-resolved.stopIfChanged = false;

@@ -40,6 +40,7 @@ in
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
+    ./syncthing.nix
   ];
 
   nixpkgs = {
@@ -363,7 +364,6 @@ in
   };
 
   services = {
-    syncthing.enable = true;
     gpg-agent = {
       enable = true;
       enableSshSupport = true;

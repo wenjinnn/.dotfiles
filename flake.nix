@@ -243,6 +243,7 @@
           extraSpecialArgs = {
             inherit inputs outputs me;
             mainMonitor = "eDP-1";
+            syncthingLocalDevice = "nixos";
           };
           modules = [
             # > Our main home-manager configuration file <
@@ -255,7 +256,10 @@
         };
         "wenjin@nixos-wsl" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-          extraSpecialArgs = { inherit inputs outputs me; };
+          extraSpecialArgs = {
+            inherit inputs outputs me;
+            syncthingLocalDevice = "nixos-wsl";
+          };
           modules = [
             # > Our main home-manager configuration file <
             ./home-manager/home.nix
