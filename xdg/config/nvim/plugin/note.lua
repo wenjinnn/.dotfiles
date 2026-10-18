@@ -15,8 +15,15 @@ later(function()
         { name = 'work', path = note_path .. '/work' },
       },
       legacy_commands = false,
-      statusline = {
-        enabled = false,
+      daily_notes = {
+        enabled = true,
+        folder = 'daily',
+        date_format = 'YYYY-MM-DD',
+        template = 'daily.md',
+        default_tags = { 'daily' },
+      },
+      templates = {
+        folder = 'templates',
       },
     })
     map('n', '<leader>o', '<cmd>Obsidian<cr>', 'Obsidian subcommand')
