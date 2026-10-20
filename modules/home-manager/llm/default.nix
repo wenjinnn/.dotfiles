@@ -153,6 +153,17 @@ in
       sops-exec-env = "${lib.getExe pkgs.sops} exec-env ${config.home.sessionVariables.SOPS_SECRETS}";
     in
     {
+      herdr = {
+        enable = true;
+        settings = {
+          onboarding = false;
+          theme = {
+            name = "gruvbox";
+            auto_switch = false;
+          };
+          ui.toast.delivery = "terminal";
+        };
+      };
       bash = {
         shellAliases = {
           gemini = ''
@@ -384,10 +395,6 @@ in
           enableInstallTelemetry = false;
           packages = [
             "npm:pi-lens"
-            # must load BEFORE pi-permission-system: pi runs tool_call handlers
-            # sequentially, and the permission gate awaits its dialog inside its
-            # own handler — hooks registered later fire after the prompt resolves.
-            "npm:pi-yaml-hooks"
             "npm:pi-intercom"
             "npm:pi-subagents"
             # Structured output resolves TypeBox from the Nix-managed Pi SDK.
@@ -527,64 +534,6 @@ in
               # reasoning = "low";    # default
               # timeoutMs = 45000;    # default
             };
-          };
-        };
-        # pi-yaml-hooks notification hooks (modules/home-manager/llm/hooks/).
-        # Written to <configDir>/hook/<name> = ~/.pi/agent/hook/ on every
-        # activation (copy mode: editable until next rebuild; hot-reloaded
-        # lazily by the plugin). Validate with /hooks-validate.
-        files = {
-          "hooks.yaml" = {
-            text = ''
-              # pi-yaml-hooks global config: notify on interactive interruptions.
-              # Trigger timing depends on extension load order — pi-yaml-hooks is
-              # declared BEFORE pi-permission-system in `packages` because pi runs
-              # tool_call handlers sequentially and the permission gate awaits its
-              # dialog inside its own handler.
-              hooks:
-                - id: notify-ask-user-question
-                  event: tool.before.ask_user_question
-                  actions:
-                    - bash: "${config.home.homeDirectory}/.pi/agent/hook/notify-prompt.sh"
-
-                - id: notify-permission-ask
-                  event: tool.before.bash
-                  actions:
-                    - bash: "${config.home.homeDirectory}/.pi/agent/hook/notify-prompt.sh"
-
-                - id: notify-goal-draft
-                  event: tool.before.propose_goal_draft
-                  actions:
-                    - bash: "${config.home.homeDirectory}/.pi/agent/hook/notify-prompt.sh"
-
-                - id: notify-loop-draft
-                  event: tool.before.propose_loop_draft
-                  actions:
-                    - bash: "${config.home.homeDirectory}/.pi/agent/hook/notify-prompt.sh"
-
-                - id: notify-task-list
-                  event: tool.before.propose_task_list
-                  actions:
-                    - bash: "${config.home.homeDirectory}/.pi/agent/hook/notify-prompt.sh"
-
-                - id: notify-loop-refine
-                  event: tool.before.propose_loop_refine
-                  actions:
-                    - bash: "${config.home.homeDirectory}/.pi/agent/hook/notify-prompt.sh"
-
-                - id: notify-subagent-checkpoint
-                  event: tool.before.subagent
-                  actions:
-                    - bash: "${config.home.homeDirectory}/.pi/agent/hook/notify-prompt.sh"
-
-                - id: notify-session-idle
-                  event: session.idle
-                  actions:
-                    - bash: "${config.home.homeDirectory}/.pi/agent/hook/notify-prompt.sh"
-            '';
-          };
-          "notify-prompt.sh" = {
-            source = ./hooks/notify-prompt.sh;
           };
         };
         keybindings = {
