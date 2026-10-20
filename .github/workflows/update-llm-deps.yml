@@ -22,12 +22,19 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3 # v31.10.6
+      # v31.10.6
+      - uses: >-
+          cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3
 
       - name: Install source prefetch tools
         run: |
-          nix profile install nixpkgs#nix-prefetch-github nixpkgs#nix-prefetch-git nixpkgs#prefetch-npm-deps
-          command -v nix-prefetch-github nix-prefetch-git nix-prefetch-url nix-build prefetch-npm-deps
+          nix profile install \
+            nixpkgs#nix-prefetch-github \
+            nixpkgs#nix-prefetch-git \
+            nixpkgs#prefetch-npm-deps
+          command -v \
+            nix-prefetch-github nix-prefetch-git nix-prefetch-url \
+            nix-build prefetch-npm-deps
 
       - name: Check and update dependencies
         id: check
@@ -39,14 +46,17 @@ jobs:
 
       - name: Create Pull Request
         if: steps.check.outputs.updated == 'true'
-        uses: peter-evans/create-pull-request@98357b18bf14b5342f975ff684046ec3b2a07725 # v8.0.0
+        # v8.0.0
+        uses: >-
+          peter-evans/create-pull-request@98357b18bf14b5342f975ff684046ec3b2a07725
         with:
           token: ${{ github.token }}
           branch: auto-update/deps
           delete-branch: true
-          title: "chore: update GitHub dependencies"
+          title: "chore: update pinned dependencies"
           body: |
-            Automated weekly update of pinned GitHub and npm dependencies
+            Automated weekly updates of pinned GitHub, npm, and TypeBox
+            dependencies
             (`modules/home-manager/llm/default.nix`,
             `modules/home-manager/de.nix`,
             `pkgs/pi-acp/package.nix`,
@@ -58,5 +68,5 @@ jobs:
             ${{ steps.check.outputs.warnings }}
 
             Please review the changes and merge if everything looks correct.
-          commit-message: "chore: update GitHub dependency revs and hashes"
+          commit-message: "chore: update pinned dependency versions and hashes"
           labels: dependencies, automated

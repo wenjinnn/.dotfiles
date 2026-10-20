@@ -6,12 +6,14 @@ Tracks every pinned dependency:
 * commit-pinned repos in modules/home-manager/de.nix
 * tag-pinned GitHub packages (pkgs/pi-acp/package.nix)
 * tag-pinned npm packages published from GitHub (pkgs/pi-web/package.nix)
+* TypeBox, tracked from the npm registry's latest dist-tag
 
 For each entry it compares the pinned rev against the latest upstream rev
-(commit mode: default-branch HEAD; tag mode: latest release tag), prefetches
-the new source hash, and rewrites the nix file. GitHub sources use
-nix-prefetch-github; npm sources use the registry tarball and
-nix-prefetch-url. Tag-mode npm packages with patched dependency metadata refresh
+(commit mode: default-branch HEAD; tag mode: latest release tag; npm-latest mode:
+registry dist-tag), prefetches the new source hash, and rewrites the Nix file.
+GitHub sources use nix-prefetch-github; scoped npm sources use the registry
+tarball and nix-prefetch-url, while unscoped npm-latest sources use a SHA-512
+Nix prefetch. Tag-mode npm packages with patched dependency metadata refresh
 the checked-in package-lock.json and recompute `npmDepsHash` with
 prefetch-npm-deps, so the resulting PR stays buildable. If that step fails the
 package's update is rolled back.
@@ -44,10 +46,12 @@ API = "https://api.github.com/repos/{owner}/{name}"
 
 # (file, owner, name, hash-field-name, mode, tag-prefix, source)
 # mode "commit": track default-branch HEAD; the nix block has a plain `rev`.
-# mode "tag":    track latest release tag; the nix block has
-#                rev = "<prefix>${version}", so we bump `version` and let the
-#                rev line follow automatically.
-# source "github": hash the GitHub archive; source "npm": hash the registry tarball.
+# mode "tag":        track latest release tag; the nix block has
+#                    rev = "<prefix>${version}", so we bump `version` and let the
+#                    rev line follow automatically.
+# mode "npm-latest": track the npm registry's latest dist-tag and bump `version`.
+# source "github": hash a GitHub archive; "npm": hash a scoped npm tarball;
+# source "npm-registry": hash an unscoped npm tarball with SHA-512.
 REPOS = [
     (
         "modules/home-manager/llm/default.nix",
@@ -109,6 +113,16 @@ REPOS = [
     ("pkgs/pi-acp/package.nix", "svkozak", "pi-acp", "hash", "tag", "v", "github"),
     # pi-web is published to npm but releases are tracked in GitHub tags.
     ("pkgs/pi-web/package.nix", "jmfederico", "pi-web", "hash", "tag", "v", "npm"),
+    # TypeBox's pinned Nix tarball follows the npm registry's latest dist-tag.
+    (
+        "modules/home-manager/llm/default.nix",
+        "npm",
+        "typebox",
+        "hash",
+        "npm-latest",
+        "",
+        "npm-registry",
+    ),
 ]
 
 
@@ -209,6 +223,24 @@ def gh_get(url, retries=3):
 
 
 def latest_rev(owner, name, mode, prefix):
+    if mode == "npm-latest":
+        proc = subprocess.run(
+            [NPM, "view", f"{name}@latest", "version", "--json"],
+            capture_output=True,
+            text=True,
+            check=True,
+            timeout=30,
+        )
+        try:
+            version = json.loads(proc.stdout)
+        except json.JSONDecodeError as error:
+            raise RuntimeError(
+                f"npm registry returned invalid version response for {name}"
+            ) from error
+        if not isinstance(version, str) or not version:
+            raise RuntimeError(f"npm registry returned no latest version for {name}")
+        return version
+
     base = API.format(owner=owner, name=name)
     if mode == "tag":
         try:
@@ -257,13 +289,17 @@ def block_fields(block):
 
 
 def find_block(text, owner, name, source="github"):
-    if source == "npm":
-        pattern = re.compile(r"src\s*=\s*fetchurl\s*\{(?P<body>.*?)\n\s*\};", re.DOTALL)
+    if source in ("npm", "npm-registry"):
+        package = f"@{owner}/{name}" if source == "npm" else name
+        pattern = re.compile(
+            r"src\s*=\s*(?:pkgs\.)?fetchurl\s*\{(?P<body>.*?)\n\s*\};",
+            re.DOTALL,
+        )
         for match in pattern.finditer(text):
             block = match.group("body")
-            if f"registry.npmjs.org/@{owner}/{name}/-/" in block:
+            if f"registry.npmjs.org/{package}/-/" in block:
                 return block, block_fields(block)
-        raise RuntimeError(f"no npm fetchurl block for @{owner}/{name}")
+        raise RuntimeError(f"no npm fetchurl block for {package}")
 
     for block in iter_blocks(text):
         fields = block_fields(block)
@@ -296,7 +332,25 @@ def prefetch_src_hash(owner, name, rev, source):
     last = None
     for attempt in range(3):
         try:
-            if source == "npm":
+            if source == "npm-registry":
+                url = f"https://registry.npmjs.org/{name}/-/{name}-{rev}.tgz"
+                proc = subprocess.run(
+                    [
+                        "nix",
+                        "store",
+                        "prefetch-file",
+                        "--json",
+                        "--hash-type",
+                        "sha512",
+                        url,
+                    ],
+                    capture_output=True,
+                    text=True,
+                    check=True,
+                    timeout=600,
+                )
+                h = (json.loads(proc.stdout).get("hash") or "").strip()
+            elif source == "npm":
                 package = f"@{owner}/{name}"
                 version = rev[1:] if rev.startswith("v") else rev
                 url = f"https://registry.npmjs.org/{package}/-/{name}-{version}.tgz"
@@ -529,11 +583,11 @@ def main():
             orig = read_file(path)
             block, fields = find_block(orig, owner, name, source)
 
-            if mode == "tag":
+            if mode in ("tag", "npm-latest"):
                 version = file_field(orig, "version")
                 if not version:
                     raise RuntimeError(f"no top-level `version` in {path}")
-                if source != "npm":
+                if source not in ("npm", "npm-registry"):
                     expected_rev = f"{prefix}${{version}}"
                     if fields["rev"] != expected_rev:
                         raise RuntimeError(
@@ -565,9 +619,9 @@ def main():
             new_hash = prefetch_src_hash(owner, name, latest, source)
 
             text = orig
-            if mode == "tag":
+            if mode in ("tag", "npm-latest"):
                 new_version = (
-                    latest[len(prefix) :] if latest.startswith(prefix) else latest
+                    latest[len(prefix) :] if prefix and latest.startswith(prefix) else latest
                 )
                 text = re.sub(
                     r'\bversion\s*=\s*"[^"]*"',
@@ -619,8 +673,8 @@ def main():
             write_file(path, text)
             if lock_path and new_lock is not None:
                 write_file(lock_path, new_lock)
-            updated_repos.append(f"{owner}/{name}")
-            print(f"  ✅ updated (rev + {hash_field})")
+            updated_repos.append(name if owner == "npm" else f"{owner}/{name}")
+            print(f"  ✅ updated (version + {hash_field})")
         except Exception as e:
             print(f"  ❌ ERROR: {e}")
             warnings.append(f"{owner}/{name}: {e}")
