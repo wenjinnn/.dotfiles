@@ -364,15 +364,15 @@ in
           subagents = {
             agentOverrides = {
               oracle = {
-                model = "openai-codex/gpt-6-sol";
+                model = "openai-codex/gpt-6.1-sol";
                 thinking = "xhigh";
               };
               researcher = {
-                model = "openai-codex/gpt-6-sol";
+                model = "openai-codex/gpt-6.1-sol";
                 thinking = "high";
               };
               reviewer = {
-                model = "openai-codex/gpt-6-sol";
+                model = "openai-codex/gpt-6.1-sol";
                 thinking = "high";
               };
             };
@@ -626,14 +626,14 @@ in
           modelRoles = {
             default = "xiaomi/mimo-v2.5-pro";
             smol = "openai-codex/gpt-5.6-luna";
-            slow = "openai-codex/gpt-5.6-sol";
+            slow = "openai-codex/gpt-6.1-sol";
             plan = "openai-codex/gpt-5.6-terra";
             vision = "xiaomi/mimo-v2.5";
             designer = "openai-codex/gpt-5.6-terra";
             commit = "xiaomi/mimo-v2.5-pro";
             task = "openai-codex/gpt-5.6-terra";
             tiny = "xiaomi/mimo-v2.5";
-            advisor = "openai-codex/gpt-5.6-sol";
+            advisor = "openai-codex/gpt-6.1-sol";
           };
           providers.webSearch = "exa";
           theme.dark = "dark-gruvbox";
