@@ -40,29 +40,26 @@ let
   xlsx = "${anthropic-skills}/skills/xlsx";
   pi-subagents-typebox = pkgs.stdenvNoCC.mkDerivation {
     pname = "pi-subagents-typebox";
-    version = "1.3.27";
+    version = "1.4.2";
     src = pkgs.fetchurl {
-      url = "https://registry.npmjs.org/typebox/-/typebox-1.3.27.tgz";
-      hash = "sha512-zu+jc1pcy4UiNThxikUr36f0Rybk9PEeCg/NE6adeWr/SKsdNO4EzZHYRDlv2YCVAfj3Odq3dESSo/jNyoBXzA==";
+      url = "https://registry.npmjs.org/typebox/-/typebox-1.4.2.tgz";
+      hash = "sha512-eSoZzgSIyOKDtTH9MI7XMAxMaiXq7UiSFWarysN1ka66baTLDxAVdQ6WkWn6qDqsJFVrcjzvuP+CqHo9yrlQpg==";
     };
     nativeBuildInputs = [ pkgs.gnutar ];
     dontUnpack = true;
     installPhase = ''
-      mkdir -p "$out/node_modules/typebox"
-      tar -xzf "$src" --strip-components=1 -C "$out/node_modules/typebox"
-      printf '%s\n' '{"name":"pi-subagents-typebox","version":"1.3.27","private":true}' > "$out/package.json"
+      mkdir -p "$out"
+      tar -xzf "$src" --strip-components=1 -C "$out"
     '';
+  };
+  pi-node = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi.override {
+    useBun = false;
   };
   docx = "${anthropic-skills}/skills/docx";
   pptx = "${anthropic-skills}/skills/pptx";
   pdf = "${anthropic-skills}/skills/pdf";
   doc-coauthoring = "${anthropic-skills}/skills/doc-coauthoring";
   skill-creator = "${anthropic-skills}/skills/skill-creator";
-  # obra-superpowers has individual skills under skills/, not a single SKILL.md at root.
-  # Enumerate them so each gets its own symlink in ~/.codex/skills/, ~/.claude/skills/, etc.
-  superpowers-skills = lib.mapAttrs' (
-    name: _: lib.nameValuePair "superpower-${name}" "${obra-superpowers}/skills/${name}"
-  ) (lib.filterAttrs (_: type: type == "directory") (builtins.readDir "${obra-superpowers}/skills"));
   ponytail-skills =
     lib.mapAttrs'
       (name: _: lib.nameValuePair "ponytail-${name}" "${dietrichgebert-ponytail}/skills/${name}")
@@ -144,6 +141,10 @@ in
     pi-acp
     qmd
   ];
+
+  home.file.".pi/agent/npm/node_modules/pi-subagents/node_modules/typebox" = {
+    source = pi-subagents-typebox;
+  };
 
   services.pi-web.enable = true;
 
@@ -322,10 +323,9 @@ in
         package = pkgs.writeShellScriptBin "pi" ''
           export JDTLS_PATH="${pkgs.jdtls-pi-lens}/bin/jdtls-pi-lens"
           export PI_LENS_LOMBOK_JAR="${pkgs.lombok}/share/java/lombok.jar"
-          export PI_SUBAGENTS_PI_CODING_AGENT_PACKAGE_ROOT="${pi-subagents-typebox}"
           export LD_LIBRARY_PATH="${pkgs.icu}/lib''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
-          exec "${inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi}/bin/pi" "$@"
+          exec "${pi-node}/bin/pi" "$@"
         '';
         extraPackages = [
           pkgs.nodejs
@@ -390,6 +390,7 @@ in
             "npm:pi-yaml-hooks"
             "npm:pi-intercom"
             "npm:pi-subagents"
+            # Structured output resolves TypeBox from the Nix-managed Pi SDK.
             "npm:pi-web-access"
             "npm:context-mode"
             "npm:pi-memory"
