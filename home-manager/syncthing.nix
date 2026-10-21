@@ -1,18 +1,18 @@
 {
   config,
   lib,
-  syncthingLocalDevice,
+  hostName,
   ...
 }:
 let
   baseSettings = builtins.fromJSON (builtins.readFile ./syncthing-settings.json);
   settings = baseSettings // {
-    devices = lib.removeAttrs baseSettings.devices [ syncthingLocalDevice ];
+    devices = lib.removeAttrs baseSettings.devices [ hostName ];
     folders = lib.mapAttrs (
       _: folder:
       folder
       // {
-        devices = lib.filter (device: device != syncthingLocalDevice) folder.devices;
+        devices = lib.filter (device: device != hostName) folder.devices;
       }
     ) baseSettings.folders;
   };
