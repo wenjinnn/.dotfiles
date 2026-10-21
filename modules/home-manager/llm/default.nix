@@ -37,6 +37,7 @@ let
     rev = "9b58c1ffb790c075ca32e70a89cf1d80588f4abf";
     sha256 = "sha256-S2gHV4/c8XPDqpf0jS8Q5r22//6skZjITf2T9CVhVRE=";
   };
+  herdr-notify-wsl-ref = "51c4e2e205d1c1de1d2cec1dd33bbc602d4041f4";
   xlsx = "${anthropic-skills}/skills/xlsx";
   pi-subagents-typebox = pkgs.stdenvNoCC.mkDerivation {
     pname = "pi-subagents-typebox";
@@ -148,6 +149,17 @@ in
 
   services.pi-web.enable = true;
 
+  home.activation.herdrPiIntegration = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    ${lib.getExe config.programs.herdr.package} integration install pi
+  '';
+
+  home.activation.herdrWslNotifyPlugin = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    if [[ "$(hostname)" == "nixos-wsl" ]]; then
+      ${lib.getExe config.programs.herdr.package} plugin install \
+        saeedrahimi/herdr-notify-wsl --ref ${herdr-notify-wsl-ref} --yes
+    fi
+  '';
+
   programs =
     let
       sops-exec-env = "${lib.getExe pkgs.sops} exec-env ${config.home.sessionVariables.SOPS_SECRETS}";
@@ -162,6 +174,25 @@ in
             auto_switch = false;
           };
           ui.toast.delivery = "terminal";
+          keys = {
+            prefix = "alt+space";
+            open_worktree = "prefix+t";
+            remove_worktree = "prefix+ctrl+t";
+            previous_workspace = "prefix+up";
+            next_workspace = "prefix+down";
+            previous_agent = "prefix+left";
+            next_agent = "prefix+right";
+            focus_agent = "prefix+ctrl+1..9";
+            move_tab_previous = "prefix+ctrl+left";
+            move_tab_next = "prefix+ctrl+right";
+            switch_workspace = "prefix+shift+1..9";
+            clear_pane = "prefix+ctrl+k";
+            last_pane = "prefix+semicolon";
+            resize_pane_left = "prefix+shift+h";
+            resize_pane_down = "prefix+shift+j";
+            resize_pane_up = "prefix+shift+k";
+            resize_pane_right = "prefix+shift+l";
+          };
         };
       };
       bash = {
