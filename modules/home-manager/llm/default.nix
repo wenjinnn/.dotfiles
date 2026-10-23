@@ -141,6 +141,7 @@ in
     # codex-acp
     pi-acp
     qmd
+    paseo
   ];
 
   home.file.".pi/agent/npm/node_modules/pi-subagents/node_modules/typebox" = {
