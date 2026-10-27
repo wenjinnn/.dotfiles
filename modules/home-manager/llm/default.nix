@@ -53,9 +53,6 @@ let
       tar -xzf "$src" --strip-components=1 -C "$out"
     '';
   };
-  pi-node = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi.override {
-    useBun = false;
-  };
   docx = "${anthropic-skills}/skills/docx";
   pptx = "${anthropic-skills}/skills/pptx";
   pdf = "${anthropic-skills}/skills/pdf";
@@ -136,7 +133,7 @@ in
 
   home.packages = with pkgs; [
     qwen-code
-    mcp-nixos
+    # mcp-nixos
     # claude-agent-acp
     # codex-acp
     pi-acp
@@ -208,15 +205,14 @@ in
       mcp = {
         enable = true;
         servers = {
-          nixos = {
-            enable = true;
-            command = "mcp-nixos";
-          };
+          # nixos = {
+          #   enable = true;
+          #   # command = "mcp-nixos";
+          # };
         };
       };
       claude-code = {
         enable = false;
-        package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code;
         enableMcpIntegration = true;
         marketplaces = {
           anthropic-skills = anthropic-skills;
@@ -262,7 +258,6 @@ in
       };
       codex = {
         enable = false;
-        package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex;
         enableMcpIntegration = true;
         settings = {
           model_provider = "openrouter";
@@ -309,7 +304,6 @@ in
       };
       opencode = {
         enable = false;
-        package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
         enableMcpIntegration = true;
         settings = {
           autoupdate = false;
@@ -352,7 +346,6 @@ in
       };
       antigravity-cli = {
         enable = false;
-        package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.gemini-cli;
         enableMcpIntegration = true;
       };
       pi-coding-agent = {
@@ -368,7 +361,7 @@ in
           export PI_LENS_LOMBOK_JAR="${pkgs.lombok}/share/java/lombok.jar"
           export LD_LIBRARY_PATH="${pkgs.icu}/lib''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
-          exec "${pi-node}/bin/pi" "$@"
+          exec "${pkgs.pi-coding-agent}/bin/pi" "$@"
         '';
         extraPackages = [
           pkgs.nodejs
@@ -599,64 +592,6 @@ in
           "app.session.toggleNamedFilter" = [ "ctrl+shift+n" ];
           "app.models.toggleProvider" = [ "ctrl+alt+v" ];
         };
-      };
-      oh-my-pi = {
-        enable = false;
-        package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.omp;
-        settings = {
-          modelRoles = {
-            default = "xiaomi/mimo-v2.5-pro";
-            smol = "openai-codex/gpt-5.6-luna";
-            slow = "openai-codex/gpt-6.1-sol";
-            plan = "openai-codex/gpt-5.6-terra";
-            vision = "xiaomi/mimo-v2.5";
-            designer = "openai-codex/gpt-5.6-terra";
-            commit = "xiaomi/mimo-v2.5-pro";
-            task = "openai-codex/gpt-5.6-terra";
-            tiny = "xiaomi/mimo-v2.5";
-            advisor = "openai-codex/gpt-6.1-sol";
-          };
-          providers.webSearch = "exa";
-          theme.dark = "dark-gruvbox";
-          display.showTokenUsage = true;
-          startup.checkUpdate = false;
-          marketplace.autoUpdate = "off";
-          symbolPreset = "unicode";
-          memory.backend = "local";
-          autolearn.enabled = true;
-          # startup.quiet = true;
-          startup.setupWizard = false;
-        };
-        # API keys via sops — injected at launch time
-        preLaunchHook = ''
-          export XIAOMI_API_KEY="$(${sops-exec-env} 'echo -n $MIMO_API_KEY')"
-          export DEEPSEEK_API_KEY="$(${sops-exec-env} 'echo -n $DEEPSEEK_API_KEY')"
-          export GEMINI_API_KEY="$(${sops-exec-env} 'echo -n $GEMINI_API_KEY')"
-          export OPENROUTER_API_KEY="$(${sops-exec-env} 'echo -n $OPENROUTER_API_KEY')"
-        '';
-        keybindings = {
-          "tui.select.up" = [
-            "up"
-            "ctrl+p"
-          ];
-          "tui.select.down" = [
-            "down"
-            "ctrl+n"
-          ];
-          "app.model.cycleForward" = "ctrl+alt+p";
-        };
-        skills = [
-          doc-coauthoring
-          skill-creator
-          xlsx
-          docx
-          pptx
-          pdf
-          personnal-skill
-        ]
-        # ++ (lib.attrValues superpowers-skills)
-        ++ (lib.attrValues ponytail-skills)
-        ++ (lib.attrValues mattpocock-skills);
       };
     };
 }

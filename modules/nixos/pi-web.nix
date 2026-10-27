@@ -49,7 +49,7 @@ in
 
     agentPackage = lib.mkOption {
       type = lib.types.package;
-      default = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi;
+      default = pkgs.pi-coding-agent;
       description = "The Pi Coding Agent package exposed as the pi executable.";
     };
 

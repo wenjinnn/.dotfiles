@@ -63,6 +63,8 @@ in
     ];
     # Configure your nixpkgs instance
     config = {
+      # mcp-nixos uses FastMCP, whose fastmcp-slim dependency is marked broken with MCP 2.
+      problems.handlers.fastmcp-slim.broken = "warn";
       # Disable if you don't want unfree packages
       allowUnfree = true;
     };
