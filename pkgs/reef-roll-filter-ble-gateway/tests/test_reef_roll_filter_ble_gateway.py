@@ -260,7 +260,7 @@ class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
         finally:
             globals_dict["BleakScanner"] = original_scanner
 
-    async def test_transient_scan_error_does_not_kill_monitor(self):
+    async def test_busy_scan_failure_is_fatal(self):
         globals_dict = MODULE["discover_target"].__globals__
         original_scanner = globals_dict["BleakScanner"]
 
@@ -273,7 +273,34 @@ class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
 
         globals_dict["BleakScanner"] = FailingScanner
         try:
-            with self.assertRaises(MODULE["TransientBleError"]):
+            with self.assertRaises(MODULE["BleScannerFailure"]):
+                await MODULE["discover_target"](settings())
+        finally:
+            globals_dict["BleakScanner"] = original_scanner
+
+    async def test_scanner_cleanup_failure_is_fatal(self):
+        globals_dict = MODULE["discover_target"].__globals__
+        original_scanner = globals_dict["BleakScanner"]
+
+        class FailingStopScanner:
+            def __init__(self, detection_callback):
+                self.detection_callback = detection_callback
+
+            async def start(self):
+                self.detection_callback(
+                    types.SimpleNamespace(
+                        address="AA:BB:CC:DD:EE:FF",
+                        name="Paper_reel_TEST",
+                    ),
+                    types.SimpleNamespace(local_name="Paper_reel_TEST"),
+                )
+
+            async def stop(self):
+                raise RuntimeError("scanner stop failed")
+
+        globals_dict["BleakScanner"] = FailingStopScanner
+        try:
+            with self.assertRaises(MODULE["BleScannerFailure"]):
                 await MODULE["discover_target"](settings())
         finally:
             globals_dict["BleakScanner"] = original_scanner

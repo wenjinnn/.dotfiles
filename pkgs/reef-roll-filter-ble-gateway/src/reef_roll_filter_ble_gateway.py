@@ -200,7 +200,16 @@ async def _stop_scanner(scanner: Any, timeout: float) -> None:
     try:
         await asyncio.wait_for(stop(), timeout)
     except Exception as error:
-        LOG.warning("BLE scanner cleanup failed: %s", error)
+        LOG.error("BLE scanner cleanup failed; restarting the service: %s", error)
+        raise BleScannerFailure("BLE scanner cleanup failed") from error
+
+
+def _scanner_is_busy(error: BaseException) -> bool:
+    message = str(error).lower()
+    return (
+        "org.bluez.error.inprogress" in message
+        or "operation already in progress" in message
+    )
 
 
 async def discover_target(settings: Settings) -> Any | None:
@@ -239,6 +248,12 @@ async def discover_target(settings: Settings) -> Any | None:
     except TransientBleError:
         raise
     except Exception as error:
+        if _scanner_is_busy(error):
+            LOG.error(
+                "BLE scanner is already in progress; restarting the service: %s",
+                error,
+            )
+            raise BleScannerFailure("BLE scanner is already in progress") from error
         LOG.warning("BLE scan failed; retrying at the next check: %s", error)
         raise TransientBleError from error
     finally:
@@ -248,6 +263,10 @@ async def discover_target(settings: Settings) -> Any | None:
 
 class TransientBleError(RuntimeError):
     """A BLE transaction failed before its result could be trusted."""
+
+
+class BleScannerFailure(RuntimeError):
+    """A scanner failure requires a process restart to release BlueZ discovery."""
 
 
 class GattlibFailure(RuntimeError):
