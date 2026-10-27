@@ -64,25 +64,46 @@ fetch_bing() {
 # --- NASA APOD ---
 
 fetch_nasa() {
-    local target="${wallpaper_dir}/${datestr}-NASA*"
-    # shellcheck disable=SC2086
-    [[ -f ${target} ]] && { echo "nasa wallpaper exists"; return 0; }
+    local response start_date
+    start_date=$(date -d '30 days ago' '+%Y-%m-%d')
+    response=$(wget -qO- "https://api.nasa.gov/planetary/apod?api_key=${NASA_API_KEY}&start_date=${start_date}&end_date=$(date '+%Y-%m-%d')") || {
+        echo "nasa api failed"
+        return 1
+    }
 
-    local response
-    response=$(wget -qO- "https://api.nasa.gov/planetary/apod?api_key=${NASA_API_KEY}&date=$(date '+%Y-%m-%d')")
-    [[ $? -ne 0 ]] && { echo "nasa api failed"; return 1; }
+    local item date img_url title ext file_name tmp dimensions width height
+    while IFS= read -r item; do
+        date=$(echo "${item}" | jq -r '.date')
+        img_url=$(echo "${item}" | jq -r '.hdurl // empty')
+        [[ -z "${img_url}" ]] && continue
 
-    [[ "$(echo "${response}" | jq -r '.media_type')" != "image" ]] && { echo "nasa today is not an image"; return 1; }
+        title=$(echo "${item}" | jq -r '.title' | sed 's/[^a-zA-Z0-9 _-]//g;s/ /-/g')
+        ext="${img_url##*.}"; ext="${ext%%\?*}"
+        [[ "${ext}" =~ ^(jpg|jpeg|png|gif|webp)$ ]] || ext="jpg"
+        file_name="${wallpaper_dir}/${date}-NASA-${title}.${ext}"
+        [[ -f "${file_name}" ]] && continue
 
-    local img_url title ext file_name
-    img_url=$(echo "${response}" | jq -r '.hdurl // empty')
-    [[ -z "${img_url}" ]] && { echo "nasa no hd image"; return 1; }
-    title=$(echo "${response}" | jq -r '.title' | sed 's/[^a-zA-Z0-9 _-]//g;s/ /-/g')
-    ext="${img_url##*.}"; ext="${ext%%\?*}"
-    [[ "${ext}" =~ ^(jpg|jpeg|png|gif|webp)$ ]] || ext="jpg"
-    file_name="${wallpaper_dir}/${datestr}-NASA-${title}.${ext}"
+        mkdir -p "${wallpaper_dir}"
+        tmp=$(mktemp "${wallpaper_dir}/.nasa.XXXXXX")
+        if ! wget -O "${tmp}" "${img_url}" -q --read-timeout=10; then
+            rm -f "${tmp}"
+            continue
+        fi
+        dimensions=$(identify -format '%w %h' "${tmp}" 2>/dev/null) || dimensions=""
+        read -r width height <<< "${dimensions}"
+        if [[ "${width:-0}" -lt 1920 || "${height:-0}" -lt 1080 ]]; then
+            echo "nasa image too small (${width:-0}x${height:-0}), skipping ${date}"
+            rm -f "${tmp}"
+            continue
+        fi
 
-    download "${img_url}" "${file_name}"
+        mv "${tmp}" "${file_name}"
+        wallpaper-switch -f "${file_name}"
+        return 0
+    done < <(echo "${response}" | jq -c 'reverse[] | select(.media_type == "image")')
+
+    echo "nasa no new image at least 1920x1080 in the last 30 days"
+    return 1
 }
 
 # --- Yande.re (4K anime) ---

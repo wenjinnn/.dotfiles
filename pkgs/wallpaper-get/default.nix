@@ -7,6 +7,7 @@
   wget,
   coreutils-full,
   gnused,
+  imagemagick,
 }:
 runCommand "wallpaper-get"
   {
@@ -26,6 +27,7 @@ runCommand "wallpaper-get"
             wget
             gnused
             coreutils-full
+            imagemagick
             wallpaper-switch
           ]
         }
