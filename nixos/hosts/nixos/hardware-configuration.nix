@@ -23,10 +23,10 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [
     "kvm-intel"
-    "acpi_call"
+    # "acpi_call"
   ];
   boot.extraModulePackages = with config.boot.kernelPackages; [
-    acpi_call
+    # acpi_call
   ];
   boot.resumeDevice = "/dev/disk/by-uuid/63c28fde-17cc-44bb-aa1b-6658c4107d3f";
   # btrfs resume_offset calc
