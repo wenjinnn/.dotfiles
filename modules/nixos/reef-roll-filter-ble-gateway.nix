@@ -9,6 +9,19 @@ let
   cfg = config.services.reef-roll-filter-ble-gateway;
   serviceName = "reef-roll-filter-ble-gateway";
   serviceUser = serviceName;
+  weekdayNames = [
+    "Mon"
+    "Tue"
+    "Wed"
+    "Thu"
+    "Fri"
+    "Sat"
+    "Sun"
+  ];
+  scheduledCalendar = lib.optional (cfg.recoveryDays != [ ]) (
+    "${lib.concatStringsSep "," (map (day: lib.elemAt weekdayNames day) cfg.recoveryDays)} "
+    + "*-*-* ${cfg.scheduledCheckTime}:00"
+  );
   command = lib.concatStringsSep " " [
     "${cfg.package}/bin/${serviceName}"
     "--mode ${lib.escapeShellArg cfg.mode}"
@@ -183,10 +196,7 @@ in
       wantedBy = [ "timers.target" ];
       timerConfig = {
         OnBootSec = "2min";
-        OnCalendar = [
-          "hourly"
-          "*-*-2,4,6 19:32:00"
-        ];
+        OnCalendar = [ "hourly" ] ++ scheduledCalendar;
         Persistent = true;
         AccuracySec = "1s";
         Unit = "${serviceName}.service";
