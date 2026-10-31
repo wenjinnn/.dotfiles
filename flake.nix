@@ -11,8 +11,6 @@
       "https://nix-community.cachix.org"
       "https://nixos-raspberrypi.cachix.org"
       "https://wenjinnn.cachix.org"
-      "https://noctalia.cachix.org"
-      "https://cache.numtide.com"
     ];
 
     # will be appended to the system-level trusted-public-keys
@@ -21,8 +19,6 @@
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
       "wenjinnn.cachix.org-1:g4YUsgvT21EYKUP4n9p677m5SwJ85gX3NSi+P5wyFKg="
-      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
-      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
     ];
   };
 
