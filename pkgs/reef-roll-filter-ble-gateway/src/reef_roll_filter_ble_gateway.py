@@ -7,6 +7,7 @@ import argparse
 import asyncio
 import json
 import logging
+import multiprocessing
 import os
 import queue
 import time
@@ -107,24 +108,37 @@ def monitor_transition(
     return "present", next_absent_count, False
 
 
-def load_monitor_state(path: str | None) -> str:
+def load_monitor_snapshot(path: str | None) -> tuple[str, int]:
     if not path:
-        return "unknown"
+        return "unknown", 0
     try:
-        state = json.loads(Path(path).read_text()).get("state")
+        payload = json.loads(Path(path).read_text())
+        state = payload.get("state")
+        absent_count = payload.get("absent_count", 0)
     except (OSError, ValueError, AttributeError):
-        return "unknown"
-    return state if state in {"unknown", "present", "absent"} else "unknown"
+        return "unknown", 0
+    if state not in {"unknown", "present", "absent"}:
+        state = "unknown"
+    if not isinstance(absent_count, int) or absent_count < 0:
+        absent_count = 0
+    return state, absent_count
 
 
-def save_monitor_state(path: str | None, state: str) -> bool:
+def load_monitor_state(path: str | None) -> str:
+    return load_monitor_snapshot(path)[0]
+
+
+def save_monitor_state(path: str | None, state: str, absent_count: int = 0) -> bool:
     if not path:
         return True
     target = Path(path)
     temporary = target.with_suffix(".tmp")
     try:
         target.parent.mkdir(parents=True, exist_ok=True)
-        temporary.write_text(json.dumps({"state": state}) + "\n")
+        payload: dict[str, Any] = {"state": state}
+        if absent_count > 0:
+            payload["absent_count"] = absent_count
+        temporary.write_text(json.dumps(payload) + "\n")
         os.replace(temporary, target)
         return True
     except OSError:
@@ -305,7 +319,7 @@ async def _wait_for_notification(
             return None
         try:
             value = await asyncio.wait_for(notifications.get(), remaining)
-        except asyncio.TimeoutError:
+        except TimeoutError:
             return None
         LOG.info("FFE4 notify: %s", hex_bytes(value))
         detected_mode = notification_mode(value)
@@ -526,6 +540,57 @@ def _gattlib_transaction(address: str, settings: Settings, ensure: bool) -> bool
                 )
 
 
+def _gattlib_worker(
+    result_queue: Any,
+    address: str,
+    settings: Settings,
+    ensure: bool,
+) -> None:
+    try:
+        result_queue.put(("result", _gattlib_transaction(address, settings, ensure)))
+    except GattlibFailure as error:
+        result_queue.put(("fatal", str(error)))
+    except BaseException as error:
+        result_queue.put(("error", f"{type(error).__name__}: {error}"))
+
+
+def _isolated_gattlib_transaction(
+    address: str,
+    settings: Settings,
+    ensure: bool,
+) -> bool:
+    context = multiprocessing.get_context("fork")
+    result_queue = context.Queue(maxsize=1)
+    worker = context.Process(
+        target=_gattlib_worker,
+        args=(result_queue, address, settings, ensure),
+    )
+    worker.start()
+    timeout = settings.connect_timeout + (settings.notify_timeout * 2) + 10
+    try:
+        worker.join(timeout)
+        if worker.is_alive():
+            worker.terminate()
+            worker.join(2)
+            raise GattlibFailure("gattlib worker timed out")
+        try:
+            result = result_queue.get(timeout=1)
+        except queue.Empty as error:
+            raise GattlibFailure(
+                f"gattlib worker exited without a result (exit code {worker.exitcode})"
+            ) from error
+        kind, value = result
+        if kind == "result":
+            return bool(value)
+        raise GattlibFailure(f"gattlib worker failed: {value}")
+    finally:
+        if worker.is_alive():
+            worker.terminate()
+            worker.join(2)
+        result_queue.close()
+        result_queue.join_thread()
+
+
 async def _with_device_client_once(device: Any, settings: Settings, ensure: bool) -> bool:
     try:
         return await _with_bleak_device_client_once(device, settings, ensure)
@@ -534,7 +599,7 @@ async def _with_device_client_once(device: Any, settings: Settings, ensure: bool
             raise
         LOG.warning("Bleak exposed no GATT services; using gattlib fallback")
         return await asyncio.to_thread(
-            _gattlib_transaction, str(device.address), settings, ensure
+            _isolated_gattlib_transaction, str(device.address), settings, ensure
         )
 
 
@@ -584,6 +649,74 @@ def scheduled_check_key(now: datetime, days: tuple[int, ...], check_time: str) -
 
 def mode_check_due(now: datetime, last_check: datetime | None, interval: float) -> bool:
     return last_check is None or (now - last_check).total_seconds() >= interval
+
+
+async def check_once(settings: Settings, now: datetime | None = None) -> bool:
+    """Perform one scheduled discovery, state transition, and mode check."""
+    state, absent_count = load_monitor_snapshot(settings.state_file)
+    current = now or datetime.now()
+    try:
+        device = await discover_target(settings)
+    except TransientBleError:
+        LOG.warning("BLE discovery unavailable; preserving monitor state")
+        return False
+
+    if device is None:
+        next_state, next_count, _ = monitor_transition(
+            state, False, absent_count, settings.absent_scans
+        )
+        if (next_state, next_count) != (state, absent_count):
+            if not save_monitor_state(settings.state_file, next_state, next_count):
+                return False
+            LOG.info(
+                "target absent (%d/%d scans)",
+                next_count,
+                settings.absent_scans,
+            )
+            if next_state == "absent" and state != "absent":
+                LOG.info("target considered powered off")
+        return True
+
+    if not identity_confident(device, settings):
+        LOG.warning("target found with an unverified BLE identity; no write")
+        return save_monitor_state(settings.state_file, "present")
+
+    previous_state = state
+    if not save_monitor_state(settings.state_file, "present"):
+        LOG.error("state is not durable; refusing the mode check")
+        return False
+
+    if previous_state == "absent":
+        if recovery_window_open(
+            settings.recovery_days,
+            settings.recovery_window_start,
+            settings.recovery_window_end,
+            current,
+        ):
+            LOG.info(
+                "target returned; waiting %.1f seconds before restoring %s mode",
+                settings.recovery_delay,
+                settings.mode,
+            )
+            await asyncio.sleep(settings.recovery_delay)
+            restored = await restore_device(device, settings)
+            if not restored:
+                LOG.error("recovery mode restore did not confirm %s", settings.mode)
+            return restored
+        LOG.info(
+            "target returned outside the configured recovery window; "
+            "skipping recovery write but running the ordinary mode check"
+        )
+
+    try:
+        mode_ok = await ensure_device(device, settings)
+    except TransientBleError:
+        return False
+    if mode_ok:
+        LOG.info("scheduled mode check complete")
+    else:
+        LOG.warning("scheduled mode check did not confirm %s mode", settings.mode)
+    return mode_ok
 
 
 async def monitor(settings: Settings, startup_check: bool = True) -> None:
@@ -811,12 +944,21 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="find the device, set the mode once, and exit",
     )
+    parser.add_argument(
+        "--check-once",
+        action="store_true",
+        help="run one scheduled discovery and mode check, then exit",
+    )
     parser.add_argument("--verbose", action="store_true")
     return parser.parse_args()
 
 
 async def _run_restore_once(settings: Settings) -> bool:
     return await restore_once(settings)
+
+
+async def _run_check_once(settings: Settings) -> bool:
+    return await check_once(settings)
 
 
 async def _run_monitor(settings: Settings) -> None:
@@ -848,8 +990,12 @@ def main() -> int:
     )
 
     try:
+        if args.once and args.check_once:
+            raise ValueError("--once and --check-once cannot be combined")
         if args.once:
             return 0 if asyncio.run(_run_restore_once(settings)) else 1
+        if args.check_once:
+            return 0 if asyncio.run(_run_check_once(settings)) else 1
         asyncio.run(_run_monitor(settings))
     except KeyboardInterrupt:
         LOG.info("stopped")

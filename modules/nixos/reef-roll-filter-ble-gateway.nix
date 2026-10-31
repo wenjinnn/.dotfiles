@@ -27,6 +27,7 @@ let
     "--mode-check-interval ${toString cfg.modeCheckInterval}"
     "--scheduled-check-time ${lib.escapeShellArg cfg.scheduledCheckTime}"
   ];
+  checkCommand = "${command} --check-once";
 in
 {
   options.services.reef-roll-filter-ble-gateway = {
@@ -159,21 +160,36 @@ in
     users.groups.${serviceUser} = { };
 
     systemd.services.${serviceName} = {
-      description = "Restore the reef paper-reel BLE mode after power recovery";
-      wantedBy = [ "multi-user.target" ];
+      description = "Check and restore the reef paper-reel BLE mode";
       after = [ "bluetooth.service" ];
       wants = [ "bluetooth.service" ];
       serviceConfig = {
-        Type = "simple";
+        Type = "oneshot";
         User = serviceUser;
-        ExecStart = command;
-        Restart = "on-failure";
-        RestartSec = 10;
+        ExecStart = checkCommand;
+        TimeoutStartSec = "5min";
+        # A native BLE backend must never be able to monopolize the RPi.
+        CPUQuota = "50%";
         StateDirectory = serviceName;
         NoNewPrivileges = true;
         PrivateTmp = true;
         ProtectSystem = "strict";
         ProtectHome = true;
+      };
+    };
+
+    systemd.timers.${serviceName} = {
+      description = "Schedule reef paper-reel BLE mode checks";
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnBootSec = "2min";
+        OnCalendar = [
+          "hourly"
+          "*-*-2,4,6 19:32:00"
+        ];
+        Persistent = true;
+        AccuracySec = "1s";
+        Unit = "${serviceName}.service";
       };
     };
   };

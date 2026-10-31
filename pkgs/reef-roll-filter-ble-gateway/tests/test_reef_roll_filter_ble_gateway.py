@@ -1,4 +1,5 @@
 import asyncio
+import os
 import pathlib
 import runpy
 import sys
@@ -335,6 +336,12 @@ class MonitorStateTests(unittest.TestCase):
             self.assertTrue(MODULE["save_monitor_state"](path, "absent"))
             self.assertEqual(MODULE["load_monitor_state"](path), "absent")
 
+    def test_state_file_persists_absent_scan_count(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = f"{directory}/state.json"
+            self.assertTrue(MODULE["save_monitor_state"](path, "present", 1))
+            self.assertEqual(MODULE["load_monitor_snapshot"](path), ("present", 1))
+
     def test_state_persistence_failure_is_reported(self):
         with tempfile.NamedTemporaryFile() as path:
             self.assertFalse(MODULE["save_monitor_state"](f"{path.name}/state", "present"))
@@ -376,6 +383,56 @@ class MonitorStateTests(unittest.TestCase):
 
 
 class MonitorBehaviorTests(unittest.IsolatedAsyncioTestCase):
+    async def test_check_once_persists_missed_scans_across_invocations(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = f"{directory}/state.json"
+            MODULE["save_monitor_state"](path, "present")
+            globals_dict = MODULE["check_once"].__globals__
+            original_discover = globals_dict["discover_target"]
+
+            async def discover(_settings):
+                return None
+
+            globals_dict["discover_target"] = discover
+            try:
+                self.assertTrue(await MODULE["check_once"](settings(state_file=path)))
+                self.assertEqual(MODULE["load_monitor_snapshot"](path), ("present", 1))
+                self.assertTrue(await MODULE["check_once"](settings(state_file=path)))
+                self.assertEqual(MODULE["load_monitor_snapshot"](path), ("absent", 2))
+            finally:
+                globals_dict["discover_target"] = original_discover
+
+    async def test_check_once_restores_persisted_outage_only_in_window(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = f"{directory}/state.json"
+            MODULE["save_monitor_state"](path, "absent")
+            device = types.SimpleNamespace(address="AA:BB:CC:DD:EE:FF")
+            globals_dict = MODULE["check_once"].__globals__
+            originals = {
+                name: globals_dict[name]
+                for name in ("discover_target", "restore_device", "recovery_window_open")
+            }
+            restore_calls = []
+
+            async def discover(_settings):
+                return device
+
+            async def restore(_device, _settings):
+                restore_calls.append(True)
+                return True
+
+            globals_dict.update(
+                discover_target=discover,
+                restore_device=restore,
+                recovery_window_open=lambda *_args: True,
+            )
+            try:
+                self.assertTrue(await MODULE["check_once"](settings(state_file=path)))
+            finally:
+                globals_dict.update(originals)
+            self.assertEqual(restore_calls, [True])
+            self.assertEqual(MODULE["load_monitor_state"](path), "present")
+
     async def test_failed_absent_save_requires_a_later_durable_absence(self):
         with tempfile.TemporaryDirectory() as directory:
             path = f"{directory}/state.json"
@@ -738,6 +795,22 @@ class RestoreDeviceTests(unittest.IsolatedAsyncioTestCase):
             FakeBleakClient.last_instance.writes[0][1],
             MODULE["STATE_QUERY_PAYLOAD"],
         )
+
+    def test_gattlib_transaction_runs_in_an_isolated_process(self):
+        original_transaction = self.globals["_gattlib_transaction"]
+        parent_pid = os.getpid()
+
+        def transaction_in_child(_address, _settings, _ensure):
+            return os.getpid() != parent_pid
+
+        self.globals["_gattlib_transaction"] = transaction_in_child
+        try:
+            result = self.globals["_isolated_gattlib_transaction"](
+                "AA:BB:CC:DD:EE:FF", settings(), ensure=True
+            )
+            self.assertTrue(result)
+        finally:
+            self.globals["_gattlib_transaction"] = original_transaction
 
     def test_gattlib_requester_constructor_failure_is_fatal(self):
         original_gattlib = self.globals["gattlib"]
