@@ -554,12 +554,26 @@ def _gattlib_worker(
         result_queue.put(("error", f"{type(error).__name__}: {error}"))
 
 
+def _reap_gattlib_worker(worker: Any) -> None:
+    if worker.is_alive():
+        worker.terminate()
+        worker.join(2)
+    if worker.is_alive():
+        LOG.error("gattlib worker ignored SIGTERM; sending SIGKILL")
+        worker.kill()
+        worker.join(2)
+    if worker.is_alive():
+        raise GattlibFailure("gattlib worker could not be terminated")
+    worker.join()
+
+
 def _isolated_gattlib_transaction(
     address: str,
     settings: Settings,
     ensure: bool,
+    process_context: Any | None = None,
 ) -> bool:
-    context = multiprocessing.get_context("fork")
+    context = process_context or multiprocessing.get_context("spawn")
     result_queue = context.Queue(maxsize=1)
     worker = context.Process(
         target=_gattlib_worker,
@@ -570,8 +584,7 @@ def _isolated_gattlib_transaction(
     try:
         worker.join(timeout)
         if worker.is_alive():
-            worker.terminate()
-            worker.join(2)
+            _reap_gattlib_worker(worker)
             raise GattlibFailure("gattlib worker timed out")
         try:
             result = result_queue.get(timeout=1)
@@ -584,11 +597,16 @@ def _isolated_gattlib_transaction(
             return bool(value)
         raise GattlibFailure(f"gattlib worker failed: {value}")
     finally:
-        if worker.is_alive():
-            worker.terminate()
-            worker.join(2)
-        result_queue.close()
-        result_queue.join_thread()
+        try:
+            if worker.is_alive():
+                _reap_gattlib_worker(worker)
+            else:
+                worker.join()
+        finally:
+            result_queue.cancel_join_thread()
+            result_queue.close()
+            if not worker.is_alive():
+                worker.close()
 
 
 async def _with_device_client_once(device: Any, settings: Settings, ensure: bool) -> bool:

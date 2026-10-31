@@ -749,6 +749,63 @@ class RestoreDeviceTests(unittest.IsolatedAsyncioTestCase):
     def tearDown(self):
         self.globals["BleakClient"] = self.original_client
 
+    def test_gattlib_worker_escalates_to_sigkill(self):
+        workers = []
+
+        class FakeQueue:
+            def cancel_join_thread(self):
+                pass
+
+            def close(self):
+                pass
+
+            def get(self, timeout):
+                raise AssertionError(f"unexpected queue read after {timeout}s")
+
+        class StubbornWorker:
+            def __init__(self, **_kwargs):
+                self.alive = True
+                self.terminated = False
+                self.killed = False
+                self.closed = False
+                workers.append(self)
+
+            def start(self):
+                pass
+
+            def join(self, _timeout=None):
+                pass
+
+            def is_alive(self):
+                return self.alive
+
+            def terminate(self):
+                self.terminated = True
+
+            def kill(self):
+                self.killed = True
+                self.alive = False
+
+            def close(self):
+                self.closed = True
+
+        class FakeContext:
+            Queue = staticmethod(lambda maxsize: FakeQueue())
+            Process = StubbornWorker
+
+        with self.assertRaises(MODULE["GattlibFailure"]):
+            self.globals["_isolated_gattlib_transaction"](
+                "AA:BB:CC:DD:EE:FF",
+                settings(),
+                ensure=True,
+                process_context=FakeContext(),
+            )
+
+        self.assertEqual(len(workers), 1)
+        self.assertTrue(workers[0].terminated)
+        self.assertTrue(workers[0].killed)
+        self.assertTrue(workers[0].closed)
+
     async def test_wrong_mode_notification_cannot_confirm_mode(self):
         FakeBleakClient.during_write_notifications = (
             MODULE["expected_notifications"]("clean")[0],
@@ -806,7 +863,10 @@ class RestoreDeviceTests(unittest.IsolatedAsyncioTestCase):
         self.globals["_gattlib_transaction"] = transaction_in_child
         try:
             result = self.globals["_isolated_gattlib_transaction"](
-                "AA:BB:CC:DD:EE:FF", settings(), ensure=True
+                "AA:BB:CC:DD:EE:FF",
+                settings(),
+                ensure=True,
+                process_context=self.globals["multiprocessing"].get_context("fork"),
             )
             self.assertTrue(result)
         finally:
