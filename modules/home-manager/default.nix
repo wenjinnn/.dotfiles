@@ -43,4 +43,5 @@
   pi-web = import ./pi-web.nix;
   ghostty = import ./ghostty.nix;
   noctalia = import ./noctalia.nix;
+  paseo = import ./paseo.nix;
 }

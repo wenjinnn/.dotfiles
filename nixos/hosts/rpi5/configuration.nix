@@ -52,7 +52,6 @@ in
     sops
     firewall
     tailscale
-    paseo
     cachix
     podman
     reef-roll-filter-ble-gateway

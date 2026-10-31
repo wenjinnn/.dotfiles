@@ -70,7 +70,6 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    paseo.url = "github:getpaseo/paseo";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nix-on-droid.url = "github:nix-community/nix-on-droid/release-23.11";
     # follow `main` branch of this repository, considered being stable
@@ -252,6 +251,16 @@
             nur.modules.homeManager.default
             stylix.homeModules.stylix
             nix-index-database.homeModules.nix-index
+          ];
+        };
+        "wenjin@rpi5" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs me;
+            hostName = "rpi5";
+          };
+          modules = [
+            ./home-manager/hosts/rpi5.nix
           ];
         };
         "wenjin@nixos-wsl" = home-manager.lib.homeManagerConfiguration {

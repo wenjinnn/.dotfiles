@@ -25,7 +25,6 @@
   headscale = import ./headscale.nix;
   tailscale = import ./tailscale.nix;
   pi-web = import ./pi-web.nix;
-  paseo = import ./paseo.nix;
   rustdesk-server = import ./rustdesk-server.nix;
   de = import ./de.nix;
   k3s = import ./k3s;
