@@ -11,11 +11,11 @@
 
 buildNpmPackage rec {
   pname = "pi-web";
-  version = "1.202610.3";
+  version = "1.202610.9";
 
   src = fetchurl {
     url = "https://registry.npmjs.org/@jmfederico/pi-web/-/pi-web-${version}.tgz";
-    hash = "sha256-qFAfNQfmEX+xCxenpWUqet7Ud5G5N5DaZeURYnbTDik=";
+    hash = "sha256-g85tS2LS80C/K6qhL+zxr760eHqC4UA80BWYCXEZ2hg=";
   };
 
   postPatch = ''
@@ -31,7 +31,7 @@ buildNpmPackage rec {
     NODE
   '';
 
-  npmDepsHash = "sha256-TxYAm81fIEUuyoE7AwGuckW70271Zv5/V9VprWGzGjk=";
+  npmDepsHash = "sha256-Mp6BhyhWxd+LYRV/XoQVYqtz9eoBaTm3iqq+LVVhaKs=";
   npmDepsFetcherVersion = 2;
 
   nativeBuildInputs = [

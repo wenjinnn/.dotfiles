@@ -10,41 +10,41 @@ let
   anthropic-skills = pkgs.fetchFromGitHub {
     owner = "anthropics";
     repo = "skills";
-    rev = "dbd4588f9e1033efb41dad4bef2f7947c8993d44";
-    sha256 = "sha256-+UIqBnzyeIOvJSKYaDaE3GYPEpLw7qQqyUw5S971AfU=";
+    rev = "ca45fc496a3436251f191354091d557da31c15b5";
+    sha256 = "sha256-MkCOANBAqCc1WmNf7S8PsyAphGJAIzEXGyCm8RrCR9M=";
   };
   juliusbrussee-caveman = pkgs.fetchFromGitHub {
     owner = "JuliusBrussee";
     repo = "caveman";
-    rev = "bad48a0e1df55e05e3f52249afa35ecc1909ee76";
-    sha256 = "sha256-G2i54t+5fFCRI3lXP6fXV9oPWwIKklmx6F3EfrqntBY=";
+    rev = "2e068f735253cce28256744804785f01887d9646";
+    sha256 = "sha256-DFS9Xp9msSFF4WwdPd9RdghjBzc0x4yVomM6nxQWPKw=";
   };
   obra-superpowers = pkgs.fetchFromGitHub {
     owner = "obra";
     repo = "superpowers";
-    rev = "bb92a77741419a4ab5f06e711a283343f1ada0c3";
-    sha256 = "sha256-UCVI+T7j1Xh1LDkrvnJduis7eHFqrizCyGTWAGW5d6U=";
+    rev = "2ce8aa15d05bd57213e6f746f953aafb7ded7a8b";
+    sha256 = "sha256-9+69YEdjdaDu5sWTyAbufSVcZgGD7h6wAq4nUVY2syE=";
   };
   mattpocock-skills-src = pkgs.fetchFromGitHub {
     owner = "mattpocock";
     repo = "skills";
-    rev = "49dd158d1076134a641b33efb035946536778336";
-    sha256 = "sha256-NljCSZNI3sZ+vbCw7pRdrwR7try4BxOFp4gdjuWYtzs=";
+    rev = "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d";
+    sha256 = "sha256-3vhd77xfZjKUYJsIwPFevIZPUAzUgZXr0RYj5NQrBwk=";
   };
   dietrichgebert-ponytail = pkgs.fetchFromGitHub {
     owner = "DietrichGebert";
     repo = "ponytail";
-    rev = "09c434ab73ca43761c5d8b0c5d341926c2fba710";
-    sha256 = "sha256-sVnxA4rfxa2SlS2g+2+q3odRq0VJz1z7PEVHW2QRPQI=";
+    rev = "96608e078b2d5ea607c5c3b8b5a54d1c1fba6846";
+    sha256 = "sha256-PhPtZbeX2wBp19GtWRy+fV93+fFYZe5S487eXPDl/us=";
   };
   herdr-notify-wsl-ref = "51c4e2e205d1c1de1d2cec1dd33bbc602d4041f4";
   xlsx = "${anthropic-skills}/skills/xlsx";
   pi-subagents-typebox = pkgs.stdenvNoCC.mkDerivation {
     pname = "pi-subagents-typebox";
-    version = "1.4.2";
+    version = "1.4.3";
     src = pkgs.fetchurl {
       url = "https://registry.npmjs.org/typebox/-/typebox-1.4.2.tgz";
-      hash = "sha512-eSoZzgSIyOKDtTH9MI7XMAxMaiXq7UiSFWarysN1ka66baTLDxAVdQ6WkWn6qDqsJFVrcjzvuP+CqHo9yrlQpg==";
+      hash = "sha512-u3nyf7ZciAv1GOijVpI0TDt9At5wmEi7lSHSlRrnjuThv1DcB7fgGBqqrz+fGZ54jAfTpOOX0JXwxSIg3pnxQA==";
     };
     nativeBuildInputs = [ pkgs.gnutar ];
     dontUnpack = true;
@@ -83,8 +83,8 @@ let
   claude-plugins-official = pkgs.fetchFromGitHub {
     owner = "anthropics";
     repo = "claude-plugins-official";
-    rev = "ea10b213686c90bb1984b2016937310e05336cf3";
-    sha256 = "sha256-Tfs8Ig1rzLvaAuTZwqGUzKCK0TMWE2SddYss+H/04ug=";
+    rev = "a7ba5b93db0c7c8d17f3f1d25853adca79598a1a";
+    sha256 = "sha256-C8uTRCtKEvL7dz+dDbfs/DwU/uxH5YzYFDn0oo3BKnA=";
   };
   personnal-skill = ./skills;
   # Copy a skill dir and add `disable-model-invocation: true` to its SKILL.md
