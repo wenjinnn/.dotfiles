@@ -54,6 +54,7 @@ in
     tailscale
     cachix
     podman
+    paseo
     reef-roll-filter-ble-gateway
     ../../users.nix
     ./disko-usb-btrfs.nix
@@ -62,6 +63,7 @@ in
     # Import your generated (nixos-generate-config) hardware configuration
     #./hardware-configuration.nix
   ];
+
   nixpkgs = {
     # You can add overlays here
     overlays = [
@@ -126,19 +128,12 @@ in
     algorithm = "zstd";
   };
 
-  sops.secrets.MATRIX_REGISTRATION_TOKEN = { };
   sops.secrets.RPI5_AMULE_EC_PASSWORD = { };
-  sops.secrets.MATRIX_REGISTRATION_TOKEN.owner = "matrix-synapse";
-  sops.secrets.MATRIX_REGISTRATION_TOKEN.group = "matrix-synapse";
   sops.secrets.RPI5_PASS = { };
   sops.templates."iwd-ap" = {
     content = ''
       [Security]
       Passphrase=${config.sops.placeholder.RPI5_PASS}
-
-      [IPv4]
-      Address=192.168.222.1
-      Netmask=255.255.255.0
     '';
   };
   services = {
@@ -184,12 +179,6 @@ in
         "syncthing.ts.wenjin.me" = {
           locations."/" = {
             proxyPass = "http://127.0.0.1:8384";
-            proxyWebsockets = true;
-          };
-        };
-        "samba.ts.wenjin.me" = {
-          locations."/" = {
-            proxyPass = "http://127.0.0.1:445";
             proxyWebsockets = true;
           };
         };
@@ -261,59 +250,28 @@ in
         overwriteprotocol = "http";
       };
     };
-    matrix-synapse = {
+    paseo = {
       enable = true;
-      settings = {
-        server_name = "ts.wenjin.me";
-        public_baseurl = "https://matrix.ts.wenjin.me/";
-        database = {
-          name = "psycopg2";
-          args = {
-            database = "matrix-synapse";
-            user = "matrix-synapse";
-            host = "/run/postgresql";
-          };
-        };
-        listeners = [
-          {
-            port = 6167;
-            bind_addresses = [ "127.0.0.1" ];
-            type = "http";
-            tls = false;
-            x_forwarded = true;
-            resources = [
-              {
-                names = [
-                  "client"
-                  "federation"
-                ];
-                compress = true;
-              }
-            ];
-          }
-        ];
-        enable_registration = false;
-        registration_shared_secret_path = config.sops.secrets.MATRIX_REGISTRATION_TOKEN.path;
-        event_cache_size = "256M";
-        max_upload_size = "50M";
-        url_preview_enabled = true;
-      };
-      configureRedisLocally = true;
-    };
-    postgresql = {
-      enable = true;
-      ensureDatabases = [ "matrix-synapse" ];
-      ensureUsers = [
-        {
-          name = "matrix-synapse";
-          ensureDBOwnership = true;
-        }
+      package = inputs.nixpkgs.legacyPackages.aarch64-linux.paseo;
+      listenAddress = "0.0.0.0";
+      hostnames = [
+        "paseo.ts.wenjin.me"
+        "100.64.0.1"
       ];
-      initialScript = pkgs.writeText "synapse-init.sql" ''
-        CREATE USER \"matrix-synapse\" WITH CREATEDB;
-        CREATE DATABASE "matrix-synapse" LC_COLLATE='C' LC_CTYPE='C' OWNER "matrix-synapse" TEMPLATE template0;
-      '';
+      relay.enable = false;
+      settings.features.webUi.enabled = true;
     };
+    matrix-conduit = {
+      enable = true;
+      settings.global = {
+        server_name = "ts.wenjin.me";
+        address = "127.0.0.1";
+        port = 6167;
+        allow_registration = false;
+        max_request_size = 52428800;
+      };
+    };
+    postgresql.enable = true;
     home-assistant = {
       enable = true;
       openFirewall = true;
@@ -322,6 +280,11 @@ in
           packageOverrides = _self: super: {
             paho-mqtt = super.paho-mqtt.overridePythonAttrs (_: {
               dontUsePytestCheck = true;
+            });
+            # The failing-notebook test needs a kernel to start within 60s;
+            # this is unreliable on the low-power RPi builder.
+            nbmake = super.nbmake.overridePythonAttrs (old: {
+              disabledTests = (old.disabledTests or [ ]) ++ [ "test_failing" ];
             });
           };
         }).overrideAttrs
@@ -412,6 +375,7 @@ in
     };
     samba = {
       enable = true;
+      winbindd.enable = false;
       openFirewall = true;
       nmbd.enable = false;
       settings = {
@@ -422,12 +386,20 @@ in
           # "passwd program" = "/run/wrappers/bin/passwd %u";
           security = "user";
         };
-        media = {
+        Music = {
           browseable = "yes";
-          comment = "Public samba share.";
+          comment = "Music samba share.";
           "read only" = "no";
           "write list" = "root, @sambashare, aria2, @aria2";
-          path = "/home/wenjin";
+          path = "/home/wenjin/Music";
+          "admin users" = "@sambashare";
+        };
+        Videos = {
+          browseable = "yes";
+          comment = "Videos samba share.";
+          "read only" = "no";
+          "write list" = "root, @sambashare, aria2, @aria2";
+          path = "/home/wenjin/Videos";
           "admin users" = "@sambashare";
         };
       };
@@ -601,6 +573,36 @@ in
         ExecStart = syncthingFolderAcl;
       };
     };
+    iwd-ap = {
+      description = "Start the iwd access point";
+      wantedBy = [ "multi-user.target" ];
+      after = [
+        "iwd.service"
+        "sops-nix.service"
+        "sys-subsystem-net-devices-wlan0.device"
+      ];
+      wants = [ "sys-subsystem-net-devices-wlan0.device" ];
+      requires = [ "iwd.service" ];
+      partOf = [ "iwd.service" ];
+      unitConfig.RequiresMountsFor = "/var/lib/iwd/ap/rpi5nixos.ap";
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = pkgs.writeShellScript "iwd-ap-start" ''
+          set -eu
+          for attempt in $(${pkgs.coreutils}/bin/seq 1 60); do
+            if ${pkgs.iwd}/bin/iwctl device wlan0 show >/dev/null 2>&1; then
+              ${pkgs.iwd}/bin/iwctl device wlan0 set-property Mode ap
+              exec ${pkgs.iwd}/bin/iwctl ap wlan0 start-profile rpi5nixos
+            fi
+            ${pkgs.coreutils}/bin/sleep 1
+          done
+          echo "iwd did not expose wlan0 after 60 seconds" >&2
+          exit 1
+        '';
+        ExecStop = "${pkgs.iwd}/bin/iwctl ap wlan0 stop";
+      };
+    };
     # systemd-networkd.stopIfChanged = false;
     # Services that are only restarted might be not able to resolve when resolved is stopped before
     # systemd-resolved.stopIfChanged = false;
@@ -623,19 +625,20 @@ in
   networking.wireless.iwd = {
     enable = true;
     settings = {
-      General.CountryCode = "CN";
+      General.Country = "CN";
       Network.EnableIPv6 = true;
       General.EnableNetworkConfiguration = false;
     };
   };
-  # Place sops-managed AP config into iwd's state dir via bind mount
-  fileSystems."/var/lib/iwd/rpi5nixos.ap" = {
+  # iwd reads AP profiles from /var/lib/iwd/ap/<ssid>.ap.
+  fileSystems."/var/lib/iwd/ap/rpi5nixos.ap" = {
     device = config.sops.templates."iwd-ap".path;
     fsType = "none";
     options = [ "bind" ];
   };
   systemd.tmpfiles.rules = [
     "d /var/lib/iwd 0755 root root -"
+    "d /var/lib/iwd/ap 0700 root root -"
     "d /home/wenjin/Videos 0755 wenjin users -"
     "d /home/wenjin/Videos/amule 0775 wenjin users -"
     "d /home/wenjin/Videos/amule/Temp 0775 wenjin users -"
