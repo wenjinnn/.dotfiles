@@ -58,7 +58,7 @@
     waydroid
     telegram-desktop
     discord
-    dbeaver-bin
+    dbx
     # temp disabled because of build error
     # redisinsight
     wechat
