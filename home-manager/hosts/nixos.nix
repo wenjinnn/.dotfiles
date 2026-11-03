@@ -13,24 +13,35 @@
     fcitx5
     mpv
     ghostty
+    paseo
   ];
+
+  services.paseo = {
+    enable = true;
+    listenAddress = "0.0.0.0";
+    hostnames = true;
+    relay.enable = false;
+    settings.features.webUi.enabled = true;
+  };
 
   # nixpkgs.config.permittedInsecurePackages = [
   #   "openssl-1.1.1w"
   # ];
 
-  gtk.gtk3.bookmarks = let
-    homePath = "file://${config.home.homeDirectory}";
-  in [
-    "${homePath}/Documents"
-    "${homePath}/Downloads"
-    "${homePath}/Music"
-    "${homePath}/Pictures"
-    "${homePath}/Public"
-    "${homePath}/Repo"
-    "${homePath}/Templates"
-    "${homePath}/Videos"
-  ];
+  gtk.gtk3.bookmarks =
+    let
+      homePath = "file://${config.home.homeDirectory}";
+    in
+    [
+      "${homePath}/Documents"
+      "${homePath}/Downloads"
+      "${homePath}/Music"
+      "${homePath}/Pictures"
+      "${homePath}/Public"
+      "${homePath}/Repo"
+      "${homePath}/Templates"
+      "${homePath}/Videos"
+    ];
 
   services.remmina.enable = true;
 

@@ -249,16 +249,6 @@
             nix-index-database.homeModules.nix-index
           ];
         };
-        "wenjin@rpi5" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.aarch64-linux;
-          extraSpecialArgs = {
-            inherit inputs outputs me;
-            hostName = "rpi5";
-          };
-          modules = [
-            ./home-manager/hosts/rpi5.nix
-          ];
-        };
         "wenjin@nixos-wsl" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
           extraSpecialArgs = {
@@ -268,6 +258,16 @@
           modules = [
             # > Our main home-manager configuration file <
             ./home-manager/home.nix
+            {
+              imports = with outputs.homeManagerModules; [ paseo ];
+              services.paseo = {
+                enable = true;
+                listenAddress = "0.0.0.0";
+                hostnames = true;
+                relay.enable = false;
+                settings.features.webUi.enabled = true;
+              };
+            }
             nur.modules.homeManager.default
             stylix.homeModules.stylix
             nix-index-database.homeModules.nix-index

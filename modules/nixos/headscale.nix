@@ -88,6 +88,11 @@
                 type = "A";
                 value = "100.64.0.1";
               }
+              {
+                name = "paseo.${base_domain}";
+                type = "A";
+                value = "100.64.0.1";
+              }
             ];
             nameservers.global = [
               "223.5.5.5"

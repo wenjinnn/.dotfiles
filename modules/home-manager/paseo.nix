@@ -22,13 +22,11 @@ let
     PASEO_RELAY_ENDPOINT = "${cfg.relay.host}:${toString cfg.relay.port}";
     PASEO_RELAY_USE_TLS = if cfg.relay.useTls then "true" else "false";
   }
-  // lib.optionalAttrs (
-    cfg.relay.enable
-    && cfg.relay.mode == "remote"
-    && cfg.relay.publicUseTls != null
-  ) {
-    PASEO_RELAY_PUBLIC_USE_TLS = if cfg.relay.publicUseTls then "true" else "false";
-  }
+  //
+    lib.optionalAttrs (cfg.relay.enable && cfg.relay.mode == "remote" && cfg.relay.publicUseTls != null)
+      {
+        PASEO_RELAY_PUBLIC_USE_TLS = if cfg.relay.publicUseTls then "true" else "false";
+      }
   // cfg.environment;
 in
 {
@@ -73,7 +71,10 @@ in
       };
 
       mode = lib.mkOption {
-        type = lib.types.enum [ "hosted" "remote" ];
+        type = lib.types.enum [
+          "hosted"
+          "remote"
+        ];
         default = "hosted";
         description = "Relay mode.";
       };
@@ -132,10 +133,13 @@ in
         After = [ "network.target" ];
       };
       Service = {
-        ExecStart = "${cfg.package}/bin/paseo-server${lib.optionalString (!cfg.relay.enable) " --no-relay"}";
+        ExecStart = "${cfg.package}/bin/paseo-server${
+          lib.optionalString (!cfg.relay.enable) " --no-relay"
+        }";
         ExecStartPre = [
           "${pkgs.coreutils}/bin/install -d -m 700 ${lib.escapeShellArg cfg.dataDir}"
-        ] ++ lib.optional (cfg.settings != { }) (
+        ]
+        ++ lib.optional (cfg.settings != { }) (
           "${pkgs.coreutils}/bin/install -m 600 ${settingsFile} "
           + lib.escapeShellArg "${cfg.dataDir}/config.json"
         );
