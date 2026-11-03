@@ -87,7 +87,6 @@ in
     lact
     nvtopPackages.amd
     nvtopPackages.intel
-    tpacpi-bat
   ];
   systemd.packages = with pkgs; [ lact ];
   systemd.services.lactd.wantedBy = [ "multi-user.target" ];
