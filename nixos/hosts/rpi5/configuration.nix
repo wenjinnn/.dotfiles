@@ -130,12 +130,18 @@ in
 
   sops.secrets.RPI5_AMULE_EC_PASSWORD = { };
   sops.secrets.RPI5_PASS = { };
+  sops.secrets.PASEO_PASSWORD = { };
+  sops.templates."paseo.env".content = ''
+    PASEO_PASSWORD=${config.sops.placeholder.PASEO_PASSWORD}
+  '';
   sops.templates."iwd-ap" = {
     content = ''
       [Security]
       Passphrase=${config.sops.placeholder.RPI5_PASS}
     '';
   };
+  systemd.services.paseo.serviceConfig.EnvironmentFile = config.sops.templates."paseo.env".path;
+
   services = {
     reef-roll-filter-ble-gateway = {
       enable = true;
