@@ -94,6 +94,9 @@ rustPlatform.buildRustPackage {
     pnpmDeps
     ;
   cargoHash = "sha256-qivYZqXBPNh8Dhylk9keIW32dLUI516bAWjV0fKHnNM=";
+  doCheck = false;
+  CARGO_PROFILE_RELEASE_LTO = "false";
+  CARGO_PROFILE_RELEASE_CODEGEN_UNITS = "16";
 
   nativeBuildInputs = [
     nodejs_22
@@ -149,10 +152,12 @@ rustPlatform.buildRustPackage {
   installPhase = ''
     runHook preInstall
     install -Dm755 target/release/dbx $out/bin/dbx
-    for size in 32 128 256; do
-      install -Dm644 "src-tauri/icons/''${size}x''${size}.png" \
-        "$out/share/icons/hicolor/''${size}x''${size}/apps/dbx.png"
-    done
+    install -Dm644 src-tauri/icons/32x32.png \
+      $out/share/icons/hicolor/32x32/apps/dbx.png
+    install -Dm644 src-tauri/icons/128x128.png \
+      $out/share/icons/hicolor/128x128/apps/dbx.png
+    install -Dm644 src-tauri/icons/128x128@2x.png \
+      $out/share/icons/hicolor/256x256/apps/dbx.png
     for size in 16 48 64; do
       mkdir -p "$out/share/icons/hicolor/''${size}x''${size}/apps"
       if [ "$size" -le 32 ] && [ -f src-tauri/icons/32x32.png ]; then
