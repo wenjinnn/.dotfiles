@@ -135,7 +135,14 @@ in
     PASEO_PASSWORD=${config.sops.placeholder.PASEO_PASSWORD}
   '';
   sops.templates."iwd-ap" = {
+    restartUnits = [ "iwd-ap.service" ];
     content = ''
+      [General]
+      # Force 20 MHz HT-disabled operation; brcmfmac rejects the HT40
+      # chanspec selected by iwd on the RPi5 AP path.
+      Channel=1
+      DisableHT=true
+
       [Security]
       Passphrase=${config.sops.placeholder.RPI5_PASS}
     '';
@@ -590,20 +597,27 @@ in
       wants = [ "sys-subsystem-net-devices-wlan0.device" ];
       requires = [ "iwd.service" ];
       partOf = [ "iwd.service" ];
-      unitConfig.RequiresMountsFor = "/var/lib/iwd/ap/rpi5nixos.ap";
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
+        ExecStartPre = "${pkgs.coreutils}/bin/install -m 600 ${
+          config.sops.templates."iwd-ap".path
+        } /var/lib/iwd/ap/rpi5nixos.ap";
         ExecStart = pkgs.writeShellScript "iwd-ap-start" ''
           set -eu
           for attempt in $(${pkgs.coreutils}/bin/seq 1 60); do
             if ${pkgs.iwd}/bin/iwctl device wlan0 show >/dev/null 2>&1; then
               ${pkgs.iwd}/bin/iwctl device wlan0 set-property Mode ap
-              exec ${pkgs.iwd}/bin/iwctl ap wlan0 start-profile rpi5nixos
+              for ap_attempt in $(${pkgs.coreutils}/bin/seq 1 15); do
+                if ${pkgs.iwd}/bin/iwctl ap wlan0 show >/dev/null 2>&1; then
+                  exec ${pkgs.iwd}/bin/iwctl ap wlan0 start-profile rpi5nixos
+                fi
+                ${pkgs.coreutils}/bin/sleep 1
+              done
             fi
             ${pkgs.coreutils}/bin/sleep 1
           done
-          echo "iwd did not expose wlan0 after 60 seconds" >&2
+          echo "iwd did not expose wlan0/AP after 60 seconds" >&2
           exit 1
         '';
         ExecStop = "${pkgs.iwd}/bin/iwctl ap wlan0 stop";
@@ -636,12 +650,8 @@ in
       General.EnableNetworkConfiguration = false;
     };
   };
-  # iwd reads AP profiles from /var/lib/iwd/ap/<ssid>.ap.
-  fileSystems."/var/lib/iwd/ap/rpi5nixos.ap" = {
-    device = config.sops.templates."iwd-ap".path;
-    fsType = "none";
-    options = [ "bind" ];
-  };
+  # iwd reads AP profiles from /var/lib/iwd/ap/<ssid>.ap. The service copies
+  # the current sops-rendered profile before each start.
   systemd.tmpfiles.rules = [
     "d /var/lib/iwd 0755 root root -"
     "d /var/lib/iwd/ap 0700 root root -"
