@@ -84,8 +84,10 @@
 
   systemd.services.k3s = lib.mkMerge [
     (lib.mkIf config.services.tailscale.enable {
+      # Wait for Tailscale at boot, but do not restart embedded etcd when
+      # tailscaled is manually restarted or briefly reconnects.
       after = [ "tailscaled.service" ];
-      bindsTo = [ "tailscaled.service" ];
+      wants = [ "tailscaled.service" ];
     })
     {
       serviceConfig.ExecStartPre = [
