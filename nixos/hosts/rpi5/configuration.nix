@@ -142,9 +142,9 @@ in
     restartUnits = [ "iwd-ap.service" ];
     content = ''
       [General]
-      # Force 20 MHz HT-disabled operation; brcmfmac rejects the HT40
-      # chanspec selected by iwd on the RPi5 AP path.
-      Channel=1
+      # Keep the AP on 5 GHz channel 36 with 20 MHz width; this leaves
+      # the 2.4 GHz radio time available for BLE on the RPi5.
+      Channel=36
       DisableHT=true
 
       [Security]
