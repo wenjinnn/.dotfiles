@@ -28,6 +28,39 @@ let
         PASEO_RELAY_PUBLIC_USE_TLS = if cfg.relay.publicUseTls then "true" else "false";
       }
   // cfg.environment;
+  registerHost =
+    host:
+    let
+      endpoint = lib.escapeShellArg host.endpoint;
+      label = lib.escapeShellArg host.label;
+      passwordSetup = lib.optionalString (host.passwordFile != null) ''
+        password="$(${pkgs.coreutils}/bin/tr -d '\n' < ${lib.escapeShellArg host.passwordFile})"
+        encoded_password="$(${pkgs.jq}/bin/jq -nr --arg value "$password" '$value | @uri')"
+        connection="$endpoint?password=$encoded_password"
+      '';
+    in
+    ''
+      label=${label}
+      endpoint=${endpoint}
+      connection="$endpoint"
+      ${passwordSetup}
+      hosts="$(${cfg.package}/bin/paseo host ls --json)"
+      registration_id="$(${pkgs.jq}/bin/jq -r --arg label "$label" '.[] | select(.label == $label) | .registrationId' <<<"$hosts" | ${pkgs.coreutils}/bin/head -n 1)"
+
+      if [ -n "$registration_id" ]; then
+        ${cfg.package}/bin/paseo host update "$registration_id" \
+          --label "$label" \
+          --connection "$connection"
+      else
+        ${cfg.package}/bin/paseo host add \
+          --label "$label" \
+          "$connection"
+      fi
+    '';
+  connectedHostsScript = pkgs.writeShellScript "paseo-connected-hosts" ''
+    set -euo pipefail
+    ${lib.concatMapStringsSep "\n" registerHost cfg.connectedHosts}
+  '';
 in
 {
   options.services.paseo = {
@@ -115,6 +148,30 @@ in
       default = { };
       description = "Declarative Paseo config.json settings.";
     };
+
+    connectedHosts = lib.mkOption {
+      type = lib.types.listOf (
+        lib.types.submodule {
+          options = {
+            label = lib.mkOption {
+              type = lib.types.str;
+              description = "Stable label for the connected Paseo daemon.";
+            };
+            endpoint = lib.mkOption {
+              type = lib.types.str;
+              description = "Paseo TCP endpoint, for example tcp://100.64.0.1:6767.";
+            };
+            passwordFile = lib.mkOption {
+              type = lib.types.nullOr lib.types.str;
+              default = null;
+              description = "File containing the remote daemon password.";
+            };
+          };
+        }
+      );
+      default = [ ];
+      description = "Paseo daemons to register with this daemon.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -149,6 +206,27 @@ in
         RestartSec = 5;
         KillSignal = "SIGTERM";
         TimeoutStopSec = 15;
+      };
+      Install.WantedBy = [ "default.target" ];
+    };
+
+    systemd.user.services.paseo-connected-hosts = lib.mkIf (cfg.connectedHosts != [ ]) {
+      Unit = {
+        Description = "Register connected Paseo daemons";
+        Wants = [
+          "paseo.service"
+          "network-online.target"
+        ];
+        After = [
+          "paseo.service"
+          "network-online.target"
+        ];
+      };
+      Service = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = connectedHostsScript;
+        Environment = lib.mapAttrsToList (name: value: "${name}=${value}") serviceEnvironment;
       };
       Install.WantedBy = [ "default.target" ];
     };

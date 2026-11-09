@@ -4,8 +4,10 @@
   lib,
   config,
   pkgs,
+  me,
   ...
-}: {
+}:
+{
   imports = with outputs.homeManagerModules; [
     # If you want to use modules your own flake exports (from modules/home-manager):
     # outputs.homeManagerModules.example
@@ -16,12 +18,26 @@
     paseo
   ];
 
+  sops.secrets.PASEO_PASSWORD = { };
+
   services.paseo = {
     enable = true;
     listenAddress = "0.0.0.0";
     hostnames = true;
     relay.enable = false;
     settings.features.webUi.enabled = true;
+    connectedHosts = [
+      {
+        label = "nixos-wsl";
+        endpoint = "tcp://nixos-wsl.ts.${me.domain}:6767";
+        passwordFile = config.sops.secrets.PASEO_PASSWORD.path;
+      }
+      {
+        label = "rpi5";
+        endpoint = "tcp://rpi5.ts.${me.domain}:6767";
+        passwordFile = config.sops.secrets.PASEO_PASSWORD.path;
+      }
+    ];
   };
 
   # nixpkgs.config.permittedInsecurePackages = [

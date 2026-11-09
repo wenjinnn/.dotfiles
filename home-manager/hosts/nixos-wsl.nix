@@ -1,6 +1,7 @@
 {
   config,
   outputs,
+  me,
   ...
 }:
 {
@@ -12,6 +13,18 @@
     hostnames = true;
     relay.enable = false;
     settings.features.webUi.enabled = true;
+    connectedHosts = [
+      {
+        label = "nixos";
+        endpoint = "tcp://nixos.ts.${me.domain}:6767";
+        passwordFile = config.sops.secrets.PASEO_PASSWORD.path;
+      }
+      {
+        label = "rpi5";
+        endpoint = "tcp://rpi5.ts.${me.domain}:6767";
+        passwordFile = config.sops.secrets.PASEO_PASSWORD.path;
+      }
+    ];
   };
 
   sops.secrets.PASEO_PASSWORD = { };

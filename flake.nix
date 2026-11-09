@@ -103,6 +103,7 @@
       forAllSystems = nixpkgs.lib.genAttrs systems;
       me = {
         username = "wenjin";
+        domain = "wenjin.me";
         mail = {
           outlook = "hewenjin94@outlook.com";
           gmail = "hewenjin1112@gmail.com";

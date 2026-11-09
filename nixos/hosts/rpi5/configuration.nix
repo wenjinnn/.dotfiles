@@ -130,7 +130,11 @@ in
 
   sops.secrets.RPI5_AMULE_EC_PASSWORD = { };
   sops.secrets.RPI5_PASS = { };
-  sops.secrets.PASEO_PASSWORD = { };
+  sops.secrets.PASEO_PASSWORD = {
+    owner = "paseo";
+    group = "paseo";
+    mode = "0400";
+  };
   sops.templates."paseo.env".content = ''
     PASEO_PASSWORD=${config.sops.placeholder.PASEO_PASSWORD}
   '';
@@ -268,16 +272,27 @@ in
       package = inputs.nixpkgs.legacyPackages.aarch64-linux.paseo;
       listenAddress = "0.0.0.0";
       hostnames = [
-        "paseo.ts.wenjin.me"
-        "100.64.0.1"
+        "paseo.ts.${me.domain}"
       ];
       relay.enable = false;
       settings.features.webUi.enabled = true;
+      connectedHosts = [
+        {
+          label = "nixos";
+          endpoint = "tcp://nixos.ts.${me.domain}:6767";
+          passwordFile = config.sops.secrets.PASEO_PASSWORD.path;
+        }
+        {
+          label = "nixos-wsl";
+          endpoint = "tcp://nixos-wsl.ts.${me.domain}:6767";
+          passwordFile = config.sops.secrets.PASEO_PASSWORD.path;
+        }
+      ];
     };
     matrix-conduit = {
       enable = true;
       settings.global = {
-        server_name = "ts.wenjin.me";
+        server_name = "ts.${me.domain}";
         address = "127.0.0.1";
         port = 6167;
         allow_registration = false;
