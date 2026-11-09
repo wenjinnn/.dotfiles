@@ -2,6 +2,7 @@
   pkgs,
   config,
   outputs,
+  me,
   ...
 }: {
   imports = with outputs.nixosModules; [
@@ -163,7 +164,7 @@
         - "+.lan"
         - "+.local"
         - "+.market.xiaomi.com"
-        - "+.wenjin.me"
+        - "+.${me.domain}"
       nameserver:
         - https://doh.pub/dns-query
         - https://dns.alidns.com/dns-query
@@ -474,7 +475,7 @@
       - GEOSITE,private,DIRECT,no-resolve
       - GEOIP,private,DIRECT,no-resolve
       - IP-CIDR,172.1.1.0/24,DIRECT,no-resolve
-      - DOMAIN-SUFFIX,wenjin.me,DIRECT
+      - DOMAIN-SUFFIX,${me.domain},DIRECT
       - DOMAIN-SUFFIX,open-meteo.com,DIRECT
       - DOMAIN,api.noctalia.dev,DIRECT
       # 若需禁用 QUIC 请取消注释 QUIC 两条规则

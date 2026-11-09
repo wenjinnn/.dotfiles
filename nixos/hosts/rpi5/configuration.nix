@@ -109,7 +109,7 @@ in
 
   # Headscale advertises the Tailscale service names, but the host itself
   # cannot resolve its own ts.wenjin.me name during early boot.
-  networking.hosts."100.64.0.1" = [ "nextcloud.ts.wenjin.me" ];
+  networking.hosts."100.64.0.1" = [ "nextcloud.ts.${me.domain}" ];
   networking.hosts."100.64.0.4" = [ "nixos" ];
 
   environment.systemPackages = with pkgs; [
@@ -193,19 +193,19 @@ in
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
       virtualHosts = {
-        "syncthing.ts.wenjin.me" = {
+        "syncthing.ts.${me.domain}" = {
           locations."/" = {
             proxyPass = "http://127.0.0.1:8384";
             proxyWebsockets = true;
           };
         };
-        "qbittorrent.ts.wenjin.me" = {
+        "qbittorrent.ts.${me.domain}" = {
           locations."/" = {
             proxyPass = "http://127.0.0.1:8080";
             proxyWebsockets = true;
           };
         };
-        "matrix.ts.wenjin.me" = {
+        "matrix.ts.${me.domain}" = {
           locations."/" = {
             proxyPass = "http://127.0.0.1:6167";
             proxyWebsockets = true;
@@ -214,19 +214,19 @@ in
             proxyPass = "http://127.0.0.1:6167";
           };
         };
-        "homeassistant.ts.wenjin.me" = {
+        "homeassistant.ts.${me.domain}" = {
           locations."/" = {
             proxyPass = "http://127.0.0.1:8123";
             proxyWebsockets = true;
           };
         };
-        "amule.ts.wenjin.me" = {
+        "amule.ts.${me.domain}" = {
           locations."/" = {
             proxyPass = "http://127.0.0.1:4711";
             proxyWebsockets = true;
           };
         };
-        "ariang.ts.wenjin.me" = {
+        "ariang.ts.${me.domain}" = {
           locations."/" = {
             root = "${pkgs.ariang}/share/ariang";
             index = "index.html";
@@ -236,7 +236,7 @@ in
             proxyWebsockets = true;
           };
         };
-        "atuin.ts.wenjin.me" = {
+        "atuin.ts.${me.domain}" = {
           locations."/" = {
             proxyPass = "http://127.0.0.1:8888";
           };
@@ -245,7 +245,7 @@ in
     };
     nextcloud = {
       enable = true;
-      hostName = "nextcloud.ts.wenjin.me";
+      hostName = "nextcloud.ts.${me.domain}";
       database.createLocally = true;
       configureRedis = false;
       phpExtraExtensions = all: [ all.smbclient ];
@@ -580,7 +580,7 @@ in
       server = [
         "223.5.5.5"
         "223.6.6.6"
-        "/ts.wenjin.me/100.100.100.100"
+        "/ts.${me.domain}/100.100.100.100"
       ];
     };
   };

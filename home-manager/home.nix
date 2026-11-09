@@ -264,7 +264,7 @@ in
       settings = {
         auto_sync = true;
         sync_frequency = "10m";
-        sync_address = "http://atuin.ts.wenjin.me";
+        sync_address = "http://atuin.ts.${me.domain}";
         key_path = config.sops.secrets.ATUIN_KEY.path;
       };
     };

@@ -14,7 +14,7 @@
     ./disk-config.nix
     (headscale {
       inherit config me;
-      domain = "wenjin.me";
+      domain = me.domain;
     })
     (k3s {
       role = "server";

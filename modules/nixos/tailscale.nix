@@ -6,6 +6,6 @@
   services.tailscale = {
     enable = true;
     openFirewall = true;
-    extraUpFlags = [ "--login-server=https://hs.wenjin.me" ];
+    extraUpFlags = [ "--login-server=https://hs.${me.domain}" ];
   };
 }

@@ -78,7 +78,7 @@ in
           };
           remote = {
             type = "carddav";
-            url = "http://nextcloud.ts.wenjin.me/remote.php/dav/";
+            url = "http://nextcloud.ts.${me.domain}/remote.php/dav/";
             userName = me.username;
             passwordCommand = [
               "${lib.getExe pkgs.sops}"
@@ -111,7 +111,7 @@ in
           };
           remote = {
             type = "caldav";
-            url = "http://nextcloud.ts.wenjin.me/remote.php/dav/";
+            url = "http://nextcloud.ts.${me.domain}/remote.php/dav/";
             userName = me.username;
             passwordCommand = [
               "${lib.getExe pkgs.sops}"

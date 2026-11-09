@@ -31,7 +31,7 @@
       nextcloud = {
         config = {
           type = "webdav";
-          url = "http://nextcloud.ts.wenjin.me/remote.php/dav/files/wenjin";
+          url = "http://nextcloud.ts.${me.domain}/remote.php/dav/files/${me.username}";
           vendor = "nextcloud";
           user = me.username;
         };
