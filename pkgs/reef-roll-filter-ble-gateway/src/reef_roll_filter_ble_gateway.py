@@ -24,6 +24,8 @@ except ImportError:
     gattlib = None
 
 LOG = logging.getLogger("reef-roll-filter-ble-gateway")
+PROCESS_START = time.monotonic()
+CONNECT_RETRY_DELAY = 1.0
 
 DEVICE_NAME = "Paper_reel_REDACTED"
 WRITE_UUID = "0000ffe9-0000-1000-8000-00805f9b34fb"
@@ -239,9 +241,14 @@ async def discover_target(settings: Settings) -> Any | None:
 
     scanner = BleakScanner(detection_callback=remember_device)
     cleaned_up = False
+    scanner_started_at = time.monotonic()
+    LOG.info("BLE scanner start requested")
     try:
         await asyncio.wait_for(scanner.start(), settings.scan_timeout)
-        LOG.info("BLE scanner started")
+        LOG.info(
+            "BLE scanner started after %.3f seconds",
+            time.monotonic() - scanner_started_at,
+        )
         await asyncio.sleep(settings.scan_timeout)
         if activity == 0:
             LOG.warning("BLE scan produced no advertisements; preserving monitor state")
@@ -272,7 +279,12 @@ async def discover_target(settings: Settings) -> Any | None:
         raise TransientBleError from error
     finally:
         if not cleaned_up:
+            stop_started_at = time.monotonic()
             await _stop_scanner(scanner, settings.scan_timeout)
+            LOG.info(
+                "BLE scanner stopped after %.3f seconds",
+                time.monotonic() - stop_started_at,
+            )
 
 
 class TransientBleError(RuntimeError):
@@ -300,6 +312,7 @@ class Settings:
     recovery_window_start: str
     recovery_window_end: str
     connect_timeout: float
+    connect_attempts: int
     notify_timeout: float
     mode_check_interval: float
     scheduled_check_time: str
@@ -345,6 +358,7 @@ async def _read_state(
         notifications,
         None,
         settings.notify_timeout,
+        long_state=True,
     )
     if state is not None:
         LOG.info("FFE4 notification state: %s", hex_bytes(state))
@@ -378,38 +392,153 @@ def _drain_notifications(notifications: asyncio.Queue[bytes]) -> None:
         notifications.get_nowait()
 
 
-async def _with_bleak_device_client_once(device: Any, settings: Settings, ensure: bool) -> bool:
+async def _disconnect_bleak_client(client: Any, timeout: float) -> bool:
+    try:
+        await asyncio.wait_for(client.disconnect(), timeout)
+    except Exception as error:
+        LOG.warning(
+            "BLE client cleanup failed: %s: %r",
+            type(error).__name__,
+            error,
+        )
+        return False
+    return True
+
+
+async def _with_bleak_device_client_once(
+    device: Any,
+    settings: Settings,
+    ensure: bool,
+    connect_only: bool = False,
+) -> bool:
     notifications: asyncio.Queue[bytes] = asyncio.Queue()
 
     def on_notification(_sender: Any, data: bytearray) -> None:
         notifications.put_nowait(bytes(data))
 
-    LOG.info("connecting to %s", device.address)
-    async with BleakClient(device, timeout=settings.connect_timeout) as client:
-        write_characteristic = find_characteristic(client.services, WRITE_UUID)
-        notify_characteristic = find_characteristic(client.services, NOTIFY_UUID)
-        await client.start_notify(notify_characteristic, on_notification)
-        try:
-            if ensure:
-                state = await _read_state(
-                    client, write_characteristic, notifications, settings
-                )
-                if state is not None and notification_mode(state) == settings.mode:
-                    LOG.info("device already uses %s mode", settings.mode)
-                    return True
-                if state is None:
-                    LOG.error("FFE4 did not report the current mode")
-                    return False
-            else:
-                _drain_notifications(notifications)
-            return await _write_mode(
-                client,
-                write_characteristic,
-                notifications,
-                settings,
+    connection_target_seen = asyncio.Event()
+    connection_target: Any = None
+    target_address = str(device.address).lower()
+
+    def on_connection_advertisement(found: Any, _advertisement: Any) -> None:
+        nonlocal connection_target
+        if str(getattr(found, "address", "")).lower() == target_address:
+            connection_target = found
+            connection_target_seen.set()
+
+    async def wait_for_connection_target() -> Any:
+        await asyncio.wait_for(connection_target_seen.wait(), settings.scan_timeout)
+        if connection_target is None:
+            raise RuntimeError("BLE target advertisement did not provide a device")
+        LOG.info("BLE target rediscovered before connection")
+        return connection_target
+
+    connection_scanner = BleakScanner(
+        detection_callback=on_connection_advertisement
+    )
+    connection_scanner_started_at = time.monotonic()
+    primary_error: BaseException | None = None
+    try:
+        await asyncio.wait_for(
+            connection_scanner.start(), settings.scan_timeout
+        )
+        LOG.info(
+            "BLE connection scanner started after %.3f seconds",
+            time.monotonic() - connection_scanner_started_at,
+        )
+
+        attempts = max(1, settings.connect_attempts)
+        client: Any = None
+        for attempt in range(1, attempts + 1):
+            connection_target = await wait_for_connection_target()
+            connection_target_seen.clear()
+            client = BleakClient(connection_target, timeout=settings.connect_timeout)
+            connect_started_at = time.monotonic()
+            LOG.info(
+                "connecting to %s (attempt %d/%d)",
+                device.address,
+                attempt,
+                attempts,
             )
+            try:
+                await client.connect()
+            except asyncio.CancelledError:
+                await asyncio.shield(
+                    _disconnect_bleak_client(client, min(settings.connect_timeout, 5.0))
+                )
+                raise
+            except Exception as error:
+                LOG.warning(
+                    "BLE connection attempt %d/%d failed after %.3f seconds: %s: %r",
+                    attempt,
+                    attempts,
+                    time.monotonic() - connect_started_at,
+                    type(error).__name__,
+                    error,
+                    exc_info=True,
+                )
+                if not await _disconnect_bleak_client(
+                    client, min(settings.connect_timeout, 5.0)
+                ):
+                    raise
+                if attempt == attempts:
+                    raise
+                connection_target = None
+                connection_target_seen.clear()
+                await asyncio.sleep(CONNECT_RETRY_DELAY)
+                continue
+            LOG.info(
+                "BLE connected after %.3f seconds",
+                time.monotonic() - connect_started_at,
+            )
+            break
+
+        if client is None:
+            raise RuntimeError("BLE client was not created")
+        if connect_only:
+            LOG.info("BLE connect-only probe succeeded")
+            return True
+        try:
+            write_characteristic = find_characteristic(client.services, WRITE_UUID)
+            notify_characteristic = find_characteristic(client.services, NOTIFY_UUID)
+            await client.start_notify(notify_characteristic, on_notification)
+            try:
+                if ensure:
+                    state = await _read_state(
+                        client, write_characteristic, notifications, settings
+                    )
+                    if state is not None and notification_mode(state) == settings.mode:
+                        LOG.info("device already uses %s mode", settings.mode)
+                        return True
+                    if state is None:
+                        LOG.error("FFE4 did not report the current mode")
+                        return False
+                else:
+                    _drain_notifications(notifications)
+                return await _write_mode(
+                    client,
+                    write_characteristic,
+                    notifications,
+                    settings,
+                )
+            finally:
+                await client.stop_notify(notify_characteristic)
         finally:
-            await client.stop_notify(notify_characteristic)
+            if not await _disconnect_bleak_client(
+                client, min(settings.connect_timeout, 5.0)
+            ):
+                raise RuntimeError("BLE client cleanup failed")
+    except BaseException as error:
+        primary_error = error
+        raise
+    finally:
+        try:
+            await _stop_scanner(connection_scanner, settings.scan_timeout)
+        except Exception:
+            if primary_error is None:
+                raise
+            LOG.exception("BLE connection scanner cleanup failed")
+        LOG.info("BLE connection scanner stopped")
 
 
 def _normalize_gattlib_notification(data: bytes | str) -> bytes:
@@ -641,8 +770,28 @@ async def ensure_device(device: Any, settings: Settings) -> bool:
     except GattlibFailure:
         raise
     except Exception as error:
-        LOG.warning("BLE mode-check transaction failed; retrying next check: %s", error)
+        LOG.warning(
+            "BLE mode-check transaction failed; retrying next check: %s: %r",
+            type(error).__name__,
+            error,
+            exc_info=True,
+        )
         raise TransientBleError from error
+
+
+async def probe_device(device: Any, settings: Settings) -> bool:
+    try:
+        return await _with_bleak_device_client_once(
+            device, settings, ensure=False, connect_only=True
+        )
+    except Exception as error:
+        LOG.warning(
+            "BLE connect-only probe failed: %s: %r",
+            type(error).__name__,
+            error,
+            exc_info=True,
+        )
+        return False
 
 
 async def restore_once(settings: Settings) -> bool:
@@ -953,6 +1102,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--recovery-window-start", default="19:20")
     parser.add_argument("--recovery-window-end", default="19:45")
     parser.add_argument("--connect-timeout", type=float, default=15.0)
+    parser.add_argument("--connect-attempts", type=int, default=2)
     parser.add_argument("--notify-timeout", type=float, default=5.0)
     parser.add_argument("--mode-check-interval", type=float, default=3600.0)
     parser.add_argument("--scheduled-check-time", default="19:32")
@@ -967,6 +1117,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="run one scheduled discovery and mode check, then exit",
     )
+    parser.add_argument(
+        "--connect-only",
+        action="store_true",
+        help="scan and connect once without GATT subscriptions or writes",
+    )
     parser.add_argument("--verbose", action="store_true")
     return parser.parse_args()
 
@@ -977,6 +1132,17 @@ async def _run_restore_once(settings: Settings) -> bool:
 
 async def _run_check_once(settings: Settings) -> bool:
     return await check_once(settings)
+
+
+async def _run_connect_only(settings: Settings) -> bool:
+    device = await discover_target(settings)
+    if device is None:
+        LOG.error("target device not found")
+        return False
+    if not identity_confident(device, settings):
+        LOG.error("connect-only probe refused an unverified BLE identity")
+        return False
+    return await probe_device(device, settings)
 
 
 async def _run_monitor(settings: Settings) -> None:
@@ -1001,19 +1167,29 @@ def main() -> int:
         recovery_window_start=args.recovery_window_start,
         recovery_window_end=args.recovery_window_end,
         connect_timeout=args.connect_timeout,
+        connect_attempts=max(1, args.connect_attempts),
         notify_timeout=args.notify_timeout,
         mode_check_interval=max(1.0, args.mode_check_interval),
         scheduled_check_time=args.scheduled_check_time,
         state_file=args.state_file,
     )
+    LOG.info(
+        "gateway initialization completed after %.3f seconds",
+        time.monotonic() - PROCESS_START,
+    )
 
     try:
-        if args.once and args.check_once:
-            raise ValueError("--once and --check-once cannot be combined")
+        selected_actions = sum(
+            bool(action) for action in (args.once, args.check_once, args.connect_only)
+        )
+        if selected_actions > 1:
+            raise ValueError("--once, --check-once, and --connect-only are mutually exclusive")
         if args.once:
             return 0 if asyncio.run(_run_restore_once(settings)) else 1
         if args.check_once:
             return 0 if asyncio.run(_run_check_once(settings)) else 1
+        if args.connect_only:
+            return 0 if asyncio.run(_run_connect_only(settings)) else 1
         asyncio.run(_run_monitor(settings))
     except KeyboardInterrupt:
         LOG.info("stopped")

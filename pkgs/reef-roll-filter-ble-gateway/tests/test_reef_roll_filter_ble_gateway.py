@@ -2,8 +2,10 @@ import asyncio
 import os
 import pathlib
 import runpy
+import subprocess
 import sys
 import tempfile
+import textwrap
 import types
 import unittest
 from datetime import datetime
@@ -34,6 +36,7 @@ def settings(mode="auto", state_file=None):
         recovery_window_start="19:20",
         recovery_window_end="19:45",
         connect_timeout=0.01,
+        connect_attempts=2,
         notify_timeout=0.01,
         mode_check_interval=0.0,
         scheduled_check_time="19:32",
@@ -50,7 +53,10 @@ class FakeBleakClient:
     configured_notifications: tuple[bytes, ...] = ()
     query_notifications: tuple[bytes, ...] = ()
     during_write_notifications: tuple[bytes, ...] = ()
+    connect_failures = 0
+    connect_calls = 0
     last_instance: Any = None
+
 
     def __init__(self, device, timeout):
         self.device = device
@@ -73,6 +79,23 @@ class FakeBleakClient:
     async def __aexit__(self, *_args):
         return None
 
+    async def connect(self):
+        type(self).connect_calls += 1
+        if type(self).connect_failures > 0:
+            type(self).connect_failures -= 1
+            for scanner in FakeConnectionScanner.instances:
+                if scanner.detection_callback is not None:
+                    asyncio.get_running_loop().call_later(
+                        0.001,
+                        scanner.detection_callback,
+                        types.SimpleNamespace(address="AA:BB:CC:DD:EE:FF"),
+                        None,
+                    )
+            raise TimeoutError()
+
+    async def disconnect(self):
+        return None
+
     async def start_notify(self, _characteristic, callback):
         self.callback = callback
         for value in type(self).configured_notifications:
@@ -90,6 +113,25 @@ class FakeBleakClient:
             notifications = type(self).during_write_notifications
         for value in notifications:
             self.callback(None, bytearray(value))
+
+
+class FakeConnectionScanner:
+    instances: list[Any] = []
+
+    def __init__(self, detection_callback=None, **_kwargs):
+        self.detection_callback = detection_callback
+        self.running = False
+        type(self).instances.append(self)
+
+    async def start(self):
+        self.running = True
+        if self.detection_callback is not None:
+            self.detection_callback(
+                types.SimpleNamespace(address="AA:BB:CC:DD:EE:FF"), None
+            )
+
+    async def stop(self):
+        self.running = False
 
 
 class ModePayloadTests(unittest.TestCase):
@@ -197,8 +239,13 @@ class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
 
         globals_dict["BleakScanner"] = WorkingScanner
         try:
-            first = await MODULE["discover_target"](settings())
-            second = await MODULE["discover_target"](settings())
+            with self.assertLogs(MODULE["LOG"], level="INFO") as captured:
+                first = await MODULE["discover_target"](settings())
+                second = await MODULE["discover_target"](settings())
+            log_output = "\n".join(captured.output)
+            self.assertIn("BLE scanner start requested", log_output)
+            self.assertIn("BLE scanner started after", log_output)
+            self.assertIn("BLE scanner stopped after", log_output)
             self.assertIsNotNone(first)
             self.assertIsNotNone(second)
             self.assertEqual(len(instances), 2)
@@ -737,17 +784,145 @@ class MonitorBehaviorTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(attempts, 2)
 
 
+class EntrypointTests(unittest.TestCase):
+    def test_check_once_entrypoint_runs_in_an_independent_process(self):
+        with tempfile.TemporaryDirectory() as directory:
+            stub_dir = pathlib.Path(directory)
+            (stub_dir / "bleak.py").write_text(
+                textwrap.dedent(
+                    f"""
+                    import types
+
+                    WRITE_UUID = {MODULE["WRITE_UUID"]!r}
+                    NOTIFY_UUID = {MODULE["NOTIFY_UUID"]!r}
+                    STATE_QUERY_PAYLOAD = {MODULE["STATE_QUERY_PAYLOAD"]!r}
+                    AUTO_STATE = {MODULE["expected_notifications"]("auto")[1]!r}
+
+                    class BleakScanner:
+                        def __init__(self, detection_callback):
+                            self.detection_callback = detection_callback
+
+                        async def start(self):
+                            self.detection_callback(
+                                types.SimpleNamespace(
+                                    address="AA:BB:CC:DD:EE:FF",
+                                    name="Paper_reel_TEST",
+                                ),
+                                types.SimpleNamespace(local_name="Paper_reel_TEST"),
+                            )
+
+                        async def stop(self):
+                            return None
+
+                    class BleakClient:
+                        def __init__(self, device, timeout):
+                            self.services = [
+                                types.SimpleNamespace(
+                                    characteristics=[
+                                        types.SimpleNamespace(uuid=WRITE_UUID),
+                                        types.SimpleNamespace(uuid=NOTIFY_UUID),
+                                    ]
+                                )
+                            ]
+                            self.callback = None
+
+                        async def connect(self):
+                            return None
+
+                        async def disconnect(self):
+                            return None
+
+                        async def start_notify(self, _characteristic, callback):
+                            self.callback = callback
+
+                        async def stop_notify(self, _characteristic):
+                            return None
+
+                        async def write_gatt_char(self, _characteristic, payload, response):
+                            print(f"FAKE_WRITE {{bytes(payload).hex()}} {{response}}")
+                            if bytes(payload) == STATE_QUERY_PAYLOAD:
+                                self.callback(None, bytearray(AUTO_STATE))
+                    """
+                )
+            )
+            (stub_dir / "gattlib.py").write_text("\n")
+            environment = dict(os.environ)
+            environment["PYTHONPATH"] = str(stub_dir)
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(SOURCE),
+                    "--check-once",
+                    "--address",
+                    "AA:BB:CC:DD:EE:FF",
+                    "--name",
+                    "Paper_reel_TEST",
+                    "--scan-timeout",
+                    "0.01",
+                    "--connect-timeout",
+                    "0.01",
+                    "--connect-attempts",
+                    "2",
+                    "--notify-timeout",
+                    "0.01",
+                ],
+                capture_output=True,
+                text=True,
+                env=environment,
+                timeout=30,
+            )
+            output = completed.stdout + completed.stderr
+            self.assertEqual(completed.returncode, 0, output)
+            self.assertIn("gateway initialization completed after", output)
+            self.assertIn("BLE scanner started after", output)
+            self.assertIn("BLE scanner stopped after", output)
+            self.assertIn("connecting to AA:BB:CC:DD:EE:FF (attempt 1/2)", output)
+            self.assertIn("BLE connected after", output)
+            self.assertIn("FAKE_WRITE 475400020131 False", output)
+            self.assertNotIn("5054000605f801", output)
+
+            probe = subprocess.run(
+                [
+                    sys.executable,
+                    str(SOURCE),
+                    "--connect-only",
+                    "--address",
+                    "AA:BB:CC:DD:EE:FF",
+                    "--name",
+                    "Paper_reel_TEST",
+                    "--scan-timeout",
+                    "0.01",
+                    "--connect-timeout",
+                    "0.01",
+                ],
+                capture_output=True,
+                text=True,
+                env=environment,
+                timeout=30,
+            )
+            probe_output = probe.stdout + probe.stderr
+            self.assertEqual(probe.returncode, 0, probe_output)
+            self.assertIn("BLE connect-only probe succeeded", probe_output)
+            self.assertNotIn("FAKE_WRITE", probe_output)
+
+
 class RestoreDeviceTests(unittest.IsolatedAsyncioTestCase):
     def setUp(self):
         self.globals = MODULE["restore_device"].__globals__
         self.original_client = self.globals["BleakClient"]
+        self.original_scanner = self.globals["BleakScanner"]
         self.globals["BleakClient"] = FakeBleakClient
+        self.globals["BleakScanner"] = FakeConnectionScanner
+        FakeConnectionScanner.instances = []
         FakeBleakClient.configured_notifications = ()
         FakeBleakClient.query_notifications = ()
         FakeBleakClient.during_write_notifications = ()
+        FakeBleakClient.connect_failures = 0
+        FakeBleakClient.connect_calls = 0
 
     def tearDown(self):
         self.globals["BleakClient"] = self.original_client
+        self.globals["BleakScanner"] = self.original_scanner
 
     def test_gattlib_worker_escalates_to_sigkill(self):
         workers = []
@@ -806,6 +981,41 @@ class RestoreDeviceTests(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(workers[0].killed)
         self.assertTrue(workers[0].closed)
 
+    async def test_connection_keeps_scanner_running_for_stale_device(self):
+        class ScannerAwareClient(FakeBleakClient):
+            async def connect(self):
+                if not any(scanner.running for scanner in FakeConnectionScanner.instances):
+                    raise AssertionError("scanner stopped before BLE connection")
+                await super().connect()
+
+        self.globals["BleakClient"] = ScannerAwareClient
+        ScannerAwareClient.query_notifications = MODULE["expected_notifications"]("auto")
+        result = await MODULE["ensure_device"](
+            types.SimpleNamespace(address="AA:BB:CC:DD:EE:FF"), settings()
+        )
+        self.assertTrue(result)
+        self.assertEqual(len(FakeConnectionScanner.instances), 1)
+        self.assertFalse(FakeConnectionScanner.instances[0].running)
+
+    async def test_connection_timeout_retries_before_gatt_transaction(self):
+        FakeBleakClient.connect_failures = 1
+        FakeBleakClient.query_notifications = MODULE["expected_notifications"]("auto")
+        result = await MODULE["ensure_device"](
+            types.SimpleNamespace(address="AA:BB:CC:DD:EE:FF"), settings()
+        )
+        self.assertTrue(result)
+        self.assertEqual(FakeBleakClient.connect_calls, 2)
+        self.assertEqual(FakeBleakClient.last_instance.writes[0][1], MODULE["STATE_QUERY_PAYLOAD"])
+
+    async def test_connection_failures_do_not_send_gatt_writes(self):
+        FakeBleakClient.connect_failures = 2
+        with self.assertRaises(MODULE["TransientBleError"]):
+            await MODULE["ensure_device"](
+                types.SimpleNamespace(address="AA:BB:CC:DD:EE:FF"), settings()
+            )
+        self.assertEqual(FakeBleakClient.connect_calls, 2)
+        self.assertEqual(FakeBleakClient.last_instance.writes, [])
+
     async def test_wrong_mode_notification_cannot_confirm_mode(self):
         FakeBleakClient.during_write_notifications = (
             MODULE["expected_notifications"]("clean")[0],
@@ -827,6 +1037,19 @@ class RestoreDeviceTests(unittest.IsolatedAsyncioTestCase):
             bytes.fromhex("5054000605F801010000"),
         )
         self.assertFalse(FakeBleakClient.last_instance.writes[0][2])
+
+    async def test_short_state_notification_does_not_confirm_mode(self):
+        FakeBleakClient.query_notifications = (
+            MODULE["expected_notifications"]("auto")[0],
+        )
+        result = await MODULE["ensure_device"](
+            types.SimpleNamespace(address="AA:BB:CC:DD:EE:FF"), settings()
+        )
+        self.assertFalse(result)
+        self.assertEqual(
+            FakeBleakClient.last_instance.writes,
+            [(MODULE["WRITE_UUID"], MODULE["STATE_QUERY_PAYLOAD"], False)],
+        )
 
     async def test_startup_check_skips_write_when_mode_matches(self):
         FakeBleakClient.query_notifications = MODULE["expected_notifications"]("auto")

@@ -35,6 +35,7 @@ let
     "--recovery-window-start ${lib.escapeShellArg cfg.recoveryWindowStart}"
     "--recovery-window-end ${lib.escapeShellArg cfg.recoveryWindowEnd}"
     "--connect-timeout ${toString cfg.connectTimeout}"
+    "--connect-attempts ${toString cfg.connectAttempts}"
     "--state-file ${lib.escapeShellArg cfg.stateFile}"
     "--notify-timeout ${toString cfg.notifyTimeout}"
     "--mode-check-interval ${toString cfg.modeCheckInterval}"
@@ -131,6 +132,12 @@ in
       type = lib.types.ints.positive;
       default = 15;
       description = "BLE connection timeout in seconds.";
+    };
+
+    connectAttempts = lib.mkOption {
+      type = lib.types.ints.positive;
+      default = 2;
+      description = "Bounded BLE connection attempts per transaction.";
     };
 
     notifyTimeout = lib.mkOption {
