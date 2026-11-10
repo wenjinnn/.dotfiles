@@ -5,7 +5,7 @@
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "codecompanion.nvim": {
-      "rev": "85d01170e11e6563f44e0c7993184adefa0826f5",
+      "rev": "36587a09d7afa65ca9970475b037e6c747afe7a0",
       "src": "https://github.com/olimorris/codecompanion.nvim"
     },
     "conform.nvim": {
@@ -65,7 +65,7 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
     },
     "obsidian.nvim": {
-      "rev": "15af492b64f4677959fe95008f1d5b782fe1f86a",
+      "rev": "4c3c5d3379d434da9bfff8a6c9c381735272e50a",
       "src": "https://github.com/obsidian-nvim/obsidian.nvim"
     },
     "one-small-step-for-vimkind": {
@@ -109,7 +109,7 @@
       "src": "https://github.com/tpope/vim-speeddating"
     },
     "vim-test": {
-      "rev": "4c6ba11524388562f2ad3636dc02cd479204aaff",
+      "rev": "29d4a674f970a463c636049beb081f15e511665c",
       "src": "https://github.com/vim-test/vim-test"
     }
   }
