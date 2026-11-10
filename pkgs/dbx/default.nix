@@ -137,6 +137,9 @@ rustPlatform.buildRustPackage {
 
   preConfigure = ''
     export HOME="$TMPDIR"
+    # nixpkgs forces system crypto libraries, but dbx vendors aws-lc-sys
+    # without a compatible system AWS-LC installation.
+    export AWS_LC_SYS_USE_SYSTEM=0
     if [ -f package.json ]; then
       jq 'del(.packageManager)' package.json > package.json.tmp
       mv package.json.tmp package.json
@@ -145,6 +148,7 @@ rustPlatform.buildRustPackage {
 
   buildPhase = ''
     runHook preBuild
+    export AWS_LC_SYS_USE_SYSTEM=0
     cargo tauri build --no-bundle
     runHook postBuild
   '';
