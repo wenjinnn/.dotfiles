@@ -41,6 +41,9 @@
       }
     );
     # rss2email from main branch that support lmtp feature
+    mitmproxy = prev.mitmproxy.overridePythonAttrs (old: {
+      disabledTests = (old.disabledTests or [ ]) ++ [ "test_emudhra" ];
+    });
     rss2email = prev.rss2email.overrideAttrs (old: {
       src = prev.pkgs.fetchFromGitHub {
         owner = "rss2email";
