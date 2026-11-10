@@ -128,11 +128,9 @@ in
     oh-my-pi
     pi-plugins
     pi-theme
-    pi-web
   ];
 
   home.packages = with pkgs; [
-    qwen-code
     # mcp-nixos
     # claude-agent-acp
     # codex-acp
@@ -144,8 +142,6 @@ in
   home.file.".pi/agent/npm/node_modules/pi-subagents/node_modules/typebox" = {
     source = pi-subagents-typebox;
   };
-
-  services.pi-web.enable = true;
 
   home.activation.herdrPiIntegration = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
     ${lib.getExe config.programs.herdr.package} integration install pi

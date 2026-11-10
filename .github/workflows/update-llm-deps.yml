@@ -59,8 +59,7 @@ jobs:
             dependencies
             (`modules/home-manager/llm/default.nix`,
             `modules/home-manager/de.nix`,
-            `pkgs/pi-acp/package.nix`,
-            `pkgs/pi-web/package.nix`).
+            `pkgs/pi-acp/package.nix`).
 
             **Updated repos:** ${{ steps.check.outputs.repos }}
 
