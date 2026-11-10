@@ -5,7 +5,6 @@ Tracks every pinned dependency:
 * commit-pinned skill repos in modules/home-manager/llm/default.nix
 * commit-pinned repos in modules/home-manager/de.nix
 * tag-pinned GitHub packages (pkgs/pi-acp/package.nix)
-* tag-pinned npm packages published from GitHub (pkgs/pi-web/package.nix)
 * TypeBox, tracked from the npm registry's latest dist-tag
 
 For each entry it compares the pinned rev against the latest upstream rev
@@ -38,8 +37,6 @@ NIX_PREFETCH_URL = os.environ.get("NIX_PREFETCH_URL", "nix-prefetch-url")
 NPM = os.environ.get("NPM", "npm")
 CURL = os.environ.get("CURL", "curl")
 PREFETCH_NPM_DEPS = os.environ.get("PREFETCH_NPM_DEPS", "prefetch-npm-deps")
-# pi-web uses fetcher version 2; pi-acp uses buildNpmPackage's default (1).
-NPM_FETCHER_VERSION = os.environ.get("NPM_FETCHER_VERSION", "2")
 DRY_RUN = "--dry-run" in sys.argv
 
 API = "https://api.github.com/repos/{owner}/{name}"
@@ -111,8 +108,6 @@ REPOS = [
     ),
     # pi-acp is tagged (rev = "v${version}"): track the latest release tag
     ("pkgs/pi-acp/package.nix", "svkozak", "pi-acp", "hash", "tag", "v", "github"),
-    # pi-web is published to npm but releases are tracked in GitHub tags.
-    ("pkgs/pi-web/package.nix", "jmfederico", "pi-web", "hash", "tag", "v", "npm"),
     # TypeBox's pinned Nix tarball follows the npm registry's latest dist-tag.
     (
         "modules/home-manager/llm/default.nix",
@@ -534,7 +529,7 @@ def update_npm_deps_hash(owner, name, tag, source):
                 timeout=600,
             )
             _fill_missing_npm_integrity(lockfile)
-            fetcher_version = NPM_FETCHER_VERSION
+            fetcher_version = "2"
         proc = subprocess.run(
             [PREFETCH_NPM_DEPS, lockfile],
             capture_output=True,

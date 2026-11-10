@@ -37,7 +37,6 @@ let
     rev = "09c434ab73ca43761c5d8b0c5d341926c2fba710";
     sha256 = "sha256-sVnxA4rfxa2SlS2g+2+q3odRq0VJz1z7PEVHW2QRPQI=";
   };
-  herdr-notify-wsl-ref = "51c4e2e205d1c1de1d2cec1dd33bbc602d4041f4";
   xlsx = "${anthropic-skills}/skills/xlsx";
   pi-subagents-typebox = pkgs.stdenvNoCC.mkDerivation {
     pname = "pi-subagents-typebox";
@@ -128,11 +127,9 @@ in
     oh-my-pi
     pi-plugins
     pi-theme
-    pi-web
   ];
 
   home.packages = with pkgs; [
-    qwen-code
     # mcp-nixos
     # claude-agent-acp
     # codex-acp
@@ -145,17 +142,8 @@ in
     source = pi-subagents-typebox;
   };
 
-  services.pi-web.enable = true;
-
   home.activation.herdrPiIntegration = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
     ${lib.getExe config.programs.herdr.package} integration install pi
-  '';
-
-  home.activation.herdrWslNotifyPlugin = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-    if [[ "$(hostname)" == "nixos-wsl" ]]; then
-      ${lib.getExe config.programs.herdr.package} plugin install \
-        saeedrahimi/herdr-notify-wsl --ref ${herdr-notify-wsl-ref} --yes
-    fi
   '';
 
   programs =
