@@ -1,11 +1,11 @@
 {
   "plugins": {
     "SchemaStore.nvim": {
-      "rev": "073910e2521e23681c44a8b1355e91765a60cbaa",
+      "rev": "d3e2250efab001fba40d2226361c0060ccf18fd6",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "codecompanion.nvim": {
-      "rev": "9cc3c1352181253d6a65c709431f30a90a45eb05",
+      "rev": "85d01170e11e6563f44e0c7993184adefa0826f5",
       "src": "https://github.com/olimorris/codecompanion.nvim"
     },
     "conform.nvim": {
@@ -21,7 +21,7 @@
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "mini.nvim": {
-      "rev": "6d5a29e86a7352739506c28e0bc50fe214b5216f",
+      "rev": "f9550dd81d0514927b7ad1794fd8eb8606ca28cd",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "minuet-ai.nvim": {
@@ -49,11 +49,11 @@
       "src": "https://codeberg.org/mfussenegger/nvim-lint"
     },
     "nvim-lspconfig": {
-      "rev": "adfbb74472f6c231b651b650a89f414c2680fb31",
+      "rev": "993d048db0d83d8e8ba3f9cb376456321acdcce3",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
-      "rev": "0195cd62fa89950f34c0e0d648ea7897ab85d4d3",
+      "rev": "19bdfc04f40ed2ccb3340591d125f759b0406875",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
@@ -109,7 +109,7 @@
       "src": "https://github.com/tpope/vim-speeddating"
     },
     "vim-test": {
-      "rev": "7a5f7e1848b573de556adffe718097933d827d32",
+      "rev": "4c6ba11524388562f2ad3636dc02cd479204aaff",
       "src": "https://github.com/vim-test/vim-test"
     }
   }
