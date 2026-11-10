@@ -29,7 +29,6 @@
       taplo
       gopls
       tinymist
-      copilot-language-server
       basedpyright
       # linter
       vale
