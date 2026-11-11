@@ -99,6 +99,14 @@ REPOS = [
         "",
     ),
     (
+        "modules/home-manager/llm/default.nix",
+        "hugohe3",
+        "ppt-master",
+        "sha256",
+        "commit",
+        "",
+    ),
+    (
         "modules/home-manager/de.nix",
         "JackHack96",
         "EasyEffects-Presets",

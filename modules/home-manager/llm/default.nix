@@ -2,7 +2,6 @@
   pkgs,
   lib,
   config,
-  inputs,
   outputs,
   ...
 }:
@@ -37,6 +36,13 @@ let
     rev = "09c434ab73ca43761c5d8b0c5d341926c2fba710";
     sha256 = "sha256-sVnxA4rfxa2SlS2g+2+q3odRq0VJz1z7PEVHW2QRPQI=";
   };
+  ppt-master-skill-src = pkgs.fetchFromGitHub {
+    owner = "hugohe3";
+    repo = "ppt-master";
+    rev = "3c6ffd0ee6d6e31aa9ca316bd157173802e3526f";
+    sha256 = "sha256-WW9cnGg5TKix2iml9oXqHOepXJX5tuVZrlnexOhOWL0=";
+  };
+  ppt-master-skill = "${ppt-master-skill-src}/skills/ppt-master";
   xlsx = "${anthropic-skills}/skills/xlsx";
   pi-subagents-typebox = pkgs.stdenvNoCC.mkDerivation {
     pname = "pi-subagents-typebox";
@@ -432,6 +438,8 @@ in
             (slashOnlySkill docx)
             (slashOnlySkill pptx)
             (slashOnlySkill pdf)
+            # Keep the full presentation workflow available only by explicit command.
+            (slashOnlySkill ppt-master-skill)
             # ./skills: nix-first stays realtime, nix-packing already
             # declares disable-model-invocation in its own frontmatter
             personnal-skill
