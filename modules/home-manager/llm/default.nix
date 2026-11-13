@@ -48,7 +48,7 @@ let
     pname = "pi-subagents-typebox";
     version = "1.4.6";
     src = pkgs.fetchurl {
-      url = "https://registry.npmjs.org/typebox/-/typebox-1.4.2.tgz";
+      url = "https://registry.npmjs.org/typebox/-/typebox-1.4.6.tgz";
       hash = "sha512-Yh8Mi4hzD7gqcuv9ZIk6HK1KVJKubTlfxaNxkrYK35HCvxoCjCuWVr8cBjQ/ChfA7yliPteJEBWHGFVGWDuF5Q==";
     };
     nativeBuildInputs = [ pkgs.gnutar ];
