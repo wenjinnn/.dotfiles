@@ -636,12 +636,20 @@ def main():
                 block2 = block.replace(f'rev = "{current}"', f'rev = "{latest}"')
                 text = text.replace(block, block2, 1)
 
-            # re-locate the block (positions shifted) and swap the hash field
+            # Re-locate the block (positions shifted), then update its source URL
+            # and hash. npm-latest versions are embedded in the tarball URL too.
             block, fields = find_block(text, owner, name, source)
+            original_block = block
+            if source == "npm-registry":
+                old_url = f"https://registry.npmjs.org/{name}/-/{name}-{current}.tgz"
+                new_url = f"https://registry.npmjs.org/{name}/-/{name}-{latest}.tgz"
+                if old_url not in block:
+                    raise RuntimeError(f"expected npm tarball URL {old_url!r} in {path}")
+                block = block.replace(old_url, new_url, 1)
             block2 = block.replace(
                 f'{hash_field} = "{hash_val}"', f'{hash_field} = "{new_hash}"'
             )
-            text = text.replace(block, block2, 1)
+            text = text.replace(original_block, block2, 1)
 
             # tag-pinned npm packages: refresh npmDepsHash and, for npm
             # sources, the checked-in lockfile so the PR remains buildable.
@@ -677,7 +685,10 @@ def main():
             if lock_path and new_lock is not None:
                 write_file(lock_path, new_lock)
             updated_repos.append(name if owner == "npm" else f"{owner}/{name}")
-            print(f"  ✅ updated (version + {hash_field})")
+            if source == "npm-registry":
+                print("  ✅ updated (version + tarball URL + hash)")
+            else:
+                print(f"  ✅ updated (version + {hash_field})")
         except Exception as e:
             print(f"  ❌ ERROR: {e}")
             warnings.append(f"{owner}/{name}: {e}")
