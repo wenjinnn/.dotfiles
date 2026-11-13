@@ -112,15 +112,8 @@ let
   # already declares the flag stay slash-only on their own.
   # Experimental and non-current-development skills: keep out of Pi entirely.
   mattExcluded = [
-    "ask-matt"
     "claude-handoff"
-    "setup-ts-deep-modules"
-    # One-time installer for the engineering skills — already ran, keep out.
-    "setup-matt-pocock-skills"
     "git-guardrails-claude-code"
-    "migrate-to-shoehorn"
-    "scaffold-exercises"
-    "setup-pre-commit"
   ];
   mattName = key: lib.strings.removePrefix "matt-" key;
   mattpocock-adjusted = lib.filterAttrs (
