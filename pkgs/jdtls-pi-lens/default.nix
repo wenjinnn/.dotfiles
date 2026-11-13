@@ -30,6 +30,8 @@ pkgs.writeShellScriptBin "jdtls-pi-lens" ''
 
   exec '${jdtls}/bin/jdtls' \
     --jvm-arg=-Djava.import.generatesMetadataFilesAtProjectRoot=false \
+    --jvm-arg=-Xms256m \
+    --jvm-arg=-Xmx1G \
     -configuration "$cache/config" \
     -data "$cache/workspace/$ws_name" \
     "$@"
