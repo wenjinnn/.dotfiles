@@ -42,8 +42,7 @@ in
     anime-game-launcher.enable = true;
     gamescope = {
       enable = true;
-      # temporary disable for bwarp setuid issue, see https://github.com/NixOS/nixpkgs/issues/523200
-      capSysNice = false;
+      capSysNice = true;
     };
     steam = {
       enable = true;
