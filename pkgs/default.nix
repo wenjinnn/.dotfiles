@@ -9,8 +9,6 @@
   rofi-screenshot-wayland = pkgs.callPackage ./rofi-screenshot-wayland { };
   qmd = pkgs.callPackage ./qmd { };
   dbx = pkgs.callPackage ./dbx { };
-  orca = pkgs.callPackage ./orca { };
-  orca-server = pkgs.callPackage ./orca-server { };
   oh-my-pi = pkgs.callPackage ./oh-my-pi/package.nix { };
   pi-acp = pkgs.callPackage ./pi-acp/package.nix { };
   # jdtls wrapper for pi-lens: no metadata files at project root + shared nvim cache dirs

@@ -86,7 +86,6 @@
     telegram-desktop
     discord
     dbx
-    orca
     # temp disabled because of build error
     # redisinsight
     wechat
