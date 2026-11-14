@@ -421,6 +421,12 @@ let
       #     anchor = "bottom_right";
       #   };
       # }
+      {
+        match.app_id = "^wemeetapp$";
+        match.title = "^wemeetapp$";
+        match.is_floating = false;
+        opacity = 0.0;
+      }
     ];
 
     layer_rule = [
