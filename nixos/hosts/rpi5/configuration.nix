@@ -284,7 +284,7 @@ in
         }
         {
           label = "nixos-wsl";
-          endpoint = "tcp://nixos-wsl.ts.${me.domain}:6767";
+          endpoint = "tcp://nixos-wsl-1.ts.${me.domain}:6767";
           passwordFile = config.sops.secrets.PASEO_PASSWORD.path;
         }
       ];
