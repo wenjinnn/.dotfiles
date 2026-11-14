@@ -31,4 +31,5 @@
   fingerprint = import ./fingerprint.nix;
   reef-roll-filter-ble-gateway = import ./reef-roll-filter-ble-gateway.nix;
   paseo = import ./paseo.nix;
+  orca-server = import ./orca-server.nix;
 }
