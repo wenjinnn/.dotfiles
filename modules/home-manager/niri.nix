@@ -1,11 +1,10 @@
 {
   pkgs,
-  config,
-  lib,
-  mainMonitor,
   ...
 }:
 {
+
+  home.packages = [ pkgs.hyprpicker ];
 
   wayland.windowManager.niri = {
     enable = true;

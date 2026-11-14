@@ -1,18 +1,15 @@
 # This module provides basic home manager desktop environment services and applications
 {
-  inputs,
   outputs,
   pkgs,
   lib,
-  mainMonitor,
-  config,
   me,
   ...
 }:
 {
   imports = with outputs.homeManagerModules; [
     noctalia
-    niri
+    umbriel
     wallpaper
     kdeconnect
   ];

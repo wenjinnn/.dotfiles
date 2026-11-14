@@ -226,7 +226,8 @@ window-rule {
 }
 window-rule {
     match app-id="^xwaylandvideobridge$"
-    match app-id="wemeetapp" is-floating=false title="wemeetapp"
+    match app-id="wemeetapp" title="wemeetapp"
+    match app-id="wemeetapp" title="EmojiFloatWnd"
     open-floating true
     focus-ring { off; }
     opacity 0.000000

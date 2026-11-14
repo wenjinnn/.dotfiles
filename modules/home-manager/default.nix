@@ -43,4 +43,5 @@
   ghostty = import ./ghostty.nix;
   noctalia = import ./noctalia.nix;
   paseo = import ./paseo.nix;
+  umbriel = import ./umbriel.nix;
 }

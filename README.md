@@ -1,7 +1,7 @@
 # Personal NixOS configuration with Flake and Home Manager
-# Screenshot
+## Screenshot
 
-![Niri screenshot](https://github.com/wenjinnn/.dotfiles/releases/download/0.1.0/Screenshot.png)
+![Desktop screenshot](https://github.com/wenjinnn/.dotfiles/releases/download/0.1.0/Screenshot.png)
 
 The old Arch configuration can be found in the [Arch branch](https://github.com/wenjinnn/config/tree/arch).
 
@@ -20,7 +20,7 @@ The repository structure is based on [nix-starter-config#standard](https://githu
 * Editor: A well-configured [Neovim](https://github.com/wenjinnn/config/tree/nixos/xdg/config/nvim) (tested startup time is less than 35ms) that follows the [KISS principle](https://en.wikipedia.org/wiki/KISS_principle).
 
     You can try it and find more details in my standalone Neovim configuration repo, [wenvim](https://github.com/wenjinnn/wenvim). I use home-manager with `mkOutOfStoreSymlink` to symlink my Neovim configurations directory. This might not be the "pure" Nix way, but since I modify it very frequently and store my custom snippets and spell files with it, I don't want to recompile it every time I make a change. This also makes it easier to share my code with those who are not using NixOS.
-* Compositor: [niri](https://github.com/YaLTeR/niri)
+* Compositor: Umbriel
 * Shell: [noctalia-shell](https://github.com/noctalia-dev/noctalia); configuration can be found in [de.nix](modules/home-manager/de.nix).
 * Terminal emulator: [ghostty](https://github.com/ghostty-org/ghostty)
 * Wallpaper: [wallpaper-switch](pkgs/wallpaper-switch) and [wallpaper-get](pkgs/wallpaper-get) with noctalia integration.
