@@ -1,6 +1,7 @@
 {
   pkgs,
   me,
+  inputs,
   ...
 }:
 let
@@ -33,7 +34,12 @@ let
   '';
 in
 {
+  imports = [ inputs.aagl.nixosModules.default ];
+
+  nix.settings = inputs.aagl.nixConfig;
+
   programs = {
+    anime-game-launcher.enable = true;
     gamescope = {
       enable = true;
       # temporary disable for bwarp setuid issue, see https://github.com/NixOS/nixpkgs/issues/523200
