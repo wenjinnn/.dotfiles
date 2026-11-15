@@ -117,6 +117,7 @@ in
   boot.kernelModules = [
     "thunderbolt"
     "br_netfilter"
+    "snd_hda_intel"
   ];
   boot.kernelParams = [
     "pci=realloc"
@@ -126,11 +127,6 @@ in
     "amdgpu.runpm=0"
     "modprobe.blacklist=amdgpu"
   ];
-
-  boot.extraModprobeConfig = ''
-    options snd-hda-intel enable=1,0  # only enable the first audio card
-    blacklist snd_hda_codec_hdmi  # disable HDMI audio output
-  '';
 
   # Let the tty2 Gamescope launcher load the eGPU driver and mount the game disk.
   security.sudo.extraRules = [
