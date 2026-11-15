@@ -291,7 +291,7 @@ in
         gpu_temp = true;
         ram = true;
         vram = true;
-        font_scale = lib.mkForce 2.0;
+        font_scale = lib.mkForce 1.5;
         background_alpha = lib.mkForce 0.3;
       };
     };
