@@ -56,6 +56,15 @@
       doCheck = false;
       dontUseUnittestCheck = true;
     });
+    # pi-ai 1.5 depends on pi-schema, which the nixpkgs package omits when
+    # replacing its runtime workspace symlinks. Background subagents need it.
+    pi-coding-agent = prev.pi-coding-agent.overrideAttrs (old: {
+      postInstall = (old.postInstall or "") + ''
+        schemaTarget="$out/lib/node_modules/pi-monorepo/node_modules/@earendil-works/pi-schema"
+        rm -rf "$schemaTarget"
+        cp -r packages/schema "$schemaTarget"
+      '';
+    });
     vscode-java-debug = prev.vscode-utils.extensionFromVscodeMarketplace {
       name = "vscode-java-debug";
       publisher = "vscjava";
