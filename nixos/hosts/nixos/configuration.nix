@@ -132,13 +132,17 @@ in
     blacklist snd_hda_codec_hdmi  # disable HDMI audio output
   '';
 
-  # Allow wenjin to load amdgpu without password (for user service)
+  # Let the tty2 Gamescope launcher load the eGPU driver and mount the game disk.
   security.sudo.extraRules = [
     {
       users = [ "wenjin" ];
       commands = [
         {
           command = "${pkgs.kmod}/bin/modprobe amdgpu";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command = "${pkgs.systemd}/bin/systemctl start game.mount";
           options = [ "NOPASSWD" ];
         }
       ];
