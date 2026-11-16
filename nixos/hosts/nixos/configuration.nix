@@ -27,8 +27,8 @@ let
 
     case "$ACTION" in
       add)
-        logger -t egpu-thermal "eGPU connected, lowering CPU to 80%% no-turbo"
-        set_cpu 80 1 "balance_performance"
+        logger -t egpu-thermal "eGPU connected, lowering CPU to 100%% no-turbo"
+        set_cpu 100 1 "balance_performance"
         ;;
       remove)
         logger -t egpu-thermal "eGPU disconnected, restoring CPU to 100%% turbo"
