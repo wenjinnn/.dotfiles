@@ -70,7 +70,9 @@ in
     anime-game-launcher.enable = true;
     gamescope = {
       enable = true;
-      capSysNice = true;
+      # Keep disabled: Steam's runtime rejects Gamescope's CAP_SYS_NICE during
+      # capability handoff (EPERM); Gamescope still runs, but cannot use --rt.
+      # capSysNice = true;
       enableWsi = true;
     };
     steam = {
