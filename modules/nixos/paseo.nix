@@ -58,6 +58,18 @@ let
     '';
   connectedHostsScript = pkgs.writeShellScript "paseo-connected-hosts" ''
     set -euo pipefail
+    for attempt in $(${pkgs.coreutils}/bin/seq 1 30); do
+      if ${pkgs.coreutils}/bin/timeout --kill-after=1s 3s \
+        ${cfg.package}/bin/paseo daemon status \
+        --home ${lib.escapeShellArg cfg.dataDir} >/dev/null 2>&1; then
+        break
+      fi
+      if [ "$attempt" -eq 30 ]; then
+        echo "Paseo daemon did not become ready after 30 checks; skipping registration." >&2
+        exit 1
+      fi
+      ${pkgs.coreutils}/bin/sleep 2
+    done
     ${lib.concatMapStringsSep "\n" registerHost cfg.connectedHosts}
   '';
 in
@@ -231,6 +243,7 @@ in
         Group = "paseo";
         ExecStart = connectedHostsScript;
         RemainAfterExit = true;
+        TimeoutStartSec = "5min";
       };
     };
   };
