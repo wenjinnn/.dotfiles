@@ -86,8 +86,6 @@
     telegram-desktop
     discord
     dbx
-    # temp disabled because of build error
-    # redisinsight
     wechat
     shotcut
     qq
