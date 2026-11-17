@@ -181,6 +181,7 @@ let
       "Mod+B" = "spawn wayscriber -a";
       "Mod+Ctrl+P" = "spawn noctalia msg media toggle";
       "Mod+Ctrl+S" = "spawn noctalia msg settings-toggle";
+      "Mod+Ctrl+N" = "spawn noctalia msg notification-clear-active";
       "Mod+Ctrl+Shift+P" = "spawn noctalia msg panel-toggle session";
       "Mod+Return" = "spawn ghostty";
       "Mod+D" = "spawn noctalia msg panel-toggle launcher";
