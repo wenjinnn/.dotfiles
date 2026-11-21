@@ -278,6 +278,65 @@ class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
         finally:
             globals_dict["BleakScanner"] = original_scanner
 
+    async def test_empty_scan_retries_busy_cleanup_and_keeps_scan_transient(self):
+        globals_dict = MODULE["discover_target"].__globals__
+        original_scanner = globals_dict["BleakScanner"]
+        instance: Any = None
+
+        class BusyStopScanner:
+            def __init__(self, **_kwargs):
+                nonlocal instance
+                self.stop_count = 0
+                instance = self
+
+            async def start(self):
+                return None
+
+            async def stop(self):
+                self.stop_count += 1
+                if self.stop_count == 1:
+                    raise RuntimeError(
+                        "[org.bluez.Error.InProgress] Operation already in progress"
+                    )
+
+        globals_dict["BleakScanner"] = BusyStopScanner
+        try:
+            with self.assertRaises(MODULE["TransientBleError"]):
+                await MODULE["discover_target"](settings())
+            self.assertEqual(instance.stop_count, 2)
+        finally:
+            globals_dict["BleakScanner"] = original_scanner
+
+    async def test_persistent_busy_cleanup_fails_after_bounded_attempts(self):
+        globals_dict = MODULE["discover_target"].__globals__
+        original_scanner = globals_dict["BleakScanner"]
+        instance: Any = None
+
+        class BusyStopScanner:
+            def __init__(self, **_kwargs):
+                nonlocal instance
+                self.stop_count = 0
+                instance = self
+
+            async def start(self):
+                return None
+
+            async def stop(self):
+                self.stop_count += 1
+                raise RuntimeError(
+                    "[org.bluez.Error.InProgress] Operation already in progress"
+                )
+
+        globals_dict["BleakScanner"] = BusyStopScanner
+        try:
+            with self.assertRaises(MODULE["BleScannerFailure"]):
+                await MODULE["discover_target"](settings())
+            self.assertEqual(
+                instance.stop_count, MODULE["SCANNER_STOP_ATTEMPTS"]
+            )
+        finally:
+            globals_dict["BleakScanner"] = original_scanner
+
     async def test_cancelled_start_stops_local_scanner(self):
         globals_dict = MODULE["discover_target"].__globals__
         original_scanner = globals_dict["BleakScanner"]

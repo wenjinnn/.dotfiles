@@ -26,6 +26,8 @@ except ImportError:
 LOG = logging.getLogger("reef-roll-filter-ble-gateway")
 PROCESS_START = time.monotonic()
 CONNECT_RETRY_DELAY = 1.0
+SCANNER_STOP_ATTEMPTS = 3
+SCANNER_STOP_RETRY_DELAY = 0.25
 
 DEVICE_NAME = "Paper_reel_REDACTED"
 WRITE_UUID = "0000ffe9-0000-1000-8000-00805f9b34fb"
@@ -213,11 +215,27 @@ async def _stop_scanner(scanner: Any, timeout: float) -> None:
     stop = getattr(scanner, "stop", None)
     if stop is None:
         return
-    try:
-        await asyncio.wait_for(stop(), timeout)
-    except Exception as error:
-        LOG.error("BLE scanner cleanup failed; restarting the service: %s", error)
-        raise BleScannerFailure("BLE scanner cleanup failed") from error
+    for attempt in range(SCANNER_STOP_ATTEMPTS):
+        try:
+            await asyncio.wait_for(stop(), timeout)
+            return
+        except Exception as error:
+            if _scanner_is_busy(error) and attempt + 1 < SCANNER_STOP_ATTEMPTS:
+                LOG.warning(
+                    "BLE scanner cleanup is already in progress; retrying (%d/%d): %s",
+                    attempt + 1,
+                    SCANNER_STOP_ATTEMPTS,
+                    error,
+                )
+                await asyncio.sleep(SCANNER_STOP_RETRY_DELAY)
+                continue
+            LOG.error(
+                "BLE scanner cleanup failed after %d attempt(s); "
+                "BlueZ discovery may remain active: %s",
+                attempt + 1,
+                error,
+            )
+            raise BleScannerFailure("BLE scanner cleanup failed") from error
 
 
 def _scanner_is_busy(error: BaseException) -> bool:
@@ -292,7 +310,7 @@ class TransientBleError(RuntimeError):
 
 
 class BleScannerFailure(RuntimeError):
-    """A scanner failure requires a process restart to release BlueZ discovery."""
+    """BlueZ discovery could not be stopped after bounded retries."""
 
 
 class GattlibFailure(RuntimeError):
