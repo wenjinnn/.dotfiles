@@ -104,6 +104,12 @@
 
   time.timeZone = "Asia/Shanghai";
 
+  # Keep rclone mounts outside $HOME so GVfs/Nautilus does not treat them as
+  # user-visible volumes. Home Manager exposes them through ~/Rclone symlinks.
+  systemd.tmpfiles.rules = [
+    "d /mnt/rclone 0755 ${me.username} users -"
+  ];
+
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";

@@ -1,30 +1,10 @@
 {
   config,
+  lib,
   outputs,
   me,
-  pkgs,
   ...
 }:
-let
-  warmup = pkgs.writeShellScript "rclone-metadata-warmup" ''
-    set -u
-
-    warm_mount() {
-      local mount_point=$1
-      for _ in $(${pkgs.coreutils}/bin/seq 1 30); do
-        if ${pkgs.coreutils}/bin/ls -la "$mount_point" >/dev/null 2>&1; then
-          return 0
-        fi
-        ${pkgs.coreutils}/bin/sleep 1
-      done
-      return 0
-    }
-
-    warm_mount "${config.home.homeDirectory}/Rclone/gd" &
-    warm_mount "${config.home.homeDirectory}/Rclone/nextcloud" &
-    wait
-  '';
-in
 {
   imports = with outputs.homeManagerModules; [
     sops
@@ -45,7 +25,7 @@ in
         mounts = {
           "/" = {
             enable = true;
-            mountPoint = "${config.home.homeDirectory}/Rclone/gd";
+            mountPoint = "/mnt/rclone/gd";
           };
         };
       };
@@ -62,32 +42,25 @@ in
         mounts = {
           "/" = {
             enable = true;
-            mountPoint = "${config.home.homeDirectory}/Rclone/nextcloud";
+            mountPoint = "/mnt/rclone/nextcloud";
           };
         };
       };
     };
   };
 
-  # Prime each remote's root directory so Nautilus does not make the first
-  # network metadata request during its initial startup.
-  systemd.user.services.rclone-metadata-warmup = {
-    Unit = {
-      Description = "Warm rclone mount metadata";
-      Requires = [
-        "rclone-mount:.@gd.service"
-        "rclone-mount:.@nextcloud.service"
-      ];
-      After = [
-        "rclone-mount:.@gd.service"
-        "rclone-mount:.@nextcloud.service"
-      ];
-    };
-    Service = {
-      Type = "oneshot";
-      ExecStart = warmup;
-      RemainAfterExit = true;
-    };
-    Install.WantedBy = [ "default.target" ];
-  };
+  home.activation.rcloneLinks = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    mkdir -p "$HOME/Rclone"
+    for name in gd nextcloud; do
+      link="$HOME/Rclone/$name"
+      target="/mnt/rclone/$name"
+      if [ -d "$link" ] && [ ! -L "$link" ]; then
+        rmdir "$link" || {
+          echo "refusing to replace non-empty rclone mount point: $link" >&2
+          exit 1
+        }
+      fi
+      ln -sfn "$target" "$link"
+    done
+  '';
 }
