@@ -80,6 +80,10 @@ in
         libsecret = prev.libsecret.override {
           withIntrospection = false;
         };
+        # The X11/Xvfb check exits 99 on the RPi builder.
+        libxkbcommon = prev.libxkbcommon.overrideAttrs (_: {
+          doCheck = false;
+        });
         pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
           (_pythonFinal: pythonPrev: {
             cryptography = pythonPrev.cryptography.overridePythonAttrs (_: {
@@ -93,6 +97,10 @@ in
               doCheck = false;
             });
             zigpy = pythonPrev.zigpy.overridePythonAttrs (_: {
+              doCheck = false;
+            });
+            # zeroconf's circular-import test exceeds pytest-timeout on the RPi builder.
+            zeroconf = pythonPrev.zeroconf.overridePythonAttrs (_: {
               doCheck = false;
             });
           })
