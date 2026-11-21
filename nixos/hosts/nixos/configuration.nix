@@ -125,7 +125,6 @@ in
     "pcie_ports=native"
     "amdgpu.gpu_recovery=1"
     "amdgpu.runpm=0"
-    "modprobe.blacklist=amdgpu"
   ];
 
   # Let the tty2 Gamescope launcher load the eGPU driver and mount the game disk.
@@ -144,18 +143,6 @@ in
       ];
     }
   ];
-  # User service: loads amdgpu after graphical session starts (i.e. after login)
-  systemd.user.services.load-amdgpu = {
-    description = "Load amdgpu kernel module for eGPU";
-    after = [ "graphical-session.target" ];
-    wantedBy = [ "graphical-session.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "/run/wrappers/bin/sudo ${pkgs.kmod}/bin/modprobe amdgpu";
-      RemainAfterExit = true;
-    };
-  };
-
   xdg.terminal-exec = {
     enable = true;
     settings = {
