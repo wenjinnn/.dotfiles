@@ -70,42 +70,70 @@ in
       outputs.overlays.additions
       outputs.overlays.modifications
       # Redis 8.8 has timing-sensitive tests that fail on aarch64.
-      (final: prev: {
-        redis = prev.redis.overrideAttrs (_: {
-          doCheck = false;
-        });
-        wxwidgets_3_2 = prev.wxwidgets_3_2.override {
-          withWebKit = false;
-        };
-        libsecret = prev.libsecret.override {
-          withIntrospection = false;
-        };
-        # The X11/Xvfb check exits 99 on the RPi builder.
-        libxkbcommon = prev.libxkbcommon.overrideAttrs (_: {
-          doCheck = false;
-        });
-        pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
-          (_pythonFinal: pythonPrev: {
-            cryptography = pythonPrev.cryptography.overridePythonAttrs (_: {
-              doCheck = false;
-            });
-            # ponytail: websockets' sync test is flaky on the low-power RPi builder; runtime is unchanged.
-            websockets = pythonPrev.websockets.overridePythonAttrs (_: {
-              doCheck = false;
-            });
-            chacha20poly1305-reuseable = pythonPrev.chacha20poly1305-reuseable.overridePythonAttrs (_: {
-              doCheck = false;
-            });
-            zigpy = pythonPrev.zigpy.overridePythonAttrs (_: {
-              doCheck = false;
-            });
-            # zeroconf's circular-import test exceeds pytest-timeout on the RPi builder.
-            zeroconf = pythonPrev.zeroconf.overridePythonAttrs (_: {
-              doCheck = false;
-            });
-          })
-        ];
-      })
+      # (final: prev: {
+      # redis = prev.redis.overrideAttrs (_: {
+      #   doCheck = false;
+      # });
+      # wxwidgets_3_2 = prev.wxwidgets_3_2.override {
+      #   withWebKit = false;
+      # };
+      # libsecret = prev.libsecret.override {
+      #   withIntrospection = false;
+      # };
+      # # The X11/Xvfb check exits 99 on the RPi builder.
+      # libxkbcommon = prev.libxkbcommon.overrideAttrs (_: {
+      #   doCheck = false;
+      # });
+      # pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+      #   (_pythonFinal: pythonPrev: {
+      # cryptography = pythonPrev.cryptography.overridePythonAttrs (_: {
+      #   doCheck = false;
+      # });
+      # # ponytail: websockets' sync test is flaky on the low-power RPi builder; runtime is unchanged.
+      # websockets = pythonPrev.websockets.overridePythonAttrs (_: {
+      #   doCheck = false;
+      # });
+      # # Multiprocess launch tests repeatedly crash xdist workers on the RPi5 builder.
+      # debugpy = pythonPrev.debugpy.overrideAttrs (_: {
+      #   doInstallCheck = false;
+      # });
+      # # Cache timing tests fail on the RPi5 after long test runs.
+      # diskcache = pythonPrev.diskcache.overrideAttrs (_: {
+      #   doInstallCheck = false;
+      # });
+      # # Moto's integration suite reaches AWS endpoints and has sub-second performance assertions.
+      # moto = pythonPrev.moto.overrideAttrs (_: {
+      #   doInstallCheck = false;
+      # });
+      # # Its snapshot and 5s timeout tests are unreliable on the RPi5 builder.
+      # hass-nabucasa = pythonPrev.hass-nabucasa.overrideAttrs (_: {
+      #   doInstallCheck = false;
+      # });
+      # # Skip the slow install suite and allow CMake's RPi5 probe more time.
+      # scikit-build-core = pythonPrev.scikit-build-core.overrideAttrs (old: {
+      #   doInstallCheck = false;
+      #   # postPatch = (old.postPatch or "") + ''
+      #   #   substituteInPlace src/scikit_build_core/program_search.py \
+      #   #     --replace-fail "BASE_TIMEOUT = 5" "BASE_TIMEOUT = 60"
+      #   # '';
+      # });
+      # # The test's fixed 10s process join is too short on the RPi5.
+      # pyzmq = pythonPrev.pyzmq.overridePythonAttrs (old: {
+      #   disabledTests = (old.disabledTests or [ ]) ++ [ "test_process_teardown" ];
+      # });
+      # chacha20poly1305-reuseable = pythonPrev.chacha20poly1305-reuseable.overridePythonAttrs (_: {
+      #   doCheck = false;
+      # });
+      # zigpy = pythonPrev.zigpy.overridePythonAttrs (_: {
+      #   doCheck = false;
+      # });
+      # # zeroconf's circular-import test exceeds pytest-timeout on the RPi builder.
+      # zeroconf = pythonPrev.zeroconf.overridePythonAttrs (_: {
+      #   doCheck = false;
+      # });
+      #   })
+      # ];
+      # })
     ];
     # Configure your nixpkgs instance
     config = {
@@ -311,24 +339,6 @@ in
     home-assistant = {
       enable = true;
       openFirewall = true;
-      package =
-        (pkgs.home-assistant.override {
-          packageOverrides = _self: super: {
-            paho-mqtt = super.paho-mqtt.overridePythonAttrs (_: {
-              dontUsePytestCheck = true;
-            });
-            # The failing-notebook test needs a kernel to start within 60s;
-            # this is unreliable on the low-power RPi builder.
-            nbmake = super.nbmake.overridePythonAttrs (old: {
-              disabledTests = (old.disabledTests or [ ]) ++ [ "test_failing" ];
-            });
-          };
-        }).overrideAttrs
-          (_: {
-            # ponytail: Home Assistant's integration suite times out on the RPi builder; runtime is unchanged.
-            doCheck = false;
-            dontUsePytestCheck = true;
-          });
       customComponents = with pkgs.home-assistant-custom-components; [
         xiaomi_home
         xiaomi_gateway3
@@ -479,9 +489,6 @@ in
         # Deduplicate and optimize nix store
         auto-optimise-store = true;
         trusted-users = [ "${me.username}" ];
-        # Limit build parallelism to avoid OOM on RPi5 (4GB RAM)
-        max-jobs = 1;
-        cores = 2;
         # the system-level substituers & trusted-public-keys
         # given the users in this list the right to specify additional substituters via:
         #    1. `nixConfig.substituers` in `flake.nix`
