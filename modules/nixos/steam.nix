@@ -12,7 +12,7 @@ let
 
     hdmiStatus=
     for _ in {1..50}; do
-      for status in /sys/class/drm/card*-HDMI-A-4/status; do
+      for status in /sys/class/drm/card*-HDMI-A-1/status; do
         if [[ -r "$status" && "$(<"$status")" == connected ]]; then
           hdmiStatus="$status"
           break 2
@@ -21,7 +21,7 @@ let
       sleep 0.1
     done
     if [[ -z "$hdmiStatus" ]]; then
-      echo "eGPU HDMI-A-4 did not appear; refusing to start Gamescope" >&2
+      echo "eGPU HDMI-A-1 did not appear; refusing to start Gamescope" >&2
       exit 1
     fi
 
@@ -32,7 +32,7 @@ let
 
     gamescopeArgs=(
         --backend drm
-        --prefer-output HDMI-A-4
+        --prefer-output HDMI-A-1
         --adaptive-sync # VRR support
         --hdr-enabled
         --mangoapp # performance overlay
@@ -77,7 +77,7 @@ in
     };
     steam = {
       # a example for game launch options
-      # ENABLE_GAMESCOPE_WSI=1 MANGOHUD=1 DRI_PRIME=0  gamescope -f --hdr-enabled -O HDMI-A-4 -w 2560 -h 1440 -W 3840 -H 2160 -- env DXVK_HDR=1  gamemoderun %command%
+      # ENABLE_GAMESCOPE_WSI=1 MANGOHUD=1 DRI_PRIME=0  gamescope -f --hdr-enabled -O HDMI-A-1 -w 2560 -h 1440 -W 3840 -H 2160 -- env DXVK_HDR=1  gamemoderun %command%
       enable = true;
       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
       dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
