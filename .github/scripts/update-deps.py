@@ -6,8 +6,10 @@ Tracks every pinned dependency:
 * commit-pinned repos in modules/home-manager/de.nix
 * tag-pinned GitHub packages (pkgs/pi-acp/package.nix)
 * TypeBox, tracked from the npm registry's latest dist-tag
+* DBX's latest GitHub release, reported for manual refresh because it also pins
+  Cargo and pnpm dependency hashes
 
-For each entry it compares the pinned rev against the latest upstream rev
+For each update entry it compares the pinned rev against the latest upstream rev
 (commit mode: default-branch HEAD; tag mode: latest release tag; npm-latest mode:
 registry dist-tag), prefetches the new source hash, and rewrites the Nix file.
 GitHub sources use nix-prefetch-github; scoped npm sources use the registry
@@ -126,6 +128,12 @@ REPOS = [
         "",
         "npm-registry",
     ),
+]
+
+# DBX's source and lockfile hashes need coordinated updates, so check its latest
+# release without rewriting the package automatically.
+RELEASE_CHECKS = [
+    ("pkgs/dbx/default.nix", "t8y2", "dbx", "v"),
 ]
 
 
@@ -574,6 +582,16 @@ def set_output(name, value):
     print(f"[output] {name}={value}")
 
 
+def check_latest_release(path, owner, name, prefix):
+    pinned_version = file_field(read_file(path), "version")
+    if not pinned_version:
+        raise RuntimeError(f"no top-level `version` in {path}")
+
+    latest_tag = latest_rev(owner, name, "tag", prefix)
+    latest_version = latest_tag.removeprefix(prefix) if prefix else latest_tag
+    return pinned_version, latest_tag, pinned_version == latest_version
+
+
 def main():
     updated_repos = []
     warnings = []
@@ -624,7 +642,9 @@ def main():
             text = orig
             if mode in ("tag", "npm-latest"):
                 new_version = (
-                    latest[len(prefix) :] if prefix and latest.startswith(prefix) else latest
+                    latest[len(prefix) :]
+                    if prefix and latest.startswith(prefix)
+                    else latest
                 )
                 text = re.sub(
                     r'\bversion\s*=\s*"[^"]*"',
@@ -644,7 +664,9 @@ def main():
                 old_url = f"https://registry.npmjs.org/{name}/-/{name}-{current}.tgz"
                 new_url = f"https://registry.npmjs.org/{name}/-/{name}-{latest}.tgz"
                 if old_url not in block:
-                    raise RuntimeError(f"expected npm tarball URL {old_url!r} in {path}")
+                    raise RuntimeError(
+                        f"expected npm tarball URL {old_url!r} in {path}"
+                    )
                 block = block.replace(old_url, new_url, 1)
             block2 = block.replace(
                 f'{hash_field} = "{hash_val}"', f'{hash_field} = "{new_hash}"'
@@ -694,6 +716,32 @@ def main():
             warnings.append(f"{owner}/{name}: {e}")
         print("::endgroup::")
 
+    for path, owner, name, prefix in RELEASE_CHECKS:
+        print(f"::group::Checking {owner}/{name} release")
+        try:
+            pinned_version, latest_tag, up_to_date = check_latest_release(
+                path, owner, name, prefix
+            )
+            if up_to_date:
+                print(f"  ✅ up to date ({latest_tag})")
+            else:
+                warning = (
+                    f"{owner}/{name}: {latest_tag} is available, but {path} pins "
+                    f"{pinned_version}; refresh the version, source, Cargo, and pnpm hashes together"
+                )
+                print(f"::warning title=Release update available::{warning}")
+                warnings.append(warning)
+        except (
+            OSError,
+            ValueError,
+            RuntimeError,
+            subprocess.SubprocessError,
+        ) as e:
+            warning = f"{owner}/{name} release check failed: {e}"
+            print(f"::warning title=Release check failed::{warning}")
+            warnings.append(warning)
+        print("::endgroup::")
+
     updated = len(updated_repos) > 0
     set_output("updated", "true" if updated else "false")
     if updated_repos:
@@ -703,7 +751,7 @@ def main():
 
     if not updated_repos:
         if warnings:
-            print("⚠️  No repos were updated; errors:")
+            print("⚠️  No repos were updated; checks need attention:")
             for w in warnings:
                 print(f"   - {w}")
             return 1
