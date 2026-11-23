@@ -173,15 +173,15 @@ let
       "Mod+B" = "spawn wayscriber -a";
       "Mod+Ctrl+P" = "spawn noctalia msg media toggle";
       "Mod+Ctrl+S" = "spawn noctalia msg settings-toggle";
-      "Mod+Ctrl+N" = "spawn noctalia msg notification-clear-active";
+      "Mod+Z" = "spawn noctalia msg notification-clear-active";
       "Mod+Ctrl+Shift+P" = "spawn noctalia msg panel-toggle session";
       "Mod+Return" = "spawn ghostty";
       "Mod+D" = "spawn noctalia msg panel-toggle launcher";
       "Mod+E" = "spawn noctalia msg panel-toggle control-center";
-      "Mod+M" = "spawn noctalia msg panel-toggle control-center media";
+      "Mod+M" = "spawn noctalia msg panel-toggle control-center system";
       "Mod+N" = "spawn noctalia msg panel-toggle control-center notifications";
       "Mod+Y" = "spawn noctalia msg power-cycle";
-      "Mod+P" = "window-toggle-pinned";
+      "Mod+X" = "window-toggle-pinned";
       "Mod+U" = "window-toggle-maximize-to-edges";
       "Mod+Shift+N" = "spawn noctalia msg media next";
       "Mod+Alt+N" = "spawn noctalia msg media next-player";
@@ -190,7 +190,7 @@ let
       "Mod+Shift+W" = "spawn noctalia msg wallpaper-random";
       "Mod+V" = "spawn noctalia msg panel-toggle clipboard";
       "Mod+W" = "spawn noctalia msg panel-toggle wallpaper";
-      "Mod+X" = "spawn noctalia msg notification-invoke-latest";
+      "Mod+T" = "spawn noctalia msg notification-invoke-latest";
       "Super+Alt+L" = "spawn noctalia msg session lock";
       "XF86AudioLowerVolume" = "spawn noctalia msg volume-down 5";
       "XF86AudioMicMute" = "spawn wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
