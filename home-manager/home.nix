@@ -201,7 +201,7 @@ in
     # sops secrets file location
     SOPS_SECRETS = "${dotfiles_path}/secrets.yaml";
     # setup terminal sounds player
-    PLAYER = "ffplay -nodisp -autoexit -loglevel quiet";
+    PLAYER = "mpv --no-config --no-video --no-terminal --really-quiet";
     TERMINAL = lib.getExe pkgs.ghostty;
     # sudo askpass program
     SUDO_ASKPASS = "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
