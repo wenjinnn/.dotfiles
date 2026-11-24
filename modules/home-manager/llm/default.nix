@@ -128,14 +128,16 @@ in
     pi-theme
   ];
 
-  home.packages = with pkgs; [
-    # mcp-nixos
-    # claude-agent-acp
-    # codex-acp
-    pi-acp
-    qmd
-    paseo
-  ];
+  home.packages =
+    with pkgs;
+    [
+      # mcp-nixos
+      # claude-agent-acp
+      # codex-acp
+      pi-acp
+      paseo
+    ]
+    ++ lib.optionals (pkgs.stdenv.hostPlatform.system == "x86_64-linux") [ qmd ];
 
   home.file.".pi/agent/npm/node_modules/pi-subagents/node_modules/typebox" = {
     source = pi-subagents-typebox;
