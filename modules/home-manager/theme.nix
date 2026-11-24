@@ -24,6 +24,8 @@
       size = 24;
     };
     targets = {
+      # nixpkgs removed wayprompt; this Stylix target still writes its Home Manager option.
+      wayprompt.enable = false;
       # neovim.enable = false;
       qt.enable = true;
       # gtk.enable = false;
