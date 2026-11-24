@@ -269,6 +269,14 @@
             nix-index-database.homeModules.nix-index
           ];
         };
+        "wenjin@rpi5" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs me;
+            hostName = "rpi5";
+          };
+          modules = [ ./home-manager/hosts/rpi5.nix ];
+        };
       };
     };
 }
