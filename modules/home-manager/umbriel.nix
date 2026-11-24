@@ -160,7 +160,6 @@ let
         hide_when_typing = false;
         hide_timeout_ms = 0;
       };
-      focus.follows_mouse = false;
     };
 
     keybinds = {
