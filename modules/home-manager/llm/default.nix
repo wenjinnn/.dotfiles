@@ -415,7 +415,7 @@ in
             "npm:pi-web-access"
             "npm:context-mode"
             "npm:pi-memory"
-            "npm:pi-goal-list-loop-audit"
+            "npm:@narumitw/pi-goal"
             "npm:@narumitw/pi-usage"
             "npm:@dietrichgebert/ponytail"
             "npm:@gotgenes/pi-permission-system"
