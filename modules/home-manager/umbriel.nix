@@ -23,6 +23,13 @@ let
 
     workspaces.back_and_forth = false;
 
+    scratchpad = [
+      {
+        name = "monitor";
+        spawn_when_empty = "ghostty --class=btop -e btop";
+      }
+    ];
+
     colors = {
       background = rgba palette.base00 "F0";
       text_primary = rgba palette.base05 "FF";
@@ -257,9 +264,9 @@ let
       "Mod+Shift+Slash" = "cheatsheet-open";
       "Mod+Tab" = "overview-toggle";
       # "Alt+Tab" = "scratchpad-focus-next";
-      "Alt+Tab" = "scratchpad-toggle";
-      "Mod+Shift+Space" = "window-move-to-scratchpad";
-      "Mod+Ctrl+Space" = "window-restore-from-scratchpad";
+      "Alt+Tab" = "scratchpad-toggle monitor";
+      "Mod+Shift+Space" = "window-move-to-scratchpad monitor";
+      "Mod+Ctrl+Space" = "window-restore-from-scratchpad monitor";
       "Mod+Ctrl+Escape" = "session-quit";
       "Mod+Shift+E" = "session-quit skip-confirmation";
 
@@ -315,6 +322,10 @@ let
     };
 
     window_rule = [
+      {
+        match.app_id = "^btop$";
+        default_scratchpad = "monitor";
+      }
       {
         match.app_id = "^dev.noctalia.Noctalia$";
         default_floating = true;
