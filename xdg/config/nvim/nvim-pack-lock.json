@@ -1,11 +1,11 @@
 {
   "plugins": {
     "SchemaStore.nvim": {
-      "rev": "abc95e13502ff3acbed151de97667174b2e4132d",
+      "rev": "5926c7899b2e36cd0f944ef3a933abd68c0fcdb8",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "codecompanion.nvim": {
-      "rev": "14b4993a24fac8bb122ce524e25bb0f7f392afd6",
+      "rev": "e262a7b7777cfdd09b271326198ff5bdf1a4d754",
       "src": "https://github.com/olimorris/codecompanion.nvim"
     },
     "conform.nvim": {
@@ -21,11 +21,11 @@
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "mini.nvim": {
-      "rev": "b8a0af521530f8ee68c738657429eab59de6a2ae",
+      "rev": "24cf4ad5840f0d092e3d8296b17eaf7026bf27f3",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "minuet-ai.nvim": {
-      "rev": "3b0a4c5f97b7124d94302c608fbe01c0270d4fbe",
+      "rev": "fcda648efd20f7495403de5f572165502a861731",
       "src": "https://github.com/milanglacier/minuet-ai.nvim"
     },
     "neogen": {
@@ -49,11 +49,11 @@
       "src": "https://codeberg.org/mfussenegger/nvim-lint"
     },
     "nvim-lspconfig": {
-      "rev": "4648fd8ba5c678d7e2db75ae44ffac269bb589d8",
+      "rev": "9691c9af52cd12c9accc6dc6d0540593c705bca8",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
-      "rev": "37e52c733ada9d8d544d53a763140ef1ba404353",
+      "rev": "52773f0d13a0c11d0c3ef33c14ab6ecc1c17148b",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
@@ -65,7 +65,7 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
     },
     "obsidian.nvim": {
-      "rev": "b5b6dae964aefdf3dd4eafa555068d9c82e6e23b",
+      "rev": "51d60b5b587538045bee5b2607a0880c6a73d942",
       "src": "https://github.com/obsidian-nvim/obsidian.nvim"
     },
     "one-small-step-for-vimkind": {
@@ -109,7 +109,7 @@
       "src": "https://github.com/tpope/vim-speeddating"
     },
     "vim-test": {
-      "rev": "70dc0f77ef46c1bd46ff6e82587c6a76076f0314",
+      "rev": "ad6e74cfac81158042014fe31d155df0b70e571a",
       "src": "https://github.com/vim-test/vim-test"
     }
   }
