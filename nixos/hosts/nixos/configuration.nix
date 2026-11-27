@@ -90,6 +90,7 @@ in
   ];
   systemd.packages = with pkgs; [ lact ];
   systemd.services.lactd.wantedBy = [ "multi-user.target" ];
+  systemd.services.k3s.serviceConfig.CPUWeight = 20;
   powerManagement.powertop.enable = true;
   services = {
     printing.enable = true;
