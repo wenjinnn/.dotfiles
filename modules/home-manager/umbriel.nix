@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   mainMonitor ? "eDP-1",
   pkgs,
   ...
@@ -7,6 +8,8 @@
 let
   palette = config.lib.stylix.colors.withHashtag;
   rgba = color: alpha: "${color}${alpha}";
+  steamOutput =
+    rule: if mainMonitor == "eDP-1" then rule // { default_output = "HDMI-A-1"; } else rule;
   settings = {
     include.files = [ ];
 
@@ -117,29 +120,32 @@ let
       };
     };
 
-    output = {
-      "${mainMonitor}" = {
-        scale = 2.5;
-        transform = "normal";
-        position = [
-          0
-          0
-        ];
-        vrr = "always";
-        hdr = "on";
+    output =
+      lib.optionalAttrs (mainMonitor != null) {
+        "${mainMonitor}" = {
+          scale = 2.5;
+          transform = "normal";
+          position = [
+            0
+            0
+          ];
+          vrr = "always";
+          hdr = "on";
+        };
+      }
+      // lib.optionalAttrs (mainMonitor == "eDP-1") {
+        "HDMI-A-1" = {
+          scale = 2.5;
+          transform = "normal";
+          # At 2.5x, HDMI is 1536x864 logical pixels, centered above eDP.
+          position = [
+            0
+            (0 - 864)
+          ];
+          vrr = "always";
+          hdr = "on";
+        };
       };
-      "HDMI-A-1" = {
-        scale = 2.5;
-        transform = "normal";
-        # At 2.5x, HDMI is 1536x864 logical pixels, centered above eDP.
-        position = [
-          0
-          (0 - 864)
-        ];
-        vrr = "always";
-        hdr = "on";
-      };
-    };
 
     input = {
       middle_click_paste = true;
@@ -342,32 +348,28 @@ let
           height = 600;
         };
       }
-      {
+      (steamOutput {
         match.content_type = "game";
         default_fullscreen = true;
-        default_output = "HDMI-A-1";
-      }
-      {
+      })
+      (steamOutput {
         match.app_id = "^steam_app_[0-9]+$";
         default_fullscreen = true;
-        default_output = "HDMI-A-1";
-      }
-      {
+      })
+      (steamOutput {
         match.app_id = "steam";
         match.title = "^notificationtoasts_[0-9]+_desktop$";
         default_floating = true;
         default_focused = false;
-        default_output = "HDMI-A-1";
         default_position = {
           x = 50;
           y = 50;
           anchor = "bottom_right";
         };
-      }
-      {
+      })
+      (steamOutput {
         match.app_id = "steam";
-        default_output = "HDMI-A-1";
-      }
+      })
       # {
       #   match.app_id = "wemeetapp";
       #   match.title = "wemeetapp";
