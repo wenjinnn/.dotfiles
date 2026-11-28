@@ -201,6 +201,17 @@
               ;
           };
           modules = [
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useUserPackages = true;
+                extraSpecialArgs = {
+                  inherit inputs outputs me;
+                  hostName = "rpi5";
+                };
+                users.${me.username}.imports = [ ./home-manager/hosts/rpi5.nix ];
+              };
+            }
             {
               imports = with nixos-raspberrypi.nixosModules; [
                 raspberry-pi-5.base
