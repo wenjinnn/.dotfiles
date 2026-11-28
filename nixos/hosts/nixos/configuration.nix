@@ -1,10 +1,7 @@
 # This is your system's configuration file.
 # Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
 {
-  inputs,
   outputs,
-  lib,
-  config,
   pkgs,
   ...
 }:
@@ -128,22 +125,6 @@ in
     "amdgpu.runpm=0"
   ];
 
-  # Let the tty2 Gamescope launcher load the eGPU driver and mount the game disk.
-  security.sudo.extraRules = [
-    {
-      users = [ "wenjin" ];
-      commands = [
-        {
-          command = "${pkgs.kmod}/bin/modprobe amdgpu";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "${pkgs.systemd}/bin/systemctl start game.mount";
-          options = [ "NOPASSWD" ];
-        }
-      ];
-    }
-  ];
   xdg.terminal-exec = {
     enable = true;
     settings = {

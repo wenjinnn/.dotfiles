@@ -150,6 +150,19 @@
             nix-index-database.nixosModules.nix-index
           ];
         };
+        nixos-minidesk = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs outputs me; };
+          modules = [
+            ./nixos/hosts/nixos-minidesk
+            disko.nixosModules.disko
+            nixos-hardware.nixosModules.common-cpu-amd
+            nixos-hardware.nixosModules.common-gpu-amd
+            nixos-hardware.nixosModules.common-pc-ssd
+            nur.modules.nixos.default
+            sops-nix.nixosModules.sops
+          ];
+        };
         nixos-wsl = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs outputs me; };
@@ -256,6 +269,14 @@
             stylix.homeModules.stylix
             nix-index-database.homeModules.nix-index
           ];
+        };
+        "wenjin@nixos-minidesk" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs me;
+            hostName = "nixos-minidesk";
+          };
+          modules = [ ./home-manager/hosts/nixos-minidesk.nix ];
         };
         "wenjin@nixos-wsl" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance

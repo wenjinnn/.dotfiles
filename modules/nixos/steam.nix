@@ -1,66 +1,8 @@
 {
   pkgs,
-  me,
   inputs,
   ...
 }:
-let
-  gs = pkgs.writeShellScript "gs" ''
-    set -xeuo pipefail
-
-    /run/wrappers/bin/sudo -n ${pkgs.kmod}/bin/modprobe amdgpu
-
-    hdmiStatus=
-    for _ in {1..50}; do
-      for status in /sys/class/drm/card*-HDMI-A-1/status; do
-        if [[ -r "$status" && "$(<"$status")" == connected ]]; then
-          hdmiStatus="$status"
-          break 2
-        fi
-      done
-      sleep 0.1
-    done
-    if [[ -z "$hdmiStatus" ]]; then
-      echo "eGPU HDMI-A-1 did not appear; refusing to start Gamescope" >&2
-      exit 1
-    fi
-
-    if ! /run/wrappers/bin/sudo -n ${pkgs.systemd}/bin/systemctl start game.mount; then
-      echo "Failed to mount /game; refusing to start Gamescope" >&2
-      exit 1
-    fi
-
-    gamescopeArgs=(
-        --backend drm
-        --prefer-output HDMI-A-1
-        --adaptive-sync # VRR support
-        --hdr-enabled
-        --mangoapp # performance overlay
-        --rt
-        --steam
-        -w 2560
-        -h 1440
-        -W 2560
-        -H 1440
-    )
-    steamArgs=(
-        -pipewire-dmabuf
-        -tenfoot
-    )
-    mangoConfig=(
-        cpu_temp
-        gpu_temp
-        ram
-        vram
-    )
-    mangoVars=(
-        MANGOHUD=1
-        MANGOHUD_CONFIG="$(IFS=,; echo "''${mangoConfig[*]}")"
-    )
-    export "''${mangoVars[@]}"
-    exec gamescope "''${gamescopeArgs[@]}" -- steam "''${steamArgs[@]}"
-  '';
-in
 {
   imports = [ inputs.aagl.nixosModules.default ];
 
@@ -100,13 +42,8 @@ in
     };
   };
 
-  environment = {
-    systemPackages = with pkgs; [
-      mangohud
-      gamemode
-    ];
-    loginShellInit = ''
-      [[ "$(tty)" = "/dev/tty2" ]] && ${gs}
-    '';
-  };
+  environment.systemPackages = with pkgs; [
+    mangohud
+    gamemode
+  ];
 }
