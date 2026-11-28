@@ -4,7 +4,8 @@
   outputs,
   me,
   ...
-}: {
+}:
+{
   imports = with outputs.nixosModules; [
     sops
   ];
@@ -507,7 +508,7 @@
       - GEOSITE,spotify,universal
       - GEOSITE,pixiv,universal
       - GEOSITE,steam@cn,DIRECT
-      - GEOSITE,steam,steam
+      - GEOSITE,steam,universal
       - GEOSITE,onedrive,universal
       - GEOSITE,microsoft,universal
       - GEOSITE,geolocation-!cn,universal
