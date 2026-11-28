@@ -12,11 +12,11 @@
     umbriel
     wallpaper
     kdeconnect
+    easyeffects
   ];
 
   services = {
     pass-secret-service.enable = true;
-    easyeffects.enable = true;
     # udisks2 GUI front end
     udiskie.enable = true;
   };
@@ -83,34 +83,6 @@
     gnome-software # for flatpak
     # vdhcoapp # for videodownloadhelper, the browser extension. for first time setup, run `vdhcoapp install`
   ];
-  xdg =
-    let
-      eePresets = pkgs.fetchFromGitHub {
-        owner = "JackHack96";
-        repo = "EasyEffects-Presets";
-        rev = "1ac92c9be57bdfccec3fb9820924f9a870a9d56f";
-        hash = "sha256-Nd4LOgiZyrrkXeWfpBfrEkZwJ+i/xVjg6EPNf/+sGjw=";
-      };
-      presetFiles = builtins.readDir "${eePresets}";
-      jsonPresets = lib.filterAttrs (
-        name: type: type == "regular" && lib.hasSuffix ".json" name
-      ) presetFiles;
-      irsFiles = builtins.readDir "${eePresets}/irs";
-    in
-    {
-      configFile = builtins.listToAttrs (
-        # easyeffects presets from JackHack96/EasyEffects-Presets
-        (map (name: {
-          name = "easyeffects/output/${name}";
-          value.source = "${eePresets}/${name}";
-        }) (lib.attrNames jsonPresets))
-        ++ (map (name: {
-          name = "easyeffects/irs/${name}";
-          value.source = "${eePresets}/irs/${name}";
-        }) (lib.attrNames irsFiles))
-      );
-      # customize nautilus right click menu
-      dataFile."nautilus-python/extensions/image_tools_extension.py".source =
-        ../../xdg/data/nautilus-python/extensions/image_tools_extension.py;
-    };
+  xdg.dataFile."nautilus-python/extensions/image_tools_extension.py".source =
+    ../../xdg/data/nautilus-python/extensions/image_tools_extension.py;
 }

@@ -36,6 +36,7 @@
   kdeconnect = import ./kdeconnect.nix;
   udiskie = import ./udiskie.nix;
   de = import ./de.nix;
+  easyeffects = import ./easyeffects.nix;
   llm = import ./llm;
   oh-my-pi = import ./oh-my-pi.nix;
   pi-theme = import ./pi-theme.nix;
