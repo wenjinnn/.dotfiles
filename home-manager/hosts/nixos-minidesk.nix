@@ -29,6 +29,8 @@
     sessionVariables.SOPS_SECRETS = "${config.home.homeDirectory}/.dotfiles/secrets.yaml";
   };
 
+  programs.bash.enable = true;
+
   systemd.user.services.easyeffects = {
     Install.WantedBy = [ "default.target" ];
     Service.Environment = [ "QT_QPA_PLATFORM=offscreen" ];

@@ -13,6 +13,8 @@
     ../syncthing.nix
   ];
 
+  programs.bash.enable = true;
+
   nixpkgs = {
     overlays = [
       outputs.overlays.additions
